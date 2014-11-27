@@ -1,0 +1,436 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gpdhom.xml             Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-gpdhom">
+<Heading>Homomorphisms of Groupoids</Heading>
+
+A <E>homomorphism</E> <M>m</M> from a groupoid <M>G</M> to a groupoid <M>H</M>
+consists of a map from the objects of <M>G</M> to those of <M>H</M>
+together with a map from the elements of <M>G</M> to those of <M>H</M>
+which is compatible with tail and head and which preserves multiplication: 
+<Display>
+m(g1 : o1 \to o2)*m(g2 : o2 \to o3) ~=~ m(g1*g2 : o1 \to o3).
+</Display>
+<P/>
+Note that when a homomorphism is not injective on objects, 
+the image of the source need not be a subgroupoid of the range.
+A simple example of this is given by a homomorphism from the two-object 
+groupoid with trivial group to the free group <M>\langle a \rangle</M> 
+on one generator, when the image is <M>[1,a^n,a^{-n}]</M> 
+for some <M>n>0</M>. 
+
+
+<Section Label="sec-homsfrom">
+<Heading>Homomorphisms from a connected groupoid</Heading>
+
+<ManSection>
+   <Oper Name="GroupoidHomomorphismFromSinglePiece"
+         Arg="src, rng, hom, imobs, imrays" />
+   <Oper Name="GroupoidHomomorphismByGroupHom"
+         Arg="src, rng, hom" />
+   <Func Name="GroupoidHomomorphism"
+         Arg="args" />
+   <Oper Name="InclusionMappingGroupoids"
+         Arg="gpd, sgpd" />
+   <Attr Name="RootObjectHomomorphism"
+         Arg="gpdhom" />
+<Description>
+As usual, there are various homomorphism operations.
+The basic construction is a homomorphism <M>G \to H</M> with <M>G</M> 
+the direct product of a group and a complete graph. 
+The homomorphism has attributes <C>Source</C>, <C>Range</C>, 
+<C>ImagesOfObjects</C>, <C>PieceImages</C> 
+and <C>RootObjectHomomorphism</C>. 
+The input data consists of the source; the range; and 
+<List>
+<Item>
+a homomorphism <C>hom</C> from the root group of <M>G</M> 
+to that of <M>H</M>; 
+</Item>
+<Item>
+a list <C>imobs</C> of the images of the objects of <M>G</M>;
+</Item>
+<Item>
+a list <C>imrays</C> of the images of the rays of <M>G</M>. 
+</Item>
+</List>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> gend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; 
+gap> d12 := Group( gend12 );; 
+gap> Gd12 := Groupoid( d12, [-37,-36,-35,-34] );;
+gap> SetName( d12, "d12" );  
+gap> SetName( Gd12, "Gd12" );
+gap> s3 := Subgroup( d12, [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] );;
+gap> Gs3 := SubgroupoidByPieces( Gd12, [ [ s3, [-36,-35,-34] ] ] );;
+gap> SetName( s3, "s3" );  
+gap> SetName( Gs3, "Gs3" );
+gap> gend8 := GeneratorsOfGroup( d8 );;
+gap> imhd8 := [ ( ), (15,20)(16,19)(17,18) ];;
+gap> hd8 := GroupHomomorphismByImages( d8, s3, gend8, imhd8 );;
+gap> homd8 := GroupoidHomomorphismByGroupHom( Gd8, Gs3, hd8 ); 
+groupoid homomorphism : Gd8 -> Gs3
+[ [ GroupHomomorphismByImages( d8, s3, [ (1,2,3,4), (1,3) ], 
+        [ (), (15,20)(16,19)(17,18) ] ), [ -36, -35, -34 ], [ (), (), () ] ] ]
+gap> e2; ImageElm( homd8, e2 );
+[(1,3) : -8 -> -7]
+[(15,20)(16,19)(17,18) : -35 -> -34]
+gap> incGs3 := InclusionMappingGroupoids( Gd12, Gs3 );; 
+gap> ihomd8 := homd8 * incGs3;; 
+gap> IsBijectiveOnObjects( ihomd8 );
+false
+gap> Display( ihomd8 );
+ groupoid mapping: [ Gd8 ] -> [ Gd12 ]
+root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
+images of objects: [ -36, -35, -34 ]
+   images of rays: [ (), (), () ]
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sec-homsto">
+<Heading>Homomorphisms to a connected groupoid</Heading>
+
+<ManSection>
+   <Oper Name="HomomorphismToSinglePiece"
+         Arg="src, rng, pieces" />
+<Description>
+When <M>G</M> is made up of two or more pieces, all of which get mapped 
+to a connected groupoid, we have a <E>homomorphism to a single piece</E>. 
+The third input parameter in this case is a list of the <C>PieceImages</C> 
+of the individual homomorphisms <E>from</E> the single pieces. 
+See section <Ref Sect="sec-mwohom"/> for the corresponding operation 
+on homomorphisms of magmas with objects. 
+<P/>
+In the following example the source has three pieces, 
+and one of the component homomorphisms is an <C>IdentityMapping</C> 
+<Index Key="IdentityMapping"> <C>IdentityMapping</C> </Index>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> hc6 := GroupHomomorphismByImages( c6, s3, 
+>            [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;
+gap> Fs3 := FullSubgroupoid( Gs3, [ -35 ] );; 
+gap> SetName( Fs3, "Fs3" ); 
+gap> homc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;
+gap> incFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; 
+gap> ihomc6 := homc6 * incFs3; 
+groupoid homomorphism : Gc6 -> Gs3
+[ [ GroupHomomorphismByImages( c6, s3, [ (5,6,7)(8,9) ], 
+        [ (15,16)(17,20)(18,19) ] ), [ -35 ], [ () ] ] ]
+gap> idGs3 := IdentityMapping( Gs3 );;
+gap> V3 := ReplaceOnePieceInUnion( U3, 1, Gs3 ); 
+groupoid with 3 pieces:
+[ Gs3, Gd8, Gc6 ]
+gap> images3 := [ PieceImages( idGs3 )[1], 
+>                 PieceImages( homd8 )[1], 
+>                 PieceImages( ihomc6 )[1] ];; 
+gap> homV3 := HomomorphismToSinglePiece( V3, Gs3, images3 );; 
+gap> Display( homV3 );         
+homomorphism to single piece magma with pieces:
+(1): [ Gs3 ] -> [ Gs3 ]
+magma mapping: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
+  [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] ]
+   object map: [ -36, -35, -34 ] -> [ -36, -35, -34 ]
+(2): [ Gd8 ] -> [ Gs3 ]
+magma mapping: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
+   object map: [ -9, -8, -7 ] -> [ -36, -35, -34 ]
+(3): [ Gc6 ] -> [ Gs3 ]
+magma mapping: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ]
+   object map: [ -6 ] -> [ -35 ]
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sec-genhoms">
+<Heading>Homomorphisms with more than one piece</Heading>
+
+<ManSection>
+   <Oper Name="HomomorphismByUnion"
+         Arg="src, rng, homs" />
+<Description>
+As in section <Ref Sect="sec-hompieces"/>,  
+when the range <M>H</M> has more than one connected component, 
+a homomorphism is a union of homomorphisms, one for each piece. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> isoq8 := IsomorphismNewObjects( Gq8, [-38,-37] ); 
+groupoid homomorphism : 
+[ 
+  [ IdentityMapping( q8 ), [ -38, -37 ], 
+      [ <identity> of ..., <identity> of ... ] ] ]
+gap> Gq8b := Range( isoq8 );; 
+gap> SetName( Gq8b, "Gq8b" ); 
+gap> V4 := UnionOfPieces( [ V3, Gq8 ] ); 
+groupoid with 4 pieces:
+[ Gs3, Gq8, Gd8, Gc6 ]
+gap> SetName( V4, "V4" ); 
+gap> Vs3q8b := UnionOfPieces( [ Gs3, Gq8b ] ); 
+gap> SetName( Vs3q8b, "Vs3q8b" ); 
+gap> hom4 := HomomorphismByUnion( V4, Vs3q8b, [ homV3, isoq8 ] );; 
+gap> PiecesOfMapping( hom4 );
+[ groupoid homomorphism : Gq8 -> Gq8b
+    [ [ IdentityMapping( q8 ), [ -38, -37 ], 
+          [ <identity> of ..., <identity> of ... ] ] ], 
+  groupoid homomorphism : 
+    [ [ IdentityMapping( s3 ), [ -36, -35, -34 ], [ (), (), () ] ], 
+      [ GroupHomomorphismByImages( d8, s3, [ (1,2,3,4), (1,3) ], 
+            [ (), (15,20)(16,19)(17,18) ] ), [ -36, -35, -34 ], 
+          [ (), (), () ] ], 
+      [ GroupHomomorphismByImages( c6, s3, [ (5,6,7)(8,9) ], 
+            [ (15,16)(17,20)(18,19) ] ), [ -35 ], [ () ] ] ] ]
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sec-autos">
+<Heading>Groupoid automorphisms</Heading>
+
+<ManSection>
+   <Oper Name="GroupoidAutomorphismByObjectPerm"
+         Arg="gpd, imobs" />
+   <Oper Name="GroupoidAutomorphismByGroupAuto"
+         Arg="gpd, gpauto" />
+   <Oper Name="GroupoidAutomorphismByRayImages"
+         Arg="gpd, imrays" />
+<Description>
+We first describe automorphisms <M>a</M> of a groupoid <M>G</M> 
+where <M>G</M> is the direct product of a group <M>g</M> and a complete graph. 
+The group of automorphisms is generated by three types of automorphism: 
+<List>
+<Item>
+a permutation of the <M>n</M> objects; 
+</Item>
+<Item>
+an automorphism of the root group <M>g</M>; 
+</Item>
+<Item>
+a choice of image for each ray: 
+<M>a(1 : o_1 \to o_i) = (g_i : o_1 \to o_i)</M> for <M>i \ne 1</M>. 
+</Item>
+</List> 
+<P/> 
+<Example>
+<![CDATA[
+gap> a4 := Subgroup( s4, [(1,2,3),(2,3,4)] );; 
+gap> SetName( a4, "a4" ); 
+gap> gensa4 := GeneratorsOfGroup( a4 );; 
+gap> Ga4 := SubgroupoidByPieces( Gs4, [ [a4, [-15,-13,-11]] ] ); 
+single piece groupoid: < a4, [ -15, -13, -11 ] >
+gap> SetName( Ga4, "Ga4" ); 
+gap> aut1 := GroupoidAutomorphismByObjectPerm( Ga4, [-13,-11,-15] );; 
+gap> Display( aut1 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
+images of objects: [ -13, -11, -15 ]
+   images of rays: [ (), (), () ]
+gap> h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
+gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; 
+gap> Display( aut2 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
+images of objects: [ -15, -13, -11 ]
+   images of rays: [ (), (), () ]
+gap> im3 := [(), (1,3,2), (2,4,3)];; 
+gap> aut3 := GroupoidAutomorphismByRayImages( Ga4, im3 );; 
+gap> Display( aut3 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
+images of objects: [ -15, -13, -11 ]
+   images of rays: [ (), (1,3,2), (2,4,3) ]
+gap> aut123 := aut1*aut2*aut3;; 
+gap> Display( aut123 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
+images of objects: [ -13, -11, -15 ]
+   images of rays: [ (), (1,4,3), (1,2,3) ]
+gap> inv123 := InverseGeneralMapping( aut123 );; 
+gap> Display( inv123 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (2,3,4), (1,3,4) ], [ (1,2,3), (2,3,4) ] ]
+images of objects: [ -11, -15, -13 ]
+   images of rays: [ (), (1,2,4), (1,3,4) ]
+gap> id123 := aut123 * inv123;; 
+gap> id123 = IdentityMapping( Ga4 ); 
+true
+]]>
+</Example>
+<P/> 
+The <Index Key="AutomorphismGroup"> <C>AutomorphismGroup</C> </Index> 
+<C>AutomorphismGroup</C> of <M>G</M> is isomorphic to the quotient of 
+<M>S_n \times A \times g^n</M> by a subgroup isomorphic to <M>g</M>, 
+where <M>A</M> is the automorphism group of <M>g</M> 
+and <M>S_n</M> is the symmetric group on the <M>n</M> objects. 
+This is one of the main topics in <Cite Key="AlWe" />. 
+<P/>
+The current implementation is experimental, producing a 
+<E>nice monomorphism</E> from  the automorphism group to a pc-group, 
+if one is available.  
+However <C>ImageElm</C> at present only works on generating elements.  
+<P/> 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> AGa4 := AutomorphismGroup( Ga4 ); 
+<group with 10 generators>
+gap> NGa4 := NiceObject( AGa4 ); 
+Group([ f6, f3, f11*f12, f12, f2, f1, f4*f9, f4^2, f5*f9*f10*f11*f12, f5^2 ])
+gap> MGa4 := NiceMonomorphism( AGa4 );; 
+gap> Size( AGa4 ); 
+20736
+gap> SetName( AGa4, "AGa4" ); 
+gap> SetName( NGa4, "NGa4" ); 
+gap> Print( MGa4, "\n" ); 
+GroupHomomorphismByImages( AGa4, Group( [ f1, f2, f3, f4, f5, f6, f7, f8, f9, 
+  f10, f11, f12 ] ), [ magma with objects homomorphism : Ga4 -> Ga4
+    [ [ InnerAutomorphism( a4, (2,4,3) ), [ -15, -13, -11 ], [ (), (), () ] ] 
+     ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ ConjugatorAutomorphism( a4, (3,4) ), [ -15, -13, -11 ], 
+          [ (), (), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ InnerAutomorphism( a4, (1,2)(3,4) ), [ -15, -13, -11 ], 
+          [ (), (), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ InnerAutomorphism( a4, (1,4)(2,3) ), [ -15, -13, -11 ], 
+          [ (), (), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
+            [ (1,2,3), (2,3,4) ] ), [ -13, -11, -15 ], [ (), (), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
+            [ (1,2,3), (2,3,4) ] ), [ -13, -15, -11 ], [ (), (), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (1,2,3), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (2,3,4), () ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (1,2,3) ] ] ]
+    , magma with objects homomorphism : Ga4 -> Ga4
+    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (2,3,4) ] ] ]
+     ], [ f6, f3, f11*f12, f12, f2, f1, f4*f9, f4^2, f5*f9*f10*f11*f12, f5^2 
+ ] )
+gap> ##  Now do some tests!
+gap> mgi := MappingGeneratorsImages( MGa4 );; 
+gap> autgen := mgi[1];; 
+gap> pcgen := mgi[2];;
+gap> ngen := Length( autgen );; 
+gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); 
+true 
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="GroupoidAutomorphismByGroupAutos"
+         Arg="gpd, auts" />
+<Description>
+Homogeneous, discrete groupoids are the second type of groupoid for which a method is provided for <C>AutomorphismGroup( gpd )</C>. 
+This is used in the <Package>XMod</Package> package for constructing 
+crossed modules of groupoids. 
+The two types of generating automorphism are 
+<C>GroupoidAutomorphismByGroupAutos</C>, which requires a list 
+of group automorphisms, one for each object group, 
+and <C>GroupoidAutomorphismByObjectPerm</C>, which permutes the objects.  
+<P/> 
+<Example>
+<![CDATA[
+gap> Hs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); 
+homogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >
+gap> aut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); 
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -12, -10, -11, -13 ]
+object homomorphisms:
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+
+gap> gens3 := GeneratorsOfGroup( s3 );; 
+gap> g1 := gens3[1];; 
+gap> g2 := gens3[2];; 
+gap> b1 := GroupHomomorphismByImages( s3, s3, gens3, [ g1, g2^g1 ] );; 
+gap> b2 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^g2, g2 ] );; 
+gap> b3 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^g2, g2^(g1*g2) ] );; 
+gap> b4 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^(g2*g1), g2^g1 ] );; 
+gap> aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1,b2,b3,b4] ); 
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
+object homomorphisms:
+GroupHomomorphismByImages( s3, s3, 
+[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
+[ (15,17,19)(16,18,20), (15,18)(16,17)(19,20) ] )
+GroupHomomorphismByImages( s3, s3, 
+[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
+[ (15,19,17)(16,20,18), (15,20)(16,19)(17,18) ] )
+GroupHomomorphismByImages( s3, s3, 
+[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
+[ (15,19,17)(16,20,18), (15,16)(17,20)(18,19) ] )
+GroupHomomorphismByImages( s3, s3, 
+[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
+[ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
+
+gap> AHs3 := AutomorphismGroup( Hs3 );;  Size( AHs3 ); 
+31104
+gap> for z in GeneratorsOfGroup(AHs3) do Print(z); od;  
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
+object homomorphisms:
+InnerAutomorphism( s3, (15,20)(16,19)(17,18) )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
+object homomorphisms:
+InnerAutomorphism( s3, (15,19,17)(16,20,18) )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -12, -11, -10, -13 ]
+object homomorphisms:
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -12, -13, -11, -10 ]
+object homomorphisms:
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+IdentityMapping( s3 )
+]]>
+</Example>
+<P/>
+</Description>
+</ManSection>
+
+</Section>
+
+</Chapter>

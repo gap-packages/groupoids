@@ -1,0 +1,842 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gpd.xml                Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-gpd">
+<Heading>Groupoids</Heading>
+
+A <E>groupoid</E> is a (mathematical) category in which every element
+is invertible. 
+It consists of a set of <E>pieces</E>, 
+each of which is a connected groupoid. 
+(The usual terminology is `connected component', but in &GAP; `component' 
+is used for `record component'.) 
+<P/>
+A <E>single piece groupoid</E> is determined by a set of <E>objects</E> 
+<C>obs</C> and an <E>object group</E> <C>grp</C>. 
+The objects of a single piece groupoid are generally chosen to be 
+consecutive negative integers, but any suitable ordered set is acceptable, 
+and `consecutive' is not a requirement.
+The object groups will usually be taken to be permutation groups,
+but pc-groups and fp-groups are also supported. 
+<P/>
+A <E>group</E> is a single piece groupoid with one object.
+<P/>
+A <E>groupoid</E> is a set of one or more single piece groupoids, 
+its <E>pieces</E>, and is represented as <C>IsGroupoidRep</C>, 
+with attribute <C>PiecesOfGroupoid</C>.
+<P/>
+A groupoid is <E>homogeneous</E> if it has two of more isomorphic pieces, 
+with identical groups. 
+The special case of <E>homogeneous, discrete</E> groupoids, 
+where each piece has a single object, is given its own representation. 
+These groupoids are used in the <Package>XMod</Package> package 
+as the source of many crossed modules of groupoids. 
+<P/> 
+For the definitions of the standard properties of groupoids
+we refer to R. Brown's book ``Topology'' <Cite Key="BrTop" />, 
+recently revised and reissued as ``Topology and Groupoids'' 
+<Cite Key="BrTopGpd" />.
+
+
+<Section Label="sec-gpds">
+<Heading>Groupoids: their properties and attributes</Heading>
+
+<ManSection>
+   <Oper Name="SinglePieceGroupoid"
+         Arg="grp, obs" />
+   <Func Name="Groupoid"
+         Arg="args" />
+   <Oper Name="RootObject"
+         Arg="gpd" />
+<Description>
+As for magmas with objects, the simplest construction of a groupoid 
+is as the direct product of a group and a complete graph. 
+Many subgroupoids of such a groupoid do not have this simple form, 
+and will be considered in section <Ref Sect="sec-subgpds"/>. 
+As usual, the <C>RootObject</C> 
+is the object with least label. 
+The global function <C>Groupoid</C> will normally find the appropriate 
+constructor to call, the options being:
+<List>
+<Item>
+the object group, a list of objects;
+</Item>
+<Item>
+a group being converted to a groupoid, a single object; 
+</Item>
+<Item>
+a list of groupoids which have already been constructed.
+</Item>
+</List>
+<P/>
+Methods for <C>ViewObj</C>, <C>PrintObj</C> and <C>Display</C> are
+provided for groupoids and the other types of object in this package.
+Users are advised to supply names for all the groups and groupoids 
+they construct.
+<P/> 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
+gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
+gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] ); 
+single piece groupoid: < s4, [ -15 .. -11 ] >
+gap> RootObject( Gs4 );
+-15
+gap> Gd8 := Groupoid( d8, [-9,-8,-7] );
+single piece groupoid: < d8, [ -9, -8, -7 ] >
+gap> c6 := Group( (5,6,7)(8,9) );;
+gap> SetName( c6, "c6" );
+gap> Gc6 := DomainWithSingleObject( c6, -6 );
+single piece groupoid: < c6, [ -6 ] >
+gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsPermGroupoid"
+         Arg="gpd" />
+   <Prop Name="IsPcGroupoid"
+         Arg="gpd" />
+   <Prop Name="IsFpGroupoid"
+         Arg="gpd" />
+   <Prop Name="IsMatrixGroupoid"
+         Arg="gpd" />
+<Description>
+A groupoid is a permutation groupoid if all its pieces have 
+permutation groups.
+Most of the examples in this chapter are permutation groupoids,
+but in principle any type of group known to &GAP; may be used.
+In the following example <C>Gf2</C> is an fp-groupoid, 
+<C>Gq8</C> is a pc-groupoid, and <C>Gsl43</C> is a matrix groupoid. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> f2 := FreeGroup( 2 );;
+gap> Gf2 := Groupoid( f2, -22 );;
+gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
+gap> q8 := SmallGroup( 8, 4 );;
+gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
+gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
+gap> sl43 := SpecialLinearGroup( 4, 3 );;
+gap> Gsl43 := SinglePieceGroupoid( sl43, [ -35..-31 ] );;
+gap> SetName( sl43, "sl43" );  SetName( Gsl43, "Gsl43" );
+gap> [ IsMatrixGroupoid( Gsl43 ), IsFpGroupoid( Gf2 ), 
+>      IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; 
+[ true, true, true, true ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="UnionOfPieces" 
+         Arg="pieces" />
+   <Attr Name="Pieces"
+         Arg="gpd" />
+   <Attr Name="Size"
+         Arg="gpd" />
+   <Oper Name="ReplaceOnePieceInUnion" 
+         Arg="gpd, old_piece, new_piece" />
+<Description>
+When a groupoid consists of two or more pieces, 
+we require their object lists to be disjoint. 
+The operation <C>UnionOfPieces</C> and the attribute <C>Pieces</C>,  
+introduced in section <Ref Sect="sec-pieces"/>, are also used for groupoids. 
+The pieces are sorted by the least object in their object lists. 
+The <Index Key="ObjectList" Subkey="for groupoids"> <C>ObjectList</C> </Index> 
+<C>ObjectList</C> is the sorted concatenation of the objects in the pieces.
+<P/>
+The <C>Size</C> of a groupoid is the number of its arrows which, 
+for a single piece groupoid, is the product of the size of the group 
+with the square of the number of objects.
+<P/>
+One of the pieces in a groupoid may be replaced by an alternative piece 
+using the operation <C>ReplaceOnePieceInUnion</C>. 
+The objects in the new piece may or may not overlap the objects 
+in the piece removed -- 
+we just require that the object lists in the new union are disjoint. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> U3 := UnionOfPieces( [ Gs4, Gd8, Gc6 ] );;
+gap> Display( U3 );
+groupoid with 3 pieces:
+< objects: [ -15 .. -11 ]
+    group: s4 = <[ (1,2,3,4), (3,4) ]> >
+< objects: [ -9, -8, -7 ]
+    group: d8 = <[ (1,2,3,4), (1,3) ]> >
+< objects: [ -6 ]
+    group: c6 = <[ (5,6,7)(8,9) ]> >
+gap> Pieces( U3 );
+[ Gs4, Gd8, Gc6 ]
+gap> ObjectList( U3 );
+[ -15, -14, -13, -12, -11, -9, -8, -7, -6 ]
+gap> U2 := Groupoid( [ Gf2, Gq8 ] );;
+gap> [ Size(Gs4), Size(Gd8), Size(Gc6), Size(U3) ];
+[ 600, 72, 6, 678 ]
+gap> [ Size(Gf2), Size(Gq8), Size(U2) ];           
+[ infinity, 32, infinity ]
+gap> U5 := UnionOfPieces( [ U3, Gf2, Gq8 ] );
+groupoid with 5 pieces:
+[ Gq8, Gf2, Gs4, Gd8, Gc6 ]
+gap> V5 := ReplaceOnePieceInUnion( U5, 3, Gsl43 ); 
+groupoid with 5 pieces:
+[ Gsl43, Gq8, Gf2, Gd8, Gc6 ]
+gap> ObjectList(V5);             
+[ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
+gap> U5 = V5; 
+false
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="HomogeneousGroupoid" 
+         Arg="gpd, oblist" />
+   <Oper Name="HomogeneousDiscreteGroupoid" 
+         Arg="gp, obs" />
+<Description>
+Special functions are provided for the case where a groupoid has 
+more than one connected component, and these components are identical 
+except for their object sets. 
+Such groupoids are said to be <E>homogeneous</E>. 
+<P/>
+The operation <C>HomogeneousGroupoid</C> is used when the components 
+each contain more than one object. 
+The arguments consist of a single piece groupoid <C>gpd</C> 
+and a list of lists of objects <C>oblist</C>, 
+each of whose lists has the same length as the object list 
+<C>obs</C> of <C>gpd</C>. 
+Note that <C>gpd</C> is <E>not</E> included as one of the pieces in the output 
+unless <C>obs</C> is included as one of the lists in <C>oblist</C>. 
+<P/>
+The operation <C>HomogeneousDiscreteGroupoid</C> is used 
+when the components each have a single object. 
+In this case the first argument is just a group -- 
+the root group for each component. 
+These groupoids are used in the <Package>XMod</Package> package 
+as the source of many crossed modules of groupoids. 
+<P/>
+Both types of groupoid have the property 
+<Index Key="IsHomogeneousDomainWithObjects">  <C>IsHomogeneousDomainWithObjects</C> </Index> 
+<C>IsHomogeneousDomainWithObjects</C>. 
+In the latter case a separate representation 
+<Index Key="IsHomogeneousDomainWithObjectsRep">  <C>IsHomogeneousDiscreteGroupoidRep</C> </Index> 
+<C>IsHomogeneousDiscreteGroupoidRep</C> is used. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] ); 
+homogeneous groupoid with 2 pieces:
+1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
+2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
+gap> IsHomogeneousDomainWithObjects(Hd8);               
+true
+gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] );
+homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
+gap> RepresentationsOfObject(Gd8);
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
+gap> RepresentationsOfObject(Hd8);
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ]
+gap> RepresentationsOfObject(Hc6);
+[ "IsComponentObjectRep", "IsAttributeStoringRep", 
+  "IsHomogeneousDiscreteGroupoidRep" ]
+gap> KnownTruePropertiesOfObject(Hc6); 
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsAssociative", "IsCommutative", "IsDiscreteDomainWithObjects", 
+  "IsHomogeneousDomainWithObjects" ]
+gap> Kd8 := UnionOfPieces( [ Gd8, Hd8 ] );
+groupoid with 3 pieces:
+1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
+2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
+3:  Gd8
+gap> ObjectList(Kd8);
+[ -16, -15, -14, -12, -11, -10, -9, -8, -7 ]
+gap> IsHomogeneousDomainWithObjects( Kd8 );
+true
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sec-elements">
+<Heading>Groupoid elements; stars; costars; homsets</Heading>
+
+<ManSection>
+   <Oper Name="Arrow"
+         Arg="gpd, elt, tail, head" />
+   <Oper Name="ElementOfArrow"
+         Arg="elt" />
+   <Oper Name="TailOfArrow"
+         Arg="elt" />
+   <Oper Name="HeadOfArrow"
+         Arg="elt" />
+   <Oper Name="IsArrowIn"
+         Arg="arr,gpd" />
+<Description>
+A <E>groupoid element</E> is an arrow in a magma with objects, 
+as described in subsection <Ref Sect="man-arrow"/>. 
+To recapitulate, an arrow <C>e</C> consists of 
+a group element, <C>ElementOfArrow(e)</C> or <C>e![1]</C>; 
+the tail (source) object, <C>TailOfArrow(e)</C> or <C>e![2]</C>;
+and the head (target) object, <C>HeadOfArrow(e)</C> or <C>e![3]</C>.
+Arrows have a <E>partial composition</E>: 
+two arrows may be multiplied when the head of the first 
+coincides with the tail of the second. 
+When an attempt to multiply arrows when this condition does not hold 
+the value <C>fail</C> is returned. 
+(In earlier versions of the package there were functions <C>GroupoidElement</C> 
+and <C>MultiplicativeElementWithObjects</C>, 
+but these have now been replaced by <C>Arrow</C>.)  
+<P/>
+</Description>
+</ManSection>
+<Index>* for groupoid elements</Index>
+<Example>
+<![CDATA[
+gap> e1 := Arrow( Gd8, (1,2,3,4), -9, -8 );
+[(1,2,3,4) : -9 -> -8]
+gap> e2 := Arrow( Gd8, (1,3), -8, -7 );
+[(1,3) : -8 -> -7]
+gap> Print( [ ElementOfArrow(e2), TailOfArrow(e2), HeadOfArrow(e2) ], "\n" );
+[ (1,3), -8, -7 ]
+gap> prod := e1*e2;
+[(1,2)(3,4) : -9 -> -7]
+gap> e2*e1;
+fail
+gap> e3 := Arrow( Gd8, (2,4), -7, -9 );;
+gap> cycle := prod*e3;
+[(1,4,3,2) : -9 -> -9]
+gap> cycle^2;
+[(1,3)(2,4) : -9 -> -9]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IdentityArrow"
+         Arg="gpd, obj" />
+<Description>
+The identity arrow <M>1_o</M> of <M>G</M> at object <M>o</M> 
+is <M>(e:o \to o)</M> where <M>e</M> is the identity element in the 
+object group.  
+The inverse <M>e^{-1}</M> of <M>e = (c : p \to q)</M> is 
+<M>(c^{-1} : q \to p)</M>, 
+so that <M>e*e^{-1}=1_p</M> and <M>e^{-1}*e = 1_q</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> i8 := IdentityArrow( Gd8, -8 );
+[() : -8 -> -8]
+gap> [ e1*i8, i8*e1, e1^-1]; 
+[ [(1,2,3,4) : -9 -> -8], fail, [(1,4,3,2) : -8 -> -9] ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="Order"
+         Arg="arr" />
+<Description>
+A groupoid element is a <Index Key="loop"> loop </Index> <E>loop</E> 
+when the tail and head coincide. 
+In this case the order of the element is defined to be 
+the order of its group element.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> i8; Order(i8);
+[() : -8 -> -8]
+1
+gap> cycle; Order(cycle);
+[(1,4,3,2) : -9 -> -9]
+4
+]]>
+</Example>
+
+
+
+
+<ManSection>
+   <Oper Name="ObjectStar"
+         Arg="gpd, obj" />
+   <Oper Name="ObjectCostar"
+         Arg="gpd, obj" />
+   <Oper Name="Homset"
+         Arg="gpd, tail, head" />
+<Description>
+The <E>star</E> at <C>obj</C> is the set of arrows 
+which have <C>obj</C> as tail,
+while the <E>costar</E> is the set of arrows which have <C>obj</C> as head.
+The <E>homset</E> from <C>obj1</C> to <C>obj2</C>
+is the set of arrows with the specified tail and head, 
+and so is bijective with the elements of the object groups. 
+Thus every star and every costar is a union of homsets. 
+The identity arrow at an object is a left identity for the star 
+and a right identity for the costar at that object.
+<P/>
+In order not to create unneccessarily long lists, 
+these operations return objects of type <C>IsHomsetCosetsRep</C> 
+for which an <C>Iterator</C> is provided. 
+(An <C>Enumerator</C> is not yet implemented.)
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> star9 := ObjectStar( Gd8, -9 );
+<star at [ -9 ] with group d8>
+gap> Size( star9 ); 
+24
+gap> for e in star9 do
+>      if ( Order( ElementOfArrow(e) ) = 4 ) then Print( e, "\n" ); fi;
+>    od;
+[(1,4,3,2) : -9 -> -9]
+[(1,4,3,2) : -9 -> -8]
+[(1,4,3,2) : -9 -> -7]
+[(1,2,3,4) : -9 -> -9]
+[(1,2,3,4) : -9 -> -8]
+[(1,2,3,4) : -9 -> -7]
+gap> costar6 := ObjectCostar( Gc6, -6 );
+<costar at [ -6 ] with group c6>
+gap> Size( costar6 ); 
+6
+gap> hsetq8 := Homset( Gq8, -28, -27 );
+<homset -28 -> -27 with group q8>
+gap> for e in hsetq8 do Print(e,"\n"); od;
+[<identity> of ... : -28 -> -27]
+[f3 : -28 -> -27]
+[f2 : -28 -> -27]
+[f2*f3 : -28 -> -27]
+[f1 : -28 -> -27]
+[f1*f3 : -28 -> -27]
+[f1*f2 : -28 -> -27]
+[f1*f2*f3 : -28 -> -27]
+]]>
+</Example>
+
+</Section>
+
+
+
+<Section Label="sec-subgpds">
+<Heading>Subgroupoids</Heading>
+
+<ManSection>
+   <Func Name="Subgroupoid"
+         Arg="args" />
+   <Oper Name="SubgroupoidByPieces"
+         Arg="gpd, obhoms" />
+   <Oper Name="IsSubgroupoid"
+         Arg="gpd, sgpd" />
+   <Oper Name="FullSubgroupoid"
+         Arg="gpd, obs" />
+   <Attr Name="MaximalDiscreteSubgroupoid"
+         Arg="gpd" />
+   <Oper Name="DiscreteSubgroupoid"
+         Arg="gpd, sgps, obs" />
+   <Attr Name="FullTrivialSubgroupoid"
+         Arg="gpd" />
+   <Attr Name="DiscreteTrivialSubgroupoid"
+         Arg="gpd" />
+   <Oper Name="IsWide"
+         Arg="gpd, sgpd" />
+<Description>
+A <E>subgroupoid</E> <C>sgpd</C> of a groupoid <C>gpd</C> has as objects 
+some subset of the objects of <C>gpd</C>.
+It is <E>wide</E> if all the objects are included.
+It is <E>full</E> if, for any two objects in <C>sgpd</C>, 
+the <C>Homset</C> is the same as that in <C>gpd</C>.
+The arrows of <C>sgpd</C> are a subset of those of <C>gpd</C>,
+closed under multiplication and
+with tail and head in the chosen object set.
+<P/>
+There are a variety of constructors for a subgroupoid of a groupoid, 
+and the most general is the operation <C>SubgroupoidByPieces</C>. 
+Its two parameters are a groupoid and a list of pieces, 
+each piece being specified as a list <C>[sgp,obs]</C>,  
+where <C>sgp</C> is a subgroup of the root group in that piece, 
+and <C>obs</C> is a subset of the objects in that piece.
+The <C>FullSubgroupoid</C> of a groupoid <C>gpd</C> 
+on a subset <C>obs</C> of its objects 
+contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
+A subgroupoid is <E>discrete</E> if it is a union of groups. 
+The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
+is the union of all the single-object full subgroupoids of <C>gpd</C>.
+A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
+<E>trivial subgroupoid</E> 
+has trivial object groups, but need not be discrete.
+A single piece trivial groupoid is sometimes called a 
+<Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
+(The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
+<E>identity subgroupoid</E> was used in versions up to 1.14.)  
+The global function <C>Subgroupoid</C> should call the appropriate operation.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
+gap> k4 := Subgroup( d8, [ (1,2)(3,4), (1,3)(2,4) ] );;
+gap> SetName( c4, "c4" );  SetName( k4, "k4" );
+gap> Ud8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );;
+gap> SetName( Ud8, "Ud8" );
+gap> Display( Ud8 );
+groupoid with 2 pieces:
+< objects: [ -9 ]
+    group: k4 = <[ (1,2)(3,4), (1,3)(2,4) ]> >
+< objects: [ -8, -7 ]
+    group: c4 = <[ (1,2,3,4) ]> >
+gap> [ Parent( Ud8 ), IsWide( Gd8, Ud8 ) ]; 
+[ Gd8, true ]
+gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
+[ f1^2, f2^2 ]
+gap> f2b := Subgroup( f2, genf2b );;
+gap> SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < q8, [ -27 ] >
+2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
+gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
+true
+gap> FullSubgroupoid( U3, [-7,-6] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < d8, [ -7 ] >
+2:  single piece groupoid: < c6, [ -6 ] >
+gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < c4, [ -9 ] >
+2:  single piece groupoid: < k4, [ -7 ] >
+gap> FullTrivialSubgroupoid( Ud8 );
+groupoid with 2 pieces:
+1:  single piece groupoid: < id(k4), [ -9 ] >
+2:  single piece groupoid: < id(c4), [ -8, -7 ] >
+gap> MaximalDiscreteSubgroupoid(U2);
+groupoid with 3 pieces:
+1:  single piece groupoid: < q8, [ -28 ] >
+2:  single piece groupoid: < q8, [ -27 ] >
+3:  single piece groupoid: < f2, [ -22 ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SubgroupoidWithRays"
+         Arg="gpd, sgp, rays" />
+   <Oper Name="RaysOfGroupoid"
+         Arg="gpd" />
+   <Oper Name="RayElementsOfGroupoid"
+         Arg="gpd" />
+<Description>
+If groupoid <M>G</M> is of type <C>IsDirectProductWithCompleteGraph</C> 
+with group <M>g</M> and <M>n</M> objects, 
+then a typical wide subgroupoid <M>H</M> of <M>G</M> is formed by choosing 
+a subgroup <M>h</M> of <M>g</M> to be the object group 
+at the root object <M>q</M>, and an arrow  
+<M>r : q \to p</M> for each of the objects <M>p</M>. 
+The chosen loop arrow at <M>q</M> must be the identity arrow. 
+These <M>n</M> arrows are called the 
+<Index Key="rays"> rays</Index> <E>rays</E> of the subgroupoid. 
+The arrows in the homset from <M>p</M> to <M>p'</M> have the form 
+<M>r^{-1}xr'</M> for all rays <M>r,r'</M> and all <M>x</M> in <M>h</M>. 
+<P/>
+The operation <C>RaysOfGroupoid</C> returns a list of arrows, 
+one for each object, while the operation <C>RayElementsOfGroupoid</C> 
+returns the list of group elements in these arrows. 
+<P/>
+In the following example we construct a subgroupoid with rays 
+on four of the five objects.  It is therefore necessary to construct 
+the full subgroupoid on these four objects first. 
+<P/> 
+Note that it is also possible to construct a subgroupoid with rays 
+of a subgroupoid with rays. 
+<P/>
+Note also that the function <Index Key="Ancestor"> <C>Ancestor</C></Index> 
+<C>Ancestor</C> provides an iteration of <C>Parent</C>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> SetName( Hs4, "Hs4" ); 
+gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
+single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4)
+ ] >
+gap> hs1413 := Homset( Hd8a, -14, -13 );
+<homset -14 -> -13 with group d8>
+gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
+[(2,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [
+(1,3,4) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,3) : -14 -> -13], [
+(1,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
+gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
+single piece groupoid with rays: < d8, [ -14, -13, -12 ],
+[ (), (1,2,3), (1,2,4) ] >
+gap> Hd8a = Hd8b; 
+true
+gap> RaysOfGroupoid( Hd8b );
+[ [() : -14 -> -14], [(1,2,3) : -14 -> -13], [(1,2,4) : -14 -> -12] ]
+gap> RayElementsOfGroupoid( Hd8b ); 
+[ (), (1,2,3), (1,2,4) ]
+gap> Parent( Hd8a );
+Hs4
+gap> Ancestor( Hd8a ); 
+Gs4
+gap> Fd8a := FullSubgroupoid( Hd8a, [-14,-13]);
+single piece groupoid with rays: < d8, [ -14, -13 ], [ (), (2,3) ] >
+gap> Fd8b := FullSubgroupoid( Hd8a, [-13,-12]);
+single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
+[ -13, -12 ], [ (), (2,4,3) ] >
+gap> Fd8a := FullSubgroupoid( Hd8a, [-13,-12] );            
+single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
+[ -13, -12 ], [ (), (2,4,3) ] >
+gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
+single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
+]]>
+</Example>
+
+</Section>
+
+
+
+<Section Label="sec-cosets">
+<Heading>Left, right and double cosets</Heading>
+
+<ManSection>
+   <Oper Name="RightCoset"
+         Arg="G, U, elt" />
+   <Oper Name="RightCosetRepresentatives"
+         Arg="G, U" />
+   <Oper Name="LeftCoset"
+         Arg="G, U, elt" />
+   <Oper Name="LeftCosetRepresentatives"
+         Arg="G, U" />
+   <Oper Name="LeftCosetRepresentativesFromObject"
+         Arg="G, U, obj" />
+   <Oper Name="DoubleCoset"
+         Arg="G, U, elt, V" />
+   <Oper Name="DoubleCosetRepresentatives"
+         Arg="G, U, V" />
+<Description>
+If <C>U</C> is a wide subgroupoid of <M>G</M>, 
+the <E>right cosets</E> <M>Ug</M> of <M>U</M> in <M>G</M>
+are the equivalence classes for the relation on the arrows of <M>G</M>
+where  <M>g1</M> is related to <M>g2</M> if and only if <M>g2 = u*g1</M>
+for some arrow <M>u</M> of <M>U</M>.
+The right coset containing <M>g</M> is written <M>Ug</M>.
+These right cosets partition the costars of <M>G</M> and, 
+in particular, the costar <M>U1\_{o}</M> of <M>U</M> at object <M>o</M>, 
+so that (unlike groups) <M>U</M> is itself a coset only when 
+<M>G</M> has a single object.
+<P/>
+The <E>right coset representatives</E> for <M>U</M> in <M>G</M> 
+form a list containing one arrow for each coset where, 
+in a particular piece of <M>U</M>, 
+the group element chosen is the right coset representative 
+of the group of <M>U</M> in the group of <M>G</M>.
+<P/>
+Similarly, the <E>left cosets</E> <M>gU</M> refine the stars of <M>G</M>, 
+while <E>double cosets</E> are unions of left cosets and right cosets.
+The operation <C>LeftCosetRepresentativesFromObject( G, U, obj )</C> 
+is used in Chapter 4, 
+and returns only those representatives which have tail at <C>obj</C>. 
+<P/>
+As with stars and homsets, these cosets are implemented with representation 
+<C>IsHomsetCosetsRep</C> and provided with an iterator.
+Note that, when <M>U</M> has more than one piece, 
+cosets may have differing lengths.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> re2 := RightCoset( Gd8, Ud8, e2 );
+RightCoset(single piece groupoid: < c4, [ -8, -7 ] >,[(1,3) : -8 -> -7])
+gap> for x in re2 do Print( x, "\n" ); od;
+[(1,3) : -8 -> -7]
+[(1,3) : -7 -> -7]
+[(2,4) : -8 -> -7]
+[(2,4) : -7 -> -7]
+[(1,4)(2,3) : -8 -> -7]
+[(1,4)(2,3) : -7 -> -7]
+[(1,2)(3,4) : -8 -> -7]
+[(1,2)(3,4) : -7 -> -7]
+gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
+[ [() : -9 -> -9], [() : -9 -> -8], [() : -9 -> -7], [(2,4) : -9 -> -9],
+  [(2,4) : -9 -> -8], [(2,4) : -9 -> -7], [() : -8 -> -9], [() : -8 -> -8],
+  [() : -8 -> -7], [(2,4) : -8 -> -9], [(2,4) : -8 -> -8], [(2,4) : -8 -> -7]
+ ]
+gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
+[ [() : -7 -> -9], [(2,4) : -7 -> -9], [() : -7 -> -8], [(2,4) : -7 -> -8] ]
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sec-conj">
+<Heading>Conjugation</Heading>
+
+<ManSection>
+   <Oper Name="ConjugateArrow"
+         Arg="e1, e" />
+<Description>
+When <M>e = (c : p \to q)</M> conjugation by <M>e</M> 
+is the groupoid automorphism defined as follows. 
+There are two cases.
+<P/>
+In the case <M>p \neq q</M>, 
+<List>
+<Item>
+objects <M>p,q</M> are interchanged, and the remaining objects are fixed; 
+</Item>
+<Item> 
+loops at <M>p,q</M>: <M>(b: p \to p) \mapsto (b^c : q \to q)</M> 
+and    <M>(b: q \to q) \mapsto (b^{c^{-1}} : p \to p)</M>; 
+</Item> 
+<Item>
+arrows between <M>p</M> and <M>q</M>: 
+<M>(b : p \to q) \mapsto (c^{-1}bc^{-1} : q \to p)</M> 
+and <M>(b : q \to p) \mapsto (cbc : p \to q)</M>; 
+</Item>
+<Item>
+costar at <M>p,q</M>: 
+<M>(b : r \to p) \mapsto (bc : r \to q)</M> 
+and <M>(b : r \to q) \mapsto (bc^{-1} : r \to p)</M>; 
+</Item>
+<Item>
+star at <M>p,q</M>: 
+<M>(b : p \to r) \mapsto (c^{-1}b :  \to q)</M> 
+and <M>(b : q \to r) \mapsto (cb : p \to r)</M>; 
+</Item>
+<Item>
+the remaining arrows are unchanged. 
+</Item> 
+</List>
+<P/>
+In the case <M>p=q</M>,
+<List>
+<Item> all the objects are fixed; 
+</Item>
+<Item> loops at <M>p</M> are conjugated by <M>c</M>,
+<M>(b : p \to p) \mapsto (b^c : p \to p)</M>; 
+</Item>
+<Item> the rest of the costar and star at <M>p</M> are permuted, 
+<M>(b : r \to p) \mapsto (bc : r \to p)</M> 
+and <M>(b : p \to r) \mapsto (c^{-1}b : p \to r)</M>; 
+</Item>
+<Item> the remaining arrows are unchanged. 
+</Item>
+</List>
+<P/>
+The details of this construction may be found in <Cite Key="AlWe" />. 
+<P/>
+(Note that it is more desirable to use the command <C>e1^e2</C>, 
+but it has not yet been possible to get this to work!) 
+</Description>
+</ManSection>
+<Index>\^{} for arrows</Index>
+<Example>
+<![CDATA[
+gap> x := Arrow( Gd8, (1,3), -9, -9 );; 
+gap> y := Arrow( Gd8, (1,2,3,4), -8, -9 );; 
+gap> z := Arrow( Gd8, (1,2)(3,4), -9, -7 );; 
+gap> w := Arrow( Gd8, (1,2,3,4), -7, -8 );; 
+gap> ##  conjugation with arrows x, y, z and w in Gd8: 
+gap> ConjugateArrow(x,y);
+[(2,4) : -8 -> -8]
+gap> ConjugateArrow(x,z);
+[(2,4) : -7 -> -7]
+gap> ConjugateArrow(x,w);
+[(1,3) : -9 -> -9]
+gap> ConjugateArrow(y,x);
+[() : -8 -> -9]
+gap> ConjugateArrow(y,z);
+[(2,4) : -8 -> -7]
+gap> ConjugateArrow(y,w);    
+[(1,3)(2,4) : -7 -> -9]
+gap> ConjugateArrow(z,x);
+[(1,4,3,2) : -9 -> -7]
+gap> ConjugateArrow(z,y);
+[(2,4) : -8 -> -7]
+gap> ConjugateArrow(z,w);
+[(1,3) : -9 -> -8]
+gap> ConjugateArrow(w,x); 
+[(1,2,3,4) : -7 -> -8]
+gap> ConjugateArrow(w,y);
+[(1,3)(2,4) : -7 -> -9]
+gap> ConjugateArrow(w,z);
+[(1,3) : -9 -> -8]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SinglePieceGroupoidByGenerators"
+         Arg="parent, gens" />
+<Description>
+A set of arrows generates a groupoid by taking all possible 
+products and inverses.  
+So far, the only implementation is for the case of loops generating a 
+group at an object <M>o</M> andf a set of rays from <M>o</M>, 
+where <M>o</M> is <E>not</E> the least object. 
+A suitably large supergroupoid, which must be a direct product with a 
+complete graph, should be provided. 
+This is the case needed for <C>ConjugateGroupoid</C> in the following section. 
+Other cases will be added as time permits. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
+[(1,2,3) : -15 -> -13]
+gap> gensa := GeneratorsOfGroupoid( Hd8a );
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
+  [(3,4) : -14 -> -12] ]
+gap> imsa := List( gensa, g -> ConjugateArrow( g, u ) ); 
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
+  [(3,4) : -14 -> -12] ]
+gap> C := SinglePieceGroupoidByGenerators( Gs4, imsa ); 
+single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
+[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="ConjugateGroupoid"
+         Arg="gpd, e" />
+<Description>
+When <M>H</M> is a subgroupoid of a groupoid <M>G</M> and <M>a</M> 
+is an arrow of <M>G</M>, then the conjugate of <M>H</M> by <M>a</M> 
+is the subgroupoid generated by the conjugates of the generators of <M>H</M>. 
+</Description>
+</ManSection>
+<Index>\^{} for groupoids</Index>
+<Example>
+<![CDATA[
+gap> ConjugateGroupoid( Hd8a, u^-1 ); 
+single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
+[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+]]>
+</Example>
+</Section>
+
+More examples of all these operations may be found in the example file 
+<F>gpd/examples/gpd.g</F>.
+
+</Chapter>

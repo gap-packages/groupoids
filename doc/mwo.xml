@@ -1,0 +1,398 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  mwo.xml                Gpd documentation            Chris Wensley  -->
+<!--                                                                     -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-mwp">
+<Heading>Many-object structures</Heading>
+
+The aim of this package is to provide operations for finite groupoids. 
+A <E>groupoid</E> is constructed from a group and a set of objects. 
+In order to provide a sequence of categories, with increasing structure, 
+mimicing those for groups, we introduce in this chapter the notions of 
+<E>magma with objects</E>; <E>semigroup with objects</E>
+and <E>monoid with objects</E>. 
+The next chapter introduces morphisms of these structures. 
+At a first reading of this manual, the user is advised to skip quickly 
+through these first two chapters, and then move on to groupoids 
+in Chapter 3. 
+<P/>
+For the definitions of the standard properties of groupoids
+we refer to P. Higgins' book ``Categories and Groupoids'' 
+<Cite Key="HiGpd" /> (originally published in 1971, reprinted by TAC in 2005),  
+and to R. Brown's book ``Topology'' <Cite Key="BrTop" />, 
+recently revised and reissued as ``Topology and Groupoids'' 
+<Cite Key="BrTopGpd" />.
+
+
+<Section Label="sec-mwo">
+<Heading>Magmas with objects; arrows</Heading>
+
+A <E>magma with objects</E> <M>M</M> consists of 
+a set of <E>objects</E> Ob<M>(M)</M>, 
+and a set of <E>arrows</E> Arr<M>(M)</M> 
+together with <E>tail</E> and <E>head</E> maps 
+<M>t,h :</M> Arr<M>(M) \to</M> Ob<M>(M)</M>, 
+and a <E>partial multiplication</E> 
+<M>* :</M> Arr<M>(M) \to </M> Arr<M>(M)</M>, 
+with <M>a*b</M> defined precisely when the head of <M>a</M> 
+coincides with the tail of <M>b</M>. 
+We write an arrow <M>a</M> with tail <M>u</M> and head <M>v</M> 
+as <M>(a : u \to v)</M>. 
+<P/>
+When this multiplication is associative we obtain a 
+<E>semigroup with objects</E>. 
+<P/>
+A <E>loop</E> is an arrow whose tail and head are the same object. 
+An <E>identity arrow</E> at object <M>u</M> is a loop <M>(1_u : u \to u)</M> 
+such that <M>a*1_u=a</M> and <M>1_u*b=b</M> 
+whenever <M>u</M> is the head of <M>a</M> and the tail of <M>b</M>. 
+When <M>M</M> is a semigroup with objects 
+and every object has an identity arrow, 
+we obtain a <E>monoid with objects</E>, 
+which is just the usual notion of mathematical category. 
+<P/>
+An arrow <M>(a : u \to v)</M> in a monoid with objects 
+has <E>inverse</E> <M>(a^{-1} : v \to u)</M> provided 
+<M>a*a^{-1} = 1_u</M> and <M>a^{-1}*a = 1_v</M>. 
+A monoid with objects in which every arrow has an inverse 
+is a <E>group with objects</E>, usually called a <E>groupoid</E>. 
+
+<ManSection>
+   <Func Name="MagmaWithObjects"
+         Arg="args" />
+   <Oper Name="SinglePieceMagmaWithObjects"
+         Arg="magma, obs" />
+   <Attr Name="ObjectList"
+         Arg="mwo" />
+   <Oper Name="RootObject"
+         Arg="mwo" />
+<Description>
+The simplest construction for a magma with objects <M>M</M> 
+is to take a magma <M>m</M> and an ordered set <M>s</M>, 
+and form arrows <M>(u,a,v)</M> for every <M>a</M> in <M>m</M> 
+and <M>u,v</M> in <M>s</M>. 
+Multiplication is defined by <M>(u,a,v)*(v,b,w) = (u,a*b,w)</M>. 
+In this package we prefer to write <M>(u,a,v)</M> as <M>(a : u \to v)</M>, 
+so that the multiplication rule becomes 
+<M>(a : u \to v)*(b : v \to w) = (a*b : u \to w)</M>. 
+<P/> 
+Any finite, ordered set is in principle acceptable as 
+the object list of <M>M</M>, but we find it convenient 
+to restrict ourselves to sets of non-positive integers. 
+<P/> 
+This is the only construction implemented here for magmas, semigroups, 
+and monoids with objects, and these all have the property 
+<C>IsDirectProductWithCompleteGraph</C>. 
+There are other constructions implemented for groupoids. 
+<P/>
+The output from function <C>MagmaWithObjects</C> lies in the categories 
+<Index Key="IsDomainWithObjects"> <C>IsDomainWithObjects</C> </Index>
+<C>IsDomainWithObjects</C>, 
+<Index Key="IsMagmaWithObjects"> <C>IsMagmaWithObjects</C> </Index>
+<C>IsMagmaWithObjects</C>, 
+<C>CategoryCollections(IsMultiplicativeElementWithObjects)</C> and 
+<C>IsMagma</C>. 
+The <E>root object</E> of <M>M</M> is the first element in <M>s</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> tm := [[1,2,4,3],[1,2,4,3],[3,4,2,1],[3,4,2,1]];; 
+gap> Display( tm );
+[ [  1,  2,  4,  3 ],
+  [  1,  2,  4,  3 ],
+  [  3,  4,  2,  1 ],
+  [  3,  4,  2,  1 ] ]
+gap> m := MagmaByMultiplicationTable( tm );;  SetName( m, "m" );
+gap> m1 := MagmaElement(m,1);;  m2 := MagmaElement(m,2);; 
+gap> m3 := MagmaElement(m,3);;  m4 := MagmaElement(m,4);; 
+gap> M78 := MagmaWithObjects( m, [-8,-7] ); 
+magma with objects :-
+    magma = m
+  objects = [ -8, -7 ]
+gap> SetName( M78, "M78" ); 
+gap> [ IsAssociative(M78), IsCommutative(M78), IsDomainWithObjects(M78) ]; 
+[ false, false, true ]
+gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
+[ -8, [ -8, -7 ] ]
+]]>
+</Example>
+
+<ManSection Label="man-arrow">
+   <Oper Name="Arrow"
+         Arg="mwo,elt,tail,head" />
+   <Attr Name="ElementOfArrow"
+         Arg="arr" />
+   <Attr Name="TailOfArrow"
+         Arg="arr" />
+   <Attr Name="HeadOfArrow"
+         Arg="arr" />
+   <Oper Name="IsArrowIn"
+         Arg="arr,mwo" />
+<Description>
+Arrows in a magma with objects lie in the category 
+<Index Key="IsMultiplicativeElementWithObjects">
+<C>IsMultiplicativeElementWithObjects</C></Index> 
+<C>IsMultiplicativeElementWithObjects</C>. 
+An attempt to multiply two arrows which do not compose 
+resuts in <C>fail</C> being returned. 
+Each arrow <M>arr = (a : u \to v)</M> has three components. 
+The magma <E>element</E> <M>a \in m</M> may be accessed by 
+<C>ElementOfArrow(arr) = arr![1]</C>.  
+Similarly, the <E>tail</E> object <M>u</M> and the <E>head</E> object <M>v</M> 
+may be obtained using <C>TailOfArrow(arr) = arr![2]</C> 
+and <C>HeadOfArrow(arr) = arr![3]</C> respectively. 
+<P/> 
+The operation <C>IsArrowIn</C> is added due to 
+difficulties found when attempting to write a method for <C>\in</C>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> a78 := Arrow( M78, m2, -7, -8 ); 
+[m2 : -7 -> -8]
+gap> [ a78 in M78, IsArrowIn( a78, M78 ) ]; 
+[ false, true ]
+gap> b87 := Arrow( M78, m4, -8, -7 );;
+gap> [ ElementOfArrow( b87 ), TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
+[ m4, -8, -7 ]
+gap> ba := b87*a78;;  ab := a78*b87;;  [ ba, ab ];
+[ [m4 : -8 -> -8], [m3 : -7 -> -7] ]
+gap> [ a78^2, ba^2, ba^3 ]; 
+[ fail, [m1 : -8 -> -8], [m3 : -8 -> -8] ]
+gap> ## this demonstrates non-associativity:  
+gap> [ a78*ba, ab*a78, a78*ba=ab*a78 ]; 
+[ [m3 : -7 -> -8], [m4 : -7 -> -8], false ]
+]]>
+</Example>
+
+
+<ManSection>
+   <Prop Name="IsSinglePiece"
+         Arg="mwo" />
+   <Prop Name="IsDirectProductWithCompleteGraph"
+         Arg="mwo" />
+   <Prop Name="IsDiscrete"
+         Arg="mwo" />
+<Description>
+If the partial composition is forgotten, then what remains is a digraph 
+(usually with multiple edges and loops). 
+Thus the notion of <E>connected component</E> may be inherited 
+by magmas with objects from digraphs. 
+Unfortunately the terms <C>Component</C> and <C>Constituent</C> 
+are already in considerable use elsewhere in &GAP;, 
+so (and this may change if a more suitable word is suggested) 
+we use the term <C>IsSinglePiece</C> 
+to describe a connected magma with objects. 
+When each connected component has a single object, 
+and there is more than one component, 
+the magma with objects is <E>discrete</E>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> IsSinglePiece( M78 ); 
+true
+gap> IsDirectProductWithCompleteGraph( M78 );
+true
+gap> IsDiscrete( M78 ); 
+false
+]]>
+</Example>
+
+</Section> 
+
+<Section Label="sec-swo">
+<Heading>Semigroups with objects</Heading>
+
+<ManSection>
+   <Func Name="SemigroupWithObjects"
+         Arg="args" />
+   <Oper Name="SinglePieceSemigroupWithObjects"
+         Arg="sgp, obs" />
+<Description>
+When the magma is a semigroup the construction gives a 
+<C>SinglePieceSemigroupWithObjects</C>. 
+In the example we use a transformation semigroup and <M>3</M> objects. 
+<P/>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> t := Transformation( [1,1,2,3] );;  s := Transformation( [2,2,3,3] );;
+gap> r := Transformation( [2,3,4,4] );;  sgp := Semigroup( t, s, r );; 
+gap> SetName( sgp, "sgp<t,s,r>" ); 
+gap> S123 := SemigroupWithObjects( sgp, [-3,-2,-1] ); 
+semigroup with objects :-
+    magma = sgp<t,s,r>
+  objects = [ -3, -2, -1 ]
+gap> [ IsAssociative(S123), IsCommutative(S123) ];
+[ true, false ]
+gap> t12 := Arrow( S123, t, -1, -2 );
+[Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2]
+gap> s23 := Arrow( S123, s, -2, -3 );
+[Transformation( [ 2, 2, 3, 3 ] ) : -2 -> -3]
+gap> r31 := Arrow( S123, r, -3, -1 );
+[Transformation( [ 2, 3, 4, 4 ] ) : -3 -> -1]
+gap> ts13 := t12 * s23;
+[Transformation( [ 2, 2, 2, 3 ] ) : -1 -> -3]
+gap> sr21 := s23 * r31;
+[Transformation( [ 3, 3, 4, 4 ] ) : -2 -> -1]
+gap> rt32 := r31 * t12;
+[Transformation( [ 1, 2, 3, 3 ] ) : -3 -> -2]
+gap>  tsr1 := ts13 * r31;
+[Transformation( [ 3, 3, 3 ] ) : -1 -> -1]
+]]>
+</Example>
+
+</Section>
+
+<Section Label="monwo">
+<Heading>Monoids with objects</Heading>
+
+<ManSection>
+   <Func Name="MonoidWithObjects"
+         Arg="args" />
+   <Oper Name="SinglePieceMonoidWithObjects"
+         Arg="mon, obs" />
+  <Oper Name="GeneratorsOfMagmaWithObjects" 
+         Arg="mwo" />
+<Description>
+When the semigroup is a monoid the construction gives a 
+<C>SinglePieceMonoidWithObjects</C>. 
+The example uses a finitely presented monoid with <M>2</M> generators 
+and <M>2</M> objects. 
+<P/> 
+When the construction is the direct product of a monoid 
+and the complete graph on the objects, 
+the generating set consists of two parts. 
+Firstly, there is a loop at the root object for each generator of the monoid. 
+Secondly, for each pair of objects <M>u,v</M>, there are arrows 
+<M>(1 : u \to v)</M> and <M>(1 : v \to u)</M>. 
+<P/>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> fm := FreeMonoid( 2, "f" );;
+gap> em := One( fm );;
+gap> gm := GeneratorsOfMonoid( fm );;
+gap> mon := fm/[ [gm[1]^3,em], [gm[1]*gm[2],gm[2]] ];; 
+gap> M49 := MonoidWithObjects( mon, [-9,-4] ); 
+monoid with objects :-
+    magma = Monoid( [ f1, f2 ] )
+  objects = [ -9, -4 ]
+gap> ktpo := KnownTruePropertiesOfObject( M49 );
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsAssociative", "IsSinglePieceDomain", 
+  "IsDirectProductWithCompleteGraphDomain" ]
+gap> genM : GeneratorsOfMagmaWithObjects( M49 );
+[ [<identity ...> : -9 -> -9], [f1 : -9 -> -9], [f2 : -9 -> -9],
+  [<identity ...> : -9 -> -4], [<identity ...> : -4 -> -9] ]
+gap> g2:=genM[2];; g3:=genM[3];; g4:=genM[4];; g5:=genM[5];; 
+gap> [g5,g3,g2,g4];
+[ [<identity ...> : -4 -> -9], [f2 : -9 -> -9], [f1 : -9 -> -9], 
+  [<identity ...> : -9 -> -4] ]
+gap> g5*g3*g2*g4;
+[f2*f1 : -4 -> -4]
+]]>
+</Example>
+
+</Section>
+
+<Section Label="sec-pieces">
+<Heading>Structures with one or more pieces</Heading>
+
+<ManSection>
+  <Oper Name="DomainWithSingleObject"
+         Arg="dom,obj" />
+<Description>
+A magma, semigroup, monoid, or group can be made into a magma with objects 
+by the addition of a single object. 
+The two are algebraically isomorphic, and there is one arrow (a loop) 
+for each element in the group.  In the example we take the dihedral group 
+of size <M>8</M> at the object <M>0</M>.  
+<P/>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> d8 := Group( (1,2,3,4), (1,3) );;
+gap> SetName( d8, "d8" );
+gap> D0 := DomainWithSingleObject( d8, 0 );
+single piece groupoid: < d8, [ 0 ] >
+gap> GeneratorsOfMagmaWithInverses( D0 );
+[ [(1,2,3,4) : 0 -> 0], [(1,3) : 0 -> 0] ]
+gap> Size( D0 );
+8
+]]>
+</Example>
+
+<ManSection>
+  <Oper Name="UnionOfPieces" 
+         Arg="pieces" />
+  <Attr Name="Pieces" 
+         Arg="mwo" />
+<Description>
+A magma with objects whose underlying digraph has two or more connected 
+components can be constructed by taking the union of two or more 
+connected structures. 
+These, in turn, can be combined together. 
+The only requirement is that all the object lists should be disjoint.  
+<P/>
+Structures <C>S123, M49, D0</C> generated above have, respectively, 
+<C>GeneratorsOfMagma</C>, <C>GeneratorsOfMagmaWithOne</C> 
+and <C>GeneratorsOfMagmaWithInverses</C>. 
+The generators of a structure with several pieces is the union 
+of the generators of the individual pieces. 
+<P/>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> N1 := UnionOfPieces( [ M78, S123 ] );;  ObjectList( N1 );
+[ -8, -7, -3, -2, -1 ]
+gap> N2 := UnionOfPieces( [ M49, D0 ] );;  Pieces( N2 );
+[ monoid with objects :-
+        magma = Monoid( [ f1, f2 ] )
+      objects = [ -9, -4 ]
+    , single piece groupoid: < d8, [ 0 ] > ]
+gap> N3 := UnionOfPieces( [ N1, N2 ] );
+magma with objects having 4 pieces :-
+1: monoid with objects :-
+    magma = Monoid( [ f1, f2 ] )
+  objects = [ -9, -4 ]
+2: M78
+3: semigroup with objects :-
+    magma = sgp<t,s,r>
+  objects = [ -3, -2, -1 ]
+4: single piece groupoid: < d8, [ 0 ] >
+gap> ObjectList( N3 ); 
+[ -9, -8, -7, -4, -3, -2, -1, 0 ]
+gap> Length( GeneratorsOfMagmaWithObjects( N3 ) ); 
+50
+gap> ## the next command returns fail since the object sets are not disjoint: 
+gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  
+fail
+]]>
+</Example>
+
+</Section>
+
+</Chapter>

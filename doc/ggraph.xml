@@ -1,0 +1,628 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  ggraph.xml             Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000--2014, Emma Moore and Chris Wensley,            --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-ggraph">
+<Heading>Graphs of Groups and Groupoids</Heading>
+
+This package was originally designed to implement <E>graphs of groups</E>, 
+a notion introduced by Serre in <Cite Key="Serre" />. 
+It was only when this was extended to <E>graphs of groupoids</E> 
+that the functions for groupoids, described in the previous chapters, 
+were required. 
+The methods described here are based on Philip Higgins' paper 
+<Cite Key="HiJLMS" />.
+For further details see Chapter 2 of <Cite Key="emma-thesis" />.
+
+Since a graph of groups involves a directed graph, with a group 
+associated to each vertex and arc, we first define digraphs
+with edges weighted by the generators of a free group.
+
+
+<Section Label="sec-dgph">
+<Heading>Digraphs</Heading>
+
+<ManSection>
+   <Attr Name="FpWeightedDigraph"
+         Arg="verts, arcs" />
+   <Attr Name="IsFpWeightedDigraph"
+         Arg="dig" />
+   <Attr Name="InvolutoryArcs"
+         Arg="dig" />
+<Description>
+A <E>weighted digraph</E> is a record with two components: 
+<E>vertices</E>, which are usually taken to be positive integers 
+(to distinguish them from the objects in a groupoid); 
+and <E>arcs</E>, which take the form of 3-element lists 
+<C>[weight,tail,head]</C>.
+The <E>tail</E> and <E>head</E> are the two vertices of the arc.
+The <E>weight</E> is taken to be an element of a finitely presented group, 
+so as to produce digraphs of type <C>IsFpWeightedDigraph</C>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> V1 := [ 5, 6 ];;
+gap> fg1 := FreeGroup( "y" );;
+gap> y := fg1.1;;
+gap> A1 := [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ];
+gap> D1 := FpWeightedDigraph( fg1, V1, A1 );
+weighted digraph with vertices: [ 5, 6 ]
+and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+gap> inv1 := InvolutoryArcs( D1 );
+[ 2, 1 ]
+]]>
+</Example>
+
+The example illustrates the fact that we require arcs to be defined
+in involutory pairs, as though they were inverse elements in a groupoid.
+We may in future decide just to give <C>[y,5,6]</C> as the data
+and get the function to construct the reverse edge.
+The attribute <C>InvolutoryArcs</C> returns a list of the positions
+of each inverse arc in the list of arcs.
+In the second example the graph is a complete digraph on three vertices.
+<Example>
+<![CDATA[
+gap> fg3 := FreeGroup( 3, "z" );;
+gap> z1 := fg3.1;;  z2 := fg3.2;;  z3 := fg3.3;;
+gap> V3 := [ 7, 8, 9 ];;
+gap> A3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;
+gap> D3 := FpWeightedDigraph( fg3, V3, A3 );
+weighted digraph with vertices: [ 7, 8, 9 ]
+and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
+  [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
+[gap> inv3 := InvolutoryArcs( D3 );
+[ 4, 5, 6, 1, 2, 3 ]
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sec-gphgps">
+<Heading>Graphs of Groups</Heading>
+
+<ManSection>
+   <Oper Name="GraphOfGroups"
+         Arg="dig, gps, isos" />
+   <Attr Name="DigraphOfGraphOfGroups"
+         Arg="gg" />
+   <Attr Name="GroupsOfGraphOfGroups"
+         Arg="gg" />
+   <Attr Name="IsomorphismsOfGraphOfGroups"
+         Arg="gg" />
+<Description>
+A graph of groups is traditionally defined as consisting of: 
+<List>
+<Item>
+a digraph with involutory pairs of arcs;
+</Item>
+<Item>
+a <E>vertex group</E> associated to each vertex; 
+</Item>
+<Item>
+a group associated to each pair of arcs;
+</Item>
+<Item>
+an injective homomorphism from each arc group to the group at the head
+of the arc.
+</Item>
+</List>
+We have found it more convenient to associate to each arc: 
+<List>
+<Item>
+a subgroup of the vertex group at the tail;
+</Item>
+<Item>
+a subgroup of the vertex group at the head;
+</Item>
+<Item>
+an isomorphism between these subgroups,
+such that each involutory pair of arcs determines inverse isomorphisms.
+</Item>
+</List>
+These two viewpoints are clearly equivalent.
+<P/>
+In this implementation we require that all subgroups are of finite index 
+in the vertex groups.
+<P/>
+The three attributes provide a means of calling the three items
+of data in the construction of a graph of groups.
+<P/>
+We shall be representing free products with amalgamation of groups
+and HNN extensions of groups, so we take as our first example the
+trefoil group with generators <M>a,b</M> and relation <M>a^3=b^2</M>.
+For this we take digraph <C>D1</C> above 
+with an infinite cyclic group at each vertex,
+generated by <M>a</M> and <M>b</M> respectively.
+The two subgroups will be generated by <M>a^3</M> and <M>b^2</M>
+with the obvious isomorphisms.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> ## free vertex group at 5
+gap> fa := FreeGroup( "a" );;
+gap> a := fa.1;;
+gap> SetName( fa, "fa" );
+gap> hy := Subgroup( fa, [a^3] );;
+gap> SetName( hy, "hy" );
+gap> ## free vertex group at 6
+gap> fb := FreeGroup( "b" );;
+gap> b := fb.1;;
+gap> SetName( fb, "fb" );
+gap> hybar := Subgroup( fb, [b^2] );;
+gap> SetName( hybar, "hybar" );
+gap> ## isomorphisms between subgroups
+gap> homy := GroupHomomorphismByImagesNC( hy, hybar, [a^3], [b^2] );;
+gap> homybar := GroupHomomorphismByImagesNC( hybar, hy, [b^2], [a^3] );;
+gap> ## defining graph of groups G1
+gap> G1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );
+Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
+gap> Display( G1 );
+Graph of Groups with :-
+    vertices: [ 5, 6 ]
+        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+      groups: [ fa, fb ]
+isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsGraphOfFpGroups"
+         Arg="gg" />
+   <Prop Name="IsGraphOfPcGroups"
+         Arg="gg" />
+   <Prop Name="IsGraphOfPermGroups"
+         Arg="gg" />
+<Description>
+This is a list of properties to be expected of a graph of groups. 
+In principle any type of group known to &GAP;
+may be used as vertex groups, though these types are not
+normally mixed in a single structure.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> IsGraphOfFpGroups( G1 );
+true
+gap> IsomorphismsOfGraphOfGroups( G1 );
+[ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), 
+  GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ) ]
+
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="RightTransversalsOfGraphOfGroups"
+         Arg="gg" />
+   <Attr Name="LeftTransversalsOfGraphOfGroups"
+         Arg="gg" />
+<Description>
+Computation with graph of groups words will require, 
+for each arc subgroup <C>ha</C>, a set of representatives for the left cosets
+of <C>ha</C> in the tail vertex group. 
+As already pointed out, we require subgroups of finite index.
+Since &GAP; prefers to provide right cosets, we obtain the right 
+representatives first, and then invert them.
+<P/>
+When the vertex groups are of type <C>FpGroup</C>
+we shall require normal forms for these groups,
+so we assume that such vertex groups are provided with Knuth Bendix 
+rewriting systems using functions from the main &GAP; library,
+(e.g. <C>IsomorphismFpSemigroup</C>). 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> RTG1 := RightTransversalsOfGraphOfGroups( G1 );
+[ [ <identity ...>, a, a^2 ], [ <identity ...>, b ] ]
+gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
+[ [ <identity ...>, a^-1, a^-2 ], [ <identity ...>, b^-1 ] ] 
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sec-words">
+<Heading>Words in a Graph of Groups and their normal forms</Heading>
+
+<ManSection>
+   <Oper Name="GraphOfGroupsWord"
+         Arg="gg, tv, list" />
+   <Prop Name="IsGraphOfGroupsWord"
+         Arg="w" />
+   <Attr Name="GraphOfGroupsOfWord"
+         Arg="w" />
+   <Attr Name="WordOfGraphOfGroupsWord"
+         Arg="w" />
+   <Attr Name="GGTail"
+         Arg="w" />
+   <Attr Name="GGHead"
+         Arg="w" />
+<Description>
+If <C>G</C> is a graph of groups with underlying digraph <C>D</C>,
+the following groupoids may be considered.
+First there is the free groupoid or path groupoid on <C>D</C>.
+Since we want each involutory pair of arcs to represent inverse elements
+in the groupoid, we quotient out by the relations <C>y\^{}-1 = ybar</C>
+to obtain <C>PG(D)</C>.
+Secondly, there is the discrete groupoid <C>VG(D)</C>, namely the union
+of all the vertex groups.
+Since these two groupoids have the same object set (the vertices of <C>D</C>)
+we can form <C>A(G)</C>, the free product of <C>PG(D)</C> and <C>VG(D)</C>
+amalgamated over the vertices.  
+For further details of this universal groupoid construction 
+see <Cite Key="emma-thesis" />.
+(Note that these groupoids are not implemented in this package.)
+<P/>
+An element of <C>A(G)</C> is a graph of groups word which may be represented 
+by a list of the form <M>w = [g_1,y_1,g_2,y_2,...,g_n,y_n,g_{n+1}]</M>.
+Here each <M>y_i</M> is an arc of <C>D</C>;
+the head of <M>y_{i-1}</M> is a vertex <M>v_i</M> 
+which is also the tail of <M>y_i</M>;
+and <M>g_i</M> is an element of the vertex group at <M>v_i</M>.
+<P/>
+The attributes <C>GGTail</C> and <C>GGHead</C> are <E>temporary</E> 
+names for the tail and head of a graph of groups word, 
+and are likely to be replaced in future versions.  
+<P/>
+So a graph of groups word requires as data the graph of groups; 
+the tail vertex for the word; and a list of arcs and group elements.
+We may specify each arc by its position in the list of arcs. 
+<P/>
+In the following example, where <C>gw1</C> is a word 
+in the trefoil graph of groups, 
+the <M>y_i</M> are specified by their positions in <C>A1</C>.
+Both arcs are traversed twice, 
+so the resulting word is a loop at vertex <M>5</M>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
+gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
+(5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
+gap> IsGraphOfGroupsWord( gw1 );
+true
+gap> [ GGTail(gw1), GGHead(gw1) ];
+[ 5, 5 ]
+gap> GraphOfGroupsOfWord(gw1);
+Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
+gap> WordOfGraphOfGroupsWord( gw1 );
+[ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="ReducedGraphOfGroupsWord"
+         Arg="w" />
+   <Prop Name="IsReducedGraphOfGroupsWord"
+         Arg="w" />
+<Description>
+A graph of groups word may be reduced in two ways, to give a normal form. 
+Firstly, if part of the word has the form <C>[yi, identity, yibar]</C> 
+then this subword may be omitted.  
+This is known as a length reduction.
+Secondly there are coset reductions.
+Working from the left-hand end of the word, subwords of the form  
+<M>[g_i,y_i,g_{i+1}]</M>  are replaced by  <M>[t_i,y_i,m_i(h_i)*g_{i+1}]</M>
+where <M>g_i = t_i*h_i</M> is the unique factorisation of <M>g_i</M> 
+as a left coset representative times an element of the arc subgroup,
+and <M>m_i</M> is the isomorphism associated to <M>y_i</M>.
+Thus we may consider a coset reduction as passing a subgroup element
+along an arc.  
+The resulting normal form (if no length reductions have taken place)
+is then <M>[t_1,y_1,t_2,y_2,...,t_n,y_n,k]</M> 
+for some <M>k</M> in the head group of <M>y_n</M>.
+For further details see Section 2.2 of <Cite Key="emma-thesis" />.
+<P/>
+The reduction of the word <C>gw1</C> in our example 
+includes one length reduction.
+The four stages of the reduction are as follows:
+<Display>
+a^7b^{-6}a^{-11}b^9a^7 ~\mapsto~
+a^{-2}b^0a^{-11}b^9a^7 ~\mapsto~
+a^{-13}b^9a^7 ~\mapsto~
+a^{-1}b^{-8}b^9a^7 ~\mapsto~
+a^{-1}b^{-1}a^{10}.
+</Display>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
+(5)a^-1.y.b^-1.y^-1.a^10(5)
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sec-fpahnn">
+<Heading>Free products with amalgamation and HNN extensions</Heading>
+
+<ManSection>
+   <Oper Name="FreeProductWithAmalgamation"
+         Arg="gp1, gp2, iso" />
+   <Prop Name="IsFpaGroup"
+         Arg="fpa" />
+   <Attr Name="GraphOfGroupsRewritingSystem"
+         Arg="fpa" />
+   <Attr Name="NormalFormGGRWS"
+         Arg="fpa, word" />
+<Description>
+As we have seen with the trefoil group example,
+graphs of groups can be used to obtain a normal form
+for free products with amalgamation <M>G_1 *_H G_2</M> 
+when <M>G_1, G_2</M> both have rewrite systems, 
+and <M>H</M> is of finite index in both <M>G_1</M> and <M>G_2</M>.
+<P/>
+When <C>gp1</C> and <C>gp2</C> are fp-groups, the operation 
+<C>FreeProductWithAmalgamation</C> constructs the required fp-group. 
+When the two groups are permutation groups, 
+the <C>IsomorphismFpGroup</C> operation is called on both 
+<C>gp1</C> and <C>gp2</C>,  and the resulting isomorphism 
+is transported to one between the two new subgroups.
+<P/>
+The attribute <C>GraphOfGroupsRewritingSystem</C> of <C>fpa</C> 
+is the graph of groups which has underlying digraph <C>D1</C>, 
+with two vertices and two arcs; 
+the two groups as vertex groups; 
+and the specified isomorphisms on the arcs. 
+Despite the name, graphs of groups constructed in this way 
+<E>do not</E> belong to the category <C>IsRewritingSystem</C>. 
+This anomaly may be dealt with when time permits.
+<P/>
+The example below shows a computation in the the free product 
+of the symmetric <C>s3</C> and the alternating <C>a4</C>, 
+amalgamated over a cyclic subgroup <C>c3</C>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> ## set up the first group s3 and a subgroup c3=<a1>
+gap> fg2 := FreeGroup( 2, "a" );;
+gap> rel1 := [ fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2 ];;
+gap> s3 := fg2/rel1;;
+gap> gs3 := GeneratorsOfGroup(s3);;
+gap> SetName( s3, "s3" );
+gap> a1 := gs3[1];;  a2 := gs3[2];;
+gap> H1 := Subgroup(s3,[a1]);;
+gap> ## then the second group a4 and subgroup c3=<b1>
+gap> f2 := FreeGroup( 2, "b" );;
+gap> rel2 := [ f2.1^3, f2.2^3, (f2.1*f2.2)^2 ];;
+gap> a4 := f2/rel2;;
+gap> ga4 := GeneratorsOfGroup(a4);;
+gap> SetName( a4, "a4" );
+gap> b1 := ga4[1];  b2 := ga4[2];;
+gap> H2 := Subgroup(a4,[b1]);;
+gap> ## form the isomorphism and the fpa group
+gap> iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;
+gap> fpa := FreeProductWithAmalgamation( s3, a4, iso );
+<fp group on the generators [ fa1, fa2, fa3, fa4 ]>
+gap> RelatorsOfFpGroup( fpa );
+[ fa1^3, fa2^2, (fa1*fa2)^2, fa3^3, fa4^3, (fa3*fa4)^2, fa1*fa3^-1 ]
+gap> gg1 := GraphOfGroupsRewritingSystem( fpa );;
+gap> Display( gg1 );
+Graph of Groups with :-
+    vertices: [ 5, 6 ]
+        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+      groups: [ s3, a4 ]
+isomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ]
+gap> LeftTransversalsOfGraphOfGroups( gg1 );
+[ [ <identity ..>, a2^-1 ], [ <identity ..>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ] ]
+gap> ## choose a word in fpa and find its normal form 
+gap> gfpa := GeneratorsOfGraphOfGroups( fpa );;
+gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
+(fa1*fa2*fa4^-1*fa3*fa4)^3
+gap> n2 := NormalFormGGRWS( fpa, w2 );
+fa2*fa3*(fa4^-1*fa2)^2*fa3^-1*fa4*fa3^-1
+
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="HnnExtension"
+         Arg="gp, iso" />
+   <Prop Name="IsHnnGroup"
+         Arg="hnn" />
+<Description>
+For <E>HNN extensions</E>, the appropriate graph of groups
+has underlying digraph with just one vertex and one pair of loops,
+weighted with <C>FpGroup</C> generators <M>z,z^{-1}</M>.
+There is one vertex group <C>G</C>, two isomorphic subgroups
+<C>H1,H2</C> of <C>G</C>, with the isomorphism and its inverse on the loops.
+The presentation of the extension has one more generator than that of <C>G</C>
+and corresponds to the generator <M>z</M>.
+<P/>
+The functions <C>GraphOfGroupsRewritingSystem</C> and <C>NormalFormGGRWS</C>
+may be applied to hnn-groups as well as to fpa-groups.
+<P/>
+In the example we take <C>G=a4</C> and the two subgroups are cyclic groups
+of order 3.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> H3 := Subgroup(a4,[b2]);;
+gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
+gap> hnn := HnnExtension( a4, i23 );
+<fp group on the generators [ fe1, fe2, fe3 ]> 
+gap> phnn := PresentationFpGroup( hnn );;
+gap> TzPrint( phnn );
+#I  generators: [ fe1, fe2, fe3 ]
+#I  relators:
+#I  1.  3  [ 1, 1, 1 ]
+#I  2.  3  [ 2, 2, 2 ]
+#I  3.  4  [ 1, 2, 1, 2 ]
+#I  4.  4  [ -3, 1, 3, -2 ] 
+gap> gg2 := GraphOfGroupsRewritingSystem( hnn );
+Graph of Groups: 1 vertices; 2 arcs; groups [ a4 ]
+gap> LeftTransversalsOfGraphOfGroups( gg2 );
+[ [ <identity ...>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ],
+  [ <identity ...>, b1^-1, b1, b2^-1*b1 ] ]
+gap> gh := GeneratorsOfGroup( hnn );;
+gap> w3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];
+fe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2
+gap> n3 := NormalFormGGRWS( hnn, w3 );
+(fe2*fe1*fe3)^2
+]]>
+</Example>
+
+Both fpa-groups and hnn-groups are provided with a record attribute, 
+<C>FpaInfo(fpa)</C> and <C>HnnInfo(hnn)</C> respectively, 
+storing the groups and isomorphisms involved in their construction.
+<P/>
+<Example>
+<![CDATA[
+gap> fpainfo := FpaInfo( fpa );
+rec( groups := [ s3, a4 ], positions := [ [ 1, 2 ], [ 3, 4 ] ],
+  isomorphism := [ a1 ] -> [ b1 ] )
+gap> hnninfo := HnnInfo( hnn );
+rec( group := a4, isomorphism := [ b1 ] -> [ b2 ] )
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sec-gphgpds">
+<Heading>GraphsOfGroupoids and their Words</Heading>
+
+<ManSection>
+   <Oper Name="GraphOfGroupoids"
+         Arg="dig, gpds, subgpds, isos" />
+   <Prop Name="IsGraphOfPermGroupoids"
+         Arg="gg" />
+   <Prop Name="IsGraphOfFpGroupoids"
+         Arg="gg" />
+   <Attr Name="GroupoidsOfGraphOfGroupoids"
+         Arg="gg" />
+   <Attr Name="DigraphOfGraphOfGroupoids"
+         Arg="gg" />
+   <Attr Name="SubgroupoidsOfGraphOfGroupoids"
+         Arg="gg" />
+   <Attr Name="IsomorphismsOfGraphOfGroupoids"
+         Arg="gg" />
+   <Attr Name="RightTransversalsOfGraphOfGroupoids"
+         Arg="gg" />
+   <Attr Name="LeftTransversalsOfGraphOfGroupoids"
+         Arg="gg" />
+<Description>
+Graphs of groups generalise naturally to graphs of groupoids, 
+forming the class <C>IsGraphOfGroupoids</C>.
+There is now a groupoid at each vertex and the isomorphism on an arc
+identifies wide subgroupoids at the tail and at the head.  
+Since all subgroupoids are wide, 
+every groupoid in a connected constituent of the graph has
+the same number of objects, but there is no requirement that the
+object sets are all the same.
+<P/>
+The example below generalises the trefoil group example in subsection 4.4.1, 
+taking at each vertex of <C>D1</C> a two-object groupoid with a free group 
+on one generator, and full subgroupoids with groups 
+<M>\langle a^3 \rangle</M> and <M>\langle b^2 \rangle</M>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
+gap> ofa := One( fa );;
+gap> SetName( Gfa, "Gfa" );
+gap> Uhy := Subgroupoid( Gfa, [ [[-2,-1], hy ] ] );;
+gap> SetName( Uhy, "Uhy" );
+gap> Gfb := SinglePieceGroupoid( fb, [-4,-3] );;
+gap> ofb := One( fb );;
+gap> SetName( Gfb, "Gfb" );
+gap> Uhybar := Subgroupoid( Gfb, [ [[-4,-3], hybar ] ] );;
+gap> SetName( Uhybar, "Uhybar" );
+gap> mory := GroupoidMappingOfSinglePieces( 
+gap>      Uhy, Uhybar, homy, [-4,-3], [ofb,ofb] );;
+gap> morybar := GroupoidMappingOfSinglePieces( 
+gap>      Uhybar, Uhy, homybar, [-2,-1], [ofa,ofa] );;
+gap> gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;
+gap> Display( gg3 );
+Graph of Groupoids with :- 
+    vertices: [ 5, 6 ]
+        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+   groupoids: 
+fp single piece groupoid: Gfa
+  objects: [ -2, -1 ]
+    group: fa = <[ a ]>
+fp single piece groupoid: Gfb
+  objects: [ -4, -3 ]
+    group: fb = <[ b ]>
+subgroupoids: single piece groupoid: Uhy
+  objects: [ -2, -1 ]
+    group: hy = <[ a^3 ]>
+single piece groupoid: Uhybar
+  objects: [ -4, -3 ]
+    group: hybar = <[ b^2 ]>
+isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
+    [ [ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), [ -4, -3 ], 
+          [ <identity ...>, <identity ...> ] ] ], 
+  groupoid homomorphism : Uhybar -> Uhy
+    [ [ GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ), [ -2, -1 ], 
+          [ <identity ...>, <identity ...> ] ] ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="GraphOfGroupoidsWord"
+         Arg="gg, tv, list" />
+   <Prop Name="IsGraphOfGroupoidsWord"
+         Arg="w" />
+   <Attr Name="GraphOfGroupoidsOfWord"
+         Arg="w" />
+   <Attr Name="WordOfGraphOfGroupoidsWord"
+         Arg="w" />
+   <Oper Name="ReducedGraphOfGroupoidsWord"
+         Arg="w" />
+   <Prop Name="IsReducedGraphOfGroupoidsWord"
+         Arg="w" />
+<Description>
+Having produced the graph of groupoids <C>gg3</C>, 
+we may construct left coset representatives;
+choose a graph of groupoids word; and reduce this to normal form. 
+Compare the <C>nw3</C> below with the normal form <C>nw1</C> in 
+subsection 4.3.2.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> f1 := Arrow( Gfa, a^7, -1, -2);;
+gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
+gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;
+gap> f4 := Arrow( Gfb, b^9, -3, -4 );;
+gap> f5 := Arrow( Gfa, a^7, -2, -1 );;
+gap> L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];
+[ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, 
+  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -1] ]
+gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
+(5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : 
+-3 -> -4].y^-1.[a^7 : -2 -> -1](5)
+gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
+(5)[a^-1 : -1 -> -2].y.[b^-1 : -4 -> -4].y^-1.[a^10 : -2 -> -1](5)
+]]>
+</Example>
+</Section>
+
+More examples of these operations may be found in the example file 
+<F>gpd/examples/ggraph.g</F>.
+
+</Chapter>

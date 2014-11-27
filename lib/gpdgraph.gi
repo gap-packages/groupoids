@@ -1,0 +1,667 @@
+#############################################################################
+##
+#W  gpdgraph.gi                GAP4 package `Gpd'                Chris Wensley
+#W                                                                & Emma Moore
+##  version 1.31, 09/11/2014 
+##
+#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  School of Computer Science, Bangor University, U.K. 
+##
+##  This file contains methods for FpWeightedDigraphs of groupoids, 
+##  and normal forms for GraphOfGroupoidWords. 
+##  
+
+#############################################################################
+##
+#M  GraphOfGroupoidsNC                                               
+#M  GraphOfGroupoids                                             
+##
+InstallMethod( GraphOfGroupoidsNC, "generic method for digraph of groupoids",
+    true, [ IsFpWeightedDigraph, IsList, IsList, IsList ], 0,
+function( dig, gpds, subgpds, isos )
+
+    local  fam, filter, gg;
+     
+    fam := GraphOfGroupoidsFamily; 
+    filter := IsGraphOfGroupoidsRep;
+    gg := Objectify( NewType( fam, filter ), rec () );
+    SetDigraphOfGraphOfGroupoids( gg, dig );
+    SetGroupoidsOfGraphOfGroupoids( gg, gpds );
+    SetSubgroupoidsOfGraphOfGroupoids( gg, subgpds );
+    SetIsomorphismsOfGraphOfGroupoids( gg, isos );
+    if ForAll( gpds, g -> IsPermGroupoid( g ) ) then
+        SetIsGraphOfPermGroupoids( gg, true );
+    elif ForAll( gpds, g -> IsFpGroupoid( g ) ) then
+        SetIsGraphOfFpGroupoids( gg, true );
+    fi;
+    return gg; 
+end );
+
+InstallMethod( GraphOfGroupoids, "generic method for a digraph of  groupoids",
+    true, [ IsFpWeightedDigraph, IsList, IsList, IsList ], 0,
+function( dig, gpds, subgpds, isos )
+
+    local  g, ob1, nob1, m, i, j, v, a, lenV, lena, tgtL, pos, inv, ainvpos;
+
+    v := dig!.vertices;
+    a := dig!.arcs; 
+    lenV := Length(v); 
+    lena := Length(a);
+    # checking that list sizes are compatible
+    if ((lenV <> Length(gpds)) or (lena <> Length(subgpds)) or 
+           (lena <> Length(isos))) then
+        Error( "list sizes are not compatible for assignments" );
+    fi; 
+    # checking that we have groupoids
+    # lenV and length of groupoids are equal 
+    ob1 := ObjectList( gpds[1] );
+    nob1 := Length( ob1 ); 
+    for i in [1..lenV] do
+        if not IsGroupoid( gpds[i] ) then
+            Error( "groupoids are needed");
+        fi;
+        if not ( Length( ObjectList( gpds[i] ) ) = nob1 ) then
+            Error( "groupoids must have same number of objects");
+        fi;
+#        if not ( Objects( gpds[i] ) = ob1 ) then
+#            Error( "groupoids fail to have the same objects" );
+#        fi;
+    od;
+    # checking that subgroupoids are groupoids
+    for i in [1..lena] do
+        if not IsGroupoid( subgpds[i] ) then
+            Error( "not a subgroupoid");
+        fi;
+    od;
+    # checking that subgroupoids are subgroupoids of the relevant groupoid    
+    for i in [1..lena] do
+        pos := Position( v, a[i][2] ); 
+        if not IsSubgroupoid( gpds[pos], subgpds[i] ) then
+            Error( "subgroupoids are not of correct groupoids");
+        fi;
+    od;
+    # checking that isomorphisms are isos and form correct groupoids.
+    inv := InvolutoryArcs( dig ); 
+    for i in [1..lena] do
+        m := isos[i];
+#        if not ( Objects( Source(m) ) = ObjectImages(m) ) then
+#            Error( "isos not constant on objects" );
+#        fi;
+#        ainvpos := Position( a, a[inv[i]] );
+        if not( isos[inv[i]] = InverseGeneralMapping(m) ) then
+            Error( "isos are not in inverse pairs");
+        fi;
+    od; 
+    return GraphOfGroupoidsNC( dig, gpds, subgpds, isos );
+end );
+
+###############################################################################
+##
+#M  PrintObj( <gg> ) . . . . . . . . . . . . . . . print a graph of groupoids
+##
+InstallMethod( PrintObj, "for graph of groupoids", [ IsGraphOfGroupoids ],
+function( gg )
+    
+    local  dig;
+    dig := DigraphOfGraphOfGroupoids( gg );
+    Print( "Graph of Groupoids: " );
+    Print( Length( dig!.vertices ), " vertices; " );
+    Print( Length( dig!.arcs ), " arcs; " );
+    ## Print( Length(Vertices(dig)), " vertices; " );
+    ## Print( Length(Arcs(dig)), " arcs; " );
+    Print( "groupoids ", GroupoidsOfGraphOfGroupoids( gg ) );
+end );
+
+###############################################################################
+##
+#M  ViewObj( <gg> ) . . . . . . . . . . . . . . . . view a graph of groupoids
+##
+InstallMethod( ViewObj, "for graph of groupoids", [ IsGraphOfGroupoids ],
+function( gg )
+    
+    local  dig;
+    dig := DigraphOfGraphOfGroupoids( gg );
+    Print( "Graph of Groupoids: " );
+    Print( Length( dig!.vertices ), " vertices; " );
+    Print( Length( dig!.arcs ), " arcs; " );
+    ## Print( Length(Vertices(dig)), " vertices; " );
+    ## Print( Length(Arcs(dig)), " arcs; " );
+    Print( "groupoids ", GroupoidsOfGraphOfGroupoids( gg ) );
+end );
+
+##############################################################################
+##
+#M  Display( <gg> ) . . . . . . . . . . . . . . . . view a graph of groupoids
+##
+InstallMethod( Display, "for a graph of groupoids", [ IsGraphOfGroupoids ],
+function( gg )
+    
+    local  g, dig;
+    dig := DigraphOfGraphOfGroupoids( gg );
+    Print( "Graph of Groupoids with :- \n" );
+    Print( "    vertices: ", dig!.vertices, "\n" );
+    Print( "        arcs: ", dig!.arcs, "\n" );
+    ## Print( "    vertices: ", Vertices( dig ), "\n" );
+    ## Print( "        arcs: ", Arcs( dig ), "\n" );
+    Print( "   groupoids: \n" );
+    for g in GroupoidsOfGraphOfGroupoids( gg ) do
+        Display( g );
+    od;
+    Print( "subgroupoids: " );
+    for g in SubgroupoidsOfGraphOfGroupoids( gg ) do
+        Display( g );
+    od;
+    Print( "isomorphisms: ", IsomorphismsOfGraphOfGroupoids( gg ), "\n" );
+end );
+
+##############################################################################
+##
+#M  IsGraphOfPermGroupoids( <gg> ) . . . . . . . . . . . for a graph of groups
+#M  IsGraphOfFpGroupoids( <gg> ) . . . . . . . . . . . . for a graph of groups
+#M  IsGraphOfPcGroupoids( <gg> ) . . . . . . . . . . . . for a graph of groups
+##
+InstallMethod( IsGraphOfPermGroupoids, "generic method", [ IsGraphOfGroupoids ],
+function( gg )
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsPermGroupoid(g) );
+end );
+
+InstallMethod( IsGraphOfFpGroupoids, "generic method", [ IsGraphOfGroupoids ],
+function( gg )
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsFpGroupoid( g ) );
+end );
+
+InstallMethod( IsGraphOfPcGroupoids, "generic method", [ IsGraphOfGroupoids ],
+function( gg )
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsPcGroupoid( g ) );
+end );
+
+#############################################################################
+##
+#M  NormalFormKBRWS                                             
+##
+InstallOtherMethod( NormalFormKBRWS, "generic method for normal form",
+    true, [ IsFpGroupoid, IsObject ], 0,
+function( gpd, w0 )
+
+    local comp, ogp, id, iso, inviso, smg, rwsmg, smggen, fsmg,
+          iw, uiw, ruw, fam1, riw, rw;
+
+    if not IsElementInGroupoid( w0, gpd ) then
+        Error( "word not in the groupoid" );
+    fi;
+    comp := PieceOfObject( gpd, w0![2] );
+    ogp := comp!.magma;
+    id := One( ogp );
+    iso := IsomorphismFpSemigroup( ogp );
+    inviso := InverseOfIsomorphismFpSemigroup( iso );
+    smg := Range( iso );
+    rwsmg := KnuthBendixRewritingSystem( smg );
+    MakeConfluent( rwsmg );  ### this should not be necessary here !! ###
+    smggen := GeneratorsOfSemigroup( smg );
+    fsmg := FreeSemigroupOfKnuthBendixRewritingSystem( rwsmg );
+    iw := Image( iso, w0![1] );
+    uiw := UnderlyingElement( iw );
+    ruw := ReducedForm( rwsmg, uiw );
+    fam1 := FamilyObj( smggen[1] );
+    riw := ElementOfFpSemigroup( fam1, ruw );
+    rw :=Image( inviso, riw );
+    return GroupoidElement( gpd, rw, w0![2], w0![3] );
+end);
+
+#############################################################################
+##
+#M  RightTransversalsOfGraphOfGroupoids
+##
+InstallMethod( RightTransversalsOfGraphOfGroupoids, 
+    "generic method for a groupoid graph", true, [ IsGraphOfGroupoids ], 0,
+function( gg )
+
+    local  gpds, subs, dig, verts, arcs, na, reps, k, a, p, G, U;
+
+    gpds := GroupoidsOfGraphOfGroupoids( gg );
+    subs := SubgroupoidsOfGraphOfGroupoids( gg );
+    dig := DigraphOfGraphOfGroupoids( gg );
+    verts := dig!.vertices;
+    arcs := dig!.arcs;
+    ## verts := Vertices( dig );
+    ## arcs := Arcs( dig );
+    na := Length( arcs );
+    reps := ListWithIdenticalEntries( na, 0 );
+    for k in [1..na] do
+        a := arcs[k];
+        p := Position( verts, a![2] );
+        G := gpds[p];
+        U := subs[k];
+        reps[k] := RightCosetRepresentatives( G, U );
+    od;
+    return reps;
+end );
+
+#############################################################################
+##
+#M  LeftTransversalsOfGraphOfGroupoids
+##
+InstallMethod( LeftTransversalsOfGraphOfGroupoids, 
+    "generic method for a groupoid graph", true, [ IsGraphOfGroupoids ], 0,
+function( gg )
+
+    local  gpds, subs, dig, verts, arcs, na, reps, k, a, p, G, obG, U;
+
+    gpds := GroupoidsOfGraphOfGroupoids( gg );
+    subs := SubgroupoidsOfGraphOfGroupoids( gg );
+    dig := DigraphOfGraphOfGroupoids( gg );
+    verts := dig!.vertices;
+    arcs := dig!.arcs;
+    na := Length( arcs );
+    reps := ListWithIdenticalEntries( na, 0 );
+    for k in [1..na] do
+        a := arcs[k];
+        p := Position( verts, a![2] );
+        G := gpds[p];
+        obG := ObjectList( G );
+        U := subs[k];
+        reps[k] := List( obG, 
+            o -> LeftCosetRepresentativesFromObject( G, U, o ) );
+    od;
+    return reps;
+end);
+
+## ------------------------------------------------------------------------##
+##                      Graph of Groupoids Words                           ##
+## ------------------------------------------------------------------------##
+ 
+#############################################################################
+##
+#M  GraphOfGroupoidsWordNC                                               
+#M  GraphOfGroupoidsWord 
+##
+InstallMethod( GraphOfGroupoidsWordNC, "generic method for a word",
+    true, [ IsGraphOfGroupoids, IsInt, IsList ], 0,
+function( gg, tv, wL )
+
+    local  fam, filter, ggword;
+
+    fam := FamilyObj( [ gg, wL] );
+    filter := IsGraphOfGroupoidsWordRep;
+    ggword := Objectify( NewType( fam, filter ), rec () );
+    SetIsGraphOfGroupoidsWord( ggword, true );
+    SetGraphOfGroupoidsOfWord( ggword, gg );
+    SetGGTail( ggword, tv );
+    if ( Length( wL ) = 1 ) then
+        SetGGHead( ggword, tv );
+    fi;
+    SetWordOfGraphOfGroupoidsWord( ggword, wL );
+    return ggword; 
+end );
+
+InstallMethod( GraphOfGroupoidsWord, "for word in graph of groupoids",
+    true, [ IsGraphOfGroupoids, IsInt, IsList ], 0,
+function( gg, tv, wL )
+
+    local  gpds, dig, arcs, enum, vdig, n, i, j, g, cg, v, posv, e, w;
+
+    gpds := GroupoidsOfGraphOfGroupoids( gg );
+    dig := DigraphOfGraphOfGroupoids( gg );
+    vdig := dig!.vertices;
+    arcs := dig!.arcs;
+    enum := Length( arcs );
+    v := tv;
+    posv := Position( vdig, v );
+    g := gpds[ posv ];
+    w := wL[1];
+    cg := PieceOfObject( g, w![2] );
+    if not IsElementInGroupoid( w, cg ) then
+        Error( "first groupoid element not in tail groupoid" );
+    fi;
+    j := 1;
+    n := ( Length( wL ) - 1 )/2;
+    for i in [1..n] do
+        e := wL[j+1];
+        if ( e > enum ) then
+            Error( "entry ", j+1, " in wL not an arc" );
+        else
+            e := arcs[e];
+        fi;
+        v := e[3];
+        posv := Position( vdig, v );
+        g := gpds[ posv ];
+        j := j+2;
+        w := wL[j];
+        cg := PieceOfObject( g, w![2] );
+        if not IsElementInGroupoid( w, cg ) then
+            Error( "entry ", j, " not in groupoid at vertex ", v );
+        fi;
+    od;    
+    Info( InfoGpd, 3, "wL = ", wL );
+    return GraphOfGroupoidsWordNC( gg, tv, wL );
+end);
+
+##############################################################################
+##
+#M  ViewObj( <ggword> ) . . . . . . . . . . . . view a graph of groupoids word
+##
+InstallMethod( ViewObj, "method for a graph of groupoids word", 
+    [ IsGraphOfGroupoidsWord ],
+function( ggword )
+    local  w, i, gg, arcs;
+
+    gg := GraphOfGroupoidsOfWord( ggword );
+    arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
+    ## arcs := Arcs( DigraphOfGraphOfGroupoids( gg ) );
+    w := WordOfGraphOfGroupoidsWord( ggword );
+    Print( "(", GGTail( ggword ), ")", w[1] );
+    i := 1;
+    while ( i < Length(w) ) do
+        i := i+2;
+        Print( ".", arcs[w[i-1]][1], ".", w[i] );
+    od;
+    Print( "(", GGHead( ggword ), ")" );
+end );
+
+##############################################################################
+##
+#M  PrintObj( <ggword> ) . . . . . . . . . . . print a graph of groupoids word
+##
+InstallMethod( PrintObj, "method for a graph of groupoids word", 
+    [ IsGraphOfGroupoidsWord ],
+function( ggword )
+    local  w, i, gg, arcs;
+
+    gg := GraphOfGroupoidsOfWord( ggword );
+    arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
+    ## arcs := Arcs( DigraphOfGraphOfGroupoids( gg ) );
+    w := WordOfGraphOfGroupoidsWord( ggword );
+    Print( "(", GGTail( ggword ), ")", w[1] );
+    i := 1;
+    while ( i < Length(w) ) do
+        i := i+2;
+        Print( ".", arcs[w[i-1]][1], ".", w[i] );
+    od;
+    Print( "(", GGHead( ggword ), ")" );
+end );
+
+#############################################################################
+##
+#M  GGHead                                             
+##
+InstallOtherMethod( GGHead, "generic method for a graph of groupoids word",
+    true, [ IsGraphOfGroupoidsWordRep ], 0,
+function( ggword )
+
+    local  w, gg, e, ie;
+
+    w := WordOfGraphOfGroupoidsWord( ggword ); 
+    gg := GraphOfGroupoidsOfWord( ggword );
+    e := w[Length(w)-1];
+    return DigraphOfGraphOfGroupoids( gg )!.arcs[e][3];
+    ## return Arcs( DigraphOfGraphOfGroupoids( gg ) )[e][3];
+end );
+
+#############################################################################
+##
+#M  ReducedGraphOfGroupoidsWord 
+##
+InstallMethod( ReducedGraphOfGroupoidsWord, "for word in graph of groupoids",
+    true, [ IsGraphOfGroupoidsWordRep ], 0,
+function( ggword )
+
+    local  w, tw, hw, gg, gpds, sgpds, dig, adig, vdig, lw, len, k, k2, he,
+           tsp, word, tran, ltrans, pos, a, g, h, found, i, nwit, tword, 
+           te, obg, nob, ptword, itword, ch, isos, im, sub, u, v, gu, gv, e, 
+           ie, isoe, part, cw, pw, fw, iw, isow, ng, rw, lenred, isfp, isid;
+
+    if ( HasIsReducedGraphOfGroupoidsWord( ggword )
+         and IsReducedGraphOfGroupoidsWord( ggword ) ) then
+        return ggword;
+    fi;
+    w := ShallowCopy( WordOfGraphOfGroupoidsWord( ggword ) );
+    tw := GGTail( ggword );
+    hw := GGHead( ggword );
+    lw := Length( w );
+    len := (lw-1)/2;
+    gg := GraphOfGroupoidsOfWord( ggword );
+    gpds := GroupoidsOfGraphOfGroupoids( gg );
+    sgpds := SubgroupoidsOfGraphOfGroupoids( gg );
+    isos := IsomorphismsOfGraphOfGroupoids( gg );
+    isfp := IsGraphOfFpGroupoids( gg );
+    dig := DigraphOfGraphOfGroupoids( gg );
+    vdig := dig!.vertices;
+    adig := dig!.arcs;
+    ltrans := LeftTransversalsOfGraphOfGroupoids( gg );
+    if ( len = 0 ) then
+        if isfp then
+            ng := NormalFormKBRWS( gpds[tw], w[1] ); 
+        else
+            ng := w[1];
+        fi;
+        return GraphOfGroupoidsWordNC( gg, tw, ng );
+    fi;
+    k := 1;
+    v := tw;
+    while ( k <= len ) do
+        k2 := k+k;
+        ## reduce the subword  w{[k2-1..k2+1]}
+        e := w[k2];
+        he := Position( vdig, adig[e][3] );
+        #### factor groupoid element as pair [ transversal, subgpd elt ] ####
+        word := w[k2-1];
+        Info( InfoGpd, 3, "[word,e] = ", word, ", ", e );
+        a := adig[e];
+        te := Position( vdig, a[2] );
+        g := gpds[te];
+        u := sgpds[te];
+        obg := ObjectList( g );
+        nob := Length( obg );
+        tword := word![2];
+        ptword := Position( obg, tword );
+        h := sgpds[e];
+        ch := PieceOfObject( h, word![3] );
+        tran := ltrans[e][ptword];
+        Info( InfoGpd, 3, "tran = ", tran );
+        Info( InfoGpd, 3, "word = ", word );
+        i := 0;
+        found := false;
+        while not found do
+            i := i+1;
+            itword := tran[i]^(-1)*word;
+            Info( InfoGpd, 3, "[i,itword] = ", [i,itword] );
+            if ( itword = fail ) then 
+                found := false;
+            else
+                found := IsElementInGroupoid( itword, ch );
+            fi;
+        od;
+        tsp := [ tran[i], itword ];
+        Info( InfoGpd, 3, "tsp = ", tsp );
+        isoe := isos[e];
+        if IsMWOSinglePieceRep( Source( isoe ) ) then
+            part := [ [1] ];
+        else
+            part := PartitionOfSource( isoe );
+        fi;
+        if HasPiecesOfMapping( isoe ) then
+            cw := PieceOfObject( u, itword![2] );
+            pw := Position( Pieces( u ), cw ); 
+            fw := List( part, p -> Position( p, pw ) );
+            iw := PositionProperty( fw, f -> not( f = fail ) ); 
+            isow := PiecesOfMapping( isoe )[iw];
+        else
+            isow := isoe;
+        fi;
+        Info( InfoGpd, 3, "isow = ", isow );
+        im := ImageElm( isow, tsp[2] );
+        Info( InfoGpd, 2, tsp[2], " mapped over to ", im );
+        w[k2-1] := tsp[1];
+        if isfp then
+            #?  (14/11/08)  old version fails - problem with \* 
+            #? w[k2+1] := NormalFormKBRWS( gpds[he], im*w[k2+1] );
+            w[k2+1] := NormalFormKBRWS( gpds[he], GroupoidElement( 
+                gpds[he], im![1]*w[k2+1]![1], im![2], w[k2+1]![3] ) );
+            Info( InfoGpd, 2, "k = ", k, ", w = ", w );
+        else
+            w[k2+1] := im*w[k2+1];
+        fi;
+        Info( InfoGpd, 2, "k = ", k, ", w = ", w );
+        lenred := ( k > 1 );
+        while lenred do
+            ## test for a length reduction
+            e := w[k2];
+            ie := InvolutoryArcs( dig )[e];
+            v := adig[e][2];
+            gv := gpds[ Position( vdig, v ) ];
+            if isfp then
+                isid := ( ( Length( w[k2-1]![1] ) = 0 ) and ( w[k2-2] = ie ) );
+            else
+                isid := ( ( w[k2-1]![1] = ( ) ) and ( w[k2-2] = ie ) );
+            fi;
+            if isid then
+                Info( InfoGpd, 2, "LENGTH REDUCTION!\n" );
+                ### perform a length reduction ###
+                u := adig[e][3];
+                gu := gpds[ Position( vdig, u ) ];
+                if isfp then
+                    ng := NormalFormKBRWS( gu, w[k2-3]*w[k2+1] );
+                else
+                    ng := w[k2-3]*w[k2+1];
+                fi;
+                w := Concatenation( w{[1..k2-4]}, [ng], w{[k2+2..lw]} );
+                len := len - 2;
+                lw := lw - 4;
+                Info( InfoGpd, 2, "k = ", k, ", shorter w = ", w );
+                if ( len = 0 ) then
+                     rw := GraphOfGroupoidsWordNC( gg, u, w );
+                     SetGGTail( rw, u );
+                     SetGGHead( rw, u );
+                     return rw;
+                else
+                     k := k-2;
+                     k2 := k2-4;
+                     lenred := ( k > 1 );
+                fi;
+            else
+                lenred := false;
+            fi;
+        od;
+        k := k+1;
+    od;
+    ## put final groupoid element in normal form
+    e := w[lw-1];
+    u := adig[e][3];
+    gu := gpds[ Position( vdig, u ) ];
+    if isfp then
+        w[lw] := NormalFormKBRWS( gu, w[lw] );
+    fi;
+    rw := GraphOfGroupoidsWordNC( gg, tw, w );
+    SetGGTail( rw, tw );
+    SetGGHead( rw, hw );
+    SetIsReducedGraphOfGroupoidsWord( rw, true );
+    return rw;
+end);
+ 
+##############################################################################
+##
+#M  \=( <ggw1>, <ggw2> ) . . . . test if two graph of groupoid words are equal
+##
+InstallOtherMethod( \=,
+    "generic method for two graph of groupoids words",
+    IsIdenticalObj, [ IsGraphOfGroupoidsWordRep, IsGraphOfGroupoidsWordRep ], 0,
+function ( w1, w2 )
+return ( ( GraphOfGroupoidsOfWord(w1) = GraphOfGroupoidsOfWord(w2) )
+     and ( GGTail( w1 ) = GGTail( w2 ) )
+     and ( WordOfGraphOfGroupoidsWord(w1) = WordOfGraphOfGroupoidsWord(w2) ) );
+end );
+
+##############################################################################
+##
+#M  \*( <ggw1>, <ggw2> ) . . . . . . . product of two graph of groupoids words
+##
+InstallOtherMethod( \*, "generic method for two graph of groupoids words",
+    IsIdenticalObj, [ IsGraphOfGroupoidsWordRep, IsGraphOfGroupoidsWordRep ], 0,
+function ( ggw1, ggw2 )
+    local  w1, w2, h1, len1, len2, w;
+    if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
+        Info( InfoGpd, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+        return fail;
+    fi;
+    w1 := WordOfGraphOfGroupoidsWord( ggw1 );
+    w2 := WordOfGraphOfGroupoidsWord( ggw2 );
+    len1 := Length( w1 );
+    len2 := Length( w2 );
+    w := Concatenation( w1{[1..len1-1]}, [w1[len1]*w2[1]], w2{[2..len2]} );
+    return GraphOfGroupoidsWord( GraphOfGroupoidsOfWord(ggw1), GGTail(ggw1), w );
+end );
+
+##############################################################################
+##
+#M  InverseOp( <ggword> ) . . . . . . . . inverse of a graph of groupoids word
+##
+InstallOtherMethod( InverseOp, "generic method for a graph of groupoids word",
+    true, [ IsGraphOfGroupoidsWordRep ], 0,
+function ( ggw )
+    local  gg, ie, i, j, w, len, iw, iggw;
+
+    w := WordOfGraphOfGroupoidsWord( ggw );
+    gg := GraphOfGroupoidsOfWord( ggw );
+    ie := InvolutoryArcs( DigraphOfGraphOfGroupoids( gg ) );
+    len := Length( w );
+    iw := ShallowCopy( w );
+    i := 1;
+    j := len;
+    iw[1] := w[len]^-1;
+    while ( i < len ) do
+        iw[i+1] := ie[ w[j-1] ];
+        i := i+2;
+        j := j-2;
+        iw[i] := w[j]^(-1);
+    od;
+    iggw := GraphOfGroupoidsWord( gg, GGHead( ggw ), iw );
+    SetGGHead( iggw, GGTail( ggw ) );
+    if IsReducedGraphOfGroupoidsWord( ggw ) then
+        iggw := ReducedGraphOfGroupoidsWord( iggw );
+    fi;
+    return iggw;
+end );
+
+##############################################################################
+##
+#M  \^( <ggw>, <n> ) . . . . . . . . . . .  power of a graph of groupoids word
+##
+InstallOtherMethod( \^,
+    "generic method for n-th power of a graph of groupoids word",
+    true, [ IsGraphOfGroupoidsWordRep, IsInt ], 0,
+function ( ggw, n )
+    local  w, tv, gg, g, k, iggw, ggwn;
+
+    if ( n = 1 ) then
+        return ggw;
+    elif ( n = -1 ) then
+        return InverseOp( ggw );
+    fi;
+    if not ( GGHead( ggw ) = GGTail( ggw ) ) then
+        Info( InfoGpd, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
+        return fail;
+    fi;
+    if ( n = 0 ) then
+        tv := GGTail( ggw );
+        gg := GraphOfGroupoidsOfWord( ggw );
+        g := GroupoidsOfGraphOfGroupoids( gg )[tv];
+        return GraphOfGroupoidsWordNC( gg, tv, [ One(g) ] ); 
+    elif ( n > 1 ) then
+        ggwn := ggw;
+        for k in [2..n] do
+            ggwn := ggwn * ggw;
+        od;
+    elif ( n < -1 ) then
+        iggw := InverseOp( ggw );
+        ggwn := iggw;
+        for k in [2..-n] do
+            ggwn := ggwn * iggw;
+        od;
+    fi;
+    return ggwn;
+end );
+
+#############################################################################
+##
+#E  gpdgraph.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+##

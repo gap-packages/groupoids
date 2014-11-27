@@ -1,0 +1,61 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  intro.xml              Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<!-- lines to be edited with each new version: 42.  
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-intro">
+<Heading>Introduction</Heading>
+
+Groupoids are mathematical categories in which every arrow is invertible. 
+The &gpd; package provides functions for the computation with
+groupoids and their morphisms; 
+for graphs of groups and graphs of groupoids. 
+The package is far from complete, and development continues. 
+<P/>
+It was used by Emma Moore in her thesis <Cite Key="emma-thesis" /> 
+to calculate normal forms for <E>free products with amalgamation</E>, 
+and for <E>HNN-extensions</E> 
+when the initial groups have rewriting systems.
+<P/>
+The latest version &VERSION; of &gpd; is implemented using &GAP; 4.6. 
+<P/>
+The information parameter <C>InfoGpd</C> takes default value <C>1</C> 
+which, for the benefit of new users, causes more messages 
+to be printed out when operations fail.
+When raised to a higher value, additional information is printed out. 
+<P/>
+Help is available in the usual way.
+<P/>
+<Example>
+<![CDATA[
+gap> LoadPackage( "gpd" );
+Loading Gpd &VERSION; for GAP 4.6 - Emma Moore and Chris Wensley ... 
+true
+]]>
+</Example>
+
+For version 1.05 the package was completely restructured, 
+starting with <E>magmas with objects</E> and their mappings, 
+and building up to groupoids via semigroups with objects 
+and monoids with objects. 
+From version 1.07 the package includes some functions to implement 
+constructions contained in <Cite Key="AlWe" />. 
+More functions will be released as soon as possible.  
+<P/>
+Once the package is loaded, it is possible to check the correct 
+installation by running the test suite of the package with the command  
+<C> ReadPackage( "gpd", "tst/testall.g" ); </C>
+
+You may reference this package by mentioning <Cite Key="BrMoPoWe" />, 
+<Cite Key="emma-thesis" /> and <Cite Key="AlWe" />. 
+</Chapter>

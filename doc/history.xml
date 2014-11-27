@@ -1,0 +1,119 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  history.xml            Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-history">
+<Heading>Development History</Heading>
+
+
+<Section Label="sec-versions">
+<Heading>Versions of the Package</Heading>
+
+The first version, <Package>GraphGpd</Package> 1.001, 
+formed part of Emma Moore's thesis <Cite Key="emma-thesis" /> in December 2000,
+but was not made generally available.
+<P/>
+Version 1.002 of <Package>GraphGpd</Package> 
+was prepared to run under &GAP; 4.4 in January 2004; 
+was submitted to the &GAP; council to be considered as an accepted package; 
+but suggestions from the referee were not followed up.
+<P/>
+In April 2006 the manual was converted to <Package>GAPDoc</Package> format.
+Variables <C>Star</C>, <C>Costar</C> and <C>CoveringGroup</C> were
+found to conflict with usage in other packages, and were renamed 
+<C>VertexStar</C>, <C>VertexCostar</C> and 
+<C>CoveringGroupOfGroupoid</C> respectively. 
+Similarly, the <C>Vertices</C> and <C>Arcs</C> of an <C>FpWeightedDigraph</C> 
+were changed from attributes to record components.
+<P/>
+In the spring of 2006 the package was extensively rewritten 
+and renamed &gpd;. 
+Version 1.01 was submitted as a deposited package in June 2006.
+Version 1.03, of October 2007, fixed some file protections, 
+and introduced the test file <F>gpd_manual.tst</F>. 
+<P/>
+Version 1.05, of November 2008, was released when the website 
+at Bangor changed. 
+<P/>
+Since then, the package has been rewritten again, 
+introducing magmas with objects and their mappings. 
+Functions to implement constructions contained in <Cite Key="AlWe" /> 
+have been added, but this is ongoing work. 
+<P/> 
+Versions 1.09 to 1.15 were prepared for the anticipated release of &GAP; 4.5 
+in June 2012. 
+<P/> 
+The latest version is &VERSION; of &GPDRELEASEDATE;, for &GAP; 4.7.  
+</Section>
+
+
+<Section Label="sec-whatnext">
+<Heading>What needs to be done next?</Heading>
+
+Computationally, there are three types of connected groupoid:
+<List>
+<Item>
+those with identical object groups,
+</Item>
+<Item>
+those with object groups conjugate in some supergroup,
+</Item>
+<Item>
+those with object groups which are simply isomorphic. 
+</Item>
+</List>
+
+<Package>GraphGpd</Package> attempted to implement the second case, 
+while &gpd; 1.01 and 1.03 considered only the first case, 
+and &gpd; 1.05 extended 1.03 to the second case. 
+<P/> 
+The third case has not yet been considered for implementation, 
+and there does not appear to be much need to do so. 
+<P/> 
+Here are some other immediate requirements: 
+<List>
+<Item>
+more work on automorphism groups of groupoids; 
+</Item>
+<Item>
+normal subgroupoids and quotient groupoids;
+</Item>
+<Item>
+more methods for morphisms of groupoids, 
+particularly when the range is not connected; 
+</Item>
+<Item>
+<C>ImageElm</C> and <C>ImagesSource</C> 
+for the cases of groupoid morphisms not yet covered;
+</Item>
+<Item>
+<C>Enumerator</C> for <C>IsHomsetCosetsRep</C>;
+</Item>
+<Item>
+free groupoid on a graph;
+</Item>
+<Item>
+methods for <C>FreeProductWithAmalgamation</C> and <C>HnnEntension</C> 
+for pc-groups; 
+</Item>
+<Item>
+convert <C>GraphOfGroupsRewritingSystem</C> to the category 
+<C>IsRewritingSystem</C>;
+</Item>
+<Item>
+in <Package>XMod</Package>, implement crossed modules over groupoids 
+(a start has been made).
+</Item>
+</List>
+
+</Section>
+</Chapter>

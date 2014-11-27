@@ -1,0 +1,107 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  manual.xml             Gpd documentation            Chris Wensley  -->
+<!--                                                       & Emma Moore  -->
+<!--  version 1.31, 09/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Reading data chunk from the PackageInfo.g file --> 
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+  [<!ENTITY gpd "<Package>Gpd</Package>"> 
+   <#Include Label="PKGVERSIONDATA"> 
+  ]> 
+
+<!-- The documentation to the Gpd package. -->
+
+<Book Name="Gpd"> 
+
+<TitlePage>
+  <Title>&gpd;</Title>
+  <Subtitle>Groupoids, graphs of groups, and graphs of groupoids</Subtitle>
+  <Version>Version &VERSION;</Version>   
+  <Date>&RELEASEDATE;</Date> 
+  <Author> Emma Moore 
+  </Author>
+  <Author> Chris Wensley
+    <Email>c.d.wensley@bangor.ac.uk</Email>
+    <Homepage>http://www.bangor.ac.uk/~mas023/</Homepage>
+    <Address>
+         School of Computer Science, Bangor University,<Br/>
+      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.
+    </Address>
+  </Author>
+
+<Abstract>
+The &gpd; package for &GAP;4 provides functions for 
+the computation with groupoids (categories with every arrow invertible) 
+and their morphisms; for graphs of groups, and graphs of groupoids. 
+The most basic structure introduced is that of <E>magma with objects</E>, 
+followed by <E>semigroup with objects</E>, then <E>monoid with objects</E> 
+and finally <E>groupoid</E> which is a <E>group with objects</E>. 
+<P/>
+It provides normal forms for Free Products with Amalgamation 
+and for HNN-extensions when the initial groups have rewrite systems 
+and the subgroups have finite index.
+<P/>
+The &gpd; package was originally implemented in 2000 
+(as <Package>GraphGpd</Package>) 
+when the first author was studying for a Ph.D. in Bangor.
+<P/>
+Version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
+Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
+and was submitted for official acceptance as a &GAP; package. 
+The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.7.  
+<P/> 
+Recent versions implement many of the constructions described in the paper 
+<Cite Key="AlWe" /> for automorphisms of groupoids. 
+<P/>
+Bug reports, suggestions and comments are, of course, welcome. 
+Please contact the second author at     
+<Email>c.d.wensley@bangor.ac.uk</Email>.
+</Abstract>
+
+<Copyright> 
+<Index>License</Index>
+&copyright; 2000-2013 Emma Moore and Chris Wensley <P/>
+
+<Package>gpd</Package> is free software; you can redistribute it 
+and/or modify it under the terms of the 
+<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
+as published by the Free Software Foundation; 
+either version 2 of the License, or (at your option) any later version.
+</Copyright>
+
+<Acknowledgements>
+This documentation was prepared with the <Package>GAPDoc</Package> 
+package of Frank L&#xfc;beck and Max Neunh&#xf6;ffer. 
+</Acknowledgements>
+
+</TitlePage>
+
+<TableOfContents/>
+
+<Body>
+
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "mwo.xml">
+<#Include SYSTEM "mwohom.xml">
+<#Include SYSTEM "gpd.xml">
+<#Include SYSTEM "gpdhom.xml">
+<#Include SYSTEM "ggraph.xml">
+<#Include SYSTEM "tecnotes.xml">
+<#Include SYSTEM "history.xml">
+
+</Body>
+
+<Bibliography Databases="manual"/>
+
+<TheIndex/>
+
+</Book>
