@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.31, 26/11/2014 
+##  version 1.31, 17/12/2014 
 ##
 #Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -572,8 +572,7 @@ end );
 InstallMethod( GeneratorsOfMagmaWithObjects, "for discrete domain",
     true, [ IsGroupoid and IsSinglePiece and IsDiscreteDomainWithObjects ], 0,
 function( mwo )
-    local  o, ogens, gens; 
-Print("method2\n"); 
+    local  o, ogens, gens;  
     gens := [ ];
     for o in mwo!.objects do 
         ogens := GeneratorsOfGroup( ObjectGroup( mwo, o ) ); 
@@ -586,7 +585,6 @@ InstallMethod( GeneratorsOfMagmaWithObjects, "for mwo with >1 piece",
     true, [ IsMagmaWithObjects ], 0,
 function( mwo )
     local  L; 
-Print("method3\n"); 
     L := Concatenation( List( Pieces( mwo ), 
              p -> GeneratorsOfMagmaWithObjects( p ) ) ); 
     return L; 

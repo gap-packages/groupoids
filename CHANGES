@@ -12,9 +12,9 @@ ToDo
               to be different but, when it comes to composition of arrows 
               the type of mwo hardly matters!?
 ############################################################################## 
-1.23 -> 1.31  (26/11/14) 
+1.23 -> 1.31  (17/12/14) 
 
- - (26/11/14) moved package homepage to pages.bangor.ac.uk/~mas023/chda/gpd/ 
+ - (17/12/14) moved package homepage to pages.bangor.ac.uk/~mas023/chda/gpd/ 
  - (26/11/14) changed Arrow to ArrowNC in GeneratorsOfMagmaWithObjects 
 
 ############################################################################## 

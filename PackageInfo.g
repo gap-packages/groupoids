@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g   file for the package Gpd version 1.31  (26/11/14)
+##  PackageInfo.g   file for the package Gpd version 1.31  (17/12/14)
 ##  Emma Moore and Chris Wensley 
 ##
 
@@ -9,21 +9,21 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.31",
-Date := "26/11/2014", 
+Date := "17/12/2014", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.31">
-##  <!ENTITY RELEASEDATE "26/11/2014">
+##  <!ENTITY RELEASEDATE "17/12/2014">
 ##  <!ENTITY GPDTARFILE "gpd-1.31.tar.gz">
 ##  <!ENTITY GPDHTMLFILE "gpd131.html">
-##  <!ENTITY GPDRELEASEDATE "26th November 2014">
+##  <!ENTITY GPDRELEASEDATE "17th December 2014">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
- "http://pages.bangor.ac.uk/~mas023/chda/gap4/gpd/",
+ "http://pages.bangor.ac.uk/~mas023/chda/gpd/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gap4/gpd/gpd-1.23", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.31", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [

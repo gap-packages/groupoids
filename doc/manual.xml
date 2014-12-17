@@ -57,6 +57,7 @@ when the first author was studying for a Ph.D. in Bangor.
 Version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
 Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
 and was submitted for official acceptance as a &GAP; package. 
+(The referee's comments are slowly being addressed.) 
 The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.7.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
@@ -69,7 +70,7 @@ Please contact the second author at
 
 <Copyright> 
 <Index>License</Index>
-&copyright; 2000-2013 Emma Moore and Chris Wensley <P/>
+&copyright; 2000-2014 Emma Moore and Chris Wensley <P/>
 
 <Package>gpd</Package> is free software; you can redistribute it 
 and/or modify it under the terms of the 
