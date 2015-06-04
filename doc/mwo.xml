@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  mwo.xml                Gpd documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.33, 02/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -300,7 +300,7 @@ gap> ktpo := KnownTruePropertiesOfObject( M49 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsAssociative", "IsSinglePieceDomain", 
   "IsDirectProductWithCompleteGraphDomain" ]
-gap> genM : GeneratorsOfMagmaWithObjects( M49 );
+gap> genM := GeneratorsOfMagmaWithObjects( M49 );
 [ [<identity ...> : -9 -> -9], [f1 : -9 -> -9], [f2 : -9 -> -9],
   [<identity ...> : -9 -> -4], [<identity ...> : -4 -> -9] ]
 gap> g2:=genM[2];; g3:=genM[3];; g4:=genM[4];; g5:=genM[5];; 

@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  tecnotes.xml           Gpd documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.33, 02/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -33,13 +33,13 @@ Structures with many objects, and their elements, are defined in a manner simila
     IsMultiplicativeElementWithObjects ); </C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsMultiplicativeElementWithObjectsAndInversesIfNonzero", 
+<C>DeclareCategory( "IsMultiplicativeElementWithObjectsAndInverses", 
     IsMultiplicativeElementWithObjectsAndOnes ); </C>
 </Item>
 <Item>
 <C>DeclareCategory( "IsGroupoidElement", </C>
 <P/>
-<C>IsMultiplicativeElementWithObjectsAndInversesIfNonzero ); </C>
+<C>IsMultiplicativeElementWithObjectsAndInverses ); </C>
 </Item>
 </List>
 as well as various category collections. 
@@ -58,13 +58,13 @@ For the various structures we have:
     IsMultiplicativeElementWithObjectsAndOnesCollection ); </C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsMagmaWithObjectsAndInversesIfNonzero", 
+<C>DeclareCategory( "IsMagmaWithObjectsAndInverses", 
     IsMagmaWithObjectsAndOnes and </C>
 <P/>
-<C>IsMultiplicativeElementWithObjectsAndInversesIfNonzeroCollection ); </C>
+<C>IsMultiplicativeElementWithObjectsAndInversesCollection ); </C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInversesIfNonzero 
+<C>DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInverses 
     and IsGroupoidElementCollection ); 
 </C>
 </Item>
@@ -83,9 +83,9 @@ gap> CategoriesOfObject( Gd8 );
   "IsMagma", "IsDomainWithObjects", 
   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInversesIfNonzero)\
+  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)\
 ", "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", 
-  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInversesIfNonzero", 
+  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInverses", 
   "IsGroupoid" ]
 gap> FamilyObj( Gd8 );     ## these numbers vary from one run to another
 NewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116, 
@@ -120,7 +120,7 @@ gap> CategoriesOfObject(e2);
 [ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
   "IsMultiplicativeElementWithObjects", 
   "IsMultiplicativeElementWithObjectsAndOnes", 
-  "IsMultiplicativeElementWithObjectsAndInversesIfNonzero", 
+  "IsMultiplicativeElementWithObjectsAndInverses", 
   "IsGroupoidElement" ]
 gap> FamilyObj( e2 );        
 NewFamily( "GroupoidElementFamily", [ 2714 ], 

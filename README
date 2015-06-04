@@ -1,4 +1,4 @@
-                   The Gpd package - version 1.31
+                   The Gpd package - version 1.34
 
 This is the README file for the GAP package ``Gpd''. 
 
@@ -25,7 +25,8 @@ Version 1.03 was released in October 2007.
 Version 1.05 was released on 21st November 2008. 
 Version 1.07 was prepared for the anticipated GAP 4.5, 
 and version 1.15 came out with the first release in June 2012. 
-The latest version, 1.31, was released on 17th December 2014 for GAP 4.7. 
+Kan becsme an accepted GAP package in May 2015. 
+The latest version, 1.34, was released on 3rd June 2015 for GAP 4.7. 
 A more detailed history is included as Chapter 8 of the manual, 
 and in the file CHANGES.
 
@@ -35,7 +36,7 @@ Computational Higher-dimensional Discrete Algebra at:
   http://pages.bangor.ac.uk/~mas023/chda/
 
 The Gpd package is Copyright {\copyright} Chris Wensley and Emma Moore, 
-2000--2014. 
+2000--2015. 
 Gpd is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -46,7 +47,7 @@ For details, see \URL{http://www.gnu.org/licenses/gpl.html}
 
 Installing `Gpd':
 
-1) unpack `gpd-1.31.tar.gz' in the `pkg' subdirectory of the GAP root
+1) unpack `gpd-1.34.tar.gz' in the `pkg' subdirectory of the GAP root
    directory.
 
 2) From within GAP load the package with:

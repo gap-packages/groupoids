@@ -2,9 +2,9 @@
 ## 
 #W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.31, 17/12/2014 
+##  version 1.33, 02/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 

@@ -2,9 +2,9 @@
 ## 
 #W  mwo.gd                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.31, 09/11/2014 
+##  version 1.33, 02/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -115,24 +115,24 @@ DeclareCategoryCollections(
 
 ############################################################################# 
 ## 
-#C  IsMultiplicativeElementWithObjectsAndInversesIfNonzero( <elt> ) 
+#C  IsMultiplicativeElementWithObjectsAndInverses( <elt> ) 
 ## 
 ##  An element $e$ has inverse $f$ provided $e*f=1_{te}$ and $f*e=1_{he}$. 
-DeclareCategory( "IsMultiplicativeElementWithObjectsAndInversesIfNonzero", 
+DeclareCategory( "IsMultiplicativeElementWithObjectsAndInverses", 
     IsMultiplicativeElementWithObjectsAndOnes ); 
 DeclareCategoryCollections( 
-    "IsMultiplicativeElementWithObjectsAndInversesIfNonzero" ); 
+    "IsMultiplicativeElementWithObjectsAndInverses" ); 
 DeclareCategoryCollections( 
-    "IsMultiplicativeElementWithObjectsAndInversesIfNonzeroCollection" ); 
+    "IsMultiplicativeElementWithObjectsAndInversesCollection" ); 
 DeclareCategoryCollections(     
-    "IsMultiplicativeElementWithObjectsAndInversesIfNonzeroCollColl" ); 
+    "IsMultiplicativeElementWithObjectsAndInversesCollColl" ); 
 
 ############################################################################# 
 ## 
 #C  IsGroupoidElement( <elt> ) 
 ## 
 DeclareCategory( "IsGroupoidElement", 
-    IsMultiplicativeElementWithObjectsAndInversesIfNonzero ); 
+    IsMultiplicativeElementWithObjectsAndInverses ); 
 DeclareCategoryCollections( "IsGroupoidElement" ); 
 DeclareCategoryCollections( "IsGroupoidElementCollection" ); 
 DeclareCategoryCollections( "IsGroupoidElementCollColl" ); 
@@ -174,7 +174,7 @@ DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] );
 ## 
 #C  IsMagmaWithObjects( <dwo> ) . . . . . . . category of magmas with objects 
 #C  IsMagmaWithObjectsAndOnes( <dwo> ) . . . . . . . . . . . . . . . and ones
-#C  IsMagmaWithObjectsAndInversesIfNonzero( <dwo> ) . . . . and some inverses
+#C  IsMagmaWithObjectsAndInverses( <dwo> ) . . . . . . . . . . .  and inverses
 #C  IsGroupoid( <dwo> )  . . . . . . . . . . . . . . . . . . and all inverses
 ##
 ##  A *magma with objects* in {\GAP} is a domain $M$ with (not necessarily 
@@ -187,11 +187,11 @@ DeclareCategoryCollections( "IsMagmaWithObjects" );
 DeclareCategory( "IsMagmaWithObjectsAndOnes", 
     IsMagmaWithObjects and 
     IsMultiplicativeElementWithObjectsAndOnesCollection ); 
-DeclareCategory( "IsMagmaWithObjectsAndInversesIfNonzero", 
+DeclareCategory( "IsMagmaWithObjectsAndInverses", 
     IsMagmaWithObjectsAndOnes and 
-    IsMultiplicativeElementWithObjectsAndInversesIfNonzeroCollection ); 
+    IsMultiplicativeElementWithObjectsAndInversesCollection ); 
 ##  DeclareCategory( "IsMagmaWithObjectsAndInverses",
-DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInversesIfNonzero 
+DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInverses 
     and IsGroupoidElementCollection ); 
 
 ############################################################################# 

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g   file for the package Gpd version 1.31  (17/12/14)
+##  PackageInfo.g   file for the package Gpd version 1.34 
 ##  Emma Moore and Chris Wensley 
 ##
 
@@ -8,22 +8,22 @@ SetPackageInfo( rec(
 PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.31",
-Date := "17/12/2014", 
+Version := "1.34",
+Date := "02/06/2015", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "1.31">
-##  <!ENTITY RELEASEDATE "17/12/2014">
-##  <!ENTITY GPDTARFILE "gpd-1.31.tar.gz">
-##  <!ENTITY GPDHTMLFILE "gpd131.html">
-##  <!ENTITY GPDRELEASEDATE "17th December 2014">
+##  <!ENTITY VERSION "1.34">
+##  <!ENTITY RELEASEDATE "02/06/2015">
+##  <!ENTITY GPDTARFILE "gpd-1.34.tar.gz">
+##  <!ENTITY GPDHTMLFILE "gpd134.html">
+##  <!ENTITY GPDRELEASEDATE "3rd June 2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
  "http://pages.bangor.ac.uk/~mas023/chda/gpd/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.31", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.34", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -44,7 +44,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
-    WWWHome       := "http://www.bangor.ac.uk/~mas023/",
+    WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
     PostalAddress := Concatenation( [
                        "Dr. C.D. Wensley\n",
                        "School of Computer Science\n",
@@ -89,7 +89,7 @@ Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
                            [ "fga", ">= 1.2.0" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 1.4"] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 2.2"] ],
   ExternalConditions := [ ]
 ),
 

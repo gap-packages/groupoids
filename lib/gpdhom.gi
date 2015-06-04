@@ -2,9 +2,9 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 21/11/2014 
+##  version 1.32, 13/02/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -29,7 +29,7 @@ GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
 InstallMethod( IsGeneratorsOfMagmaWithInverses, "for a list of groupoid maps", 
     true, [ IsGeneralMappingWithObjectsCollection ], 0,
 function( homlist ) 
-    Print( "#I  using IsGeneratorsOfMagmaWithInverse in gpdhom.gi\n" ); 
+    Print( "#I  using IsGeneratorsOfMagmaWithInverses in gpdhom.gi\n" ); 
     return ForAll( homlist, 
         m -> ( ( Source(m) = Range(m) ) 
                and IsEndomorphismWithObjects(m) 

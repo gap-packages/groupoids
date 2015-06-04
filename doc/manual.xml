@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  manual.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.33, 02/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -31,7 +31,7 @@
   </Author>
   <Author> Chris Wensley
     <Email>c.d.wensley@bangor.ac.uk</Email>
-    <Homepage>http://www.bangor.ac.uk/~mas023/</Homepage>
+    <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
     <Address>
          School of Computer Science, Bangor University,<Br/>
       Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.
@@ -57,7 +57,8 @@ when the first author was studying for a Ph.D. in Bangor.
 Version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
 Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
 and was submitted for official acceptance as a &GAP; package. 
-(The referee's comments are slowly being addressed.) 
+<Package>Gpd</Package> became an accepted &GAP; package in May 2015 
+(even though the referee's comments are still being addressed). 
 The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.7.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
@@ -70,9 +71,9 @@ Please contact the second author at
 
 <Copyright> 
 <Index>License</Index>
-&copyright; 2000-2014 Emma Moore and Chris Wensley <P/>
+&copyright; 2000-2015 Emma Moore and Chris Wensley <P/>
 
-<Package>gpd</Package> is free software; you can redistribute it 
+<Package>Gpd</Package> is free software; you can redistribute it 
 and/or modify it under the terms of the 
 <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
 as published by the Free Software Foundation; 
@@ -101,7 +102,7 @@ package of Frank L&#xfc;beck and Max Neunh&#xf6;ffer.
 
 </Body>
 
-<Bibliography Databases="manual"/>
+<Bibliography Databases="gpdbib.xml"/>
 
 <TheIndex/>
 

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE file SYSTEM "bibxmlext.dtd">
+<file>
+
+<entry id="AlWe"><article>
+  <author>
+    <name><first>Murat</first><last>Alp</last></name>
+    <name><first>Christopher D.</first><last>Wensley</last></name>
+  </author>  
+  <title>Automorphisms and homotopies of groupoids and crossed modules</title>
+  <journal>Applied Categorical Structures</journal>
+  <year>2010</year>
+  <volume>18</volume>
+  <pages>473&ndash;495</pages>
+</article></entry>
+
+<entry id="BrTop"><book>
+  <author>
+    <name><first>Ronald</first><last>Brown</last></name>
+  </author>  
+  <title>Topology: a geometric account of general topology,
+         homotopy types, and the fundamental groupoid</title>
+  <publisher>Ellis Horwood, Chichester</publisher>
+  <year>1988</year>
+</book></entry>
+
+<entry id="BrTopGpd"><book>
+  <author>
+    <name><first>Ronald</first><last>Brown</last></name>
+  </author>  
+  <title>Topology and groupoids</title>
+  <publisher>Booksurge LLC, S.Carolina</publisher>
+  <year>2006</year>
+</book></entry>
+
+<entry id="BrMoPoWe"><article>
+  <author>
+    <name><first>Ronald</first><last>Brown</last></name>
+    <name><first>Emma J.</first><last>Moore</last></name>
+    <name><first>Timothy</first><last>Porter</last></name>
+    <name><first>Christopher D.</first><last>Wensley</last></name>
+  </author>  
+  <title>Crossed complexes, and free crossed resolutions 
+         for amalgamated sums and HNN-extensions of groups</title>
+  <journal>Georgian Math. J.</journal>
+  <year>2002</year>
+  <volume>9</volume>
+  <pages>623&ndash;644</pages>
+</article></entry>
+
+<entry id="HiGpd"><book>
+  <author>
+    <name><first>Philip</first><last>Higgins</last></name>
+  </author>  
+  <title>Categories and groupoids</title>
+  <publisher>Reprints in Theory and Applications of Categories</publisher>
+  <year>2005</year>
+  <pages>1&ndash;195</pages>
+  <note>
+    <URL>http://www.tac.mta.ca/tac/reprints/articles/7/tr7abs.html</URL>
+  </note> 
+</book></entry>
+
+<entry id="HiJLMS"><article>
+  <author>
+    <name><first>Philip</first><last>Higgins</last></name>
+  </author>  
+  <title>The fundamental groupoid of a graph of groups</title>
+  <journal>J. London Math. Soc.</journal>
+  <year>1976</year>
+  <volume>13</volume>
+  <pages>145&ndash;149</pages>
+</article></entry>
+
+<entry id="emma-thesis"><phdthesis>
+  <author>
+    <name><first>Emma J.</first><last>Moore</last></name>
+  </author>  
+  <title>Graphs of Groups: 
+         Word Computations and Free Crossed Resolutions</title>
+  <school>University of Wales, Bangor</school>
+  <year>2001</year>
+  <note>
+    <URL>http://www.maths.bangor.ac.uk/research/ftp/theses/moore.ps.gz</URL>
+  </note>
+</phdthesis></entry>
+
+<entry id="Serre"><book>
+  <author>
+    <name><first>J.</first><last>Serre</last></name>
+  </author>  
+  <title>Trees</title>
+  <publisher>Springer-Verlag, Berlin</publisher>
+  <year>1980</year>
+</book></entry>
+
+</file>

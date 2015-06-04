@@ -5,12 +5,33 @@ ToDo
               recently been included in grpgraph.gi but not yet used in 
               any example or test file: so need to work on this. 
               So far there is no implementation of WeightedAdjacencyMatrix. 
+ - (17/04/13) Referee's report contains a number of typos, comments, 
+              and suggestions, which all need attention. 
  - (21/11/14) Arrows are the elements in any mwo, but in a groupoid the code 
               still makes GroupoidElement different - but IsGroupoidElement 
               is declared to be a synonym of Arrow in gpd.gi. 
               This needs to be sorted out: maybe the ElementFamilies need 
               to be different but, when it comes to composition of arrows 
-              the type of mwo hardly matters!?
+              the type of mwo hardly matters!? 
+
+############################################################################## 
+1.33 -> 1.34  (03/06/15) 
+
+ - 
+
+############################################################################## 
+1.32 -> 1.33  (02/06/15) 
+
+ - (02/06/15) PackageInfo.g: Kan is now an accepted package  
+ - (02/06/15) converted the bibliography to BibXMLext format 
+              and added an URL to Emma's thesis (moore.ps.gz) 
+ - (02/06/15) Fixed typos in the manual reported by the referee 
+
+############################################################################## 
+1.31 -> 1.32  (03/02/15) 
+
+ - (03/02/15) changed 'InversesIfNonzero' to 'Inverse' in category names 
+
 ############################################################################## 
 1.23 -> 1.31  (17/12/14) 
 

@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  ggraph.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.33, 02/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000--2014, Emma Moore and Chris Wensley,            --> 
+<!--  Copyright (C) 2000--2015, Emma Moore and Chris Wensley,            --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -426,7 +426,7 @@ isomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ]
 gap> LeftTransversalsOfGraphOfGroups( gg1 );
 [ [ <identity ..>, a2^-1 ], [ <identity ..>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ] ]
 gap> ## choose a word in fpa and find its normal form 
-gap> gfpa := GeneratorsOfGraphOfGroups( fpa );;
+gap> gfpa := GeneratorsOfGroup( fpa );;
 gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
 (fa1*fa2*fa4^-1*fa3*fa4)^3
 gap> n2 := NormalFormGGRWS( fpa, w2 );

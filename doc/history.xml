@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  history.xml            Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.33, 02/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -52,6 +52,8 @@ have been added, but this is ongoing work.
 Versions 1.09 to 1.15 were prepared for the anticipated release of &GAP; 4.5 
 in June 2012. 
 <P/> 
+&gpd; became an accepted &GAP; package in May 2015. 
+<P/>
 The latest version is &VERSION; of &GPDRELEASEDATE;, for &GAP; 4.7.  
 </Section>
 
