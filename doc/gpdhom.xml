@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gpdhom.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.34, 05/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -24,8 +24,9 @@ m(g1 : o1 \to o2)*m(g2 : o2 \to o3) ~=~ m(g1*g2 : o1 \to o3).
 <P/>
 Note that when a homomorphism is not injective on objects, 
 the image of the source need not be a subgroupoid of the range.
-A simple example of this is given by a homomorphism from the two-object 
-groupoid with trivial group to the free group <M>\langle a \rangle</M> 
+A simple example of this is given by a homomorphism from the two-object,  
+four-element groupoid with trivial group to the free group 
+<M>\langle a \rangle</M> 
 on one generator, when the image is <M>[1,a^n,a^{-n}]</M> 
 for some <M>n>0</M>. 
 
@@ -117,7 +118,7 @@ of the individual homomorphisms <E>from</E> the single pieces.
 See section <Ref Sect="sec-mwohom"/> for the corresponding operation 
 on homomorphisms of magmas with objects. 
 <P/>
-In the following example the source has three pieces, 
+In the following example the source <C>V3</C> of <C>homV3</C> has three pieces, 
 and one of the component homomorphisms is an <C>IdentityMapping</C> 
 <Index Key="IdentityMapping"> <C>IdentityMapping</C> </Index>. 
 <P/>

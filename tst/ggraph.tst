@@ -2,9 +2,9 @@
 ##
 #W  ggraph.tst                    Gpd Package                    Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014   
+##  version 1.34, 05/06/2015   
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -141,7 +141,7 @@ gap> gfpa := GeneratorsOfGroup( fpa );;
 gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
 (fa1*fa2*fa4^-1*fa3*fa4)^3
 gap> n2 := NormalFormGGRWS( fpa, w2 );
-fa2*fa3*(fa4^-1*fa2)^2*fa3^-1*fa4*fa3^-1
+fa2*fa3*(fa4^-1*fa2)^2*fa4^-1*fa3
 
 ## Subsection 5.4.2
 gap> H3 := Subgroup(a4,[b2]);;

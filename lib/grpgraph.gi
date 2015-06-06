@@ -2,9 +2,9 @@
 ##
 #W  grpgraph.gi                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014 
+##  version 1.34, 05/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for FpWeightedDigraphs and 
@@ -1043,6 +1043,7 @@ function( fpa, w )
     if ( ew = [ ] ) then
         return One( fpa );
     fi;
+## Print( "+++++ ew = ", ew, "\n" );
     ff := FreeGroupOfFpGroup( fpa );
     idff := One( ff );
     famff := FamilyObj( idff );
@@ -1050,6 +1051,7 @@ function( fpa, w )
     wL := [ ];
     info := FpaInfo( fpa );
     pos := info!.positions;
+## Print( "+++++ pos = ", pos, "\n" );
     ng1 := Length( pos[1] );
     gff := GeneratorsOfGroup( ff );
     gff12 := [ gff{pos[1]}, gff{pos[2]} ];
@@ -1064,21 +1066,25 @@ function( fpa, w )
     else
         Error( "first vertex not found" );
     fi;
-    j := 2;
+## Print( "+++++ [p,tv,len] = ", [p,tv,len], "\n" ); 
+    j := 0;
     while ( j < len ) do
-        k := j;
-        while ( ( k < len-2 ) and ( ew[k+1] in pos[p] ) ) do
+        k := j+2;
+        while ( ( k < len ) and ( ew[k+1] in pos[p] ) ) do
             k := k+2;
         od;
-        es := ew{[j-1..k]};
+        es := ew{[j+1..k]};
         s := MappedWord( ObjByExtRep( famff, es ), gff12[p], gen12[p] );
+## Print( "+++++ [es,s] = ", [es,s], "\n" ); 
         Append( wL, [ s, p ] );
         p := 3-p;
-        j := k+2;
+        j := k;
     od;
+## Print( "++++ wL = ", wL, "\n" ); 
     wL := wL{[1..(Length(wL)-1)]};
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, tv, wL );
+## Print( "+++++ ggw = ", ggw, "\n" );
     Info( InfoGpd, 2, "ggw = ", ggw );
     rgw := ReducedGraphOfGroupsWord( ggw );
     Info( InfoGpd, 2, "rgw = ", rgw );

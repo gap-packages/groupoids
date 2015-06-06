@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gpd.xml                Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.31, 09/11/2014                                           --> 
+<!--  version 1.34, 05/06/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -39,8 +39,8 @@ A groupoid is <E>homogeneous</E> if it has two of more isomorphic pieces,
 with identical groups. 
 The special case of <E>homogeneous, discrete</E> groupoids, 
 where each piece has a single object, is given its own representation. 
-These groupoids are used in the <Package>XMod</Package> package 
-as the source of many crossed modules of groupoids. 
+Such a groupoid is used in the <Package>XMod</Package> package 
+as the source of a crossed modules of groupoids. 
 <P/> 
 For the definitions of the standard properties of groupoids
 we refer to R. Brown's book ``Topology'' <Cite Key="BrTop" />, 
@@ -300,8 +300,8 @@ and the head (target) object, <C>HeadOfArrow(e)</C> or <C>e![3]</C>.
 Arrows have a <E>partial composition</E>: 
 two arrows may be multiplied when the head of the first 
 coincides with the tail of the second. 
-When an attempt to multiply arrows when this condition does not hold 
-the value <C>fail</C> is returned. 
+When an attempt is made to multiply arrows where this condition does not hold, 
+then the value <C>fail</C> is returned. 
 (In earlier versions of the package there were functions <C>GroupoidElement</C> 
 and <C>MultiplicativeElementWithObjects</C>, 
 but these have now been replaced by <C>Arrow</C>.)  

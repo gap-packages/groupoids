@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.34",
-Date := "02/06/2015", 
+Date := "05/06/2015", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.34">
-##  <!ENTITY RELEASEDATE "02/06/2015">
+##  <!ENTITY RELEASEDATE "05/06/2015">
 ##  <!ENTITY GPDTARFILE "gpd-1.34.tar.gz">
 ##  <!ENTITY GPDHTMLFILE "gpd134.html">
-##  <!ENTITY GPDRELEASEDATE "3rd June 2015">
+##  <!ENTITY GPDRELEASEDATE "5th June 2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
@@ -58,9 +58,9 @@ Persons := [
   )
 ],
 
-Status := "submitted",
-## CommunicatedBy := "",
-## AcceptDate := "",
+Status := "accepted",
+CommunicatedBy := "Derek Holt (Warwick)",
+AcceptDate := "05/2015",
 
 README_URL := 
   Concatenation( ~.PackageWWWHome, "README" ),
@@ -68,7 +68,7 @@ PackageInfoURL :=
   Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML :=
- "The Gpd package provides a collection of functions for computing with \
+"The Gpd package provides a collection of functions for computing with \
 finite groupoids, graph of groups, and graphs of groupoids. \
 These are based on the more basic structures of magmas with objects \
 and their mappings. \

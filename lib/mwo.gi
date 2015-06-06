@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.33, 02/06/2015 
+##  version 1.34, 05/06/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -497,7 +497,7 @@ end );
 
 #############################################################################
 ##
-#M  GeneratorsOfMagmaWithObjects( <mwo> )  for a connected magma with objects
+#M  GeneratorsOfMagmaWithObjects( <mwo> )  for a connected magma with objects 
 ##
 InstallMethod( GeneratorsOfMagmaWithObjects, "for a single piece mwo", 
     true, [ IsSinglePiece ], 0,
@@ -590,7 +590,18 @@ function( mwo )
     return L; 
 end );
 
-
+#############################################################################
+##
+##  add some basic magma properties/operations methods for magmas with objects 
+## 
+#M  GeneratorsOfMagma( <m> ) 
+## 
+##
+InstallMethod( GeneratorsOfMagma, "for a magma with objects", 
+    true, [ IsMagmaWithObjects ], 0,
+function( m )
+    return GeneratorsOfMagmaWithObjects( m ); 
+end );
 
 #############################  MORE THAN ONE PIECE  ######################### 
 
