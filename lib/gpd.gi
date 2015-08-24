@@ -2,9 +2,9 @@
 ## 
 #W  gpd.gi                    GAP4 package `Gpd'                Chris Wensley 
 #W                                                               & Emma Moore
-##  version 1.31, 26/11/2014 
+##  version 1.35, 10/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -1662,6 +1662,29 @@ function( U, pos, new )
     ## OK to replace old by new in the pn-th place 
     pieces[pos] := new; 
     return UnionOfPieces( pieces ); 
+end ); 
+
+InstallMethod( ReplaceOnePieceInUnion, "for union and two gpds", true, 
+    [ IsGroupoid and IsPiecesRep, IsGroupoid and IsSinglePiece, 
+      IsGroupoid and IsSinglePiece ], 0,
+function( U, old, new )
+
+    local  pieces, pos; 
+    pieces := ShallowCopy( Pieces( U ) ); 
+    pos := Position( pieces, old ); 
+    if ( pos = fail ) then 
+        Info( InfoGpd, 1, "old not a piece in U" ); 
+        return fail; 
+    fi; 
+    ## OK to replace old by new in the pn-th place 
+    pieces[pos] := new; 
+    return UnionOfPieces( pieces ); 
+end ); 
+
+InstallMethod( ReplaceOnePieceInUnion, "for union, object and gpd", true, 
+    [ IsGroupoid and IsPiecesRep, IsObject, IsGroupoid and IsSinglePiece ], 0,
+function( U, obj, new )
+    Error( "obj must be a positive integer or a single piece groupoid" );
 end ); 
 
 #############################################################################

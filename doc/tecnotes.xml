@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  tecnotes.xml           Gpd documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 1.34, 05/06/2015                                           --> 
+<!--  version 1.35, 10/06/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -192,11 +192,11 @@ gap> CategoriesOfObject( homd8 );
   "IsGroupoidHomomorphism" ]
 gap> KnownAttributesOfObject( homd8 );
 [ "Range", "Source", "PieceImages", "ImagesOfObjects", "ImagesOfRays", 
-  "ObjectTransformationOfGroupoidHomomorphism", "RootObjectHomomorphism" ]
+  "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ]
 gap> KnownAttributesOfObject( aut3 );
 [ "Order", "Range", "Source", "PieceImages", "ImagesOfObjects", 
   "ImagesOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
-  "RootObjectHomomorphism" ]
+  "RootGroupHomomorphism" ]
 ]]>
 </Example>
 

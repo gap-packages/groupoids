@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.32, 13/02/2015 
+##  version 1.35, 11/06/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -13,14 +13,14 @@
 
 GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "The standard operations which construct a groupoid mapping are:\n", 
-    "1.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
-    "2.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
-    "3.  GroupoidAutomorphismByRayImages( gpd, rims );\n", 
-    "4.  GroupoidHomomorphismByGroupHom( src, rng, hom );\n",
-    "5.  GroupoidHomomorphismFromSinglePiece( src, rng, hom, oims, rims );\n",
-    "6.  HomomorphismToSinglePiece( src, rng, list of [hom,imobs,rays]'s );\n",
-    "7.  HomomorphismByUnion( src, rng, list of disjoint mappings );\n", 
-    "8.  GroupoidHomomorphism( one of the previous parameter options );" );
+    "1.  GroupoidHomomorphism( src, rng, hom | src, rng, hom, oims );\n", 
+    " or GroupoidHomomorphism( one of the following parameter options );\n",
+    "2.  GroupoidHomomorphismFromSinglePiece( src, rng, hom, oims, rims );\n",
+    "3.  HomomorphismToSinglePiece( src, rng, list of [hom,imobs,rays]'s );\n",
+    "4.  HomomorphismByUnion( src, rng, list of disjoint mappings );\n", 
+    "5.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
+    "6.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
+    "7.  GroupoidAutomorphismByRayImages( gpd, rims );\n" ); 
 
 #############################################################################
 ##
@@ -65,7 +65,7 @@ end );
 #############################################################################
 ##
 ##  GroupoidHomomorphism( <gpd>,<hom>|<oims>|<rays>             automorphisms 
-#F  GroupoidHomomorphism( <g1>,<g2>,<hom> )                  connected source 
+#F  GroupoidHomomorphism( <g1>,<g2>,<hom> )                 from single piece 
 #F  GroupoidHomomorphism( <g1>,<g2>,<piece images> )       single piece range 
 #F  GroupoidHomomorphism( <g1>,<g2>,<maps> )                union of mappings 
 #F  GroupoidHomomorphism( <g>,<auto> )             automorphism by group auto
@@ -79,7 +79,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     nargs := Length( arg );
 
     if ( ( nargs < 2 ) 
-         or ( nargs > 3 )  
+         or ( nargs > 5 )  
          or not IsMagmaWithObjects( arg[1] ) 
          or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) 
        ) then Info( InfoGpd, 1, GROUPOID_MAPPING_CONSTRUCTORS );
@@ -98,7 +98,8 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     # gpd, gpd, group hom 
     elif ( ( nargs = 3 ) and IsSinglePiece( arg[1] ) 
            and IsSinglePiece( arg[2] ) and IsGroupHomomorphism( arg[3] ) ) then 
-        return GroupoidHomomorphismByGroupHom( arg[1], arg[2], arg[3] ); 
+        return GroupoidHomomorphismFromSinglePieceNC( arg[1], arg[2], arg[3], 
+                   arg[2]!.objects, RayElementsOfGroupoid( arg[2] ) ); 
     # mwo, mwo, list of mappings
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
             and IsHomomorphismToSinglePiece( arg[3][1] ) ) then
@@ -108,7 +109,14 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
            and IsList( arg[3][1] ) and IsList( arg[3][1][1] ) ) then 
         Info( InfoGpd, 2, "HomomorphismToSinglePiece" );
-        return HomomorphismToSinglePiece( arg[1], arg[2], arg[3] );
+        return HomomorphismToSinglePiece( arg[1], arg[2], arg[3] ); 
+    elif ( ( nargs = 4 ) and IsGroupHomomorphism( arg[3] ) 
+           and ( IsHomogeneousList( arg[4] ) ) ) then 
+        return GroupoidHomomorphismFromSinglePieceNC( arg[1], arg[2], arg[3], 
+                   arg[4], RayElementsOfGroupoid( arg[2] ) ); 
+    elif ( nargs = 5 ) then 
+        return GroupoidHomomorphismFromSinglePieceNC( 
+                   arg[1], arg[2], arg[3], arg[4], arg[5] );
     else
         Info( InfoGpd, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
@@ -275,11 +283,11 @@ function( map )
     piro1 := Position( ob2, iro1 ); 
     iro2 := imob2[1]; 
     piro2 := Position( ob1, iro2 ); 
-    hom12 := RootObjectHomomorphism( map ); 
+    hom12 := RootGroupHomomorphism( map ); 
     if not IsBijective( hom12 ) then 
         Error( "root homomorphism has no inverse" ); 
     fi; 
-    hom21 := InverseGeneralMapping( RootObjectHomomorphism( map ) ); 
+    hom21 := InverseGeneralMapping( RootGroupHomomorphism( map ) ); 
     ok := IsGroupHomomorphism( hom21 ); 
     #? are the following settings necessary ?? 
     #? SetIsGroupHomomorphism( hom21, true );
@@ -350,7 +358,7 @@ function( mor )
     gpd2 := Range( mor ); 
     ob2 := gpd2!.objects; 
     imobs := ImagesOfObjects( mor ); 
-    roh := RootObjectHomomorphism( mor ); 
+    roh := RootGroupHomomorphism( mor ); 
     if ( imobs[1] = ob2[1] ) then  ## root maps to root 
         hom := roh; 
     elif ( HasIsDirectProductWithCompleteGraph( gpd2 ) and 
@@ -382,7 +390,7 @@ function( mor, obj )
          and IsGeneralMappingFromSinglePiece( mor ) ) then 
         rng := Range( mor ); 
         obr := rng!.objects; 
-        roh := RootObjectHomomorphism( mor ); 
+        roh := RootGroupHomomorphism( mor ); 
         if ( imobs[1] = obr[1] ) then  ## root maps to root 
             hom := roh; 
         elif ( HasIsDirectProductWithCompleteGraph( rng ) and 
@@ -470,7 +478,7 @@ function ( map )
     Print( " groupoid mapping: " ); 
     Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 
     Print( "root homomorphism: ", 
-           MappingGeneratorsImages( RootObjectHomomorphism(map) ), "\n" ); 
+           MappingGeneratorsImages( RootGroupHomomorphism(map) ), "\n" ); 
     Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
     Print( "   images of rays: ", ImagesOfRays( map ), "\n" ); 
 end );
@@ -508,7 +516,7 @@ function( src, rng, hom, oims, rims )
     ObjectifyWithAttributes( map, NewType( fam, filter ), 
         Source, src, 
         Range, rng, 
-        RootObjectHomomorphism, hom, 
+        RootGroupHomomorphism, hom, 
         ImagesOfObjects, oims, 
         ImagesOfRays, rims,  
         IsGeneralMappingWithObjects, true, 
@@ -632,35 +640,6 @@ function( gpd, oims )
         Error( "object images not a permutation of the objects" ); 
     fi; 
     return GroupoidAutomorphismByObjectPermNC( gpd, oims ); 
-end ); 
-
-#############################################################################
-##
-#M  GroupoidHomomorphismByGroupHomNC  
-#M  GroupoidHomomorphismByGroupHom 
-##
-InstallMethod( GroupoidHomomorphismByGroupHomNC , 
-    "for two groupoids and a group hom: root group -> root group", true, 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism ], 0,
-function( src, rng, hom )
-    return GroupoidHomomorphismFromSinglePieceNC( 
-               src, rng, hom, rng!.objects, RayElementsOfGroupoid( rng ) ); 
-end ); 
-
-InstallMethod( GroupoidHomomorphismByGroupHom, 
-    "for two groupoids and a group hom: root group -> root group", true, 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism ], 0,
-function( src, rng, hom ) 
-    if not ( (Source(hom) = src!.magma) and (Range(hom) = rng!.magma) ) then 
-        Error( "hom not a homomorphism between the root groups" ); 
-    fi; 
-    if not ( Length( src!.objects ) = Length( rng!.objects ) ) then 
-        Error( "object sets have different lengths" ); 
-    fi;
-    return GroupoidHomomorphismFromSinglePieceNC( 
-             src, rng, hom, rng!.objects, RayElementsOfGroupoid( rng ) ); 
 end ); 
 
 #############################################################################
@@ -1104,7 +1083,7 @@ function( m1, m2 )
     fi; 
     if ( HasIsGeneralMappingToSinglePiece( m1 ) 
         and IsGeneralMappingToSinglePiece( m1 ) ) then  
-        return ( ( RootObjectHomomorphism( m1 ) = RootObjectHomomorphism( m2 ) ) 
+        return ( ( RootGroupHomomorphism( m1 ) = RootGroupHomomorphism( m2 ) ) 
              and ( ImagesOfRays( m1 ) = ImagesOfRays( m1 ) ) ); 
     else 
         return fail; 
@@ -1140,9 +1119,9 @@ function( m1, m2 )
     for j in [1..nob1] do
         oims[j] := io2[ Position( ob2, io1[j] ) ]; 
     od;
-    h1 := RootObjectHomomorphism( m1 ); 
+    h1 := RootGroupHomomorphism( m1 ); 
     mgi1 := MappingGeneratorsImages( h1 ); 
-    h2 := RootObjectHomomorphism( m2 ); 
+    h2 := RootGroupHomomorphism( m2 ); 
     im12 := List( mgi1[2], x -> Image( h2, x ) ); 
     hom := GroupHomomorphismByImages( Source(h1), Range(h2), mgi1[1], im12 ); 
     rims := RaysOfGroupoid( s1 ); 

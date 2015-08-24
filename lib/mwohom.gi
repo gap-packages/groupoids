@@ -2,9 +2,9 @@
 ##
 #W  mwohom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 26/11/2014 
+##  version 1.35, 10/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for mappings of magmas with objects
@@ -940,8 +940,6 @@ end );
 
 InstallMethod( Order, "for a single piece magma mapping", true,
     [ IsHomomorphismToSinglePiece and IsAutomorphismWithObjects ], 0, 
-## could add requirement IsAutomorphismWithObjects, 
-## but the code below essentially tests for this. 
 function( m )
     local  im, obsrc, oblist, obord, hom, homord, ok;
 
@@ -952,7 +950,7 @@ function( m )
     obsrc := ObjectList( Source( m ) );
     oblist := List( ImagesOfObjects( m ), o -> Position( obsrc, o ) );
     obord := Order( PermList( oblist ) );
-    hom := RootObjectHomomorphism( m );
+    hom := RootGroupHomomorphism( m );
     homord := Order( hom);
     return Lcm( [ obord, homord ] );
 end );

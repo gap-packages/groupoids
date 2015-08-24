@@ -2,9 +2,9 @@
 ##
 #W  gpdhom.tst                    Gpd Package                    Chris Wensley
 ##
-##  version 1.31, 09/11/2014   
+##  version 1.35, 24/08/2015   
 ##
-#Y  Copyright (C) 2000-2014, Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -26,7 +26,7 @@ gap> SetName( Gs3, "Gs3" );
 gap> gend8 := GeneratorsOfGroup( d8 );;
 gap> imhd8 := [ ( ), (15,20)(16,19)(17,18) ];;
 gap> hd8 := GroupHomomorphismByImages( d8, s3, gend8, imhd8 );;
-gap> homd8 := GroupoidHomomorphismByGroupHom( Gd8, Gs3, hd8 ); 
+gap> homd8 := GroupoidHomomorphism( Gd8, Gs3, hd8 ); 
 groupoid homomorphism : Gd8 -> Gs3
 [ [ GroupHomomorphismByImages( d8, s3, [ (1,2,3,4), (1,3) ], 
         [ (), (15,20)(16,19)(17,18) ] ), [ -36, -35, -34 ], [ (), (), () ] ] ]
@@ -42,6 +42,9 @@ gap> Display( ihomd8 );
 root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
 images of objects: [ -36, -35, -34 ]
    images of rays: [ (), (), () ]
+gap> e2; ImageElm( ihomd8, e2 );
+[(1,3) : -8 -> -7]
+[(15,20)(16,19)(17,18) : -35 -> -34]
 
 ## SubSection 4.2.1
 gap> hc6 := GroupHomomorphismByImages( c6, s3, 

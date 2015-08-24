@@ -1,4 +1,4 @@
-                   The Gpd package - version 1.34
+                   The Gpd package - version 1.35
 
 This is the README file for the GAP package ``Gpd''. 
 
@@ -25,8 +25,8 @@ Version 1.03 was released in October 2007.
 Version 1.05 was released on 21st November 2008. 
 Version 1.07 was prepared for the anticipated GAP 4.5, 
 and version 1.15 came out with the first release in June 2012. 
-Kan becsme an accepted GAP package in May 2015. 
-The latest version, 1.34, was released on 5th June 2015 for GAP 4.7. 
+Gpd becsme an accepted GAP package in May 2015. 
+The latest version, 1.35, was released on 24th August 2015 for GAP 4.7. 
 A more detailed history is included as Chapter 8 of the manual, 
 and in the file CHANGES.
 
@@ -47,7 +47,7 @@ For details, see \URL{http://www.gnu.org/licenses/gpl.html}
 
 Installing `Gpd':
 
-1) unpack `gpd-1.34.tar.gz' in the `pkg' subdirectory of the GAP root
+1) unpack `gpd-1.35.tar.gz' in the `pkg' subdirectory of the GAP root
    directory.
 
 2) From within GAP load the package with:

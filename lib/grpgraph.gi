@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gi                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.34, 05/06/2015 
+##  version 1.35, 10/06/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -408,14 +408,14 @@ end);
  
 #############################################################################
 ##
-#M  GraphOfGroupsWordNC                                               
+#M  GraphOfGroupsWordNC          ## $$$$$$$$$$$$$$$$$$ 
 ##
 InstallMethod( GraphOfGroupsWordNC, "generic method for a word",
     true, [ IsGraphOfGroups, IsInt, IsList ], 0,
 function( gg, tv, wL )
 
     local  fam, filter, ggword;
-     
+    
     fam := FamilyObj( [ gg, wL] );
     filter := IsGraphOfGroupsWordRep;
     ggword := Objectify( NewType( fam, filter ), rec () );
@@ -466,7 +466,7 @@ function( gg, tv, wL )
         j := j+2;
         w := wL[j];
         if not ( w in g ) then
-            Error( "entry ", j, "not in group at vertex", v );
+            Error( "entry ", j, " not in group at vertex", v );
         fi;
     od;    
     return GraphOfGroupsWordNC( gg, tv, wL );
@@ -576,7 +576,7 @@ end);
 
 #############################################################################
 ##
-#M  ReducedGraphOfGroupsWord 
+#M  ReducedGraphOfGroupsWord                ## &&&&&&&&&
 ##
 InstallMethod( ReducedGraphOfGroupsWord, "for word in graph of groups",
     true, [ IsGraphOfGroupsWordRep ], 0,
@@ -604,12 +604,12 @@ function( ggword )
     adig := dig!.arcs;
     rtrans := RightTransversalsOfGraphOfGroups( gg );
     if ( len = 0 ) then
-        if isfp then
-            ng := NormalFormKBRWS( gps[tw], w[1] ); 
+        if isfp then 
+            ng := NormalFormKBRWS( gps[1], w[1] ); 
         else
             ng := w[1];
         fi;
-        return GraphOfGroupsWordNC( gg, tw, ng );
+        return GraphOfGroupsWordNC( gg, tw, [ng] );
     fi;
     k := 1;
     v := tw;
@@ -1043,30 +1043,28 @@ function( fpa, w )
     if ( ew = [ ] ) then
         return One( fpa );
     fi;
-## Print( "+++++ ew = ", ew, "\n" );
     ff := FreeGroupOfFpGroup( fpa );
     idff := One( ff );
     famff := FamilyObj( idff );
     len := Length( ew );
-    wL := [ ];
     info := FpaInfo( fpa );
     pos := info!.positions;
-## Print( "+++++ pos = ", pos, "\n" );
     ng1 := Length( pos[1] );
     gff := GeneratorsOfGroup( ff );
     gff12 := [ gff{pos[1]}, gff{pos[2]} ];
     gps := info!.groups;
     gen12 := List( gps, g -> GeneratorsOfGroup( g ) );
+    ## (08/06/15) make the word start at the first vertex 
+    tv := verts[1]; 
     if ( ew[1] in pos[1] ) then
+        wL := [ ];
         p := 1;
-        tv := verts[1];
-    elif ( ew[1] in pos[2] ) then
+    elif ( ew[1] in pos[2] ) then 
+        wL := [ One( gps[1] ), 1 ]; 
         p := 2;
-        tv := verts[2];
     else
         Error( "first vertex not found" );
     fi;
-## Print( "+++++ [p,tv,len] = ", [p,tv,len], "\n" ); 
     j := 0;
     while ( j < len ) do
         k := j+2;
@@ -1075,16 +1073,17 @@ function( fpa, w )
         od;
         es := ew{[j+1..k]};
         s := MappedWord( ObjByExtRep( famff, es ), gff12[p], gen12[p] );
-## Print( "+++++ [es,s] = ", [es,s], "\n" ); 
         Append( wL, [ s, p ] );
         p := 3-p;
         j := k;
     od;
-## Print( "++++ wL = ", wL, "\n" ); 
+    ## (08/06/15) make the word finish at the second vertex 
+    if ( p = 2 ) then 
+        Append( wL, [ One( gps[2] ), 2 ] ); 
+    fi; 
     wL := wL{[1..(Length(wL)-1)]};
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, tv, wL );
-## Print( "+++++ ggw = ", ggw, "\n" );
     Info( InfoGpd, 2, "ggw = ", ggw );
     rgw := ReducedGraphOfGroupsWord( ggw );
     Info( InfoGpd, 2, "rgw = ", rgw );
@@ -1192,8 +1191,8 @@ InstallMethod( NormalFormGGRWS, "generic method for hnn normal form",
 function( hnn, w )
 
     local  iso, gg, dig, v, ew, len, ff, idff, famff, wL, info, z, p, q,
-           ng, j, k, gff, fp, gfp, s, es, ggw, rgw, trgw, wrgw,
-           idhnn, famhnn, i, e, rw;
+           ng, j, k, gff, fp, gfp, idfp, s, es, ggw, rgw, trgw, wrgw,
+           idhnn, famhnn, i, e, rw; 
 
     if not ( w in hnn ) then
         Error( "word not in the group" );
@@ -1211,34 +1210,47 @@ function( hnn, w )
     idff := One( ff );
     famff := FamilyObj( idff );
     len := Length( ew );
-    wL := [ ];
     info := HnnInfo( hnn );
     gff := GeneratorsOfGroup( ff );
     p := Length( gff );
     z := gff[p];
     ng := p - 1;
     fp := info!.group;
+    idfp := One( fp );
     gfp := GeneratorsOfGroup( fp );
-    j := 2;
-    while ( j <= len ) do
-        k := j;
-        while ( ( k < len ) and ( ew[k+1] <> p ) ) do
-            k := k+2;
-        od;
-        es := ew{[j-1..k]};
-        s := MappedWord( ObjByExtRep( famff, es ), gff, gfp );
-        Add( wL, s );
-        if ( k < len ) then
-            q := ( 3 - ew[k+2] )/2;
-            Add( wL, q );
-            j := k+2;
-        else
+    j := 0; 
+    if ( ew[1] = 3 ) then 
+        wL := [ idfp ];
+    else 
+        wL := [ ]; 
+    fi; 
+    while ( j < len ) do 
+        k := j; 
+        if ( ew[j+1] = p) then 
+            j := j+2; 
+            if ( ew[j] > 0 ) then 
+                Add( wL, 1 ); 
+                for i in [2..ew[j]] do 
+                    Append( wL, [ idfp, 1 ] ); 
+                od; 
+            else 
+                Add( wL, 2 );
+                for i in [2..-ew[j]] do 
+                    Append( wL, [ idfp, 2 ] ); 
+                od; 
+            fi;
+        else 
+            while ( ( k < len ) and ( ew[k+1] <> p ) ) do
+                k := k+2;
+            od;
+            es := ew{[j+1..k]};
+            s := MappedWord( ObjByExtRep( famff, es ), gff, gfp );
+            Add( wL, s );
             j := k;
-        fi;
-        j := j+2;
+        fi; 
     od;
-    if ( RemInt( Length( wL ), 2 ) = 0 ) then
-        Add( wL, idff );
+    if ( RemInt( Length( wL ), 2 ) = 0 ) then 
+        Add( wL, idfp );
     fi;
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, v, wL );

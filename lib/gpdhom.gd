@@ -2,9 +2,9 @@
 ##
 #W  gpdhom.gd                GAP4 package `Gpd'                  Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014 
+##  version 1.35, 11/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -84,13 +84,11 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 
 ############################################################################# 
 ## 
-#A  RootObjectHomomorphism( <map> ) 
+#A  RootGroupHomomorphism( <map> ) 
 #O  RootHomomorphism( <map> ) 
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <hom>, <oims>, <rims> )  
 #O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <hom>, <oims>, <rims> )  
-#O  GroupoidHomomorphismByGroupHomNC( <gpd, hom> )
-#O  GroupoidHomomorphismByGroupHom( <gpd, hom> )
 #O  GroupoidAutomorphismByGroupAutoNC( <gpd, ims> )
 #O  GroupoidAutomorphismByGroupAuto( <gpd, auto> )
 #O  GroupoidAutomorphismByObjectPermNC( <gpd, oims> )
@@ -98,7 +96,7 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #O  GroupoidAutomorphismByRayImagesNC( <gpd, rims> ) 
 #O  GroupoidAutomorphismByRayImages( <gpd, rims> ) 
 ## 
-DeclareAttribute( "RootObjectHomomorphism", 
+DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
 DeclareOperation( "RootHomomorphism", 
     [ IsGroupoidHomomorphism and IsHomomorphismToSinglePiece ] );
@@ -110,12 +108,6 @@ DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC",
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
     [ IsGroupoid, IsGroupoid, IsGroupHomomorphism, 
       IsHomogeneousList, IsHomogeneousList ] );
-DeclareOperation( "GroupoidHomomorphismByGroupHomNC", 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism ] );
-DeclareOperation( "GroupoidHomomorphismByGroupHom", 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism ] ); 
 DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAuto", 

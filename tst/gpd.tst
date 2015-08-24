@@ -2,9 +2,9 @@
 ##
 #W  gpd.tst                       Gpd Package                    Chris Wensley
 ##
-##  version 1.31, 09/11/2014   
+##  version 1.35, 10/06/2015   
 ##
-#Y  Copyright (C) 2000-2014, Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -59,7 +59,7 @@ gap> [ Size(Gs4), Size(Gd8), Size(Gc6), Size(U3) ];
 [ 600, 72, 6, 678 ]
 gap> [ Size(Gf2), Size(Gq8), Size(U2) ];           
 [ infinity, 32, infinity ]
-gap> U5 := UnionOfPieces( [ U3, Gf2, Gq8 ] );
+gap> U5 := UnionOfPieces( [ U3, U2 ] );
 groupoid with 5 pieces:
 [ Gq8, Gf2, Gs4, Gd8, Gc6 ]
 gap> Display( U5 );
@@ -81,6 +81,9 @@ gap> ObjectList(V5);
 [ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
 gap> U5 = V5;
 false
+gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
+groupoid with 5 pieces:
+[ Gsl43, Gq8, Gf2, Gs4, Gd8 ]
 
 ## SubSection 3.1.4
 gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
@@ -120,9 +123,9 @@ gap> prod := e1*e2;
 gap> e2*e1;
 fail
 gap> e3 := Arrow( Gd8, (2,4), -7, -9 );;
-gap> cycle := prod*e3;
+gap> loop := prod*e3;
 [(1,4,3,2) : -9 -> -9]
-gap> cycle^2;
+gap> loop^2;
 [(1,3)(2,4) : -9 -> -9]
 
 ## SubSection 3.2.2
@@ -132,7 +135,7 @@ gap> [ e1*i8, i8*e1, e1^-1];
 [ [(1,2,3,4) : -9 -> -8], fail, [(1,4,3,2) : -8 -> -9] ]
 gap> Order(i8);
 1
-gap> Order(cycle);
+gap> Order(loop);
 4
 
 ## SubSection 3.2.3

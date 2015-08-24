@@ -2,9 +2,9 @@
 ##
 #W  util.gi                    GAP4 package `Gpd'               Chris Wensley
 ##
-##  version 1.31, 09/11/2014 
+##  version 1.35, 24/07/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  Installation file for utility functions in Gpd and XMod packages.

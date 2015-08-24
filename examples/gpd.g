@@ -2,9 +2,9 @@
 ##
 #W  gpd.g                       GAP4 package `Gpd'               Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014 
+##  version 1.35, 10/06/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -12,7 +12,7 @@ SetInfoLevel( InfoGpd, 1 );
 ##  TraceImmediateMethods( false );
 
 Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 09/11/14) >>>>\n" );
+Print( "<<<< testing examples in the Gpd manual (version 10/06/15) >>>>\n" );
 Print( "<<<<      functions for groupoids and their morphisms      >>>>\n" );
 Print( "===============================================================\n\n");
 
@@ -83,7 +83,7 @@ U2 := Groupoid( [ Gf2, Gq8 ] );
 Print( [ IsFpGroupoid(Gf2), IsPcGroupoid(Gq8), IsPcGroupoid(U2) ], "\n\n" );
 Print( [ Size(Gs4), Size(Gd8), Size(Gc6), Size(U3), Size(U2) ], "\n\n" );
 
-U5 := Groupoid( [ U3, Gf2, Gq8 ] );
+U5 := Groupoid( [ U3, U2 ] );
 Print( "U5 = " ); 
 Display( U5 );
 Print( "Size of U5 is ", Size(U5), "\n\n" );
@@ -92,6 +92,8 @@ V5 := ReplaceOnePieceInUnion( U5, 3, Gsl43 );
 Print( "V5 = ", V5, "\n" ); 
 Print( "V5 has object list ", ObjectList(V5), "\n" ); 
 Print( "U5=V5? ", U5=V5, "\n\n" );      
+W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
+Print( "W5 = ", W5, "\n" ); 
 
 ### Section 3.2.1 : Groupoid elements ###
 
@@ -102,11 +104,11 @@ Print( "e1 = ", e1, "\ne2 = ", e2, "\n" );
 Print( "prod = ", prod, "\n" );
 Print( "e2*e1 = ", e2*e1, "\n" ); 
 e3 := Arrow( Gd8, (2,4), -7, -9 );
-cycle := prod*e3;
-Print("e3 = ",e3, "\ncycle = ",cycle, ",  cycle^2 = ", cycle^2, "\n" ); 
-Print("cycle has order = ", Order(cycle), "\n" );
-ce1 := ConjugateArrow( cycle, e1 ); 
-Print( "conjugate of cycle by e1 is ", ce1, "\n\n" ); 
+loop := prod*e3;
+Print("e3 = ",e3, "\nloop = ",loop, ",  loop^2 = ", loop^2, "\n" ); 
+Print("loop has order = ", Order(loop), "\n" );
+ce1 := ConjugateArrow( loop, e1 ); 
+Print( "conjugate of loop by e1 is ", ce1, "\n\n" ); 
 
 ### Section 3.2 : Groupoid elements: star, costar and homset ###
 
