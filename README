@@ -13,11 +13,11 @@ rewriting systems.
 
 History
 -------
-Version 1.001 was called ``GraphGpd'', and  formed part of 
+Version 1.001 was called GraphGpd, and  formed part of 
 Emma Moore's PhD thesis in December 2000.
 Version 1.002 was prepared for the GAP 4.4 release in January 2004,
 and deposited in the incoming directory on the St Andrews ftp server.
-In the spring of 2006 the package was renamed ``Gpd'' and extensively 
+In the spring of 2006 the package was renamed Gpd and extensively 
 rewritten, with documentation in GAPDoc format.
 Version 1.01 was deposited in June 2006. 
 Gpd became an accepted GAP package in May 2015. 
@@ -27,11 +27,11 @@ and in the file CHANGES.
 
 Distribution
 ------------
-The ``Gpd'' package is distributed with the accepted GAP packages: see
+The Gpd package is distributed with the accepted GAP packages: see
      http://www.gap-system.org/Packages/gpd.html
 It may also be obtained from the Bangor ftp pages for
 Computational Higher-dimensional Discrete Algebra at:
-  http://pages.bangor.ac.uk/~mas023/chda/
+  http://pages.bangor.ac.uk/~mas023/chda/gpd/
 
 Copyright
 ---------
@@ -51,6 +51,7 @@ Installation
 gap> LoadPackage("gpd");
 true
 3) The documentation is in the `doc' subdirectory.
+4) To run the test file read testall.g from the gpd/tst/ directory. 
 
 Contact
 -------

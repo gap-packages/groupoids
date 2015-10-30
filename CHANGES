@@ -14,8 +14,9 @@ ToDo
  - (10/06/15) RootHomomorphism and ObjectGroupHomomorphism not in manual
 
 ############################################################################## 
-1.35 -> 1.36  (01/09/15) 
+1.35 -> 1.36  (30/10/15) 
 
+ - (28/10/15) added MathJax to makedocrel.g 
  - (01/09/15) major edits to README, including GitHub issues link 
 
 ############################################################################## 

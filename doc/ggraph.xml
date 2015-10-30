@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  ggraph.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.34, 05/06/2015                                           --> 
+<!--  version 1.36, 16/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000--2015, Emma Moore and Chris Wensley,            --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -256,7 +256,7 @@ If <C>G</C> is a graph of groups with underlying digraph <C>D</C>,
 the following groupoids may be considered.
 First there is the free groupoid or path groupoid on <C>D</C>.
 Since we want each involutory pair of arcs to represent inverse elements
-in the groupoid, we quotient out by the relations <C>y\^{}-1 = ybar</C>
+in the groupoid, we quotient out by the relations <C>y^-1 = ybar</C>
 to obtain <C>PG(D)</C>.
 Secondly, there is the discrete groupoid <C>VG(D)</C>, namely the union
 of all the vertex groups.
