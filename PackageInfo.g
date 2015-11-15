@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.36",
-Date := "01/09/2015", 
+Date := "15/11/2015", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.36">
-##  <!ENTITY RELEASEDATE "01/09/2015">
+##  <!ENTITY RELEASEDATE "15/11/2015">
 ##  <!ENTITY GPDTARFILE "gpd-1.36.tar.gz">
 ##  <!ENTITY GPDHTMLFILE "gpd136.html">
-##  <!ENTITY GPDRELEASEDATE "1st September 2015">
+##  <!ENTITY GPDRELEASEDATE "15th November 2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
@@ -67,6 +67,16 @@ README_URL :=
 PackageInfoURL := 
   Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
+##  Optional:
+##    - Type and the URL of the source code repository
+##    - URL of the public issue tracker
+##    - Support email address
+SourceRepository :=
+  rec( Type := "git", # must be one of "git", "hg", "svn", "cvs"
+       URL  := "http://github.com/gap-packages/gpd"),
+IssueTrackerURL := "http://github.com/gap-packages/gpd/issues",
+SupportEmail := "c.d.wensley@bangor.ac.uk",
+
 AbstractHTML :=
 "The Gpd package provides a collection of functions for computing with \
 finite groupoids, graph of groups, and graphs of groupoids. \
@@ -86,7 +96,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7",
+  GAP := ">=4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
                            [ "fga", ">= 1.2.0" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 2.2"] ],
@@ -96,7 +106,7 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation(
-    "Loading Gpd ", String( ~.Version ), " for GAP 4.7", 
+    "Loading Gpd ", String( ~.Version ), " for GAP 4.8", 
     " - Emma Moore and Chris Wensley ...\n" ),
 
 Autoload := false,

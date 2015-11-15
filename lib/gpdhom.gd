@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd                GAP4 package `Gpd'                  Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.35, 11/06/2015 
+##  version 1.36, 15/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -85,7 +85,6 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 ############################################################################# 
 ## 
 #A  RootGroupHomomorphism( <map> ) 
-#O  RootHomomorphism( <map> ) 
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <hom>, <oims>, <rims> )  
 #O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <hom>, <oims>, <rims> )  
@@ -98,8 +97,6 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 ## 
 DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
-DeclareOperation( "RootHomomorphism", 
-    [ IsGroupoidHomomorphism and IsHomomorphismToSinglePiece ] );
 DeclareOperation( "ObjectGroupHomomorphism", 
     [ IsGroupoidHomomorphism, IsObject ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC", 

@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gi                    GAP4 package `Gpd'                Chris Wensley 
 #W                                                               & Emma Moore
-##  version 1.35, 10/06/2015 
+##  version 1.36, 15/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -1829,6 +1829,18 @@ function( gpd, sgpd, e )
     hc := HomsetCosetsGroupoidCoset( l ); 
     return l;
 end ); 
+
+InstallMethod( PrintObj, "RightCoset", true, 
+    [ IsGroupoidCoset and IsRightCosetDefaultRep ], 0,
+function( l )
+  Print( "RightCoset(", ActingDomain(l), ",", Representative(l), ")" );
+end); 
+
+InstallMethod( ViewObj, "RightCoset", true, 
+    [ IsGroupoidCoset and IsRightCosetDefaultRep ], 0,
+function( l )
+  Print( "RightCoset(", ActingDomain(l), ",", Representative(l), ")" );
+end); 
 
 InstallMethod( PrintObj, "LeftCoset", true, 
     [ IsGroupoidCoset and IsLeftCosetWithObjectsDefaultRep ], 0,

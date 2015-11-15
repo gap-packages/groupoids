@@ -2,7 +2,7 @@
 ##
 #W  gpd.tst                       Gpd Package                    Chris Wensley
 ##
-##  version 1.35, 10/06/2015   
+##  version 1.36, 15/11/2015   
 ##
 #Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -220,9 +220,9 @@ single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4)
 gap> hs1413 := Homset( Hd8a, -14, -13 );
 <homset -14 -> -13 with group d8>
 gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
-[(2,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [
-(1,3,4) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,3) : -14 -> -13], [
-(1,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
+[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
+(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
+(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
 [ (), (1,2,3), (1,2,4) ] >

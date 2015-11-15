@@ -2,7 +2,7 @@
 ##
 #W  util.gi                    GAP4 package `Gpd'               Chris Wensley
 ##
-##  version 1.35, 24/07/2015 
+##  version 1.36, 04/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -67,33 +67,6 @@ function( G )
     oneG := One( G );
     ones := List( genG, g -> oneG );
     return GroupHomomorphismByImages( G, G, genG, ones );
-end );
-
-#############################################################################
-##
-#M  RestrictionMappingGroups( <hom>, <src>, <rng> )
-##
-InstallMethod( RestrictionMappingGroups, "generic method for group hom",
-    true, [ IsGroupHomomorphism, IsGroup, IsGroup ], 0,
-function( hom, src, rng )
-
-    local  res, gens, ims, r;
-
-    if not IsSubgroup( Source( hom ), src ) then
-        return fail;
-    fi;
-    if not IsSubgroup( Range( hom ), rng ) then
-        return fail;
-    fi;
-    res := RestrictedMapping( hom, src );
-    gens := GeneratorsOfGroup( src );
-    ims := List( gens, g -> Image( res, g ) );
-    for r in ims do
-        if not (r in rng ) then
-            return fail;
-        fi;
-    od;
-    return GroupHomomorphismByImages( src, rng, gens, ims );
 end );
 
 #############################################################################

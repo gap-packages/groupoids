@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.35, 11/06/2015 
+##  version 1.36, 04/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -226,8 +226,8 @@ function( mor, U, V )
         sj := compU[j];
         osj := sj!.objects;
         orj := List( osj, o -> imo[Position(obsU,o)] );
-        rhom := RestrictionMappingGroups( hom, sj!.magma, rng!.magma );
-        if ( rhom = fail ) then
+        rhom := GeneralRestrictedMapping( hom, sj!.magma, rng!.magma );
+        if ( fail in MappingGeneratorsImages(rhom)[2] ) then
             Error( "magma mapping fails to restrict" );
         fi;
         #? (28/01/11) made this "NC" and added the rays, but not checked! 
@@ -238,6 +238,7 @@ function( mor, U, V )
 end );
 
 ##  this one not checked
+#?  should be changed to GeneralRestrictedMapping
 InstallMethod( RestrictionMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ], 0,
 function( mor, ssrc, srng )
@@ -349,9 +350,9 @@ end );
 
 #############################################################################
 ##
-#M  RootHomomorphism . . . . . . . . . . for a groupoid hom from single piece 
+#M  RootGroupHomomorphism . . . . . . . for a groupoid hom from single piece 
 ##
-InstallMethod( RootHomomorphism, "for a groupoid hom from a single piece", 
+InstallMethod( RootGroupHomomorphism, "for a groupoid hom from a single piece", 
     true, [ IsGroupoidHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( mor )
     local  gpd1, gpd2, ob2, imobs, roh, mgi, ray, gp2, im2, hom;
@@ -1216,7 +1217,7 @@ function ( map, e )
     ray1 := RayElementsOfGroupoid( m1 ); 
     loop := ray1[pt1] * e![1] * ray1[ph1]^-1; 
     rims := ImagesOfRays( map ); 
-    iloop := ImageElm( RootHomomorphism( map ), loop ); 
+    iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
     g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
     return ArrowNC( true, g2, imo[pt1], imo[ph1] );
 end ); 

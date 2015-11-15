@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gi                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.35, 10/06/2015 
+##  version 1.36, 15/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -93,6 +93,30 @@ function( gp, v, e )
     od;
     return FpWeightedDigraphNC( gp, v, e );
 end);
+
+#############################################################################
+##
+#M  WeightedAdjacencyMatrix                                              
+##
+InstallMethod( WeightedAdjacencyMatrix, "generic method for FpWeightedDigraph",
+    true, [ IsFpWeightedDigraph ], 0,
+function( dig )
+
+    local  verts, n, mat, arcs, a, u, posu, v, posv; 
+
+    verts := dig!.vertices;
+    n := Length( verts ); 
+    mat := NullMat( n, n );
+    arcs := dig!.arcs; 
+    for a in arcs do 
+        u := a[2]; 
+        posu := Position( verts, u );
+        v := a[3]; 
+        posv := Position( verts, v ); 
+        mat[posu][posv] := a[1]; 
+    od; 
+    return mat; 
+end ); 
 
 #############################################################################
 ##
