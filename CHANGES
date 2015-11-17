@@ -10,11 +10,13 @@ ToDo
               This needs to be sorted out: maybe the ElementFamilies need 
               to be different but, when it comes to composition of arrows 
               the type of mwo hardly matters!? 
- - (10/06/15) RootHomomorphism and ObjectGroupHomomorphism not in manual
+ - (10/06/15) RootGroupHomomorphism and ObjectGroupHomomorphism not in manual
+ - (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
 
 ############################################################################## 
-1.35 -> 1.36  (15/11/15) 
+1.35 -> 1.36  (16/11/15) 
 
+ - (16/11/15) RestrictionMappingGroupoids -> RestrictedMappingGroupoids 
  - (15/11/15) added method for WeightedAdjacencyMatrix for FpWeightedDigraphs 
  - (15/11/15) added PrintObj & Viewobj for groupoid right cosets 
  - (04/11/15) removed RestrictionMappingGroups: now GeneralRestrictedMapping

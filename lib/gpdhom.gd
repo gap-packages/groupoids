@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd                GAP4 package `Gpd'                  Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.36, 15/11/2015 
+##  version 1.36, 16/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -35,11 +35,11 @@ DeclareSynonym( "IsGroupoidAutomorphism",
 ############################################################################# 
 ## 
 #O  InclusionMappingGroupoids( <G>, <H> )
-#O  RestrictionMappingGroupoids( <hom>, <src>, <rng> )
+#O  RestrictedMappingGroupoids( <hom>, <src>, <rng> )
 #? #O  HomomorphismToTrivialGroupoid( <G>, <H> )
 ## 
 DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
-DeclareOperation( "RestrictionMappingGroupoids", 
+DeclareOperation( "RestrictedMappingGroupoids", 
     [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ] );
 
 ############################################################################# 

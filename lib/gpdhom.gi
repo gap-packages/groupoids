@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.36, 04/11/2015 
+##  version 1.36, 16/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -192,9 +192,9 @@ end );
 
 #############################################################################
 ##
-#M  RestrictionMappingGroupoids
+#M  RestrictedMappingGroupoids
 ##
-InstallMethod( RestrictionMappingGroupoids, "for a groupoid mapping", true,
+InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ], 0,
 function( mor, U, V )
 
@@ -238,8 +238,8 @@ function( mor, U, V )
 end );
 
 ##  this one not checked
-#?  should be changed to GeneralRestrictedMapping
-InstallMethod( RestrictionMappingGroupoids, "for a groupoid mapping", true,
+#?  should use GeneralRestrictedMapping
+InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ], 0,
 function( mor, ssrc, srng )
 
@@ -249,7 +249,7 @@ function( mor, ssrc, srng )
     len := Length( comp );
     rcomp := ListWithIdenticalEntries( len, 0 );
     for j in [1..len] do
-        rcomp[j] := RestrictionMappingGroupoids( comp[j], ssrc, srng );
+        rcomp[j] := RestrictedMappingGroupoids( comp[j], ssrc, srng );
     od;
     return HomomorphismByUnionNC( Source(mor), Range(mor), rcomp );
 end );
@@ -411,7 +411,7 @@ function( mor, obj )
         pos := Position( Pieces( src ), obj ); 
         hom := ObjectGroupHomomorphism( PiecesOfMapping( mor )[pos], obj ); 
     else 
-        Error( "this case not yet provided for," ); 
+        Error( "this case not yet provided for" ); 
     fi; 
     return hom; 
 end ); 
