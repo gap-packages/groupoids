@@ -2,13 +2,13 @@
 ##
 #W  gpd.tst                       Gpd Package                    Chris Wensley
 ##
-##  version 1.36, 15/11/2015   
+##  version 1.36, 23/11/2015   
 ##
 #Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-## SubSection 3.1.1 
+## SubSection 4.1.1 
 gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
 gap> SetInfoLevel( InfoGpd, 0 );; 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
@@ -16,8 +16,6 @@ gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
 gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
 gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] ); 
 single piece groupoid: < s4, [ -15 .. -11 ] >
-gap> RootObject( Gs4 );
--15
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );
 single piece groupoid: < d8, [ -9, -8, -7 ] >
 gap> c6 := Group( (5,6,7)(8,9) );;
@@ -26,7 +24,17 @@ gap> Gc6 := DomainWithSingleObject( c6, -6 );
 single piece groupoid: < c6, [ -6 ] >
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
 
-## SubSection 3.1.2
+## SubSection 4.1.2
+gap> ObjectList( Gs4 );    
+[ -15 .. -11 ]
+gap> RootObject( Gd8 );
+-9
+gap> RootGroup( Gc6 );
+c6
+gap> ObjectGroup( Gs4, -11 );
+s4
+
+## SubSection 4.1.3
 gap> f2 := FreeGroup( 2 );;
 gap> Gf2 := Groupoid( f2, -22 );;
 gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
@@ -40,7 +48,7 @@ gap> [ IsMatrixGroupoid( Gsl43 ), IsFpGroupoid( Gf2 ),
 >      IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; 
 [ true, true, true, true ]
 
-## SubSection 3.1.3
+## SubSection 4.1.4
 gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
 gap> Display( U3 );
 groupoid with 3 pieces:
@@ -85,7 +93,7 @@ gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 );
 groupoid with 5 pieces:
 [ Gsl43, Gq8, Gf2, Gs4, Gd8 ]
 
-## SubSection 3.1.4
+## SubSection 4.1.5
 gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
@@ -109,9 +117,9 @@ gap> ans :=
 gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
 
-## Section 3.2 : Groupoid elements: stars; costars; homsets ###
+## Section 4.2 : Groupoid elements: stars; costars; homsets ###
 
-## SubSection 3.2.1
+## SubSection 4.2.1
 gap> e1 := Arrow( Gd8, (1,2,3,4), -9, -8 );
 [(1,2,3,4) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (1,3), -8, -7 );
@@ -128,7 +136,7 @@ gap> loop := prod*e3;
 gap> loop^2;
 [(1,3)(2,4) : -9 -> -9]
 
-## SubSection 3.2.2
+## SubSection 4.2.2
 gap> i8 := IdentityArrow( Gd8, -8 );
 [() : -8 -> -8]
 gap> [ e1*i8, i8*e1, e1^-1]; 
@@ -138,7 +146,7 @@ gap> Order(i8);
 gap> Order(loop);
 4
 
-## SubSection 3.2.3
+## SubSection 4.2.3
 gap> star9 := ObjectStar( Gd8, -9 );
 <star at [ -9 ] with group d8>
 gap> Size( star9 ); 
@@ -168,9 +176,9 @@ gap> for e in hsetq8 do Print(e,"\n"); od;
 [f1*f2 : -28 -> -27]
 [f1*f2*f3 : -28 -> -27]
 
-### Section 3.3 : Subgroupoids ###
+### Section 4.3 : Subgroupoids ###
 
-## SubSection 3.3.1
+## SubSection 4.3.1
 gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
 gap> k4 := Subgroup( d8, [ (1,2)(3,4), (1,3)(2,4) ] );;
 gap> SetName( c4, "c4" );  SetName( k4, "k4" );
@@ -211,7 +219,7 @@ groupoid with 3 pieces:
 2:  single piece groupoid: < q8, [ -27 ] >
 3:  single piece groupoid: < f2, [ -22 ] >
 
-## SubSection 3.3.2
+## SubSection 4.3.2
 gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
@@ -240,9 +248,9 @@ single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ),
 gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
 single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
 
-### Section 3.4 : Left, Right and Double Cosets ###
+### Section 4.4 : Left, Right and Double Cosets ###
 
-## SubSection 3.4.1
+## SubSection 4.4.1
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
 RightCoset(single piece groupoid: < c4, [ -8, -7 ] >,[(1,3) : -8 -> -7])
 gap> for x in re2 do Print( x, "\n" ); od;
@@ -262,9 +270,9 @@ gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 [ [() : -7 -> -9], [(2,4) : -7 -> -9], [() : -7 -> -8], [(2,4) : -7 -> -8] ]
 
-### Section 3.5 : conjugation ###
+### Section 4.5 : conjugation ###
 
-## SubSection 3.5.1
+## SubSection 4.5.1
 gap> x := Arrow( Gd8, (1,3), -9, -9 );; 
 gap> y := Arrow( Gd8, (1,2,3,4), -8, -9 );; 
 gap> z := Arrow( Gd8, (1,2)(3,4), -9, -7 );; 
@@ -287,7 +295,7 @@ gap> ConjugateArrow(w,y);
 gap> ConjugateArrow(w,z);
 [(1,3) : -9 -> -8]
 
-## SubSection 3.5.2
+## SubSection 4.5.2
 gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
 [(1,2,3) : -15 -> -13]
 gap> gensa := GeneratorsOfGroupoid( Hd8a );
@@ -300,7 +308,7 @@ gap> C := SinglePieceGroupoidByGenerators( Gs4, imsa );
 single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
 
-## SubSection 3.5.3
+## SubSection 4.5.3
 gap> ConjugateGroupoid( Hd8a, u^-1 ); 
 single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >

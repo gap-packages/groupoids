@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml            Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.33, 02/06/2015                                           --> 
+<!--  version 1.36, 23/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -54,7 +54,14 @@ in June 2012.
 <P/> 
 &gpd; became an accepted &GAP; package in May 2015. 
 <P/>
-The latest version is &VERSION; of &GPDRELEASEDATE;, for &GAP; 4.7.  
+The latest version is &VERSION; of &GPDRELEASEDATE;, for &GAP; 4.8.  
+<P/>
+(In this temporary version there have been a number of changes of function 
+name, such as <C>IsDigraph</C> becoming <C>GpdIsDigraph</C>. 
+This is in order to avoid conflicts with the new 
+<Package>digraphs</Package> package.
+Further changes will be made once the <Package>digraphs</Package> 
+package becomes part of the general GAP distribution.) 
 </Section>
 
 

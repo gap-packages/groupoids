@@ -2,7 +2,7 @@
 ##
 #W  ggraph.tst                    Gpd Package                    Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.34, 05/06/2015   
+##  version 1.36, 23/11/2015   
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -11,9 +11,9 @@
 gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
 gap> SetInfoLevel( InfoGpd, 0 );; 
 
-###  Section 5.1  Digraphs
+###  Section 6.1  Digraphs
 
-## SubSection 5.1.1
+## SubSection 6.1.1
 ## define the graph D1
 gap> V1 := [5,6];;
 gap> fg1 := FreeGroup("y");;
@@ -39,9 +39,9 @@ and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
 gap> inv3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 
-### Section 5.2 : Graphs of Groups
+### Section 6.2 : Graphs of Groups
 
-## SubSection 5.2.1
+## SubSection 6.2.1
 ## group fa and subgroup 3fa
 gap> fa := FreeGroup( "a" );;
 gap> a := fa.1;;
@@ -70,21 +70,21 @@ Graph of Groups with :-
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 
-## SubSection 5.2.2
+## SubSection 6.2.2
 gap> IsGraphOfFpGroups(G1);
 true
 gap> IsomorphismsOfGraphOfGroups(G1);
 [ [ a^3 ] -> [ b^2 ], [ b^2 ] -> [ a^3 ] ]
 
-## SubSection 5.2.3
+## SubSection 6.2.3
 gap> RTG1 := RightTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a, a^2 ], [ <identity ...>, b ] ]
 gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a^-1, a^-2 ], [ <identity ...>, b^-1 ] ]
 
-### Section 5.3  Words in a Graph of Groups and their normal forms
+### Section 6.3  Words in a Graph of Groups and their normal forms
 
-## SubSection 5.3.1
+## SubSection 6.3.1
 gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
 gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
 (5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
@@ -97,13 +97,13 @@ Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> WordOfGraphOfGroupsWord( gw1 );
 [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
 
-## SubSection 5.3.2
+## SubSection 6.3.2
 gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
 (5)a^-1.y.b^-1.y^-1.a^10(5)
 
-### Section 5.4 : Free products with amalgamation and HNN extensions
+### Section 6.4 : Free products with amalgamation and HNN extensions
 
-## Subsection 5.4.1
+## Subsection 6.4.1
 ## set up the first group s3 and a subgroup c3=<a1>
 gap> fg2 := FreeGroup( 2, "a" );;
 gap> rel1 := [fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2];;
@@ -143,7 +143,7 @@ gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
 gap> n2 := NormalFormGGRWS( fpa, w2 );
 fa2*fa3*(fa4^-1*fa2)^2*fa4^-1*fa3
 
-## Subsection 5.4.2
+## Subsection 6.4.2
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
 gap> hnn := HnnExtension( a4, i23 );
@@ -172,9 +172,9 @@ rec( groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ],
 gap> hnninfo := HnnInfo( hnn );
 rec( group := a4, isomorphism := [ b1 ] -> [ b2 ] )
 
-### Section 5.5 : Graphs of groupoids and their words 
+### Section 6.5 : Graphs of groupoids and their words 
 
-## Subsection 5.5.1
+## Subsection 6.5.1
 gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );

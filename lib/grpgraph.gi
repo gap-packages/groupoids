@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gi                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.36, 15/11/2015 
+##  version 1.36, 23/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -96,9 +96,9 @@ end);
 
 #############################################################################
 ##
-#M  WeightedAdjacencyMatrix                                              
+#M  GpdWeightedAdjacencyMatrix                                              
 ##
-InstallMethod( WeightedAdjacencyMatrix, "generic method for FpWeightedDigraph",
+InstallMethod( GpdWeightedAdjacencyMatrix, "generic method for FpWeightedDigraph",
     true, [ IsFpWeightedDigraph ], 0,
 function( dig )
 
@@ -120,9 +120,9 @@ end );
 
 #############################################################################
 ##
-#M  WeightedSpanningTree                                              
+#M  GpdWeightedSpanningTree                                              
 ##
-InstallMethod( WeightedSpanningTree, "generic method for a FpWeightedDigraph",
+InstallMethod( GpdWeightedSpanningTree, "generic method for a FpWeightedDigraph",
     true, [ IsFpWeightedDigraph ], 0,
 function( dig )
 
@@ -131,7 +131,7 @@ function( dig )
     gp := dig!.group; 
     verts := dig!.vertices; 
     arcs := dig!.arcs; 
-    adjmx := WeightedAdjacencyMatrix( dig ); 
+    adjmx := GpdWeightedAdjacencyMatrix( dig ); 
     lenv := Length( verts );
     lena := Length( arcs ); 
     paths := ListWithIdenticalEntries( lenv, 0 ); 

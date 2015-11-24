@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gpdhom.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.35, 11/06/2015                                           --> 
+<!--  version 1.36, 23/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -41,8 +41,6 @@ for some <M>n>0</M>.
          Arg="args" />
    <Oper Name="InclusionMappingGroupoids"
          Arg="gpd, sgpd" />
-   <Attr Name="RootGroupHomomorphism"
-         Arg="gpdhom" />
    <Oper Name="IsomorphismNewObjects"
          Arg="src,objlist" />
 <Description>
@@ -50,8 +48,7 @@ As usual, there are various homomorphism operations.
 The basic construction is a homomorphism <M>G \to H</M> with <M>G</M> 
 the direct product of a group and a complete graph. 
 The homomorphism has attributes <C>Source</C>, <C>Range</C>, 
-<C>ImagesOfObjects</C>, <C>PieceImages</C> 
-and <C>RootGroupHomomorphism</C>. 
+<C>ImagesOfObjects</C> and <C>PieceImages</C>. 
 The input data consists of the source; the range; and 
 <List>
 <Item>
@@ -373,7 +370,6 @@ IdentityMapping( s3 )
 IdentityMapping( s3 )
 IdentityMapping( s3 )
 IdentityMapping( s3 )
-
 gap> gens3 := GeneratorsOfGroup( s3 );; 
 gap> g1 := gens3[1];; 
 gap> g2 := gens3[2];; 
@@ -397,35 +393,13 @@ GroupHomomorphismByImages( s3, s3,
 GroupHomomorphismByImages( s3, s3, 
 [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
 [ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
-
 gap> AHs3 := AutomorphismGroup( Hs3 );;  Size( AHs3 ); 
 31104
-gap> for z in GeneratorsOfGroup(AHs3) do Print(z); od;  
-morphism from a homogeneous discrete groupoid:
-[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
-object homomorphisms:
-InnerAutomorphism( s3, (15,20)(16,19)(17,18) )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
+gap> GeneratorsOfGroup( AHs3 )[2];
 morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
 object homomorphisms:
 InnerAutomorphism( s3, (15,19,17)(16,20,18) )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-morphism from a homogeneous discrete groupoid:
-[ -13, -12, -11, -10 ] -> [ -12, -11, -10, -13 ]
-object homomorphisms:
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
-morphism from a homogeneous discrete groupoid:
-[ -13, -12, -11, -10 ] -> [ -12, -13, -11, -10 ]
-object homomorphisms:
-IdentityMapping( s3 )
 IdentityMapping( s3 )
 IdentityMapping( s3 )
 IdentityMapping( s3 )
@@ -434,6 +408,31 @@ IdentityMapping( s3 )
 <P/>
 </Description>
 </ManSection>
+
+<ManSection>
+   <Attr Name="RootGroupHomomorphism"
+         Arg="gpdhom" />
+   <Oper Name="ObjectGroupHomomorphism"
+         Arg="gpdhom, obj" />
+<Description>
+A homomorphism from a single piece groupoid has one further attribute, 
+namely <C>RootGroupHomomorphism</C>.  
+This is the group homomorphism from the root group of the source 
+to the object group at the image object in the range. 
+Similarly, the group homomorphism from an object group of the source 
+to the object group at the image object in the range is given by 
+<C>ObjectGroupHomomorphism</C>.  
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> RootGroupHomomorphism( aut123 );
+[ (1,2,3), (2,3,4) ] -> [ (2,3,4), (1,3,4) ]
+gap> ObjectGroupHomomorphism( aut123, -13 );
+[ (1,2,3), (2,3,4) ] -> [ (1,3,2), (1,3,4) ]
+]]>
+</Example>
 
 </Section>
 

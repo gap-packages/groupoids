@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  manual.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.34, 05/06/2015                                           --> 
+<!--  version 1.36, 23/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -57,16 +57,15 @@ when the first author was studying for a Ph.D. in Bangor.
 Version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
 Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
 and was submitted for official acceptance as a &GAP; package. 
-<Package>Gpd</Package> became an accepted &GAP; package in May 2015 
-(even though the referee's comments are still being addressed). 
-The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.7.  
+<Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
+The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.8.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
-Please contact the second author at     
-<Email>c.d.wensley@bangor.ac.uk</Email>.
+Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
+or submit an issue at <URL>http://github.com/gap-packages/gpd/issues/</URL>. 
 </Abstract>
 
 <Copyright> 

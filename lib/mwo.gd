@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gd                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.33, 02/06/2015 
+##  version 1.36, 23/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -47,11 +47,11 @@ DeclareProperty( "IsHomogeneousDomainWithObjects", IsDomainWithObjects );
 ## 
 #A  ObjectList( <dwo> ) 
 #A  Pieces( <dwo> ) 
-#O  RootObject( <dwo> )
+#A  RootObject( <dwo> )
 ## 
 DeclareAttribute( "ObjectList", IsDomainWithObjects ); 
 DeclareAttribute( "Pieces", IsDomainWithObjects );  
-DeclareOperation( "RootObject", [ IsSinglePieceDomain ] ); 
+DeclareAttribute( "RootObject", IsSinglePieceDomain ); 
   
 ############################################################################## 
 ## 
@@ -184,25 +184,37 @@ DeclareCategory( "IsMagmaWithObjects", IsDomainWithObjects and
     IsMagma and IsMultiplicativeElementWithObjectsCollection ); 
 DeclareCategoryCollections( "IsMagmaWithObjects" ); 
 ##  ?? (23/04/10) Declare more CategoryColections ?? 
+DeclareSynonymAttr( "IsSemigroupWithObjects",
+    IsMagmaWithObjects and IsAssociative );
 DeclareCategory( "IsMagmaWithObjectsAndOnes", 
     IsMagmaWithObjects and 
     IsMultiplicativeElementWithObjectsAndOnesCollection ); 
+DeclareSynonymAttr( "IsMonoidWithObjects", 
+    IsMagmaWithObjectsAndOnes and IsAssociative );
 DeclareCategory( "IsMagmaWithObjectsAndInverses", 
     IsMagmaWithObjectsAndOnes and 
     IsMultiplicativeElementWithObjectsAndInversesCollection ); 
-##  DeclareCategory( "IsMagmaWithObjectsAndInverses",
 DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInverses 
     and IsGroupoidElementCollection ); 
 
 ############################################################################# 
 ##  
 #V  MagmaWithObjectsFamily . . . . . . . . . . family for magmas with objects 
+#V  SemigroupWithObjectsFamily . . . . . . family for semigroups with objects 
+#V  MonoidWithObjectsFamily . . . . . . . . . family for monoids with objects 
 #V  GroupoidFamily . . . . . . . . . . . . . . . . . . . family for groupoids
 ##  
 BindGlobal( "MagmaWithObjectsFamily", 
     NewFamily( "MagmaWithObjectsFamily", IsMagmaWithObjects, 
                CanEasilySortElements, CanEasilySortElements ) ); 
-BindGlobal( "GroupoidFamily", NewFamily( "GroupoidFamily", IsGroupoid, 
+BindGlobal( "SemigroupWithObjectsFamily", 
+    NewFamily( "SemigroupWithObjectsFamily", IsSemigroupWithObjects, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "MonoidWithObjectsFamily", 
+    NewFamily( "MonoidWithObjectsFamily", IsMonoidWithObjects, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "GroupoidFamily", 
+    NewFamily( "GroupoidFamily", IsGroupoid, 
                CanEasilySortElements, CanEasilySortElements ) ); 
 
 ############################################################################# 
@@ -279,17 +291,6 @@ DeclareOperation( "IsArrowIn",
 
 ################################  SEMIGROUPS  ###############################
 
-#############################################################################
-##
-#P  IsSemigroupWithObjects( <mwo> )
-##
-##  returns `true' if the object <obj> is a semigroup & a magma with objects.
-##
-#?  why SynonymAttr ??  surely a category ?? 
-##
-DeclareSynonymAttr( "IsSemigroupWithObjects",
-    IsMagmaWithObjects and IsAssociative );
-
 ############################################################################ 
 ## 
 #F  SemigroupWithObjects( <mag>, <obs> )  
@@ -308,17 +309,6 @@ DeclareOperation( "SinglePieceSemigroupWithObjects",
 
 
 #################################  MONOIDS  #################################
-
-#############################################################################
-##
-#P  IsMonoidWithObjects( <mwo> )
-##
-##  returns `true' if the object <obj> is a monoid and a magma with objects.
-##
-#?  why SynonymAttr -- see above ??
-##
-DeclareSynonymAttr( "IsMonoidWithObjects", 
-    IsMagmaWithObjectsAndOnes and IsAssociative );
 
 ############################################################################ 
 ## 

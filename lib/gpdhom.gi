@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.36, 16/11/2015 
+##  version 1.36, 23/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -383,27 +383,19 @@ InstallMethod( ObjectGroupHomomorphism, "for a groupoid hom and an object",
     true, [ IsGroupoidHomomorphism, IsObject ], 0,
 function( mor, obj ) 
 
-    local  src, imobs, rng, obr, roh, hom, mgi, ray, gp2, im2, pos; 
-
+    local  src, imobs, pos, obg, gens, loops, imloops, imgens, img, hom; 
     src := Source( mor ); 
-    imobs := ImagesOfObjects( mor ); 
     if ( HasIsGeneralMappingFromSinglePiece( mor ) 
          and IsGeneralMappingFromSinglePiece( mor ) ) then 
-        rng := Range( mor ); 
-        obr := rng!.objects; 
-        roh := RootGroupHomomorphism( mor ); 
-        if ( imobs[1] = obr[1] ) then  ## root maps to root 
-            hom := roh; 
-        elif ( HasIsDirectProductWithCompleteGraph( rng ) and 
-               IsDirectProductWithCompleteGraph( rng ) ) then 
-            hom := roh; 
-        else 
-            mgi := MappingGeneratorsImages( roh ); 
-            ray := RayElementsOfGroupoid( rng )[ Position( obr, imobs[1] ) ]; 
-            gp2 := ObjectGroup( rng, imobs[1] ); 
-            im2 := List( mgi[2], g -> g^ray ); 
-            hom := GroupHomomorphismByImages( Source(roh), rng, mgi[1], im2 );  
-        fi; 
+        imobs := ImagesOfObjects( mor ); 
+        pos := Position( src!.objects, obj );
+        obg := ObjectGroup( src, obj );
+        gens := GeneratorsOfGroup( obg ); 
+        loops := List( gens, g -> Arrow( src, g, obj, obj ) ); 
+        imloops := List( loops, a -> ImageElm( mor, a ) ); 
+        imgens := List( imloops, a -> a![1] ); 
+        img := Group( imgens ); 
+        hom := GroupHomomorphismByImages( obg, img, gens, imgens ); 
     elif IsGeneralMappingFromHomogeneousDiscrete( mor ) then 
         pos := Position( src!.objects, obj ); 
         hom := ObjectHomomorphisms( mor )[pos]; 
@@ -411,7 +403,7 @@ function( mor, obj )
         pos := Position( Pieces( src ), obj ); 
         hom := ObjectGroupHomomorphism( PiecesOfMapping( mor )[pos], obj ); 
     else 
-        Error( "this case not yet provided for" ); 
+        Error( "this is a case not yet provided for" ); 
     fi; 
     return hom; 
 end ); 

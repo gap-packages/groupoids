@@ -2,13 +2,13 @@
 ##
 #W  mwohom.tst                    Gpd Package                    Chris Wensley
 ##
-##  version 1.31, 09/11/2014   
+##  version 1.36, 23/11/2015   
 ##
-#Y  Copyright (C) 2000-2014, Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-## SubSection 2.1.1
+## SubSection 3.1.1
 gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
 gap> SetInfoLevel( InfoGpd, 0 );;
 gap> tup1 := 
@@ -51,7 +51,7 @@ gap> ImageElm( map4, b87 );
 gap> ImageElm( map4, ib87 );
 [m4 : -8 -> -7]
 
-## Section 2.2, Homomorphisms of semigroups and monoids with objects 
+## Section 3.2, Homomorphisms of semigroups and monoids with objects 
 gap> t2 := Transformation( [2,2,4,1] );; 
 gap> s2 := Transformation( [1,1,4,4] );;
 gap> r2 := Transformation( [4,1,3,3] );; 
@@ -100,9 +100,9 @@ gap> ir31 := ImageElm( shom, r31 );;  [ r31, ir31 ];
 [ [Transformation( [ 2, 3, 4, 4 ] ) : -3 -> -1], 
   [Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13] ]
 
-## Section 2.3, Homomorphisms from several pieces
+## Section 3.3, Homomorphisms from several pieces
 
-## SubSection 2.3.1
+## SubSection 3.3.1
 gap> N4 := UnionOfPieces( [ M78, T123 ] );; 
 gap> h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] ); 
 magma with objects homomorphism : 

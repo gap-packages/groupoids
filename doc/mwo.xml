@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  mwo.xml                Gpd documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 1.33, 02/06/2015                                           --> 
+<!--  version 1.36, 23/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -148,10 +148,10 @@ An attempt to multiply two arrows which do not compose
 resuts in <C>fail</C> being returned. 
 Each arrow <M>arr = (a : u \to v)</M> has three components. 
 The magma <E>element</E> <M>a \in m</M> may be accessed by 
-<C>ElementOfArrow(arr) = arr![1]</C>.  
+<C>ElementOfArrow(arr)</C>.  
 Similarly, the <E>tail</E> object <M>u</M> and the <E>head</E> object <M>v</M> 
-may be obtained using <C>TailOfArrow(arr) = arr![2]</C> 
-and <C>HeadOfArrow(arr) = arr![3]</C> respectively. 
+may be obtained using <C>TailOfArrow(arr)</C> 
+and <C>HeadOfArrow(arr)</C> respectively. 
 <P/> 
 The operation <C>IsArrowIn</C> is added due to 
 difficulties found when attempting to write a method for <C>\in</C>. 

@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.tst                    Gpd Package                    Chris Wensley
 ##
-##  version 1.35, 24/08/2015   
+##  version 1.36, 23/11/2015   
 ##
 #Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -11,9 +11,9 @@
 gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
 gap> SetInfoLevel( InfoGpd, 0 );; 
 
-###  Section 4.1
+###  Section 5.1
 
-## SubSection 4.1.1
+## SubSection 5.1.1
 gap> gend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; 
 gap> d12 := Group( gend12 );; 
 gap> Gd12 := Groupoid( d12, [-37,-36,-35,-34] );;
@@ -46,7 +46,7 @@ gap> e2; ImageElm( ihomd8, e2 );
 [(1,3) : -8 -> -7]
 [(15,20)(16,19)(17,18) : -35 -> -34]
 
-## SubSection 4.2.1
+## SubSection 5.2.1
 gap> hc6 := GroupHomomorphismByImages( c6, s3, 
 >            [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;
 gap> Fs3 := FullSubgroupoid( Gs3, [ -35 ] );; 
@@ -78,9 +78,9 @@ magma mapping: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
 magma mapping: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ]
    object map: [ -6 ] -> [ -35 ]
 
-## Section 4.3, Homomorphisms with more than one piece 
+## Section 5.3, Homomorphisms with more than one piece 
 
-## SubSection 4.3.1
+## SubSection 5.3.1
 gap> isoq8 := IsomorphismNewObjects( Gq8, [-38,-37] ); 
 groupoid homomorphism : 
 [ 
@@ -107,9 +107,9 @@ gap> PiecesOfMapping( hom4 );
       [ GroupHomomorphismByImages( c6, s3, [ (5,6,7)(8,9) ], 
             [ (15,16)(17,20)(18,19) ] ), [ -35 ], [ () ] ] ] ]
 
-## Section 4.4, Groupoid automoprphisms 
+## Section 5.4, Groupoid automoprphisms 
 
-## SubSection 4.4.1
+## SubSection 5.4.1
 gap> a4 := Subgroup( s4, [(1,2,3),(2,3,4)] );; 
 gap> SetName( a4, "a4" ); 
 gap> gensa4 := GeneratorsOfGroup( a4 );; 
@@ -191,7 +191,7 @@ gap> ngen := Length( autgen );;
 gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); 
 true
 
-## SubSection 4.4.2
+## SubSection 5.4.2
 gap> Hs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); 
 homogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >
 gap> aut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); 

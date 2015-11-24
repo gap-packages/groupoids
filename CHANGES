@@ -14,8 +14,11 @@ ToDo
  - (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
 
 ############################################################################## 
-1.35 -> 1.36  (16/11/15) 
+1.35 -> 1.36  (23/11/15) 
 
+ - (23/11/15) new method for ObjectGroupHomomorphism 
+ - (23/11/15) converted RootObject from an operation to an attribute 
+ - (23/11/15) renamed IsDigraph etc as GpdIsDigraph as requested by James 
  - (16/11/15) RestrictionMappingGroupoids -> RestrictedMappingGroupoids 
  - (15/11/15) added method for WeightedAdjacencyMatrix for FpWeightedDigraphs 
  - (15/11/15) added PrintObj & Viewobj for groupoid right cosets 

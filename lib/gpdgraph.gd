@@ -2,9 +2,9 @@
 ##
 #W  gpdgraph.gd                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014 
+##  version 1.36, 23/11/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -20,7 +20,7 @@
 ##  - subgroupoid associated to tail vertex of each edge, and 
 ##  - an isomorphism associated to each edge.  
 ## 
-DeclareCategory( "IsGraphOfGroupoids", IsDigraph ); 
+DeclareCategory( "IsGraphOfGroupoids", GpdIsDigraph ); 
 BindGlobal( "GraphOfGroupoidsFamily", 
     NewFamily( "GraphOfGroupoidsFamily", IsGraphOfGroupoids ) ); 
 DeclareRepresentation( "IsGraphOfGroupoidsRep",

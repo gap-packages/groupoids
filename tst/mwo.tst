@@ -2,13 +2,13 @@
 ##
 #W  mwo.tst                       Gpd Package                    Chris Wensley
 ##
-##  version 1.31, 09/11/2014   
+##  version 1.36, 23/11/2015   
 ##
-#Y  Copyright (C) 2000-2014, Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-## SubSection 1.1.1 
+## SubSection 2.1.1 
 gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
 gap> SetInfoLevel( InfoGpd, 0 );; 
 
@@ -36,7 +36,7 @@ gap> [ IsAssociative(M78), IsCommutative(M78), IsDomainWithObjects(M78) ];
 gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
 [ -8, [ -8, -7 ] ]
 
-## SubSection 1.1.2 
+## SubSection 2.1.2 
 gap> a78 := Arrow( M78, m2, -7, -8 ); 
 [m2 : -7 -> -8]
 gap> [ a78 in M78, IsArrowIn( a78, M78 ) ]; 
@@ -52,7 +52,7 @@ gap> [ a78^2, ba^2, ba^3 ];
 gap> [ a78*ba, ab*a78, a78*ba = ab*a78 ]; 
 [ [m3 : -7 -> -8], [m4 : -7 -> -8], false ]
 
-## SubSection 1.1.3 
+## SubSection 2.1.3 
 gap> IsSinglePiece( M78 ); 
 true
 gap> IsDirectProductWithCompleteGraph( M78 );
@@ -60,9 +60,9 @@ true
 gap> IsDiscrete( M78 );
 false
 
-## Section 1.2, Semigroups with objects 
+## Section 2.2, Semigroups with objects 
 
-## SubSection 1.2.1
+## SubSection 2.2.1
 gap> t := Transformation( [1,1,2,3] );; 
 gap> s := Transformation( [2,2,3,3] );;
 gap> r := Transformation( [2,3,4,4] );; 
@@ -90,9 +90,9 @@ gap> ts13 := t12 * s23;  tsr1 := ts13 * r31;
 [Transformation( [ 2, 2, 2, 3 ] ) : -1 -> -3]
 [Transformation( [ 3, 3, 3 ] ) : -1 -> -1]
 
-## Section 1.3, Monoids with objects 
+## Section 2.3, Monoids with objects 
 
-## SubSection 1.3.1
+## SubSection 2.3.1
 gap> fm := FreeMonoid( 2, "f" );; 
 gap> em := One( fm );; 
 gap> gm := GeneratorsOfMonoid( fm );; 
@@ -128,9 +128,9 @@ gap> g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; g5 := genM[5];;
 gap> g5*g3*g2*g4; 
 [f2*f1 : -4 -> -4]
 
-## Section 1.4, Structures with one or more pieces 
+## Section 2.4, Structures with one or more pieces 
 
-## SubSection 1.4.1
+## SubSection 2.4.1
 gap> d8 := Group( (1,2,3,4), (1,3) );; 
 gap> SetName( d8, "d8" );
 gap> D0 := DomainWithSingleObject( d8, 0 ); 
@@ -146,7 +146,7 @@ gap> p0*q0;
 gap> Size( D0 );
 8
 
-## SubSection 1.4.2
+## SubSection 2.4.2
 gap> N1 := UnionOfPieces( [ M78, S123 ] ); 
 magma with objects having 2 pieces :-
 1: M78

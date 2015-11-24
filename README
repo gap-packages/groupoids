@@ -1,7 +1,7 @@
                    README file for the Gpd package
                    ===============================
 
-Version 1.36, 1st September 2015  
+Version 1.36, 23rd November 2015  
 
 Introduction
 ------------
@@ -21,7 +21,12 @@ In the spring of 2006 the package was renamed Gpd and extensively
 rewritten, with documentation in GAPDoc format.
 Version 1.01 was deposited in June 2006. 
 Gpd became an accepted GAP package in May 2015. 
-The latest version, 1.36, was released on ???????? 2015 for GAP 4.7. 
+The latest version, 1.36, was released on 23rd November 2015 for GAP 4.8. 
+(In this temporary version there have been a number of changes of function 
+name, such as IsDigraph becoming GpdIsDigraph. 
+This is in order to avoid conflicts with the new Digraphs package.
+Further changes will be made once the Digraphs package becomes part 
+of the GAP distribution.) 
 A more detailed history is included as Chapter 8 of the manual, 
 and in the file CHANGES.
 

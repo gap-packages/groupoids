@@ -2,15 +2,15 @@
 ##
 #W  ggraph.g                    GAP4 package `Gpd'               Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014   
+##  version 1.36, 23/11/2015   
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 SetInfoLevel( InfoGpd, 2 );
 
 Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 09/11/14) >>>>\n" );
+Print( "<<<< testing examples in the Gpd manual (version 23/11/15) >>>>\n" );
 Print( "<<<<      functions for Graphs of Groups and Groupoids     >>>>\n" );
 Print( "===============================================================\n\n");
 
@@ -23,7 +23,7 @@ y := fg1.1;
 A1 := [ [y,5,6], [y^-1,6,5]];
 D1 := FpWeightedDigraph( fg1, V1, A1 );
 Print( D1!.vertices, "\n", D1!.arcs, "\n" );
-## Print( Vertices( D1 ), "\n", Arcs( D1 ), "\n" );
+## Print( GpdVertices( D1 ), "\n", GpdArcs( D1 ), "\n" );
 # Display( D1 );
 inv1 := InvolutoryArcs( D1 );
 Print( inv1, "\n\n" );

@@ -2,9 +2,9 @@
 ##
 #W  gpdgraph.gi                GAP4 package `Gpd'                Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.31, 09/11/2014 
+##  version 1.36, 23/11/2015 
 ##
-#Y  Copyright (C) 2000-2014, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains methods for FpWeightedDigraphs of groupoids, 
@@ -107,8 +107,8 @@ function( gg )
     Print( "Graph of Groupoids: " );
     Print( Length( dig!.vertices ), " vertices; " );
     Print( Length( dig!.arcs ), " arcs; " );
-    ## Print( Length(Vertices(dig)), " vertices; " );
-    ## Print( Length(Arcs(dig)), " arcs; " );
+    ## Print( Length(GpdVertices(dig)), " vertices; " );
+    ## Print( Length(GpdArcs(dig)), " arcs; " );
     Print( "groupoids ", GroupoidsOfGraphOfGroupoids( gg ) );
 end );
 
@@ -124,8 +124,8 @@ function( gg )
     Print( "Graph of Groupoids: " );
     Print( Length( dig!.vertices ), " vertices; " );
     Print( Length( dig!.arcs ), " arcs; " );
-    ## Print( Length(Vertices(dig)), " vertices; " );
-    ## Print( Length(Arcs(dig)), " arcs; " );
+    ## Print( Length(GpdVertices(dig)), " vertices; " );
+    ## Print( Length(GpdArcs(dig)), " arcs; " );
     Print( "groupoids ", GroupoidsOfGraphOfGroupoids( gg ) );
 end );
 
@@ -141,8 +141,8 @@ function( gg )
     Print( "Graph of Groupoids with :- \n" );
     Print( "    vertices: ", dig!.vertices, "\n" );
     Print( "        arcs: ", dig!.arcs, "\n" );
-    ## Print( "    vertices: ", Vertices( dig ), "\n" );
-    ## Print( "        arcs: ", Arcs( dig ), "\n" );
+    ## Print( "    vertices: ", GpdVertices( dig ), "\n" );
+    ## Print( "        arcs: ", GpdArcs( dig ), "\n" );
     Print( "   groupoids: \n" );
     for g in GroupoidsOfGraphOfGroupoids( gg ) do
         Display( g );
@@ -223,8 +223,8 @@ function( gg )
     dig := DigraphOfGraphOfGroupoids( gg );
     verts := dig!.vertices;
     arcs := dig!.arcs;
-    ## verts := Vertices( dig );
-    ## arcs := Arcs( dig );
+    ## verts := GpdVertices( dig );
+    ## arcs := GpdArcs( dig );
     na := Length( arcs );
     reps := ListWithIdenticalEntries( na, 0 );
     for k in [1..na] do
@@ -347,7 +347,7 @@ function( ggword )
 
     gg := GraphOfGroupoidsOfWord( ggword );
     arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
-    ## arcs := Arcs( DigraphOfGraphOfGroupoids( gg ) );
+    ## arcs := GpdArcs( DigraphOfGraphOfGroupoids( gg ) );
     w := WordOfGraphOfGroupoidsWord( ggword );
     Print( "(", GGTail( ggword ), ")", w[1] );
     i := 1;
@@ -369,7 +369,7 @@ function( ggword )
 
     gg := GraphOfGroupoidsOfWord( ggword );
     arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
-    ## arcs := Arcs( DigraphOfGraphOfGroupoids( gg ) );
+    ## arcs := GpdArcs( DigraphOfGraphOfGroupoids( gg ) );
     w := WordOfGraphOfGroupoidsWord( ggword );
     Print( "(", GGTail( ggword ), ")", w[1] );
     i := 1;
@@ -394,7 +394,7 @@ function( ggword )
     gg := GraphOfGroupoidsOfWord( ggword );
     e := w[Length(w)-1];
     return DigraphOfGraphOfGroupoids( gg )!.arcs[e][3];
-    ## return Arcs( DigraphOfGraphOfGroupoids( gg ) )[e][3];
+    ## return GpdArcs( DigraphOfGraphOfGroupoids( gg ) )[e][3];
 end );
 
 #############################################################################

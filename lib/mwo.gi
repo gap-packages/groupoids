@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.34, 05/06/2015 
+##  version 1.36, 23/11/2015 
 ##
 #Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -479,17 +479,16 @@ end );
 
 #############################################################################
 ##
-#M  RootObject( <mwo> )                    for a connected magma with objects
-#M  RootObject( <mwo> )                   for a many piece magma with objects
+#M  RootObject( <mwo> )      for a connected or many-piece magma with objects
 ##
-InstallMethod( RootObject, "for a single piece mwo", 
-    true, [ IsSinglePiece ], 0,
+InstallMethod( RootObject, "for a single piece mwo", true, 
+    [ IsSinglePiece ], 0,
 function( mwo )
     return mwo!.objects[1]; 
 end ); 
 
-InstallOtherMethod( RootObject, "for a mwo with pieces", 
-    true, [ IsDomainWithObjects and IsPiecesRep ], 0,
+InstallOtherMethod( RootObject, "for a mwo with pieces", true, 
+    [ IsDomainWithObjects and IsPiecesRep ], 0,
 function( mwo )
     Print( "#I only a single piece magma with objects has a root object\n" ); 
     return fail; 
@@ -662,22 +661,21 @@ function( comps, type )
         Info( InfoGpd, 2, "reordering pieces by first object" ); 
         pieces := List( L, i -> comps[i] );
     fi; 
-    ## ?? (23/04/10) fam := FamilyObj( [ pieces ] ); 
     if ( type = 1 ) then 
         fam := GroupoidFamily; 
-    else 
-        fam := MagmaWithObjectsFamily; 
-    fi;
-    if ( type = 1 ) then 
         filter := IsPiecesRep and IsGroupoid and IsAssociative; 
     elif ( type = 2 ) then 
+        fam := MonoidWithObjectsFamily; 
         filter := IsPiecesRep and IsMagmaWithObjectsAndOnes 
                               and IsAssociative; 
     elif ( type = 3 ) then 
+        fam := SemigroupWithObjectsFamily; 
         filter := IsPiecesRep and IsMagmaWithObjects and IsAssociative; 
     elif ( type = 4 ) then 
-        filter := IsPiecesRep; 
+        fam := MagmaWithObjectsFamily; 
+        filter := IsPiecesRep and IsMagmaWithObjects; 
     else 
+        ## ?? (23/04/10) fam := FamilyObj( [ pieces ] ); 
         Error( "union of unstructured domains not yet implemented," ); 
     fi; 
     #?  should use ObjectifyWithAttributes here ??
@@ -984,7 +982,7 @@ InstallMethod( SinglePieceSemigroupWithObjects,
     local  cf, one, r, gens, swo, isa, isc; 
 
     ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( sgp ) ); 
-    cf := MagmaWithObjectsFamily; 
+    cf := SemigroupWithObjectsFamily; 
     r := obs[1];  ## root object  
     isa := IsAssociative( sgp ); 
     isc := IsCommutative( sgp ); 
@@ -1037,7 +1035,7 @@ InstallMethod( SinglePieceMonoidWithObjects,
     local  cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
 
     ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( mon ) ); 
-    cf := MagmaWithObjectsFamily; 
+    cf := MonoidWithObjectsFamily; 
     r := obs[1];  ## root object  
     isa := IsAssociative( mon ); 
     isc := IsCommutative( mon ); 
