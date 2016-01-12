@@ -1,7 +1,7 @@
                    README file for the Gpd package
                    ===============================
 
-Version 1.36, 23rd November 2015  
+Version 1.41, 12th January 2016  
 
 Introduction
 ------------
@@ -21,7 +21,7 @@ In the spring of 2006 the package was renamed Gpd and extensively
 rewritten, with documentation in GAPDoc format.
 Version 1.01 was deposited in June 2006. 
 Gpd became an accepted GAP package in May 2015. 
-The latest version, 1.36, was released on 23rd November 2015 for GAP 4.8. 
+The latest version, 1.41, was released on 12th January 2016 for GAP 4.8. 
 (In this temporary version there have been a number of changes of function 
 name, such as IsDigraph becoming GpdIsDigraph. 
 This is in order to avoid conflicts with the new Digraphs package.
@@ -41,7 +41,7 @@ Computational Higher-dimensional Discrete Algebra at:
 Copyright
 ---------
 The Gpd package is Copyright {\copyright} Chris Wensley and Emma Moore, 
-2000--2015. 
+2000--2016. 
 Gpd is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -50,7 +50,7 @@ For details, see \URL{http://www.gnu.org/licenses/gpl.html}
 
 Installation
 ------------
-1) unpack `gpd-1.36.tar.gz' in the `pkg' subdirectory of the GAP root
+1) unpack `gpd-1.41.tar.gz' in the `pkg' subdirectory of the GAP root
    directory.
 2) From within GAP load the package with:
 gap> LoadPackage("gpd");
@@ -62,5 +62,5 @@ Contact
 -------
 If you have a question relating to Gpd, encounter any problems, or have a suggestion for extending the package in any way, please 
  - email c.d.wensley@bangor.ac.uk 
- - or report an issue at https://github.com/gap-system/gpd/issues/new 
+ - or report an issue at https://github.com/gap-packages/gpd/issues/new 
 

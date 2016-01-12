@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  manual.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.36, 23/11/2015                                           --> 
+<!--  version 1.41, 12/01/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -18,15 +18,15 @@
    <#Include Label="PKGVERSIONDATA"> 
   ]> 
 
-<!-- The documentation to the Gpd package. -->
+<!-- The documentation for the Gpd package. -->
 
 <Book Name="Gpd"> 
 
 <TitlePage>
   <Title>&gpd;</Title>
   <Subtitle>Groupoids, graphs of groups, and graphs of groupoids</Subtitle>
-  <Version>Version &VERSION;</Version>   
-  <Date>&RELEASEDATE;</Date> 
+  <Version>Version &GPDVERSION;</Version>   
+  <Date>&GPDRELEASEDATE;</Date> 
   <Author> Emma Moore 
   </Author>
   <Author> Chris Wensley
@@ -58,7 +58,8 @@ Version 1.07 was released in July 2011, to be tested with &GAP; 4.5.
 Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
 and was submitted for official acceptance as a &GAP; package. 
 <Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
-The latest version is &VERSION; of &GPDRELEASEDATE;, prepared for  &GAP; 4.8.  
+The latest version is &GPDVERSION; of &GPDLONGRELEASEDATE;, 
+prepared for  &GAP; 4.8.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
@@ -70,7 +71,7 @@ or submit an issue at <URL>http://github.com/gap-packages/gpd/issues/</URL>.
 
 <Copyright> 
 <Index>License</Index>
-&copyright; 2000-2015 Emma Moore and Chris Wensley <P/>
+&copyright; &GPDCOPYRIGHTYEARS; Emma Moore and Chris Wensley <P/>
 
 <Package>Gpd</Package> is free software; you can redistribute it 
 and/or modify it under the terms of the 

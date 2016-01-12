@@ -1,6 +1,6 @@
                        CHANGES to the Gpd package 
 
-ToDo 
+ToDo: 
  - (14/01/13) It seems that operations such as WeightedSpanningTree have 
               recently been included in grpgraph.gi but not yet used in 
               any example or test file: so need to work on this. 
@@ -12,6 +12,16 @@ ToDo
               the type of mwo hardly matters!? 
  - (10/06/15) RootGroupHomomorphism and ObjectGroupHomomorphism not in manual
  - (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
+ - (12/01/16) in this temporary version there have been a number of changes 
+              of function name, such as IsDigraph becoming GpdIsDigraph: 
+              this is in order to avoid conflicts with the new digraphs package. 
+              Further changes will need to be made once the digraphs package 
+              becomes part of the general GAP distribution.
+
+############################################################################## 
+1.36 -> 1.41  (12/01/16) 
+
+ - (12/01/16) renamed some ENTITYs in PackageInfo.g 
 
 ############################################################################## 
 1.35 -> 1.36  (23/11/15) 

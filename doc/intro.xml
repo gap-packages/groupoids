@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  intro.xml              Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.36, 23/11/2015                                           --> 
+<!--  version 1.41, 12/01/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -27,8 +27,29 @@ to calculate normal forms for <E>free products with amalgamation</E>,
 and for <E>HNN-extensions</E> 
 when the initial groups have rewriting systems.
 <P/>
-The latest version &VERSION; of &gpd; is implemented using &GAP; 4.8. 
+
+The current version is &GPDVERSION; for &GAP; 4.8, 
+released on &GPDLONGRELEASEDATE;. 
+<P/> 
+The package may be obtained as a compressed tar file 
+<File>&GPDTARFILENAME;</File>
+by ftp from one of the following sites: 
+<List>
+<Item>
+any &GAP; archive, e.g. 
+<URL>http://www.gap-system.org/Packages/packages.html</URL>; 
+</Item>
+<Item>
+the Bangor site: 
+<URL>http://www.maths.bangor.ac.uk/chda/gap4/gpd/&GPDHTMLFILENAME;</URL>;
+</Item>
+<Item>
+the package GitHub repository: 
+<URL>https://github.com/gap-packages/gpd</URL>. 
+</Item>
+</List>
 <P/>
+
 The information parameter <C>InfoGpd</C> takes default value <C>1</C> 
 which, for the benefit of new users, causes more messages 
 to be printed out when operations fail.
@@ -39,7 +60,7 @@ Help is available in the usual way.
 <Example>
 <![CDATA[
 gap> LoadPackage( "gpd" );
-Loading Gpd 1.36 for GAP 4.8 - Emma Moore and Chris Wensley ... 
+Loading Gpd 1.41 for GAP 4.8 - Emma Moore and Chris Wensley ... 
 true
 ]]>
 </Example>
