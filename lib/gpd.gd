@@ -2,9 +2,9 @@
 ## 
 #W  gpd.gd                    GAP4 package `Gpd'                Chris Wensley 
 #W                                                               & Emma Moore
-##  version 1.35, 10/06/2015 
+##  version 1.41, 04/02/2016 
 ##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -79,22 +79,11 @@ DeclareOperation( "SinglePieceGroupoidByGenerators",
     [ IsGroupoid, IsList ] ); 
 
 ############################################################################# 
-## 
-## these operations replaced by their magma versions:
-## #O  GroupAsGroupoid( <obj>, <grp> )
-## #O  GroupoidByUnionNC( <comps> )              
-## #O  GroupoidByUnion( <comps> )              
-## 
-##  DeclareOperation( "GroupAsGroupoid", [ IsScalar, IsGroup ] );    
-##  DeclareOperation( "GroupoidByUnionNC", [ IsHomogeneousList ] );    
-##  DeclareOperation( "GroupoidByUnion", [ IsList ] );
- 
-############################################################################# 
 ##                         
 #O  ObjectGroup( <gpd>, <obj> )
 #A  ObjectGroups( <gpd> )
 ## 
-DeclareOperation( "ObjectGroup", [ IsGroupoid, IsScalar ] );    
+DeclareOperation( "ObjectGroup", [ IsGroupoid, IsObject ] );    
 DeclareAttribute( "ObjectGroups", IsGroupoid );    
 
 
@@ -136,8 +125,8 @@ DeclareOperation( "HomogeneousDiscreteGroupoid",
 ## 
 #O  ReplaceOnePieceInUnion( <union>, <old>, <new> ) 
 ## 
-DeclareOperation( "ReplaceOnePieceInUnion", [ IsGroupoid and IsPiecesRep, 
-    IsObject,  IsGroupoid and IsSinglePiece ] ); 
+DeclareOperation( "ReplaceOnePieceInUnion", 
+    [ IsGroupoid and IsPiecesRep, IsObject,  IsGroupoid and IsSinglePiece ] ); 
 
 
 ## ======================================================================== ##
@@ -150,10 +139,6 @@ DeclareOperation( "ReplaceOnePieceInUnion", [ IsGroupoid and IsPiecesRep,
 ## 
 ##  A connected groupoid element is [ group element, tail, head ]
 ## 
-##  (01/07/14)  No need for GroupoidElement: stick with Arrow 
-##  (26/11/14)  All other references to GroupoidElement removed. 
-##  DeclareOperation( "GroupoidElement",
-##      [ IsGroupoid, IsMultiplicativeElement, IsScalar, IsScalar ] ); 
 DeclareSynonym( "GroupoidElement", Arrow ); 
 
 ############################################################################## 
@@ -184,13 +169,13 @@ DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 DeclareRepresentation( "IsHomsetCosetsRep", 
     IsHomsetCosets and IsPositionalObjectRep, [1..6] ); 
 ## DeclareAttribute( "UnionHomsets", IsGroupoid );
-DeclareOperation( "IdentityArrow", [ IsGroupoid, IsScalar ] ); 
-DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsScalar ] ); 
-DeclareOperation( "ObjectStar", [ IsGroupoid, IsScalar ] ); 
-DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsScalar ] ); 
-DeclareOperation( "ObjectCostar", [ IsGroupoid, IsScalar ] ); 
-DeclareOperation( "HomsetNC", [ IsGroupoid, IsScalar, IsScalar ] ); 
-DeclareOperation( "Homset", [ IsGroupoid, IsScalar, IsScalar ] ); 
+DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] ); 
+DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] ); 
+DeclareOperation( "ObjectStar", [ IsGroupoid, IsObject ] ); 
+DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsObject ] ); 
+DeclareOperation( "ObjectCostar", [ IsGroupoid, IsObject ] ); 
+DeclareOperation( "HomsetNC", [ IsGroupoid, IsObject, IsObject ] ); 
+DeclareOperation( "Homset", [ IsGroupoid, IsObject, IsObject ] ); 
 DeclareAttribute( "ElementsOfGroupoid", IsGroupoid ); 
 
 ############################################################################## 
@@ -218,7 +203,7 @@ DeclareRepresentation( "IsLeftCosetWithObjectsDefaultRep",
 DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
 DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
 DeclareOperation( "LeftCosetRepresentativesFromObject", 
-    [ IsGroupoid, IsGroupoid, IsScalar ] ); 
+    [ IsGroupoid, IsGroupoid, IsObject ] ); 
 DeclareOperation( "LeftCosetsNC", [ IsGroupoid, IsGroupoid ] ); 
 DeclareOperation( "LeftCoset", [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
 DeclareOperation( "DoubleCosetRepresentatives", 

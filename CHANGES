@@ -19,8 +19,11 @@ ToDo:
               becomes part of the general GAP distribution.
 
 ############################################################################## 
-1.36 -> 1.41  (12/01/16) 
+1.36 -> 1.41  (04/02/16) 
 
+ - (04/02/16) replacing test IsScalar for objects with IsObject/IsSet 
+              added examples in section 4.1.1 where the objects are 
+              free group generators or strings 
  - (12/01/16) renamed some ENTITYs in PackageInfo.g 
 
 ############################################################################## 

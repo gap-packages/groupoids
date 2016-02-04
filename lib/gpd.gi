@@ -2,9 +2,9 @@
 ## 
 #W  gpd.gi                    GAP4 package `Gpd'                Chris Wensley 
 #W                                                               & Emma Moore
-##  version 1.36, 23/11/2015 
+##  version 1.41, 04/02/2016 
 ##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -65,7 +65,7 @@ end );
 InstallMethod( SinglePieceGroupoid, "method for a connected groupoid",
     true, [ IsGroup, IsHomogeneousList ], 0,
 function( gp, obs ) 
-        if not HasIsSSortedList( obs ) then 
+        if not IsSet( obs ) then 
             Sort( obs ); 
         fi; 
     if not IsDuplicateFree( obs ) then
@@ -360,7 +360,7 @@ function( gp, obj )
     local  o; 
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
         o := obj[1]; 
-    elif IsScalar( obj ) then 
+    elif IsObject( obj ) then 
         o := obj;
     else 
         Error( "usage: DomainWithSingleObject( <group>, <object> );" ); 
@@ -390,7 +390,7 @@ InstallGlobalFunction( Groupoid, function( arg )
         Info( InfoGpd, 2, "group plus objects" ); 
         return SinglePieceGroupoid( arg[1], arg[2] );
     # one-object groupoid
-    elif ( ( nargs = 2 ) and IsScalar( arg[2] ) and IsGroup( arg[1] ) ) then
+    elif ( ( nargs = 2 ) and IsObject( arg[2] ) and IsGroup( arg[1] ) ) then
         Info( InfoGpd, 2, "SingleObject" );
         return DomainWithSingleObject( arg[1], arg[2] );
     elif ( ( nargs = 3 ) and IsGroupoid( arg[1] ) and IsGroup( arg[2] ) 
@@ -631,7 +631,7 @@ end );
 #M  ObjectGroup
 ## 
 InstallMethod( ObjectGroup, "generic method for groupoid and object",
-    true, [ IsGroupoid and IsSinglePiece, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( G, obj )
 
     local  pos, id, c, rgp; 
@@ -658,7 +658,7 @@ function( G, obj )
 end );
 
 InstallMethod( ObjectGroup, "generic method for groupoid and object",
-    true, [ IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid, IsObject ], 0,
 function( G, obj )
 
     local  nC, C;
@@ -775,7 +775,7 @@ end );
 #M  Arrow 
 ##
 InstallMethod( Arrow, "generic method for a groupoid element",
-    true, [ IsGroupoid, IsMultiplicativeElement, IsScalar, IsScalar ], 0,
+    true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
 function( gpd, g, i, j )
 
     local  comp, obs, ok1, ok2, rays, e;
@@ -1050,7 +1050,7 @@ end );
 #M  ObjectStar 
 ##
 InstallMethod( ObjectStarNC, "for a connected groupoid and an object",
-    true, [ IsGroupoid and IsSinglePiece, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
     local  gp, obs, nobs, fam, filter, st, fgpd, rays, pos, rpos;
@@ -1080,7 +1080,7 @@ function( gpd, obj )
 end );
 
 InstallMethod( ObjectStar, "generic method for a groupoid and an object",
-    true, [ IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
 
     local  comp;
@@ -1103,7 +1103,7 @@ end );
 #M  ObjectCostar 
 ##
 InstallMethod( ObjectCostarNC, "for a connected groupoid and an object",
-    true, [ IsGroupoid and IsSinglePiece, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
     local  gp, obs, nobs, fam, filter, cst, fgpd, rays, pos, rpos;
@@ -1133,7 +1133,7 @@ function( gpd, obj )
 end );
 
 InstallMethod( ObjectCostar, "generic method for a groupoid and an object",
-    true, [ IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
 
     local  comp;
@@ -1156,7 +1156,7 @@ end );
 #M  Homset
 ##
 InstallMethod( HomsetNC, "for a connected groupoid and two objects",
-    true, [ IsGroupoid and IsSinglePiece, IsScalar, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
     local  gp, obs, fgpd, fam, filter, rays, gen, hs, p1, p2;
@@ -1183,7 +1183,7 @@ function( gpd, o1, o2 )
 end );
 
 InstallMethod( Homset, "generic method for a groupoid and two objects",
-    true, [ IsGroupoid, IsScalar, IsScalar ], 0,
+    true, [ IsGroupoid, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
     local  obs, comp;
@@ -2058,7 +2058,7 @@ end );
 #M  LeftCosetRepresentativesFromObject
 ## 
 InstallMethod( LeftCosetRepresentativesFromObject, "for a subgroupoid",
-    true, [ IsGroupoid and IsSinglePiece, IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsGroupoid, IsObject ], 0,
 function( G, U, o )
 
     local  gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g;
@@ -2091,7 +2091,7 @@ function( G, U, o )
 end );    
 
 InstallMethod( LeftCosetRepresentativesFromObject, "for a subgroupoid",
-    true, [ IsGroupoid, IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid, IsGroupoid, IsObject ], 0,
 function( G, U, o )
 
     local  pos, cG, co, i, cU, ncU, filt, piece, m, j, subU;
@@ -2308,13 +2308,13 @@ end );
 #M  IdentityArrow
 ## 
 InstallMethod( IdentityArrow, "for a connected groupoid and object",
-    true, [ IsGroupoid and IsSinglePiece, IsScalar ], 0,
+    true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
     return ArrowNC( true, One(gpd!.magma), obj, obj );
 end );
 
 InstallMethod( IdentityArrow, "generic method for groupoid and object",
-    true, [ IsGroupoid, IsScalar ], 0,
+    true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
     local  comp;
     comp := PieceOfObject( gpd, obj );

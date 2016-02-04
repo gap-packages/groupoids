@@ -2,9 +2,9 @@
 ## 
 #W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.36, 23/11/2015 
+##  version 1.41, 04/02/2016 
 ##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -60,7 +60,7 @@ end );
 ##
 InstallMethod( ArrowNC, 
     "for boolean, element, tail and head", true,  
-    [ IsBool, IsMultiplicativeElement, IsScalar, IsScalar ], 
+    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ], 
     0, 
     function( isge, e, t, h ) 
     local  obs, elt, fam;
@@ -80,7 +80,7 @@ end );
 
 InstallMethod( Arrow, 
     "for general magma with objects, element, tail and head", true, 
-    [ IsMagmaWithObjects, IsMultiplicativeElement, IsScalar, IsScalar ], 0, 
+    [ IsMagmaWithObjects, IsMultiplicativeElement, IsObject, IsObject ], 0, 
     function( mwo, e, t, h ) 
     local  piece, obs, fam, mag, pwo, pos, homset, pose; 
     if IsSinglePiece( mwo ) then 
@@ -213,8 +213,7 @@ InstallGlobalFunction( MagmaWithObjects, function( arg )
 
     local  obs, mag;
     # list of objects and a magma 
-    if ( ( Length( arg ) = 2 ) and IsMagma( arg[1] ) 
-            and IsCollection( arg[2] ) and IsScalar( arg[2][1] ) ) then 
+    if ( ( Length(arg) = 2 ) and IsMagma( arg[1] ) and IsSet( arg[2] ) ) then 
         mag := arg[1]; 
         obs := arg[2]; 
         if ( HasIsGeneratorsOfMagmaWithInverses( mag ) 
@@ -752,7 +751,7 @@ function( dom, obj )
     else
         o := obj;
     fi; 
-    if not IsScalar( o ) then 
+    if not IsObject( o ) then 
         Error( "<obj> not a scalar or singleton list," ); 
     fi; 
     if ( HasIsAssociative( dom ) and IsAssociative( dom ) 
@@ -775,7 +774,7 @@ end );
 #M  PieceOfObject
 ## 
 InstallMethod( PieceOfObject, "generic method for magma with objects", 
-    true, [ IsDomainWithObjects, IsScalar ], 0,
+    true, [ IsDomainWithObjects, IsObject ], 0,
 function( dwo, obj )
 
     local  pieces, p, objp;
@@ -806,7 +805,7 @@ end );
 #M  PieceNrOfObject
 ## 
 InstallMethod( PieceNrOfObject, "generic method for domain with objects",
-    true, [ IsDomainWithObjects, IsScalar ], 0,
+    true, [ IsDomainWithObjects, IsObject ], 0,
 function( dwo, obj )
 
     local  pieces, i, objp, np;
@@ -955,8 +954,7 @@ InstallGlobalFunction( SemigroupWithObjects, function( arg )
 
     local  obs, sgp;
     # list of objects and a semigroup 
-    if ( ( Length( arg ) = 2 ) and IsSemigroup( arg[1] ) 
-            and IsCollection( arg[2] ) and IsScalar( arg[2][1] ) ) then 
+    if ( (Length(arg) = 2) and IsSemigroup( arg[1] ) and IsSet( arg[2] ) ) then 
         sgp := arg[1]; 
         obs := arg[2]; 
         if HasGeneratorsOfMagmaWithInverses( sgp ) then  
@@ -1010,8 +1008,7 @@ InstallGlobalFunction( MonoidWithObjects, function( arg )
 
     local  obs, mon;
     # list of objects and a monoid 
-    if ( ( Length( arg ) = 2 ) and IsMonoid( arg[1] ) 
-            and IsCollection( arg[2] ) and IsScalar( arg[2][1] ) ) then 
+    if ( ( Length(arg) = 2 ) and IsMonoid( arg[1] )  and IsSet( arg[2] ) ) then 
         mon := arg[1]; 
         obs := arg[2]; 
         if HasGeneratorsOfMagmaWithInverses( mon ) then  

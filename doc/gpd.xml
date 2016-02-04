@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gpd.xml                Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.36, 23/11/2015                                           --> 
+<!--  version 1.41, 04/02/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -73,7 +73,7 @@ The global function <C>Groupoid</C> will normally find the appropriate
 constructor to call, the options being:
 <List>
 <Item>
-the object group, a list of objects;
+the object group, a set of objects;
 </Item>
 <Item>
 a group being converted to a groupoid, a single object; 
@@ -89,6 +89,9 @@ provided for groupoids and the other types of object in this package.
 Users are advised to supply names for all the groups and groupoids 
 they construct.
 <P/> 
+In the last two examples <C>Gf2c6</C> and <C>Gabc</C> show that 
+the objects need not be integers.
+<P/>
 </Description>
 </ManSection>
 <Example>
@@ -108,6 +111,11 @@ gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );
 gap> G3 := Groupoid( [ Gc6, Gd8, Gs4 ] );
 groupoid with 3 pieces:
 [ Gs4, Gd8, Gc6 ]
+gap> f2 := FreeGroup(2);;
+gap> Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );
+single piece groupoid: < c6, [ f1, f2 ] >
+gap> Gabc := Groupoid( d8, [ "a", "b", "c" ] );
+single piece groupoid: < d8, [ "a", "b", "c" ] >
 ]]>
 </Example>
 

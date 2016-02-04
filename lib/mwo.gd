@@ -2,9 +2,9 @@
 ## 
 #W  mwo.gd                    GAP4 package `Gpd'                Chris Wensley 
 ##
-##  version 1.36, 23/11/2015 
+##  version 1.41, 04/02/2016 
 ##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -76,8 +76,8 @@ DeclareOperation( "UnionOfPieces", [ IsList ] );
 #O  PieceOfObject( <dwo>, <obj> )                                    
 #O  PieceNrOfObject( <dwo>, <obj> )                                    
 ## 
-DeclareOperation( "PieceOfObject", [ IsDomainWithObjects, IsScalar ] );  
-DeclareOperation( "PieceNrOfObject", [ IsDomainWithObjects, IsScalar ] );
+DeclareOperation( "PieceOfObject", [ IsDomainWithObjects, IsObject ] );  
+DeclareOperation( "PieceNrOfObject", [ IsDomainWithObjects, IsObject ] );
 
 ############################################################################# 
 ## 
@@ -274,10 +274,10 @@ DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );
 #O  ArrowNC( <isgpdelt>, <elt>, <tail>, <head> ) 
 ## 
 DeclareOperation( "Arrow", 
-    [ IsMagmaWithObjects, IsMultiplicativeElement, IsScalar, IsScalar ] ); 
+    [ IsMagmaWithObjects, IsMultiplicativeElement, IsObject, IsObject ] ); 
 DeclareSynonym( "MultiplicativeElementWithObjects", Arrow ); 
 DeclareOperation( "ArrowNC", 
-    [ IsBool, IsMultiplicativeElement, IsScalar, IsScalar ] ); 
+    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ] ); 
     
 ############################################################################## 
 ## 
