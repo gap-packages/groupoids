@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  mwo.xml                Gpd documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 1.36, 23/11/2015                                           --> 
+<!--  version 1.41, 08/02/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -86,7 +86,7 @@ so that the multiplication rule becomes
 <M>(a : u \to v)*(b : v \to w) = (a*b : u \to w)</M>. 
 <P/> 
 Any finite, ordered set is in principle acceptable as 
-the object list of <M>M</M>, but we find it convenient 
+the object list of <M>M</M>, but most of the time we find it convenient 
 to restrict ourselves to sets of non-positive integers. 
 <P/> 
 This is the only construction implemented here for magmas, semigroups, 

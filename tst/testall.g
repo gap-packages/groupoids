@@ -2,11 +2,13 @@
 ##
 #W  testall.g                     Gpd Package                    Chris Wensley
 ##
-##  version 1.31, 09/11/2014   
+##  version 1.42, 09/02/2016   
 ##
-#Y  Copyright (C) 2000-2014, Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
+
+LoadPackage( "gpd" ); 
 
 TestMyPackage := function( pkgname )
     local  pkgdir, testfiles, testresult, ff, fn;

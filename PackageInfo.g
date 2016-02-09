@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g   file for the package Gpd version 1.41 
+##  PackageInfo.g   file for the package Gpd version 1.42 
 ##  Emma Moore and Chris Wensley 
 ##
 
@@ -8,23 +8,23 @@ SetPackageInfo( rec(
 PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.41",
-Date := "04/02/2016", 
+Version := "1.42",
+Date := "10/02/2016", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GPDVERSION "1.41">
-##  <!ENTITY GPDRELEASEDATE "04/02/2016">
-##  <!ENTITY GPDTARFILENAME "gpd-1.41.tar.gz">
+##  <!ENTITY GPDVERSION "1.42">
+##  <!ENTITY GPDRELEASEDATE "10/02/2016">
+##  <!ENTITY GPDTARFILENAME "gpd-1.42.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "4th February 2016">
+##  <!ENTITY GPDLONGRELEASEDATE "10th February 2016">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
  "http://pages.bangor.ac.uk/~mas023/chda/gpd/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.41", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.42", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -99,8 +99,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
-                           [ "fga", ">= 1.2.0" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 2.2"] ],
+                           [ "fga", ">= 1.3.0" ] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 2.7.2"] ],
   ExternalConditions := [ ]
 ),
 

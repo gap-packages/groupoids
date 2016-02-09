@@ -2,9 +2,9 @@
 ##
 #W  mwo.tst                       Gpd Package                    Chris Wensley
 ##
-##  version 1.36, 23/11/2015   
+##  version 1.41, 08/02/2016   
 ##
-#Y  Copyright (C) 2000-2015, Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
