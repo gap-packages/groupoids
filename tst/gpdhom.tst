@@ -2,9 +2,9 @@
 ##
 #W  gpdhom.tst                    Gpd Package                    Chris Wensley
 ##
-##  version 1.36, 23/11/2015   
+##  version 1.42, 15/02/2016   
 ##
-#Y  Copyright (C) 2000-2015, Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -229,7 +229,7 @@ GroupHomomorphismByImages( s3, s3,
 
 gap> AHs3 := AutomorphismGroup( Hs3 ); 
 <group with 4 generators>
-gap> Size( AHs3) ;
+gap> Size( AHs3 );
 31104
 gap> GeneratorsOfGroup( AHs3 ); 
 [ morphism from a homogeneous discrete groupoid:

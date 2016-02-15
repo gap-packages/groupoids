@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gpdhom.xml             Gpd documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  version 1.36, 23/11/2015                                           --> 
+<!--  version 1.42, 12/02/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -393,8 +393,8 @@ GroupHomomorphismByImages( s3, s3,
 GroupHomomorphismByImages( s3, s3, 
 [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
 [ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
-gap> AHs3 := AutomorphismGroup( Hs3 );;  Size( AHs3 ); 
-31104
+gap> AHs3 := AutomorphismGroup( Hs3 );
+<group of size 31104 with 4 generators>
 gap> GeneratorsOfGroup( AHs3 )[2];
 morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]

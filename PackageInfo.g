@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g   file for the package Gpd version 1.42 
+##  PackageInfo.g  file for the package Gpd version 1.42 
 ##  Emma Moore and Chris Wensley 
 ##
 
@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.42",
-Date := "10/02/2016", 
+Date := "15/02/2016", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GPDVERSION "1.42">
-##  <!ENTITY GPDRELEASEDATE "10/02/2016">
+##  <!ENTITY GPDRELEASEDATE "15/02/2016">
 ##  <!ENTITY GPDTARFILENAME "gpd-1.42.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "10th February 2016">
+##  <!ENTITY GPDLONGRELEASEDATE "15th February 2016">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
 ##  <#/GAPDoc>
 
@@ -109,8 +109,6 @@ AvailabilityTest := ReturnTrue,
 BannerString := Concatenation(
     "Loading Gpd ", String( ~.Version ), " for GAP 4.8", 
     " - Emma Moore and Chris Wensley ...\n" ),
-
-Autoload := false,
 
 TestFile := "tst/testall.g", 
 

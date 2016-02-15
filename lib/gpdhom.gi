@@ -2,9 +2,9 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.36, 23/11/2015 
+##  version 1.42, 15/02/2016 
 ##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -1249,6 +1249,12 @@ function ( map, e )
     h2 := obs2[ Position( obs1, e![3] ) ]; 
     g2 := Image( pim[2], e![1] );
     return Arrow( Range( map ), g2, t2, h2 );
+end );
+
+InstallOtherMethod( ImagesRepresentative, "for a groupoid homomorphism", true, 
+    [ IsGroupoidHomomorphism, IsGroupoidElement ], 0, 
+function( map, e ) 
+    return ImageElm( map, e ); 
 end );
 
 #############################################################################
