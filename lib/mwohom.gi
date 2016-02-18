@@ -2,9 +2,7 @@
 ##
 #W  mwohom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.35, 10/06/2015 
-##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for mappings of magmas with objects

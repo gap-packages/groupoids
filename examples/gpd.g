@@ -2,9 +2,7 @@
 ##
 #W  gpd.g                       GAP4 package `Gpd'               Chris Wensley
 #W                                                                & Emma Moore
-##  version 1.35, 10/06/2015 
-##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 

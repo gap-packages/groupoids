@@ -2,8 +2,6 @@
 ##
 #W  testall.g                     Gpd Package                    Chris Wensley
 ##
-##  version 1.42, 09/02/2016   
-##
 #Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  

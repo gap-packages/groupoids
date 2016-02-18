@@ -2,9 +2,7 @@
 ##
 #W  init.g                 GAP package `gpd'                    Chris Wensley
 ##                                                               & Emma Moore
-##  version 1.33, 02/06/2015 
-##
-#Y  Copyright (C) 2000-2015, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  read the function declarations 
