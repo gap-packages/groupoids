@@ -133,10 +133,11 @@ gap> d8 := Group( (1,2,3,4), (1,3) );;
 gap> SetName( d8, "d8" );
 gap> D0 := DomainWithSingleObject( d8, 0 ); 
 single piece groupoid: < d8, [ 0 ] >
-gap> KnownTruePropertiesOfObject( D0 ); 
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsAssociative", "IsSinglePieceDomain", 
-  "IsDirectProductWithCompleteGraphDomain" ]
+gap> ktpD0 := KnownTruePropertiesOfObject( D0 );;
+gap> ForAll( [ "CanEasilyCompareElements", "CanEasilySortElements", 
+>     "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
+>     "IsDirectProductWithCompleteGraphDomain" ], p -> p in ktpD0 ); 
+true
 gap> p0 := Arrow( D0, (1,2,3,4), 0, 0 );; 
 gap> q0 := Arrow( D0, (1,3), 0, 0 );; 
 gap> p0*q0; 

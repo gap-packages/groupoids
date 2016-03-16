@@ -447,11 +447,11 @@ function( map )
     local  obs, ims; 
     ims := ImagesOfObjects( map );
     obs := Filtered( Range( map )!.objects, o -> o in ims ); 
-#    if not ( Length(obs) = Length(ims) ) then 
-#        Info( InfoGpd, 1, 
-#            "ObjectTransformationOfGroupoidHomomorphism set to <fail>" );
-#        return fail; 
-#    fi; 
+    if not ( Length(obs) = Length(ims) ) then 
+        Info( InfoGpd, 1, 
+            "ObjectTransformationOfGroupoidHomomorphism set to <fail>" );
+        return fail; 
+    fi; 
     if IsInjectiveOnObjects( map ) then 
         return MappingPermObjectsImages( obs, ims );
     else 
@@ -557,7 +557,7 @@ function( src, rng, hom, oims, rims )
     fi; 
     rayr := RayElementsOfGroupoid( rng ); 
     pos1 := Position( obr, oims[1] ); 
-    for i in [2..lenr] do 
+    for i in [2..lens] do 
         posi := Position( obr, oims[i] ); 
         if not ( ( rayr[pos1] * rims[i] * rayr[posi]^-1 ) in gpr ) then 
             Error( "ray images not all in relevant homset" ); 

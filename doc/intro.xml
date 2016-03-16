@@ -7,8 +7,6 @@
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
-<!-- lines to be edited with each new version: 42. -->
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-intro">
@@ -58,8 +56,6 @@ Help is available in the usual way.
 <Example>
 <![CDATA[
 gap> LoadPackage( "gpd" );
-Loading Gpd 1.41 for GAP 4.8 - Emma Moore and Chris Wensley ... 
-true
 ]]>
 </Example>
 

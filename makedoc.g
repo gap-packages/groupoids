@@ -1,4 +1,4 @@
-##  makedocrel.g,  version 28/10/15
+##  makedoc.g,  version 16/03/16
 ##  This builds the documentation of the Gpd package
 ##  Needs: GAPDoc package, latex, pdflatex, mkindex
 ##  

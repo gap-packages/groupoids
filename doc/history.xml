@@ -57,8 +57,8 @@ The latest version is &GPDVERSION; of &GPDLONGRELEASEDATE;, for &GAP; 4.8.
 (In this temporary version there have been a number of changes of function 
 name, such as <C>IsDigraph</C> becoming <C>GpdIsDigraph</C>. 
 This is in order to avoid conflicts with the new 
-<Package>digraphs</Package> package.
-Further changes will be made once the <Package>digraphs</Package> 
+<Package>Digraphs</Package> package.
+Further changes will be made once the <Package>Digraphs</Package> 
 package becomes part of the general GAP distribution.) 
 </Section>
 

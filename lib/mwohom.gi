@@ -84,7 +84,7 @@ function( m1, m2, hom, imo )
     if not ( Length( imo ) = Length( o1 ) ) then
         Error( "object images of incorrect length" );
     fi;
-    if not IsSubset( o2, imo ) then
+    if not ForAll( imo, o -> o in o2 ) then
         Error( "object images not in the objects of m2" );
     fi;
     mag1 := m1!.magma; 
