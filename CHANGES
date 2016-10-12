@@ -22,7 +22,7 @@ ToDo:
 ############################################################################## 
 1.43 -> 1.44  (12/10/16) 
 
- - (12/10/16) changed my email address and moved web page to GitHub 
+ - (12/10/16) changed my email address and moved the web page to GitHub 
  - (03/10/16) ImagesOfRays renamed ImageElementsOfRays 
  - (28/04/16) replaced Image(hom,x) with ImageElm(hom,x) throughout 
  - (28/04/16) moved AutomorphismGroup methods to AutomorphismGroupOfGroupoid
