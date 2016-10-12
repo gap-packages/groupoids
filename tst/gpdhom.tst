@@ -36,10 +36,10 @@ gap> ihomd8 := homd8 * incGs3;;
 gap> IsBijectiveOnObjects( ihomd8 );
 false
 gap> Display( ihomd8 );
- groupoid mapping: [ Gd8 ] -> [ Gd12 ]
-root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
-images of objects: [ -36, -35, -34 ]
-   images of rays: [ (), (), () ]
+  groupoid mapping: [ Gd8 ] -> [ Gd12 ]
+ root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
+ images of objects: [ -36, -35, -34 ]
+image elts of rays: [ (), (), () ]
 gap> e2; ImageElm( ihomd8, e2 );
 [(1,3) : -8 -> -7]
 [(15,20)(16,19)(17,18) : -35 -> -34]
@@ -116,50 +116,45 @@ single piece groupoid: < a4, [ -15, -13, -11 ] >
 gap> SetName( Ga4, "Ga4" ); 
 gap> aut1 := GroupoidAutomorphismByObjectPerm( Ga4, [-13,-11,-15] );; 
 gap> Display( aut1 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -13, -11, -15 ]
-   images of rays: [ (), (), () ]
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
+ images of objects: [ -13, -11, -15 ]
+image elts of rays: [ (), (), () ]
 gap> h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
 gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; 
 gap> Display( aut2 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
-images of objects: [ -15, -13, -11 ]
-   images of rays: [ (), (), () ]
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
+ images of objects: [ -15, -13, -11 ]
+image elts of rays: [ (), (), () ]
 gap> im3 := [(), (1,3,2), (2,4,3)];; 
 gap> aut3 := GroupoidAutomorphismByRayImages( Ga4, im3 );; 
 gap> Display( aut3 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -15, -13, -11 ]
-   images of rays: [ (), (1,3,2), (2,4,3) ]
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
+ images of objects: [ -15, -13, -11 ]
+image elts of rays: [ (), (1,3,2), (2,4,3) ]
 gap> aut123 := aut1*aut2*aut3;; 
 gap> Display( aut123 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
-images of objects: [ -13, -11, -15 ]
-   images of rays: [ (), (1,4,3), (1,2,3) ]
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
+ images of objects: [ -13, -11, -15 ]
+image elts of rays: [ (), (1,4,3), (1,2,3) ]
 gap> inv123 := InverseGeneralMapping( aut123 );; 
 gap> Display( inv123 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (2,3,4), (1,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -11, -15, -13 ]
-   images of rays: [ (), (1,2,4), (1,3,4) ]
-gap> id123 := aut123 * inv123;; 
-gap> id123 = IdentityMapping( Ga4 ); 
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (2,3,4), (1,3,4) ], [ (1,2,3), (2,3,4) ] ]
+ images of objects: [ -11, -15, -13 ]
+image elts of rays: [ (), (1,2,4), (1,3,4) ]
+gap> id123 := aut123 * inv123;
 true
-gap> AGa4 := AutomorphismGroup( Ga4 ); 
-<group with 10 generators>
+gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
+<group with 8 generators>
 gap> AGgens := GeneratorsOfGroup( AGa4); 
 [ groupoid homomorphism : Ga4 -> Ga4
-    [ [ InnerAutomorphism( a4, (2,4,3) ), [ -15, -13, -11 ], [ (), (), () ] ] 
-     ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (3,4) ), [ -15, -13, -11 ], 
+    [ [ ConjugatorAutomorphism( a4, (2,4,3) ), [ -15, -13, -11 ], 
           [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ InnerAutomorphism( a4, (1,2)(3,4) ), [ -15, -13, -11 ], 
-          [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ InnerAutomorphism( a4, (1,4)(2,3) ), [ -15, -13, -11 ], 
+    [ [ ConjugatorAutomorphism( a4, (1,2) ), [ -15, -13, -11 ], 
           [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
     [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
             [ (1,2,3), (2,3,4) ] ), [ -13, -11, -15 ], [ (), (), () ] ] ], 
@@ -193,7 +188,7 @@ true
 gap> Hs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); 
 homogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >
 gap> aut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); 
-morphism from a homogeneous discrete groupoid:
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -12, -10, -11, -13 ]
 object homomorphisms:
 IdentityMapping( s3 )
@@ -209,7 +204,7 @@ gap> b2 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2 ] );;
 gap> b3 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2^(g1*g2) ] );; 
 gap> b4 := GroupHomomorphismByImages( s3, s3, gens3, [g1^(g2*g1), g2^g1 ] );; 
 gap> aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1,b2,b3,b4] ); 
-morphism from a homogeneous discrete groupoid:
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
 object homomorphisms:
 GroupHomomorphismByImages( s3, s3, 
@@ -225,33 +220,33 @@ GroupHomomorphismByImages( s3, s3,
 [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
 [ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
 
-gap> AHs3 := AutomorphismGroup( Hs3 ); 
+gap> AHs3 := AutomorphismGroupOfGroupoid( Hs3 ); 
 <group with 4 generators>
 gap> Size( AHs3 );
 31104
-gap> GeneratorsOfGroup( AHs3 ); 
-[ morphism from a homogeneous discrete groupoid:
+gap> genAHs3 := GeneratorsOfGroup( AHs3 ); 
+[ groupoid homomorphism : morphism from a homogeneous discrete groupoid:
     [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
     object homomorphisms:
-    InnerAutomorphism( s3, (15,20)(16,19)(17,18) )
+    ConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
-    , morphism from a homogeneous discrete groupoid:
+    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
     [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
     object homomorphisms:
-    InnerAutomorphism( s3, (15,19,17)(16,20,18) )
+    ConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
-    , morphism from a homogeneous discrete groupoid:
+    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
     [ -13, -12, -11, -10 ] -> [ -12, -11, -10, -13 ]
     object homomorphisms:
     IdentityMapping( s3 )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
     IdentityMapping( s3 )
-    , morphism from a homogeneous discrete groupoid:
+    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
     [ -13, -12, -11, -10 ] -> [ -12, -13, -11, -10 ]
     object homomorphisms:
     IdentityMapping( s3 )
@@ -259,6 +254,31 @@ gap> GeneratorsOfGroup( AHs3 );
     IdentityMapping( s3 )
     IdentityMapping( s3 )
      ]
+gap> nobAHs3 := NiceObject( AHs3 );; 
+gap> nmonAHs3 := NiceMonomorphism( AHs3 );;
+gap> w := genAHs3[1];; 
+gap> w1 := ImageElm( nmonAHs3, w );; 
+gap> x := genAHs3[2];; 
+gap> x1 := ImageElm( nmonAHs3, x );; 
+gap> y := genAHs3[3];; 
+gap> y1 := ImageElm( nmonAHs3, y );; 
+gap> z := genAHs3[4];; 
+gap> z1 := ImageElm( nmonAHs3, z );; 
+gap> u := z*w*y*x*z; 
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -> [ -11, -13, -10, -12 ]
+object homomorphisms:
+IdentityMapping( s3 )
+ConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )
+IdentityMapping( s3 )
+ConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )
+
+gap> u1 := z1*w1*y1*x1*z1; 
+(1,2,4,3)(5,17,23,16,8,20,26,13)(6,18,24,15,7,19,25,14)(9,21,27,12,10,22,28,
+11)
+gap> imu := ImageElm( nmonAHs3, u );; 
+gap> u1 = imu;
+true
 gap> SetInfoLevel( InfoGpd, gpd_infolevel_saved );;  
 
 #############################################################################

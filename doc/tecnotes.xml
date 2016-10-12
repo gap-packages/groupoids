@@ -189,11 +189,11 @@ gap> CategoriesOfObject( homd8 );
   "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", 
   "IsGroupoidHomomorphism" ]
 gap> KnownAttributesOfObject( homd8 );
-[ "Range", "Source", "PieceImages", "ImagesOfObjects", "ImagesOfRays", 
+[ "Range", "Source", "PieceImages", "ImagesOfObjects", "ImageElementsOfRays", 
   "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ]
 gap> KnownAttributesOfObject( aut3 );
 [ "Order", "Range", "Source", "PieceImages", "ImagesOfObjects", 
-  "ImagesOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
+  "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
   "RootGroupHomomorphism" ]
 ]]>
 </Example>

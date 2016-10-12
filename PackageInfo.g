@@ -8,24 +8,18 @@ SetPackageInfo( rec(
 PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.43",
-Date := "16/03/2016", 
+Version := "1.44",
+Date := "12/10/2016", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GPDVERSION "1.43">
-##  <!ENTITY GPDRELEASEDATE "16/03/2016">
-##  <!ENTITY GPDTARFILENAME "gpd-1.43.tar.gz">
+##  <!ENTITY GPDVERSION "1.44">
+##  <!ENTITY GPDRELEASEDATE "12/10/2016">
+##  <!ENTITY GPDTARFILENAME "gpd-1.44.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "16th March 2016">
+##  <!ENTITY GPDLONGRELEASEDATE "12th October 2016">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
 ##  <#/GAPDoc>
-
-PackageWWWHome := 
- "http://pages.bangor.ac.uk/~mas023/chda/gpd/",
-
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/gpd/gpd-1.43", 
-ArchiveFormats := ".tar.gz",
 
 Persons := [
   rec(
@@ -44,17 +38,17 @@ Persons := [
     FirstNames    := "Christopher D.",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "c.d.wensley@bangor.ac.uk",
+    Email         := "cdwensley.maths@btinternet.com",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
-    PostalAddress := Concatenation( [
-                       "Dr. C.D. Wensley\n",
-                       "School of Computer Science\n",
-                       "Bangor University\n",
-                       "Dean Street\n",
-                       "Bangor\n",
-                       "Gwynedd LL57 1UT\n",
-                       "UK"] ),
-    Place         := "Bangor",
+    ## PostalAddress := Concatenation( [
+    ##                    "Dr. C.D. Wensley\n",
+    ##                    "School of Computer Science\n",
+    ##                    "Bangor University\n",
+    ##                    "Dean Street\n",
+    ##                    "Bangor\n",
+    ##                    "Gwynedd LL57 1UT\n",
+    ##                    "UK"] ),
+    Place         := "Llanfairfechan",
     Institution   := "University of Wales, Bangor"
   )
 ],
@@ -63,20 +57,19 @@ Status := "accepted",
 CommunicatedBy := "Derek Holt (Warwick)",
 AcceptDate := "05/2015",
 
-README_URL := 
-  Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := 
-  Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-
-##  Optional:
-##    - Type and the URL of the source code repository
-##    - URL of the public issue tracker
-##    - Support email address
-SourceRepository :=
-  rec( Type := "git", # must be one of "git", "hg", "svn", "cvs"
-       URL  := "http://github.com/gap-packages/gpd"),
-IssueTrackerURL := "http://github.com/gap-packages/gpd/issues",
-SupportEmail := "c.d.wensley@bangor.ac.uk",
+SourceRepository := rec( 
+  Type := "git", 
+  URL := "https://github.com/gap-packages/gpd"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := "http://gap-packages.github.io/gpd/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
+                                  "/releases/download/v", ~.Version, 
+                                  "/", ~.PackageName, "-", ~.Version ), 
+SupportEmail := "cdwensley.maths@btinternet.com",
+ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
 "The Gpd package provides a collection of functions for computing with \
@@ -107,8 +100,9 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation(
-    "Loading Gpd ", String( ~.Version ), " for GAP 4.8", 
-    " - Emma Moore and Chris Wensley ...\n" ),
+    "Loading Gpd ", String( ~.Version ), " (algorithms for finite groupoids)\n", 
+    "by Emma Moore and Chris Wensley (http://pages.bangor.ac.uk/~mas023/)\n",
+    "--------------------------------------------------------------------\n" ),
 
 TestFile := "tst/testall.g", 
 

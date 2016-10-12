@@ -118,15 +118,24 @@ DeclareOperation( "GroupoidAutomorphismByRayImages",
 
 ############################################################################# 
 ## 
-#P  IsAutomorphismGroupOfGroupoid( IsGroup ) 
+#P  IsAutomorphismGroupOfGroupoid( <gp> ) 
+#O  AutomorphismGroupOfGroupoid( <gpd> ) 
+#O  NiceObjectAutoGroupGroupoid( <gpd>, <aut> )
+#A  EmbeddingsInNiceObject( <gp> ) 
 ##  
 DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
+DeclareOperation( "AutomorphismGroupOfGroupoid", [ IsGroupoid ] ); 
+DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
+DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
 
 ############################################################################# 
 ## 
-#O  NiceObjectAutoGroupGroupoid( <gpd> )
+##  this should be a method for \in, but cannot make that work at present 
+## 
+#O  InAutomorphismGroupOfGroupoid( <a, aut> )
 ##  
-DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid ] );
+DeclareOperation( "InAutomorphismGroupOfGroupoid", 
+    [ IsGroupoidHomomorphism, IsAutomorphismGroupOfGroupoid ] );
 
 ############################################################################# 
 ## 
@@ -157,6 +166,7 @@ DeclareRepresentation( "IsGroupoidHomomorphismFromHomogeneousDiscreteRep",
 #O  GroupoidHomomorphismFromHomogeneousDiscreteNC( <src>,<rng>,<homs>,<oims> ) 
 #A  ObjectHomomorphisms( <map> ) 
 #P  IsGeneralMappingFromHomogeneousDiscrete( <map> ) 
+#P  IsGroupoidHomomorphismFromHomogeneousDiscrete( <map> ) 
 #P  IsAutomorphismOfHomogeneousDiscreteGroupoid( IsGroup ) 
 #O  GroupoidAutomorphismByGroupAutosNC( <gpd, homs> )
 #O  GroupoidAutomorphismByGroupAutos( <gpd, homs> )
@@ -171,17 +181,14 @@ DeclareAttribute( "ObjectHomomorphisms",
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
 DeclareProperty("IsGeneralMappingFromHomogeneousDiscrete", 
     IsGeneralMappingWithObjects );
+DeclareProperty("IsGroupoidHomomorphismFromHomogeneousDiscrete", 
+    IsGeneralMappingWithObjects );
 DeclareProperty( "IsAutomorphismOfHomogeneousDiscreteGroupoid", 
     IsGroupoidAutomorphism );
 DeclareOperation( "GroupoidAutomorphismByGroupAutos", 
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAutosNC", 
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
-
-
-
-
-
 
 ############################################################################## 
 ## 

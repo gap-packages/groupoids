@@ -61,8 +61,8 @@ DeclareGlobalFunction( "Groupoid" );
 ##           
 #O  SinglePieceGroupoidNC( <group>, <objects> )              
 #O  SinglePieceGroupoid( <group>, <objects> )              
-#O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <conj> )
-#O  SubgroupoidWithRays( <parent>, <rootgp>, <conj> )
+#O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
+#O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
 #O  SinglePieceGroupoidByGenerators( <ancestor>, <gens> )
 ## 
 DeclareOperation( "SinglePieceGroupoidNC", 

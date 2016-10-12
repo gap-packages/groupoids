@@ -28,12 +28,12 @@
   <Author> Emma Moore 
   </Author>
   <Author> Chris Wensley
-    <Email>c.d.wensley@bangor.ac.uk</Email>
+    <Email>cdwensley.maths@btinternet.com</Email>
     <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
-    <Address>
-         School of Computer Science, Bangor University,<Br/>
-      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.
-    </Address>
+<!--    <Address>                                                 -->
+<!--         School of Computer Science, Bangor University,<Br/>. -->
+<!--      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.            -->
+<!--    </Address>                                                -->
   </Author>
 
 <Abstract>
@@ -63,8 +63,10 @@ Recent versions implement many of the constructions described in the paper
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
-Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
-or submit an issue at <URL>http://github.com/gap-packages/gpd/issues/</URL>. 
+Please submit an issue at 
+<URL>http://github.com/gap-packages/gpd/issues/</URL>
+or send an email to the last author at 
+<Email>cdwensley.maths@btinternet.com</Email>. 
 </Abstract>
 
 <Copyright> 

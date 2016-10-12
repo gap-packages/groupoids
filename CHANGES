@@ -17,6 +17,17 @@ ToDo:
               this is in order to avoid conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution.
+ - (22/03/16) in mwohom.gi check \^-1 now works for isomorphisms 
+
+############################################################################## 
+1.43 -> 1.44  (12/10/16) 
+
+ - (12/10/16) changed my email address and moved web page to GitHub 
+ - (03/10/16) ImagesOfRays renamed ImageElementsOfRays 
+ - (28/04/16) replaced Image(hom,x) with ImageElm(hom,x) throughout 
+ - (28/04/16) moved AutomorphismGroup methods to AutomorphismGroupOfGroupoid
+ - (27/04/16) added EmbeddingsInNiceObject 
+ - (14/04/16) converted cases of \in to new InAutomorphismGroupOfGroupoid 
 
 ############################################################################## 
 1.41 -> 1.43  (16/03/16) 

@@ -197,12 +197,12 @@ function( gpd, w0 )
     MakeConfluent( rwsmg );  ### this should not be necessary here !! ###
     smggen := GeneratorsOfSemigroup( smg );
     fsmg := FreeSemigroupOfKnuthBendixRewritingSystem( rwsmg );
-    iw := Image( iso, w0![1] );
+    iw := ImageElm( iso, w0![1] );
     uiw := UnderlyingElement( iw );
     ruw := ReducedForm( rwsmg, uiw );
     fam1 := FamilyObj( smggen[1] );
     riw := ElementOfFpSemigroup( fam1, ruw );
-    rw :=Image( inviso, riw );
+    rw := ImageElm( inviso, riw );
     return GroupoidElement( gpd, rw, w0![2], w0![3] );
 end);
 

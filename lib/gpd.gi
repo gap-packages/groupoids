@@ -124,12 +124,12 @@ function( gpd, rgp, rays )
         grays := gpd!.rays; 
     fi; 
     gp := gpd!.magma; 
-    if not ( rays[1] = One( gp ) ) then
-        Error( "root group conjugator not the identity element," );
+    if not ( rays[1] = One( rgp ) ) then
+        Error( "first ray element is not the identity element," );
     fi;
     if not ForAll( [2..Length(obs)], 
                    i -> rays[i] * grays[i]^-1 in gp ) then
-        Error( "not all the rays are elements of the parent group," );
+        Error( "not all the rays are in the corresponding homsets," );
     fi; 
     if HasLargerDirectProductGroupoid( gpd ) then   ## for RaysRep 
         par := LargerDirectProductGroupoid( gpd ); 
@@ -776,7 +776,7 @@ InstallMethod( Arrow, "generic method for a groupoid element",
     true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
 function( gpd, g, i, j )
 
-    local  comp, obs, ok1, ok2, rays, e;
+    local  comp, obs, ok1, ok2, rays;
 
     if ( HasIsSinglePiece( gpd ) 
          and IsSinglePiece( gpd ) ) then 
@@ -797,10 +797,7 @@ function( gpd, g, i, j )
     if not ( ok1 and ok2 ) then 
         return fail;
     else
-        e :=  ArrowNC( true, g, i, j ); 
-        #? (08/09/10) change back from Category to Property ?? 
-        #? SetIsGroupoidElement( e, true ); 
-        return e;
+        return ArrowNC( true, g, i, j ); 
     fi;
 end );
 

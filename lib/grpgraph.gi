@@ -271,7 +271,7 @@ function( dig, gps, isos )
     ### THIS LINE DOES NOT MAKE SENSE :-
     ###        einvpos := Position( e, e[inv[i]] );
         for g in GeneratorsOfGroup( Source( isos[i] ) ) do
-            if not ( Image( isos[inv[i]], Image( isos[i], g ) ) = g ) then
+            if not ( ImageElm( isos[inv[i]], ImageElm(isos[i],g) ) = g ) then
                 Error( "isos are not correct");
             fi;
         od;
@@ -658,7 +658,7 @@ function( ggword )
         od;
         tsp := [ tran[i]^(-1), nwit ];
         Info( InfoGpd, 3, "tsp at i = ", i, " is ", tsp );
-        im := Image( isos[e], tsp[2] );
+        im := ImageElm( isos[e], tsp[2] );
         w[k2-1] := tsp[1];
         if isfp then
             w[k2+1] := NormalFormKBRWS( gps[he], im*w[k2+1] );
@@ -891,7 +891,7 @@ function( iso )
     id := One( fgp );
     nat := GroupHomomorphismByImages( fgp, gp, GeneratorsOfGroup( fgp ),
                                                GeneratorsOfGroup( gp ) );
-    fun := x -> Image( nat, smgword2gpword( id, UnderlyingElement( x ) ) );
+    fun := x -> ImageElm( nat, smgword2gpword( id, UnderlyingElement( x ) ) );
     return MagmaHomomorphismByFunctionNC( smg, gp, fun );
 end);
 
@@ -927,12 +927,12 @@ function( gp, w0 )
     MakeConfluent( rwsmg );  ### this should not be necessary here !! ###
     smggen := GeneratorsOfSemigroup( smg );
     fsmg := FreeSemigroupOfKnuthBendixRewritingSystem( rwsmg );
-    iw := Image( iso, w0 );
+    iw := ImageElm( iso, w0 );
     uiw := UnderlyingElement( iw );
     ruw := ReducedForm( rwsmg, uiw );
     fam1 := FamilyObj( smggen[1] );
     riw := ElementOfFpSemigroup( fam1, ruw );
-    rw :=Image( inviso, riw );
+    rw :=ImageElm( inviso, riw );
     return rw;
 end);
 
@@ -969,7 +969,7 @@ function( fp1, fp2, iso )
     gfa1 := gfa{[1..ng1]};
     gfa2 := gfa{[ng1+1..num]};
     gH1 := GeneratorsOfGroup( H1 );
-    igH1 := List( gH1, h -> Image( iso, h ) );
+    igH1 := List( gH1, h -> ImageElm( iso, h ) );
     relH := List( [1..Length(gH1)], i -> MappedWord( gH1[i], gfp1, gfa1 )
                 * MappedWord( igH1[i], gfp2, gfa2 )^(-1) );
     rela := Concatenation( List( rel1, w -> MappedWord( w, gf1, gfa1 ) ),
@@ -999,13 +999,13 @@ function( p1, p2, iso )
     fp1 := Image( p2f1 );
     sub1 := Source( iso );
     gen1 := GeneratorsOfGroup( sub1 );
-    fgen1 := Image( p2f1, gen1 );
+    fgen1 := ImageElm( p2f1, gen1 );
     fsub1 := Subgroup( fp1, fgen1 );
     p2f2 := IsomorphismFpGroup( p2 );
     fp2 := Image( p2f2 );
     sub2 := Range( iso );
-    gen2 := Image( iso, gen1 );
-    fgen2 := Image( p2f2, gen2 );
+    gen2 := ImageElm( iso, gen1 );
+    fgen2 := ImageElm( p2f2, gen2 );
     fsub2 := Subgroup( fp2, fgen2 );
     fiso := GroupHomomorphismByImages( fsub1, fsub2, fgen1, fgen2 );
     return FreeProductWithAmalgamation( fp1, fp2, fiso );
@@ -1160,7 +1160,7 @@ function( fp, iso )
     gffp := GeneratorsOfGroup( ffp );
     rel := RelatorsOfFpGroup( fp );
     gH1 := GeneratorsOfGroup( H1 );
-    igH1 := List( gH1, h -> Image( iso, h ) );
+    igH1 := List( gH1, h -> ImageElm( iso, h ) );
     relH := List( [1..Length(gH1)], i -> z^-1 * MappedWord( gH1[i], gfp, gfe1 )
                 * z * MappedWord( igH1[i], gfp, gfe1 )^(-1) );
     rele := Concatenation( List( rel, w -> MappedWord(w, gffp, gfe1) ), relH );

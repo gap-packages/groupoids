@@ -629,11 +629,11 @@ function( map )
     return ( Set(imo) = obr ); 
 end );
 
-InstallMethod( IsBijectiveOnObjects, "for a mapping with objects", true,
+InstallMethod( IsBijectiveOnObjects, "for a mapping with objects", true, 
     [ IsMagmaWithObjectsHomomorphism ], 0,
-function( map )
-    return IsInjectiveOnObjects( map ) and IsSurjectiveOnObjects( map );
-end );
+function( map ) 
+    return IsInjectiveOnObjects( map ) and IsSurjectiveOnObjects( map ); 
+end ); 
 
 ##############################################################################
 ##
@@ -666,8 +666,23 @@ function( map )
     return InverseGeneralMapping( map );
 end );
 
+InstallMethod( InverseGeneralMapping, "for a magma mapping", true,
+    [ IsMagmaWithObjectsHomomorphism ], 0,
+function( map )
+
+    local  pieces, isos, inv;
+
+    Info( InfoGpd, 3, "InverseGeneralMapping for magma mappings" );
+    pieces := PiecesOfMapping( map );
+    isos := List( pieces, m -> InverseGeneralMapping( m ) );
+    inv := HomomorphismByUnion( Range(map), Source(map), isos );
+    SetIsInjectiveOnObjects( inv, true );
+    SetIsSurjectiveOnObjects( inv, true );
+    return inv;
+end );
+
 InstallMethod( InverseGeneralMapping, "for a single piece mapping", true,
-    [  IsMagmaWithObjectsHomomorphism and IsHomomorphismToSinglePiece ], 0,
+    [ IsMagmaWithObjectsHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( map )
 
     local  m1, m2, ob1, ob2, nob, hom21, len, sc1, sc2, obhom1, inv;
@@ -675,6 +690,7 @@ function( map )
     if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
         Error( "mapping with objects not bijective" );
     fi;
+    Info( InfoGpd, 3, "InverseGeneralMapping for single piece mappings" );
     m1 := Source( map );
     if not IsSinglePiece( m1 ) then
         Error( "source is not single piece" );
@@ -699,19 +715,92 @@ function( map )
     return inv;
 end );
 
-InstallMethod( InverseGeneralMapping, "for a magma mapping", true,
-    [ IsMagmaWithObjectsHomomorphism ], 0,
+InstallMethod( InverseGeneralMapping, "for a connected mapping", true,
+    [  IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece ], 0,
 function( map )
 
-    local  pieces, isos, inv;
+    local  m1, m2, ob1, ob2, nobs, imob1, hom12, hom21, ok, imob2, sc, hs, e, 
+           iro1, piro1, iro2, piro2, L, pi, i, ri, ray2, rim12, rim21, inv;
 
-    pieces := PiecesOfMapping( map );
-    isos := List( pieces, m -> InverseGeneralMapping( m ) );
-    inv := HomomorphismByUnion( Range(map), Source(map), isos );
+    if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
+        Error( "mapping not bijective on objects" );
+    fi;  
+    Info( InfoGpd, 3, "InverseGeneralMapping for connected mappings" );
+    m1 := Source( map );
+    m2 := Range( map );
+    ob1 := m1!.objects;
+    ob2 := m2!.objects;
+    nobs := Length( ob1 );
+    imob1 := ImagesOfObjects( map ); 
+    L := [1..nobs]; 
+    SortParallel( ShallowCopy( imob1 ), L ); 
+    pi := PermList( L ); 
+    imob2 := ShallowCopy( ob1 );
+    sc := ShallowCopy( imob1 );
+    SortParallel( sc, imob2 ); 
+    iro1 := imob1[1]; 
+    piro1 := Position( ob2, iro1 ); 
+    iro2 := imob2[1]; 
+    piro2 := Position( ob1, iro2 ); 
+    hom12 := RootGroupHomomorphism( map ); 
+    if not IsBijective( hom12 ) then 
+        Error( "root homomorphism has no inverse" ); 
+    fi; 
+    hom21 := InverseGeneralMapping( RootGroupHomomorphism( map ) ); 
+    ok := IsGroupHomomorphism( hom21 ); 
+    #? are the following settings necessary ?? 
+    #? SetIsGroupHomomorphism( hom21, true );
+    #? SetIsTotal( hom21, true );
+    #? SetRespectsMultiplication( hom21, true );
+    #? SetIsInjective( hom21, true );
+    #? SetIsSurjective( hom21, true ); 
+    ray2 := RaysOfGroupoid( m2 ); 
+    rim12 := ImageElementsOfRays( map ); 
+    #? (08/07/11) using an inefficient search here, but at least using break! 
+    rim21 := ListWithIdenticalEntries( nobs, 0 ); 
+    for i in [1..nobs] do 
+        ri := ray2[i];  
+        hs := Homset( m1, iro2, imob2[i] ); 
+        for e in hs do 
+            if ( ri = ImageElm( map, e ) ) then 
+                rim21[i] := e![1]; 
+                break; 
+            fi; 
+        od;
+    od; 
+    inv := GroupoidHomomorphismFromSinglePieceNC( m2, m1, hom21, imob2, rim21 );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
+####Error("here");
     return inv;
 end );
+
+InstallMethod( InverseGeneralMapping, "for hom from discrete gpd with objects", 
+    true, [ IsGroupoidHomomorphism and 
+            IsGroupoidHomomorphismFromHomogeneousDiscrete ], 0,
+function( map )
+
+    local  src, rng, obs, oims1, oims2, homs, ihoms; 
+
+    if not IsBijectiveOnObjects( map ) then 
+        Error( "expecting map to be bijective on objects" ); 
+    fi; 
+    Info( InfoGpd, 3, "InverseGeneralMapping for hom from discrete groupoid" );
+    src := Source( map ); 
+    rng := Range( map ); 
+    if not ( IsHomogeneousDomainWithObjects( rng ) and 
+             IsDiscreteDomainWithObjects( rng ) ) then 
+        Error( "expecting range to be homogeneous discrete" ); 
+    fi; 
+    obs := ShallowCopy( src!.objects ); 
+    oims1 := ShallowCopy( ImagesOfObjects( map ) ); 
+    oims2 := ShallowCopy( oims1 ); 
+    homs := ShallowCopy( ObjectHomomorphisms( map ) ); 
+    SortParallel( oims1, obs ); 
+    SortParallel( oims2, homs ); 
+    ihoms := List( homs, h -> InverseGeneralMapping(h) ); 
+    return GroupoidHomomorphismFromHomogeneousDiscrete( src,rng,ihoms,obs ); 
+end ); 
 
 #############################################################################
 ##
@@ -762,10 +851,30 @@ function( m1, m2 )
     return ( L = Set(L) );
 end );
 
+InstallMethod( \=, "for 2 connected groupoid mappings", true,
+    [ IsDefaultGroupoidHomomorphismRep, 
+      IsDefaultGroupoidHomomorphismRep ], 0,
+function( m1, m2 ) 
+    Info( InfoGpd, 4, "\\= for IsDefaultGroupoidHomomorphismRep in gpdhom.gi" ); 
+    if not ( ( Source( m1 ) =  Source( m2 ) ) 
+            and ( Range( m1 ) = Range( m2 ) ) ) then 
+        return false; 
+    fi; 
+    if not ( ImagesOfObjects( m1 ) = ImagesOfObjects( m2 ) ) then 
+        return false; 
+    fi; 
+    if ( HasIsGeneralMappingToSinglePiece( m1 ) 
+        and IsGeneralMappingToSinglePiece( m1 ) ) then  
+        return ( ( RootGroupHomomorphism( m1 ) = RootGroupHomomorphism( m2 ) ) 
+             and ( ImageElementsOfRays( m1 ) = ImageElementsOfRays( m2 ) ) ); 
+    else 
+        return fail; 
+    fi; 
+end );
+
 #############################################################################
 ##
-#M  \*( <m1>, <m2> )  . . . . . . . . . . . product of two magma mappings
-#M  \^( <e>, <n> )  . . . . . . . . . . . . . .  power of a magma mapping
+#M  \*( <m1>, <m2> )  . . . . . .  product of two magma with objects mappings 
 ##
 InstallMethod( \*, "for 2 magma mappings", true,
     [ IsMagmaWithObjectsHomomorphism, IsMagmaWithObjectsHomomorphism ], 0,
@@ -890,20 +999,119 @@ function( m1, m2 )
     return HomomorphismToSinglePiece( s1, r2, [ [ hom, oi12 ] ] );
 end );
 
-InstallMethod( \^, "for a magma mapping and an integer", true,
-    [ IsMagmaWithObjectsHomomorphism, IsInt ], 0,
-function( m, n )
-    Print( "^ only implemented for single piece mappings at present\n" );
-    return fail;
+InstallMethod( \*, "for 2 connected groupoid homomorphisms", true,
+    [ IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep, 
+      IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep ], 0,
+function( m1, m2 )
+
+    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
+           j, h1, h2, mgi1, im12, hom, oims, rims;
+
+    Info( InfoGpd, 2, "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
+    s1 := Source( m1 ); 
+    r1 := Range( m1 );
+    s2 := Source( m2 );
+    r2 := Range( m2 );
+    if not IsSubdomainWithObjects( s2, r1 ) then
+        Error( "Range(m1) not a subgroupoid of Source(m2)" );
+    fi; 
+    ob1 := s1!.objects;
+    nob1 := Length( ob1 );
+    ob2 := s2!.objects; 
+    io1 := ImagesOfObjects( m1 ); 
+    io2 := ImagesOfObjects( m2 ); 
+    oims := [1..nob1]; 
+    for j in [1..nob1] do
+        oims[j] := io2[ Position( ob2, io1[j] ) ]; 
+    od;
+    h1 := RootGroupHomomorphism( m1 ); 
+    mgi1 := MappingGeneratorsImages( h1 ); 
+    h2 := RootGroupHomomorphism( m2 ); 
+    im12 := List( mgi1[2], x -> ImageElm( h2, x ) ); 
+    hom := GroupHomomorphismByImages( Source(h1), Range(h2), mgi1[1], im12 ); 
+    rims := RaysOfGroupoid( s1 ); 
+    rims := List( rims, r -> ImageElm( m1, r ) ); 
+    rims := List( rims, r -> ImageElm( m2, r ) ); 
+    rims := List( rims, r -> r![1] ); 
+    return GroupoidHomomorphismFromSinglePieceNC( s1, r2, hom, oims, rims );
 end );
 
-InstallMethod( \^, "for a single piece magma mapping and an integer", true,
-    [ IsHomomorphismToSinglePiece, IsInt ], 0,
-function( map, n )
-    local  i, m1, m2;
+InstallMethod( \*, "for maps from hom discrete groupoids", true,
+    [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep, 
+      IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
+function( m1, m2 )
 
-    if not ( Source( map ) = Range( map ) ) then
-        Error( "source <> range" );
+    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
+           homs, oims, hom1, hom2, pos, j;
+
+    Info( InfoGpd, 3, "method 2 for * with maps from hom discrete gpds" );
+    s1 := Source( m1 ); 
+    r1 := Range( m1 );
+    s2 := Source( m2 );
+    r2 := Range( m2 );
+    if not IsSubdomainWithObjects( s2, r1 ) then
+        Error( "Range(m1) not a subgroupoid of Source(m2)" );
+    fi; 
+    ob1 := s1!.objects;
+    nob1 := Length( ob1 );
+    ob2 := s2!.objects; 
+    io1 := ImagesOfObjects( m1 ); 
+    io2 := ImagesOfObjects( m2 ); 
+    oims := [1..nob1]; 
+    homs := [1..nob1]; 
+    hom1 := ObjectHomomorphisms( m1 ); 
+    hom2 := ObjectHomomorphisms( m2 ); 
+    for j in [1..nob1] do 
+        pos := Position( ob2, io1[j] ); 
+        oims[j] := io2[ pos ]; 
+        homs[j] := hom1[j] * hom2[pos]; 
+    od; 
+    return GroupoidHomomorphismFromHomogeneousDiscreteNC( s1, r2, homs, oims );
+end );
+
+InstallMethod( \*, "for map from hom discrete with any gpd hom", true,
+    [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep, 
+      IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep ], 0,
+function( m1, m2 )
+
+    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
+           homs, oims, hom1, j;
+
+    Info( InfoGpd, 2, "method 3 for * with first a map from hom discrete" );
+    s1 := Source( m1 ); 
+    r1 := Range( m1 );
+    s2 := Source( m2 );
+    r2 := Range( m2 );
+    if not IsSubdomainWithObjects( s2, r1 ) then
+        Error( "Range(m1) not a subgroupoid of Source(m2)" );
+    fi; 
+    ob1 := s1!.objects;
+    nob1 := Length( ob1 );
+    ob2 := s2!.objects; 
+    io1 := ImagesOfObjects( m1 ); 
+    io2 := ImagesOfObjects( m2 ); 
+    oims := [1..nob1]; 
+    homs := [1..nob1]; 
+    hom1 := ObjectHomomorphisms( m1 ); 
+    for j in [1..nob1] do
+        oims[j] := io2[ Position( ob2, io1[j] ) ]; 
+        homs[j] := hom1[j] * ObjectGroupHomomorphism( m2, io1[j] ); 
+    od;
+    return GroupoidHomomorphismFromHomogeneousDiscreteNC( s1, r2, homs, oims );
+end );
+
+#############################################################################
+##
+#M  \^( <e>, <n> )  . . . . . . . . . . power of a magma with objects mapping
+##
+InstallMethod( \^, "for a magma with objects mapping and an integer", true,
+    [ IsMagmaWithObjectsHomomorphism, IsInt ], 0,
+function( map, n )
+
+    local  i, m1, m2; 
+
+    if not ( ( Source(map) = Range(map) ) or ( n = -1 ) ) then
+        Error( "source <> range  or  n <> -1" );
     fi;
     if ( n = 1 ) then
         return map;
@@ -956,7 +1164,7 @@ end );
 #############################################################################
 ##
 #M  PrintObj
-#M  ViewObj  . . . . . . . this defaults to PrintObj, no no methods necessary 
+#M  ViewObj  . . . . . . . this defaults to PrintObj, so no methods necessary 
 ##
 InstallMethod( PrintObj, "for mwo homomorphism to single piece", true,
     [ IsHomomorphismToSinglePiece ], 0, 
@@ -964,7 +1172,11 @@ function ( hom )
     local src, rng; 
     src := Source( hom ); 
     rng := Range( hom ); 
-    Print( "magma with objects homomorphism : " ); 
+    if ( "IsGroupoidHomomorphism" in CategoriesOfObject(hom) ) then 
+        Print( "groupoid homomorphism : " ); 
+    else 
+        Print( "magma with objects homomorphism : " ); 
+    fi;
     if ( HasName( src ) and HasName( rng ) ) then 
         Print( src, " -> ", rng, "\n" ); 
     fi; 
@@ -982,28 +1194,24 @@ function ( hom )
 end );
 
 InstallMethod( PrintObj, "for a groupoid homomorphism", true,
-    [ IsGroupoidHomomorphism ], 10, 
+    [ IsGroupoidHomomorphism ], 0, 
 function ( hom ) 
+
+    local  h; 
+
     Print( "groupoid homomorphism : " );
     if ( HasName( Source(hom) ) and HasName( Range(hom) ) ) then 
         Print( Source(hom), " -> ", Range(hom), "\n" ); 
+    elif IsGroupoidHomomorphismFromHomogeneousDiscrete( hom ) then 
+        Print( "morphism from a homogeneous discrete groupoid:\n" ); 
+        Print( ObjectList(Source(hom)), " -> ", ImagesOfObjects(hom), "\n" ); 
+        Print( "object homomorphisms:\n" );  
+        for h in ObjectHomomorphisms( hom ) do 
+            Print( h, "\n" ); 
+        od; 
+    else 
+        Print( PieceImages( hom ) ); 
     fi; 
-    Print( PieceImages( hom ) );  
-end ); 
-
-InstallMethod( PrintObj, "for a mapping from homogeneous discrete gpd", true,
-    [ IsGroupoidHomomorphism and IsGeneralMappingFromHomogeneousDiscrete ], 10, 
-function ( hom ) 
-    local  h; 
-    if ( HasName( Source(hom) ) and HasName( Range(hom) ) ) then 
-        Print( Source(hom), " -> ", Range(hom), "\n" ); 
-    fi; 
-    Print( "morphism from a homogeneous discrete groupoid:\n" ); 
-    Print( ObjectList( Source(hom) ), " -> ", ImagesOfObjects( hom ), "\n" ); 
-    Print( "object homomorphisms:\n" );  
-    for h in ObjectHomomorphisms( hom ) do 
-        Print( h, "\n" ); 
-    od; 
 end ); 
 
 #############################################################################
@@ -1098,7 +1306,7 @@ function ( map, e )
     mag2 := Range( map ); 
     t2 := obs2[ Position( obs1, e![2] ) ];
     h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := Image( hom, e![1] );
+    g2 := ImageElm( hom, e![1] );
     return MultiplicativeElementWithObjects( mag2, g2, t2, h2 );
 end );
 
@@ -1118,7 +1326,7 @@ function ( map, e )
     obs2 := pim[2]; 
     t2 := obs2[ Position( obs1, e![2] ) ];
     h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := Image( pim[1], e![1] );
+    g2 := ImageElm( pim[1], e![1] );
     return MultiplicativeElementWithObjects( Range( map ), g2, t2, h2 );
 end ); 
 
@@ -1138,7 +1346,7 @@ function ( map, elt )
     gens := gensims[1]; 
     ims := gensims[2];
     rhom := HomsOfMapping( map )[1]; 
-    e := Image( rhom, elt![1] ); 
+    e := ImageElm( rhom, elt![1] ); 
     j := elt![2];
     pj := Position( obs, elt![2] );
     k := elt![3];

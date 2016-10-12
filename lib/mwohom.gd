@@ -190,14 +190,14 @@ DeclareOperation( "IsomorphismNewObjects",
 #A  PiecesOfMapping( <map> )                                    
 #A  PartitionOfSource( <map> )
 #A  ImagesOfObjects( <map> ) 
-#A  ImagesOfRays( <map> ) 
+#A  ImageElementsOfRays( <map> ) 
 ## 
 DeclareAttribute( "PieceImages", IsMappingToSinglePieceRep );
 DeclareAttribute( "HomsOfMapping", IsHomomorphismToSinglePiece );  
 DeclareAttribute( "PiecesOfMapping", IsMappingWithPiecesRep );  
 DeclareAttribute( "PartitionOfSource", IsMappingWithPiecesRep );
 DeclareAttribute( "ImagesOfObjects", IsMagmaWithObjectsHomomorphism ); 
-DeclareAttribute( "ImagesOfRays", IsMagmaWithObjectsHomomorphism ); 
+DeclareAttribute( "ImageElementsOfRays", IsMagmaWithObjectsHomomorphism ); 
 
 ############################################################################# 
 ## 

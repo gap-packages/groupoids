@@ -21,9 +21,9 @@ Distribution
 ------------
 The Gpd package is distributed with the accepted GAP packages: see
      http://www.gap-system.org/Packages/gpd.html
-It may also be obtained from the Bangor ftp pages for
+It may also be obtained from the GitHub repository at:  
 Computational Higher-dimensional Discrete Algebra at:
-  http://pages.bangor.ac.uk/~mas023/chda/gpd/
+  https://gap-packages.github.io/gpd/
 
 Copyright
 ---------
@@ -43,6 +43,6 @@ true
 Contact
 -------
 If you have a question relating to Gpd, encounter any problems, or have a suggestion for extending the package in any way, please 
- - email c.d.wensley@bangor.ac.uk 
+ - email cdwensley.maths@btinternet.com 
  - or report an issue at https://github.com/gap-packages/gpd/issues/new 
 
