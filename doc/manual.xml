@@ -83,6 +83,10 @@ either version 2 of the License, or (at your option) any later version.
 <Acknowledgements>
 This documentation was prepared with the <Package>GAPDoc</Package> 
 package of Frank L&#xfc;beck and Max Neunh&#xf6;ffer. 
+<P/> 
+The procedure used to mount new releases on GitHub uses the packages 
+<Package>GitHubPagesForGAP</Package> and <Package>ReleaseTools</Package> 
+of Max Horn. 
 </Acknowledgements>
 
 </TitlePage>
