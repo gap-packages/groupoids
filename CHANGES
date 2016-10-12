@@ -17,7 +17,7 @@ ToDo:
               this is in order to avoid conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution.
- - (22/03/16) in mwohom.gi check \^-1 now works for isomorphisms 
+ - (22/03/16) in mwohom.gi check that \^-1 now works for isomorphisms 
 
 ############################################################################## 
 1.43 -> 1.44  (12/10/16) 
