@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.44",
-Date := "13/10/2016", 
+Date := "18/10/2016", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GPDVERSION "1.44">
-##  <!ENTITY GPDRELEASEDATE "13/10/2016">
+##  <!ENTITY GPDRELEASEDATE "18/10/2016">
 ##  <!ENTITY GPDTARFILENAME "gpd-1.44.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "13th October 2016">
+##  <!ENTITY GPDLONGRELEASEDATE "18th October 2016">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
 ##  <#/GAPDoc>
 
