@@ -20,10 +20,10 @@ ToDo:
  - (22/03/16) in mwohom.gi check that \^-1 now works for isomorphisms 
 
 ############################################################################## 
-1.43 -> 1.44  (18/10/16) 
+1.43 -> 1.45  (20/10/16) 
 
  - (18/10/16) now using bibliography file bib.xml of type "bibxmlext.dtd"
- - (12/10/16) changed my email address and moved web page to GitHub 
+ - (12/10/16) changed package releases to https://gap-packages.github.io/gpd 
  - (03/10/16) ImagesOfRays renamed ImageElementsOfRays 
  - (28/04/16) replaced Image(hom,x) with ImageElm(hom,x) throughout 
  - (28/04/16) moved AutomorphismGroup methods to AutomorphismGroupOfGroupoid

@@ -8,16 +8,16 @@ SetPackageInfo( rec(
 PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.44",
-Date := "18/10/2016", 
+Version := "1.45",
+Date := "20/10/2016", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GPDVERSION "1.44">
-##  <!ENTITY GPDRELEASEDATE "18/10/2016">
-##  <!ENTITY GPDTARFILENAME "gpd-1.44.tar.gz">
+##  <!ENTITY GPDVERSION "1.45">
+##  <!ENTITY GPDRELEASEDATE "20/10/2016">
+##  <!ENTITY GPDTARFILENAME "gpd-1.45.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "18th October 2016">
+##  <!ENTITY GPDLONGRELEASEDATE "20th October 2016">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
 ##  <#/GAPDoc>
 
@@ -38,16 +38,16 @@ Persons := [
     FirstNames    := "Christopher D.",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "cdwensley.maths@btinternet.com",
+    Email         := "c.d.wensley@bangor.ac.uk",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
-    ## PostalAddress := Concatenation( [
-    ##                    "Dr. C.D. Wensley\n",
-    ##                    "School of Computer Science\n",
-    ##                    "Bangor University\n",
-    ##                    "Dean Street\n",
-    ##                    "Bangor\n",
-    ##                    "Gwynedd LL57 1UT\n",
-    ##                    "UK"] ),
+    PostalAddress := Concatenation( [
+                       "Dr. C.D. Wensley\n",
+                       "School of Computer Science\n",
+                       "Bangor University\n",
+                       "Dean Street\n",
+                       "Bangor\n",
+                       "Gwynedd LL57 1UT\n",
+                       "UK"] ),
     Place         := "Llanfairfechan",
     Institution   := "University of Wales, Bangor"
   )
@@ -68,7 +68,7 @@ PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
                                   "/releases/download/v", ~.Version, 
                                   "/", ~.PackageName, "-", ~.Version ), 
-SupportEmail := "cdwensley.maths@btinternet.com",
+SupportEmail := "c.d.wensley@bangor.ac.uk",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=

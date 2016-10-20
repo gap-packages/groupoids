@@ -28,12 +28,12 @@
   <Author> Emma Moore 
   </Author>
   <Author> Chris Wensley
-    <Email>cdwensley.maths@btinternet.com</Email>
+    <Email>c.d.wensley@bangor.ac.uk</Email>
     <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
-<!--    <Address>                                                 -->
-<!--         School of Computer Science, Bangor University,<Br/>. -->
-<!--      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.            -->
-<!--    </Address>                                                -->
+    <Address> 
+      School of Computer Science, Bangor University,<Br/> 
+      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K. 
+    </Address> 
   </Author>
 
 <Abstract>
@@ -66,7 +66,7 @@ Bug reports, suggestions and comments are, of course, welcome.
 Please submit an issue at 
 <URL>http://github.com/gap-packages/gpd/issues/</URL>
 or send an email to the last author at 
-<Email>cdwensley.maths@btinternet.com</Email>. 
+<Email>c.d.wensley@bangor.ac.uk</Email>. 
 </Abstract>
 
 <Copyright> 

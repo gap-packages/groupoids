@@ -24,8 +24,9 @@ and for <E>HNN-extensions</E>
 when the initial groups have rewriting systems.
 <P/>
 
-The current version is &GPDVERSION; for &GAP; 4.8, 
-released on &GPDLONGRELEASEDATE;. 
+The latest version is &GPDVERSION; for &GAP; 4.8, 
+released on &GPDLONGRELEASEDATE;, 
+and may be more recent than the release on the &GAP; archive. 
 <P/> 
 The package may be obtained as a compressed tar file 
 <File>&GPDTARFILENAME;</File>
@@ -33,15 +34,11 @@ by ftp from one of the following sites:
 <List>
 <Item>
 any &GAP; archive, e.g. 
-<URL>http://www.gap-system.org/Packages/packages.html</URL>; 
-</Item>
-<Item>
-the Bangor site: 
-<URL>http://www.maths.bangor.ac.uk/chda/gap4/gpd/&GPDHTMLFILENAME;</URL>;
+<URL>http://www.gap-system.org/Packages/gpd.html</URL>; 
 </Item>
 <Item>
 the package GitHub repository: 
-<URL>https://github.com/gap-packages/gpd</URL>. 
+<URL>https://gap-packages.github.io/gpd</URL>. 
 </Item>
 </List>
 <P/>
@@ -73,4 +70,10 @@ installation by running the test suite of the package with the command
 
 You may reference this package by mentioning <Cite Key="BrMoPoWe" />, 
 <Cite Key="emma-thesis" /> and <Cite Key="AlWe" />. 
+
+<P/>
+For a general introduction to the Bangor &GAP; packages see the 
+Computational Higher Dimensional Algebra website: 
+<URL>http://pages.bangor.ac.uk/~mas023/chda/intro.html</URL>. 
+
 </Chapter>
