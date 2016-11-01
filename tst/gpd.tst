@@ -302,7 +302,7 @@ gap> gensa := GeneratorsOfGroupoid( Hd8a );
 gap> imsa := List( gensa, g -> ConjugateArrow( g, u ) ); 
 [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
   [(3,4) : -14 -> -12] ]
-gap> C := SinglePieceGroupoidByGenerators( Gs4, imsa ); 
+gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 
 single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
 

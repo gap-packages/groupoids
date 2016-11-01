@@ -11,7 +11,6 @@ ToDo:
               This needs to be sorted out: maybe the ElementFamilies need 
               to be different but, when it comes to composition of arrows 
               the type of mwo hardly matters!? 
- - (10/06/15) RootGroupHomomorphism and ObjectGroupHomomorphism not in manual
  - (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
  - (12/01/16) in this temporary version there have been a number of changes 
               of function name, such as IsDigraph becoming GpdIsDigraph: 
@@ -23,7 +22,10 @@ ToDo:
 ############################################################################## 
 1.43 -> 1.45  (01/11/16) 
 
- - (01/11/16) added IsomorphismStandardGroupoid to gpdhom.g{d,i} 
+ - (01/11/16) added IsomorphismStandardGroupoid to gpdhom.g{d,i}; 
+             GroupoidAutomorphismByRayImages->GroupoidAutomorphismByRayShifts; 
+            SinglePieceGroupoidByGenerators->SinglePiceSubgroupoidByGenerators;
+           improved RestrictedMappingGroupoids
  - (18/10/16) now using bibliography file bib.xml of type "bibxmlext.dtd"
  - (12/10/16) changed package releases to https://gap-packages.github.io/gpd 
  - (03/10/16) ImagesOfRays renamed ImageElementsOfRays 

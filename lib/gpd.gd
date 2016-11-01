@@ -63,7 +63,7 @@ DeclareGlobalFunction( "Groupoid" );
 #O  SinglePieceGroupoid( <group>, <objects> )              
 #O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
 #O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
-#O  SinglePieceGroupoidByGenerators( <ancestor>, <gens> )
+#O  SinglePieceSubgroupoidByGenerators( <ancestor>, <gens> )
 ## 
 DeclareOperation( "SinglePieceGroupoidNC", 
     [ IsGroup, IsHomogeneousList ] ); 
@@ -73,7 +73,7 @@ DeclareOperation( "SubgroupoidWithRaysNC",
     [ IsGroupoid, IsGroup, IsHomogeneousList ] );
 DeclareOperation( "SubgroupoidWithRays", 
     [ IsGroupoid, IsGroup, IsHomogeneousList ] );
-DeclareOperation( "SinglePieceGroupoidByGenerators", 
+DeclareOperation( "SinglePieceSubgroupoidByGenerators", 
     [ IsGroupoid, IsList ] ); 
 
 ############################################################################# 

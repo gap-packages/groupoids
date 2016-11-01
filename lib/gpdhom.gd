@@ -33,12 +33,12 @@ DeclareSynonym( "IsGroupoidAutomorphism",
 ############################################################################# 
 ## 
 #O  InclusionMappingGroupoids( <G>, <H> )
-#O  RestrictedMappingGroupoids( <hom>, <src>, <rng> )
+#O  RestrictedMappingGroupoids( <hom>, <src> )
 #? #O  HomomorphismToTrivialGroupoid( <G>, <H> )
 ## 
 DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "RestrictedMappingGroupoids", 
-    [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ] );
+    [ IsGroupoidHomomorphism, IsGroupoid ] );
 
 ############################################################################# 
 ## 
@@ -97,8 +97,8 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #O  GroupoidAutomorphismByGroupAuto( <gpd, auto> )
 #O  GroupoidAutomorphismByObjectPermNC( <gpd, oims> )
 #O  GroupoidAutomorphismByObjectPerm( <gpd, oims> )
-#O  GroupoidAutomorphismByRayImagesNC( <gpd, rims> ) 
-#O  GroupoidAutomorphismByRayImages( <gpd, rims> ) 
+#O  GroupoidAutomorphismByRayShiftsNC( <gpd, rims> ) 
+#O  GroupoidAutomorphismByRayShifts( <gpd, rims> ) 
 ## 
 DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
@@ -118,9 +118,9 @@ DeclareOperation( "GroupoidAutomorphismByObjectPermNC",
     [ IsGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByObjectPerm", 
     [ IsGroupoid, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByRayImagesNC", 
+DeclareOperation( "GroupoidAutomorphismByRayShiftsNC", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByRayImages", 
+DeclareOperation( "GroupoidAutomorphismByRayShifts", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 
 ############################################################################# 

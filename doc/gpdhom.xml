@@ -238,7 +238,7 @@ gap> PiecesOfMapping( hom4 );
          Arg="gpd, imobs" />
    <Oper Name="GroupoidAutomorphismByGroupAuto"
          Arg="gpd, gpauto" />
-   <Oper Name="GroupoidAutomorphismByRayImages"
+   <Oper Name="GroupoidAutomorphismByRayShifts"
          Arg="gpd, imrays" />
 <Description>
 We first describe automorphisms of a groupoid <M>G</M> 
@@ -256,8 +256,8 @@ given an automorphism <M>\alpha</M> of the root group <M>g</M>, we define
 <Item>
 given <M>L = [1,g_2,g_3,\ldots,g_n] \in g^n</M> we define 
 <M>\theta_L : G \to G,~ (o_i,g,o_j) \mapsto (o_i,g_i^{-1}gg_j,o_j)</M> 
-so that, in particular, the rays <M>(r_i : o_1 \to o_i)</M> 
-map to <M>(g_ir_i : o_1 \to o_i)</M> for all <M>i</M>. 
+so that, in particular, for all <M>i</M> the rays <M>(r_i : o_1 \to o_i)</M> 
+are shifted by <M>g_i\;</M>: they map to <M>(g_ir_i : o_1 \to o_i)</M>. 
 </Item>
 </List> 
 <P/> 
@@ -285,7 +285,7 @@ gap> Display( aut2 );
  images of objects: [ -15, -13, -11 ]
 image elts of rays: [ (), (), () ]
 gap> im3 := [(), (1,3,2), (2,4,3)];; 
-gap> aut3 := GroupoidAutomorphismByRayImages( Ga4, im3 );; 
+gap> aut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 );; 
 gap> Display( aut3 ); 
   groupoid mapping: [ Ga4 ] -> [ Ga4 ]
  root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]

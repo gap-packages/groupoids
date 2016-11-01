@@ -141,7 +141,7 @@ gap> Display( aut2 );
  images of objects: [ -15, -13, -11 ]
 image elts of rays: [ (), (), () ]
 gap> im3 := [(), (1,3,2), (2,4,3)];; 
-gap> aut3 := GroupoidAutomorphismByRayImages( Ga4, im3 );; 
+gap> aut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 );; 
 gap> Display( aut3 ); 
   groupoid mapping: [ Ga4 ] -> [ Ga4 ]
  root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]

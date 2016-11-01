@@ -111,7 +111,7 @@ Print( "\nmapping aut2 = \n" );
 Display( aut2 ); 
 
 im3 := [(), (1,3,2), (2,4,3)]; 
-aut3 := GroupoidAutomorphismByRayImages( Ga4, im3 ); 
+aut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 ); 
 Print( "\nmapping aut3 = \n" ); 
 Display( aut3 ); 
 

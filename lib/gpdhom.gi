@@ -18,7 +18,7 @@ GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "4.  HomomorphismByUnion( src, rng, list of disjoint mappings );\n", 
     "5.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
     "6.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
-    "7.  GroupoidAutomorphismByRayImages( gpd, rims );\n" ); 
+    "7.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
 
 #############################################################################
 ##
@@ -102,7 +102,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
                and ( arg[2][1] in arg[1]!.objects ) ) then 
             return GroupoidAutomorphismByObjectPerm( arg[1], arg[2] ); 
         else 
-            return GroupoidAutomorphismByRayImages( arg[1], arg[2] ); 
+            return GroupoidAutomorphismByRayShifts( arg[1], arg[2] ); 
         fi; 
     # gpd, gpd, group hom 
     elif ( ( nargs = 3 ) and IsSinglePiece( arg[1] ) 
@@ -204,27 +204,25 @@ end );
 #M  RestrictedMappingGroupoids
 ##
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGroupoidHomomorphism, IsGroupoid and IsSinglePiece, 
-      IsGroupoid and IsSinglePiece ], 0,
-function( mor, U, V )
+    [ IsGroupoidHomomorphism, IsGroupoid and IsSinglePiece ], 0,
+function( mor, U )
 
-    local  src, rng, images, imo, hom, obsrc, obsU, len, imobsU, 
-           i, pos, rhom, rays, rims, e, res;
+    local  smor, rmor, images, imo, hom, mgi, obsrc, obsU, len, imobsU, 
+           i, pos, sres, rres, rhom, rays, rims, e, V, res;
 
-    src := Source( mor );
-    rng := Range( mor );
-    if not ( IsDirectProductWithCompleteGraph( src ) and 
-             IsDirectProductWithCompleteGraph( rng ) ) then 
+    smor := Source( mor );
+    rmor := Range( mor );
+    if not ( IsDirectProductWithCompleteGraph( smor ) and 
+             IsDirectProductWithCompleteGraph( rmor ) ) then 
         Error( "only implemented for standard groupoids at present" ); 
     fi;
-    if not ( IsSubdomainWithObjects( src, U ) 
-             and IsSubdomainWithObjects( rng, V ) ) then
-        Error( "not a pair of submagmas" );
+    if not ( IsSubdomainWithObjects( smor, U ) ) then
+        Error( "U not a submagma of Source(mor)" );
     fi;
     images := PieceImages( mor );
     imo := images[1][2];
     hom := images[1][1];
-    obsrc := src!.objects; 
+    obsrc := smor!.objects; 
     obsU := ObjectList( U );
     len := Length( obsU );
     imobsU := ListWithIdenticalEntries( len, 0 ); 
@@ -232,26 +230,28 @@ function( mor, U, V )
         pos := Position( obsrc, obsU[i] );
         imobsU[i] := imo[pos]; 
     od;
-    rhom := GeneralRestrictedMapping( hom, U!.magma, V!.magma );
-    if ( fail in MappingGeneratorsImages(rhom)[2] ) then
+    sres := U!.magma; 
+    rhom := RestrictedMapping( hom, sres );
+    mgi := MappingGeneratorsImages( rhom ); 
+    if ( fail in mgi[2] ) then
         Error( "magma mapping fails to restrict" );
     fi;
-    #? (28/01/11) added the rays, but not checked! 
-    rays := U!.rays; 
-    rims := ListWithIdenticalEntries( len, 0 ); 
-    for i in [1..len] do 
-        e := ImageElm( mor, Arrow( src, rays[i], obsU[1], obsU[i] ) ); 
-        rims[i] := e![1]; 
-    od;
+    rres := Image( rhom );
+    rhom := GroupHomomorphismByImages( sres, rres, mgi[1], mgi[2] );
+    rays := RaysOfGroupoid( U );
+Print( List( rays, r -> ImageElm(mor,r) ), "\n" );
+    rims := List( rays, r -> ImageElm(mor,r)![1] ); 
+Print("rays = ", rays, ",  rims = ", rims, "\n");
+    V := SubgroupoidByPieces( rmor, [ [ rres, imobsU ] ] ); 
     res := GroupoidHomomorphismFromSinglePiece( U, V, rhom, imobsU, rims ); 
-    return res;
+    return res; 
 end );
 
 ##  this one not checked
 #?  should use GeneralRestrictedMapping
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGroupoidHomomorphism, IsGroupoid, IsGroupoid ], 0,
-function( mor, ssrc, srng )
+    [ IsGroupoidHomomorphism, IsGroupoid ], 0,
+function( mor, ssrc )
 
     local  comp, len, rcomp, j, m;
 
@@ -259,7 +259,7 @@ function( mor, ssrc, srng )
     len := Length( comp );
     rcomp := ListWithIdenticalEntries( len, 0 );
     for j in [1..len] do
-        rcomp[j] := RestrictedMappingGroupoids( comp[j], ssrc, srng );
+        rcomp[j] := RestrictedMappingGroupoids( comp[j], ssrc );
     od;
     return HomomorphismByUnionNC( Source(mor), Range(mor), rcomp );
 end );
@@ -490,10 +490,16 @@ function( src, rng, hom, oims, rims )
     for i in [2..lens] do 
         posi := Position( obr, oims[i] ); 
         rayi := rayr[pos1] * rims[i] * rayr[posi]^-1; 
+Print( "[i,rayi] = ", [i,rayi], "\n" );
         if ( IsGroupoidHomomorphism( rayi ) and 
              IsDefaultGroupoidHomomorphismRep( rayi ) ) then 
+            ## this is the automorphism group of groupoid case 
             if not InAutomorphismGroupOfGroupoid( rayi, gpr ) then 
-                Error( "ray images not all in relevant homset" ); 
+                Error( "ray images not all in relevant automorphism homset" ); 
+            fi; 
+        elif HasParentAttr( gpr ) then 
+            if not ( rayi in Parent( gpr ) ) then 
+                Error( "ray images not all in relevant parent homset" ); 
             fi; 
         else 
             if not ( rayi in gpr ) then 
@@ -654,40 +660,38 @@ end );
 
 #############################################################################
 ##
-#M  GroupoidAutomorphismByRayImagesNC  
-#M  GroupoidAutomorphismByRayImages 
+#M  GroupoidAutomorphismByRayShiftsNC  
+#M  GroupoidAutomorphismByRayShifts 
 ##
-InstallMethod( GroupoidAutomorphismByRayImagesNC , 
+InstallMethod( GroupoidAutomorphismByRayShiftsNC , 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, images )
+function( gpd, shifts )
     local  obs, hom, mor, rays, rims; 
     obs := gpd!.objects;
     hom := IdentityMapping( gpd!.magma ); 
     rays := gpd!.rays; 
-    rims := List( [1..Length(obs)], i -> images[i]*rays[i] );
+    rims := List( [1..Length(obs)], i -> shifts[i]*rays[i] );
+Print( "shifts, rays, rims = \n", shifts, "\n", rays, "\n", rims, "\n" );
     mor := GroupoidHomomorphismFromSinglePieceNC( gpd, gpd, hom, obs, rims ); 
-    SetOrder( mor, Lcm( List( images, i -> Order(i) ) ) ); 
+    SetOrder( mor, Lcm( List( shifts, i -> Order(i) ) ) ); 
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
     return mor;
 end ); 
 
-InstallMethod( GroupoidAutomorphismByRayImages, 
+InstallMethod( GroupoidAutomorphismByRayShifts, 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, images )  
+function( gpd, shifts )  
     local  rgp, rays, nobs, conj; 
     rgp := gpd!.magma; 
     rays := gpd!.rays; 
     nobs := Length( gpd!.objects );
-    if not ( images[1] = One(rgp) ) then 
-        Error( "first image must be the identity element" ); 
-    fi;
-    if not ForAll( images, i -> i in rgp ) then  
-        Error( "ray images not all in the relevant homsets" ); 
+    if not ForAll( shifts, s -> s in rgp ) then  
+        Error( "ray shifts not all in the relevant homsets" ); 
     fi; 
-    return GroupoidAutomorphismByRayImagesNC( gpd, images ); 
+    return GroupoidAutomorphismByRayShiftsNC( gpd, shifts ); 
 end ); 
 
 #############################################################################
@@ -950,7 +954,7 @@ function( gpd )
         for c in genrgp do 
             cids := ShallowCopy( ids ); 
             cids[i] := c; 
-            Add( autgen, GroupoidAutomorphismByRayImages( gpd, cids ) ); 
+            Add( autgen, GroupoidAutomorphismByRayShifts( gpd, cids ) ); 
         od; 
     od; 
     nautgen := Length( autgen ); 
@@ -1133,7 +1137,6 @@ function ( map, e )
 
     local  m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
 
-    Info( InfoGpd, 5, "using ImageElm for IsHomFromSinglePiece, line 1134" ); 
     #?  need to include some tests here ?? 
     m1 := Source( map ); 
     imo := ImagesOfObjects( map );                   ### BUT NOT YET USED!!! 
@@ -1226,7 +1229,7 @@ function( hom )
             od;
         od;
     od;
-    Print( "t = ", t, " products tested\n" ); 
+    Print( "#I ", t, " products tested\n" ); 
     return true; 
 end ); 
 

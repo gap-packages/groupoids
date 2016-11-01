@@ -14,7 +14,7 @@ GPD_CONSTRUCTORS := Concatenation(
     "1.  SinglePieceGroupoid( object group, list of objects );\n",
     "2.  DomainWithSingleObject( group, single object );\n",
     "3.  UnionOfPieces( list of groupoids );\n",
-    "4.  SinglePieceGroupoidByGenerators( list of elements );\n", 
+    "4.  SinglePieceSubgroupoidByGenerators( list of elements );\n", 
     "5.  SubgroupoidWithRays( parent gpd, root gp, ray mults. );\n", 
     "6.  Groupoid( one of the previous parameter options );" );
 
@@ -141,9 +141,9 @@ end );
 
 #############################################################################
 ##
-#M  SinglePieceGroupoidByGenerators
+#M  SinglePieceSubgroupoidByGenerators
 ##
-InstallMethod( SinglePieceGroupoidByGenerators, "for a list of elements",
+InstallMethod( SinglePieceSubgroupoidByGenerators, "for a list of elements",
     true, [ IsGroupoid, IsList ], 0,
 function( anc, gens ) 
     local  ok, ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
@@ -829,7 +829,7 @@ function( gpd, elt )
 
     gens := GeneratorsOfGroupoid( gpd ); 
     ims := List( gens, g -> ConjugateArrow( g, elt ) ); 
-    conj := SinglePieceGroupoidByGenerators( Ancestor( gpd ), ims );
+    conj := SinglePieceSubgroupoidByGenerators( Ancestor( gpd ), ims );
     #? leftovers from the version for groups: 
     #? OnTuples( GeneratorsOfGroupoid( gpd ), elt ), One( gpd ) );
     #? UseIsomorphismRelation( gpd, conj );

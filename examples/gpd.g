@@ -227,7 +227,7 @@ Cd8u5 := ConjugateGroupoid( Hd8a, u5 );
 Print( "Cd8u5 = ", Cd8u5, "\n" ); 
 Print( GeneratorsOfGroupoid( Cd8u5 ), "\n\n" ); 
 
-## last two examples use SinglePieceGroupoidByGenerators 
+## last two examples use SinglePieceSubgroupoidByGenerators 
 
 u6 := Arrow( Gs4, (1,4), -15, -13 ); 
 Cd8u6 := ConjugateGroupoid( Hd8a, u6 );
