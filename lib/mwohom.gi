@@ -771,7 +771,7 @@ function( map )
     inv := GroupoidHomomorphismFromSinglePieceNC( m2, m1, hom21, imob2, rim21 );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
-####Error("here");
+Error("here");
     return inv;
 end );
 

@@ -43,6 +43,20 @@ image elts of rays: [ (), (), () ]
 gap> e2; ImageElm( ihomd8, e2 );
 [(1,3) : -8 -> -7]
 [(15,20)(16,19)(17,18) : -35 -> -34]
+gap> c6d := Subgroup( d12, [ (15,16,17,18,19,20) ] );; 
+gap> rays := [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) ];; 
+gap> Gc6d := SubgroupoidWithRays( Gd12, c6d, rays ); 
+single piece groupoid with rays: < Group( [ (15,16,17,18,19,20) ] ), 
+[ -37, -36, -35, -34 ], [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) 
+ ] >
+gap> iso1 := IsomorphismNewObjects( Gd12, [-7,-6,-5,-4] ); 
+IdentityMapping( d12 )[ -7, -6, -5, -4 ][ (), (), (), () ]
+groupoid homomorphism : 
+[ [ IdentityMapping( d12 ), [ -7, -6, -5, -4 ], [ (), (), (), () ] ] ]
+gap> iso2 := IsomorphismStandardGroupoid( Gc6d, [-7,-6,-5,-4] ); 
+groupoid homomorphism : 
+[ [ IdentityMapping( Group( [ (15,16,17,18,19,20) ] ) ), [ -7, -6, -5, -4 ], 
+      [ (), (), (), () ] ] ]
 
 ## SubSection 5.2.1
 gap> hc6 := GroupHomomorphismByImages( c6, s3, 

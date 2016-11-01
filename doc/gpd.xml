@@ -604,7 +604,8 @@ The chosen loop arrow at <M>q</M> must be the identity arrow.
 These <M>n</M> arrows are called the 
 <Index Key="rays"> rays</Index> <E>rays</E> of the subgroupoid. 
 The arrows in the homset from <M>p</M> to <M>p'</M> have the form 
-<M>r^{-1}xr'</M> for all rays <M>r,r'</M> and all <M>x</M> in <M>h</M>. 
+<M>r^{-1}xr'</M> where <M>r,r'</M> are the rays from <M>q</M> 
+to <M>p,p'</M> respectively, and <M>x \in h</M>. 
 <P/>
 The operation <C>RaysOfGroupoid</C> returns a list of arrows, 
 one for each object, while the operation <C>RayElementsOfGroupoid</C> 

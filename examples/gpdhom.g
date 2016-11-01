@@ -34,6 +34,14 @@ Print( "ihomd8 = ", ihomd8, "\n" );
 Print( "IsBijectiveOnObjects(ihomd8)? ",IsBijectiveOnObjects(ihomd8),"\n" );
 TestAllProductsUnderGroupoidHomomorphism( ihomd8 ); 
 Print( "\n\n" ); 
+c6d := Subgroup( d12, [ (15,16,17,18,19,20) ] ); 
+rays := [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) ]; 
+Gc6d := SubgroupoidWithRays( Gd12, c6d, rays ); 
+iso1 := IsomorphismNewObjects( Gd12, [-7,-6,-5,-4] ); 
+Print( "iso1 = ", iso1, "\n" ); 
+iso2 := IsomorphismStandardGroupoid( Gc6d, [-7,-6,-5,-4] ); 
+Print( "iso2 = ", iso2 ); 
+Print( "\n\n" ); 
 
 hc6 := GroupHomomorphismByImages( c6, s3, 
           [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;

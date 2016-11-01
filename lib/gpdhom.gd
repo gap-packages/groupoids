@@ -48,6 +48,13 @@ DeclareOperation( "GroupoidHomomorphismFromDiscreteToSinglePiece",
     [ IsGroupoid and IsDiscrete, IsGroupoid and IsSinglePiece, 
       IsHomogeneousList ] );
 
+############################################################################# 
+## 
+#O  IsomorphismStandardGroupoid( <gpd>, <obs> )
+##  
+DeclareOperation( "IsomorphismStandardGroupoid", 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
+
 
 ####################### functions from the 08.05 paper ####################### 
 

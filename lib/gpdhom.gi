@@ -209,7 +209,7 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
 function( mor, U, V )
 
     local  src, rng, images, imo, hom, obsrc, obsU, len, imobsU, 
-           i, pos, rhom, rays, rims, res;
+           i, pos, rhom, rays, rims, e, res;
 
     src := Source( mor );
     rng := Range( mor );
@@ -240,7 +240,8 @@ function( mor, U, V )
     rays := U!.rays; 
     rims := ListWithIdenticalEntries( len, 0 ); 
     for i in [1..len] do 
-        rims[i] := ImageElm( mor, Arrow( src, rays[i], obsU[1], obsU[i] ) ); 
+        e := ImageElm( mor, Arrow( src, rays[i], obsU[1], obsU[i] ) ); 
+        rims[i] := e![1]; 
     od;
     res := GroupoidHomomorphismFromSinglePiece( U, V, rhom, imobsU, rims ); 
     return res;
@@ -1136,7 +1137,7 @@ function ( map, e )
     Info( InfoGpd, 5, "using ImageElm for IsHomFromSinglePiece, line 1134" ); 
     #?  need to include some tests here ?? 
     m1 := Source( map ); 
-    imo := ImagesOfObjects( map ); 
+    imo := ImagesOfObjects( map );                   ### BUT NOT YET USED!!! 
     obs1 := m1!.objects; 
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
@@ -1292,8 +1293,35 @@ function( gpd1, ob2 )
     gp := gpd1!.magma;
     gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
     id := IdentityMapping( gp );
-    iso := HomomorphismToSinglePiece( gpd1, gpd2, 
-               [ [id, ob2, RayElementsOfGroupoid( gpd1 ) ] ] ); 
+Print( id, ob2, RayElementsOfGroupoid(gpd1), "\n" ); 
+    iso := GroupoidHomomorphismFromSinglePiece( 
+               gpd1, gpd2, id, ob2, RayElementsOfGroupoid( gpd1 ) ); 
+    return iso;
+end );
+
+#############################################################################
+##
+#M  IsomorphismStandardGroupoid
+##
+InstallMethod( IsomorphismStandardGroupoid, "for a single piece groupoid", 
+    true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
+function( gpd1, obs )
+
+    local  obs1, obs2, gp, id, rays, gpd2, iso;
+
+    if IsDirectProductWithCompleteGraphDomain( gpd1 ) then 
+        return IdentityMapping( gpd1 ); 
+    fi;
+    obs1 := gpd1!.objects; 
+    obs2 := Set( obs ); 
+    if not ( Length(obs1) = Length(obs2) ) then
+        Error( "object sets have different lengths" );
+    fi;
+    gp := gpd1!.magma;
+    gpd2 := SinglePieceGroupoidNC( gp, obs2 );
+    rays := List( obs2, o -> One(gp) ); 
+    id := IdentityMapping( gp );
+    iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, id, obs2, rays ); 
     return iso;
 end );
 

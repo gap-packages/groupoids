@@ -2,6 +2,31 @@
 <!DOCTYPE file SYSTEM "bibxmlext.dtd">
 <file>
 
+<entry id="GAPDoc"><manual>
+  <author>
+    <name><first>Frank</first><last>Lübeck</last></name>
+    <name><first>Max</first><last>Neunhöffer</last></name>
+  </author>
+  <title><C>GAPDoc (Version 1.5.1)</C></title>
+  <organization>RWTH Aachen</organization>
+  <year>2012</year>
+  <other type="note">
+    GAP package, 
+    <URL>http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html</URL>
+  </other>
+</manual></entry>
+
+<entry id="GitHubPagesForGAP"><manual>
+  <author>
+    <name><first>Max</first><last>Horn</last></name>
+  </author>
+  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.1)</C></title>
+  <year>2014</year>
+  <other type="note">
+    GAP package, <URL>https://github.com/fingolfin/GitHubPagesForGAP/</URL>
+  </other>
+</manual></entry>
+
 <entry id="AlWe"><article>
   <author>
     <name><first>Murat</first><last>Alp</last></name>

@@ -41,6 +41,8 @@ for some <M>n>0</M>.
          Arg="gpd, sgpd" />
    <Oper Name="IsomorphismNewObjects"
          Arg="src,objlist" />
+   <Oper Name="IsomorphismStandardGroupoid"
+         Arg="gpd,obs" />
 <Description>
 As usual, there are various homomorphism operations.
 The basic construction is a homomorphism <M>\phi : G \to H</M> with <M>G</M> 
@@ -58,11 +60,17 @@ a list <C>imobs</C> of the images of the objects of <M>G</M>;
 </Item>
 <Item>
 a list <C>imrays</C> of the elements in the images of the rays of <M>G</M>, 
-so that the image <M>\phi(1 : o_1 \to o_i)</M> 
+so that the image <M>\phi(r_i : o_1 \to o_i)</M> 
 of the <M>i</M>-th ray is 
 <C>(imrays[i]:imobs[1]</C><M>\to</M><C>imobs[i])</C>. 
 </Item>
 </List>
+<P/>
+The operation <C>IsomorphismNewObjects</C> returns the isomorphism from a groupoid to a groupoid with the same object group and rays but with a different set of objects. 
+<P/>
+The operation <C>IsomorphismStandardGroupoid(gpd,obs)</C> 
+returns the isomorphism from a groupoid with rays to the groupoid of type 
+<C>IsDirectProductWithCompleteGraph</C> on the given objects.
 <P/>
 </Description>
 </ManSection>
@@ -99,6 +107,20 @@ image elts of rays: [ (), (), () ]
 gap> e2; ImageElm( homd8, e2 );
 [(1,3) : -8 -> -7]
 [(15,20)(16,19)(17,18) : -35 -> -36]
+gap> c6d := Subgroup( d12, [ (15,16,17,18,19,20) ] );;                        
+gap> rays := [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) ];;        
+gap> Gc6d := SubgroupoidWithRays( Gd12, c6d, rays );                   
+single piece groupoid with rays: < Group( [ (15,16,17,18,19,20) ] ), 
+[ -37, -36, -35, -34 ], [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) 
+ ] >
+gap> iso1 := IsomorphismNewObjects( Gd12, [-7,-6,-5,-4] );     
+IdentityMapping( d12 )[ -7, -6, -5, -4 ][ (), (), (), () ]
+groupoid homomorphism : 
+[ [ IdentityMapping( d12 ), [ -7, -6, -5, -4 ], [ (), (), (), () ] ] ]
+gap> iso2 := IsomorphismStandardGroupoid( Gc6d, [-7,-6,-5,-4] );
+groupoid homomorphism : 
+[ [ IdentityMapping( Group( [ (15,16,17,18,19,20) ] ) ), [ -7, -6, -5, -4 ], 
+      [ (), (), (), () ] ] ]
 ]]>
 </Example>
 
