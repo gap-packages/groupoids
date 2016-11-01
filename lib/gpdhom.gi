@@ -814,7 +814,6 @@ function( gpd, aut )
         gim3 := List( gim2, g -> ImageElm( nat, g ) ); 
         eno[i+2] := GroupHomomorphismByImages( rgp, niceob, genrgp, gim3 ); 
     od; 
-
     autgen := Concatenation( agens1, agens2, agens3 ); 
     agens := List( autgen, g -> ImageElm( nat, g ) ); 
     return [ niceob, eno ]; 
@@ -1293,7 +1292,7 @@ function( gpd1, ob2 )
     gp := gpd1!.magma;
     gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
     id := IdentityMapping( gp );
-Print( id, ob2, RayElementsOfGroupoid(gpd1), "\n" ); 
+## Print( id, ob2, RayElementsOfGroupoid(gpd1), "\n" ); 
     iso := GroupoidHomomorphismFromSinglePiece( 
                gpd1, gpd2, id, ob2, RayElementsOfGroupoid( gpd1 ) ); 
     return iso;

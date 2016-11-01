@@ -168,9 +168,9 @@ DeclareOperation( "HomomorphismToSinglePieceNC",
 DeclareOperation( "HomomorphismToSinglePiece",
   [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ] );
 DeclareOperation( "HomomorphismByUnionNC",
-    [ IsMagmaWithObjects, IsMagmaWithObjects, IsHomogeneousList ] );
+    [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ] );
 DeclareOperation( "HomomorphismByUnion",
-    [ IsMagmaWithObjects, IsMagmaWithObjects, IsHomogeneousList ] );
+    [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ] );
 DeclareOperation( "HomomorphismFromSinglePieceGeneratorsImages",
   [ IsSinglePiece, IsSinglePiece, IsHomogeneousList, IsHomogeneousList ] );
 

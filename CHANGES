@@ -1,6 +1,7 @@
                        CHANGES to the Gpd package 
 
 ToDo: 
+ - (15/06/11) HomomorphismByUnion needs revisiting for multi-component cases. 
  - (14/01/13) It seems that operations such as WeightedSpanningTree have 
               recently been included in grpgraph.gi but not yet used in 
               any example or test file: so need to work on this. 

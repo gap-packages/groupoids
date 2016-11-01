@@ -50,7 +50,6 @@ single piece groupoid with rays: < Group( [ (15,16,17,18,19,20) ] ),
 [ -37, -36, -35, -34 ], [ (), (16,20)(17,19), (15,17)(18,20), (15,19)(16,18) 
  ] >
 gap> iso1 := IsomorphismNewObjects( Gd12, [-7,-6,-5,-4] ); 
-IdentityMapping( d12 )[ -7, -6, -5, -4 ][ (), (), (), () ]
 groupoid homomorphism : 
 [ [ IdentityMapping( d12 ), [ -7, -6, -5, -4 ], [ (), (), (), () ] ] ]
 gap> iso2 := IsomorphismStandardGroupoid( Gc6d, [-7,-6,-5,-4] ); 

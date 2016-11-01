@@ -182,7 +182,7 @@ end );
 ##
 InstallMethod( HomomorphismByUnionNC, 
     "generic method for a magma mapping", true,
-    [ IsMagmaWithObjects, IsMagmaWithObjects, IsHomogeneousList ], 0,  
+    [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0,  
 function( mag1, mag2, maps )
 
     local  fam, filter, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
@@ -225,9 +225,8 @@ end );
 
 InstallMethod( HomomorphismByUnion, 
     "generic method for a magma mapping", true,
-    [ IsMagmaWithObjects, IsMagmaWithObjects, IsHomogeneousList ], 0,  
-    ## was SinglePiece 
-    #? (15/06/11) needs revising for multi-component cases? 
+    [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0, 
+    #? (15/06/11) was SinglePiece: needs revising for multi-component cases? 
 
 function( mag1, mag2, maps )
 
@@ -235,6 +234,9 @@ function( mag1, mag2, maps )
            src1, g, flat1, pos1, pos2, piecesmap, L, i, j, k, m, filt, 
            mapj, src;
 
+    if not ForAll( maps, m -> IsGeneralMappingWithObjects(m) ) then 
+        Error( "all maps should have IsGeneralMappingWithObjects" ); 
+    fi; 
     if IsSinglePiece( mag2 ) then 
         Info( InfoGpd, 3, "using the special case in HomomorphismByUnion" ); 
         piecesmap := Concatenation( List( maps, m -> PieceImages(m) ) ); 
