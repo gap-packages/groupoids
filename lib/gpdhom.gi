@@ -207,8 +207,9 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid and IsSinglePiece ], 0,
 function( mor, U )
 
-    local  smor, rmor, images, imo, hom, mgi, obsrc, obsU, len, imobsU, 
-           i, pos, sres, rres, rhom, rays, rims, e, V, res;
+    local  smor, rmor, images, imo, hom, obsrc, obsU, len, imobsU, i, 
+           pos, sres, sgen, rres, qres, qgen, rhom, gens, imgens, ghom, 
+           rays, rims, e, V, res;
 
     smor := Source( mor );
     rmor := Range( mor );
@@ -232,23 +233,23 @@ function( mor, U )
     od;
     sres := U!.magma; 
     rhom := RestrictedMapping( hom, sres );
-    mgi := MappingGeneratorsImages( rhom ); 
-    if ( fail in mgi[2] ) then
-        Error( "magma mapping fails to restrict" );
-    fi;
     rres := Image( rhom );
-    rhom := GroupHomomorphismByImages( sres, rres, mgi[1], mgi[2] );
+    sgen := GeneratorsOfGroup( sres ); 
+    gens := List( GeneratorsOfGroup(sres), s -> Arrow(U,s,obsU[1],obsU[1]) ); 
+    imgens := List( gens, s -> ImageElm(mor,s) ); 
     rays := RaysOfGroupoid( U );
-Print( List( rays, r -> ImageElm(mor,r) ), "\n" );
-    rims := List( rays, r -> ImageElm(mor,r)![1] ); 
-Print("rays = ", rays, ",  rims = ", rims, "\n");
-    V := SubgroupoidByPieces( rmor, [ [ rres, imobsU ] ] ); 
-    res := GroupoidHomomorphismFromSinglePiece( U, V, rhom, imobsU, rims ); 
+    rims := List( rays, r -> ImageElm(mor,r) ); 
+    V := SinglePieceSubgroupoidByGenerators( rmor, 
+             Concatenation( imgens, rims{[2..len]} ) ); 
+    qres := RootGroup( V );
+    qgen := GeneratorsOfGroup( qres ); 
+    ghom := GroupHomomorphismByImages( sres, qres, sgen, qgen );  
+    rims := List( rims, r -> r![1] ); 
+    res := GroupoidHomomorphismFromSinglePiece( U, V, ghom, imobsU, rims ); 
     return res; 
 end );
 
-##  this one not checked
-#?  should use GeneralRestrictedMapping
+#?  this one not checked: use GeneralRestrictedMapping? 
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid ], 0,
 function( mor, ssrc )
@@ -490,7 +491,6 @@ function( src, rng, hom, oims, rims )
     for i in [2..lens] do 
         posi := Position( obr, oims[i] ); 
         rayi := rayr[pos1] * rims[i] * rayr[posi]^-1; 
-Print( "[i,rayi] = ", [i,rayi], "\n" );
         if ( IsGroupoidHomomorphism( rayi ) and 
              IsDefaultGroupoidHomomorphismRep( rayi ) ) then 
             ## this is the automorphism group of groupoid case 
@@ -672,7 +672,6 @@ function( gpd, shifts )
     hom := IdentityMapping( gpd!.magma ); 
     rays := gpd!.rays; 
     rims := List( [1..Length(obs)], i -> shifts[i]*rays[i] );
-Print( "shifts, rays, rims = \n", shifts, "\n", rays, "\n", rims, "\n" );
     mor := GroupoidHomomorphismFromSinglePieceNC( gpd, gpd, hom, obs, rims ); 
     SetOrder( mor, Lcm( List( shifts, i -> Order(i) ) ) ); 
     SetIsInjectiveOnObjects( mor, true ); 

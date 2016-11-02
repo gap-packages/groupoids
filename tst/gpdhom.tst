@@ -153,14 +153,23 @@ gap> Display( aut123 );
  root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
  images of objects: [ -13, -11, -15 ]
 image elts of rays: [ (), (1,4,3), (1,2,3) ]
-gap> inv123 := InverseGeneralMapping( aut123 );; 
-gap> Display( inv123 ); 
+gap> inv123a := InverseGeneralMapping( aut123 );; 
+gap> Display( inv123a ); 
   groupoid mapping: [ Ga4 ] -> [ Ga4 ]
  root homomorphism: [ [ (2,3,4), (1,3,4) ], [ (1,2,3), (2,3,4) ] ]
  images of objects: [ -11, -15, -13 ]
 image elts of rays: [ (), (1,2,4), (1,3,4) ]
-gap> id123 := aut123 * inv123;
-true
+gap> inv1 := InverseGeneralMapping( aut1 );; 
+gap> inv2 := InverseGeneralMapping( aut2 );; 
+gap> inv3 := InverseGeneralMapping( aut3 );;
+gap> inv123b := inv3*inv2*inv1;;
+gap> Display( inv123b ); 
+  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (1,2,3) ] ]
+ images of objects: [ -11, -15, -13 ]
+image elts of rays: [ (), (1,2,4), (1,2,3) ]
+gap> ok := inv123a = inv123b;
+false
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 <group with 8 generators>
 gap> AGgens := GeneratorsOfGroup( AGa4); 

@@ -8,10 +8,10 @@
 
 SetInfoLevel( InfoGpd, 4 );
 
-Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 09/11/14) >>>>\n" );
-Print( "<<<<    functions for groupoids and their homomorphisms    >>>>\n" );
-Print( "===============================================================\n\n");
+Print( "\n============================================================\n");
+Print(   "<<<<       testing examples in the Gpd manual           >>>>\n" );
+Print(   "<<<< functions for groupoids and their homomorphisms    >>>>\n" );
+Print( "==============================================================\n\n");
 
 gend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; 
 d12 := Group( gend12 );; 
@@ -125,7 +125,7 @@ id123 := aut123 * inv123;
 Print( "\nid123 = identity mapping? ", id123=IdentityMapping(Ga4), "\n\n" ); 
 
 ## attempt to create automorphism group for Ga4
-AGa4 := AutomorphismGroup( Ga4 ); 
+AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 AGgens := GeneratorsOfGroup( AGa4); 
 Print( "AGa4 has generators:\n", AGgens, "\n" ); 
 NGa4 := NiceObject( AGa4 ); 
@@ -193,7 +193,7 @@ Print( "\nautomorphism aut5 of Hs3 :-\n" );
 Display( aut5 ); 
 
 ## attempt to create automorphism group for Hs3 
-AHs3 := AutomorphismGroup( Hs3 ); 
+AHs3 := AutomorphismGroupOfGroupoid( Hs3 ); 
 NHs3 := NiceObject( AHs3 ); 
 Print( "Hs3 has automorphism group AHs3 of size ", Size( AHs3 ) ); 
 Print( " with pc-group representation :-\n", NHs3, "\n" ); 

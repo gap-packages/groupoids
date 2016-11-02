@@ -7,10 +7,10 @@
 
 SetInfoLevel( InfoGpd, 2 );
 
-Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 23/11/15) >>>>\n" );
-Print( "<<<<      functions for Graphs of Groups and Groupoids     >>>>\n" );
-Print( "===============================================================\n\n");
+Print( "\n==========================================================\n");
+Print(   "<<<<      testing examples in the Gpd manual          >>>>\n" );
+Print(   "<<<< functions for Graphs of Groups and Groupoids     >>>>\n" );
+Print( "============================================================\n\n");
 
 ## now arcs in the order  [ wt, tail, head ]
 

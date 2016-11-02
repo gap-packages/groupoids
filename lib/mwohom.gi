@@ -750,12 +750,6 @@ function( map )
     fi; 
     hom21 := InverseGeneralMapping( RootGroupHomomorphism( map ) ); 
     ok := IsGroupHomomorphism( hom21 ); 
-    #? are the following settings necessary ?? 
-    #? SetIsGroupHomomorphism( hom21, true );
-    #? SetIsTotal( hom21, true );
-    #? SetRespectsMultiplication( hom21, true );
-    #? SetIsInjective( hom21, true );
-    #? SetIsSurjective( hom21, true ); 
     ray2 := RaysOfGroupoid( m2 ); 
     rim12 := ImageElementsOfRays( map ); 
     #? (08/07/11) using an inefficient search here, but at least using break! 
@@ -773,7 +767,6 @@ function( map )
     inv := GroupoidHomomorphismFromSinglePieceNC( m2, m1, hom21, imob2, rim21 );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
-Error("here");
     return inv;
 end );
 

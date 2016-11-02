@@ -18,10 +18,12 @@ ToDo:
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution.
  - (22/03/16) in mwohom.gi check that \^-1 now works for isomorphisms 
+              N.B. as at 02/11/16 this is still not fixed 
 
 ############################################################################## 
-1.43 -> 1.45  (01/11/16) 
+1.43 -> 1.45  (02/11/16) 
 
+ - (02/11/16) improved RestrictedMappingGroupoids 
  - (01/11/16) added IsomorphismStandardGroupoid to gpdhom.g{d,i}; 
              GroupoidAutomorphismByRayImages->GroupoidAutomorphismByRayShifts; 
             SinglePieceGroupoidByGenerators->SinglePiceSubgroupoidByGenerators;

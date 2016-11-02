@@ -11,9 +11,9 @@ SetInfoLevel( InfoGpd, 1 );
 
 
 Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 09/11/14) >>>>\n" );
-Print( "<<<< functions for magmas with objects and their morphisms >>>>\n" );
-Print( "===============================================================\n\n");
+Print(   "<<<<            testing examples in the Gpd manual         >>>>\n" );
+Print(   "<<<< functions for magmas with objects and their morphisms >>>>\n" );
+Print( "\n===============================================================\n\n");
     
 Print("\n========================  MAGMA MAPPINGS  ===================\n\n");
 

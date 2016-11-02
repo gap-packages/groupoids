@@ -9,10 +9,10 @@
 SetInfoLevel( InfoGpd, 1 );
 ##  TraceImmediateMethods( false );
 
-Print( "\n===============================================================\n");
-Print( "<<<< testing examples in the Gpd manual (version 10/06/15) >>>>\n" );
-Print( "<<<<      functions for groupoids and their morphisms      >>>>\n" );
-Print( "===============================================================\n\n");
+Print( "\n==========================================================\n");
+Print(   "<<<<      testing examples in the Gpd manual          >>>>\n" );
+Print(   "<<<< functions for groupoids and their morphisms      >>>>\n" );
+Print( "\n==========================================================\n\n");
 
 Print( "Some filter ranks:\n" ); 
 Print( "RankFilter( IsMagmaWithObjects ) = ", 
