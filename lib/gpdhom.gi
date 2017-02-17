@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 

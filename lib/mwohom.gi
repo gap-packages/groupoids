@@ -2,7 +2,7 @@
 ##
 #W  mwohom.gi                 GAP4 package `gpd'                 Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for mappings of magmas with objects
@@ -746,7 +746,7 @@ function( map )
     piro2 := Position( ob1, iro2 ); 
     hom12 := RootGroupHomomorphism( map ); 
     if not IsBijective( hom12 ) then 
-        Error( "root homomorphism has no inverse" ); 
+        Error( "root group homomorphism has no inverse" ); 
     fi; 
     hom21 := InverseGeneralMapping( RootGroupHomomorphism( map ) ); 
     ok := IsGroupHomomorphism( hom21 ); 

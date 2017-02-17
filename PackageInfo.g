@@ -8,17 +8,17 @@ SetPackageInfo( rec(
 PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.45",
-Date := "02/11/2016", 
+Version := "1.46",
+Date := "17/01/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GPDVERSION "1.45">
-##  <!ENTITY GPDRELEASEDATE "02/11/2016">
-##  <!ENTITY GPDTARFILENAME "gpd-1.45.tar.gz">
+##  <!ENTITY GPDVERSION "1.46">
+##  <!ENTITY GPDRELEASEDATE "17/01/2017">
+##  <!ENTITY GPDTARFILENAME "gpd-1.46.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "2nd November 2016">
-##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2016">
+##  <!ENTITY GPDLONGRELEASEDATE "17th January 2017">
+##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 
 Persons := [
