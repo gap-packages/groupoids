@@ -62,7 +62,7 @@ SourceRepository := rec(
   URL := "https://github.com/gap-packages/gpd"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "http://gap-packages.github.io/gpd/",
+PackageWWWHome  := "https://gap-packages.github.io/gpd/",
 README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
