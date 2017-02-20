@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.46",
-Date := "17/01/2017", 
+Date := "20/02/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GPDVERSION "1.46">
-##  <!ENTITY GPDRELEASEDATE "17/01/2017">
+##  <!ENTITY GPDRELEASEDATE "20/02/2017">
 ##  <!ENTITY GPDTARFILENAME "gpd-1.46.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "17th January 2017">
+##  <!ENTITY GPDLONGRELEASEDATE "20th February 2017">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 
@@ -62,7 +62,7 @@ SourceRepository := rec(
   URL := "https://github.com/gap-packages/gpd"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "http://gap-packages.github.io/gpd/",
+PackageWWWHome  := "https://gap-packages.github.io/gpd/",
 README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
