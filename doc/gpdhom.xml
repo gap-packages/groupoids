@@ -340,7 +340,7 @@ This subsection needs to be expanded and examples added.
    <Oper Name="AutomorphismGroupOfGroupoid"
          Arg="gpd" />
    <Oper Name="NiceObjectAutoGroupGroupoid"
-         Arg="gpd" />
+         Arg="gpd, aut" />
 <Description>
 
 The <Index Key="AutomorphismGroup"> <C>AutomorphismGroup</C> </Index> 
@@ -350,10 +350,12 @@ where <M>A</M> is the automorphism group of <M>g</M>
 and <M>S_n</M> is the symmetric group on the <M>n</M> objects. 
 This is one of the main topics in <Cite Key="AlWe" />. 
 <P/>
-The current implementation is experimental, producing a 
-<E>nice monomorphism</E> from  the automorphism group to a pc-group, 
+The function <C>NiceObjectAutoGroupGroupoid</C> takes a groupoid 
+and a subgroup of its automorphism group and retuns a 
+<E>nice monomorphism</E> from this automorphism group to a pc-group, 
 if one is available.  
-However <C>ImageElm</C> at present only works on generating elements.  
+The current implementation is experimental. 
+Note that <C>ImageElm</C> at present only works on generating elements.  
 <P/> 
 </Description>
 </ManSection>

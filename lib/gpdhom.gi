@@ -998,6 +998,7 @@ function( gpd )
 
     SetNiceMonomorphism( aut, nicemap ); 
     SetIsHandledByNiceMonomorphism( aut, true ); 
+    SetIsCommutative( aut, IsCommutative( niceob[1] ) );
     return aut; 
 end ); 
 
@@ -1077,6 +1078,7 @@ function( gpd )
     SetNiceMonomorphism( aut, nicemap ); 
     SetIsHandledByNiceMonomorphism( aut, true ); 
     #?  SetInnerAutomorphismsAutomorphismGroup( aut, ?? );  
+    SetIsCommutative( aut, IsCommutative( niceob[1] ) );
     return aut; 
 end ); 
 
