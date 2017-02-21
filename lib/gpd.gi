@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gi                    GAP4 package `Gpd'                Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -2314,16 +2314,6 @@ function( gpd, obj )
     local  comp;
     comp := PieceOfObject( gpd, obj );
     return ArrowNC( true, One(comp!.magma), obj, obj );
-end );
-
-############################################################################# 
-## 
-#M  IsCommutative
-## 
-InstallMethod( IsCommutative, "when handled by a nice mono",
-    true, [ IsGroup and IsHandledByNiceMonomorphism ], 0,
-function( gp )
-    return IsCommutative( NiceObject( gp ) ); 
 end );
 
 ##############################################################################
