@@ -172,25 +172,7 @@ gap> ok := inv123a = inv123b;
 false
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 <group with 8 generators>
-gap> AGgens := GeneratorsOfGroup( AGa4); 
-[ groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (2,3,4) ), [ -15, -13, -11 ], 
-          [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (1,4,2,3) ), [ -15, -13, -11 ], 
-          [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
-            [ (1,2,3), (2,3,4) ] ), [ -13, -11, -15 ], [ (), (), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
-            [ (1,2,3), (2,3,4) ] ), [ -13, -15, -11 ], [ (), (), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (1,2,3), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (2,3,4), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (1,2,3) ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (2,3,4) ] ] ] ]
+gap> AGgens := GeneratorsOfGroup( AGa4);; 
 gap> NGa4 := NiceObject( AGa4 );; 
 gap> MGa4 := NiceMonomorphism( AGa4 );; 
 gap> Size( AGa4 ); 
