@@ -9,15 +9,15 @@ PackageName := "gpd",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.46",
-Date := "20/02/2017", 
+Date := "21/02/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GPDVERSION "1.46">
-##  <!ENTITY GPDRELEASEDATE "20/02/2017">
+##  <!ENTITY GPDRELEASEDATE "21/02/2017">
 ##  <!ENTITY GPDTARFILENAME "gpd-1.46.tar.gz">
 ##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "20th February 2017">
+##  <!ENTITY GPDLONGRELEASEDATE "21st February 2017">
 ##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 
@@ -92,8 +92,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
-                           [ "fga", ">= 1.3.0" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 2.7.2"] ],
+                           [ "fga", ">= 1.3.1" ] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0"] ],
   ExternalConditions := [ ]
 ),
 

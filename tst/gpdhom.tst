@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.tst                    Gpd Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2016, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -174,9 +174,9 @@ gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 );
 <group with 8 generators>
 gap> AGgens := GeneratorsOfGroup( AGa4); 
 [ groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (2,4,3) ), [ -15, -13, -11 ], 
+    [ [ ConjugatorAutomorphism( a4, (2,3,4) ), [ -15, -13, -11 ], 
           [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (1,2) ), [ -15, -13, -11 ], 
+    [ [ ConjugatorAutomorphism( a4, (1,4,2,3) ), [ -15, -13, -11 ], 
           [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
     [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
             [ (1,2,3), (2,3,4) ] ), [ -13, -11, -15 ], [ (), (), () ] ] ], 
