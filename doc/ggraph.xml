@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  ggraph.xml             Gpd documentation            Chris Wensley  -->
+<!--  ggraph.xml       groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000--2016, Emma Moore and Chris Wensley,            --> 
+<!--  Copyright (C) 2000--2017, Emma Moore and Chris Wensley,            --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -621,6 +621,6 @@ gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
 </Section>
 
 More examples of these operations may be found in the example file 
-<F>gpd/examples/ggraph.g</F>.
+<F>groupoids/examples/ggraph.g</F>.
 
 </Chapter>

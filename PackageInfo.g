@@ -1,24 +1,24 @@
 #############################################################################
 ##
-##  PackageInfo.g  file for the package Gpd 
+##  PackageInfo.g  file for the package groupoids 
 ##  Emma Moore and Chris Wensley 
 ##
 
 SetPackageInfo( rec(
-PackageName := "gpd",
+PackageName := "groupoids",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
-Version := "1.46",
-Date := "21/02/2017", 
+Version := "1.51",
+Date := "07/04/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GPDVERSION "1.46">
-##  <!ENTITY GPDRELEASEDATE "21/02/2017">
-##  <!ENTITY GPDTARFILENAME "gpd-1.46.tar.gz">
-##  <!ENTITY GPDHTMLFILENAME "gpd.html">
-##  <!ENTITY GPDLONGRELEASEDATE "21st February 2017">
-##  <!ENTITY GPDCOPYRIGHTYEARS "2000-2017">
+##  <!ENTITY GROUPOIDSVERSION "1.51">
+##  <!ENTITY GROUPOIDSRELEASEDATE "07/04/2017">
+##  <!ENTITY GROUPOIDSTARFILENAME "groupoids-1.51.tar.gz">
+##  <!ENTITY GROUPOIDSHTMLFILENAME "groupoids.html">
+##  <!ENTITY GROUPOIDSLONGRELEASEDATE "7th April 2017">
+##  <!ENTITY GROUPOIDSCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 
 Persons := [
@@ -59,10 +59,10 @@ AcceptDate := "05/2015",
 
 SourceRepository := rec( 
   Type := "git", 
-  URL := "https://github.com/gap-packages/gpd"
+  URL := "https://github.com/gap-packages/groupoids"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://gap-packages.github.io/gpd/",
+PackageWWWHome  := "https://gap-packages.github.io/groupoids/",
 README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
@@ -72,15 +72,16 @@ SupportEmail := "c.d.wensley@bangor.ac.uk",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
-"The Gpd package provides a collection of functions for computing with \
+"The groupoids package provides a collection of functions for computing with \
 finite groupoids, graph of groups, and graphs of groupoids. \
 These are based on the more basic structures of magmas with objects \
 and their mappings. \
 It provides functions for normal forms of elements in Free Products with \
-Amalgamation and in HNN extensions.",
+Amalgamation and in HNN extensions. \
+Up until April 2017 this package was named Gpd.",
 
 PackageDoc := rec(
-  BookName  := "Gpd",
+  BookName  := "groupoids",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -90,7 +91,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8",
+  GAP := ">=4.8.7",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
                            [ "fga", ">= 1.3.1" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0"] ],
@@ -100,7 +101,8 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation(
-    "Loading Gpd ", String( ~.Version ), " (algorithms for finite groupoids)\n", 
+    "Loading groupoids ", String( ~.Version ), 
+    " (algorithms for finite groupoids)\n", 
     "by Emma Moore and Chris Wensley (http://pages.bangor.ac.uk/~mas023/)\n",
     "--------------------------------------------------------------------\n" ),
 

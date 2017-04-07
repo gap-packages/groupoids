@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  gpd.xml                Gpd documentation            Chris Wensley  -->
+<!--  gpd.xml          groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -889,6 +889,6 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 </Section>
 
 More examples of all these operations may be found in the example file 
-<F>gpd/examples/gpd.g</F>.
+<F>groupoids/examples/gpd.g</F>.
 
 </Chapter>

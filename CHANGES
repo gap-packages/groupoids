@@ -1,4 +1,4 @@
-                       CHANGES to the Gpd package 
+                       CHANGES to the groupoids package 
 
 ToDo: 
  - (15/06/11) HomomorphismByUnion needs revisiting for multi-component cases. 
@@ -19,12 +19,18 @@ ToDo:
               becomes part of the general GAP distribution.
  - (22/03/16) in mwohom.gi check that \^-1 now works for isomorphisms 
               N.B. as at 02/11/16 this is still not fixed 
+ - (07/03/17) the error mentioned in the manual at 5.4.1 is still there
+
+############################################################################## 
+1.46 -> 1.51  (07/04/17) 
+
+ - (07/04/17) renamed the package "groupoids" 
 
 ############################################################################## 
 1.45 -> 1.46  (21/02/17) 
 
  - (21/02/17) removed method for IsCommutative from gpd.gi 
-              which was causing slowdown in the main GAP tests 
+              which was causing slowdown in one of the main GAP tests 
 
 ############################################################################## 
 1.43 -> 1.45  (02/11/16) 

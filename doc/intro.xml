@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  intro.xml              Gpd documentation            Chris Wensley  -->
+<!--  intro.xml        groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -13,7 +13,7 @@
 <Heading>Introduction</Heading>
 
 Groupoids are mathematical categories in which every arrow is invertible. 
-The &gpd; package provides functions for the computation with
+The &groupoids; package provides functions for the computation with
 groupoids and their morphisms; 
 for graphs of groups and graphs of groupoids. 
 The package is far from complete, and development continues. 
@@ -24,26 +24,26 @@ and for <E>HNN-extensions</E>
 when the initial groups have rewriting systems.
 <P/>
 
-The latest version is &GPDVERSION; for &GAP; 4.8, 
-released on &GPDLONGRELEASEDATE;, 
+The latest version is &GROUPOIDSVERSION; for &GAP; 4.8, 
+released on &GROUPOIDSLONGRELEASEDATE;, 
 and may be more recent than the release on the &GAP; archive. 
 <P/> 
 The package may be obtained as a compressed tar file 
-<File>&GPDTARFILENAME;</File>
+<File>&GROUPOIDSTARFILENAME;</File>
 by ftp from one of the following sites: 
 <List>
 <Item>
 any &GAP; archive, e.g. 
-<URL>http://www.gap-system.org/Packages/gpd.html</URL>; 
+<URL>http://www.gap-system.org/Packages/groupoids.html</URL>; 
 </Item>
 <Item>
 the package GitHub repository: 
-<URL>https://gap-packages.github.io/gpd</URL>. 
+<URL>https://gap-packages.github.io/groupoids</URL>. 
 </Item>
 </List>
 <P/>
 
-The information parameter <C>InfoGpd</C> takes default value <C>1</C> 
+The information parameter <C>InfoGroupoids</C> takes default value <C>1</C> 
 which, for the benefit of new users, causes more messages 
 to be printed out when operations fail.
 When raised to a higher value, additional information is printed out. 
@@ -52,7 +52,7 @@ Help is available in the usual way.
 <P/>
 <Example>
 <![CDATA[
-gap> LoadPackage( "gpd" );
+gap> LoadPackage( "groupoids" );
 ]]>
 </Example>
 
@@ -66,7 +66,7 @@ More functions will be released as soon as possible.
 <P/>
 Once the package is loaded, it is possible to check the correct 
 installation by running the test suite of the package with the command  
-<C> ReadPackage( "gpd", "tst/testall.g" ); </C>
+<C> ReadPackage( "groupoids", "tst/testall.g" ); </C>
 
 You may reference this package by mentioning <Cite Key="BrMoPoWe" />, 
 <Cite Key="emma-thesis" /> and <Cite Key="AlWe" />. 
