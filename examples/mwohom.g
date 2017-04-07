@@ -1,17 +1,17 @@
 ############################################################################# 
 ## 
-#W  mwohom.g                  GAP4 package `Gpd'                Chris Wensley 
+#W  mwohom.g               GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2016, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-SetInfoLevel( InfoGpd, 1 );
+SetInfoLevel( InfoGroupoids, 1 );
 ##  TraceImmediateMethods( true );
 
 
 Print( "\n===============================================================\n");
-Print(   "<<<<            testing examples in the Gpd manual         >>>>\n" );
+Print(   "<<<<         testing examples in the groupoids manual      >>>>\n" );
 Print(   "<<<< functions for magmas with objects and their morphisms >>>>\n" );
 Print( "\n===============================================================\n\n");
     
