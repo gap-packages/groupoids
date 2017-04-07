@@ -34,7 +34,7 @@ Similarly, the <C>Vertices</C> and <C>Arcs</C> of an <C>FpWeightedDigraph</C>
 were changed from attributes to record components.
 <P/>
 In the spring of 2006 the package was extensively rewritten 
-and renamed &gpd;. 
+and renamed <Package>gpd</Package>. 
 Version 1.01 was submitted as a deposited package in June 2006.
 Version 1.03, of October 2007, fixed some file protections, 
 and introduced the test file <F>gpd_manual.tst</F>. 
@@ -50,7 +50,7 @@ have been added, but this is ongoing work.
 Versions 1.09 to 1.15 were prepared for the anticipated release of &GAP; 4.5 
 in June 2012. 
 <P/> 
-&gpd; became an accepted &GAP; package in May 2015. 
+<Package>gpd</Package> became an accepted &GAP; package in May 2015. 
 <P/>
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
 <P/>
@@ -83,8 +83,8 @@ those with object groups which are simply isomorphic.
 </List>
 
 <Package>GraphGpd</Package> attempted to implement the second case, 
-while &gpd; 1.01 and 1.03 considered only the first case, 
-and &gpd; 1.05 extended 1.03 to the second case. 
+while <Package>gpd</Package> 1.01 and 1.03 considered only the first case, 
+and <Package>gpd</Package> 1.05 extended 1.03 to the second case. 
 <P/> 
 The third case has not yet been considered for implementation, 
 and there does not appear to be much need to do so. 
