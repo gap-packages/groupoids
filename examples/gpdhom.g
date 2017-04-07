@@ -1,15 +1,15 @@
 ##############################################################################
 ##
-#W  gpdhom.g                    GAP4 package `Gpd'               Chris Wensley
+#W  gpdhom.g                 GAP4 package `groupoids'            Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-SetInfoLevel( InfoGpd, 4 );
+SetInfoLevel( InfoGroupoids, 4 );
 
 Print( "\n============================================================\n");
-Print(   "<<<<       testing examples in the Gpd manual           >>>>\n" );
+Print(   "<<<<    testing examples in the groupoids manual        >>>>\n" );
 Print(   "<<<< functions for groupoids and their homomorphisms    >>>>\n" );
 Print( "==============================================================\n\n");
 

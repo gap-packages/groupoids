@@ -1,14 +1,14 @@
 ##############################################################################
 ##
-#W  ggraph.g                    GAP4 package `Gpd'               Chris Wensley
+#W  ggraph.g              GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-SetInfoLevel( InfoGpd, 2 );
+SetInfoLevel( InfoGroupoids, 2 );
 
 Print( "\n==========================================================\n");
-Print(   "<<<<      testing examples in the Gpd manual          >>>>\n" );
+Print(   "<<<<   testing examples in the groupoids manual       >>>>\n" );
 Print(   "<<<< functions for Graphs of Groups and Groupoids     >>>>\n" );
 Print( "============================================================\n\n");
 
@@ -21,7 +21,7 @@ y := fg1.1;
 A1 := [ [y,5,6], [y^-1,6,5]];
 D1 := FpWeightedDigraph( fg1, V1, A1 );
 Print( D1!.vertices, "\n", D1!.arcs, "\n" );
-## Print( GpdVertices( D1 ), "\n", GpdArcs( D1 ), "\n" );
+## Print( GroupoidVertices( D1 ), "\n", GroupoidArcs( D1 ), "\n" );
 # Display( D1 );
 inv1 := InvolutoryArcs( D1 );
 Print( inv1, "\n\n" );

@@ -1,16 +1,16 @@
 ##############################################################################
 ##
-#W  gpd.g                       GAP4 package `Gpd'               Chris Wensley
+#W  gpd.g                    GAP4 package `groupoids'            Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-SetInfoLevel( InfoGpd, 1 );
+SetInfoLevel( InfoGroupoids, 1 );
 ##  TraceImmediateMethods( false );
 
 Print( "\n==========================================================\n");
-Print(   "<<<<      testing examples in the Gpd manual          >>>>\n" );
+Print(   "<<<<   testing examples in the groupoids manual       >>>>\n" );
 Print(   "<<<< functions for groupoids and their morphisms      >>>>\n" );
 Print( "\n==========================================================\n\n");
 
