@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  manual.xml             Gpd documentation            Chris Wensley  -->
+<!--  manual.xml       groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -12,19 +12,19 @@
 <!-- Reading data chunk from the PackageInfo.g file --> 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
-  [<!ENTITY gpd "<Package>Gpd</Package>"> 
+  [<!ENTITY groupoids "<Package>groupoids</Package>"> 
    <#Include Label="PKGVERSIONDATA"> 
   ]> 
 
-<!-- The documentation for the Gpd package. -->
+<!-- The documentation for the groupoids package. -->
 
-<Book Name="Gpd"> 
+<Book Name="groupoids"> 
 
 <TitlePage>
-  <Title>&gpd;</Title>
+  <Title>&groupoids;</Title>
   <Subtitle>Groupoids, graphs of groups, and graphs of groupoids</Subtitle>
-  <Version>Version &GPDVERSION;</Version>   
-  <Date>&GPDRELEASEDATE;</Date> 
+  <Version>Version &GROUPOIDSVERSION;</Version>   
+  <Date>&GROUPOIDSRELEASEDATE;</Date> 
   <Author> Emma Moore 
   </Author>
   <Author> Chris Wensley
@@ -37,7 +37,7 @@
   </Author>
 
 <Abstract>
-The &gpd; package for &GAP;4 provides functions for 
+The &groupoids; package for &GAP;4 provides functions for 
 the computation with groupoids (categories with every arrow invertible) 
 and their morphisms; for graphs of groups, and graphs of groupoids. 
 The most basic structure introduced is that of <E>magma with objects</E>, 
@@ -48,7 +48,7 @@ It provides normal forms for Free Products with Amalgamation
 and for HNN-extensions when the initial groups have rewrite systems 
 and the subgroups have finite index.
 <P/>
-The &gpd; package was originally implemented in 2000 
+The &groupoids; package was originally implemented in 2000 
 (as <Package>GraphGpd</Package>) 
 when the first author was studying for a Ph.D. in Bangor.
 <P/>
@@ -56,24 +56,26 @@ Version 1.07 was released in July 2011, to be tested with &GAP; 4.5.
 Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
 and was submitted for official acceptance as a &GAP; package. 
 <Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
-The latest version is &GPDVERSION; of &GPDLONGRELEASEDATE;, 
-prepared for  &GAP; 4.8.  
+<P/>
+In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
+The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
+prepared for  &GAP; 4.9.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
 Please submit an issue at 
-<URL>http://github.com/gap-packages/gpd/issues/</URL>
+<URL>http://github.com/gap-packages/groupoids/issues/</URL>
 or send an email to the last author at 
 <Email>c.d.wensley@bangor.ac.uk</Email>. 
 </Abstract>
 
 <Copyright> 
 <Index>License</Index>
-&copyright; &GPDCOPYRIGHTYEARS; Emma Moore and Chris Wensley <P/>
+&copyright; &GROUPOIDSCOPYRIGHTYEARS; Emma Moore and Chris Wensley <P/>
 
-<Package>Gpd</Package> is free software; you can redistribute it 
+<Package>groupoids</Package> is free software; you can redistribute it 
 and/or modify it under the terms of the 
 <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
 as published by the Free Software Foundation; 
