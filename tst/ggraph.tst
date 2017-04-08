@@ -1,13 +1,13 @@
 ##############################################################################
 ##
-#W  ggraph.tst                    Gpd Package                    Chris Wensley
+#W  ggraph.tst              groupoids Package                    Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );; 
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
 ###  Section 6.1  Digraphs
 
@@ -232,7 +232,8 @@ gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
 -3 -> -4].y^-1.[a^7 : -2 -> -1](5)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
 (5)[a^-1 : -1 -> -2].y.[b^-1 : -4 -> -4].y^-1.[a^10 : -2 -> -1](5)
-gap> SetInfoLevel( InfoGpd, gpd_infolevel_saved );;  
+
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 
 #############################################################################
 ##

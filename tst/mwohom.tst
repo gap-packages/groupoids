@@ -1,14 +1,14 @@
 ##############################################################################
 ##
-#W  mwohom.tst                    Gpd Package                    Chris Wensley
+#W  mwohom.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2016, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
 ## SubSection 3.1.1
-gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );;
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 gap> tup1 := 
 >      [ Tuple([m1,m2]), Tuple([m2,m1]), Tuple([m3,m4]), Tuple([m4,m3]) ];; 
 gap> f1 := GeneralMappingByElements( m, m, tup1 ); 
@@ -128,7 +128,8 @@ magma with objects homomorphism :
     , magma with objects homomorphism : [ [ smap, [ -101, -102, -103 ] ] ] ]
 gap> ImageElm( h15, t12 ); 
 [Transformation( [ 2, 2, 4, 1 ] ) : -103 -> -102]
-gap> SetInfoLevel( InfoGpd, gpd_infolevel_saved );;  
+
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 ##############################################################################
 ##

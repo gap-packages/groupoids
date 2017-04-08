@@ -1,14 +1,14 @@
 ##############################################################################
 ##
-#W  mwo.tst                       Gpd Package                    Chris Wensley
+#W  mwo.tst                 groupoidsInfoGroupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
 ## SubSection 2.1.1 
-gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );; 
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
 ## ========================  MAGMA  ================================ ## 
 gap> tm := [[1,2,4,3],[1,2,4,3],[3,4,2,1],[3,4,2,1]];; 
@@ -186,7 +186,8 @@ gap> Length( GeneratorsOfMagmaWithObjects( N3 ) );
 ## this should fail since the object sets are not disjoint: 
 gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  
 fail
-gap> SetInfoLevel( InfoGpd, gpd_infolevel_saved );;  
+
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 #############################################################################
 ##

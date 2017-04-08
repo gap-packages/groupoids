@@ -1,8 +1,8 @@
-#############################################################################
+##############################################################################
 ##
-#W  gpdgraph.gi                GAP4 package `Gpd'                Chris Wensley
+#W  gpdgraph.gi             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains methods for FpWeightedDigraphs of groupoids, 
@@ -330,7 +330,7 @@ function( gg, tv, wL )
             Error( "entry ", j, " not in groupoid at vertex ", v );
         fi;
     od;    
-    Info( InfoGpd, 3, "wL = ", wL );
+    Info( InfoGroupoids, 3, "wL = ", wL );
     return GraphOfGroupoidsWordNC( gg, tv, wL );
 end);
 
@@ -443,7 +443,7 @@ function( ggword )
         he := Position( vdig, adig[e][3] );
         #### factor groupoid element as pair [ transversal, subgpd elt ] ####
         word := w[k2-1];
-        Info( InfoGpd, 3, "[word,e] = ", word, ", ", e );
+        Info( InfoGroupoids, 3, "[word,e] = ", word, ", ", e );
         a := adig[e];
         te := Position( vdig, a[2] );
         g := gpds[te];
@@ -455,14 +455,14 @@ function( ggword )
         h := sgpds[e];
         ch := PieceOfObject( h, word![3] );
         tran := ltrans[e][ptword];
-        Info( InfoGpd, 3, "tran = ", tran );
-        Info( InfoGpd, 3, "word = ", word );
+        Info( InfoGroupoids, 3, "tran = ", tran );
+        Info( InfoGroupoids, 3, "word = ", word );
         i := 0;
         found := false;
         while not found do
             i := i+1;
             itword := tran[i]^(-1)*word;
-            Info( InfoGpd, 3, "[i,itword] = ", [i,itword] );
+            Info( InfoGroupoids, 3, "[i,itword] = ", [i,itword] );
             if ( itword = fail ) then 
                 found := false;
             else
@@ -470,7 +470,7 @@ function( ggword )
             fi;
         od;
         tsp := [ tran[i], itword ];
-        Info( InfoGpd, 3, "tsp = ", tsp );
+        Info( InfoGroupoids, 3, "tsp = ", tsp );
         isoe := isos[e];
         if IsMWOSinglePieceRep( Source( isoe ) ) then
             part := [ [1] ];
@@ -486,20 +486,20 @@ function( ggword )
         else
             isow := isoe;
         fi;
-        Info( InfoGpd, 3, "isow = ", isow );
+        Info( InfoGroupoids, 3, "isow = ", isow );
         im := ImageElm( isow, tsp[2] );
-        Info( InfoGpd, 2, tsp[2], " mapped over to ", im );
+        Info( InfoGroupoids, 2, tsp[2], " mapped over to ", im );
         w[k2-1] := tsp[1];
         if isfp then
             #?  (14/11/08)  old version fails - problem with \* 
             #? w[k2+1] := NormalFormKBRWS( gpds[he], im*w[k2+1] );
             w[k2+1] := NormalFormKBRWS( gpds[he], GroupoidElement( 
                 gpds[he], im![1]*w[k2+1]![1], im![2], w[k2+1]![3] ) );
-            Info( InfoGpd, 2, "k = ", k, ", w = ", w );
+            Info( InfoGroupoids, 2, "k = ", k, ", w = ", w );
         else
             w[k2+1] := im*w[k2+1];
         fi;
-        Info( InfoGpd, 2, "k = ", k, ", w = ", w );
+        Info( InfoGroupoids, 2, "k = ", k, ", w = ", w );
         lenred := ( k > 1 );
         while lenred do
             ## test for a length reduction
@@ -513,7 +513,7 @@ function( ggword )
                 isid := ( ( w[k2-1]![1] = ( ) ) and ( w[k2-2] = ie ) );
             fi;
             if isid then
-                Info( InfoGpd, 2, "LENGTH REDUCTION!\n" );
+                Info( InfoGroupoids, 2, "LENGTH REDUCTION!\n" );
                 ### perform a length reduction ###
                 u := adig[e][3];
                 gu := gpds[ Position( vdig, u ) ];
@@ -525,7 +525,7 @@ function( ggword )
                 w := Concatenation( w{[1..k2-4]}, [ng], w{[k2+2..lw]} );
                 len := len - 2;
                 lw := lw - 4;
-                Info( InfoGpd, 2, "k = ", k, ", shorter w = ", w );
+                Info( InfoGroupoids, 2, "k = ", k, ", shorter w = ", w );
                 if ( len = 0 ) then
                      rw := GraphOfGroupoidsWordNC( gg, u, w );
                      SetGGTail( rw, u );
@@ -578,7 +578,7 @@ InstallOtherMethod( \*, "generic method for two graph of groupoids words",
 function ( ggw1, ggw2 )
     local  w1, w2, h1, len1, len2, w;
     if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
-        Info( InfoGpd, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+        Info( InfoGroupoids, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
         return fail;
     fi;
     w1 := WordOfGraphOfGroupoidsWord( ggw1 );
@@ -636,7 +636,7 @@ function ( ggw, n )
         return InverseOp( ggw );
     fi;
     if not ( GGHead( ggw ) = GGTail( ggw ) ) then
-        Info( InfoGpd, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
+        Info( InfoGroupoids, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
         return fail;
     fi;
     if ( n = 0 ) then

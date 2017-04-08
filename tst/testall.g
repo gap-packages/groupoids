@@ -1,12 +1,12 @@
 ##############################################################################
 ##
-#W  testall.g                     Gpd Package                    Chris Wensley
+#W  testall.g               groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2016, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-LoadPackage( "gpd" ); 
+LoadPackage( "groupoids" ); 
 
 TestMyPackage := function( pkgname )
     local  pkgdir, testfiles, testresult, ff, fn;
@@ -31,4 +31,4 @@ TestMyPackage := function( pkgname )
 end;
 
 ##  Set the name of the package here
-TestMyPackage( "gpd" );
+TestMyPackage( "groupoids" );

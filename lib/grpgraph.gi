@@ -1,8 +1,8 @@
 ##############################################################################
 ##
-#W  grpgraph.gi                GAP4 package `Gpd'                Chris Wensley
+#W  grpgraph.gi             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for FpWeightedDigraphs and 
@@ -201,7 +201,7 @@ function( dig )
         inva := [ ij[i], a[3], a[2] ];
 	pos := Position( adig, inva );
 	if ( pos = fail ) then
-            Info( InfoGpd, 1, "involutory arc not available" );
+            Info( InfoGroupoids, 1, "involutory arc not available" );
 	    return fail;
 	else
 	    inv[i] := pos ;
@@ -635,12 +635,12 @@ function( ggword )
     fi;
     k := 1;
     v := tw;
-    Info( InfoGpd, 3, "initial w = ", w );
-    Info( InfoGpd, 3, "--------------------------------------------" );
+    Info( InfoGroupoids, 3, "initial w = ", w );
+    Info( InfoGroupoids, 3, "--------------------------------------------" );
     while ( k <= len ) do
         k2 := k+k;
         ## reduce the subword  w{[k2-1..k2+1]}
-        Info( InfoGpd, 3, "w{[k2-1..k2+1]} = ", w{[k2-1..k2+1]} );
+        Info( InfoGroupoids, 3, "w{[k2-1..k2+1]} = ", w{[k2-1..k2+1]} );
         e := w[k2];
         he := Position( vdig, adig[e][3] );
         ## factorise group element as pair [ transversal, subgroup element] 
@@ -657,17 +657,17 @@ function( ggword )
             found := ( nwit in h );
         od;
         tsp := [ tran[i]^(-1), nwit ];
-        Info( InfoGpd, 3, "tsp at i = ", i, " is ", tsp );
+        Info( InfoGroupoids, 3, "tsp at i = ", i, " is ", tsp );
         im := ImageElm( isos[e], tsp[2] );
         w[k2-1] := tsp[1];
         if isfp then
             w[k2+1] := NormalFormKBRWS( gps[he], im*w[k2+1] );
-            Info( InfoGpd, 3, "k = ", k, ", w = ", w );
+            Info( InfoGroupoids, 3, "k = ", k, ", w = ", w );
         else
             w[k2+1] := im*w[k2+1];
         fi;
-        Info( InfoGpd, 3, "w{[k2-1..k2+1]} = ", w{[k2-1..k2+1]} );
-        Info( InfoGpd, 3, "--------------------------------------------" );
+        Info( InfoGroupoids, 3, "w{[k2-1..k2+1]} = ", w{[k2-1..k2+1]} );
+        Info( InfoGroupoids, 3, "--------------------------------------------" );
         lenred := ( k > 1 );
         while lenred do
             ## test for a length reduction
@@ -692,7 +692,7 @@ function( ggword )
                 w := Concatenation( w{[1..k2-4]}, [ng], w{[k2+2..lw]} );
                 len := len - 2;
                 lw := lw - 4;
-                Info( InfoGpd, 1, "k = ", k, ", shorter w = ", w );
+                Info( InfoGroupoids, 1, "k = ", k, ", shorter w = ", w );
                 if ( len = 0 ) then
                      rw := GraphOfGroupsWordNC( gg, u, w );
                      SetGGTail( rw, u );
@@ -756,7 +756,7 @@ function ( ggwlist )
     ggw1 := ggwlist[1];
     ggw2 := ggwlist[2];
     if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
-        Info( InfoGpd, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+        Info( InfoGroupoids, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
         return fail;
     fi;
     w1 := WordOfGraphOfGroupsWord( ggw1 );
@@ -832,7 +832,7 @@ function ( ggw, n )
         return InverseOp( ggw );
     fi;
     if not ( GGHead( ggw ) = GGTail( ggw ) ) then
-        Info( InfoGpd, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
+        Info( InfoGroupoids, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
         return fail;
     fi;
     if ( n = 0 ) then
@@ -1106,9 +1106,9 @@ function( fpa, w )
     wL := wL{[1..(Length(wL)-1)]};
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, tv, wL );
-    Info( InfoGpd, 2, "ggw = ", ggw );
+    Info( InfoGroupoids, 2, "ggw = ", ggw );
     rgw := ReducedGraphOfGroupsWord( ggw );
-    Info( InfoGpd, 2, "rgw = ", rgw );
+    Info( InfoGroupoids, 2, "rgw = ", rgw );
     ##  now convert the reduced graph of groups word back to fpa
     trgw := GGTail( rgw );
     wrgw := WordOfGraphOfGroupsWord( rgw );
@@ -1221,8 +1221,8 @@ function( hnn, w )
     fi;
     gg := GraphOfGroupsRewritingSystem( hnn );
     dig := DigraphOfGraphOfGroups( gg );
-    Info( InfoGpd, 2, "graph of groups has left transversals" );
-    Info( InfoGpd, 2, LeftTransversalsOfGraphOfGroups( gg ) );
+    Info( InfoGroupoids, 2, "graph of groups has left transversals" );
+    Info( InfoGroupoids, 2, LeftTransversalsOfGraphOfGroups( gg ) );
     v := dig!.vertices[1];
     ew := ExtRepOfObj( w );
     if ( ew = [ ] ) then
@@ -1276,9 +1276,9 @@ function( hnn, w )
     fi;
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, v, wL );
-    Info( InfoGpd, 2, "ggw = ", ggw );
+    Info( InfoGroupoids, 2, "ggw = ", ggw );
     rgw := ReducedGraphOfGroupsWord( ggw );
-    Info( InfoGpd, 2, "rgw = ", rgw );
+    Info( InfoGroupoids, 2, "rgw = ", rgw );
     ##  now convert the reduced graph of groups word back to hnn
     trgw := GGTail( rgw );
     wrgw := WordOfGraphOfGroupsWord( rgw );
