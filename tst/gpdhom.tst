@@ -1,13 +1,13 @@
 ##############################################################################
 ##
-#W  gpdhom.tst                    Gpd Package                    Chris Wensley
+#W  gpdhom.tst              groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
-gap> gpd_infolevel_saved := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );; 
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
 ###  Section 5.1
 
@@ -283,7 +283,8 @@ gap> u1 := z1*w1*y1*x1*z1;
 gap> imu := ImageElm( nmonAHs3, u );; 
 gap> u1 = imu;
 true
-gap> SetInfoLevel( InfoGpd, gpd_infolevel_saved );;  
+
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 #############################################################################
 ##

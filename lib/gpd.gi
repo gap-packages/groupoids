@@ -1,6 +1,6 @@
 ############################################################################# 
 ## 
-#W  gpd.gi                    GAP4 package `Gpd'                Chris Wensley 
+#W  gpd.gi                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -381,21 +381,21 @@ InstallGlobalFunction( Groupoid, function( arg )
     # list of pieces
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
          and  ForAll( arg[1], G -> IsGroupoid(G) ) ) then
-        Info( InfoGpd, 2, "ByUnion" );
+        Info( InfoGroupoids, 2, "ByUnion" );
         return UnionOfPieces( arg[1] );
     # group * tree groupoid
     elif ( ( nargs = 2 ) and IsList( arg[2] ) and IsGroup( arg[1] ) ) then
-        Info( InfoGpd, 2, "group plus objects" ); 
+        Info( InfoGroupoids, 2, "group plus objects" ); 
         return SinglePieceGroupoid( arg[1], arg[2] );
     # one-object groupoid
     elif ( ( nargs = 2 ) and IsObject( arg[2] ) and IsGroup( arg[1] ) ) then
-        Info( InfoGpd, 2, "SingleObject" );
+        Info( InfoGroupoids, 2, "SingleObject" );
         return DomainWithSingleObject( arg[1], arg[2] );
     elif ( ( nargs = 3 ) and IsGroupoid( arg[1] ) and IsGroup( arg[2] ) 
            and IsHomogeneousList( arg[3] ) ) then 
         return SubgroupoidWithRays( arg[1], arg[2], arg[3] );
     else
-        Info( InfoGpd, 1, GPD_CONSTRUCTORS );
+        Info( InfoGroupoids, 1, GPD_CONSTRUCTORS );
         return fail;
     fi;
 end );
@@ -728,7 +728,7 @@ function( gpd, oblist )
     ob1 := oblist[1]; 
     for j in [2..Length(oblist)] do 
         if ( Intersection( ob1, oblist[j] ) <> [ ] ) then
-            Info( InfoGpd, 1, "constituents must have disjoint object sets," );
+            Info( InfoGroupoids, 1, "constituents must have disjoint object sets," );
             return fail;
         fi; 
     od; 
@@ -855,7 +855,7 @@ function( U, elt )
     else 
         n := np; 
         if ( ( nq <> fail ) and ( np <> nq ) ) then 
-            Info( InfoGpd, 1, "expecting np = nq here" ); 
+            Info( InfoGroupoids, 1, "expecting np = nq here" ); 
         fi; 
     fi; 
     pieces := ShallowCopy( Pieces( U ) );
@@ -1084,7 +1084,7 @@ function( gpd, obj )
     else
         comp := PieceOfObject( gpd, obj );
         if ( comp = fail ) then
-            Info( InfoGpd, 1, "obj not an object in gpd" );
+            Info( InfoGroupoids, 1, "obj not an object in gpd" );
             return fail;
         else
             return ObjectStarNC( comp, obj );
@@ -1137,7 +1137,7 @@ function( gpd, obj )
     else
         comp := PieceOfObject( gpd, obj );
         if ( comp = fail ) then
-            Info( InfoGpd, 1, "obj not an object in gpd" );
+            Info( InfoGroupoids, 1, "obj not an object in gpd" );
             return fail;
         else
             return ObjectCostarNC( comp, obj );
@@ -1185,7 +1185,7 @@ function( gpd, o1, o2 )
 
     obs := ObjectList( gpd );
     if not ( ( o1 in obs ) and ( o2 in obs ) ) then
-        Info( InfoGpd, 1, "o1,o2 not objects in gpd" );
+        Info( InfoGroupoids, 1, "o1,o2 not objects in gpd" );
         return fail;
     fi;
     if IsSinglePiece( gpd ) then
@@ -1193,7 +1193,7 @@ function( gpd, o1, o2 )
     else
         comp := PieceOfObject( gpd, o1 );
         if not ( o2 in comp!.objects ) then
-            Info( InfoGpd, 1, "o1,o2 not objects in same constituent" );
+            Info( InfoGroupoids, 1, "o1,o2 not objects in same constituent" );
             return fail;
         else
             return HomsetNC( comp, o1, o2 );
@@ -1327,14 +1327,14 @@ InstallGlobalFunction( Subgroupoid, function( arg )
     nargs := Length( arg );
     gpd := arg[1];
     if not IsGroupoid( gpd ) then 
-        Info( InfoGpd, 1, "arg[1] is not a groupoid" );
+        Info( InfoGroupoids, 1, "arg[1] is not a groupoid" );
         return fail;
     fi;
     # by subgroup
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] )
                        and IsGroup( arg[2] ) ) then
         gp := gpd!.magma;
-        Info( InfoGpd, 2, "connected subgroupoid" );
+        Info( InfoGroupoids, 2, "connected subgroupoid" );
         sub := SinglePieceGroupoid( arg[2], gpd!.objects );
         SetParentAttr( sub, gpd );
         return sub;
@@ -1342,15 +1342,15 @@ InstallGlobalFunction( Subgroupoid, function( arg )
     # discrete subgroupoid
     if ( ( nargs = 3 ) and IsHomogeneousList( arg[2] ) 
                        and IsHomogeneousList( arg[3] ) ) then
-        Info( InfoGpd, 2, "discrete subgroupoid" );
+        Info( InfoGroupoids, 2, "discrete subgroupoid" );
         return DiscreteSubgroupoid( arg[1], arg[2], arg[3] );
     fi;
     # list of constituents
     if ( ( nargs = 2 ) and IsHomogeneousList( arg[2] ) ) then
-        Info( InfoGpd, 3, "subgroupoid by constituents" );
+        Info( InfoGroupoids, 3, "subgroupoid by constituents" );
         return SubgroupoidByPieces( arg[1], arg[2] );
     fi;
-    Info( InfoGpd, 1, SUB_CONSTRUCTORS );
+    Info( InfoGroupoids, 1, SUB_CONSTRUCTORS );
     return fail;
 end );
 
@@ -1449,7 +1449,7 @@ function( gpd, pieces )
         U := pieceU[1];
     fi;
     if not IsSubgroupoid( gpd, U ) then 
-        Info( InfoGpd, 1, "union of pieces is not a subgroupoid of gpd" );
+        Info( InfoGroupoids, 1, "union of pieces is not a subgroupoid of gpd" );
         return fail;
     fi;
     if ForAll( pieces, c -> ( Length( c[2] ) = 1 ) ) then
@@ -1496,7 +1496,7 @@ function( G, gps, obs )
         pieceU[i] := [ gps[i], [o] ];
     od; 
     if ForAll( gps, g -> ( g = gps[1] ) ) then 
-        Info( InfoGpd, 2, 
+        Info( InfoGroupoids, 2, 
               "all groups equal, so using HomogeneousDiscreteGroupoid" ); 
         U := HomogeneousDiscreteGroupoid( gps[1], obs ); 
     else 
@@ -1651,7 +1651,7 @@ function( U, pos, new )
     local  pieces; 
     pieces := ShallowCopy( Pieces( U ) ); 
     if not ( pos <= Length(pieces) ) then 
-        Info( InfoGpd, 1, "U has fewer than pos pieces" ); 
+        Info( InfoGroupoids, 1, "U has fewer than pos pieces" ); 
         return fail; 
     fi; 
     ## OK to replace old by new in the pn-th place 
@@ -1668,7 +1668,7 @@ function( U, old, new )
     pieces := ShallowCopy( Pieces( U ) ); 
     pos := Position( pieces, old ); 
     if ( pos = fail ) then 
-        Info( InfoGpd, 1, "old not a piece in U" ); 
+        Info( InfoGroupoids, 1, "old not a piece in U" ); 
         return fail; 
     fi; 
     ## OK to replace old by new in the pn-th place 
@@ -1718,7 +1718,7 @@ function( G, U )
             od;
         od;
     fi;
-    Info( InfoGpd, 3, "constituent positions = ", pos ); 
+    Info( InfoGroupoids, 3, "constituent positions = ", pos ); 
     return pos;
 end );
 
@@ -1749,13 +1749,13 @@ function( gpd, sgpd, e )
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
-        Info( InfoGpd, 2, "comment: gpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: gpd not a single piece!" ); 
         G := PieceOfObject( gpd, e![2] ); 
     fi; 
     if IsSinglePiece( sgpd ) then 
         U := sgpd; 
     else
-        Info( InfoGpd, 2, "comment: sgpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: sgpd not a single piece!" ); 
         U := PieceOfObject( sgpd, e![2] ); 
     fi; 
     if not IsSubdomainWithObjects( G, U ) then 
@@ -1794,13 +1794,13 @@ function( gpd, sgpd, e )
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
-        Info( InfoGpd, 2, "comment: gpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: gpd not a single piece!" ); 
         G := PieceOfObject( gpd, e![2] ); 
     fi; 
     if IsSinglePiece( sgpd ) then 
         U := sgpd; 
     else
-        Info( InfoGpd, 2, "comment: sgpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: sgpd not a single piece!" ); 
         U := PieceOfObject( sgpd, e![2] ); 
     fi; 
     if not IsSubdomainWithObjects( G, U ) then 
@@ -1881,11 +1881,11 @@ function( cset )
     obs := C!.objects;
     if ( HasIsDirectProductWithCompleteGraph( C ) 
          and IsDirectProductWithCompleteGraph( C ) ) then 
-        Info( InfoGpd, 2, "Option 1 in HomsetCosetsGroupoidCoset" ); 
+        Info( InfoGroupoids, 2, "Option 1 in HomsetCosetsGroupoidCoset" ); 
         fgpd := FamilyObj( C ); 
         rays := C!.rays; 
     else 
-        Info( InfoGpd, 2, "Option 2 in HomsetCosetsGroupoidCoset" ); 
+        Info( InfoGroupoids, 2, "Option 2 in HomsetCosetsGroupoidCoset" ); 
         fgpd := FamilyObj( Parent( C ) );  
         rays := List( C!.rays, r -> r^(-1) ); 
         if isrt then 

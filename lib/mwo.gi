@@ -1,8 +1,8 @@
 ############################################################################# 
 ## 
-#W  mwo.gi                    GAP4 package `Gpd'                Chris Wensley 
+#W  mwo.gi                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -44,7 +44,7 @@ InstallMethod( TypeOfDomainWithObjects, "for a list of domains with objects",
                               and IsDomainWithObjects(p) ) then 
         type := 5; 
     else 
-        Info( InfoGpd, 2, "just an ordinary list?" ); 
+        Info( InfoGroupoids, 2, "just an ordinary list?" ); 
     fi; 
     return type; 
 end );
@@ -217,16 +217,16 @@ InstallGlobalFunction( MagmaWithObjects, function( arg )
         if ( HasIsGeneratorsOfMagmaWithInverses( mag ) 
             and IsGeneratorsOfMagmaWithInverses( mag ) 
             and HasIsAssociative( mag ) and IsAssociative( mag ) ) then 
-            Info( InfoGpd, 1, "SinglePieceGroupoid:-" );
+            Info( InfoGroupoids, 1, "SinglePieceGroupoid:-" );
             return SinglePieceGroupoid( mag, obs ); 
         elif ( HasIsMonoid( mag ) and IsMonoid( mag ) ) then 
-            Info( InfoGpd, 1, "SinglePieceMonoidWithObjects:-" ); 
+            Info( InfoGroupoids, 1, "SinglePieceMonoidWithObjects:-" ); 
             return SinglePieceMonoidWithObjects( mag, obs ); 
         elif ( HasIsSemigroup( mag ) and IsSemigroup( mag ) ) then 
-            Info( InfoGpd, 1, "SinglePieceSemigroupWithObjects:-" ); 
+            Info( InfoGroupoids, 1, "SinglePieceSemigroupWithObjects:-" ); 
             return SinglePieceSemigroupWithObjects( mag, obs ); 
         else  ## it's just a magma 
-            Info( InfoGpd, 1, "SinglePieceMagmaWithObjects:-" );
+            Info( InfoGroupoids, 1, "SinglePieceMagmaWithObjects:-" );
             return SinglePieceMagmaWithObjects( mag, obs ); 
         fi; 
     else 
@@ -655,7 +655,7 @@ function( comps, type )
     if ( L = [1..len] ) then 
         pieces := comps; 
     else 
-        Info( InfoGpd, 2, "reordering pieces by first object" ); 
+        Info( InfoGroupoids, 2, "reordering pieces by first object" ); 
         pieces := List( L, i -> comps[i] );
     fi; 
     if ( type = 1 ) then 
@@ -710,7 +710,7 @@ function( parts )
     fi; 
     for part in parts do 
         if not IsDomainWithObjects( part ) then
-            Info( InfoGpd, 1, "part ", part, "not an mwo" );
+            Info( InfoGroupoids, 1, "part ", part, "not an mwo" );
             return fail;
         fi;
         if ( HasIsSinglePiece(part) and IsSinglePiece(part) ) then
@@ -723,13 +723,13 @@ function( parts )
     for p in pieces do 
         obp := ObjectList( p );
         if ( Intersection( obs, obp ) <> [ ] ) then
-            Info( InfoGpd, 1, "constituents must have disjoint object sets" );
+            Info( InfoGroupoids, 1, "constituents must have disjoint object sets" );
             return fail;
         fi;
         obs := Union( obs, obp ); 
     od;
     type := TypeOfDomainWithObjects( pieces ); 
-    Info( InfoGpd, 2, "union has type ", type ); 
+    Info( InfoGroupoids, 2, "union has type ", type ); 
     return UnionOfPiecesNC( pieces, type );
 end );
 
@@ -744,7 +744,7 @@ InstallMethod( DomainWithSingleObject, "generic method for domain, object",
 function( dom, obj )
     local  o; 
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
-        Info( InfoGpd, 2, "object given as a singleton list" );
+        Info( InfoGroupoids, 2, "object given as a singleton list" );
         o := obj[1]; 
     else
         o := obj;
@@ -784,7 +784,7 @@ function( dwo, obj )
             return dwo;
         fi;
     elif not ( obj in ObjectList( dwo ) ) then
-        Info( InfoGpd, 1, "<obj> not an object of <dwo>" );
+        Info( InfoGroupoids, 1, "<obj> not an object of <dwo>" );
         return fail;
     fi;
     pieces := Pieces( dwo );
@@ -794,7 +794,7 @@ function( dwo, obj )
             return p;
         fi;
     od;
-    Info( InfoGpd, 1, "it appears that <obj> is not an object in <dwo>" );
+    Info( InfoGroupoids, 1, "it appears that <obj> is not an object in <dwo>" );
     return fail;
 end );
 
@@ -814,7 +814,7 @@ function( dwo, obj )
             return i;
         fi;
     od;
-    Info( InfoGpd, 1, "it appears that <obj> is not an object in <dwo>" );
+    Info( InfoGroupoids, 1, "it appears that <obj> is not an object in <dwo>" );
     return fail;
 end );
 

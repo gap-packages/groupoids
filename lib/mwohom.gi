@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  mwohom.gi                 GAP4 package `gpd'                 Chris Wensley
+#W  mwohom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -31,27 +31,27 @@ InstallGlobalFunction( MagmaWithObjectsHomomorphism, function( arg )
 
     if ( ( nargs < 3 ) or not IsMagmaWithObjects( arg[1] ) or 
          ( nargs > 4 ) or not IsMagmaWithObjects( arg[2] ) ) then 
-        Info( InfoGpd, 1, MAGMA_HOMOMORPHISM_CONSTRUCTORS );
+        Info( InfoGroupoids, 1, MAGMA_HOMOMORPHISM_CONSTRUCTORS );
         return fail;
     fi;
     # mwo, mwo, magma mapping, object images
     if ( ( nargs = 4 ) and IsSinglePiece( arg[1] ) 
                        and IsMagmaHomomorphism( arg[3] ) 
                        and IsHomogeneousList( arg[4] ) ) then 
-        Info( InfoGpd, 2, "HomomorphismFromSinglePiece" );
+        Info( InfoGroupoids, 2, "HomomorphismFromSinglePiece" );
         return HomomorphismFromSinglePiece(arg[1],arg[2],arg[3],arg[4]); 
     # mwo, mwo, list of mappings
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
             and IsMagmaWithObjectsHomomorphism( arg[3][1] ) ) then
-        Info( InfoGpd, 2, "HomomorphismByUnion" );
+        Info( InfoGroupoids, 2, "HomomorphismByUnion" );
         return HomomorphismByUnion( arg[1], arg[2], arg[3] );
     # mwo, mwo, list of [mapping,[images of objects]] pairs
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
            and IsList( arg[3][1] ) and IsList( arg[3][1][1] ) ) then 
-        Info( InfoGpd, 2, "HomomorphismToSinglePiece" );
+        Info( InfoGroupoids, 2, "HomomorphismToSinglePiece" );
         return HomomorphismToSinglePiece( arg[1], arg[2], arg[3] );
     else
-        Info( InfoGpd, 1, MAGMA_HOMOMORPHISM_CONSTRUCTORS );
+        Info( InfoGroupoids, 1, MAGMA_HOMOMORPHISM_CONSTRUCTORS );
         return fail;
     fi;
 end );
@@ -152,7 +152,7 @@ function( mwo1, mwo2, images )
 
     local  pieces, o2, m2, j, pj, h;
 
-    Info( InfoGpd, 3, "homomorphism to a single piece magma:", images ); 
+    Info( InfoGroupoids, 3, "homomorphism to a single piece magma:", images ); 
     pieces := Pieces( mwo1 ); 
     o2 := mwo2!.objects;
     m2 := mwo2!.magma;
@@ -189,7 +189,7 @@ function( mag1, mag2, maps )
            part, i, m, src;
 
     if IsSinglePiece( mag2 ) then 
-        Info( InfoGpd, 1, "better to use single piece function" );
+        Info( InfoGroupoids, 1, "better to use single piece function" );
         #?  (17/11/08)  fix it so the following works ?? 
         ## return HomomorphismToSinglePiece( mag1, mag2, maps );
     fi; 
@@ -218,7 +218,7 @@ function( mag1, mag2, maps )
                        c -> Position( obs1, c!.objects[1] ) );
         fi;
     od;
-    Info( InfoGpd, 3, "part = ", part );
+    Info( InfoGroupoids, 3, "part = ", part );
     SetPartitionOfSource( map, part );
     return map; 
 end );
@@ -238,7 +238,7 @@ function( mag1, mag2, maps )
         Error( "all maps should have IsGeneralMappingWithObjects" ); 
     fi; 
     if IsSinglePiece( mag2 ) then 
-        Info( InfoGpd, 3, "using the special case in HomomorphismByUnion" ); 
+        Info( InfoGroupoids, 3, "using the special case in HomomorphismByUnion" ); 
         piecesmap := Concatenation( List( maps, m -> PieceImages(m) ) ); 
         return HomomorphismToSinglePieceNC( mag1, mag2, piecesmap ); 
     fi;
@@ -272,7 +272,7 @@ function( mag1, mag2, maps )
             expand[j] := m;
         fi;
     od;
-    Info( InfoGpd, 3, "expanded maps:", expand );
+    Info( InfoGroupoids, 3, "expanded maps:", expand );
     pos1 := ListWithIdenticalEntries( lenmaps, 0 );
     src1 := List( expand, m -> Source( m ) );
     for j in [1..lenmaps] do
@@ -285,8 +285,8 @@ function( mag1, mag2, maps )
         fi;
     od;
     flat1 := Flat( pos1 );
-    Info( InfoGpd, 3, " pos1 = ", pos1 );
-    Info( InfoGpd, 3, "flat1 = ", flat1 );
+    Info( InfoGroupoids, 3, " pos1 = ", pos1 );
+    Info( InfoGroupoids, 3, "flat1 = ", flat1 );
     if ( fail in flat1 ) then
         Error( "not all m have source in mag1" );
     fi;
@@ -301,7 +301,7 @@ function( mag1, mag2, maps )
     fi;
     if IsDuplicateFree( pos2 ) then
         ## reorder if necessary
-        Info( InfoGpd, 2, "duplicate free case" );
+        Info( InfoGroupoids, 2, "duplicate free case" );
         L := [1..nc2];
         SortParallel( pos2, L );
         piecesmap := List( L, j -> expand[j] );
@@ -674,7 +674,7 @@ function( map )
 
     local  pieces, isos, inv;
 
-    Info( InfoGpd, 3, "InverseGeneralMapping for magma mappings" );
+    Info( InfoGroupoids, 3, "InverseGeneralMapping for magma mappings" );
     pieces := PiecesOfMapping( map );
     isos := List( pieces, m -> InverseGeneralMapping( m ) );
     inv := HomomorphismByUnion( Range(map), Source(map), isos );
@@ -692,7 +692,7 @@ function( map )
     if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
         Error( "mapping with objects not bijective" );
     fi;
-    Info( InfoGpd, 3, "InverseGeneralMapping for single piece mappings" );
+    Info( InfoGroupoids, 3, "InverseGeneralMapping for single piece mappings" );
     m1 := Source( map );
     if not IsSinglePiece( m1 ) then
         Error( "source is not single piece" );
@@ -727,7 +727,7 @@ function( map )
     if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
         Error( "mapping not bijective on objects" );
     fi;  
-    Info( InfoGpd, 3, "InverseGeneralMapping for connected mappings" );
+    Info( InfoGroupoids, 3, "InverseGeneralMapping for connected mappings" );
     m1 := Source( map );
     m2 := Range( map );
     ob1 := m1!.objects;
@@ -780,7 +780,7 @@ function( map )
     if not IsBijectiveOnObjects( map ) then 
         Error( "expecting map to be bijective on objects" ); 
     fi; 
-    Info( InfoGpd, 3, "InverseGeneralMapping for hom from discrete groupoid" );
+    Info( InfoGroupoids, 3, "InverseGeneralMapping for hom from discrete groupoid" );
     src := Source( map ); 
     rng := Range( map ); 
     if not ( IsHomogeneousDomainWithObjects( rng ) and 
@@ -804,7 +804,7 @@ end );
 InstallMethod( \=, "for 2 single piece mappings", true,
     [ IsHomomorphismToSinglePiece, IsHomomorphismToSinglePiece ], 0,
 function( m1, m2 )
-    Info( InfoGpd, 4, "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
+    Info( InfoGroupoids, 4, "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
     return ( ( Source( m1 ) =  Source( m2 ) ) and
              ( Range( m1 ) = Range( m2 ) ) and 
              ( PieceImages( m1 ) = PieceImages( m2 ) ) );
@@ -816,7 +816,7 @@ function( m1, m2 )
 
     local  c1, c2, nc, src1, src2, rng1, rng2, j, s, spos, r, rpos, L, ok;
 
-    Info( InfoGpd, 4, "\\= for IsMappingWithPiecesRep in mwohom.gi" ); 
+    Info( InfoGroupoids, 4, "\\= for IsMappingWithPiecesRep in mwohom.gi" ); 
     c1 := PiecesOfMapping( m1 );
     c2 := PiecesOfMapping( m2 );
     nc := Length( c1 );
@@ -850,7 +850,7 @@ InstallMethod( \=, "for 2 connected groupoid mappings", true,
     [ IsDefaultGroupoidHomomorphismRep, 
       IsDefaultGroupoidHomomorphismRep ], 0,
 function( m1, m2 ) 
-    Info( InfoGpd, 4, "\\= for IsDefaultGroupoidHomomorphismRep in gpdhom.gi" ); 
+    Info( InfoGroupoids, 4, "\\= for IsDefaultGroupoidHomomorphismRep in gpdhom.gi" ); 
     if not ( ( Source( m1 ) =  Source( m2 ) ) 
             and ( Range( m1 ) = Range( m2 ) ) ) then 
         return false; 
@@ -921,7 +921,7 @@ function( map1, map2 )
            images, imo1, hom1, s1, ob1, nob1, imo2, hom2, s2, ob2, nob2,
            imo12, j, o, p, hom;
 
-    Info( InfoGpd, 3, "second method for * with map2 single piece" );
+    Info( InfoGroupoids, 3, "second method for * with map2 single piece" );
     src1 := Source( map1 );
     rng1 := Range( map1 );
     src2 := Source( map2 );
@@ -968,7 +968,7 @@ function( m1, m2 )
 
     local  s1, r1, s2, r2, oi1, ob1, nob1, ob2, oi2, oi12, j, o, p, hom;
 
-    Info( InfoGpd, 3, "third method for * with map1 & map2 single piece" );
+    Info( InfoGroupoids, 3, "third method for * with map1 & map2 single piece" );
     s1 := Source( m1 );
     if not IsSinglePiece( s1 ) then 
         Error("source of m1 not single piece - general method not installed");
@@ -1002,7 +1002,7 @@ function( m1, m2 )
     local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
            j, h1, h2, mgi1, im12, hom, oims, rims;
 
-    Info( InfoGpd, 2, "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
+    Info( InfoGroupoids, 2, "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
     s1 := Source( m1 ); 
     r1 := Range( m1 );
     s2 := Source( m2 );
@@ -1039,7 +1039,7 @@ function( m1, m2 )
     local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
            homs, oims, hom1, hom2, pos, j;
 
-    Info( InfoGpd, 3, "method 2 for * with maps from hom discrete gpds" );
+    Info( InfoGroupoids, 3, "method 2 for * with maps from hom discrete gpds" );
     s1 := Source( m1 ); 
     r1 := Range( m1 );
     s2 := Source( m2 );
@@ -1072,7 +1072,7 @@ function( m1, m2 )
     local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
            homs, oims, hom1, j;
 
-    Info( InfoGpd, 2, "method 3 for * with first a map from hom discrete" );
+    Info( InfoGroupoids, 2, "method 3 for * with first a map from hom discrete" );
     s1 := Source( m1 ); 
     r1 := Range( m1 );
     s2 := Source( m2 );
@@ -1124,7 +1124,7 @@ function( map, n )
     else  ## n < -1
         return InverseGeneralMapping( map )^(-n);
     fi;
-    Info( InfoGpd, 1, "unexpected failure in \^" ); 
+    Info( InfoGroupoids, 1, "unexpected failure in \^" ); 
     return fail;
 end );
 
@@ -1288,7 +1288,7 @@ function ( map, e )
     local  G1, ce, C1, pe, Ge, obs1, hom, obs2, mag2, t2, h2, g2;
 
     #?  need to include some tests here ?? 
-    Info( InfoGpd, 3, "this is the first ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, "this is the first ImageElm function in mwohom.gi" ); 
     G1 := Source( map );
     ce := PieceOfObject( G1, e![2] );
     C1 := Pieces( G1 );
@@ -1311,7 +1311,7 @@ function ( map, e )
 
     local  M1, C1, pe, obs1, pom, pim, obs2, t2, h2, g2; 
 
-    Info( InfoGpd, 3, "this is the second ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, "this is the second ImageElm function in mwohom.gi" ); 
     M1 := Source( map ); 
     C1 := Pieces( M1 );
     pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
@@ -1333,7 +1333,7 @@ function ( map, elt )
     local  mag, obs, one, gensims, gens, ims, rhom, 
            e, j, ej, pj, k, ek, pk, r, im;
 
-    Info( InfoGpd, 3, "this is the third ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, "this is the third ImageElm function in mwohom.gi" ); 
     mag := Source( map );
     obs := mag!.objects; 
     one := One( mag!.magma );

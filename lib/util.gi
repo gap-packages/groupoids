@@ -1,8 +1,8 @@
 #############################################################################
 ##
-#W  util.gi                    GAP4 package `Gpd'               Chris Wensley
+#W  util.gi                 GAP4 package `groupoids'            Chris Wensley
 ##
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  Installation file for utility functions in Gpd and XMod packages.
@@ -10,10 +10,10 @@
 
 #############################################################################
 ##
-#V  InfoGpd
+#V  InfoGroupoids
 ##
-DeclareInfoClass( "InfoGpd" );
-SetInfoLevel( InfoGpd, 1 );
+DeclareInfoClass( "InfoGroupoids" );
+SetInfoLevel( InfoGroupoids, 1 );
 
 #############################################################################
 ##

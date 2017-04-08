@@ -1,6 +1,6 @@
 ############################################################################## 
 ##
-#W  gpdhom.gi                 GAP4 package `gpd'                 Chris Wensley
+#W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -56,7 +56,7 @@ function( gpd )
 
     local  one, rays, iso;
 
-    Info( InfoGpd, 3, "using IdentityMapping  in gpdaut.gi" ); 
+    Info( InfoGroupoids, 3, "using IdentityMapping  in gpdaut.gi" ); 
     if ( HasIsDirectProductWithCompleteGraphDomain( gpd ) 
          and IsDirectProductWithCompleteGraphDomain( gpd ) ) then 
         one := One( gpd!.magma ); 
@@ -91,7 +91,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
          or ( nargs > 5 )  
          or not IsMagmaWithObjects( arg[1] ) 
          or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) 
-       ) then Info( InfoGpd, 1, GROUPOID_MAPPING_CONSTRUCTORS );
+       ) then Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
               return fail;
     fi; 
     # various types of automorphism 
@@ -112,12 +112,12 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     # mwo, mwo, list of mappings
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
             and IsHomomorphismToSinglePiece( arg[3][1] ) ) then
-        Info( InfoGpd, 2, "HomomorphismByUnion" );
+        Info( InfoGroupoids, 2, "HomomorphismByUnion" );
         return HomomorphismByUnion( arg[1], arg[2], arg[3] );
     # gpd, gpd, list of [hom, images of objects, rays] triples
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
            and IsList( arg[3][1] ) and IsList( arg[3][1][1] ) ) then 
-        Info( InfoGpd, 2, "HomomorphismToSinglePiece" );
+        Info( InfoGroupoids, 2, "HomomorphismToSinglePiece" );
         return HomomorphismToSinglePiece( arg[1], arg[2], arg[3] ); 
     elif ( ( nargs = 4 ) and IsGroupHomomorphism( arg[3] ) 
            and ( IsHomogeneousList( arg[4] ) ) ) then 
@@ -127,7 +127,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         return GroupoidHomomorphismFromSinglePieceNC( 
                    arg[1], arg[2], arg[3], arg[4], arg[5] );
     else
-        Info( InfoGpd, 1, GROUPOID_MAPPING_CONSTRUCTORS );
+        Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
     fi;
 end );
@@ -147,7 +147,7 @@ function( gpd, sgpd )
     if IsSinglePiece( sgpd ) then
         sobs := sgpd!.objects;
         if IsSinglePiece( gpd ) then
-            Info( InfoGpd, 2, "InclusionMapping, one piece -> one piece" );
+            Info( InfoGroupoids, 2, "InclusionMapping, one piece -> one piece" );
             inc := InclusionMappingGroups( gpd!.magma, sgpd!.magma );
             if ( inc = fail ) then
                 Error( "magma mapping fails to include" );
@@ -166,7 +166,7 @@ function( gpd, sgpd )
             return MagmaWithObjectsHomomorphism( sgpd, gpd, [ mor ] );
         fi;
     else
-        Info( InfoGpd, 2, "InclusionMapping, source not connected" );
+        Info( InfoGroupoids, 2, "InclusionMapping, source not connected" );
         mappings := List( Pieces( sgpd ),
                            c -> InclusionMappingGroupoids( gpd, c ) );
         return HomomorphismByUnion( sgpd, gpd, mappings );
@@ -188,7 +188,7 @@ InstallMethod( InclusionMappingGroupoids, "from hom discrete to single piece",
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousDiscreteGroupoid ], 0,
 function( gpd, sgpd )
     local  obs, inc, homs; 
-    Info( InfoGpd, 2, "new InclusionMappingGroupoids method" ); 
+    Info( InfoGroupoids, 2, "new InclusionMappingGroupoids method" ); 
     if not IsSubdomainWithObjects( gpd, sgpd ) then
         Error( "arg[2] is not a submagma of arg[1]" );
     fi; 
@@ -380,7 +380,7 @@ function( map )
     ims := ImagesOfObjects( map );
     obs := Filtered( Range( map )!.objects, o -> o in ims ); 
     if not ( Length(obs) = Length(ims) ) then 
-        Info( InfoGpd, 1, 
+        Info( InfoGroupoids, 1, 
             "ObjectTransformationOfGroupoidHomomorphism set to <fail>" );
         return fail; 
     fi; 
@@ -780,7 +780,7 @@ function( gpd, aut )
     ok := IsGroupOfAutomorphisms( actgp ); 
     action := GroupHomomorphismByImages( pasy, actgp, genpasy, gens12 ); 
     sdp := SemidirectProduct( pasy, action, ngp ); 
-    Info( InfoGpd, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
+    Info( InfoGroupoids, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
     sinfo := SemidirectProductInfo( sdp ); 
     siso := SmallerDegreePermutationRepresentation( sdp ); 
     ssdp := Image( siso ); 
@@ -884,7 +884,7 @@ function( gpd, aut )
     ok := IsGroupOfAutomorphisms( actgp ); 
     action := GroupHomomorphismByImages( symm, actgp, gensymm, imact ); 
     sdp := SemidirectProduct( symm, action, mag2 ); 
-    Info( InfoGpd, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
+    Info( InfoGroupoids, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
     sinfo := SemidirectProductInfo( sdp ); 
     ## (13/04/16) comment this out for the moment and replace with identity 
     ## siso := SmallerDegreePermutationRepresentation( sdp ); 
@@ -917,7 +917,7 @@ function( gpd )
     local  autgen, nautgen, rgp, genrgp, agp, genagp, a, obs, n, imobs, 
            L, ok, id, ids, cids, i, c, aut, niceob, nicemap, rgh, ioo, ior;  
 
-    Info( InfoGpd, 2, "AutomorphismGroup for single piece groupoids" ); 
+    Info( InfoGroupoids, 2, "AutomorphismGroup for single piece groupoids" ); 
     ##  first: automorphisms of the root group 
     autgen := [ ]; 
     rgp := gpd!.magma; 
@@ -1008,7 +1008,7 @@ function( gpd )
     local  pieces, autgen, nautgen, p1, g1, ag1, id1, genag1, a, auts, 
            obs, n, imobs, L, ok, id, ids, aut, niceob, nicemap;  
 
-    Info( InfoGpd, 2, "AutomorphismGroup for homogeneous discrete groupoids" ); 
+    Info( InfoGroupoids, 2, "AutomorphismGroup for homogeneous discrete groupoids" ); 
     pieces := Pieces( gpd ); 
     obs := ObjectList( gpd ); 
     n := Length( obs );
@@ -1107,20 +1107,20 @@ function( a, aut )
     gens := GeneratorsOfGroup( aut ); 
     gpd := Source( gens[1] ); 
     if not ( ( Source(a) = gpd ) and ( Range(a) = gpd ) ) then 
-        Info( InfoGpd, 2, "require Source(a) = Range(a) = gpd" ); 
+        Info( InfoGroupoids, 2, "require Source(a) = Range(a) = gpd" ); 
         return false; 
     fi; 
     obs := ObjectList( gpd );
     imobs := ShallowCopy( ImagesOfObjects( a ) ); 
     Sort( imobs ); 
     if not ( obs = imobs ) then 
-        Info( InfoGpd, 2, "incorrect images of objects" ); 
+        Info( InfoGroupoids, 2, "incorrect images of objects" ); 
         return false;  
     fi; 
     G := Source(a)!.magma; 
     AG := AutomorphismGroup( G ); 
     if not ForAll( ObjectHomomorphisms(a), h -> h in AG ) then 
-        Info( InfoGpd, 2, "object homomorphisms incorrect" ); 
+        Info( InfoGroupoids, 2, "object homomorphisms incorrect" ); 
         return false; 
     fi; 
     #? is there anything else to test? 
@@ -1159,7 +1159,7 @@ function ( map, e )
 
     local  p1, t2, g2, a;
 
-    Info( InfoGpd, 5, 
+    Info( InfoGroupoids, 5, 
         "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1140" ); 
     #?  need to include some tests here ?? 
     p1 := Position( Source( map )!.objects, e![2] ); 
@@ -1175,7 +1175,7 @@ function ( map, e )
 
     local  G1, C1, pe, obs1, pim, obs2, t2, h2, g2;
 
-    Info( InfoGpd, 5, 
+    Info( InfoGroupoids, 5, 
         "using ImageElm for general groupoid homomorphisms, line 1158" ); 
     #?  need to include some tests here ??
     G1 := Source( map ); 
@@ -1193,7 +1193,7 @@ end );
 InstallOtherMethod( ImagesRepresentative, "for a groupoid homomorphism", true, 
     [ IsGroupoidHomomorphism, IsGroupoidElement ], 0, 
 function( map, e ) 
-    Info( InfoGpd, 3, "ImagesRep at gpdhom.gi line 1175" ); 
+    Info( InfoGroupoids, 3, "ImagesRep at gpdhom.gi line 1175" ); 
     return ImageElm( map, e ); 
 end );
 

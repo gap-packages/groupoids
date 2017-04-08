@@ -1,8 +1,8 @@
 ##############################################################################
 ##
-#W  mwohom.gd                GAP4 package `Gpd'                  Chris Wensley
+#W  mwohom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2016, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  Declaration file for functions in the Gpd package.
