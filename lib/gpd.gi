@@ -402,9 +402,23 @@ end );
 
 #############################################################################
 ##
-##  ViewObj
-#M  PrintObj
+#M  String, ViewString, PrintString, ViewObj, PrintObj
 ##
+InstallMethod( String, "for a groupoid", true, [ IsGroupoid ], 0, 
+function( gpd ) 
+    if IsSinglePiece( gpd ) then 
+        return( STRINGIFY( "single piece groupoid with ", 
+                           String(Length(ObjectList(gpd))), " objects") ); 
+    else 
+        return( STRINGIFY( "groupoid with ", 
+                           String(Length(Pieces(gpd))), " pieces" ) );
+    fi;
+end );
+
+InstallMethod( ViewString, "for a groupoid", true, [ IsGroupoid ], 0, String ); 
+
+InstallMethod( PrintString, "for a groupoid", true, [ IsGroupoid ], 0, String ); 
+
 InstallMethod( ViewObj, "for a groupoid", true, [ IsGroupoid ], 0, PrintObj ); 
 
 InstallMethod( PrintObj, "for a groupoid", true, [ IsGroupoid ], 0,
@@ -800,22 +814,6 @@ function( gpd, g, i, j )
         return ArrowNC( true, g, i, j ); 
     fi;
 end );
-
-#############################################################################
-##
-#M  PrintObj
-#M  ViewObj
-##
-##  InstallMethod( PrintObj, "for a groupoid element", [ IsGroupoidElement ],
-##  function ( e )
-##      Print( "[", e![1], " : ", e![2], " -> ", e![3], "]" );
-##  end );
-##  
-##  InstallMethod( ViewObj, "for a groupoid element",
-##      [ IsGroupoidElement ],
-##  function ( e )
-##      Print( "[", e![1], " : ", e![2], " -> ", e![3], "]" );
-##  end );
 
 #############################################################################
 ## 

@@ -128,9 +128,25 @@ InstallMethod( HeadOfArrow, "generic method for magma with objects element",
 
 #############################################################################
 ##
-#M  PrintObj . . . . . . . . . . . . . . for elements in a magma with objects 
-#M  ViewObj  . . . . . . . . . . . . . . for elements in a magma with objects 
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . for elements in a magma with objects 
 ##
+InstallMethod( String, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, 
+function( e ) 
+    return( STRINGIFY( "[", String( e![1] ), " : ", String( e![2] ), 
+                       " -> ", String( e![3] ), "]" ) ); 
+end );
+
+InstallMethod( ViewString, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+
+InstallMethod( PrintString, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+
+InstallMethod( ViewObj, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, PrintObj ); 
+
 InstallMethod( PrintObj, "for an element in a magma with objects",
     [ IsMultiplicativeElementWithObjects ],
 function ( e )
@@ -341,11 +357,37 @@ function( e, mwo )
     return IsArrowIn( e, PieceOfObject( mwo, e![2] ) ); 
 end );
 
-############################################################################# 
-## 
-#M  ViewObj( <mwo> ) . . . . . . . . . . . . . . . view a magma with objects 
-#M  PrintObj( <mwo> ) . . . . . . . . . . . . . . print a magma with objects 
+#############################################################################
 ##
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . . for a magma with objects 
+##
+InstallMethod( String, "for a magma with objects", true, 
+    [ IsMagmaWithObjects ], 0, 
+function( mwo ) 
+    local  type; 
+    type := TypeOfDomainWithObjects( [ mwo ] ); 
+    if ( type = 1 ) then 
+        return( STRINGIFY( "groupoid" ) ); 
+    elif ( type = 2 ) then 
+        return( STRINGIFY( "monoid with objects" ) ); 
+    elif ( type = 3 ) then 
+        return( STRINGIFY( "semigroup with objects" ) ); 
+    elif ( type = 4 ) then 
+        return( STRINGIFY( "magma with objects" ) ); 
+    else 
+        return( STRINGIFY( "domain with objects" ) ); 
+    fi; 
+end );
+
+InstallMethod( ViewString, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+
+InstallMethod( PrintString, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+
+InstallMethod( ViewObj, "for an element in a magma with objects", true, 
+    [ IsMultiplicativeElementWithObjects ], 0, PrintObj ); 
 
 InstallMethod( ViewObj, "for a single piece magma with objects", true, 
     [ IsSinglePiece ], 0,   

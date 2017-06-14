@@ -2,7 +2,7 @@
 ##
 #W  gpd.tst                 groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017InfoGroupoids, Chris Wensley,  
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
