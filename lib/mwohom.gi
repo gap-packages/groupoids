@@ -1158,9 +1158,28 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj
-#M  ViewObj  . . . . . . . this defaults to PrintObj, so no methods necessary 
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . for homomorphisms between magmas with objects 
 ##
+InstallMethod( String, "for a magma with objects homomorphism", true, 
+    [ IsMagmaWithObjectsHomomorphism ], 0, 
+function( hom ) 
+    if ( "IsGroupoidHomomorphism" in CategoriesOfObject(hom) ) then 
+        return( STRINGIFY( "groupoid homomorphism" ) ); 
+    else 
+        return( STRINGIFY( "magma with objects homomorphism" ) ); 
+    fi;
+end );
+
+InstallMethod( ViewString, "for a magma with objects homomorphism", true, 
+    [ IsMagmaWithObjectsHomomorphism ], 0, String ); 
+
+InstallMethod( PrintString, "for a magma with objects homomorphism", true, 
+    [ IsMagmaWithObjectsHomomorphism ], 0, String ); 
+
+InstallMethod( ViewObj, "for a magma with objects homomorphism", true, 
+    [ IsMagmaWithObjectsHomomorphism ], 0, PrintObj ); 
+
 InstallMethod( PrintObj, "for mwo homomorphism to single piece", true,
     [ IsHomomorphismToSinglePiece ], 0, 
 function ( hom ) 

@@ -93,11 +93,27 @@ function( dig, gpds, subgpds, isos )
     return GraphOfGroupoidsNC( dig, gpds, subgpds, isos );
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  PrintObj( <gg> ) . . . . . . . . . . . . . . . print a graph of groupoids
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . . for a graph of groupoids 
 ##
-InstallMethod( PrintObj, "for graph of groupoids", [ IsGraphOfGroupoids ],
+InstallMethod( String, "for a graph of groupoids", true, 
+    [ IsGraphOfGroupoids ], 0, 
+function( gg ) 
+    return( STRINGIFY( "graph of groupoids" ) ); 
+end );
+
+InstallMethod( ViewString, "for a graph of groupoids", true, 
+    [ IsGraphOfGroupoids ], 0, String ); 
+
+InstallMethod( PrintString, "for a graph of groupoids", true, 
+    [ IsGraphOfGroupoids ], 0, String ); 
+
+InstallMethod( ViewObj, "for a graph of groupoids", true, 
+    [ IsGraphOfGroupoids ], 0, PrintObj ); 
+
+InstallMethod( PrintObj, "for a graph of groupoids", [ IsGraphOfGroupoids ],
 function( gg )
     
     local  dig;
@@ -110,10 +126,6 @@ function( gg )
     Print( "groupoids ", GroupoidsOfGraphOfGroupoids( gg ) );
 end );
 
-###############################################################################
-##
-#M  ViewObj( <gg> ) . . . . . . . . . . . . . . . . view a graph of groupoids
-##
 InstallMethod( ViewObj, "for graph of groupoids", [ IsGraphOfGroupoids ],
 function( gg )
     
@@ -154,9 +166,9 @@ end );
 
 ##############################################################################
 ##
-#M  IsGraphOfPermGroupoids( <gg> ) . . . . . . . . . . . for a graph of groups
-#M  IsGraphOfFpGroupoids( <gg> ) . . . . . . . . . . . . for a graph of groups
-#M  IsGraphOfPcGroupoids( <gg> ) . . . . . . . . . . . . for a graph of groups
+#M  IsGraphOfPermGroupoids( <gg> ) . . . . . . . . . for a graph of groupoids
+#M  IsGraphOfFpGroupoids( <gg> ) . . . . . . . . . . for a graph of groupoids
+#M  IsGraphOfPcGroupoids( <gg> ) . . . . . . . . . . for a graph of groupoids
 ##
 InstallMethod( IsGraphOfPermGroupoids, "generic method", [ IsGraphOfGroupoids ],
 function( gg )
@@ -334,11 +346,24 @@ function( gg, tv, wL )
     return GraphOfGroupoidsWordNC( gg, tv, wL );
 end);
 
-##############################################################################
+#############################################################################
 ##
-#M  ViewObj( <ggword> ) . . . . . . . . . . . . view a graph of groupoids word
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . for a graph of groupoids word 
 ##
-InstallMethod( ViewObj, "method for a graph of groupoids word", 
+InstallMethod( String, "for a graph of groupoids word", true, 
+    [ IsGraphOfGroupoidsWord ], 0, 
+function( ggword ) 
+    return( STRINGIFY( "graph of groupoids word" ) ); 
+end );
+
+InstallMethod( ViewString, "for a graph of groupoids word", true, 
+    [ IsGraphOfGroupoidsWord ], 0, String ); 
+
+InstallMethod( PrintString, "for a graph of groupoids word", true, 
+    [ IsGraphOfGroupoidsWord ], 0, String ); 
+
+InstallMethod( ViewObj, "for a graph of groupoids word", 
     [ IsGraphOfGroupoidsWord ],
 function( ggword )
     local  w, i, gg, arcs;
@@ -356,11 +381,7 @@ function( ggword )
     Print( "(", GGHead( ggword ), ")" );
 end );
 
-##############################################################################
-##
-#M  PrintObj( <ggword> ) . . . . . . . . . . . print a graph of groupoids word
-##
-InstallMethod( PrintObj, "method for a graph of groupoids word", 
+InstallMethod( PrintObj, "for a graph of groupoids word", 
     [ IsGraphOfGroupoidsWord ],
 function( ggword )
     local  w, i, gg, arcs;

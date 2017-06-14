@@ -22,8 +22,9 @@ ToDo:
  - (07/03/17) the error mentioned in the manual at 5.4.1 is still there
 
 ############################################################################## 
-1.46 -> 1.51  (07/04/17) 
+1.46 -> 1.51  (14/06/17) 
 
+ - (14/06/17) added various methods for String, ViewString, PrintString 
  - (07/04/17) renamed the package "groupoids" so most files need editing 
 
 ############################################################################## 

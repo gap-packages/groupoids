@@ -149,8 +149,24 @@ end);
 
 #############################################################################
 ##
-#M  PrintObj( <dig> ) . . . . . . . . . . . . . . . print a weighted digraph
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . . . for a weighted digraph 
 ##
+InstallMethod( String, "for a weighted digraph", true, 
+    [ IsFpWeightedDigraph ], 0, 
+function( gg ) 
+    return( STRINGIFY( "graph of groupoids" ) ); 
+end );
+
+InstallMethod( ViewString, "for a weighted digraph", true, 
+    [ IsFpWeightedDigraph ], 0, String ); 
+
+InstallMethod( PrintString, "for a weighted digraph", true, 
+    [ IsFpWeightedDigraph ], 0, String ); 
+
+InstallMethod( ViewObj, "for a weighted digraph", true, 
+    [ IsFpWeightedDigraph ], 0, PrintObj ); 
+
 InstallMethod( PrintObj, "method for a weighted digraph",
     [ IsFpWeightedDigraph ],
 function( dig )
@@ -162,10 +178,6 @@ function( dig )
     fi;
 end );
 
-#############################################################################
-##
-#M  ViewObj( <dig> ) . . . . . . . . . . . . . . . . view a weighted digraph
-##
 InstallMethod( ViewObj, "method for a weighted digraph",
     [ IsFpWeightedDigraph ],
 function( dig )
@@ -173,7 +185,7 @@ function( dig )
         Print( Name( dig ), "\n" );
     else
         Print("weighted digraph with vertices: ", dig!.vertices, "\n");
-        Print("and arcs: ", dig!.arcs, "\n" );
+        Print("and arcs: ", dig!.arcs );
     fi;
 end );
 
@@ -293,10 +305,25 @@ return ( ( DigraphOfGraphOfGroups(gg1) = DigraphOfGraphOfGroups(gg2) )
      );
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  PrintObj( <gg> ) . . . . . . . . . . . . . . . . print a graph of groups
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . . . . for a graph of groups 
 ##
+InstallMethod( String, "for a graph of groups", true, [ IsGraphOfGroups ], 0, 
+function( gg ) 
+    return( STRINGIFY( "graph of groups" ) ); 
+end );
+
+InstallMethod( ViewString, "for a graph of groups", true, 
+    [ IsGraphOfGroups ], 0, String ); 
+
+InstallMethod( PrintString, "for a graph of groups", true, 
+    [ IsGraphOfGroups ], 0, String ); 
+
+InstallMethod( ViewObj, "for a graph of groups", true, 
+    [ IsGraphOfGroups ], 0, PrintObj ); 
+
 InstallMethod( PrintObj, "method for a graph of groups", [ IsGraphOfGroups ],
 function( gg )
     
@@ -309,10 +336,6 @@ function( gg )
     Print( "groups ", GroupsOfGraphOfGroups( gg ) );
 end );
 
-###############################################################################
-##
-#M  ViewObj( <gg> ) . . . . . . . . . . . . . . . . . view a graph of groups
-##
 InstallMethod( ViewObj, "method for a graph of groups", [ IsGraphOfGroups ],
 function( gg )
     
@@ -430,7 +453,7 @@ end);
  
 #############################################################################
 ##
-#M  GraphOfGroupsWordNC          ## $$$$$$$$$$$$$$$$$$ 
+#M  GraphOfGroupsWordNC 
 ##
 InstallMethod( GraphOfGroupsWordNC, "generic method for a word",
     true, [ IsGraphOfGroups, IsInt, IsList ], 0,
@@ -494,10 +517,23 @@ function( gg, tv, wL )
     return GraphOfGroupsWordNC( gg, tv, wL );
 end);
 
-##############################################################################
+#############################################################################
 ##
-#M  ViewObj( <ggword> ) . . . . . . . . . . . . . view a graph of groups word
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . for a graph of groups word 
 ##
+InstallMethod( String, "for a graph of groups word", true, 
+    [ IsGraphOfGroupsWord ], 0, 
+function( ggword ) 
+    return( STRINGIFY( "graph of groups word" ) ); 
+end );
+
+InstallMethod( ViewString, "for a graph of groups word", true, 
+    [ IsGraphOfGroupsWord ], 0, String ); 
+
+InstallMethod( PrintString, "for a graph of groups word", true, 
+    [ IsGraphOfGroupsWord ], 0, String ); 
+
 InstallMethod( ViewObj, "method for a graph of groups word", 
     [ IsGraphOfGroupsWord ],
 function( ggword )
@@ -515,10 +551,6 @@ function( ggword )
     Print( "(", GGHead( ggword ), ")" );
 end );
 
-##############################################################################
-##
-#M  PrintObj( <ggword> ) . . . . . . . . . . . .  print a graph of groups word
-##
 InstallMethod( PrintObj, "method for a graph of groups word", 
     [ IsGraphOfGroupsWord ],
 function( ggword )
