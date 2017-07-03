@@ -61,7 +61,7 @@
               free group generators or strings 
  * (12/01/16) renamed some ENTITYs in `PackageInfo.g` 
 
-1.35 -> 1.36  (23/11/15) 
+## 1.35 -> 1.36  (23/11/15) 
 
  * (23/11/15) new method for ObjectGroupHomomorphism 
  * (23/11/15) converted RootObject from an operation to an attribute 
