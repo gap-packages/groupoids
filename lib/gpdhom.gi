@@ -54,7 +54,7 @@ InstallOtherMethod( IdentityMapping, "for a groupoid", true,
     [ IsGroupoid and IsSinglePiece ], 0,
 function( gpd )
 
-    local  one, rays, iso;
+    local one, rays, iso;
 
     Info( InfoGroupoids, 3, "using IdentityMapping  in gpdaut.gi" ); 
     if ( HasIsDirectProductWithCompleteGraphDomain( gpd ) 
@@ -84,15 +84,15 @@ end );
 ##
 InstallGlobalFunction( GroupoidHomomorphism, function( arg )
 
-    local  nargs, id, rays;
-    nargs := Length( arg );
+    local nargs, id, rays; 
 
+    nargs := Length( arg );
     if ( ( nargs < 2 ) 
          or ( nargs > 5 )  
          or not IsMagmaWithObjects( arg[1] ) 
-         or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) 
-       ) then Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
-              return fail;
+         or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) ) then 
+        Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
+        return fail;
     fi; 
     # various types of automorphism 
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] ) ) then 
@@ -138,8 +138,9 @@ end );
 ##
 InstallMethod( InclusionMappingGroupoids, "for sgpd of single piece groupoid", 
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
-function( gpd, sgpd )
-    local  sobs, o1, c1, mappings, comps, m, inc, mor;
+function( gpd, sgpd ) 
+
+    local sobs, o1, c1, mappings, comps, m, inc, mor;
 
     if not IsSubgroupoid( gpd, sgpd ) then
         Error( "arg[2] is not a subgroupoid of arg[1]" );
@@ -147,7 +148,8 @@ function( gpd, sgpd )
     if IsSinglePiece( sgpd ) then
         sobs := sgpd!.objects;
         if IsSinglePiece( gpd ) then
-            Info( InfoGroupoids, 2, "InclusionMapping, one piece -> one piece" );
+            Info( InfoGroupoids, 2, 
+                  "InclusionMapping, one piece -> one piece" );
             inc := InclusionMappingGroups( gpd!.magma, sgpd!.magma );
             if ( inc = fail ) then
                 Error( "magma mapping fails to include" );
@@ -186,8 +188,10 @@ end );
 
 InstallMethod( InclusionMappingGroupoids, "from hom discrete to single piece", 
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousDiscreteGroupoid ], 0,
-function( gpd, sgpd )
-    local  obs, inc, homs; 
+function( gpd, sgpd ) 
+
+    local obs, inc, homs; 
+
     Info( InfoGroupoids, 2, "new InclusionMappingGroupoids method" ); 
     if not IsSubdomainWithObjects( gpd, sgpd ) then
         Error( "arg[2] is not a submagma of arg[1]" );
@@ -207,9 +211,9 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid and IsSinglePiece ], 0,
 function( mor, U )
 
-    local  smor, rmor, images, imo, hom, obsrc, obsU, len, imobsU, i, 
-           pos, sres, sgen, rres, qres, qgen, rhom, gens, imgens, ghom, 
-           rays, rims, e, V, res;
+    local smor, rmor, images, imo, hom, obsrc, obsU, len, imobsU, i, 
+          pos, sres, sgen, rres, qres, qgen, rhom, gens, imgens, ghom, 
+          rays, rims, e, V, res;
 
     smor := Source( mor );
     rmor := Range( mor );
@@ -254,7 +258,7 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid ], 0,
 function( mor, ssrc )
 
-    local  comp, len, rcomp, j, m;
+    local comp, len, rcomp, j, m;
 
     comp := PiecesOfMapping( mor );
     len := Length( comp );
@@ -282,7 +286,9 @@ end );
 InstallMethod( RootGroupHomomorphism, "for a groupoid hom from a single piece", 
     true, [ IsGroupoidHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( mor )
-    local  gpd1, gpd2, ob2, imobs, roh, mgi, ray, gp2, im2, hom;
+
+    local gpd1, gpd2, ob2, imobs, roh, mgi, ray, gp2, im2, hom;
+
     gpd2 := Range( mor ); 
     ob2 := gpd2!.objects; 
     imobs := ImagesOfObjects( mor ); 
@@ -310,7 +316,8 @@ InstallMethod( ObjectGroupHomomorphism, "for a groupoid hom and an object",
     true, [ IsGroupoidHomomorphism, IsObject ], 0,
 function( mor, obj ) 
 
-    local  src, imobs, pos, obg, gens, loops, imloops, imgens, img, hom; 
+    local src, imobs, pos, obg, gens, loops, imloops, imgens, img, hom; 
+
     src := Source( mor ); 
     if ( HasIsGeneralMappingFromSinglePiece( mor ) 
          and IsGeneralMappingFromSinglePiece( mor ) ) then 
@@ -343,7 +350,9 @@ end );
 InstallMethod( MappingPermObjectsImages, "for objects and their images", true, 
     [ IsList, IsList ], 0,
 function( obs, ims )
-    local  len, L; 
+
+    local len, L; 
+
     len := Length( obs ); 
     if ( len <> Length(ims) ) then
         Error("<obs> and <ims> have different lengths");
@@ -360,7 +369,9 @@ end );
 InstallMethod( MappingTransObjectsImages, "for objects and their images", true, 
     [ IsList, IsList ], 0,
 function( obs, ims )
-    local  len, L; 
+
+    local len, L; 
+
     if not IsSubset( Set(obs), Set(ims) ) then 
         Error( "ims is not a subset of obs" ); 
     fi;
@@ -376,7 +387,9 @@ end );
 InstallMethod( ObjectTransformationOfGroupoidHomomorphism, 
     "for objects and images", true, [ IsDefaultGroupoidHomomorphismRep ], 0,
 function( map )
-    local  obs, ims; 
+
+    local obs, ims; 
+
     ims := ImagesOfObjects( map );
     obs := Filtered( Range( map )!.objects, o -> o in ims ); 
     if not ( Length(obs) = Length(ims) ) then 
@@ -409,7 +422,9 @@ end );
 InstallMethod( Display, "for a mapping from a homogeneous discrete gpd", true, 
     [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
 function ( map ) 
-    local  h; 
+
+    local h; 
+
     Print( " homogeneous discrete groupoid mapping: " ); 
     Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 
     Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
@@ -430,7 +445,7 @@ InstallMethod( GroupoidHomomorphismFromSinglePieceNC,
       IsGroupHomomorphism, IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, hom, oims, rims )
 
-    local  fam, filter, map, ok;
+    local fam, filter, map, ok;
 
     ## ?? (23/04/10)  fam := FamilyObj( [ src, rng, hom, oims, rims ] );
     fam := GroupoidHomomorphismFamily; 
@@ -466,7 +481,7 @@ InstallMethod( GroupoidHomomorphismFromSinglePiece,
       IsGroupHomomorphism, IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, hom, oims, rims ) 
 
-    local  gps, gpr, obs, obr, lens, lenr, rayr, pos1, i, posi, rayi; 
+    local gps, gpr, obs, obr, lens, lenr, rayr, pos1, i, posi, rayi; 
 
     gps := RootGroup( src ); 
     gpr := RootGroup( rng ); 
@@ -518,8 +533,10 @@ end );
 InstallMethod( GroupoidAutomorphismByObjectPermNC , 
     "for a single piece groupoid and a permutation of objects", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, oims )
-    local  rgp, obs, nobs, hom, rims, pos, rays, pos1, ior1, posi, mor, L; 
+function( gpd, oims ) 
+
+    local rgp, obs, nobs, hom, rims, pos, rays, pos1, ior1, posi, mor, L; 
+
     rgp := gpd!.magma; 
     hom := InclusionMappingGroups( rgp, gpd!.magma ); 
     obs := gpd!.objects; 
@@ -548,7 +565,7 @@ InstallMethod( GroupoidAutomorphismByObjectPermNC,
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
 function( gpd, oims )
 
-    local  gpd1, gp, id, homs, mor, L; 
+    local gpd1, gp, id, homs, mor, L; 
 
     gpd1 := Pieces( gpd )[1]; 
     gp := gpd1!.magma; 
@@ -567,8 +584,10 @@ end );
 InstallMethod( GroupoidAutomorphismByObjectPerm, 
     "for a hom discrete groupoid and a permutation of objects", true, 
     [ IsGroupoid, IsHomogeneousList ], 0,
-function( gpd, oims )
-    local  obs, pos; 
+function( gpd, oims ) 
+
+    local obs, pos; 
+
     obs := ObjectList( gpd ); 
     pos := PermList( List( oims, o -> Position( obs, o ) ) ); 
     if ( pos = fail ) then 
@@ -585,8 +604,10 @@ end );
 InstallMethod( GroupoidAutomorphismByGroupAutoNC , 
     "for a groupoid and an automorphism of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism and IsBijective ], 0,
-function( gpd, hom )
-    local  rgp, obs, pos, rays, mor; 
+function( gpd, hom ) 
+
+    local rgp, obs, pos, rays, mor; 
+
     rgp := gpd!.magma; 
     obs := gpd!.objects;
     rays := RayElementsOfGroupoid( gpd ); 
@@ -600,8 +621,10 @@ end );
 InstallMethod( GroupoidAutomorphismByGroupAuto, 
     "for a groupoid and an automorphism of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ], 0,
-function( gpd, hom )  
-    local  rgp; 
+function( gpd, hom ) 
+
+    local rgp; 
+
     rgp := gpd!.magma; 
     if not ( (Source(hom) = rgp) and (Range(hom) = rgp) ) then 
         Error( "hom not an endomorphism of the root group" ); 
@@ -620,8 +643,10 @@ end );
 InstallMethod( GroupoidAutomorphismByGroupAutosNC , 
     "for homogeneous discrete groupoid and automorphism list", true, 
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
-function( gpd, homs )
-    local  obs, orders, m; 
+function( gpd, homs ) 
+
+    local obs, orders, m; 
+
     obs := ObjectList( gpd );
     m := GroupoidHomomorphismFromHomogeneousDiscreteNC( gpd, gpd, homs, obs ); 
     SetIsEndoGeneralMapping( m, true ); 
@@ -637,7 +662,7 @@ InstallMethod( GroupoidAutomorphismByGroupAutos,
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
 function( gpd, homs )  
 
-    local  pieces, len, i, p, g, h; 
+    local pieces, len, i, p, g, h; 
 
     pieces := Pieces( gpd ); 
     len := Length( pieces ); 
@@ -666,8 +691,10 @@ end );
 InstallMethod( GroupoidAutomorphismByRayShiftsNC , 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, shifts )
-    local  obs, hom, mor, rays, rims; 
+function( gpd, shifts ) 
+
+    local obs, hom, mor, rays, rims; 
+
     obs := gpd!.objects;
     hom := IdentityMapping( gpd!.magma ); 
     rays := gpd!.rays; 
@@ -682,8 +709,10 @@ end );
 InstallMethod( GroupoidAutomorphismByRayShifts, 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, shifts )  
-    local  rgp, rays, nobs, conj; 
+function( gpd, shifts ) 
+
+    local rgp, rays, nobs, conj; 
+
     rgp := gpd!.magma; 
     rays := gpd!.rays; 
     nobs := Length( gpd!.objects );
@@ -699,16 +728,15 @@ end );
 ##
 InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", 
     true, [ IsGroupoid and IsSinglePieceDomain, IsAutomorphismGroup ], 0,
-
 function( gpd, aut ) 
 
-    local  genaut, rgp, genrgp, nrgp, agp, genagp, nagp, iso1, im1, iso2, 
-           pagp, iso, obs, n, L, symm, gensymm, nsymm, ngp, genngp, nngp, 
-           ninfo, nemb, gens1, i, pi, imi, j, gens2, k, krgp, ikrgp, 
-           pasy, esymm, epagp, genpasy, gens12, actgp, ok, action, sdp, 
-           sinfo, siso, ssdp, epasy, engp, gennorm, norm, a, c, c1, c2, c12, 
-           agens1, agens2, agens3, agens, nat, autgen, eno, gim1, gim2, gim3, 
-           niceob, nicemap; 
+    local genaut, rgp, genrgp, nrgp, agp, genagp, nagp, iso1, im1, iso2, 
+          pagp, iso, obs, n, L, symm, gensymm, nsymm, ngp, genngp, nngp, 
+          ninfo, nemb, gens1, i, pi, imi, j, gens2, k, krgp, ikrgp, 
+          pasy, esymm, epagp, genpasy, gens12, actgp, ok, action, sdp, 
+          sinfo, siso, ssdp, epasy, engp, gennorm, norm, a, c, c1, c2, c12, 
+          agens1, agens2, agens3, agens, nat, autgen, eno, gim1, gim2, gim3, 
+          niceob, nicemap; 
 
     genaut := GeneratorsOfGroup( aut );
     ## first: automorphisms of the root group 
@@ -780,7 +808,8 @@ function( gpd, aut )
     ok := IsGroupOfAutomorphisms( actgp ); 
     action := GroupHomomorphismByImages( pasy, actgp, genpasy, gens12 ); 
     sdp := SemidirectProduct( pasy, action, ngp ); 
-    Info( InfoGroupoids, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
+    Info( InfoGroupoids, 2, "sdp has ", 
+          Length(GeneratorsOfGroup(sdp)), " gens." ); 
     sinfo := SemidirectProductInfo( sdp ); 
     siso := SmallerDegreePermutationRepresentation( sdp ); 
     ssdp := Image( siso ); 
@@ -824,14 +853,13 @@ end );
 
 InstallMethod( NiceObjectAutoGroupGroupoid, "for a hom discrete groupoid", 
     true, [ IsHomogeneousDiscreteGroupoid, IsAutomorphismGroup ], 0,
-
 function( gpd, aut ) 
 
-    local  pieces, obs, m, p1, g1, geng1, ng1, ag1, genag1, nag, 
-           iso1, ag2, genag2, mag2, genmag2, nmag2, minfo, i, k, memb, 
-           L, symm, gensymm, imact, pi, actgp, ok, action, sdp, sinfo, 
-           siso, ssdp, esymm, egensymm, emag2, egenmag2, agens, 
-           im1, im2, im3, eno;  
+    local pieces, obs, m, p1, g1, geng1, ng1, ag1, genag1, nag, 
+          iso1, ag2, genag2, mag2, genmag2, nmag2, minfo, i, k, memb, 
+          L, symm, gensymm, imact, pi, actgp, ok, action, sdp, sinfo, 
+          siso, ssdp, esymm, egensymm, emag2, egenmag2, agens, 
+          im1, im2, im3, eno;  
 
     pieces := Pieces( gpd ); 
     obs := ObjectList( gpd ); 
@@ -884,7 +912,8 @@ function( gpd, aut )
     ok := IsGroupOfAutomorphisms( actgp ); 
     action := GroupHomomorphismByImages( symm, actgp, gensymm, imact ); 
     sdp := SemidirectProduct( symm, action, mag2 ); 
-    Info( InfoGroupoids, 2, "sdp has ", Length(GeneratorsOfGroup(sdp)), " gens." ); 
+    Info( InfoGroupoids, 2, "sdp has ", 
+          Length(GeneratorsOfGroup(sdp)), " gens." ); 
     sinfo := SemidirectProductInfo( sdp ); 
     ## (13/04/16) comment this out for the moment and replace with identity 
     ## siso := SmallerDegreePermutationRepresentation( sdp ); 
@@ -912,10 +941,10 @@ end );
 ##
 InstallMethod( AutomorphismGroupOfGroupoid, "for a single piece groupoid", 
     true, [ IsGroupoid and IsSinglePieceDomain ], 0,
-
 function( gpd ) 
-    local  autgen, nautgen, rgp, genrgp, agp, genagp, a, obs, n, imobs, 
-           L, ok, id, ids, cids, i, c, aut, niceob, nicemap, rgh, ioo, ior;  
+
+    local autgen, nautgen, rgp, genrgp, agp, genagp, a, obs, n, imobs, 
+          L, ok, id, ids, cids, i, c, aut, niceob, nicemap, rgh, ioo, ior;  
 
     Info( InfoGroupoids, 2, "AutomorphismGroup for single piece groupoids" ); 
     ##  first: automorphisms of the root group 
@@ -976,7 +1005,7 @@ function( gpd )
     ## now construct nicemap using GroupHomomorphismByFunction 
     nicemap := GroupHomomorphismByFunction( aut, niceob[1], 
         function( alpha ) 
-            local  G, autG, q, eno, obG, nobG, oha, j, ioa, Lpos, Lmap; 
+            local G, autG, q, eno, obG, nobG, oha, j, ioa, Lpos, Lmap; 
             G := Source( alpha ); 
             autG := AutomorphismGroup( G ); 
             q := One( NiceObject( autG ) );
@@ -1005,10 +1034,12 @@ end );
 InstallMethod( AutomorphismGroupOfGroupoid, "for a hom. discrete groupoid", 
     true, [ IsHomogeneousDiscreteGroupoid ], 0,
 function( gpd ) 
-    local  pieces, autgen, nautgen, p1, g1, ag1, id1, genag1, a, auts, 
-           obs, n, imobs, L, ok, id, ids, aut, niceob, nicemap;  
 
-    Info( InfoGroupoids, 2, "AutomorphismGroup for homogeneous discrete groupoids" ); 
+    local pieces, autgen, nautgen, p1, g1, ag1, id1, genag1, a, auts, 
+          obs, n, imobs, L, ok, id, ids, aut, niceob, nicemap;  
+
+    Info( InfoGroupoids, 2, 
+          "AutomorphismGroup for homogeneous discrete groupoids" ); 
     pieces := Pieces( gpd ); 
     obs := ObjectList( gpd ); 
     n := Length( obs );
@@ -1057,7 +1088,7 @@ function( gpd )
     ## now construct nicemap using GroupHomomorphismByFunction 
     nicemap := GroupHomomorphismByFunction( aut, niceob[1], 
         function( alpha ) 
-            local  G, autG, q, eno, obG, nobG, oha, j, ioa, Lpos, Lmap; 
+            local G, autG, q, eno, obG, nobG, oha, j, ioa, Lpos, Lmap; 
             G := Source( alpha ); 
             autG := AutomorphismGroup( G ); 
             q := One( NiceObject( autG ) );
@@ -1102,7 +1133,7 @@ InstallMethod( InAutomorphismGroupOfGroupoid,
       IsAutomorphismGroupOfGroupoid ], 0, 
 function( a, aut ) 
 
-    local  gens, g1, gpd, obs, imobs, G, AG; 
+    local gens, g1, gpd, obs, imobs, G, AG; 
 
     gens := GeneratorsOfGroup( aut ); 
     gpd := Source( gens[1] ); 
@@ -1136,7 +1167,7 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping between single pieces",
     IsGroupoidElement ], 0,
 function ( map, e )
 
-    local  m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
+    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
 
     #?  need to include some tests here ?? 
     m1 := Source( map ); 
@@ -1157,7 +1188,7 @@ InstallOtherMethod( ImageElm, "for a map from homogeneous, discrete groupoid",
             IsGroupoidElement ], 6,
 function ( map, e )
 
-    local  p1, t2, g2, a;
+    local p1, t2, g2, a;
 
     Info( InfoGroupoids, 5, 
         "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1140" ); 
@@ -1173,7 +1204,7 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoidElement ], 0,
 function ( map, e )
 
-    local  G1, C1, pe, obs1, pim, obs2, t2, h2, g2;
+    local G1, C1, pe, obs1, pim, obs2, t2, h2, g2;
 
     Info( InfoGroupoids, 5, 
         "using ImageElm for general groupoid homomorphisms, line 1158" ); 
@@ -1208,7 +1239,8 @@ InstallMethod( TestAllProductsUnderGroupoidHomomorphism,
     [ IsGroupoidHomomorphism ], 0,
 function( hom )
 
-    local  t, src, obs, o, st, cst, x, ix, y, iy, z, iz; 
+    local t, src, obs, o, st, cst, x, ix, y, iy, z, iz; 
+
     t := 0; 
     src := Source( hom ); 
     obs := src!.objects; 
@@ -1242,7 +1274,7 @@ InstallMethod( IsomorphismPermGroupoid, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece ], 0,
 function( g1 )
 
-    local  iso, obs, g, g2p, p, g2;
+    local iso, obs, g, g2p, p, g2;
 
     obs := g1!.objects;
     g := g1!.magma;
@@ -1261,7 +1293,7 @@ InstallMethod( IsomorphismPermGroupoid, "generic method for a groupoid",
     true, [ IsGroupoid ], 0,
 function( g1 )
 
-    local  isos, comp1, nc1, i, g2, iso;
+    local isos, comp1, nc1, i, g2, iso;
 
     comp1 := Pieces( g1 );
     nc1 := Length( comp1 );
@@ -1284,7 +1316,7 @@ InstallMethod( IsomorphismNewObjects, "for a single piece groupoid", true,
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, ob2 )
 
-    local  iso, ob1, gp, gpd2, id;
+    local iso, ob1, gp, gpd2, id;
 
     if not IsDirectProductWithCompleteGraphDomain( gpd1 ) then 
         Error( "make an isomorphism for the parent groupoid first" );
@@ -1310,7 +1342,7 @@ InstallMethod( IsomorphismStandardGroupoid, "for a single piece groupoid",
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, obs )
 
-    local  obs1, obs2, gp, id, rays, gpd2, iso;
+    local obs1, obs2, gp, id, rays, gpd2, iso;
 
     if IsDirectProductWithCompleteGraphDomain( gpd1 ) then 
         return IdentityMapping( gpd1 ); 
@@ -1344,7 +1376,7 @@ InstallMethod( GroupoidHomomorphismFromHomogeneousDiscreteNC,
       IsHomogeneousList ], 0,
 function( src, rng, homs, oims )
 
-    local  fam, filter, map, ok, p;
+    local fam, filter, map, ok, p;
 
     fam := GroupoidHomomorphismFamily; 
     filter := IsGroupoidHomomorphismFromHomogeneousDiscreteRep 
@@ -1377,7 +1409,7 @@ InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
       IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, homs, oims ) 
 
-    local  gps, gpr, obs, obr; 
+    local gps, gpr, obs, obr; 
 
     gps := src!.magma; 
     gpr := rng!.magma; 
@@ -1402,7 +1434,7 @@ InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
       IsHomogeneousList ], 0,
 function( src, rng, homs, oims ) 
 
-    local  gps, obs, obr, lens; 
+    local gps, obs, obr, lens; 
 
     obs := src!.objects; 
     obr := rng!.objects; 

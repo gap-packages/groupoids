@@ -58,11 +58,11 @@ and was submitted for official acceptance as a &GAP; package.
 <Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
 <P/>
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
-The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
-prepared for  &GAP; 4.9.  
 <P/> 
 Recent versions implement many of the constructions described in the paper 
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
+<P/>
+The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;.  
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
 Please submit an issue at 

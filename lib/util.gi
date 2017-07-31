@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-##  Installation file for utility functions in Gpd and XMod packages.
+##  Installation file for utility functions in groupoids package.
 ## 
 
 #############################################################################
@@ -23,7 +23,8 @@ InstallMethod( InclusionMappingGroups, "generic method for subgroup",
                IsIdenticalObj, [ IsGroup, IsGroup ], 0,
 function( G, H )
 
-    local  genH, inc, ok;
+    local genH, inc, ok;
+
     if not IsSubgroup( G, H ) then
         Error( "usage: InclusionMappingGroups( G, H );  with  H <= G" );
     fi; 
@@ -45,7 +46,8 @@ InstallMethod( MappingToOne, "generic method for groups",
     true, [ IsGroup, IsGroup ], 0,
 function( G, H )
 
-    local  genG, oneH, ones;
+    local genG, oneH, ones; 
+
     genG := GeneratorsOfGroup( G );
     oneH := One( H );
     ones := List( genG, g -> oneH );
@@ -60,7 +62,8 @@ InstallMethod( EndoMappingToOne, "generic method for groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local  genG, oneG, ones;
+    local genG, oneG, ones;
+
     genG := GeneratorsOfGroup( G );
     oneG := One( G );
     ones := List( genG, g -> oneG );

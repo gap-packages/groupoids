@@ -17,7 +17,7 @@ InstallMethod( ArcsIsosFromMatrices, "generic method for a digraph",
     true, [ IsHomogeneousList, IsHomogeneousList, IsHomogeneousList ], 0,
 function( V, A, H ) 
 
-    local  n, i, j, arcs, isos; 
+    local n, i, j, arcs, isos; 
 
     n := Length( A ); 
     if not ForAll( A, L -> ( IsList(L) and ( Length(L) = n ) ) ) then 
@@ -44,7 +44,7 @@ InstallMethod( FpWeightedDigraphNC, "generic method for a digraph",
     true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
 function( gp, v, e )
 
-    local  fam, filter, dig;
+    local fam, filter, dig;
      
     fam := FamilyObj( [ v, e ] );
     filter := IsFpWeightedDigraph;
@@ -94,13 +94,13 @@ end);
 
 #############################################################################
 ##
-#M  GpdWeightedAdjacencyMatrix                                              
+#M  GroupoidWeightedAdjacencyMatrix                                              
 ##
-InstallMethod( GpdWeightedAdjacencyMatrix, "generic method for FpWeightedDigraph",
-    true, [ IsFpWeightedDigraph ], 0,
+InstallMethod( GroupoidWeightedAdjacencyMatrix, 
+    "generic method for FpWeightedDigraph", true, [ IsFpWeightedDigraph ], 0,
 function( dig )
 
-    local  verts, n, mat, arcs, a, u, posu, v, posv; 
+    local verts, n, mat, arcs, a, u, posu, v, posv; 
 
     verts := dig!.vertices;
     n := Length( verts ); 
@@ -118,18 +118,18 @@ end );
 
 #############################################################################
 ##
-#M  GpdWeightedSpanningTree                                              
+#M  GroupoidWeightedSpanningTree                                              
 ##
-InstallMethod( GpdWeightedSpanningTree, "generic method for a FpWeightedDigraph",
-    true, [ IsFpWeightedDigraph ], 0,
+InstallMethod( GroupoidWeightedSpanningTree, 
+    "generic method for a FpWeightedDigraph", true, [ IsFpWeightedDigraph ], 0,
 function( dig )
 
-    local  gp, verts, arcs, lenv, lena, paths, adjmx, i, j, p, t, w;
+    local gp, verts, arcs, lenv, lena, paths, adjmx, i, j, p, t, w;
 
     gp := dig!.group; 
     verts := dig!.vertices; 
     arcs := dig!.arcs; 
-    adjmx := GpdWeightedAdjacencyMatrix( dig ); 
+    adjmx := GroupoidWeightedAdjacencyMatrix( dig ); 
     lenv := Length( verts );
     lena := Length( arcs ); 
     paths := ListWithIdenticalEntries( lenv, 0 ); 
@@ -234,7 +234,7 @@ InstallMethod( GraphOfGroupsNC, "generic method for a digraph of groups",
     true, [ IsFpWeightedDigraph, IsList, IsList ], 0,
 function( dig, gps, isos )
 
-    local  fam, filter, gg, ok; 
+    local fam, filter, gg, ok; 
      
     fam := GraphOfGroupsFamily; 
     filter := IsGraphOfGroupsRep;
@@ -258,7 +258,7 @@ InstallMethod( GraphOfGroups, "generic method for a digraph of  groups",
     true, [ IsFpWeightedDigraph, IsList, IsList ], 0,
 function( dig, gps, isos )
 
-    local  g, i, v, e, lenV, lenE, tgtL, pos, inv, einvpos;
+    local g, i, v, e, lenV, lenE, tgtL, pos, inv, einvpos;
 
     v := dig!.vertices;
     e := dig!.arcs; 
@@ -327,7 +327,7 @@ InstallMethod( ViewObj, "for a graph of groups", true,
 InstallMethod( PrintObj, "method for a graph of groups", [ IsGraphOfGroups ],
 function( gg )
     
-    local  dig;
+    local dig;
 
     dig := DigraphOfGraphOfGroups( gg );
     Print( "Graph of Groups: " );
@@ -339,7 +339,7 @@ end );
 InstallMethod( ViewObj, "method for a graph of groups", [ IsGraphOfGroups ],
 function( gg )
     
-    local  dig;
+    local dig;
 
     dig := DigraphOfGraphOfGroups( gg );
     Print( "Graph of Groups: " );
@@ -355,7 +355,7 @@ end );
 InstallMethod( Display, "method for a graph of groups", [ IsGraphOfGroups ],
 function( gg )
     
-    local  dig;
+    local dig;
 
     dig := DigraphOfGraphOfGroups( gg );
     Print( "Graph of Groups with :- \n" );
@@ -395,7 +395,7 @@ InstallMethod( RightTransversalsOfGraphOfGroups,
     "generic method for a group graph", true, [ IsGraphOfGroups ], 0,
 function( gg )
 
-    local  gps, dig, isos, adig, vdig, len, i, g, rc, rep, trans;
+    local gps, dig, isos, adig, vdig, len, i, g, rc, rep, trans;
 
     gps := GroupsOfGraphOfGroups( gg );
     dig := DigraphOfGraphOfGroups( gg );
@@ -427,7 +427,7 @@ InstallMethod( LeftTransversalsOfGraphOfGroups,
     "generic method for a group graph", true, [ IsGraphOfGroups ], 0,
 function( gg )
 
-    local  gps, dig, vdig, adig, len, i, trans, itran, g; 
+    local gps, dig, vdig, adig, len, i, trans, itran, g; 
 
     gps := GroupsOfGraphOfGroups( gg );
     dig := DigraphOfGraphOfGroups( gg );
@@ -459,7 +459,7 @@ InstallMethod( GraphOfGroupsWordNC, "generic method for a word",
     true, [ IsGraphOfGroups, IsInt, IsList ], 0,
 function( gg, tv, wL )
 
-    local  fam, filter, ggword;
+    local fam, filter, ggword;
     
     fam := FamilyObj( [ gg, wL] );
     filter := IsGraphOfGroupsWordRep;
@@ -482,7 +482,7 @@ InstallMethod( GraphOfGroupsWord, "for word in graph of groups",
     true, [ IsGraphOfGroups, IsInt, IsList ], 0,
 function( gg, tv, wL )
 
-    local  gps, dig, adig, enum, vdig, n, i, j, g, v, posv, e, w;
+    local gps, dig, adig, enum, vdig, n, i, j, g, v, posv, e, w;
 
     gps := GroupsOfGraphOfGroups( gg );
     dig := DigraphOfGraphOfGroups( gg );
@@ -537,7 +537,7 @@ InstallMethod( PrintString, "for a graph of groups word", true,
 InstallMethod( ViewObj, "method for a graph of groups word", 
     [ IsGraphOfGroupsWord ],
 function( ggword )
-    local  w, i, gg, adig;
+    local w, i, gg, adig;
 
     gg := GraphOfGroupsOfWord( ggword );
     adig := DigraphOfGraphOfGroups( gg )!.arcs;
@@ -554,7 +554,8 @@ end );
 InstallMethod( PrintObj, "method for a graph of groups word", 
     [ IsGraphOfGroupsWord ],
 function( ggword )
-    local  w, i, gg, adig;
+
+    local w, i, gg, adig;
 
     gg := GraphOfGroupsOfWord( ggword );
     adig := DigraphOfGraphOfGroups( gg )!.arcs;
@@ -576,7 +577,7 @@ InstallMethod( GGHead, "generic method for a graph of groups word",
     true, [ IsGraphOfGroupsWordRep ], 0,
 function( ggword )
 
-    local  w, gg, e;
+    local w, gg, e;
 
     w := WordOfGraphOfGroupsWord( ggword ); 
     gg := GraphOfGroupsOfWord( ggword );
@@ -594,7 +595,7 @@ InstallMethod( IsReducedGraphOfGroupsWord, "for word in graph of groups",
     true, [ IsGraphOfGroupsWord ], 0,
 function( ggw )
 
-    local  w, len, gg, dig, gps, adig, vdig, pos, i, e, ie, t, v, g;
+    local w, len, gg, dig, gps, adig, vdig, pos, i, e, ie, t, v, g;
 
     w := WordOfGraphOfGroupsWord( ggw );
     len := Length( w );
@@ -636,9 +637,9 @@ InstallMethod( ReducedGraphOfGroupsWord, "for word in graph of groups",
     true, [ IsGraphOfGroupsWordRep ], 0,
 function( ggword )
 
-    local  w, tw, hw, gg, gps, isos, dig, adig, vdig, lw, len, k, k2, 
-           he, rtrans, tran, pos, a, g, h, found, i, nwit, tsp,
-           im, sub, u, v, gu, gv, e, ie, ng, rw, lenred, isfp, isid;
+    local w, tw, hw, gg, gps, isos, dig, adig, vdig, lw, len, k, k2, 
+          he, rtrans, tran, pos, a, g, h, found, i, nwit, tsp,
+          im, sub, u, v, gu, gv, e, ie, ng, rw, lenred, isfp, isid;
 
     if ( HasIsReducedGraphOfGroupsWord( ggword ) 
          and IsReducedGraphOfGroupsWord( ggword ) ) then
@@ -699,7 +700,7 @@ function( ggword )
             w[k2+1] := im*w[k2+1];
         fi;
         Info( InfoGroupoids, 3, "w{[k2-1..k2+1]} = ", w{[k2-1..k2+1]} );
-        Info( InfoGroupoids, 3, "--------------------------------------------" );
+        Info( InfoGroupoids, 3, "------------------------------------------" );
         lenred := ( k > 1 );
         while lenred do
             ## test for a length reduction
@@ -775,8 +776,9 @@ end );
 InstallOtherMethod( ProductOp,
     "generic method for graph of groups words",
     true, [ IsHomogeneousList ], 0,
-function ( ggwlist )
-    local  ggw1, ggw2, num, w1, w2, h1, len1, len2, w;
+function ( ggwlist ) 
+
+    local ggw1, ggw2, num, w1, w2, h1, len1, len2, w;
 
     num := Length( ggwlist );
     if not ( num = 2 ) then
@@ -788,7 +790,8 @@ function ( ggwlist )
     ggw1 := ggwlist[1];
     ggw2 := ggwlist[2];
     if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
-        Info( InfoGroupoids, 1, "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+        Info( InfoGroupoids, 1, 
+              "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
         return fail;
     fi;
     w1 := WordOfGraphOfGroupsWord( ggw1 );
@@ -796,8 +799,7 @@ function ( ggwlist )
     len1 := Length( w1 );
     len2 := Length( w2 );
     w := Concatenation( w1{[1..len1-1]}, [w1[len1]*w2[1]], w2{[2..len2]} );
-    return GraphOfGroupsWord( GraphOfGroupsOfWord( ggw1 ),
-                              GGTail( ggw1 ), w );
+    return GraphOfGroupsWord( GraphOfGroupsOfWord(ggw1), GGTail(ggw1), w );
 end );
 
 ##############################################################################
@@ -806,8 +808,9 @@ end );
 ##
 InstallOtherMethod( \*, "generic method for two graph of groups words",
     IsIdenticalObj, [ IsGraphOfGroupsWordRep, IsGraphOfGroupsWordRep ], 0,
-function ( ggw1, ggw2 )
-    local  ggw12;
+function ( ggw1, ggw2 ) 
+
+    local ggw12;
 
     ggw12 := ProductOp( [ ggw1, ggw2 ] );
     if ( ggw12 = fail ) then
@@ -823,8 +826,9 @@ end );
 ##
 InstallOtherMethod( InverseOp, "generic method for a graph of groups word",
     true, [ IsGraphOfGroupsWordRep ], 0,
-function ( ggw )
-    local  gg, ie, i, j, w, len, iw, iggw;
+function ( ggw ) 
+
+    local gg, ie, i, j, w, len, iw, iggw;
 
     w := WordOfGraphOfGroupsWord( ggw ); 
     gg := GraphOfGroupsOfWord( ggw );
@@ -855,8 +859,9 @@ end );
 InstallOtherMethod( \^,
     "generic method for n-th power of a graph of groups word",
     true, [ IsGraphOfGroupsWordRep, IsInt ], 0,
-function ( ggw, n )
-    local  w, tv, ptv, gg, g, k, iggw, ggwn;
+function ( ggw, n ) 
+
+    local w, tv, ptv, gg, g, k, iggw, ggwn;
 
     if ( n = 1 ) then
         return ggw;
@@ -900,10 +905,10 @@ InstallMethod( InverseOfIsomorphismFpSemigroup, "for iso to fp-semigroup",
     true, [ IsNonSPMappingByFunctionRep ], 0,
 function( iso )
 
-    local  gp, smg, fgp, id, i, nat, fun, smgword2gpword;
+    local gp, smg, fgp, id, i, nat, fun, smgword2gpword;
 
     smgword2gpword := function( id, w )
-        local  wlist, i;
+        local wlist, i;
         wlist := ShallowCopy( ExtRepOfObj( w ) );
         if ( ( wlist = [ 1, 1 ] ) or ( Length( wlist ) = 0 ) ) then
             return id;
@@ -946,8 +951,7 @@ InstallMethod( NormalFormKBRWS, "generic method for normal form",
     true, [ IsFpGroup, IsObject ], 0,
 function( gp, w0 )
 
-    local iso, smg, rwsmg, smggen, fsmg, iw, uiw, ruw, fam1, riw, 
-          inviso, rw;
+    local iso, smg, rwsmg, smggen, fsmg, iw, uiw, ruw, fam1, riw, inviso, rw;
 
     if not ( w0 in gp ) then
         Error( "word not in the group" );
@@ -975,9 +979,10 @@ end);
 InstallMethod( FreeProductWithAmalgamation,
     "for two fp-groups and an isomorphism of subgroups", true,
     [ IsFpGroup, IsFpGroup, IsGroupHomomorphism ], 0,
-function( fp1, fp2, iso )
-    local  H1, H2, gfp1, gfp2, ng1, ng2, num, fa, gfa, f1, f2, gf1, gf2,
-           gfa1, gfa2, rel1, rel2, rela, gH1, igH1, relH, fpa, gfpa, e1, e2;
+function( fp1, fp2, iso ) 
+
+    local H1, H2, gfp1, gfp2, ng1, ng2, num, fa, gfa, f1, f2, gf1, gf2,
+          gfa1, gfa2, rel1, rel2, rela, gH1, igH1, relH, fpa, gfpa, e1, e2;
 
     H1 := Source( iso );
     H2 := Range( iso );
@@ -1023,9 +1028,8 @@ InstallMethod( FreeProductWithAmalgamation,
     [ IsPermGroup, IsPermGroup, IsGroupHomomorphism ], 0,
 function( p1, p2, iso )
 
-    local  p2f1, fp1, sub1, gen1, fgen1, fsub1, 
-           p2f2, fp2, sub2, gen2, fgen2, fsub2, 
-           fiso;
+    local p2f1, fp1, sub1, gen1, fgen1, fsub1, 
+          p2f2, fp2, sub2, gen2, fgen2, fsub2, fiso;
 
     p2f1 := IsomorphismFpGroup( p1 );
     fp1 := Image( p2f1 );
@@ -1051,8 +1055,8 @@ InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an fpa",
     true, [ IsFpaGroup ], 0,
 function( fpa )
 
-    local  fy, y, verts, arcs, dig, inva, info, f1, f2, e1, e2, pos1, pos2,
-           iso, inv, h1, h2, gg;
+    local fy, y, verts, arcs, dig, inva, info, f1, f2, e1, e2, pos1, pos2,
+          iso, inv, h1, h2, gg;
 
     fy := FreeGroup("y");
     y := fy.1;
@@ -1083,9 +1087,9 @@ InstallMethod( NormalFormGGRWS, "generic method for fpa normal form",
     true, [ IsFpaGroup, IsObject ], 0,
 function( fpa, w )
 
-    local  iso, gg, dig, verts, ew, len, ff, idff, famff, wL, info, pos, p,
-           ng1, tv, j, k, gff, gff12, gps, gen12, s, es, ggw, rgw, trgw, wrgw,
-           i, e, rw;
+    local iso, gg, dig, verts, ew, len, ff, idff, famff, wL, info, pos, p,
+          ng1, tv, j, k, gff, gff12, gps, gen12, s, es, ggw, rgw, trgw, wrgw,
+          i, e, rw;
 
     if not ( w in fpa ) then
         Error( "word not in the group" );
@@ -1171,10 +1175,11 @@ end);
 ##
 InstallMethod( HnnExtension,
     "for an fp-groups and an isomorphism of subgroups", true,
-    [ IsFpGroup, IsGroupHomomorphism ], 0,
+    [ IsFpGroup, IsGroupHomomorphism ], 0, 
 function( fp, iso )
-    local  H1, H2, gfp, ng, fe, gfe, gfe1, ffp, gffp, z,
-           rel, rele, gH1, igH1, relH, hnn, ghnn, e1, e2;
+
+    local H1, H2, gfp, ng, fe, gfe, gfe1, ffp, gffp, z,
+          rel, rele, gH1, igH1, relH, hnn, ghnn, e1, e2;
 
     H1 := Source( iso );
     H2 := Range( iso );
@@ -1215,8 +1220,8 @@ InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an hnn",
     true, [ IsHnnGroup ], 0,
 function( hnn )
 
-    local  fz, z, verts, arcs, dig, inva, info, fp, e1, e2, pos1, pos2,
-           iso, inv, h1, h2, gg;
+    local fz, z, verts, arcs, dig, inva, info, fp, e1, e2, pos1, pos2,
+          iso, inv, h1, h2, gg;
 
     fz := FreeGroup("z");
     z := fz.1;
@@ -1244,9 +1249,9 @@ InstallMethod( NormalFormGGRWS, "generic method for hnn normal form",
     true, [ IsHnnGroup, IsObject ], 0,
 function( hnn, w )
 
-    local  iso, gg, dig, v, ew, len, ff, idff, famff, wL, info, z, p, q,
-           ng, j, k, gff, fp, gfp, idfp, s, es, ggw, rgw, trgw, wrgw,
-           idhnn, famhnn, i, e, rw; 
+    local iso, gg, dig, v, ew, len, ff, idff, famff, wL, info, z, p, q,
+          ng, j, k, gff, fp, gfp, idfp, s, es, ggw, rgw, trgw, wrgw,
+          idhnn, famhnn, i, e, rw; 
 
     if not ( w in hnn ) then
         Error( "word not in the group" );
@@ -1342,9 +1347,8 @@ end);
 ##
 ## InstallMethod( GraphOfGroupsGroupoid, "for a graph of groups",
 ##     true, [ IsGraphOfGroups ], 0,
-## function( gg )
-##
-##     local  gpd;
+## function( gg ) 
+##     local gpd;
 ##     return fail;
 ## end );
 

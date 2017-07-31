@@ -57,12 +57,12 @@ In April 2017 the package was renamed again, as <Package>groupoids</Package>.
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
 for &GAP; 4.9.  
 <P/>
-(In this temporary version there have been a number of changes of function 
-name, such as <C>IsDigraph</C> becoming <C>GpdIsDigraph</C>. 
-This is in order to avoid conflicts with the new 
+In the current version there have been a number of changes of function 
+name, such as <C>IsDigraph</C> becoming <C>GroupoidIsDigraph</C>. 
+This is in order to avoid conflicts with the 
 <Package>Digraphs</Package> package.
-Further changes will be made once the <Package>Digraphs</Package> 
-package becomes part of the general GAP distribution.) 
+The intention is that these functions can revert to the original names 
+in due course.
 </Section>
 
 

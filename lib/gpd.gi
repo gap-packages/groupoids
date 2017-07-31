@@ -41,7 +41,7 @@ InstallMethod( SinglePieceGroupoidNC, "method for a connected groupoid",
     true, [ IsGroup, IsHomogeneousList ], 0,
 function( gp, obs ) 
 
-    local  fam, filter, cf, gpd, gens;
+    local fam, filter, cf, gpd, gens;
 
     fam := GroupoidFamily; 
     filter := IsMWOSinglePieceRep and IsGroupoid; 
@@ -63,9 +63,9 @@ end );
 InstallMethod( SinglePieceGroupoid, "method for a connected groupoid",
     true, [ IsGroup, IsHomogeneousList ], 0,
 function( gp, obs ) 
-        if not IsSet( obs ) then 
-            Sort( obs ); 
-        fi; 
+    if not IsSet( obs ) then 
+        Sort( obs ); 
+    fi; 
     if not IsDuplicateFree( obs ) then
         Error( "objects must be distinct," );
     fi; 
@@ -82,7 +82,7 @@ InstallMethod( SubgroupoidWithRaysNC,
     [ IsGroupoid, IsGroup, IsHomogeneousList ], 0,
 function( pgpd, rgp, rays )
 
-    local  obs, rob, fam, filter, gpd, id;
+    local obs, rob, fam, filter, gpd, id;
 
     fam := GroupoidFamily;
     filter := IsSinglePieceRaysRep;
@@ -108,7 +108,7 @@ InstallMethod( SubgroupoidWithRays,
     [ IsGroupoid and IsSinglePiece, IsGroup, IsHomogeneousList ], 0,
 function( gpd, rgp, rays )
 
-    local  obs, gp, par, grays;
+    local obs, gp, par, grays;
 
     obs := gpd!.objects; 
     if not ( Length( obs ) = Length( rays ) ) then 
@@ -146,8 +146,10 @@ end );
 InstallMethod( SinglePieceSubgroupoidByGenerators, "for a list of elements",
     true, [ IsGroupoid, IsList ], 0,
 function( anc, gens ) 
-    local  ok, ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
-           g, c, p, q, r, rays, par; 
+
+    local ok, ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
+          g, c, p, q, r, rays, par; 
+
     ok := ForAll( gens, g -> ( FamilyObj(g) = GroupoidElementFamily ) ); 
     if not ok then 
         Error( "list supplied is not a list of groupoid elements," ); 
@@ -255,7 +257,9 @@ end );
 InstallMethod( RaysOfGroupoid, "for a connected groupoid",
     true, [ IsGroupoid and IsSinglePiece ], 0,
 function( gpd ) 
+
     local obs, nobs, rays; 
+
     obs := gpd!.objects; 
     nobs := Length( obs ); 
     rays := gpd!.rays; 
@@ -336,8 +340,10 @@ end );
 
 InstallMethod( IsMatrixGroupoid, "for a groupoid", true,
     [ IsGroupoid ], 0,
-function( gpd )
-    local  gens; 
+function( gpd ) 
+
+    local gens; 
+
     if IsSinglePiece( gpd ) then 
         gens := GeneratorsOfGroup( gpd!.magma ); 
         return ForAll( gens, g ->  HasIsRectangularTable( g )
@@ -355,7 +361,9 @@ end );
 InstallMethod( DomainWithSingleObject, "generic method for a group",
     true, [ IsGroup, IsObject ], 0,
 function( gp, obj ) 
-    local  o; 
+
+    local o; 
+
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
         o := obj[1]; 
     elif IsObject( obj ) then 
@@ -375,7 +383,7 @@ end );
 ##
 InstallGlobalFunction( Groupoid, function( arg )
 
-    local  nargs, id, rays;
+    local nargs, id, rays;
 
     nargs := Length( arg ); 
     # list of pieces
@@ -423,6 +431,7 @@ InstallMethod( ViewObj, "for a groupoid", true, [ IsGroupoid ], 0, PrintObj );
 
 InstallMethod( PrintObj, "for a groupoid", true, [ IsGroupoid ], 0,
 function ( gpd )
+
     local comp, len, c, i;
 
     if ( HasIsPermGroupoid( gpd ) and IsPermGroupoid( gpd ) ) then
@@ -474,7 +483,7 @@ end );
 InstallMethod( Display, "for a groupoid", [ IsGroupoid ],
 function( gpd )
     
-    local  comp, c, i, pgpd, gp, len, rgp, rays;
+    local comp, c, i, pgpd, gp, len, rgp, rays;
 
     if ( HasIsPermGroupoid( gpd ) and IsPermGroupoid( gpd ) ) then
         Print( "perm " );
@@ -592,7 +601,7 @@ end );
 
 InstallMethod( \=, "for a groupoid", true, [ IsGroupoid, IsGroupoid ], 
 function ( g1, g2 )
-    local  c1, c2, len, obj, i, j;
+    local c1, c2, len, obj, i, j;
 
     ## Print( "### method 2 for =\n" ); 
     c1 := Pieces( g1 );
@@ -619,7 +628,8 @@ InstallOtherMethod( Size, "generic method for a groupoid", true,
     [ IsGroupoid ], 0,
 function( gpd )
 
-    local  c, s, sg;
+    local c, s, sg;
+
     s := 0;
     for c in Pieces( gpd ) do
         if ( s <> infinity ) then 
@@ -646,7 +656,7 @@ InstallMethod( ObjectGroup, "generic method for groupoid and object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( G, obj )
 
-    local  pos, id, c, rgp; 
+    local pos, id, c, rgp; 
 
     if not ( obj in G!.objects ) then
         Error( "obj not an object of G," );
@@ -673,7 +683,7 @@ InstallMethod( ObjectGroup, "generic method for groupoid and object",
     true, [ IsGroupoid, IsObject ], 0,
 function( G, obj )
 
-    local  nC, C;
+    local nC, C;
 
     if not ( obj in ObjectList( G ) ) then
         Error( "obj not an object of G," );
@@ -715,7 +725,7 @@ InstallMethod( HomogeneousGroupoidNC,
     [ IsGroupoid, IsHomogeneousList ], 0,
 function( gpd, oblist )
 
-    local  pieces, hgpd; 
+    local pieces, hgpd; 
 
     pieces := List( oblist, L -> Range( IsomorphismNewObjects( gpd, L ) ) ); 
     hgpd := UnionOfPiecesNC( pieces, 1 ); 
@@ -729,7 +739,7 @@ InstallMethod( HomogeneousGroupoid,
     [ IsGroupoid, IsHomogeneousList ], 0,
 function( gpd, oblist )
 
-    local  len, obs, ob1, j; 
+    local len, obs, ob1, j; 
 
     if not ForAll( oblist, L -> IsHomogeneousList(L) ) then 
         Error( "oblist must be a list of lists," ); 
@@ -759,7 +769,7 @@ InstallMethod( HomogeneousDiscreteGroupoid,
     [ IsGroup, IsHomogeneousList ], 0,
 function( gp, obs ) 
 
-    local  fam, filter, gpd; 
+    local fam, filter, gpd; 
 
     if ( Length( obs ) = 1 ) then 
         Error( "hom discrete groupoids should have more than one object" ); 
@@ -790,7 +800,7 @@ InstallMethod( Arrow, "generic method for a groupoid element",
     true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
 function( gpd, g, i, j )
 
-    local  comp, obs, ok1, ok2, rays;
+    local comp, obs, ok1, ok2, rays;
 
     if ( HasIsSinglePiece( gpd ) 
          and IsSinglePiece( gpd ) ) then 
@@ -823,7 +833,7 @@ InstallMethod( ConjugateGroupoid, "<gpd>, <elt>", true,
     [ IsGroupoid and IsSinglePiece, IsGroupoidElement ], 0, 
 function( gpd, elt )
 
-    local  gens, ims, conj;
+    local gens, ims, conj;
 
     gens := GeneratorsOfGroupoid( gpd ); 
     ims := List( gens, g -> ConjugateArrow( g, elt ) ); 
@@ -838,7 +848,7 @@ InstallMethod( ConjugateGroupoid, "<gpd>, <elt>", true,
     [ IsGroupoid and IsPiecesRep, IsGroupoidElement ], 0, 
 function( U, elt )
 
-    local  p, q, np, nq, n, pieces, gpd; 
+    local p, q, np, nq, n, pieces, gpd; 
 
     p := elt![2]; 
     np := PieceNrOfObject( U, p ); 
@@ -871,8 +881,10 @@ end );
 InstallOtherMethod( \in, "for groupoid element and a standard groupoid", 
     IsElmsColls, 
     [ IsGroupoidElement, IsGroupoid and IsDirectProductWithCompleteGraph ], 0,
-function( e, gpd )
-    local  obs;
+function( e, gpd ) 
+
+    local obs;
+
     obs := gpd!.objects; 
     return ( (e![1] in gpd!.magma) and (e![2] in obs) and (e![3] in obs) );
 end );
@@ -881,7 +893,9 @@ InstallMethod( IsElementInGroupoid,
     "for groupoid element and a standard groupoid", true, 
     [ IsGroupoidElement, IsGroupoid and IsSinglePiece ], 0,
 function( e, gpd )
-    local  obs, r1, r2, rays;
+
+    local obs, r1, r2, rays;
+
     obs := gpd!.objects; 
     if not ( (e![2] in obs) and (e![3] in obs) ) then 
         return false; 
@@ -907,7 +921,7 @@ end );
 ##  InstallMethod( \in, "for a groupoid element and a groupoid",
 ##      true, [ IsGroupoidElement, IsGroupoid ], 0,
 ##  function( e, gpd )
-##      local  comp;
+##      local comp;
 ##      comp := PieceOfObject( gpd, e![2] );
 ##  Print("comp = ",comp,"\n");
 ##      if ( comp = fail ) then
@@ -925,7 +939,8 @@ InstallMethod( PrintObj, "for a subset of elements of a groupoid", true,
     [ IsHomsetCosets ], 0,
 function ( hc )
     
-    local  iter, g; 
+    local iter, g; 
+
     if ( hc![6] = "s" ) then 
         Print( "<star at ", hc![3], " with group ", hc![2], ">" );
     elif ( hc![6] = "c" ) then 
@@ -1046,7 +1061,7 @@ InstallMethod( ObjectStarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local  gp, obs, nobs, fam, filter, st, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, fam, filter, st, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
     filter := IsHomsetCosetsRep; 
@@ -1076,7 +1091,8 @@ InstallMethod( ObjectStar, "generic method for a groupoid and an object",
     true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
 
-    local  comp;
+    local comp;
+
     if ( IsSinglePiece(gpd) and ( obj in ObjectList(gpd) ) ) then
         return ObjectStarNC( gpd, obj );
     else
@@ -1099,7 +1115,7 @@ InstallMethod( ObjectCostarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local  gp, obs, nobs, fam, filter, cst, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, fam, filter, cst, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
     filter := IsHomsetCosetsRep; 
@@ -1129,7 +1145,8 @@ InstallMethod( ObjectCostar, "generic method for a groupoid and an object",
     true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
 
-    local  comp;
+    local comp;
+
     if ( IsSinglePiece(gpd) and ( obj in ObjectList(gpd) ) ) then
         return ObjectCostarNC( gpd, obj );
     else
@@ -1152,7 +1169,7 @@ InstallMethod( HomsetNC, "for a connected groupoid and two objects",
     true, [ IsGroupoid and IsSinglePiece, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
-    local  gp, obs, fgpd, fam, filter, rays, gen, hs, p1, p2;
+    local gp, obs, fgpd, fam, filter, rays, gen, hs, p1, p2;
     
     obs := gpd!.objects; 
     filter := IsHomsetCosetsRep; 
@@ -1179,7 +1196,7 @@ InstallMethod( Homset, "generic method for a groupoid and two objects",
     true, [ IsGroupoid, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
-    local  obs, comp;
+    local obs, comp;
 
     obs := ObjectList( gpd );
     if not ( ( o1 in obs ) and ( o2 in obs ) ) then
@@ -1207,7 +1224,7 @@ InstallMethod( ElementsOfGroupoid, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece ], 0,
 function( gpd )
 
-    local  iter, elts;
+    local iter, elts;
 
     elts := [ ];
     iter := Iterator( gpd );
@@ -1221,7 +1238,7 @@ InstallMethod( ElementsOfGroupoid, "generic method for a groupoid", true,
     [ IsGroupoid ], 0,
 function( gpd )
 
-    local  comps, c, elts;
+    local comps, c, elts;
     comps := Pieces( gpd );
     elts := [ ];
     for c in comps do
@@ -1321,7 +1338,8 @@ end );
 ##
 InstallGlobalFunction( Subgroupoid, function( arg )
 
-    local  nargs, gpd, id, rays, gp, sub;
+    local nargs, gpd, id, rays, gp, sub; 
+
     nargs := Length( arg );
     gpd := arg[1];
     if not IsGroupoid( gpd ) then 
@@ -1386,7 +1404,8 @@ InstallMethod( IsSubgroupoid, "generic method for two groupoids", true,
   [IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece], 0,
 function( G, U )
 
-    local  objG, objU;
+    local objG, objU; 
+
     ## Print( "IsSubgroupoid 3 : ", G, " >= ", U, "\n" ); 
     if ( HasParentAttr( U ) and ( ParentAttr( U ) = G ) ) then 
         return true;
@@ -1418,8 +1437,10 @@ end );
 InstallMethod( SubgroupoidBySubgroup,
     "generic method for direct prod with complete graph and subgroup", true,
     [ IsGroupoid and IsDirectProductWithCompleteGraph, IsGroup ], 0,
-function( gpd, sgp )
-    local  sub, gp; 
+function( gpd, sgp ) 
+
+    local sub, gp; 
+
     gp := gpd!.magma; 
     if not IsSubgroup( gp, sgp ) then 
         Error( "sgp is not a subgroup of gpd!.magma," ); 
@@ -1438,7 +1459,7 @@ InstallMethod( SubgroupoidByPieces,
     [ IsGroupoid, IsList ], 0, 
 function( gpd, pieces )
 
-    local  pieceU, U, c, piece;
+    local pieceU, U, c, piece;
 
     pieceU := List( pieces, c -> SinglePieceGroupoid( c[1], c[2] ) ); 
     if ( Length( pieceU ) > 1 ) then
@@ -1471,7 +1492,7 @@ InstallMethod( DiscreteSubgroupoid, "generic method for a groupoid", true,
     [ IsGroupoid, IsList, IsHomogeneousList ], 0,
 function( G, gps, obs )
 
-    local  pieceU, U, len, o, pieceG, obsg, C, i;
+    local pieceU, U, len, o, pieceG, obsg, C, i;
 
     obsg := ObjectList( G );
     len := Length( obs ); 
@@ -1513,7 +1534,7 @@ InstallMethod( MaximalDiscreteSubgroupoid,
     "generic method for a groupoid", true, [ IsGroupoid ], 0,
 function( gpd )
 
-    local  obs, len, gps, i, piece;
+    local obs, len, gps, i, piece;
 
     obs := ObjectList( gpd );
     len := Length( obs );
@@ -1534,7 +1555,9 @@ end );
 InstallMethod( FullSubgroupoid, "for a connected groupoid and set of objects", 
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( G, sobs )
-    local  sgpd, rgp, rayG, pG, spG, pos, rays, r1; 
+
+    local sgpd, rgp, rayG, pG, spG, pos, rays, r1; 
+
     if ( HasIsDirectProductWithCompleteGraph( G ) 
          and IsDirectProductWithCompleteGraph( G ) ) then 
         if not HasIsSSortedList( sobs ) then 
@@ -1563,8 +1586,10 @@ end );
 
 InstallMethod( FullSubgroupoid, "for a groupoid and set of objects", true,
     [ IsGroupoid, IsHomogeneousList ], 0,
-function( G, sobs )
-    local  c1, c2, len, j, c, obc, sobc;
+function( G, sobs ) 
+
+    local c1, c2, len, j, c, obc, sobc;
+
     c1 := Pieces( G );
     len := Length( c1 );
     c2 := [ ];
@@ -1582,10 +1607,10 @@ end );
 InstallMethod( FullSubgroupoid, "for a homogeneous discrete groupoid", true,
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
 function( gpd, sobs )
-    local  obs;
+    local obs;
     obs := gpd!.objects; 
     if not ForAll( sobs, o -> o in obs ) then 
-        Error( "<sobs> not a subset of <Gpd>!.objects," ); 
+        Error( "<sobs> not a subset of <gpd>!.objects," ); 
     fi; 
     if ( Length( sobs ) = 1 ) then 
         return DomainWithSingleObject( gpd!.magma, sobs[1] ); 
@@ -1597,7 +1622,9 @@ end );
 InstallMethod( FullTrivialSubgroupoid, "for a connected groupoid", 
     true, [ IsGroupoid and IsSinglePiece ], 0,
 function( gpd ) 
-    local  id, sub;
+
+    local id, sub;
+
     id := TrivialSubgroup( gpd!.magma ); 
     if HasName( gpd!.magma ) then 
         SetName( id, Concatenation( "id(", Name( gpd!.magma ), ")" ) ); 
@@ -1610,7 +1637,9 @@ end );
 InstallMethod( FullTrivialSubgroupoid, "generic method for a groupoid", 
     true, [ IsGroupoid ], 0,
 function( gpd )
-    local  pieces, subs;
+
+    local pieces, subs;
+
     pieces := Pieces( gpd );
     subs := List( pieces, c -> FullTrivialSubgroupoid(c) );
     return UnionOfPieces( subs );
@@ -1619,7 +1648,9 @@ end );
 InstallMethod( DiscreteTrivialSubgroupoid, "for a connected groupoid", 
     true, [ IsGroupoid and IsSinglePiece ], 0,
 function( gpd )
-    local  id, obs, gps;
+
+    local id, obs, gps;
+
     obs := gpd!.objects;
     id := TrivialSubgroup( gpd!.magma );
     if HasName( gpd!.magma ) then 
@@ -1632,7 +1663,9 @@ end );
 InstallMethod( DiscreteTrivialSubgroupoid, "generic method for a groupoid", 
     true, [ IsGroupoid ], 0,
 function( gpd )
-    local  pieces, subs;
+
+    local pieces, subs;
+
     pieces := Pieces( gpd );
     subs := List( pieces, c -> DiscreteTrivialSubgroupoid(c) );
     return UnionOfPieces( subs );
@@ -1646,7 +1679,8 @@ InstallMethod( ReplaceOnePieceInUnion, "for union gpd, posint and gpd", true,
     [ IsGroupoid and IsPiecesRep, IsPosInt, IsGroupoid and IsSinglePiece ], 0,
 function( U, pos, new )
 
-    local  pieces; 
+    local pieces; 
+
     pieces := ShallowCopy( Pieces( U ) ); 
     if not ( pos <= Length(pieces) ) then 
         Info( InfoGroupoids, 1, "U has fewer than pos pieces" ); 
@@ -1662,7 +1696,8 @@ InstallMethod( ReplaceOnePieceInUnion, "for union and two gpds", true,
       IsGroupoid and IsSinglePiece ], 0,
 function( U, old, new )
 
-    local  pieces, pos; 
+    local pieces, pos; 
+
     pieces := ShallowCopy( Pieces( U ) ); 
     pos := Position( pieces, old ); 
     if ( pos = fail ) then 
@@ -1688,7 +1723,7 @@ InstallMethod( PiecePositions, "for a groupoid and a subgroupoid", true,
     [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 
-    local  obsG, obU, lenG, lenU, pos, i, oi, j, found, p;
+    local obsG, obU, lenG, lenU, pos, i, oi, j, found, p;
 
     if IsSinglePiece( G ) then
         if IsSinglePiece( U ) then
@@ -1742,7 +1777,7 @@ InstallOtherMethod( RightCoset, "for groupoid, subgroupoid and element",
     0, 
 function( gpd, sgpd, e ) 
 
-    local  G, U, fam, r, hc; 
+    local G, U, fam, r, hc; 
 
     if IsSinglePiece( gpd ) then 
         G := gpd; 
@@ -1788,7 +1823,8 @@ InstallMethod( LeftCoset, "for groupoid, subgroupoid and element",
     0, 
 function( gpd, sgpd, e ) 
 
-    local  G, U, fam, l, hc; 
+    local G, U, fam, l, hc; 
+
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
@@ -1851,8 +1887,9 @@ InstallMethod( HomsetCosetsGroupoidCoset, "for right coset of groupoid",
     true, [ IsGroupoidCoset ], 0,
 function( cset )
 
-    local  U, e, G, obs, ogp, o1, o2, gpcset, fgpd, rays, pos, rpos, 
-           fam, filter, hc, isrt, C; 
+    local U, e, G, obs, ogp, o1, o2, gpcset, fgpd, rays, pos, rpos, 
+          fam, filter, hc, isrt, C; 
+
     e := Representative( cset ); 
     G := SuperDomain( cset ); 
     U := ActingDomain( cset ); 
@@ -1926,7 +1963,7 @@ InstallMethod( RightCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
 function( G, U )
 
-    local  gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
+    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -1959,7 +1996,7 @@ InstallMethod( RightCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 
-    local  pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
+    local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -1990,7 +2027,7 @@ InstallMethod( LeftCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
 function( G, U )
 
-    local  gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
+    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -2023,7 +2060,7 @@ InstallMethod( LeftCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 
-    local  pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
+    local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -2054,7 +2091,7 @@ InstallMethod( LeftCosetRepresentativesFromObject, "for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid, IsObject ], 0,
 function( G, U, o )
 
-    local  gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g;
+    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -2087,7 +2124,7 @@ InstallMethod( LeftCosetRepresentativesFromObject, "for a subgroupoid",
     true, [ IsGroupoid, IsGroupoid, IsObject ], 0,
 function( G, U, o )
 
-    local  pos, cG, co, i, cU, ncU, filt, piece, m, j, subU;
+    local pos, cG, co, i, cU, ncU, filt, piece, m, j, subU;
 
     if not IsWide( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -2119,7 +2156,7 @@ InstallMethod( DoubleCosetRepresentatives, "generic method for 2 subgroupoids",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid, IsGroupoid ], 0,
 function( G, U, V )
 
-    local  gg, obG, nobG, reps, cu, ou, gu, cv, ov, gv, dc, c, r;
+    local gg, obG, nobG, reps, cu, ou, gu, cv, ov, gv, dc, c, r;
 
     if not ( IsWide( G, U ) and IsWide( G, V ) ) then
         Error( "U,V not wide subgroupoids of G," );
@@ -2163,7 +2200,7 @@ InstallOtherMethod( RightCosetsNC, "for groupoids", true,
     [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 
-    local  cosets, reps, nr, i, e;
+    local cosets, reps, nr, i, e;
 
     reps := RightCosetRepresentatives( G, U );
     nr := Length( reps );
@@ -2179,7 +2216,7 @@ InstallMethod( LeftCosetsNC, "for groupoids", true,
     [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 
-    local  cosets, reps, nr, i, e;
+    local cosets, reps, nr, i, e;
 
     reps := LeftCosetRepresentatives( G, U );
     nr := Length( reps );
@@ -2195,7 +2232,7 @@ InstallOtherMethod( DoubleCosetsNC, "for groupoids", true,
     [ IsGroupoid, IsGroupoid, IsGroupoid ], 0,
 function( G, U, V )
 
-    local  cosets, reps, nr, i, e;
+    local cosets, reps, nr, i, e;
 
     reps := DoubleCosetRepresentatives( G, U, V );
     nr := Length( reps );
@@ -2225,7 +2262,8 @@ end );
 InstallMethod( \^, "for a groupoid element and an integer", true,
     [ IsGroupoidElement, IsInt ], 0,
 function( e, n )
-    local  t, h;
+
+    local t, h;
 
     t := e![2];
     h := e![3];
@@ -2245,7 +2283,9 @@ end );
 InstallMethod( ConjugateArrow, "for two groupoid elements", 
     IsIdenticalObj, [ IsGroupoidElement, IsGroupoidElement ], 0,
 function( e1, e2 )
-    local  c, p, q;
+
+    local c, p, q;
+
     #? gpd := FamilyObj( e1 )!.mwo; 
     c := e2![1]; 
     p := e2![2]; 
@@ -2309,7 +2349,7 @@ end );
 InstallMethod( IdentityArrow, "generic method for groupoid and object",
     true, [ IsGroupoid, IsObject ], 0,
 function( gpd, obj )
-    local  comp;
+    local comp;
     comp := PieceOfObject( gpd, obj );
     return ArrowNC( true, One(comp!.magma), obj, obj );
 end );

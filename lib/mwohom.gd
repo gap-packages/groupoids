@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-##  Declaration file for functions in the Gpd package.
+##  Declaration file for mappings of magmas with objects. 
 ##
 
 ############################################################################## 

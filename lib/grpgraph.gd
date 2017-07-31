@@ -12,20 +12,20 @@
 
 ############################################################################## 
 ## 
-#C  GpdIsDigraph( <dig> )                
+#C  GroupoidIsDigraph( <dig> )                
 ## 
-DeclareCategory( "GpdIsDigraph", IsDomain );
+DeclareCategory( "GroupoidIsDigraph", IsDomain );
 
 ############################################################################# 
 ## 
-#O  GpdVertices( <dig> );  
-#O  GpdArcs( <dig> );  
+#O  GroupoidVertices( <dig> );  
+#O  GroupoidArcs( <dig> );  
 ## 
 ##  Vertices must be declared as Operation, and not Attribute, 
 ##  so as not to conflict with Vertices in the Grape package. 
 ##   
-DeclareOperation( "GpdVertices", [ GpdIsDigraph ] );  
-DeclareOperation( "GpdArcs", [ GpdIsDigraph ] );  
+DeclareOperation( "GroupoidVertices", [ GroupoidIsDigraph ] );  
+DeclareOperation( "GroupoidArcs", [ GroupoidIsDigraph ] );  
 
 ############################################################################## 
 ## 
@@ -34,9 +34,11 @@ DeclareOperation( "GpdArcs", [ GpdIsDigraph ] );
 ##  A FpWeightedDigraph is a set of vertices and a set of directed arcs  
 ## 
 DeclareRepresentation( "IsFpWeightedDigraph",
-    GpdIsDigraph and IsComponentObjectRep, [ "group", "vertices", "arcs" ] ); 
+    GroupoidIsDigraph and IsComponentObjectRep, 
+    [ "group", "vertices", "arcs" ] ); 
 ##  (24/01/13) switched from IsAttributeStoringRep to IsComponentObjectRep
-##    GpdIsDigraph and IsAttributeStoringRep, [ "GroupOfFpWeightedDigraph" ] ); 
+##    GroupoidIsDigraph and IsAttributeStoringRep, 
+##    [ "GroupOfFpWeightedDigraph" ] ); 
  
 ############################################################################# 
 ## 
@@ -59,11 +61,11 @@ DeclareAttribute( "InvolutoryArcs", IsFpWeightedDigraph );
 
 ############################################################################# 
 ## 
-#O  GpdWeightedAdjacencyMatrix( <dig> ) 
-#O  GpdWeightedSpanningTree( <dig> ) 
+#O  GroupoidWeightedAdjacencyMatrix( <dig> ) 
+#O  GroupoidWeightedSpanningTree( <dig> ) 
 #O  ArcsIsosFromMatrices( <vertices>, <wt_adj_mx>, <isos_mx> ) 
-DeclareOperation( "GpdWeightedAdjacencyMatrix", [ GpdIsDigraph ] ); 
-DeclareOperation( "GpdWeightedSpanningTree", [ IsFpWeightedDigraph ] ); 
+DeclareOperation( "GroupoidWeightedAdjacencyMatrix", [ GroupoidIsDigraph ] ); 
+DeclareOperation( "GroupoidWeightedSpanningTree", [ IsFpWeightedDigraph ] ); 
 DeclareOperation( "ArcsIsosFromMatrices", 
     [ IsHomogeneousList, IsHomogeneousList, IsHomogeneousList ] ); 
 
@@ -76,7 +78,7 @@ DeclareOperation( "ArcsIsosFromMatrices",
 ## 
 #P  IsStructuredDigraph( <dig> )                
 ## 
-DeclareProperty( "IsStructuredDigraph", GpdIsDigraph ); 
+DeclareProperty( "IsStructuredDigraph", GroupoidIsDigraph ); 
  
 ############################################################################# 
 ## 
@@ -90,7 +92,7 @@ DeclareProperty( "IsStructuredDigraph", GpdIsDigraph );
 ##  - subgroup associated to tail vertex of each edge, and 
 ##  - an isomorphism associated to each edge.  
 ## 
-DeclareCategory( "IsGraphOfGroups", GpdIsDigraph ); 
+DeclareCategory( "IsGraphOfGroups", GroupoidIsDigraph ); 
 BindGlobal( "GraphOfGroupsFamily", 
     NewFamily( "GraphOfGroupsFamily", IsGraphOfGroups ) ); 
 DeclareRepresentation( "IsGraphOfGroupsRep",

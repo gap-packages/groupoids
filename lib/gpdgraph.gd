@@ -18,7 +18,7 @@
 ##  - subgroupoid associated to tail vertex of each edge, and 
 ##  - an isomorphism associated to each edge.  
 ## 
-DeclareCategory( "IsGraphOfGroupoids", GpdIsDigraph ); 
+DeclareCategory( "IsGraphOfGroupoids", GroupoidIsDigraph ); 
 BindGlobal( "GraphOfGroupoidsFamily", 
     NewFamily( "GraphOfGroupoidsFamily", IsGraphOfGroupoids ) ); 
 DeclareRepresentation( "IsGraphOfGroupoidsRep",

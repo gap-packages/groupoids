@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-##  Declaration file for utility functions in the Gpd package.
+##  Declaration file for utility functions in the groupoids package.
 ##
 
 #############################################################################

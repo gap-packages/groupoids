@@ -14,19 +14,21 @@
               the type of mwo hardly matters!? 
  * (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
  * (12/01/16) in this temporary version there have been a number of changes 
-              of function name, such as IsDigraph becoming GpdIsDigraph: 
-              this is in order to avoid conflicts with the new digraphs package. 
+              of function name, such as IsDigraph becoming GpdIsDigraph, 
+              later changed to GroupoidIsDigraph: this is in order to avoid 
+              conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution.
  * (22/03/16) in `mwohom.gi` check that \^-1 now works for isomorphisms 
               N.B. as at 02/11/16 this is still not fixed 
  * (07/03/17) the error mentioned in the manual at 5.4.1 is still there
 
-## 1.46 -> 1.51  (03/07/17) 
+## 1.46 -> 1.51  (01/08/17) 
 
+ * (01/08/17) version 1.51 released - for GAP 4.8.8 or 4.9.0
  * (03/07/17) README and CHANGES now in MarkDown format as .md files 
  * (14/06/17) added various methods for String, ViewString, PrintString 
- * (07/04/17) renamed the package 'groupoids' so most files need editing 
+ * (07/04/17) renamed the package 'groupoids' so most files needed editing 
 
 ## 1.45 -> 1.46  (21/02/17) 
 

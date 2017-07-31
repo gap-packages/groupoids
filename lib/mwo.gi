@@ -22,9 +22,10 @@
 ##
 InstallMethod( TypeOfDomainWithObjects, "for a list of domains with objects", 
     true, [ IsList ], 0, 
+function( pieces ) 
 
-    function( pieces ) 
-    local  type; 
+    local type; 
+
     ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
     type := 0; 
     if ForAll( pieces, p -> ( FamilyObj(p) =  GroupoidFamily ) ) then 
@@ -58,10 +59,11 @@ end );
 ##
 InstallMethod( ArrowNC, 
     "for boolean, element, tail and head", true,  
-    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ], 
-    0, 
-    function( isge, e, t, h ) 
-    local  obs, elt, fam;
+    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ], 0, 
+function( isge, e, t, h ) 
+
+    local obs, elt, fam;
+
     ## ?? (30/04/10)  fam := mwo!.eltsfam; 
     ## ?? (21/09/10)  yet another attempt to make groupoid elements special! 
     if isge then 
@@ -79,8 +81,10 @@ end );
 InstallMethod( Arrow, 
     "for general magma with objects, element, tail and head", true, 
     [ IsMagmaWithObjects, IsMultiplicativeElement, IsObject, IsObject ], 0, 
-    function( mwo, e, t, h ) 
-    local  piece, obs, fam, mag, pwo, pos, homset, pose; 
+function( mwo, e, t, h ) 
+
+    local piece, obs, fam, mag, pwo, pos, homset, pose; 
+
     if IsSinglePiece( mwo ) then 
         piece := mwo; 
     else 
@@ -174,8 +178,10 @@ end );
 InstallMethod( \*, "for two elements in a magma with objects", IsIdenticalObj,
     [IsMultiplicativeElementWithObjects, IsMultiplicativeElementWithObjects], 
     0, 
-    function( e1, e2 ) 
-    local  prod; 
+function( e1, e2 ) 
+
+    local prod; 
+
     ## elements are composable? 
     if ( ( e1![3] = e2![2] ) and 
          ( FamilyObj( e1![1] ) = FamilyObj( e2![1] ) ) ) then 
@@ -190,9 +196,8 @@ end );
 #M  \^( e, p ) . . . . . . power (inverse) of element in a magma with objects 
 ## 
 InstallMethod( \^, "for an element in a magma with objects and a PosInt", 
-    true, [ IsMultiplicativeElementWithObjects, IsPosInt ], 
-    0, 
-    function( e, p ) 
+    true, [ IsMultiplicativeElementWithObjects, IsPosInt ], 0, 
+function( e, p ) 
     ##  should be able to invert an identity element 
     ##  groupoids use their own method 
     if ( e![3] = e![2] ) then 
@@ -208,8 +213,10 @@ end );
 ##
 InstallOtherMethod( Order, "for a multiplicative element with objects", true,
     [ IsMultiplicativeElementWithObjects ], 0,
-function( e )
-    local  ord;
+function( e ) 
+
+    local ord;
+
     if not ( e![2] = e![3] ) then
         Error( "tail of e <> head of e," );
     fi;
@@ -225,7 +232,8 @@ end );
 ##
 InstallGlobalFunction( MagmaWithObjects, function( arg ) 
 
-    local  obs, mag;
+    local obs, mag;
+
     # list of objects and a magma 
     if ( ( Length(arg) = 2 ) and IsMagma( arg[1] ) and IsSet( arg[2] ) ) then 
         mag := arg[1]; 
@@ -256,8 +264,10 @@ end );
 ##
 InstallMethod( SinglePieceMagmaWithObjects, 
     "for magma, objects", true, [ IsMagma, IsCollection ], 0, 
-    function( mag, obs ) 
-    local  cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
+function( mag, obs ) 
+
+    local cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
+
     ## (23/04/10) commented out: 
     ##    cf := CollectionsFamily( FamilyObj( mag ) ); 
     ##  and replaced by: 
@@ -288,7 +298,9 @@ end );
 InstallMethod( \=, "for magmas with objects", IsIdenticalObj,
     [ IsMagmaWithObjects, IsMagmaWithObjects ], 0, 
 function ( m1, m2 ) 
-    local  i, p1, p2;
+
+    local i, p1, p2;
+
     if ( IsSinglePiece(m1) and IsSinglePiece(m2) ) then 
         return ( ( m1!.objects=m2!.objects ) and ( m1!.magma=m2!.magma ) ); 
     elif ( IsSinglePiece(m1) or IsSinglePiece(m2) ) then 
@@ -321,7 +333,8 @@ InstallMethod( \in, "for elements of a magma with objects", true,
     [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects ], 0, 
 function ( elt, mwo ) 
 
-    local  obs; 
+    local obs; 
+
     obs := ObjectList( mwo ); 
     if not ( ( elt![2] in obs ) and ( elt![3] in obs ) ) then 
         return false; 
@@ -336,8 +349,10 @@ InstallMethod( IsArrowIn,
     "for mwo element and a standard magma with objects", true, 
     [ IsMultiplicativeElementWithObjects, 
       IsMagmaWithObjects and IsSinglePiece ], 0,
-function( e, mwo )
-    local  obs, r1, r2;
+function( e, mwo ) 
+
+    local obs, r1, r2;
+
     obs := mwo!.objects; 
     if not ( (e![2] in obs) and (e![3] in obs) ) then 
         return false; 
@@ -365,7 +380,9 @@ end );
 InstallMethod( String, "for a magma with objects", true, 
     [ IsMagmaWithObjects ], 0, 
 function( mwo ) 
-    local  type; 
+
+    local type; 
+
     type := TypeOfDomainWithObjects( [ mwo ] ); 
     if ( type = 1 ) then 
         return( STRINGIFY( "groupoid" ) ); 
@@ -391,8 +408,10 @@ InstallMethod( ViewObj, "for an element in a magma with objects", true,
 
 InstallMethod( ViewObj, "for a single piece magma with objects", true, 
     [ IsSinglePiece ], 0,   
-    function( mwo )
-    local  type; 
+function( mwo )
+
+    local type; 
+
     type := TypeOfDomainWithObjects( [ mwo ] ); 
     if ( type = 1 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
@@ -410,9 +429,11 @@ InstallMethod( ViewObj, "for a single piece magma with objects", true,
 end );
 
 InstallMethod( PrintObj, "for a single piece magma with objects", true, 
-    [ IsSinglePiece ], 0,   
-    function( mwo )
-    local  type; 
+    [ IsSinglePiece ], 0, 
+function( mwo )
+
+    local type; 
+
     type := TypeOfDomainWithObjects( [ mwo ] ); 
     if ( type = 1 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
@@ -431,8 +452,10 @@ end );
 
 InstallMethod( ViewObj, "for more than one piece", true, 
     [ IsDomainWithObjects and IsPiecesRep ], 10,   
-    function( dwo )
-    local  i, pieces, np, type; 
+function( dwo )
+
+    local i, pieces, np, type; 
+
     pieces := Pieces( dwo ); 
     np := Length( pieces ); 
     type := TypeOfDomainWithObjects( Pieces( dwo ) ); 
@@ -454,8 +477,10 @@ end );
 
 InstallMethod( PrintObj, "for more than one piece", true, 
     [ IsDomainWithObjects and IsPiecesRep ], 10,   
-    function( dwo )
-    local  i, pieces, np; 
+function( dwo )
+
+    local i, pieces, np; 
+
     pieces := Pieces( dwo ); 
     np := Length( pieces ); 
     Print( "domain with objects having ", np, " pieces :-\n" ); 
@@ -471,10 +496,10 @@ end );
 ##
 #M  Display( <mwo> ) . . . . . . . . . . . . . .  display a magma with objects
 ##
-InstallMethod( Display, "for a mwo", [ IsMagmaWithObjects ],
+InstallMethod( Display, "for a mwo", true, [ IsMagmaWithObjects ], 0, 
 function( mwo )
     
-    local  comp, c, i, m, len;
+    local comp, c, i, m, len;
 
     if IsSinglePiece( mwo ) then 
         if IsDirectProductWithCompleteGraph( mwo ) then 
@@ -541,8 +566,8 @@ InstallMethod( GeneratorsOfMagmaWithObjects, "for a single piece mwo",
     true, [ IsSinglePiece ], 0,
 function( mwo )
 
-    local  obs, nobs, o1, m, mgens, type, id, gens1, gens2, gens, rays, 
-           i, j, k, g;
+    local obs, nobs, o1, m, mgens, type, id, gens1, gens2, gens, rays, 
+          i, j, k, g;
 
     obs := mwo!.objects;
     nobs := Length( obs );
@@ -609,8 +634,10 @@ end );
 
 InstallMethod( GeneratorsOfMagmaWithObjects, "for discrete domain",
     true, [ IsGroupoid and IsSinglePiece and IsDiscreteDomainWithObjects ], 0,
-function( mwo )
-    local  o, ogens, gens;  
+function( mwo ) 
+
+    local o, ogens, gens;  
+
     gens := [ ];
     for o in mwo!.objects do 
         ogens := GeneratorsOfGroup( ObjectGroup( mwo, o ) ); 
@@ -621,11 +648,9 @@ end );
 
 InstallMethod( GeneratorsOfMagmaWithObjects, "for mwo with >1 piece",
     true, [ IsMagmaWithObjects ], 0,
-function( mwo )
-    local  L; 
-    L := Concatenation( List( Pieces( mwo ), 
-             p -> GeneratorsOfMagmaWithObjects( p ) ) ); 
-    return L; 
+function( mwo ) 
+    return Concatenation( List( Pieces( mwo ), 
+               p -> GeneratorsOfMagmaWithObjects( p ) ) ); 
 end );
 
 #############################################################################
@@ -634,7 +659,6 @@ end );
 ## 
 #M  GeneratorsOfMagma( <m> ) 
 ## 
-##
 InstallMethod( GeneratorsOfMagma, "for a magma with objects", 
     true, [ IsMagmaWithObjects ], 0,
 function( m )
@@ -661,7 +685,7 @@ InstallMethod( ObjectList, "for a magma with objects",
     true, [ IsMagmaWithObjects ], 0,
 function( mwo )
 
-    local  obs; 
+    local obs; 
 
     if ( HasIsSinglePiece( mwo ) and IsSinglePiece( mwo ) ) then
         return mwo!.objects;
@@ -685,7 +709,7 @@ InstallMethod( UnionOfPiecesNC, "method for magmas with objects, and type",
     true, [ IsList, IsInt ], 0,
 function( comps, type )
 
-    local  len, pieces, L, fam, filter, mwo, i, obs, par;
+    local len, pieces, L, fam, filter, mwo, i, obs, par;
 
     ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
 
@@ -743,7 +767,7 @@ InstallMethod( UnionOfPieces, "generic method for magmas with objects",
     true, [ IsList ], 0,
 function( parts )
 
-    local  npa, part, pieces, p, nco, obs, obp, i, gi, nobj, type;
+    local npa, part, pieces, p, nco, obs, obp, i, gi, nobj, type;
 
     npa := Length( parts );
     pieces := [ ]; 
@@ -765,7 +789,8 @@ function( parts )
     for p in pieces do 
         obp := ObjectList( p );
         if ( Intersection( obs, obp ) <> [ ] ) then
-            Info( InfoGroupoids, 1, "constituents must have disjoint object sets" );
+            Info( InfoGroupoids, 1, 
+                  "constituents must have disjoint object sets" );
             return fail;
         fi;
         obs := Union( obs, obp ); 
@@ -783,8 +808,10 @@ end );
 ##
 InstallMethod( DomainWithSingleObject, "generic method for domain, object",
     true, [ IsDomain, IsObject ], 0,
-function( dom, obj )
-    local  o; 
+function( dom, obj ) 
+
+    local o; 
+
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
         Info( InfoGroupoids, 2, "object given as a singleton list" );
         o := obj[1]; 
@@ -817,7 +844,7 @@ InstallMethod( PieceOfObject, "generic method for magma with objects",
     true, [ IsDomainWithObjects, IsObject ], 0,
 function( dwo, obj )
 
-    local  pieces, p, objp;
+    local pieces, p, objp;
 
     if IsSinglePiece( dwo ) then
         if not ( obj in dwo!.objects ) then
@@ -848,7 +875,8 @@ InstallMethod( PieceNrOfObject, "generic method for domain with objects",
     true, [ IsDomainWithObjects, IsObject ], 0,
 function( dwo, obj )
 
-    local  pieces, i, objp, np;
+    local pieces, i, objp, np; 
+
     pieces := Pieces( dwo );
     for i in [1..Length( pieces )] do
         objp := pieces[i]!.objects;
@@ -868,7 +896,8 @@ InstallMethod( IsDiscreteDomainWithObjects, "for a magma with objects", true,
     [ IsDomainWithObjects ], 0,
 function( dwo )
 
-    local  p;
+    local p; 
+
     for p in Pieces( dwo ) do
         if not ( Length( p!.objects ) = 1 ) then
             return false;
@@ -886,7 +915,8 @@ InstallMethod( IsHomogeneousDomainWithObjects, "for a magma with objects",
     true, [ IsDiscreteDomainWithObjects ], 0,
 function( dwo )
 
-    local  pieces, g, j, iso; 
+    local pieces, g, j, iso; 
+
     pieces := Pieces( dwo ); 
     g := pieces[1]!.magma; 
     for j in [2..Length(pieces)] do 
@@ -902,7 +932,8 @@ InstallMethod( IsHomogeneousDomainWithObjects, "for a magma with objects",
     true, [ IsDomainWithObjects ], 0,
 function( dwo )
 
-    local  pieces, sizes, g, j, iso; 
+    local pieces, sizes, g, j, iso; 
+
     pieces := Pieces( dwo ); 
     sizes := Set( List( pieces, p -> Size( p ) ) ); 
     if not ( Length( sizes ) = 1 ) then 
@@ -927,9 +958,9 @@ end );
 ##
 InstallMethod( IsSubdomainWithObjects, "for two domains with objects", true, 
     [ IsDomainWithObjects, IsDomainWithObjects ], 0, 
-    function( D, U )
+function( D, U )
 
-    local  compU, obj, p, ok; 
+    local compU, obj, p, ok; 
 
     #?  (21/11/08)  does any of this make sence ?? 
     #?  does a subdomeain of a groupoid have to be a groupoid ?? 
@@ -977,8 +1008,7 @@ end );
 ##
 InstallMethod( IsWide, "for two domains with objects", true, 
     [ IsDomainWithObjects, IsDomainWithObjects ], 0, 
-    function( D, U )
-
+function( D, U )
     return ( IsSubdomainWithObjects( D, U ) and 
              ObjectList( D ) = ObjectList( U ) ); 
 end ); 
@@ -992,7 +1022,8 @@ end );
 ##
 InstallGlobalFunction( SemigroupWithObjects, function( arg ) 
 
-    local  obs, sgp;
+    local obs, sgp; 
+
     # list of objects and a semigroup 
     if ( (Length(arg) = 2) and IsSemigroup( arg[1] ) and IsSet( arg[2] ) ) then 
         sgp := arg[1]; 
@@ -1015,9 +1046,9 @@ end );
 ##
 InstallMethod( SinglePieceSemigroupWithObjects, 
     "for objects, semigroup", true, [ IsSemigroup, IsCollection ], 0, 
-    function( sgp, obs ) 
+function( sgp, obs ) 
 
-    local  cf, one, r, gens, swo, isa, isc; 
+    local cf, one, r, gens, swo, isa, isc; 
 
     ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( sgp ) ); 
     cf := SemigroupWithObjectsFamily; 
@@ -1036,8 +1067,6 @@ InstallMethod( SinglePieceSemigroupWithObjects,
 end ); 
 
 
-
-
 ##################################  MONOIDS  ################################ 
 
 ############################################################################# 
@@ -1046,7 +1075,8 @@ end );
 ##
 InstallGlobalFunction( MonoidWithObjects, function( arg ) 
 
-    local  obs, mon;
+    local obs, mon; 
+
     # list of objects and a monoid 
     if ( ( Length(arg) = 2 ) and IsMonoid( arg[1] )  and IsSet( arg[2] ) ) then 
         mon := arg[1]; 
@@ -1067,9 +1097,9 @@ end );
 ##
 InstallMethod( SinglePieceMonoidWithObjects, 
     "for objects, monoid", true, [ IsMonoid, IsCollection ], 0, 
-    function( mon, obs ) 
+function( mon, obs ) 
 
-    local  cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
+    local cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
 
     ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( mon ) ); 
     cf := MonoidWithObjectsFamily; 
@@ -1109,8 +1139,10 @@ end );
 ##
 InstallMethod( IsSubmagmaWithObjectsGeneratingTable, "for magma and array", 
     true, [ IsMagma, IsList ], 0, 
-    function( mag, A ) 
+function( mag, A ) 
+
     local n, s, a, b, e;
+
     n := Length( A );    ## number of objects 
     s := Size( mag );  
     e := [1..s]; 
@@ -1133,8 +1165,10 @@ end );
 ##
 InstallMethod( SubmagmaWithObjectsElementsTable, "for magma and array", 
     true, [ IsMagma, IsList ], 0, 
-    function( mag, A ) 
+function( mag, A ) 
+
     local t, done, B, C, T, n, s, i, j, k, Lij, Lik, Ljk, a, b, ab; 
+
     if not IsSubmagmaWithObjectsGeneratingTable( mag, A ) then 
         Error( "array A is not a generating table for a submagma over mag," ); 
     fi; 
@@ -1173,8 +1207,10 @@ end );
 InstallMethod( SubmagmaWithObjectsByElementsTable, 
     "for objects, magma and table of generating elements", true, 
     [ IsSinglePiece, IsList ], 0, 
-    function( mwo, A ) 
-    local  C, mag, obs, cf, isa, isc, swo; 
+function( mwo, A ) 
+
+    local C, mag, obs, cf, isa, isc, swo; 
+
     obs := mwo!.objects; 
     mag := mwo!.magma; 
     C := SubmagmaWithObjectsElementsTable( mag, A ); 
@@ -1200,7 +1236,7 @@ end );
 
 InstallMethod( PrintObj, "for a submagma with objects and elements table", 
     true, [ IsSubmagmaWithObjectsTableRep ], 0, 
-    function( M ) 
+function( M ) 
     Print( "submagma with objects:-\n" ); 
     Print( "objects = ", M!.objects, "\n" );
     Print( "  magma = ", M!.magma, "\n" );  
@@ -1217,7 +1253,8 @@ end );
 InstallMethod( Ancestor, "method for a domain with objects", 
     true, [ IsDomainWithObjects ], 0,
 function( dom ) 
-    local  found, d; 
+
+    local found, d; 
 
     d := dom; 
     found := ( HasParent( d ) and ( Parent( d ) = d ) ); 

@@ -26,9 +26,9 @@ MAGMA_HOMOMORPHISM_CONSTRUCTORS := Concatenation(
 ##
 InstallGlobalFunction( MagmaWithObjectsHomomorphism, function( arg )
 
-    local  nargs, id, rays;
-    nargs := Length( arg );
+    local nargs, id, rays; 
 
+    nargs := Length( arg );
     if ( ( nargs < 3 ) or not IsMagmaWithObjects( arg[1] ) or 
          ( nargs > 4 ) or not IsMagmaWithObjects( arg[2] ) ) then 
         Info( InfoGroupoids, 1, MAGMA_HOMOMORPHISM_CONSTRUCTORS );
@@ -76,7 +76,7 @@ InstallMethod( HomomorphismFromSinglePiece,
     0,
 function( m1, m2, hom, imo )
 
-    local  o1, o2, no2, mag1, mag2;
+    local o1, o2, no2, mag1, mag2;
 
     o1 := m1!.objects;
     o2 := m2!.objects;
@@ -105,7 +105,7 @@ InstallMethod( HomomorphismToSinglePieceNC,
     [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
 function( mag1, mag2, images )
 
-    local  fam, isgpdhom, filter, map, ok, imo, homs;
+    local fam, isgpdhom, filter, map, ok, imo, homs;
 
     #? (23/04/10) removed:  fam := FamilyObj( [ mag1, mag2, images ] ); 
     fam := GeneralMappingWithObjectsFamily; 
@@ -150,7 +150,7 @@ InstallMethod( HomomorphismToSinglePiece,
     [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
 function( mwo1, mwo2, images )
 
-    local  pieces, o2, m2, j, pj, h;
+    local pieces, o2, m2, j, pj, h;
 
     Info( InfoGroupoids, 3, "homomorphism to a single piece magma:", images ); 
     pieces := Pieces( mwo1 ); 
@@ -185,8 +185,8 @@ InstallMethod( HomomorphismByUnionNC,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0,  
 function( mag1, mag2, maps )
 
-    local  fam, filter, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
-           part, i, m, src;
+    local fam, filter, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
+          part, i, m, src;
 
     if IsSinglePiece( mag2 ) then 
         Info( InfoGroupoids, 1, "better to use single piece function" );
@@ -227,18 +227,18 @@ InstallMethod( HomomorphismByUnion,
     "generic method for a magma mapping", true,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0, 
     #? (15/06/11) was SinglePiece: needs revising for multi-component cases? 
-
 function( mag1, mag2, maps )
 
-    local  pieces1, nc1, pieces2, nc2, lenmaps, lenpieces, npieces, expand, 
-           src1, g, flat1, pos1, pos2, piecesmap, L, i, j, k, m, filt, 
-           mapj, src;
+    local pieces1, nc1, pieces2, nc2, lenmaps, lenpieces, npieces, expand, 
+          src1, g, flat1, pos1, pos2, piecesmap, L, i, j, k, m, filt, 
+          mapj, src;
 
     if not ForAll( maps, m -> IsGeneralMappingWithObjects(m) ) then 
         Error( "all maps should have IsGeneralMappingWithObjects" ); 
     fi; 
     if IsSinglePiece( mag2 ) then 
-        Info( InfoGroupoids, 3, "using the special case in HomomorphismByUnion" ); 
+        Info( InfoGroupoids, 3, 
+              "using the special case in HomomorphismByUnion" ); 
         piecesmap := Concatenation( List( maps, m -> PieceImages(m) ) ); 
         return HomomorphismToSinglePieceNC( mag1, mag2, piecesmap ); 
     fi;
@@ -337,7 +337,7 @@ InstallMethod( HomomorphismFromSinglePieceGeneratorsImages,
     [ IsSinglePiece, IsSinglePiece, IsHomogeneousList, IsHomogeneousList ], 0,
 function( m1, m2, gens, ims )
 
-    local  obs1, nobs1, mag1, gens1, obs2, nobs2, mag2, ims2, g, map, r, rhom;
+    local obs1, nobs1, mag1, gens1, obs2, nobs2, mag2, ims2, g, map, r, rhom;
 
     obs1 := m1!.objects;
     nobs1 := Length( obs1 );
@@ -381,7 +381,7 @@ InstallMethod( IsomorphismNewObjects, "for a single piece mwo", true,
     [ IsSinglePiece, IsHomogeneousList ], 0,
 function( m1, ob2 )
 
-    local  isgpd, iso, ob1, mag, m2, id;
+    local isgpd, iso, ob1, mag, m2, id;
 
     ob1 := m1!.objects; 
     if not ( Length(ob1) = Length(ob2) ) then
@@ -398,7 +398,7 @@ InstallMethod( IsomorphismNewObjects, "generic method for a magma", true,
     [ IsMagmaWithObjects, IsHomogeneousList ], 0,
 function( m1, ob2 )
 
-    local  isos, pieces1, nc1, i, m2, iso;
+    local isos, pieces1, nc1, i, m2, iso;
 
     pieces1 := Pieces( m1 );
     nc1 := Length( pieces1 );
@@ -422,7 +422,7 @@ InstallOtherMethod( IdentityMapping, "for a magma with objects", true,
     [ IsMagmaWithObjects ], 0,
 function( mwo )
 
-    local  pieces, gp, gens, id, len, homs, iso;
+    local pieces, gp, gens, id, len, homs, iso;
 
     if IsSinglePiece( mwo ) then
         iso := HomomorphismToSinglePieceNC
@@ -450,8 +450,8 @@ InstallMethod( ImagesOfObjects, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( map )
 
-    local  images, src, obs, ims, i, j, c, srcc, obc, imc, o, pos, 
-           gensims, len, rng, obr, imobr;
+    local images, src, obs, ims, i, j, c, srcc, obc, imc, o, pos, 
+          gensims, len, rng, obr, imobr;
 
     if not HasPiecesOfMapping( map ) then
         images := PieceImages( map );
@@ -492,7 +492,7 @@ InstallMethod( ImagesOfObjects, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map )
 
-    local  src, obs, ims, i, c, obc, o, pos;
+    local src, obs, ims, i, c, obc, o, pos;
 
     src := Source( map );
     obs := ObjectList( src );
@@ -515,21 +515,21 @@ end );
 ##
 InstallMethod( IsSemigroupWithObjectsHomomorphism, 
     "for a mapping with objects", true, [ IsMagmaWithObjectsHomomorphism ], 0,
-    function( map ) 
+function( map ) 
     return ( IsSemigroupWithObjects( Source(map) ) 
              and IsSemigroupWithObjects( Range(map) ) ); 
 end );
 
 InstallMethod( IsMonoidWithObjectsHomomorphism, "for a mapping with objects", 
     true, [ IsMagmaWithObjectsHomomorphism ], 0,
-    function( map ) 
+function( map ) 
     return ( IsMagmaWithObjectsAndOnes( Source(map) ) 
              and IsMagmaWithObjectsAndOnes( Range(map) ) ); 
 end );
 
 InstallMethod( IsGroupWithObjectsHomomorphism, "for a mapping with objects", 
     true, [ IsMagmaWithObjectsHomomorphism ], 0,
-    function( map ) 
+function( map ) 
     return ( IsGroupoid( Source(map) ) and IsGroupoid( Range(map) ) ); 
 end );
 
@@ -540,13 +540,13 @@ end );
 ##
 InstallMethod( IsGeneralMappingToSinglePiece, 
     "for a mapping with objects", true, [ IsMagmaWithObjectsHomomorphism ], 0,
-    function( map ) 
+function( map ) 
     return IsSinglePiece( Range( map ) ); 
 end );
 
 InstallMethod( IsGeneralMappingFromSinglePiece, 
     "for a mapping with objects", true, [ IsMagmaWithObjectsHomomorphism ], 0,
-    function( map ) 
+function( map ) 
     return IsSinglePiece( Source( map ) ); 
 end );
 
@@ -568,7 +568,7 @@ InstallMethod( IsInjectiveOnObjects, "for a mapping with objects", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function( map )
 
-    local  images, imo;
+    local images, imo;
 
     if HasImagesOfObjects( map ) then 
         return IsDuplicateFree( Flat( ImagesOfObjects( map ) ) );
@@ -600,8 +600,10 @@ end );
 
 InstallMethod( IsSurjectiveOnObjects, "for a mapping with objects", true,
     [ IsHomomorphismToSinglePiece ], 0,
-function( map )
-    local  obr, images, imo;
+function( map ) 
+
+    local obr, images, imo;
+
     obr := ObjectList( Range( map ) ); 
     if HasImagesOfObjects( map ) then 
         imo := Flat( ImagesOfObjects( map ) );
@@ -625,7 +627,9 @@ InstallMethod( IsSurjectiveOnObjects,
     "for a mapping from a homogeneous, discrete groupoid", true,
     [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
 function( map ) 
-    local  obr, images, imo;
+
+    local obr, images, imo;
+
     obr := ObjectList( Range( map ) ); 
     imo := ImagesOfObjects( map );
     return ( Set(imo) = obr ); 
@@ -672,7 +676,7 @@ InstallMethod( InverseGeneralMapping, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map )
 
-    local  pieces, isos, inv;
+    local pieces, isos, inv;
 
     Info( InfoGroupoids, 3, "InverseGeneralMapping for magma mappings" );
     pieces := PiecesOfMapping( map );
@@ -687,7 +691,7 @@ InstallMethod( InverseGeneralMapping, "for a single piece mapping", true,
     [ IsMagmaWithObjectsHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( map )
 
-    local  m1, m2, ob1, ob2, nob, hom21, len, sc1, sc2, obhom1, inv;
+    local m1, m2, ob1, ob2, nob, hom21, len, sc1, sc2, obhom1, inv;
 
     if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
         Error( "mapping with objects not bijective" );
@@ -721,8 +725,8 @@ InstallMethod( InverseGeneralMapping, "for a connected mapping", true,
     [  IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece ], 0,
 function( map )
 
-    local  m1, m2, ob1, ob2, nobs, imob1, hom12, hom21, ok, imob2, sc, hs, e, 
-           iro1, piro1, iro2, piro2, L, pi, i, ri, ray2, rim12, rim21, inv;
+    local m1, m2, ob1, ob2, nobs, imob1, hom12, hom21, ok, imob2, sc, hs, e, 
+          iro1, piro1, iro2, piro2, L, pi, i, ri, ray2, rim12, rim21, inv;
 
     if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
         Error( "mapping not bijective on objects" );
@@ -775,12 +779,13 @@ InstallMethod( InverseGeneralMapping, "for hom from discrete gpd with objects",
             IsGroupoidHomomorphismFromHomogeneousDiscrete ], 0,
 function( map )
 
-    local  src, rng, obs, oims1, oims2, homs, ihoms; 
+    local src, rng, obs, oims1, oims2, homs, ihoms; 
 
     if not IsBijectiveOnObjects( map ) then 
         Error( "expecting map to be bijective on objects" ); 
     fi; 
-    Info( InfoGroupoids, 3, "InverseGeneralMapping for hom from discrete groupoid" );
+    Info( InfoGroupoids, 3, 
+          "InverseGeneralMapping for hom from discrete groupoid" );
     src := Source( map ); 
     rng := Range( map ); 
     if not ( IsHomogeneousDomainWithObjects( rng ) and 
@@ -804,7 +809,8 @@ end );
 InstallMethod( \=, "for 2 single piece mappings", true,
     [ IsHomomorphismToSinglePiece, IsHomomorphismToSinglePiece ], 0,
 function( m1, m2 )
-    Info( InfoGroupoids, 4, "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
+    Info( InfoGroupoids, 4, 
+          "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
     return ( ( Source( m1 ) =  Source( m2 ) ) and
              ( Range( m1 ) = Range( m2 ) ) and 
              ( PieceImages( m1 ) = PieceImages( m2 ) ) );
@@ -814,7 +820,7 @@ InstallMethod( \=, "for 2 magma mappings", true,
     [ IsMappingWithPiecesRep, IsMappingWithPiecesRep ], 0,
 function( m1, m2 )
 
-    local  c1, c2, nc, src1, src2, rng1, rng2, j, s, spos, r, rpos, L, ok;
+    local c1, c2, nc, src1, src2, rng1, rng2, j, s, spos, r, rpos, L, ok;
 
     Info( InfoGroupoids, 4, "\\= for IsMappingWithPiecesRep in mwohom.gi" ); 
     c1 := PiecesOfMapping( m1 );
@@ -850,7 +856,8 @@ InstallMethod( \=, "for 2 connected groupoid mappings", true,
     [ IsDefaultGroupoidHomomorphismRep, 
       IsDefaultGroupoidHomomorphismRep ], 0,
 function( m1, m2 ) 
-    Info( InfoGroupoids, 4, "\\= for IsDefaultGroupoidHomomorphismRep in gpdhom.gi" ); 
+    Info( InfoGroupoids, 4, 
+          "\\= for IsDefaultGroupoidHomomorphismRep in gpdhom.gi" ); 
     if not ( ( Source( m1 ) =  Source( m2 ) ) 
             and ( Range( m1 ) = Range( m2 ) ) ) then 
         return false; 
@@ -875,8 +882,9 @@ InstallMethod( \*, "for 2 magma mappings", true,
     [ IsMagmaWithObjectsHomomorphism, IsMagmaWithObjectsHomomorphism ], 0,
 function( m1, m2 )
 
-    local  src1, rng1, src2, rng2, pcs1, pcr1, pcs2, pcr2, pcm1, len1, 
-           pcm2, len2, pieces, i, pi, oi, found, j; 
+    local src1, rng1, src2, rng2, pcs1, pcr1, pcs2, pcr2, pcm1, len1, 
+          pcm2, len2, pieces, i, pi, oi, found, j; 
+
     ## general * implemented 12/01/11 
     src1 := Source( m1 ); 
     rng1 := Range( m1 );
@@ -917,9 +925,9 @@ InstallMethod( \*, "for 2 single piece magma mappings", true,
     [ IsMagmaWithObjectsHomomorphism, IsHomomorphismToSinglePiece ], 0,
 function( map1, map2 )
 
-    local  src1, rng1, src2, rng2, pos, pieces1, len1, i, m, maps, 
-           images, imo1, hom1, s1, ob1, nob1, imo2, hom2, s2, ob2, nob2,
-           imo12, j, o, p, hom;
+    local src1, rng1, src2, rng2, pos, pieces1, len1, i, m, maps, 
+          images, imo1, hom1, s1, ob1, nob1, imo2, hom2, s2, ob2, nob2,
+          imo12, j, o, p, hom;
 
     Info( InfoGroupoids, 3, "second method for * with map2 single piece" );
     src1 := Source( map1 );
@@ -966,9 +974,10 @@ InstallMethod( \*, "for two single piece magma mappings", true,
     [ IsHomomorphismToSinglePiece, IsHomomorphismToSinglePiece ], 0,
 function( m1, m2 )
 
-    local  s1, r1, s2, r2, oi1, ob1, nob1, ob2, oi2, oi12, j, o, p, hom;
+    local s1, r1, s2, r2, oi1, ob1, nob1, ob2, oi2, oi12, j, o, p, hom;
 
-    Info( InfoGroupoids, 3, "third method for * with map1 & map2 single piece" );
+    Info( InfoGroupoids, 3, 
+          "third method for * with map1 & map2 single piece" );
     s1 := Source( m1 );
     if not IsSinglePiece( s1 ) then 
         Error("source of m1 not single piece - general method not installed");
@@ -999,10 +1008,11 @@ InstallMethod( \*, "for 2 connected groupoid homomorphisms", true,
       IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep ], 0,
 function( m1, m2 )
 
-    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
-           j, h1, h2, mgi1, im12, hom, oims, rims;
+    local s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
+          j, h1, h2, mgi1, im12, hom, oims, rims;
 
-    Info( InfoGroupoids, 2, "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
+    Info( InfoGroupoids, 2, 
+          "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
     s1 := Source( m1 ); 
     r1 := Range( m1 );
     s2 := Source( m2 );
@@ -1036,8 +1046,8 @@ InstallMethod( \*, "for maps from hom discrete groupoids", true,
       IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
 function( m1, m2 )
 
-    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
-           homs, oims, hom1, hom2, pos, j;
+    local s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
+          homs, oims, hom1, hom2, pos, j;
 
     Info( InfoGroupoids, 3, "method 2 for * with maps from hom discrete gpds" );
     s1 := Source( m1 ); 
@@ -1069,10 +1079,10 @@ InstallMethod( \*, "for map from hom discrete with any gpd hom", true,
       IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep ], 0,
 function( m1, m2 )
 
-    local  s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
-           homs, oims, hom1, j;
+    local s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, homs, oims, hom1, j;
 
-    Info( InfoGroupoids, 2, "method 3 for * with first a map from hom discrete" );
+    Info( InfoGroupoids, 2, 
+          "method 3 for * with first a map from hom discrete" );
     s1 := Source( m1 ); 
     r1 := Range( m1 );
     s2 := Source( m2 );
@@ -1103,7 +1113,7 @@ InstallMethod( \^, "for a magma with objects mapping and an integer", true,
     [ IsMagmaWithObjectsHomomorphism, IsInt ], 0,
 function( map, n )
 
-    local  i, m1, m2; 
+    local i, m1, m2; 
 
     if not ( ( Source(map) = Range(map) ) or ( n = -1 ) ) then
         Error( "source <> range  or  n <> -1" );
@@ -1142,7 +1152,8 @@ end );
 InstallMethod( Order, "for a single piece magma mapping", true,
     [ IsHomomorphismToSinglePiece and IsAutomorphismWithObjects ], 0, 
 function( m )
-    local  im, obsrc, oblist, obord, hom, homord, ok;
+
+    local im, obsrc, oblist, obord, hom, homord, ok;
 
     im := InverseMapping( m ); 
     if (  im = fail ) then
@@ -1211,7 +1222,7 @@ InstallMethod( PrintObj, "for a groupoid homomorphism", true,
     [ IsGroupoidHomomorphism ], 0, 
 function ( hom ) 
 
-    local  h; 
+    local h; 
 
     Print( "groupoid homomorphism : " );
     if ( HasName( Source(hom) ) and HasName( Range(hom) ) ) then 
@@ -1236,7 +1247,7 @@ InstallMethod( Display, "for a homomorphsim to a single piece magma", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( hom )
 
-    local  homs, imo, src, rng, pieces, i, c, images, len;
+    local homs, imo, src, rng, pieces, i, c, images, len;
 
     Print( "homomorphism to single piece magma" );
     src := Source( hom );
@@ -1270,7 +1281,7 @@ InstallMethod( Display, "generic method for a magma mapping", true,
     [ IsGeneralMappingWithObjects ], 0,
 function ( hom )
 
-    local  chom, src, rng, pieces, i, c, images, len;
+    local chom, src, rng, pieces, i, c, images, len;
 
     Print( "magma homomorphism: ", Source( hom ), " -> ", 
             Range( hom ), " with pieces :\n" );
@@ -1304,10 +1315,11 @@ InstallOtherMethod( ImageElm, "for a magma with objects hom", true,
    [ IsHomomorphismToSinglePiece, IsMultiplicativeElementWithObjects ], 0,
 function ( map, e )
 
-    local  G1, ce, C1, pe, Ge, obs1, hom, obs2, mag2, t2, h2, g2;
+    local G1, ce, C1, pe, Ge, obs1, hom, obs2, mag2, t2, h2, g2;
 
     #?  need to include some tests here ?? 
-    Info( InfoGroupoids, 3, "this is the first ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, 
+          "this is the first ImageElm function in mwohom.gi" ); 
     G1 := Source( map );
     ce := PieceOfObject( G1, e![2] );
     C1 := Pieces( G1 );
@@ -1328,9 +1340,10 @@ InstallOtherMethod( ImageElm, "for a magma with objects hom", true,
    [ IsGeneralMappingWithObjects, IsMultiplicativeElementWithObjects ], 0,
 function ( map, e )
 
-    local  M1, C1, pe, obs1, pom, pim, obs2, t2, h2, g2; 
+    local M1, C1, pe, obs1, pom, pim, obs2, t2, h2, g2; 
 
-    Info( InfoGroupoids, 3, "this is the second ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, 
+          "this is the second ImageElm function in mwohom.gi" ); 
     M1 := Source( map ); 
     C1 := Pieces( M1 );
     pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
@@ -1349,10 +1362,11 @@ InstallOtherMethod( ImageElm, "for a magma endomorphism", true,
       IsMultiplicativeElementWithObjects ], 0,
 function ( map, elt )
 
-    local  mag, obs, one, gensims, gens, ims, rhom, 
-           e, j, ej, pj, k, ek, pk, r, im;
+    local mag, obs, one, gensims, gens, ims, rhom, 
+          e, j, ej, pj, k, ek, pk, r, im;
 
-    Info( InfoGroupoids, 3, "this is the third ImageElm function in mwohom.gi" ); 
+    Info( InfoGroupoids, 3, 
+          "this is the third ImageElm function in mwohom.gi" ); 
     mag := Source( map );
     obs := mag!.objects; 
     one := One( mag!.magma );
@@ -1385,7 +1399,8 @@ end );
 InstallOtherMethod( ImagesSource, "for a magma mapping", true, 
     [ IsHomomorphismToSinglePiece ], 0,
 function ( map )
-    local  imo, hom, img, rng;
+
+    local imo, hom, img, rng;
 
     if not IsInjectiveOnObjects( map ) then
         Error( "not yet implemented when not injective on objects" );
@@ -1415,7 +1430,9 @@ end );
 InstallMethod( IsEndoGeneralMapping, "for a mwo mapping", true,
   [ IsMagmaWithObjectsHomomorphism ], 0,
 function ( map ) 
-    local  obs; 
+
+    local obs; 
+
     obs := Source( map )!.objects; 
     return ForAll( PieceImages( map ), 
         c -> ( IsEndoGeneralMapping( c[1] ) and IsSubset( obs, c[2] ) ) ); 
