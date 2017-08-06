@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  mwo.tst                 groupoidsInfoGroupoids Package                    Chris Wensley
+#W  mwo.tst                 Groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2016, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -186,7 +186,7 @@ gap> Length( GeneratorsOfMagmaWithObjects( N3 ) );
 ## this should fail since the object sets are not disjoint: 
 gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  
 fail
-
+gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 #############################################################################

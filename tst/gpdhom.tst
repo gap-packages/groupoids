@@ -287,7 +287,7 @@ gap> u1 := z1*w1*y1*x1*z1;
 gap> imu := ImageElm( nmonAHs3, u );; 
 gap> u1 = imu;
 true
-
+gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 #############################################################################

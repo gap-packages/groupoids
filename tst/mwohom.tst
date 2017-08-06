@@ -128,7 +128,7 @@ magma with objects homomorphism :
     , magma with objects homomorphism : [ [ smap, [ -101, -102, -103 ] ] ] ]
 gap> ImageElm( h15, t12 ); 
 [Transformation( [ 2, 2, 4, 1 ] ) : -103 -> -102]
-
+gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
 ##############################################################################

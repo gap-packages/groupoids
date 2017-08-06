@@ -20,7 +20,6 @@ gap> A1 := [ [y,5,6], [y^-1,6,5]];;
 gap> D1 := FpWeightedDigraph( fg1, V1, A1 );
 weighted digraph with vertices: [ 5, 6 ]
 and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
-
 gap> inv1 := InvolutoryArcs( D1 );
 [ 2, 1 ]
 
@@ -33,7 +32,6 @@ gap> D3 := FpWeightedDigraph( fg3, V3, A3 );
 weighted digraph with vertices: [ 7, 8, 9 ]
 and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ], 
   [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
-
 gap> inv3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 
@@ -232,7 +230,7 @@ gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
 -3 -> -4].y^-1.[a^7 : -2 -> -1](5)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
 (5)[a^-1 : -1 -> -2].y.[b^-1 : -4 -> -4].y^-1.[a^10 : -2 -> -1](5)
-
+gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 
 #############################################################################

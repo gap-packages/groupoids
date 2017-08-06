@@ -310,7 +310,7 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 gap> ConjugateGroupoid( Hd8a, u^-1 ); 
 single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
-
+gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 
 #############################################################################
