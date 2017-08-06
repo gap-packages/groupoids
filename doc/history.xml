@@ -55,7 +55,7 @@ in June 2012.
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
 <P/>
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
-for &GAP; 4.9.  
+for &GAP; 4.8.8 or 4.9. 
 <P/>
 In the current version there have been a number of changes of function 
 name, such as <C>IsDigraph</C> becoming <C>GroupoidIsDigraph</C>. 
@@ -69,6 +69,9 @@ in due course.
 <Section Label="sec-whatnext">
 <Heading>What needs to be done next?</Heading>
 
+The urgent requirement is for a new implementation of groupoid homomorphisms 
+to eliminate the errors mention in section <Ref Sect="sec-autos"/>. 
+<P/>
 Computationally, there are three types of connected groupoid:
 <List>
 <Item>
@@ -87,7 +90,7 @@ while <Package>gpd</Package> 1.01 and 1.03 considered only the first case,
 and <Package>gpd</Package> 1.05 extended 1.03 to the second case. 
 <P/> 
 The third case has not yet been considered for implementation, 
-and there does not appear to be much need to do so. 
+and there does not appear to be any need to do so. 
 <P/> 
 Here are some other immediate requirements: 
 <List>
@@ -120,8 +123,7 @@ convert <C>GraphOfGroupsRewritingSystem</C> to the category
 <C>IsRewritingSystem</C>;
 </Item>
 <Item>
-in <Package>XMod</Package>, implement crossed modules over groupoids 
-(a start has been made).
+in <Package>XMod</Package>, continue to work on crossed modules over groupoids.
 </Item>
 </List>
 

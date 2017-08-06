@@ -51,10 +51,9 @@ and the subgroups have finite index.
 The &groupoids; package was originally implemented in 2000 
 (as <Package>GraphGpd</Package>) 
 when the first author was studying for a Ph.D. in Bangor.
-<P/>
-Version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
-Version 1.15 came out with the first release of &GAP; 4.5 in June 2012, 
-and was submitted for official acceptance as a &GAP; package. 
+<P/> 
+The package was then renamed <Package>Gpd</Package> and 
+version 1.07 was released in July 2011, to be tested with &GAP; 4.5. 
 <Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
 <P/>
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
@@ -63,6 +62,9 @@ Recent versions implement many of the constructions described in the paper
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
 <P/>
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;.  
+<P/>
+A major redesign of groupoid homomorphisms is planned for the next version. 
+This should deal with a number of bugs in the various homomorphism functions. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
 Please submit an issue at 

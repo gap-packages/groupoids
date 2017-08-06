@@ -9,15 +9,15 @@ PackageName := "groupoids",
 Subtitle := "Groupoids, graphs of groups, and graphs of groupoids",
 
 Version := "1.51",
-Date := "01/08/2017", 
+Date := "06/08/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GROUPOIDSVERSION "1.51">
-##  <!ENTITY GROUPOIDSRELEASEDATE "01/08/2017">
+##  <!ENTITY GROUPOIDSRELEASEDATE "06/08/2017">
 ##  <!ENTITY GROUPOIDSTARFILENAME "groupoids-1.51.tar.gz">
 ##  <!ENTITY GROUPOIDSHTMLFILENAME "groupoids.html">
-##  <!ENTITY GROUPOIDSLONGRELEASEDATE "1st August 2017">
+##  <!ENTITY GROUPOIDSLONGRELEASEDATE "6th August 2017">
 ##  <!ENTITY GROUPOIDSCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 

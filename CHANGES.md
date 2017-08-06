@@ -21,11 +21,14 @@
               becomes part of the general GAP distribution.
  * (22/03/16) in `mwohom.gi` check that \^-1 now works for isomorphisms 
               N.B. as at 02/11/16 this is still not fixed 
- * (07/03/17) the error mentioned in the manual at 5.4.1 is still there
+ * (07/03/17) the error mentioned in the manual at 5.4.1 is still there: 
+              problems with InverseGeneralMapping and ImageElm suggest that 
+              a redesign of groupoid mappings is required
+ * (03/08/17) provide method for < for groupoid elements 
 
-## 1.46 -> 1.51  (01/08/17) 
+## 1.46 -> 1.51  (04/08/17) 
 
- * (01/08/17) version 1.51 released - for GAP 4.8.8 or 4.9.0
+ * (06/08/17) version 1.51 released - for GAP 4.8.8 or 4.9.0
  * (03/07/17) README and CHANGES now in MarkDown format as .md files 
  * (14/06/17) added various methods for String, ViewString, PrintString 
  * (07/04/17) renamed the package 'groupoids' so most files needed editing 

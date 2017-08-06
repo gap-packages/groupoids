@@ -138,6 +138,7 @@ function( mag1, mag2, images )
             SetIsMagmaWithObjectsHomomorphism( map, true );
         fi; 
     fi; 
+    ok := IsGroupWithObjectsHomomorphism( map ); 
     ok := IsHomomorphismFromSinglePiece( map ); 
 ##    if ( HasIsSinglePiece( mag1 ) and IsSinglePiece( mag1 ) ) then 
 ##        SetIsGeneralMappingFromSinglePiece( map, true ); 
@@ -722,7 +723,7 @@ function( map )
 end );
 
 InstallMethod( InverseGeneralMapping, "for a connected mapping", true,
-    [  IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece ], 0,
+    [ IsGroupWithObjectsHomomorphism and IsHomomorphismFromSinglePiece ], 0,
 function( map )
 
     local m1, m2, ob1, ob2, nobs, imob1, hom12, hom21, ok, imob2, sc, hs, e, 
@@ -752,7 +753,7 @@ function( map )
     if not IsBijective( hom12 ) then 
         Error( "root group homomorphism has no inverse" ); 
     fi; 
-    hom21 := InverseGeneralMapping( RootGroupHomomorphism( map ) ); 
+    hom21 := InverseGeneralMapping( hom12 ); 
     ok := IsGroupHomomorphism( hom21 ); 
     ray2 := RaysOfGroupoid( m2 ); 
     rim12 := ImageElementsOfRays( map ); 
@@ -774,8 +775,81 @@ function( map )
     return inv;
 end );
 
+InstallMethod( InverseGeneralMapping, "for a groupoid automorphism", true,
+    [ IsGroupWithObjectsHomomorphism and IsEndomorphismWithObjects ], 0,
+function( aut )
+
+    local gpd, obs, nobs, imobs, L, invobs, inv, c, pi, cpi1, b, j, 
+          rgp, rhom, irhom, conj, aconj, im1, pos1, api, ipi, ikappa, ab;
+
+    if not (IsInjectiveOnObjects(aut) and IsSurjectiveOnObjects(aut)) then
+        Error( "mapping not bijective on objects" );
+    fi; 
+    Info( InfoGroupoids, 1, 
+          "results from InverseGeneralMapping are unreliable" );
+    gpd := Source( aut );
+    obs := gpd!.objects;
+    nobs := Length( obs );
+    imobs := ImagesOfObjects( aut ); 
+    L := [1..nobs]; 
+    SortParallel( ShallowCopy(imobs), L ); 
+    im1 := L[1]; 
+    invobs := List( L, i -> obs[i] ); 
+    pos1 := Position( invobs, obs[1] );
+    pi := PermList(L)^-1; 
+    if HasIsGroupoidAutomorphismByObjectPerm( aut ) 
+      and IsGroupoidAutomorphismByObjectPerm( aut ) then 
+        Info( InfoGroupoids, 3, "InverseGeneralMapping for object perm auto" );
+        inv := GroupoidAutomorphismByObjectPerm( gpd, invobs ); 
+        return inv; 
+    fi; 
+    rhom := RootGroupHomomorphism( aut ); 
+    rgp := Source( rhom );
+    if not IsBijective( rhom ) then 
+        Error( "root group homomorphism has no inverse" ); 
+    fi; 
+    irhom := InverseGeneralMapping( rhom ); 
+    if HasIsGroupoidAutomorphismByGroupAuto( aut ) 
+      and IsGroupoidAutomorphismByGroupAuto( aut ) then 
+        Info( InfoGroupoids, 3, "InverseGeneralMapping for root group auto" );
+        inv := GroupoidAutomorphismByGroupAuto( gpd, irhom ); 
+        return inv;
+    fi;  
+    c := ImageElementsOfRays( aut ); 
+    if HasIsGroupoidAutomorphismByRayShifts( aut ) 
+      and IsGroupoidAutomorphismByRayShifts( aut ) then 
+        Info( InfoGroupoids, 3, "InverseGeneralMapping for ray shifts auto" );
+        b := List( c, g -> g^-1 ); 
+        inv := GroupoidAutomorphismByRayShifts( gpd, b ); 
+        return inv;
+    fi; 
+    ## the three special cases do not apply, so use the general formula 
+    Info( InfoGroupoids, 3, "InverseGeneralMapping for groupoid autos" ); 
+    b := ListWithIdenticalEntries( nobs, One(rgp) ); 
+    cpi1 := c[L[1]]; 
+    b[pos1] := cpi1; 
+    for j in [2..nobs] do 
+        if ( j <> pos1 ) then 
+            b[j] := c[L[j]]^-1 * cpi1; 
+        fi;
+    od;
+    ab := GroupoidAutomorphismByRayShifts( gpd, b ); 
+    inv := ab; 
+    api := GroupoidAutomorphismByObjectPerm( gpd, imobs ); 
+    ipi := InverseGeneralMapping( api ); 
+    inv := inv * ipi; 
+    conj := InnerAutomorphism( rgp, cpi1^-1 ); 
+    aconj := GroupoidAutomorphismByGroupAuto( gpd, conj );
+    inv := inv * aconj; 
+    ikappa := GroupoidAutomorphismByGroupAuto( gpd, irhom );
+    inv := inv * ikappa; 
+    SetIsInjectiveOnObjects( inv, true );
+    SetIsSurjectiveOnObjects( inv, true );
+    return inv;
+end );
+
 InstallMethod( InverseGeneralMapping, "for hom from discrete gpd with objects", 
-    true, [ IsGroupoidHomomorphism and 
+    true, [ IsGroupWithObjectsHomomorphism and 
             IsGroupoidHomomorphismFromHomogeneousDiscrete ], 0,
 function( map )
 
@@ -1035,8 +1109,11 @@ function( m1, m2 )
     im12 := List( mgi1[2], x -> ImageElm( h2, x ) ); 
     hom := GroupHomomorphismByImages( Source(h1), Range(h2), mgi1[1], im12 ); 
     rims := RaysOfGroupoid( s1 ); 
+    Info( InfoGroupoids, 2, "rims = ", rims ); 
     rims := List( rims, r -> ImageElm( m1, r ) ); 
+    Info( InfoGroupoids, 2, "rims = ", rims ); 
     rims := List( rims, r -> ImageElm( m2, r ) ); 
+    Info( InfoGroupoids, 2, "rims = ", rims ); 
     rims := List( rims, r -> r![1] ); 
     return GroupoidHomomorphismFromSinglePieceNC( s1, r2, hom, oims, rims );
 end );

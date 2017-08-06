@@ -411,12 +411,14 @@ end );
 InstallMethod( Display, "for a mapping of connected groupoids", true,
     [ IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece ], 0,
 function ( map ) 
-    Print( "  groupoid mapping: " ); 
+    Print( " groupoid mapping: " ); 
     Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 
-    Print( " root homomorphism: ", 
+    Print( "root homomorphism: ", 
            MappingGeneratorsImages( RootGroupHomomorphism(map) ), "\n" ); 
-    Print( " images of objects: ", ImagesOfObjects( map ), "\n" ); 
-    Print( "image elts of rays: ", ImageElementsOfRays( map ), "\n" ); 
+    Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
+    Print( "   images of rays: ", 
+           List( RaysOfGroupoid( Source(map) ), r -> ImageElm(map,r) ), 
+           "\n" ); 
 end );
 
 InstallMethod( Display, "for a mapping from a homogeneous discrete gpd", true, 
@@ -458,7 +460,7 @@ function( src, rng, hom, oims, rims )
         ImagesOfObjects, oims, 
         ImageElementsOfRays, rims,  
         IsGeneralMappingWithObjects, true, 
-        IsGroupoidHomomorphism, true, 
+        IsGroupWithObjectsHomomorphism, true, 
         IsHomomorphismToSinglePiece, true, 
         RespectsMultiplication, true ); 
     ok := IsInjectiveOnObjects( map ); 
@@ -556,7 +558,8 @@ function( gpd, oims )
     SetIsSurjectiveOnObjects( mor, true ); 
     L := [1..nobs]; 
     SortParallel( ShallowCopy( oims ), L );  
-    SetOrder( mor, Order( PermList( L ) ) );
+    SetOrder( mor, Order( PermList( L ) ) ); 
+    SetIsGroupoidAutomorphismByObjectPerm( mor, true ); 
     return mor; 
 end ); 
 
@@ -578,6 +581,7 @@ function( gpd, oims )
     L := [1..Length(oims)]; 
     SortParallel( ShallowCopy( oims ), L );  
     SetOrder( mor, Order( PermList( L ) ) );
+    SetIsGroupoidAutomorphismByObjectPerm( mor, true ); 
     return mor; 
 end ); 
 
@@ -615,6 +619,7 @@ function( gpd, hom )
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
     SetOrder( mor, Order( hom ) ); 
+    SetIsGroupoidAutomorphismByGroupAuto( mor, true ); 
     return mor; 
 end ); 
 
@@ -703,6 +708,7 @@ function( gpd, shifts )
     SetOrder( mor, Lcm( List( shifts, i -> Order(i) ) ) ); 
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
+    SetIsGroupoidAutomorphismByRayShifts( mor, true ); 
     return mor;
 end ); 
 

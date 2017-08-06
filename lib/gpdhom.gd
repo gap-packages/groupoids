@@ -24,12 +24,18 @@ DeclareAttribute( "IsomorphismSmallPermGroupoid", IsGroupoid );
 ## 
 #P  IsGroupoidEndomorphism( <mor> )                        
 #P  IsGroupoidAutomorphism( <mor> )                        
+#P  IsGroupoidAutomorphismByGroupAuto( <aut> )
+#P  IsGroupoidAutomorphismByObjectPerm( <aut> )
+#P  IsGroupoidAutomorphismByRayShifts( <aut> ) 
 ##
 DeclareSynonym( "IsGroupoidEndomorphism", 
     IsGroupoidHomomorphism and IsEndomorphismWithObjects );  
 DeclareSynonym( "IsGroupoidAutomorphism", 
     IsGroupoidHomomorphism and IsAutomorphismWithObjects );  
-  
+DeclareProperty( "IsGroupoidAutomorphismByGroupAuto", IsGroupoidAutomorphism );
+DeclareProperty( "IsGroupoidAutomorphismByObjectPerm", IsGroupoidAutomorphism );
+DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
+ 
 ############################################################################# 
 ## 
 #O  InclusionMappingGroupoids( <G>, <H> )

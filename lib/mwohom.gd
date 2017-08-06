@@ -84,7 +84,7 @@ DeclareCategory( "IsGroupoidHomomorphism", ## IsGeneralMappingWithObjects );
 
 #############################################################################
 ##
-#C  IsGroupoidHomomorphismCollection . . . . category of colls of god ohms
+#C  IsGroupoidHomomorphismCollection . . . . category of colls of gpd homs
 #C  IsGroupoidHomomorphismCollColl . . . . . category of colls of colls 
 #C  IsGroupoidHomomorphismCollCollColl . . . category of colls, colls, colls
 ##
