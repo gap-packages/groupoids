@@ -73,14 +73,14 @@ DeclareOperation( "IsomorphismStandardGroupoid",
 ##   - images for the objects, 
 ##   - images for the rays.
 ##  In this representation, however, we just store the source; the range; 
-##  and then put all the necessary detail into the list PieceImages. 
+##  and then put all the necessary detail into the list SinglePieceMappingData. 
 ##  This third attribute can vary in contents, according to context. 
 ##  For general groupoids a PieceImage is a list [hom,oims,rims], 
 ##  giving a root group hom; list of object images; list of ray images. 
 ##  
 DeclareRepresentation( "IsDefaultGroupoidHomomorphismRep",
     IsGroupoidHomomorphism and IsAttributeStoringRep, 
-    [ "Source", "Range", "PieceImages" ] ); 
+    [ "Source", "Range", "PiecesOfMapping" ] ); 
 
 ############################################################################# 
 ##  
@@ -97,8 +97,8 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 ## 
 #A  RootGroupHomomorphism( <map> ) 
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
-#O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <hom>, <oims>, <rims> )  
-#O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <hom>, <oims>, <rims> )  
+#O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <gens>, <images> )  
+#O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> )  
 #O  GroupoidAutomorphismByGroupAutoNC( <gpd, ims> )
 #O  GroupoidAutomorphismByGroupAuto( <gpd, auto> )
 #O  GroupoidAutomorphismByObjectPermNC( <gpd, oims> )
@@ -111,11 +111,9 @@ DeclareAttribute( "RootGroupHomomorphism",
 DeclareOperation( "ObjectGroupHomomorphism", 
     [ IsGroupoidHomomorphism, IsObject ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC", 
-    [ IsGroupoid, IsGroupoid, IsGroupHomomorphism, 
-      IsHomogeneousList, IsHomogeneousList ] );
+    [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
-    [ IsGroupoid, IsGroupoid, IsGroupHomomorphism, 
-      IsHomogeneousList, IsHomogeneousList ] );
+    [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAuto", 

@@ -21,12 +21,15 @@
               becomes part of the general GAP distribution.
  * (22/03/16) in `mwohom.gi` check that \^-1 now works for isomorphisms 
               N.B. as at 02/11/16 this is still not fixed 
- * (07/03/17) the error mentioned in the manual at 5.4.1 is still there: 
-              problems with InverseGeneralMapping and ImageElm suggest that 
-              a redesign of groupoid mappings is required
  * (03/08/17) provide method for < for groupoid elements 
 
-## 1.46 -> 1.51  (04/08/17) 
+## 1.51 -> 1.52  (14/08/17) 
+
+ * (12/08/17) redesign of homs proceeds : new InverseGeneralMapping for auts 
+ * (11/09/17) PieceImages -> SinglePieceMappingData (temporarily?) 
+ * (08/08/17) testall.g copied to testing.g; testall now calls TestDirectory
+
+## 1.46 -> 1.51  (06/08/17) 
 
  * (06/08/17) version 1.51 released - for GAP 4.8.8 or 4.9.0
  * (03/07/17) README and CHANGES now in MarkDown format as .md files 

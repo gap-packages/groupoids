@@ -115,7 +115,7 @@ BindGlobal( "GroupoidHomomorphismFamily",
 DeclareRepresentation( "IsMappingToSinglePieceRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
         and IsGeneralMapping,                              #? (07/10/08) 
-    [ "Source", "Range", "PieceImages" ] ); 
+    [ "Source", "Range", "SinglePieceMappingData" ] ); 
 DeclareRepresentation( "IsMappingWithPiecesRep", 
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
         and IsGeneralMapping, 
@@ -185,14 +185,14 @@ DeclareOperation( "IsomorphismNewObjects",
 
 ############################################################################# 
 ## 
-#A  PieceImages( <map> )
+#A  SinglePieceMappingData( <map> )
 #A  HomsOfMapping( <map> ) 
 #A  PiecesOfMapping( <map> )                                    
 #A  PartitionOfSource( <map> )
 #A  ImagesOfObjects( <map> ) 
 #A  ImageElementsOfRays( <map> ) 
 ## 
-DeclareAttribute( "PieceImages", IsMappingToSinglePieceRep );
+DeclareAttribute( "SinglePieceMappingData", IsMappingToSinglePieceRep );
 DeclareAttribute( "HomsOfMapping", IsHomomorphismToSinglePiece );  
 DeclareAttribute( "PiecesOfMapping", IsMappingWithPiecesRep );  
 DeclareAttribute( "PartitionOfSource", IsMappingWithPiecesRep );

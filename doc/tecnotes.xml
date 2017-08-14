@@ -157,7 +157,7 @@ and for unions of such mappings:
 <Item>
 <C>DeclareRepresentation( "IsMappingToSinglePieceRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping, [ "Source", "Range", "PieceImages" ] ); </C>
+        and IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); </C>
 </Item>
 <Item>
 <C>DeclareRepresentation( "IsMappingWithObjectsRep", 
@@ -177,7 +177,7 @@ gap> FamilyObj(hom1);
 NewFamily( "GeneralMappingWithObjectsFamily", [ 2726 ], 
 [ 79, 80, 81, 82, 116, 119, 122, 126, 130, 149, 412, 2726 ] )
 gap> KnownAttributesOfObject( hom1 );
-[ "Range", "Source", "PieceImages" ]
+[ "Range", "Source", "SinglePieceMappingData" ]
 gap> KnownTruePropertiesOfObject( hom1 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "RespectsMultiplication", "IsGeneralMappingToSinglePiece",
@@ -189,10 +189,10 @@ gap> CategoriesOfObject( homd8 );
   "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", 
   "IsGroupoidHomomorphism" ]
 gap> KnownAttributesOfObject( homd8 );
-[ "Range", "Source", "PieceImages", "ImagesOfObjects", "ImageElementsOfRays", 
+[ "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", "ImageElementsOfRays", 
   "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ]
 gap> KnownAttributesOfObject( aut3 );
-[ "Order", "Range", "Source", "PieceImages", "ImagesOfObjects", 
+[ "Order", "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", 
   "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
   "RootGroupHomomorphism" ]
 ]]>

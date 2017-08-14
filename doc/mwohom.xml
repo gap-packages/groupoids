@@ -43,7 +43,7 @@ is required to preserve object identities and inverses.
          Arg="src,rng,hom,imobs" />
    <Oper Name="HomomorphismToSinglePiece"
          Arg="src,rng,images" />
-   <Attr Name="PieceImages"
+   <Attr Name="SinglePieceMappingData"
          Arg="mwohom" />
    <Attr Name="HomsOfMapping"
          Arg="mwohom" />
@@ -63,7 +63,7 @@ It is implemented as
 with attributes 
 <Index Key="Source"> <C>Source</C> </Index> <C>Source</C>, 
 <Index Key="Range">  <C>Range</C>  </Index> <C>Range</C> 
-and <C>PieceImages</C>. 
+and <C>SinglePieceMappingData</C>. 
 The operation requires the following information: 
 <List>
 <Item>
@@ -87,7 +87,8 @@ true
 gap> hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-8,-7] );; 
 gap> Display( hom1 );
 homomorphism to single piece magma: M78 -> M78
-magma hom: <mapping: m -> m >, object map: [ -8, -7 ] -> [ -8, -7 ]
+ magma hom: <mapping: m -> m > 
+object map: [ -8, -7 ] -> [ -8, -7 ]
 gap> [ Source( hom1 ), Range( hom1 ) ]; 
 [ M78, M78 ]
 gap> b87;
@@ -119,7 +120,8 @@ and so is a union of homomorphisms <E>from</E> single pieces.
 <Example>
 <![CDATA[
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
-gap> images := [ PieceImages( hom1 )[1], PieceImages( j56 )[1] ]; 
+gap> images := [ SinglePieceMappingData( hom1 )[1], 
+> SinglePieceMappingData( j56 )[1] ]; 
 [ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 magma with objects homomorphism : 

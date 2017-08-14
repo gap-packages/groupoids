@@ -105,44 +105,55 @@ InstallMethod( HomomorphismToSinglePieceNC,
     [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
 function( mag1, mag2, images )
 
-    local fam, isgpdhom, filter, map, ok, imo, homs;
+    local fam, filter, map, ok, imo;
 
-    #? (23/04/10) removed:  fam := FamilyObj( [ mag1, mag2, images ] ); 
     fam := GeneralMappingWithObjectsFamily; 
-    isgpdhom := ( IsGroupoid( mag1 ) and IsGroupoid( mag2 ) ); 
-    ## (22/01/13) added first filter in this test
-    if isgpdhom then 
-        filter := IsMappingToSinglePieceRep and IsGroupoidHomomorphism; 
-    else 
-        filter := IsMappingToSinglePieceRep and IsMagmaWithObjectsHomomorphism;
-    fi; 
+    filter := IsMappingToSinglePieceRep and IsMagmaWithObjectsHomomorphism;
     map := rec(); 
     ObjectifyWithAttributes( map, NewType( fam, filter ), 
         Source, mag1, 
         Range, mag2, 
-        PieceImages, images,  
+        SinglePieceMappingData, images,
+        ImagesOfObjects, Flat( List( images, L -> L[2] ) ),   
         RespectsMultiplication, true, 
         IsHomomorphismToSinglePiece, true );
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
-    if not isgpdhom then 
-        if ( IsMagmaWithObjectsAndOnes( mag1 )   
-               and IsMagmaWithObjectsAndOnes( mag2 ) ) then 
-            SetIsMonoidWithObjectsHomomorphism( map, true ); 
-        elif ( ( HasIsSemigroupWithObjects( mag1 ) 
-                 and IsSemigroupWithObjects( mag1 ) )  
-               and ( HasIsSemigroupWithObjects( mag2 ) 
-                     and IsSemigroupWithObjects( mag2 ) ) ) then 
-            SetIsSemigroupWithObjectsHomomorphism( map, true );
-        elif ( IsMagmaWithObjects( mag1 ) and IsMagmaWithObjects( mag2 ) ) then 
-            SetIsMagmaWithObjectsHomomorphism( map, true );
-        fi; 
+    if ( IsMagmaWithObjectsAndOnes( mag1 )   
+           and IsMagmaWithObjectsAndOnes( mag2 ) ) then 
+        SetIsMonoidWithObjectsHomomorphism( map, true ); 
+    elif ( ( HasIsSemigroupWithObjects( mag1 ) 
+         and IsSemigroupWithObjects( mag1 ) )  
+           and ( HasIsSemigroupWithObjects( mag2 ) 
+                 and IsSemigroupWithObjects( mag2 ) ) ) then 
+        SetIsSemigroupWithObjectsHomomorphism( map, true );
+    elif ( IsMagmaWithObjects( mag1 ) and IsMagmaWithObjects( mag2 ) ) then 
+        SetIsMagmaWithObjectsHomomorphism( map, true );
     fi; 
+    ok := IsHomomorphismFromSinglePiece( map ); 
+    return map; 
+end );
+
+InstallMethod( HomomorphismToSinglePieceNC,
+    "generic method for a mapping to a single piece magma", true,
+    [ IsGroupoid, IsSinglePiece, IsHomogeneousList ], 0,
+function( gpd1, gpd2, homs )
+
+    local fam, filter, map, ok, imo;
+
+    fam := GeneralMappingWithObjectsFamily; 
+    filter := IsMappingToSinglePieceRep and IsGroupoidHomomorphism; 
+    map := rec(); 
+    ObjectifyWithAttributes( map, NewType( fam, filter ), 
+        Source, gpd1, 
+        Range, gpd2, 
+        SinglePieceMappingData, homs,  
+        RespectsMultiplication, true, 
+        IsHomomorphismToSinglePiece, true );
+    ok := IsInjectiveOnObjects( map ); 
+    ok := IsSurjectiveOnObjects( map ); 
     ok := IsGroupWithObjectsHomomorphism( map ); 
     ok := IsHomomorphismFromSinglePiece( map ); 
-##    if ( HasIsSinglePiece( mag1 ) and IsSinglePiece( mag1 ) ) then 
-##        SetIsGeneralMappingFromSinglePiece( map, true ); 
-##    fi; 
     return map; 
 end );
 
@@ -151,7 +162,7 @@ InstallMethod( HomomorphismToSinglePiece,
     [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
 function( mwo1, mwo2, images )
 
-    local pieces, o2, m2, j, pj, h;
+    local pieces, o2, m2, j, pj, h, mor;
 
     Info( InfoGroupoids, 3, "homomorphism to a single piece magma:", images ); 
     pieces := Pieces( mwo1 ); 
@@ -160,20 +171,42 @@ function( mwo1, mwo2, images )
     for j in [1..Length(pieces)] do 
         pj := pieces[j];
         h := images[j][1];
-        if not IsGeneralMapping( h ) then
-            Error( "images[[j][1] is not a magma mapping" );
+        if not IsMagmaHomomorphism( h ) then
+            Error( "h is not a magma homomorphism" );
         fi;
         if not ( ( Source(h) = pj!.magma ) and ( Range(h) = m2 ) ) then
             Error( "homs not a mapping m1!.magma -> m2!.magma" );
         fi;
-        if not ( Length( images[j][2] ) = Length( pj!.objects ) ) then
-            Error( "incorrect length for images of objects" );
+        if not ( Length( images[j][2] ) = Length( pj!.objects ) ) then 
+            Error( "incorrect length for images of objects" ); 
         fi;
-        if not IsSubset( o2, images[j][2] ) then
-            Error( "object images not in the objects of m2" );
+        if not IsSubset( o2, images[j][2] ) then 
+            Error( "objects in the image not objects in m2" );
         fi;
     od;
-    return HomomorphismToSinglePieceNC( mwo1, mwo2, images );
+    return HomomorphismToSinglePieceNC( mwo1, mwo2, images ); 
+end );
+
+InstallMethod( HomomorphismToSinglePiece,
+    "generic method for a mapping to a single piece magma", true,
+    [ IsGroupoid, IsSinglePiece, IsHomogeneousList ], 0,
+function( mwo1, mwo2, homs )
+
+    local pieces, o2, j, h;
+
+    Info( InfoGroupoids, 3, "homomorphism to a single piece groupoid:", homs ); 
+    pieces := Pieces( mwo1 ); 
+    o2 := mwo2!.objects;
+    for j in [1..Length(pieces)] do 
+        h := homs[j];
+        if not IsMagmaWithObjectsHomomorphism( h ) then
+            Error( "h is not a magma with objects homomorphism" );
+        fi;
+        if not ( ( Source(h) = pieces[j] ) and ( Range(h) = mwo2 ) ) then
+            Error( "homs not a mapping mwo1!.magma -> mwo2!.magma" );
+        fi;
+    od;
+    return HomomorphismToSinglePieceNC( mwo1, mwo2, homs );
 end );
 
 #############################################################################
@@ -240,7 +273,7 @@ function( mag1, mag2, maps )
     if IsSinglePiece( mag2 ) then 
         Info( InfoGroupoids, 3, 
               "using the special case in HomomorphismByUnion" ); 
-        piecesmap := Concatenation( List( maps, m -> PieceImages(m) ) ); 
+        piecesmap := Concatenation( List( maps, m -> SinglePieceMappingData(m) ) ); 
         return HomomorphismToSinglePieceNC( mag1, mag2, piecesmap ); 
     fi;
     pieces1 := Pieces( mag1 );
@@ -455,9 +488,9 @@ function( map )
           gensims, len, rng, obr, imobr;
 
     if not HasPiecesOfMapping( map ) then
-        images := PieceImages( map );
+        images := SinglePieceMappingData( map );
         if ( Length( images ) = 1 ) then
-            return images[1][2];
+            return ImagesOfObjects( images[1] );
         else
             src := Source( map );
             obs := ObjectList( src );
@@ -465,7 +498,7 @@ function( map )
             c := Pieces( src ); 
             for i in [1..Length(c)] do 
                 obc := c[i]!.objects;
-                imc := images[i][2];
+                imc := ImagesOfObjects( images[i] );
                 for j in [1..Length(obc)] do
                     pos := Position( obs, obc[j] );
                     ims[pos] := imc[j];
@@ -571,17 +604,19 @@ function( map )
 
     local images, imo;
 
-    if HasImagesOfObjects( map ) then 
+    imo := ImagesOfObjects( map );
+    if not ( imo = fail ) then 
         return IsDuplicateFree( Flat( ImagesOfObjects( map ) ) );
     elif IsHomomorphismToSinglePiece( map ) then
-        images := PieceImages( map );
+        images := SinglePieceMappingData( map );
         imo := Flat( List( images, L -> L[2] ) ); 
         return IsDuplicateFree( imo ); 
     elif ( HasIsGeneralMappingFromHomogeneousDiscrete( map ) 
            and IsGeneralMappingFromHomogeneousDiscrete( map ) ) then 
         return IsDuplicateFree( map!.oims ); 
     else  ## mapping has constituents
-        imo := List( PiecesOfMapping( map ), m -> PieceImages(m)[2] );
+        imo := List( PiecesOfMapping( map ), 
+                     m -> SinglePieceMappingData(m)[2] );
         return IsDuplicateFree( Flat( imo ) );
     fi;
 end );
@@ -609,11 +644,11 @@ function( map )
     if HasImagesOfObjects( map ) then 
         imo := Flat( ImagesOfObjects( map ) );
     elif IsHomomorphismToSinglePiece( map ) then
-        images := PieceImages( map );
+        images := SinglePieceMappingData( map );
         imo := Flat( List( images, L -> L[2] ) );
     else  ## mapping has constituents
         imo := Flat( List( PiecesOfMapping( map ), 
-                     m -> PieceImages(m)[1][2] ) );
+                     m -> SinglePieceMappingData(m)[1][2] ) );
     fi;
     return ( Set(imo) = obr );
 end );
@@ -706,7 +741,7 @@ function( map )
     ob1 := m1!.objects;
     ob2 := m2!.objects;
     nob := Length( ob1 );
-    obhom1 := PieceImages( map );
+    obhom1 := SinglePieceMappingData( map );
     len := Length( obhom1 );
     sc1 := ShallowCopy( ob1 );
     sc2 := ShallowCopy( obhom1[1][2] );
@@ -722,127 +757,137 @@ function( map )
     return inv;
 end );
 
-InstallMethod( InverseGeneralMapping, "for a connected mapping", true,
-    [ IsGroupWithObjectsHomomorphism and IsHomomorphismFromSinglePiece ], 0,
-function( map )
+InstallMethod( InverseGeneralMapping, "for a groupoid isomorphism", true,
+    [ IsGroupWithObjectsHomomorphism and IsHomomorphismFromSinglePiece], 0,
+function( iso )
 
-    local m1, m2, ob1, ob2, nobs, imob1, hom12, hom21, ok, imob2, sc, hs, e, 
-          iro1, piro1, iro2, piro2, L, pi, i, ri, ray2, rim12, rim21, inv;
+    local src, rng, obss, obsr, nobs, imobs, L, invobs, pos1, pi, 
+          rhom, rgps, rgpr, ids, idr, irhom, c, b, genss, ngenss, nggenss, 
+          gensr, ngensr, nggensr, images, r, u, v, q, pq, rayrq, j, rayuv, 
+          g, i, y, invy, w, rayvw, f, p, pp, rayrp, k, rayuw, h, invf, inv; 
 
-    if not (IsInjectiveOnObjects(map) and IsSurjectiveOnObjects(map)) then
+    if not (IsInjectiveOnObjects(iso) and IsSurjectiveOnObjects(iso)) then
         Error( "mapping not bijective on objects" );
-    fi;  
-    Info( InfoGroupoids, 3, "InverseGeneralMapping for connected mappings" );
-    m1 := Source( map );
-    m2 := Range( map );
-    ob1 := m1!.objects;
-    ob2 := m2!.objects;
-    nobs := Length( ob1 );
-    imob1 := ImagesOfObjects( map ); 
+    fi; 
+    Info( InfoGroupoids, 1, "InverseGeneralMapping for groupoid isos" ); 
+    src := Source( iso );
+    obss := src!.objects;
+    rng := Range( iso ); 
+    obsr := rng!.objects;
+    nobs := Length( obss );
+    imobs := ImagesOfObjects( iso ); 
     L := [1..nobs]; 
-    SortParallel( ShallowCopy( imob1 ), L ); 
-    pi := PermList( L ); 
-    imob2 := ShallowCopy( ob1 );
-    sc := ShallowCopy( imob1 );
-    SortParallel( sc, imob2 ); 
-    iro1 := imob1[1]; 
-    piro1 := Position( ob2, iro1 ); 
-    iro2 := imob2[1]; 
-    piro2 := Position( ob1, iro2 ); 
-    hom12 := RootGroupHomomorphism( map ); 
-    if not IsBijective( hom12 ) then 
+    SortParallel( ShallowCopy(imobs), L ); 
+    invobs := List( L, i -> obss[i] ); 
+    pos1 := Position( invobs, obss[1] );
+    pi := PermList(L)^-1; 
+    rhom := RootGroupHomomorphism( iso ); 
+    rgps := RootGroup( src ); 
+    rgpr := RootGroup( rng );
+    ids := Arrow( src, One( rgps ), obss[1], obss[1] ); 
+    idr := Arrow( rng, One( rgpr ), obsr[1], obsr[1] ); 
+    if not IsBijective( rhom ) then 
         Error( "root group homomorphism has no inverse" ); 
     fi; 
-    hom21 := InverseGeneralMapping( hom12 ); 
-    ok := IsGroupHomomorphism( hom21 ); 
-    ray2 := RaysOfGroupoid( m2 ); 
-    rim12 := ImageElementsOfRays( map ); 
-    #? (08/07/11) using an inefficient search here, but at least using break! 
-    rim21 := ListWithIdenticalEntries( nobs, 0 ); 
-    for i in [1..nobs] do 
-        ri := ray2[i];  
-        hs := Homset( m1, iro2, imob2[i] ); 
-        for e in hs do 
-            if ( ri = ImageElm( map, e ) ) then 
-                rim21[i] := e![1]; 
-                break; 
-            fi; 
-        od;
+    irhom := InverseGeneralMapping( rhom ); 
+    genss := GeneratorsOfGroupoid( src );
+    ngenss := Length( genss ); 
+    nggenss := ngenss - nobs + 1;
+    gensr := GeneratorsOfGroupoid( rng ); 
+    ngensr := Length( gensr );
+    nggensr := ngensr - nobs + 1;
+    images := [1..ngensr]; 
+    r := obss[1]; 
+    u := imobs[1];
+    v := obsr[1]; 
+    q := invobs[1]; 
+    pq := Position( obss, q ); 
+    if ( pq = 1 ) then 
+        rayrq := ids;  
+    else 
+        rayrq := genss[ nggenss + pq - 1 ]; 
+    fi; 
+    j := rayrq![1]; 
+    rayuv := ImageElm( iso, rayrq );
+    g := rayuv![1]; 
+    for i in [1..nggensr] do 
+        y := gensr[i]![1]; 
+        invy := ImageElm( irhom, y^(g^-1) )^j; 
+        images[i] := Arrow( src, invy, q, q ); 
     od; 
-    inv := GroupoidHomomorphismFromSinglePieceNC( m2, m1, hom21, imob2, rim21 );
+    for i in [2..nobs] do 
+        w := obsr[i];
+        rayvw := gensr[nggensr+i-1]; 
+        f := rayvw![1]; 
+        p := invobs[i]; 
+        pp := Position( obss, p );
+        if ( pp = 1 ) then 
+            rayrp := ids; 
+        else 
+            rayrp := genss[ nggenss + pp - 1 ];
+        fi; 
+        k := rayrp![1]; 
+        rayuw := ImageElm( iso, rayrp ); 
+        h := rayuw![1]; 
+        invf := (j^-1) * ImageElm( irhom, g*f*h^-1 ) * k;
+        images[ nggensr + i -1 ] := Arrow( src, invf, q, p ); 
+    od; 
+    inv := GroupoidHomomorphism( rng, src, gensr, images );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
     return inv;
 end );
 
-InstallMethod( InverseGeneralMapping, "for a groupoid automorphism", true,
-    [ IsGroupWithObjectsHomomorphism and IsEndomorphismWithObjects ], 0,
+InstallMethod( InverseGeneralMapping, "for gpd auto by object perm", true,
+    [ IsGroupoidAutomorphismByObjectPerm ], 0,
 function( aut )
 
-    local gpd, obs, nobs, imobs, L, invobs, inv, c, pi, cpi1, b, j, 
-          rgp, rhom, irhom, conj, aconj, im1, pos1, api, ipi, ikappa, ab;
+    local gpd, obs, nobs, imobs, L, invobs, inv; 
 
-    if not (IsInjectiveOnObjects(aut) and IsSurjectiveOnObjects(aut)) then
-        Error( "mapping not bijective on objects" );
-    fi; 
-    Info( InfoGroupoids, 1, 
-          "results from InverseGeneralMapping are unreliable" );
+    Info( InfoGroupoids, 1, "InverseGeneralMapping for object perm auto" );
     gpd := Source( aut );
     obs := gpd!.objects;
     nobs := Length( obs );
     imobs := ImagesOfObjects( aut ); 
     L := [1..nobs]; 
     SortParallel( ShallowCopy(imobs), L ); 
-    im1 := L[1]; 
     invobs := List( L, i -> obs[i] ); 
-    pos1 := Position( invobs, obs[1] );
-    pi := PermList(L)^-1; 
-    if HasIsGroupoidAutomorphismByObjectPerm( aut ) 
-      and IsGroupoidAutomorphismByObjectPerm( aut ) then 
-        Info( InfoGroupoids, 3, "InverseGeneralMapping for object perm auto" );
-        inv := GroupoidAutomorphismByObjectPerm( gpd, invobs ); 
-        return inv; 
-    fi; 
+    inv := GroupoidAutomorphismByObjectPerm( gpd, invobs ); 
+    SetIsEndomorphismWithObjects( inv, true );
+    SetIsInjectiveOnObjects( inv, true );
+    SetIsSurjectiveOnObjects( inv, true );
+    return inv;
+end );
+
+InstallMethod( InverseGeneralMapping, "for gpd auto by group auto", true,
+    [ IsGroupoidAutomorphismByGroupAuto ], 0,
+function( aut )
+
+    local gpd, rhom, irhom, ok, inv; 
+
+    Info( InfoGroupoids, 1, "InverseGeneralMapping for group auto auto" );
+    gpd := Source( aut );
     rhom := RootGroupHomomorphism( aut ); 
-    rgp := Source( rhom );
-    if not IsBijective( rhom ) then 
-        Error( "root group homomorphism has no inverse" ); 
-    fi; 
-    irhom := InverseGeneralMapping( rhom ); 
-    if HasIsGroupoidAutomorphismByGroupAuto( aut ) 
-      and IsGroupoidAutomorphismByGroupAuto( aut ) then 
-        Info( InfoGroupoids, 3, "InverseGeneralMapping for root group auto" );
-        inv := GroupoidAutomorphismByGroupAuto( gpd, irhom ); 
-        return inv;
-    fi;  
-    c := ImageElementsOfRays( aut ); 
-    if HasIsGroupoidAutomorphismByRayShifts( aut ) 
-      and IsGroupoidAutomorphismByRayShifts( aut ) then 
-        Info( InfoGroupoids, 3, "InverseGeneralMapping for ray shifts auto" );
-        b := List( c, g -> g^-1 ); 
-        inv := GroupoidAutomorphismByRayShifts( gpd, b ); 
-        return inv;
-    fi; 
-    ## the three special cases do not apply, so use the general formula 
-    Info( InfoGroupoids, 3, "InverseGeneralMapping for groupoid autos" ); 
-    b := ListWithIdenticalEntries( nobs, One(rgp) ); 
-    cpi1 := c[L[1]]; 
-    b[pos1] := cpi1; 
-    for j in [2..nobs] do 
-        if ( j <> pos1 ) then 
-            b[j] := c[L[j]]^-1 * cpi1; 
-        fi;
-    od;
-    ab := GroupoidAutomorphismByRayShifts( gpd, b ); 
-    inv := ab; 
-    api := GroupoidAutomorphismByObjectPerm( gpd, imobs ); 
-    ipi := InverseGeneralMapping( api ); 
-    inv := inv * ipi; 
-    conj := InnerAutomorphism( rgp, cpi1^-1 ); 
-    aconj := GroupoidAutomorphismByGroupAuto( gpd, conj );
-    inv := inv * aconj; 
-    ikappa := GroupoidAutomorphismByGroupAuto( gpd, irhom );
-    inv := inv * ikappa; 
+    irhom := InverseGeneralMapping( rhom );
+    ok := IsGroupHomomorphism( irhom );
+    inv := GroupoidAutomorphismByGroupAuto( gpd, irhom ); 
+    SetIsEndomorphismWithObjects( inv, true );
+    SetIsInjectiveOnObjects( inv, true );
+    SetIsSurjectiveOnObjects( inv, true );
+    return inv;
+end );
+
+InstallMethod( InverseGeneralMapping, "for gpd auto by ray shifts", true,
+    [ IsGroupoidAutomorphismByRayShifts ], 0,
+function( aut )
+
+    local gpd, c, inv; 
+
+    Info( InfoGroupoids, 1, "InverseGeneralMapping for ray shifts auto" );
+    gpd := Source( aut );
+    c := ImageElementsOfRays( aut );
+    inv := GroupoidAutomorphismByRayShifts( gpd, List( c, g -> g^-1 ) ); 
+    SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
     return inv;
@@ -887,7 +932,7 @@ function( m1, m2 )
           "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
     return ( ( Source( m1 ) =  Source( m2 ) ) and
              ( Range( m1 ) = Range( m2 ) ) and 
-             ( PieceImages( m1 ) = PieceImages( m2 ) ) );
+             ( SinglePieceMappingData( m1 ) = SinglePieceMappingData( m2 ) ) );
 end );
 
 InstallMethod( \=, "for 2 magma mappings", true,
@@ -1014,15 +1059,15 @@ function( map1, map2 )
     pieces1 := PiecesOfMapping( map1 );
     len1 := Length( pieces1 );
     maps := ListWithIdenticalEntries( len1, 0 );
-    images := PieceImages( map2 );
+    images := SinglePieceMappingData( map2 );
     for i in [1..len1] do
         m := pieces1[i];
         if not IsSinglePiece( Source(m) ) then
             Print( "general * not yet implemented\n" );
             return fail;
         fi;
-        imo1 := PieceImages(m)[1][2];
-        hom1 := PieceImages(m)[1][1];
+        imo1 := SinglePieceMappingData(m)[1][2];
+        hom1 := SinglePieceMappingData(m)[1][1];
         s1 := Source( m );
         ob1 := s1!.objects;
         nob1 := Length( ob1 );
@@ -1062,11 +1107,11 @@ function( m1, m2 )
     if not IsSubdomainWithObjects( s2, r1 ) then
         Error( "Range(m1) not a submagma of Source(m2)" );
     fi;
-    oi1 := PieceImages( m1 )[1];
+    oi1 := SinglePieceMappingData( m1 )[1];
     ob1 := s1!.objects;
     nob1 := Length( ob1 );
     ob2 := s2!.objects;
-    oi2 := PieceImages( m2 )[1];
+    oi2 := SinglePieceMappingData( m2 )[1];
     oi12 := ListWithIdenticalEntries( nob1, 0 );
     for j in [1..nob1] do
         o := oi1[2][j];
@@ -1082,8 +1127,7 @@ InstallMethod( \*, "for 2 connected groupoid homomorphisms", true,
       IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep ], 0,
 function( m1, m2 )
 
-    local s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
-          j, h1, h2, mgi1, im12, hom, oims, rims;
+    local s1, r1, s2, r2, mgi1, img1, img2;
 
     Info( InfoGroupoids, 2, 
           "method 1 for * with IsDefaultGroupoidHomomorphismRep" );
@@ -1094,28 +1138,10 @@ function( m1, m2 )
     if not IsSubdomainWithObjects( s2, r1 ) then
         Error( "Range(m1) not a subgroupoid of Source(m2)" );
     fi; 
-    ob1 := s1!.objects;
-    nob1 := Length( ob1 );
-    ob2 := s2!.objects; 
-    io1 := ImagesOfObjects( m1 ); 
-    io2 := ImagesOfObjects( m2 ); 
-    oims := [1..nob1]; 
-    for j in [1..nob1] do
-        oims[j] := io2[ Position( ob2, io1[j] ) ]; 
-    od;
-    h1 := RootGroupHomomorphism( m1 ); 
-    mgi1 := MappingGeneratorsImages( h1 ); 
-    h2 := RootGroupHomomorphism( m2 ); 
-    im12 := List( mgi1[2], x -> ImageElm( h2, x ) ); 
-    hom := GroupHomomorphismByImages( Source(h1), Range(h2), mgi1[1], im12 ); 
-    rims := RaysOfGroupoid( s1 ); 
-    Info( InfoGroupoids, 2, "rims = ", rims ); 
-    rims := List( rims, r -> ImageElm( m1, r ) ); 
-    Info( InfoGroupoids, 2, "rims = ", rims ); 
-    rims := List( rims, r -> ImageElm( m2, r ) ); 
-    Info( InfoGroupoids, 2, "rims = ", rims ); 
-    rims := List( rims, r -> r![1] ); 
-    return GroupoidHomomorphismFromSinglePieceNC( s1, r2, hom, oims, rims );
+    mgi1 := MappingGeneratorsImages( m1 ); 
+    img1 := mgi1[2]; 
+    img2 := List( img1, a -> ImageElm( m2, a ) ); 
+    return GroupoidHomomorphismFromSinglePieceNC( s1, r2, mgi1[1], img2 );
 end );
 
 InstallMethod( \*, "for maps from hom discrete groupoids", true,
@@ -1271,7 +1297,7 @@ InstallMethod( ViewObj, "for a magma with objects homomorphism", true,
 InstallMethod( PrintObj, "for mwo homomorphism to single piece", true,
     [ IsHomomorphismToSinglePiece ], 0, 
 function ( hom ) 
-    local src, rng; 
+    local src, rng, mgi, ngens, i; 
     src := Source( hom ); 
     rng := Range( hom ); 
     if ( "IsGroupoidHomomorphism" in CategoriesOfObject(hom) ) then 
@@ -1281,8 +1307,14 @@ function ( hom )
     fi;
     if ( HasName( src ) and HasName( rng ) ) then 
         Print( src, " -> ", rng, "\n" ); 
+    else 
+        Print( "\n" );
     fi; 
-    Print( PieceImages( hom ) );  
+    if ( "IsGroupoidHomomorphism" in CategoriesOfObject(hom) ) then 
+        Print( MappingGeneratorsImages( hom ) ); 
+    else 
+        Print( SinglePieceMappingData( hom ) ); 
+    fi;
 end );
 
 InstallMethod( PrintObj, "for a general mwo homomorphism", true,
@@ -1312,7 +1344,7 @@ function ( hom )
             Print( h, "\n" ); 
         od; 
     else 
-        Print( PieceImages( hom ) ); 
+        Print( SinglePieceMappingData( hom ) ); 
     fi; 
 end ); 
 
@@ -1324,13 +1356,14 @@ InstallMethod( Display, "for a homomorphsim to a single piece magma", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( hom )
 
-    local homs, imo, src, rng, pieces, i, c, images, len;
+    local homs, imo, src, rng, pieces, i, c, maps, len;
 
     Print( "homomorphism to single piece magma" );
     src := Source( hom );
     rng := Range( hom );
-    images := PieceImages( hom );
-    len := Length( images );
+    imo := ImagesOfObjects( hom );
+    maps := SinglePieceMappingData( hom );
+    len := Length( maps );
     if ( len = 1 ) then 
         if ( HasName( src ) and HasName( rng ) ) then 
             Print( ": ", src, " -> ", rng, "\n" ); 
@@ -1339,17 +1372,14 @@ function ( hom )
             Print( "[ ", src, " ] -> [ ", rng, " ]\n" );
         fi; 
         Print( " magma hom: " ); 
-        Display( images[1][1] ); 
-        Print( "object map: ", src!.objects, " -> ", images[1][2], "\n");
+        Display( maps[1] ); 
+        Print( "object map: ", src!.objects, " -> ", imo, "\n");
     else
         Print( " with pieces:\n" );
         pieces := Pieces( src );
-        for i in [1..Length(pieces)] do
-            c := pieces[i];
-            Print( "(", i, "):", " [ ", c, " ] -> [ ", rng, " ]\n" );
-            Print( "magma mapping: ", 
-                   MappingGeneratorsImages( images[i][1] ), "\n" );
-            Print( "   object map: ", c!.objects, " -> ", images[i][2], "\n");
+        for i in [1..len] do
+            Print( "(", i, ") : " ); 
+            Display( maps[i] );
         od;
     fi;
 end );
@@ -1358,27 +1388,21 @@ InstallMethod( Display, "generic method for a magma mapping", true,
     [ IsGeneralMappingWithObjects ], 0,
 function ( hom )
 
-    local chom, src, rng, pieces, i, c, images, len;
+    local chom, src, rng, pieces, i, c, maps, len;
 
     Print( "magma homomorphism: ", Source( hom ), " -> ", 
             Range( hom ), " with pieces :\n" );
     for chom in PiecesOfMapping( hom ) do
         src := Source( chom );
         rng := Range( chom );
-        images := PieceImages( chom );
-        len := Length( images );
+        maps := SinglePieceMappingData( chom );
+        len := Length( maps );
         if ( len = 1 ) then
-            Print( "[ ", src, " ] -> [ ", rng, " ]\n" );
-            Print( "magma homomorphism: ", images[1][1], "\n" );
-            Print("   object map: ", src!.objects, " -> ", images[1][2],"\n");
+            Display( maps[1] ); 
         else 
-            pieces := Pieces( src );
-            for i in [1..Length(pieces)] do
-                c := pieces[i];
-                Print( "[ ", c, " ] -> [ ", rng, " ]\n" );
-                Print( "magma homomorophism: ", images[i][1], "\n" );
-                Print( "   object map: ", c!.objects, 
-                       " -> ", images[i][2], "\n" );
+            for i in [1..len] do 
+                Print( "(", i, ") : " ); 
+                Display( maps[i] ); 
             od;
         fi;
     od;
@@ -1403,8 +1427,8 @@ function ( map, e )
     pe := Position( C1, ce );
     Ge := C1[pe];
     obs1 := Ge!.objects;
-    hom := PieceImages( map )[pe][1];
-    obs2 := PieceImages( map )[pe][2]; 
+    hom := SinglePieceMappingData( map )[pe][1];
+    obs2 := SinglePieceMappingData( map )[pe][2]; 
     #?  this is not the correct range magma ??
     mag2 := Range( map ); 
     t2 := obs2[ Position( obs1, e![2] ) ];
@@ -1426,7 +1450,7 @@ function ( map, e )
     pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
     obs1 := C1[pe]!.objects; 
     pom := PiecesOfMapping( map )[pe]; 
-    pim := PieceImages( pom )[1];
+    pim := SinglePieceMappingData( pom )[1];
     obs2 := pim[2]; 
     t2 := obs2[ Position( obs1, e![2] ) ];
     h2 := obs2[ Position( obs1, e![3] ) ]; 
@@ -1484,7 +1508,7 @@ function ( map )
     fi;
     imo := ShallowCopy( ImagesOfObjects( map ) );
     Sort( imo );
-    hom := PieceImages( map )[1][1];
+    hom := SinglePieceMappingData( map )[1][1];
     img := Image( hom );
     rng := Range( map );
     if ( ( imo = rng!.objects ) and ( img = rng!.magma ) ) then
@@ -1511,7 +1535,7 @@ function ( map )
     local obs; 
 
     obs := Source( map )!.objects; 
-    return ForAll( PieceImages( map ), 
+    return ForAll( SinglePieceMappingData( map ), 
         c -> ( IsEndoGeneralMapping( c[1] ) and IsSubset( obs, c[2] ) ) ); 
 end ); 
 

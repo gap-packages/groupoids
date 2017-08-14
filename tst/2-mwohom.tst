@@ -39,7 +39,8 @@ magma with objects homomorphism : M65 -> M78
 gap> ImageElm( comp, ib87 );
 [m3 : -8 -> -7]
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
-gap> images := [ PieceImages( hom1 )[1], PieceImages( j56 )[1] ]; 
+gap> images := [ SinglePieceMappingData( hom1 )[1], 
+> SinglePieceMappingData( j56 )[1] ]; 
 [ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 magma with objects homomorphism : [ [ <mapping: m -> m >, [ -8, -7 ] ], 

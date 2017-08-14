@@ -96,7 +96,7 @@ gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
 2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
-gap> IsHomogeneousDomainWithObjects(Hd8);               
+gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
 gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
 homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
