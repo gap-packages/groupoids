@@ -195,8 +195,7 @@ normally mixed in a single structure.
 gap> IsGraphOfFpGroups( G1 );
 true
 gap> IsomorphismsOfGraphOfGroups( G1 );
-[ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), 
-  GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ) ]
+[ [ a^3 ] -> [ b^2 ], [ b^2 ] -> [ a^3 ] ]
 
 ]]>
 </Example>
@@ -541,17 +540,24 @@ on one generator, and full subgroupoids with groups
 gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );
-gap> Uhy := Subgroupoid( Gfa, [ [[-2,-1], hy ] ] );;
+gap> Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;
 gap> SetName( Uhy, "Uhy" );
 gap> Gfb := SinglePieceGroupoid( fb, [-4,-3] );;
 gap> ofb := One( fb );;
 gap> SetName( Gfb, "Gfb" );
-gap> Uhybar := Subgroupoid( Gfb, [ [[-4,-3], hybar ] ] );;
+gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;
 gap> SetName( Uhybar, "Uhybar" );
-gap> mory := GroupoidMappingOfSinglePieces( 
-gap>      Uhy, Uhybar, homy, [-4,-3], [ofb,ofb] );;
-gap> morybar := GroupoidMappingOfSinglePieces( 
-gap>      Uhybar, Uhy, homybar, [-2,-1], [ofa,ofa] );;
+gap> gens := GeneratorsOfGroupoid( Uhy );; 
+gap> gensbar := GeneratorsOfGroupoid( Uhybar );;
+gap> mory := GroupoidHomomorphismFromSinglePiece( 
+>                Uhy, Uhybar, gens, gensbar );
+groupoid homomorphism : Uhy -> Uhybar
+[ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
+  [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
+gap> morybar := InverseGeneralMapping( mory );
+groupoid homomorphism : Uhybar -> Uhy
+[ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+  [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ]
 gap> gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;
 gap> Display( gg3 );
 Graph of Groupoids with :- 
@@ -571,11 +577,11 @@ single piece groupoid: Uhybar
   objects: [ -4, -3 ]
     group: hybar = <[ b^2 ]>
 isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
-    [ [ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), [ -4, -3 ], 
-          [ <identity ...>, <identity ...> ] ] ], 
+    [ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
+      [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ], 
   groupoid homomorphism : Uhybar -> Uhy
-    [ [ GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ), [ -2, -1 ], 
-          [ <identity ...>, <identity ...> ] ] ] ]
+    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
 ]]>
 </Example>
 

@@ -171,6 +171,25 @@ function( e1, e2 )
     return ForAll( [1..3], i -> ( e1![i] = e2![i] ) ); 
 end );
 
+#############################################################################
+##
+#M  \<( <e1>, <e2> ) . . . . . . equality of elements in a magma with objects
+##
+InstallMethod( \<, "for two multiplicative elements with objects", 
+    IsIdenticalObj, [ IsMultiplicativeElementWithObjects, 
+                      IsMultiplicativeElementWithObjects ], 0,
+function( e1, e2 )
+    if ( e1![2] < e2![2] ) then 
+        return true; 
+    elif ( (e1![2] = e2![2]) and (e1![3] < e2![3]) ) then 
+        return true; 
+    elif ( (e1![2] = e2![2]) and (e1![3] = e2![3]) and (e1![1] < e2![1]) ) then 
+        return true; 
+    else 
+        return false; 
+    fi;
+end );
+
 ############################################################################# 
 ## 
 #M  \*( e1, e2 ) . . . . . . composition of elements in a magma with objects 
@@ -576,10 +595,13 @@ function( mwo )
     mgens := GeneratorsOfMagma( m ); 
     if HasGeneratorsOfMagmaWithInverses( m ) then 
         type := 4; 
+        mgens := GeneratorsOfGroup( m );
     elif HasGeneratorsOfMagmaWithOne( m ) then 
         type := 3; 
+        mgens := GeneratorsOfMonoid( m ); 
     elif ( HasIsSemigroup( m ) and IsSemigroup( m ) ) then 
         type := 2; 
+        mgens := GeneratorsOfSemigroup( m );
     else  ## just a magma 
         type := 1; 
     fi; 

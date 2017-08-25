@@ -120,10 +120,10 @@ gap> ans := [ "IsListOrCollection", "IsCollection", "IsExtLElement",
 gap> ForAll( ans, a -> ( a in catobj ) ); 
 true
 gap> genM := GeneratorsOfMagmaWithOne( M49 ); 
-[ [<identity ...> : -9 -> -9], [f1 : -9 -> -9], [f2 : -9 -> -9], 
-  [<identity ...> : -9 -> -4], [<identity ...> : -4 -> -9] ]
-gap> g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; g5 := genM[5];; 
-gap> g5*g3*g2*g4; 
+[ [f1 : -9 -> -9], [f2 : -9 -> -9], [<identity ...> : -9 -> -4], 
+  [<identity ...> : -4 -> -9] ]
+gap> g1 := genM[1];; g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; 
+gap> g4*g2*g1*g3; 
 [f2*f1 : -4 -> -4]
 
 ## Section 2.4, Structures with one or more pieces 
@@ -181,7 +181,7 @@ magma with objects having 4 pieces :-
 gap> ObjectList( N3 ); 
 [ -9, -8, -7, -4, -3, -2, -1, 0 ]
 gap> Length( GeneratorsOfMagmaWithObjects( N3 ) ); 
-50
+49
 
 ## this should fail since the object sets are not disjoint: 
 gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  

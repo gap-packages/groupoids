@@ -77,7 +77,8 @@ end );
 ##
 InstallGlobalFunction( GroupoidHomomorphism, function( arg )
 
-    local nargs, id, rays, ob1, ob2, i, g, pt, ph, gens1, gens2, ngens; 
+    local nargs, id, rays, ob1, ob2, i, g, pt, ph, gens1, gens2, ngens, nobs, 
+          images, e, a; 
 
     nargs := Length( arg );
     if ( ( nargs < 2 ) 
@@ -131,7 +132,24 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         return GroupoidHomomorphismFromSinglePieceNC( 
                    arg[1], arg[2], arg[3], arg[4] ); 
     elif ( nargs = 5 ) then 
-        Error( "5 parameters no longer allowed?" ); 
+        gens1 := GeneratorsOfGroupoid( arg[1] ); 
+        images := ShallowCopy( gens1 ); 
+        ngens := Length( images );
+        ob1 := arg[1]!.objects; 
+        nobs := Length( ob1 );
+        for i in [1..ngens] do 
+            g := gens1[i]; 
+            pt := arg[4][ Position( ob1, g![2] ) ]; 
+            ph := arg[4][ Position( ob1, g![3] ) ]; 
+            if ( pt = ph ) then 
+                e := ImageElm( arg[3], g![1] ); 
+                a := Arrow( arg[2], e, pt, ph ); 
+            else 
+                a := Arrow( arg[2], arg[5][i-ngens+nobs], pt, ph ); 
+            fi;
+            images[i] := a; 
+        od; 
+        return GroupoidHomomorphism( arg[1], arg[2], gens1, images ); 
     else
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
@@ -426,7 +444,8 @@ end );
 #M  Display
 ##
 InstallMethod( Display, "for a mapping of connected groupoids", true,
-    [ IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece ], 0,
+    [ IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece 
+      and IsHomomorphismToSinglePiece ], 0,
 function ( map ) 
     Print( " groupoid mapping: " ); 
     Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 

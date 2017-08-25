@@ -54,10 +54,14 @@ in June 2012.
 <P/>
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
 <P/>
-The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
-for &GAP; 4.8.8 or 4.9. 
+In August 2017 the implementation of groupoid homomorphisms was completely 
+revised with the emphasis now on a mapping from a set of generating arrows 
+to their images. 
 <P/>
-In the current version there have been a number of changes of function 
+The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
+for &GAP; 4.9. 
+<P/>
+In recent versions there have been a number of changes of function 
 name, such as <C>IsDigraph</C> becoming <C>GroupoidIsDigraph</C>. 
 This is in order to avoid conflicts with the 
 <Package>Digraphs</Package> package.
@@ -69,30 +73,6 @@ in due course.
 <Section Label="sec-whatnext">
 <Heading>What needs to be done next?</Heading>
 
-The urgent requirement is for a new implementation of groupoid homomorphisms 
-to eliminate the errors mention in section <Ref Sect="sec-autos"/>. 
-<P/>
-Computationally, there are three types of connected groupoid:
-<List>
-<Item>
-those with identical object groups,
-</Item>
-<Item>
-those with object groups conjugate in some supergroup,
-</Item>
-<Item>
-those with object groups which are simply isomorphic. 
-</Item>
-</List>
-
-<Package>GraphGpd</Package> attempted to implement the second case, 
-while <Package>gpd</Package> 1.01 and 1.03 considered only the first case, 
-and <Package>gpd</Package> 1.05 extended 1.03 to the second case. 
-<P/> 
-The third case has not yet been considered for implementation, 
-and there does not appear to be any need to do so. 
-<P/> 
-Here are some other immediate requirements: 
 <List>
 <Item>
 more work on automorphism groups of groupoids; 

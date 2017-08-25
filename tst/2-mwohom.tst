@@ -108,27 +108,18 @@ magma with objects homomorphism :
 [ magma with objects homomorphism : M78 -> M78
     [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
+
+## SubSection 3.3.2
 gap> IsInjectiveOnObjects( h14 );
 true
 gap> IsSurjectiveOnObjects( h14 );
 true
 gap> IsBijectiveOnObjects( h14 ); 
 true
-gap> ImageElm( h14, t12 );
-[Transformation( [ 2, 2, 4, 1 ] ) : -13 -> -12]
-gap> h45 := IsomorphismNewObjects( N4, [ [-103,-102,-101], [-108,-107] ] );
-magma with objects homomorphism : 
-[ magma with objects homomorphism : 
-    [ [ IdentityMapping( m ), [ -108, -107 ] ] ], 
-  magma with objects homomorphism : 
-    [ [ IdentityMapping( sgp<t2,s2,r2> ), [ -103, -102, -101 ] ] ] ]
-gap> N5 := Range( h45 );;  SetName( N5, "N5" ); 
-gap> h15 := h14 * h45;
-magma with objects homomorphism : 
-[ magma with objects homomorphism : [ [ <mapping: m -> m >, [ -108, -107 ] ] ]
-    , magma with objects homomorphism : [ [ smap, [ -101, -102, -103 ] ] ] ]
-gap> ImageElm( h15, t12 ); 
-[Transformation( [ 2, 2, 4, 1 ] ) : -103 -> -102]
+gap> IsEndomorphismWithObjects( h14 ); 
+false
+gap> IsAutomorphismWithObjects( h14 ); 
+false
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 

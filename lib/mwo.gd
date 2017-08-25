@@ -134,6 +134,8 @@ DeclareCategory( "IsGroupoidElement",
 DeclareCategoryCollections( "IsGroupoidElement" ); 
 DeclareCategoryCollections( "IsGroupoidElementCollection" ); 
 DeclareCategoryCollections( "IsGroupoidElementCollColl" ); 
+#? 18Aug
+DeclareCategoryFamily( "IsGroupoidElement" ); 
 
 ############################################################################# 
 ## 

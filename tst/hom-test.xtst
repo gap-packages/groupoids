@@ -1,0 +1,61 @@
+## (25/08/17) groupoids/tst/hom-test.tst : for a single piece groupoid
+## =================================================================== 
+
+gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> SetName( s4, "s4" );;
+gap> a4gens := [ (1,2,3), (2,3,4) ];;
+gap> a4 := Subgroup( s4, a4gens );;
+gap> SetName( a4, "a4" );;
+gap> SG := SinglePieceGroupoid( s4, [-4,-3,-2,-1] );
+single piece groupoid: < s4, [ -4, -3, -2, -1 ] >
+gap> G := SubgroupoidWithRays( SG, a4, [(),(1,4),(2,4),(3,4)] );;
+gap> Display(G);
+single piece groupoid with rays having: 
+supergroupoid: single piece groupoid: < s4, [ -4, -3, -2, -1 ] >
+      objects: [ -4, -3, -2, -1 ]
+   root group: a4 = <[ (1,2,3), (2,3,4) ]>
+         rays: [ (), (1,4), (2,4), (3,4) ]
+gap> SH := SinglePieceGroupoid( s4, [-9,-8,-7,-6,-5] );
+single piece groupoid: < s4, [ -9, -8, -7, -6, -5 ] >
+gap> H := SubgroupoidWithRays( SH, a4, [(),(2,3,4),(1,3,4),(1,2,4),(1,2,3)] );;
+gap> Display(H);
+single piece groupoid with rays having: 
+supergroupoid: single piece groupoid: < s4, [ -9, -8, -7, -6, -5 ] >
+      objects: [ -9, -8, -7, -6, -5 ]
+   root group: a4 = <[ (1,2,3), (2,3,4) ]>
+         rays: [ (), (2,3,4), (1,3,4), (1,2,4), (1,2,3) ]
+gap> SJ := SinglePieceGroupoid( s4, [-19,-18,-17,-16,-15] );
+single piece groupoid: < s4, [ -19, -18, -17, -16, -15 ] >
+gap> J := SubgroupoidWithRays( SJ, a4, [(),(2,3),(1,3),(1,2),(1,2,3)] );;
+gap> Display(J);
+single piece groupoid with rays having: 
+supergroupoid: single piece groupoid: < s4, [ -19, -18, -17, -16, -15 ] >
+      objects: [ -19, -18, -17, -16, -15 ]
+   root group: a4 = <[ (1,2,3), (2,3,4) ]>
+         rays: [ (), (2,3), (1,3), (1,2), (1,2,3) ]
+
+gap> auta := GroupHomomorphismByImages( a4, a4, a4gens, [ (1,3,2), (1,3,4) ] );; 
+gap> obsa := [-7,-6,-5,-8];; 
+gap> raya := [(),(1,2)(3,4),(1,3)(2,4),(1,4)(2,3)];;
+gap> a := GroupoidHomomorphism( G, H, auta, obsa, raya ); 
+groupoid homomorphism : 
+[ [ [(1,2,3) : -4 -> -4], [(2,3,4) : -4 -> -4], [(1,4) : -4 -> -3], 
+      [(2,4) : -4 -> -2], [(3,4) : -4 -> -1] ], 
+  [ [(1,3,2) : -7 -> -7], [(1,3,4) : -7 -> -7], [(1,2)(3,4) : -7 -> -6], 
+      [(1,3)(2,4) : -7 -> -5], [(1,4)(2,3) : -7 -> -8] ] ]
+gap> autb := GroupHomomorphismByImages( a4, a4, a4gens, [ (1,4,3), (2,4,3) ] );; 
+gap> obsb := [-15,-18,-19,-16,-17];; 
+gap> rayb := [(),(1,4),(1,2,4),(3,4),(1,3,2,4)];; 
+gap> b := GroupoidHomomorphism( H, J, autb, obsb, rayb ); 
+groupoid homomorphism : 
+[ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [(2,3,4) : -9 -> -8], 
+      [(1,3,4) : -9 -> -7], [(1,2,4) : -9 -> -6], [(1,2,3) : -9 -> -5] ], 
+  [ [(1,4,3) : -15 -> -15], [(2,4,3) : -15 -> -15], [(1,4) : -15 -> -18], 
+      [(1,2,4) : -15 -> -19], [(3,4) : -15 -> -16], [(1,3,2,4) : -15 -> -17] 
+     ] ]
+gap> ab := a*b; 
+groupoid homomorphism : 
+[ [ [(1,2,3) : -4 -> -4], [(2,3,4) : -4 -> -4], [(1,4) : -4 -> -3], 
+      [(2,4) : -4 -> -2], [(3,4) : -4 -> -1] ], 
+  [ [(1,4,2) : -19 -> -19], [(2,3,4) : -19 -> -19], [(1,2,3,4) : -19 -> -16], 
+      [(1,4) : -19 -> -17], [(3,4) : -19 -> -18] ] ]

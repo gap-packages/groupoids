@@ -234,6 +234,7 @@ single piece groupoid with rays: < d8, [ -14, -13, -12 ],
 [ (), (1,2,3), (1,2,4) ] >
 gap> Hd8a = Hd8b; 
 true
+gap> SetName( Hd8b, "Hd8b" );
 gap> RayElementsOfGroupoid( Hd8b ); 
 [ (), (1,2,3), (1,2,4) ]
 gap> Parent( Hd8a );

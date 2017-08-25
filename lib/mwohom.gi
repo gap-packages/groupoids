@@ -835,6 +835,8 @@ function( iso )
     inv := GroupoidHomomorphism( rng, src, gensr, images );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
+    SetInverseGeneralMapping( iso, inv );
+    SetInverseGeneralMapping( inv, iso );
     return inv;
 end );
 
@@ -856,6 +858,8 @@ function( aut )
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
+    SetInverseGeneralMapping( aut, inv );
+    SetInverseGeneralMapping( inv, aut );
     return inv;
 end );
 
@@ -874,6 +878,8 @@ function( aut )
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
+    SetInverseGeneralMapping( aut, inv );
+    SetInverseGeneralMapping( inv, aut );
     return inv;
 end );
 
@@ -890,6 +896,8 @@ function( aut )
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
+    SetInverseGeneralMapping( aut, inv );
+    SetInverseGeneralMapping( inv, aut );
     return inv;
 end );
 
@@ -898,7 +906,7 @@ InstallMethod( InverseGeneralMapping, "for hom from discrete gpd with objects",
             IsGroupoidHomomorphismFromHomogeneousDiscrete ], 0,
 function( map )
 
-    local src, rng, obs, oims1, oims2, homs, ihoms; 
+    local src, rng, obs, oims1, oims2, homs, ihoms, inv; 
 
     if not IsBijectiveOnObjects( map ) then 
         Error( "expecting map to be bijective on objects" ); 
@@ -918,7 +926,10 @@ function( map )
     SortParallel( oims1, obs ); 
     SortParallel( oims2, homs ); 
     ihoms := List( homs, h -> InverseGeneralMapping(h) ); 
-    return GroupoidHomomorphismFromHomogeneousDiscrete( src,rng,ihoms,obs ); 
+    inv := GroupoidHomomorphismFromHomogeneousDiscrete( src,rng,ihoms,obs ); 
+    SetInverseGeneralMapping( map, inv );
+    SetInverseGeneralMapping( inv, map );
+    return inv;
 end ); 
 
 #############################################################################
@@ -1356,11 +1367,16 @@ InstallMethod( Display, "for a homomorphsim to a single piece magma", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( hom )
 
-    local homs, imo, src, rng, pieces, i, c, maps, len;
+    local homs, imo, src, rng, isgpd, pieces, i, c, maps, len;
 
-    Print( "homomorphism to single piece magma" );
     src := Source( hom );
     rng := Range( hom );
+    isgpd := "IsGroupoid" in CategoriesOfObject(rng); 
+    if isgpd then 
+        Print( "homomorphism to single piece groupoid" );
+    else 
+        Print( "homomorphism to single piece magma" );
+    fi;
     imo := ImagesOfObjects( hom );
     maps := SinglePieceMappingData( hom );
     len := Length( maps );
@@ -1371,9 +1387,14 @@ function ( hom )
             Print( ":\n" );
             Print( "[ ", src, " ] -> [ ", rng, " ]\n" );
         fi; 
-        Print( " magma hom: " ); 
-        Display( maps[1] ); 
-        Print( "object map: ", src!.objects, " -> ", imo, "\n");
+        if isgpd then 
+            Print( " group hom: ", MappingGeneratorsImages(maps[1][1]), "\n" ); 
+        else 
+            Print( " magma hom: " ); 
+            Display( maps[1][1] ); 
+        fi;
+        Print( "object map: ", src!.objects, " -> ", imo, "\n"); 
+        Print( "ray images: ", maps[1][3], "\n" ); 
     else
         Print( " with pieces:\n" );
         pieces := Pieces( src );

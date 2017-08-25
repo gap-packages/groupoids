@@ -22,7 +22,7 @@
 
 <TitlePage>
   <Title>&groupoids;</Title>
-  <Subtitle>Groupoids, graphs of groups, and graphs of groupoids</Subtitle>
+  <Subtitle>Calculations with finite groupoids and their homomorphisms</Subtitle>
   <Version>Version &GROUPOIDSVERSION;</Version>   
   <Date>&GROUPOIDSRELEASEDATE;</Date> 
   <Author> Emma Moore 
@@ -62,9 +62,6 @@ Recent versions implement many of the constructions described in the paper
 <Cite Key="AlWe" /> for automorphisms of groupoids. 
 <P/>
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;.  
-<P/>
-A major redesign of groupoid homomorphisms is planned for the next version. 
-This should deal with a number of bugs in the various homomorphism functions. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
 Please submit an issue at 

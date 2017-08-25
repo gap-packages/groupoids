@@ -23,9 +23,10 @@
               N.B. as at 02/11/16 this is still not fixed 
  * (03/08/17) provide method for < for groupoid elements 
 
-## 1.51 -> 1.52  (14/08/17) 
+## 1.51 -> 1.52  (25/08/17) 
 
- * (12/08/17) redesign of homs proceeds : new InverseGeneralMapping for auts 
+ * (25/08/17) converted aut-test.g, hom-tst.g to .xtst; added tst/testextra.g
+ * (14/08/17) redesign of homs proceeds : new InverseGeneralMapping for isos 
  * (11/09/17) PieceImages -> SinglePieceMappingData (temporarily?) 
  * (08/08/17) testall.g copied to testing.g; testall now calls TestDirectory
 

@@ -199,20 +199,9 @@ gap> ir31 := ImageElm( shom, r31 );;  [ r31, ir31 ];
 <ManSection>
    <Oper Name="HomomorphismByUnion"
          Arg="src,rng,homs" />
-   <Prop Name="IsInjectiveOnObjects" 
-         Arg="mwohom" />
-   <Prop Name="IsSurjectiveOnObjects" 
-         Arg="mwohom" />
-   <Prop Name="IsBijectiveOnObjects" 
-         Arg="mwohom" />
-   <Prop Name="IsEndomorphismWithObjects" 
-         Arg="mwohom" />
-   <Prop Name="IsAutomorphismWithObjects" 
-         Arg="mwohom" />
 <Description>
 When <M>f : M \to N</M> and <M>N</M> has more than one connected component, 
 then <M>f</M> is a union of homomorphisms, one for each piece in the range. 
-
 </Description>
 </ManSection>
 <Example>
@@ -228,27 +217,36 @@ magma with objects homomorphism :
 [ magma with objects homomorphism : M78 -> M78
     [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsInjectiveOnObjects" 
+         Arg="mwohom" />
+   <Prop Name="IsSurjectiveOnObjects" 
+         Arg="mwohom" />
+   <Prop Name="IsBijectiveOnObjects" 
+         Arg="mwohom" />
+   <Prop Name="IsEndomorphismWithObjects" 
+         Arg="mwohom" />
+   <Prop Name="IsAutomorphismWithObjects" 
+         Arg="mwohom" />
+<Description>
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
 gap> IsInjectiveOnObjects( h14 );
 true
 gap> IsSurjectiveOnObjects( h14 );
 true
 gap> IsBijectiveOnObjects( h14 ); 
 true
-gap> ImageElm( h14, t12 );
-[Transformation( [ 2, 2, 4, 1 ] ) : -13 -> -12]
-gap> h45 := IsomorphismNewObjects( N4, [ [-103,-102,-101], [-108,-107] ] );
-magma with objects homomorphism : 
-[ magma with objects homomorphism : 
-    [ [ IdentityMapping( m ), [ -108, -107 ] ] ], 
-  magma with objects homomorphism : 
-    [ [ IdentityMapping( sgp<t2,s2,r2> ), [ -103, -102, -101 ] ] ] ]
-gap> N5 := Range( h45 );;  SetName( N5, "N5" ); 
-gap> h15 := h14 * h45;
-magma with objects homomorphism : 
-[ magma with objects homomorphism : [ [ <mapping: m -> m >, [ -108, -107 ] ] ]
-    , magma with objects homomorphism : [ [ smap, [ -101, -102, -103 ] ] ] ]
-gap> ImageElm( h15, t12 ); 
-[Transformation( [ 2, 2, 4, 1 ] ) : -103 -> -102]
+gap> IsEndomorphismWithObjects( h14 ); 
+false
+gap> IsAutomorphismWithObjects( h14 ); 
+false
 ]]>
 </Example>
 

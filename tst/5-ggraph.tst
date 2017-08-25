@@ -181,18 +181,17 @@ gap> ofb := One( fb );;
 gap> SetName( Gfb, "Gfb" );
 gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;
 gap> SetName( Uhybar, "Uhybar" );
+gap> gens := GeneratorsOfGroupoid( Uhy );; 
+gap> gensbar := GeneratorsOfGroupoid( Uhybar );;
 gap> mory := GroupoidHomomorphismFromSinglePiece( 
->                Uhy, Uhybar, homy, [-4,-3], [ofb,ofb] );
+>                Uhy, Uhybar, gens, gensbar );
 groupoid homomorphism : Uhy -> Uhybar
-[ [ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), [ -4, -3 ], 
-      [ <identity ...>, <identity ...> ] ] ]
-gap> morybar := GroupoidHomomorphismFromSinglePiece( 
->                Uhybar, Uhy, homybar, [-2,-1], [ofa,ofa] );
+[ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
+  [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
+gap> morybar := InverseGeneralMapping( mory );
 groupoid homomorphism : Uhybar -> Uhy
-[ [ GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ), [ -2, -1 ], 
-      [ <identity ...>, <identity ...> ] ] ]
-gap> SetInverseGeneralMapping( mory, morybar );
-gap> SetInverseGeneralMapping( morybar, mory );
+[ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+  [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ]
 gap> gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;
 gap> Display( gg3 );
 Graph of Groupoids with :- 
@@ -212,11 +211,11 @@ single piece groupoid: Uhybar
   objects: [ -4, -3 ]
     group: hybar = <[ b^2 ]>
 isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
-    [ [ GroupHomomorphismByImages( hy, hybar, [ a^3 ], [ b^2 ] ), [ -4, -3 ], 
-          [ <identity ...>, <identity ...> ] ] ], 
+    [ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
+      [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ], 
   groupoid homomorphism : Uhybar -> Uhy
-    [ [ GroupHomomorphismByImages( hybar, hy, [ b^2 ], [ a^3 ] ), [ -2, -1 ], 
-          [ <identity ...>, <identity ...> ] ] ] ]
+    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
 gap> f1 := Arrow( Gfa, a^7, -1, -2);;
 gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
 gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;

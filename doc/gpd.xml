@@ -108,14 +108,6 @@ gap> SetName( c6, "c6" );
 gap> Gc6 := DomainWithSingleObject( c6, -6 );
 single piece groupoid: < c6, [ -6 ] >
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
-gap> G3 := Groupoid( [ Gc6, Gd8, Gs4 ] );
-groupoid with 3 pieces:
-[ Gs4, Gd8, Gc6 ]
-gap> f2 := FreeGroup(2);;
-gap> Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );
-single piece groupoid: < c6, [ f1, f2 ] >
-gap> Gabc := Groupoid( d8, [ "a", "b", "c" ] );
-single piece groupoid: < d8, [ "a", "b", "c" ] >
 ]]>
 </Example>
 
@@ -293,13 +285,13 @@ In the latter case a separate representation
 </ManSection>
 <Example>
 <![CDATA[
-gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] ); 
+gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
 2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
-gap> IsHomogeneousDomainWithObjects(Hd8);               
+gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
-gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] );
+gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
 homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
 gap> RepresentationsOfObject(Gd8);
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
@@ -308,18 +300,12 @@ gap> RepresentationsOfObject(Hd8);
 gap> RepresentationsOfObject(Hc6);
 [ "IsComponentObjectRep", "IsAttributeStoringRep", 
   "IsHomogeneousDiscreteGroupoidRep" ]
-gap> KnownTruePropertiesOfObject(Hc6); 
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsAssociative", "IsCommutative", "IsDiscreteDomainWithObjects", 
-  "IsHomogeneousDomainWithObjects" ]
-gap> Kd8 := UnionOfPieces( [ Gd8, Hd8 ] );
-groupoid with 3 pieces:
-1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
-2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
-3:  Gd8
-gap> ObjectList(Kd8);
-[ -16, -15, -14, -12, -11, -10, -9, -8, -7 ]
-gap> IsHomogeneousDomainWithObjects( Kd8 );
+gap> ktpo := KnownTruePropertiesOfObject(Hc6);; 
+gap> ans := 
+> [ "CanEasilyCompareElements", "CanEasilySortElements", 
+>   "IsDuplicateFree", "IsAssociative", "IsCommutative", 
+>   "IsDiscreteDomainWithObjects", "IsHomogeneousDomainWithObjects" ];;
+gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
 ]]>
 </Example>
@@ -630,32 +616,26 @@ Note also that the function <Index Key="Ancestor"> <C>Ancestor</C></Index>
 gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4)
+single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
  ] >
 gap> hs1413 := Homset( Hd8a, -14, -13 );
 <homset -14 -> -13 with group d8>
 gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
-[(2,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [
-(1,3,4) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,3) : -14 -> -13], [
-(1,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
+[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
+(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
+(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ],
+single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
 [ (), (1,2,3), (1,2,4) ] >
 gap> Hd8a = Hd8b; 
 true
-gap> RaysOfGroupoid( Hd8b );
-[ [() : -14 -> -14], [(1,2,3) : -14 -> -13], [(1,2,4) : -14 -> -12] ]
+gap> SetName( Hd8b, "Hd8b" ); 
 gap> RayElementsOfGroupoid( Hd8b ); 
 [ (), (1,2,3), (1,2,4) ]
 gap> Parent( Hd8a );
 Hs4
 gap> Ancestor( Hd8a ); 
 Gs4
-gap> Fd8a := FullSubgroupoid( Hd8a, [-14,-13]);
-single piece groupoid with rays: < d8, [ -14, -13 ], [ (), (2,3) ] >
-gap> Fd8b := FullSubgroupoid( Hd8a, [-13,-12]);
-single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
-[ -13, -12 ], [ (), (2,4,3) ] >
 gap> Fd8a := FullSubgroupoid( Hd8a, [-13,-12] );            
 single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
 [ -13, -12 ], [ (), (2,4,3) ] >
@@ -810,27 +790,19 @@ gap> x := Arrow( Gd8, (1,3), -9, -9 );;
 gap> y := Arrow( Gd8, (1,2,3,4), -8, -9 );; 
 gap> z := Arrow( Gd8, (1,2)(3,4), -9, -7 );; 
 gap> w := Arrow( Gd8, (1,2,3,4), -7, -8 );; 
-gap> ##  conjugation with arrows x, y, z and w in Gd8: 
+gap> ##  conjugation with elements x, y, and z in Gd8: 
 gap> ConjugateArrow(x,y);
 [(2,4) : -8 -> -8]
 gap> ConjugateArrow(x,z);
 [(2,4) : -7 -> -7]
-gap> ConjugateArrow(x,w);
-[(1,3) : -9 -> -9]
 gap> ConjugateArrow(y,x);
 [() : -8 -> -9]
 gap> ConjugateArrow(y,z);
 [(2,4) : -8 -> -7]
-gap> ConjugateArrow(y,w);    
-[(1,3)(2,4) : -7 -> -9]
 gap> ConjugateArrow(z,x);
 [(1,4,3,2) : -9 -> -7]
 gap> ConjugateArrow(z,y);
 [(2,4) : -8 -> -7]
-gap> ConjugateArrow(z,w);
-[(1,3) : -9 -> -8]
-gap> ConjugateArrow(w,x); 
-[(1,2,3,4) : -7 -> -8]
 gap> ConjugateArrow(w,y);
 [(1,3)(2,4) : -7 -> -9]
 gap> ConjugateArrow(w,z);
