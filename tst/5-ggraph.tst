@@ -86,7 +86,7 @@ gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
 (5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
 gap> IsGraphOfGroupsWord( gw1 );
 true
-gap> [ GGTail( gw1 ), GGHead( gw1 ) ];
+gap> [ TailOfGraphOfGroupsWord( gw1 ), HeadOfGraphOfGroupsWord( gw1 ) ];
 [ 5, 5 ]
 gap> GraphOfGroupsOfWord( gw1 );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]

@@ -3,9 +3,6 @@
 ## ToDo: 
 
  * (15/06/11) HomomorphismByUnion needs revisiting for multi-component cases. 
- * (14/01/13) It seems that operations such as WeightedSpanningTree have 
-              recently been included in `grpgraph.gi` but not yet used in 
-              any example or test file: so need to work on this. 
  * (21/11/14) Arrows are the elements in any mwo, but in a groupoid the code 
               still makes GroupoidElement different - but IsGroupoidElement 
               is declared to be a synonym of Arrow in `gpd.gi`. 
@@ -18,14 +15,15 @@
               later changed to GroupoidIsDigraph: this is in order to avoid 
               conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
-              becomes part of the general GAP distribution.
- * (22/03/16) in `mwohom.gi` check that \^-1 now works for isomorphisms 
-              N.B. as at 02/11/16 this is still not fixed 
- * (03/08/17) provide method for < for groupoid elements 
+              becomes part of the general GAP distribution. 
+ * (27/08/17) (see line 59 in 2-mwohom.tst) check whether package semigroups 
+              contains:  NaturalHomomorphismByGenerators( sgp, sgp2 );
 
-## 1.51 -> 1.52  (25/08/17) 
+## 1.51 -> 1.52  (28/08/17) 
 
+ * (27/08/17) GGHead/GGTail renamed Head/TailOfGraphOfGroupsWord 
  * (25/08/17) converted aut-test.g, hom-tst.g to .xtst; added tst/testextra.g
+ * (18/08/17) provided a method for < for groupoid elements 
  * (14/08/17) redesign of homs proceeds : new InverseGeneralMapping for isos 
  * (11/09/17) PieceImages -> SinglePieceMappingData (temporarily?) 
  * (08/08/17) testall.g copied to testing.g; testall now calls TestDirectory

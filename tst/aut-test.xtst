@@ -1,7 +1,14 @@
-## (25/08/17) groupoids/tst/aut-test.tst : for a single piece groupoid
-## =================================================================== 
+##############################################################################
+##
+#W  aut-test.xtst               Groupoids Package                Chris Wensley
+##
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  School of Computer Science, Bangor University, U.K. 
+##  
 
-## SetInfoLevel( InfoGroupoids, 4 ); 
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
+
 gap> a4gens := [ (1,2,3), (2,3,4) ];;
 gap> a4 := Group( a4gens );;
 gap> SetName( a4, "a4" );;
@@ -165,3 +172,9 @@ groupoid homomorphism :
       [(1,4)(2,3) : -8 -> -7] ] ]
 gap> cp=pme; 
 false
+gap> #
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+
+#############################################################################
+##
+#E  aut-test.xtst . . . . . . . . . . . . . . . . . . . . . . . . . ends here

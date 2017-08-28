@@ -25,8 +25,7 @@ SetName( Gs3, "Gs3" );
 gend8 := GeneratorsOfGroup( d8 );
 imhd8 := [ ( ), (15,20)(16,19)(17,18) ];
 hd8 := GroupHomomorphismByImages( d8, s3, gend8, imhd8 );
-homd8 := GroupoidHomomorphismFromSinglePiece( Gd8, Gs3, hd8, 
-             [-34,-35,-36], [(),(),()] ); 
+homd8 := GroupoidHomomorphism( Gd8, Gs3, hd8 ); 
 Print( "[e2, ImageElm( homd8, e2 )] = ", [e2, ImageElm( homd8, e2 )], "\n" );
 incGs3 := InclusionMappingGroupoids( Gd12, Gs3 ); 
 ihomd8 := homd8 * incGs3; 
@@ -63,10 +62,8 @@ idGs3 := IdentityMapping( Gs3 );
 V3 := ReplaceOnePieceInUnion( U3, 1, Gs3 ); 
 Print( "V3 = ", V3, "\n" ); 
 Print( "\n" ); 
-images3 := [ PieceImages( idGs3 )[1], 
-             PieceImages( homd8 )[1], 
-             PieceImages( ihomc6 )[1] ]; 
-homV3 := HomomorphismToSinglePiece( V3, Gs3, images3 ); 
+homs3 := [ idGs3, homd8, ihomc6 ];
+homV3 := HomomorphismToSinglePiece( V3, Gs3, homs3 );
 Print( "\ncombined homomorphism to Gs3:\n" ); 
 Display( homV3 ); 
 

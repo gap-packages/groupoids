@@ -114,7 +114,7 @@ BindGlobal( "GroupoidHomomorphismFamily",
 ## 
 DeclareRepresentation( "IsMappingToSinglePieceRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping,                              #? (07/10/08) 
+        and IsGeneralMapping, 
     [ "Source", "Range", "SinglePieceMappingData" ] ); 
 DeclareRepresentation( "IsMappingWithPiecesRep", 
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 

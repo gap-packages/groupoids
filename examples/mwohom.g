@@ -46,7 +46,8 @@ Print( "comp = ", comp, "\n" );
 Print( "comp maps ib87 to ", ImageElm( comp, ib87 ), "\n" );
 
 M4 := UnionOfPieces( [ M78, M65 ] );;
-images := [ PieceImages( hom1 )[1], PieceImages( j56 )[1] ]; 
+images := [ SinglePieceMappingData( hom1 )[1], 
+            SinglePieceMappingData( j56 )[1] ]; 
 Print( "images = ", images, "\n" ); 
 map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 Print( "map4 maps  b87 to ", ImageElm( map4, b87 ), "\n" ); 

@@ -94,9 +94,9 @@ end);
 
 #############################################################################
 ##
-#M  GroupoidWeightedAdjacencyMatrix                                              
+#M  FpWeightedAdjacencyMatrix                                              
 ##
-InstallMethod( GroupoidWeightedAdjacencyMatrix, 
+InstallMethod( FpWeightedAdjacencyMatrix, 
     "generic method for FpWeightedDigraph", true, [ IsFpWeightedDigraph ], 0,
 function( dig )
 
@@ -115,37 +115,6 @@ function( dig )
     od; 
     return mat; 
 end ); 
-
-#############################################################################
-##
-#M  GroupoidWeightedSpanningTree                                              
-##
-InstallMethod( GroupoidWeightedSpanningTree, 
-    "generic method for a FpWeightedDigraph", true, [ IsFpWeightedDigraph ], 0,
-function( dig )
-
-    local gp, verts, arcs, lenv, lena, paths, adjmx, i, j, p, t, w;
-
-    gp := dig!.group; 
-    verts := dig!.vertices; 
-    arcs := dig!.arcs; 
-    adjmx := GroupoidWeightedAdjacencyMatrix( dig ); 
-    lenv := Length( verts );
-    lena := Length( arcs ); 
-    paths := ListWithIdenticalEntries( lenv, 0 ); 
-    t := 0; 
-    paths[1] := GraphOfGroupsWord( dig, 1, [ One(gp) ] ); 
-    for i in [1..lenv] do 
-        for j in [1..lenv] do 
-            w := adjmx[i][j]; 
-            if ( w <> 0 ) then 
-                p := p+1; 
-
-            fi; 
-        od; 
-    od; 
-    return paths;
-end);
 
 #############################################################################
 ##
@@ -466,9 +435,9 @@ function( gg, tv, wL )
     ggword := Objectify( NewType( fam, filter ), rec () );
     SetIsGraphOfGroupsWord( ggword, true );
     SetGraphOfGroupsOfWord( ggword, gg );
-    SetGGTail( ggword, tv );
+    SetTailOfGraphOfGroupsWord( ggword, tv );
     if ( Length( wL ) = 1 ) then
-        SetGGHead( ggword, tv );
+        SetHeadOfGraphOfGroupsWord( ggword, tv );
     fi;
     SetWordOfGraphOfGroupsWord( ggword, wL );
     return ggword; 
@@ -491,9 +460,8 @@ function( gg, tv, wL )
     enum := Length( adig );
     v := tv;
     posv := Position( vdig, v );
-    g := gps[ posv ];
     w := wL[1];
-    if not ( w in g ) then
+    if not ( w in gps[posv] ) then
         Error( "first group element not in tail group" );
     fi;
     j := 1;
@@ -542,13 +510,13 @@ function( ggword )
     gg := GraphOfGroupsOfWord( ggword );
     adig := DigraphOfGraphOfGroups( gg )!.arcs;
     w := WordOfGraphOfGroupsWord( ggword );
-    Print( "(", GGTail( ggword ), ")", w[1] );
+    Print( "(", TailOfGraphOfGroupsWord( ggword ), ")", w[1] );
     i := 1;
     while ( i < Length(w) ) do
         i := i+2;
         Print( ".", adig[w[i-1]][1], ".", w[i] );
     od;
-    Print( "(", GGHead( ggword ), ")" );
+    Print( "(", HeadOfGraphOfGroupsWord( ggword ), ")" );
 end );
 
 InstallMethod( PrintObj, "method for a graph of groups word", 
@@ -560,20 +528,20 @@ function( ggword )
     gg := GraphOfGroupsOfWord( ggword );
     adig := DigraphOfGraphOfGroups( gg )!.arcs;
     w := WordOfGraphOfGroupsWord( ggword );
-    Print( "(", GGTail( ggword ), ")", w[1] );
+    Print( "(", TailOfGraphOfGroupsWord( ggword ), ")", w[1] );
     i := 1;
     while ( i < Length(w) ) do
         i := i+2;
         Print( ".", adig[w[i-1]][1], ".", w[i] );
     od;
-    Print( "(", GGHead( ggword ), ")" );
+    Print( "(", HeadOfGraphOfGroupsWord( ggword ), ")" );
 end );
 
 #############################################################################
 ##
-#M  GGHead                                             
+#M  HeadOfGraphOfGroupsWord                                             
 ##
-InstallMethod( GGHead, "generic method for a graph of groups word",
+InstallMethod( HeadOfGraphOfGroupsWord, "generic method for a graph of groups word",
     true, [ IsGraphOfGroupsWordRep ], 0,
 function( ggword )
 
@@ -605,7 +573,7 @@ function( ggw )
     vdig := dig!.vertices;
     adig := dig!.arcs;
     if ( len = 1 ) then
-        pos := Position( vdig, GGTail( ggw ) );
+        pos := Position( vdig, TailOfGraphOfGroupsWord( ggw ) );
         return ( w[1] = NormalFormKBRWS( gps[pos], w[1] ) );
     fi;
     i := 1;
@@ -631,7 +599,7 @@ end);
 
 #############################################################################
 ##
-#M  ReducedGraphOfGroupsWord                ## &&&&&&&&&
+#M  ReducedGraphOfGroupsWord  
 ##
 InstallMethod( ReducedGraphOfGroupsWord, "for word in graph of groups",
     true, [ IsGraphOfGroupsWordRep ], 0,
@@ -646,8 +614,8 @@ function( ggword )
         return ggword;
     fi;
     w := ShallowCopy( WordOfGraphOfGroupsWord( ggword ) );
-    tw := GGTail( ggword );
-    hw := GGHead( ggword );
+    tw := TailOfGraphOfGroupsWord( ggword );
+    hw := HeadOfGraphOfGroupsWord( ggword );
     lw := Length( w );
     len := (lw-1)/2;
     gg := GraphOfGroupsOfWord( ggword );
@@ -728,8 +696,8 @@ function( ggword )
                 Info( InfoGroupoids, 1, "k = ", k, ", shorter w = ", w );
                 if ( len = 0 ) then
                      rw := GraphOfGroupsWordNC( gg, u, w );
-                     SetGGTail( rw, u );
-                     SetGGHead( rw, u );
+                     SetTailOfGraphOfGroupsWord( rw, u );
+                     SetHeadOfGraphOfGroupsWord( rw, u );
                      return rw;
                 else
                      k := k-2;
@@ -750,8 +718,8 @@ function( ggword )
         w[lw] := NormalFormKBRWS( gu, w[lw] );
     fi;
     rw := GraphOfGroupsWordNC( gg, tw, w );
-    SetGGTail( rw, tw );
-    SetGGHead( rw, hw );
+    SetTailOfGraphOfGroupsWord( rw, tw );
+    SetHeadOfGraphOfGroupsWord( rw, hw );
     SetIsReducedGraphOfGroupsWord( rw, true );
     return rw;
 end);
@@ -765,7 +733,7 @@ InstallOtherMethod( \=,
     IsIdenticalObj, [ IsGraphOfGroupsWordRep, IsGraphOfGroupsWordRep ], 0,
 function ( w1, w2 )
 return ( ( GraphOfGroupsOfWord(w1) = GraphOfGroupsOfWord(w2) )
-     and ( GGTail( w1 ) = GGTail( w2 ) )
+     and ( TailOfGraphOfGroupsWord( w1 ) = TailOfGraphOfGroupsWord( w2 ) )
      and ( WordOfGraphOfGroupsWord(w1) = WordOfGraphOfGroupsWord(w2) ) );
 end );
 
@@ -789,9 +757,10 @@ function ( ggwlist )
     fi;
     ggw1 := ggwlist[1];
     ggw2 := ggwlist[2];
-    if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
+    if not ( HeadOfGraphOfGroupsWord( ggw1 ) 
+             = TailOfGraphOfGroupsWord( ggw2 ) ) then
         Info( InfoGroupoids, 1, 
-              "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+              "Head <> Tail for GraphOfGroupsWord(ggw1), so no composite" );
         return fail;
     fi;
     w1 := WordOfGraphOfGroupsWord( ggw1 );
@@ -799,7 +768,8 @@ function ( ggwlist )
     len1 := Length( w1 );
     len2 := Length( w2 );
     w := Concatenation( w1{[1..len1-1]}, [w1[len1]*w2[1]], w2{[2..len2]} );
-    return GraphOfGroupsWord( GraphOfGroupsOfWord(ggw1), GGTail(ggw1), w );
+    return GraphOfGroupsWord( GraphOfGroupsOfWord(ggw1), 
+                              TailOfGraphOfGroupsWord(ggw1), w );
 end );
 
 ##############################################################################
@@ -844,8 +814,8 @@ function ( ggw )
         j := j-2;
         iw[i] := w[j]^(-1);
     od;
-    iggw := GraphOfGroupsWord( gg, GGHead( ggw ), iw );
-    SetGGHead( iggw, GGTail( ggw ) );
+    iggw := GraphOfGroupsWord( gg, HeadOfGraphOfGroupsWord( ggw ), iw );
+    SetHeadOfGraphOfGroupsWord( iggw, TailOfGraphOfGroupsWord( ggw ) );
     if IsReducedGraphOfGroupsWord( ggw ) then
         iggw := ReducedGraphOfGroupsWord( iggw );
     fi;
@@ -868,12 +838,13 @@ function ( ggw, n )
     elif ( n = -1 ) then
         return InverseOp( ggw );
     fi;
-    if not ( GGHead( ggw ) = GGTail( ggw ) ) then
-        Info( InfoGroupoids, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
+    if not ( HeadOfGraphOfGroupsWord(ggw) = TailOfGraphOfGroupsWord(ggw) ) then
+        Info( InfoGroupoids, 1, 
+              "Head <> Tail for GraphOfGroupsWord(ggw), so no composite" );
         return fail;
     fi;
     if ( n = 0 ) then
-        tv := GGTail( ggw );
+        tv := TailOfGraphOfGroupsWord( ggw );
         gg := GraphOfGroupsOfWord( ggw );
         ptv := Position( DigraphOfGraphOfGroups(gg)!.vertices, tv );
         g := GroupsOfGraphOfGroups( gg )[ptv];
@@ -1146,7 +1117,7 @@ function( fpa, w )
     rgw := ReducedGraphOfGroupsWord( ggw );
     Info( InfoGroupoids, 2, "rgw = ", rgw );
     ##  now convert the reduced graph of groups word back to fpa
-    trgw := GGTail( rgw );
+    trgw := TailOfGraphOfGroupsWord( rgw );
     wrgw := WordOfGraphOfGroupsWord( rgw );
     if ( trgw = verts[1] ) then
         p := 1;
@@ -1220,8 +1191,7 @@ InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an hnn",
     true, [ IsHnnGroup ], 0,
 function( hnn )
 
-    local fz, z, verts, arcs, dig, inva, info, fp, e1, e2, pos1, pos2,
-          iso, inv, h1, h2, gg;
+    local fz, z, verts, arcs, dig, inva, info, fp, iso, inv;
 
     fz := FreeGroup("z");
     z := fz.1;
@@ -1231,14 +1201,9 @@ function( hnn )
     inva := InvolutoryArcs( dig );
     info := HnnInfo( hnn );
     fp := info!.group;
-#    e1 := info!.embeddings[1];
-#    e2 := info!.embeddings[2];
     iso := info!.isomorphism;
-    h1 := Source( iso );
-    h2 := Range( iso );
     inv := InverseGeneralMapping( iso );
-    gg := GraphOfGroups( dig, [fp], [iso,inv] );
-    return gg;
+    return GraphOfGroups( dig, [fp], [iso,inv] );
 end );
 
 #############################################################################
@@ -1317,7 +1282,7 @@ function( hnn, w )
     rgw := ReducedGraphOfGroupsWord( ggw );
     Info( InfoGroupoids, 2, "rgw = ", rgw );
     ##  now convert the reduced graph of groups word back to hnn
-    trgw := GGTail( rgw );
+    trgw := TailOfGraphOfGroupsWord( rgw );
     wrgw := WordOfGraphOfGroupsWord( rgw );
     idhnn := One( hnn );
     len := ( Length(wrgw) + 1 )/2;
@@ -1336,21 +1301,6 @@ function( hnn, w )
     od;
     return rw;
 end);
-
-## ------------------------------------------------------------------------##
-##            Graph of Groups Groupoid  - still to be implemented          ##
-## ------------------------------------------------------------------------##
- 
-#############################################################################
-##
-## #M  GraphOfGroupsGroupoid
-##
-## InstallMethod( GraphOfGroupsGroupoid, "for a graph of groups",
-##     true, [ IsGraphOfGroups ], 0,
-## function( gg ) 
-##     local gpd;
-##     return fail;
-## end );
 
 #############################################################################
 ##

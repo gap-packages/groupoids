@@ -1,5 +1,13 @@
-## (25/08/17) groupoids/tst/hom-test.tst : for a single piece groupoid
-## =================================================================== 
+##############################################################################
+##
+#W  hom-test.xtst              Groupoids Package                 Chris Wensley
+##
+#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  School of Computer Science, Bangor University, U.K. 
+##  
+
+gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
 gap> SetName( s4, "s4" );;
@@ -59,3 +67,8 @@ groupoid homomorphism :
       [(2,4) : -4 -> -2], [(3,4) : -4 -> -1] ], 
   [ [(1,4,2) : -19 -> -19], [(2,3,4) : -19 -> -19], [(1,2,3,4) : -19 -> -16], 
       [(1,4) : -19 -> -17], [(3,4) : -19 -> -18] ] ]
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+
+#############################################################################
+##
+#E  hom-test.xtst . . . . . . . . . . . . . . . . . . . . . . . . . ends here

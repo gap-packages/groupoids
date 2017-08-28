@@ -100,8 +100,8 @@ Print( KnownTruePropertiesOfObject( M49 ), "\n\n" );
 Print( CategoriesOfObject( M49 ), "\n\n" ); 
 genM := GeneratorsOfMagmaWithOne( M49 ); 
 Print( "M49 has generators ", genM, "\n" ); 
-g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; g5 := genM[5];; 
-Print( "g5*g3*g2*g4 = ", g5*g3*g2*g4, "\n" ); 
+g1 := genM[1];; g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; 
+Print( "g4*g2*g1*g3 = ", g4*g2*g1*g3, "\n" ); 
 
 
 Print("\n================ GROUP AS SINGLE OBJECT GROUPOID ============\n\n");

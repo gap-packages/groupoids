@@ -45,15 +45,15 @@ Print( inv3, "\n\n" );
 fa := FreeGroup( "a" );;
 a := GeneratorsOfGroup( fa )[1];;
 SetName( fa, "fa" );
-ha := Subgroup( fa, [a^3] );;
-SetName( ha, "ha" );
+hy := Subgroup( fa, [a^3] );;
+SetName( hy, "hy" );
 
 ## group fb and subgroup 2fb
 fb := FreeGroup( "b" );;
 b := GeneratorsOfGroup( fb )[1];;
 SetName( fb, "fb" );
-hb := Subgroup( fb, [b^2] );;
-SetName( hb, "hb" );
+hybar := Subgroup( fb, [b^2] );;
+SetName( hybar, "hybar" );
 
 ## group fc and subgroup 5fc
 fc := FreeGroup( "c" );;
@@ -63,15 +63,15 @@ hc := Subgroup( fc, [c^5] );;
 SetName( hc, "hc" );
 
 ## Isomorphisms between subgroups 
-homab := GroupHomomorphismByImagesNC( ha, hb, [a^3], [b^2] );;
-homba := GroupHomomorphismByImagesNC( hb, ha, [b^2], [a^3] );; 
-homac := GroupHomomorphismByImagesNC( ha, hc, [a^3], [c^5] );;
-homca := GroupHomomorphismByImagesNC( hc, ha, [c^5], [a^3] );; 
-hombc := GroupHomomorphismByImagesNC( hb, hc, [b^2], [c^5] );;
-homcb := GroupHomomorphismByImagesNC( hc, hb, [c^5], [b^2] );; 
+homy := GroupHomomorphismByImagesNC( hy, hybar, [a^3], [b^2] );;
+homybar := GroupHomomorphismByImagesNC( hybar, hy, [b^2], [a^3] );; 
+homac := GroupHomomorphismByImagesNC( hy, hc, [a^3], [c^5] );;
+homca := GroupHomomorphismByImagesNC( hc, hy, [c^5], [a^3] );; 
+hombc := GroupHomomorphismByImagesNC( hybar, hc, [b^2], [c^5] );;
+homcb := GroupHomomorphismByImagesNC( hc, hybar, [c^5], [b^2] );; 
 
 ## defining graph of groups G1 
-G1 := GraphOfGroups( D1, [fa,fb], [homab,homba] );
+G1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );
 Display( G1 ); 
 Print( "\nIsGraphOfFpGroups(G1)? ", IsGraphOfFpGroups(G1), "\n" );
 Print( "G1 has isomorphisms:\n", IsomorphismsOfGraphOfGroups(G1), "\n\n" );
@@ -85,7 +85,7 @@ L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
 gw1 := GraphOfGroupsWord( G1, 5, L1 );
 Print( gw1, "\n");
 Print( IsGraphOfGroupsWord( gw1 ), "\n" );
-Print( [ GGTail( gw1 ), GGHead( gw1 ) ], "\n" );
+Print( [ TailOfGraphOfGroupsWord(gw1), HeadOfGraphOfGroupsWord(gw1) ], "\n" );
 Print( GraphOfGroupsOfWord( gw1 ), "\n" );
 Print( WordOfGraphOfGroupsWord( gw1 ), "\n\n" );
 
@@ -93,7 +93,7 @@ nw1 := ReducedGraphOfGroupsWord( gw1 );
 Print( nw1, "\n\n");
 
 ## defining graph of groups G3 
-G3 := GraphOfGroups( D3, [fa,fb,fc], [homab,hombc,homca,homba,homcb,homac,] );
+G3 := GraphOfGroups( D3, [fa,fb,fc], [homy,hombc,homca,homybar,homcb,homac,] );
 Display( G3 ); 
 Print( "\nIsGraphOfFpGroups(G3)? ", IsGraphOfFpGroups(G3), "\n" );
 Print( "G3 has isomorphisms:\n", IsomorphismsOfGraphOfGroups(G3), "\n\n" );
@@ -107,7 +107,7 @@ L3 := [ a^7, 1, b^-6, 2, c^-11, 3, a^9, 6, c^7 ];;
 gw3 := GraphOfGroupsWord( G3, 7, L3 );
 Print( "gw3 = ", gw3, "\n");
 Print( IsGraphOfGroupsWord( gw3 ), "\n" );
-Print( [ GGTail( gw3 ), GGHead( gw3 ) ], "\n" );
+Print( [ TailOfGraphOfGroupsWord(gw3), HeadOfGraphOfGroupsWord(gw3) ], "\n" );
 Print( GraphOfGroupsOfWord( gw3 ), "\n" );
 Print( WordOfGraphOfGroupsWord( gw3 ), "\n\n" );
 
@@ -118,7 +118,7 @@ L4 := [ c^5, 5, b^3, 4, a^-5 ];;
 gw4 := GraphOfGroupsWord( G3, 9, L4 );
 Print( "gw4 = ", gw4, "\n");
 Print( IsGraphOfGroupsWord( gw4 ), "\n" );
-Print( [ GGTail( gw4 ), GGHead( gw4 ) ], "\n" );
+Print( [ TailOfGraphOfGroupsWord(gw4), HeadOfGraphOfGroupsWord(gw4) ], "\n" );
 Print( GraphOfGroupsOfWord( gw4 ), "\n" );
 Print( WordOfGraphOfGroupsWord( gw4 ), "\n\n" );
 
@@ -203,22 +203,23 @@ Print( "n3 = ", n3, "\n\n");
 Gfa := SinglePieceGroupoid( fa, [-2,-1] );
 ofa := One( fa );
 SetName( Gfa, "Gfa" );
-Uha := Subgroupoid( Gfa, [ [ ha, [-2,-1] ] ] );
-SetName( Uha, "Uha" );
+Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );
+SetName( Uhy, "Uhy" );
 Gfb := SinglePieceGroupoid( fb, [-4,-3] );
 ofb := One( fb );
 SetName( Gfb, "Gfb" );
-Uhb := Subgroupoid( Gfb, [ [ hb, [-4,-3] ] ] );
-SetName( Uhb, "Uhb" );
-mora := GroupoidHomomorphismFromSinglePiece( 
-               Uha, Uhb, homab, [-4,-3], [ofb,ofb] ); 
-Print( "mora = ", mora, "\n" ); 
-morb := GroupoidHomomorphismFromSinglePiece( 
-               Uhb, Uha, homba, [-2,-1], [ofa,ofa] );
-Print( "morb = ", morb, "\n" ); 
-SetInverseGeneralMapping( mora, morb );
-SetInverseGeneralMapping( morb, mora );
-gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uha,Uhb], [mora,morb] );
+Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );
+SetName( Uhybar, "Uhybar" );
+gens := GeneratorsOfGroupoid( Uhy );
+gensbar := GeneratorsOfGroupoid( Uhybar );
+mory := GroupoidHomomorphismFromSinglePiece( 
+               Uhy, Uhybar, gens, gensbar ); 
+Print( "mory = ", mory, "\n" ); 
+morybar := mory^-1;
+Print( "morybar = ", morybar, "\n" ); 
+SetInverseGeneralMapping( mory, morybar );
+SetInverseGeneralMapping( morybar, mory );
+gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );
 Display( gg3 );
 f1 := Arrow( Gfa, a^7, -1, -2);
 f2 := Arrow( Gfb, b^-6, -4, -4 );

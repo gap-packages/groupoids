@@ -244,9 +244,9 @@ gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
          Arg="w" />
    <Attr Name="WordOfGraphOfGroupsWord"
          Arg="w" />
-   <Attr Name="GGTail"
+   <Attr Name="TailOfGraphOfGroupsWord"
          Arg="w" />
-   <Attr Name="GGHead"
+   <Attr Name="HeadOfGraphOfGroupsWord"
          Arg="w" />
 <Description>
 If <C>G</C> is a graph of groups with underlying digraph <C>D</C>,
@@ -271,10 +271,6 @@ the head of <M>y_{i-1}</M> is a vertex <M>v_i</M>
 which is also the tail of <M>y_i</M>;
 and <M>g_i</M> is an element of the vertex group at <M>v_i</M>.
 <P/>
-The attributes <C>GGTail</C> and <C>GGHead</C> are <E>temporary</E> 
-names for the tail and head of a graph of groups word, 
-and are likely to be replaced in future versions.  
-<P/>
 So a graph of groups word requires as data the graph of groups; 
 the tail vertex for the word; and a list of arcs and group elements.
 We may specify each arc by its position in the list of arcs. 
@@ -294,7 +290,7 @@ gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
 (5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
 gap> IsGraphOfGroupsWord( gw1 );
 true
-gap> [ GGTail(gw1), GGHead(gw1) ];
+gap> [ TailOfGraphOfGroupsWord(gw1), HeadOfGraphOfGroupsWord(gw1) ];
 [ 5, 5 ]
 gap> GraphOfGroupsOfWord(gw1);
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]

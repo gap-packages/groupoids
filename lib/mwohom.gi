@@ -1367,7 +1367,7 @@ InstallMethod( Display, "for a homomorphsim to a single piece magma", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( hom )
 
-    local homs, imo, src, rng, isgpd, pieces, i, c, maps, len;
+    local homs, imo, src, rng, isgpd, pieces, i, c, maps, map1, len;
 
     src := Source( hom );
     rng := Range( hom );
@@ -1387,14 +1387,17 @@ function ( hom )
             Print( ":\n" );
             Print( "[ ", src, " ] -> [ ", rng, " ]\n" );
         fi; 
+        map1 := maps[1]; 
         if isgpd then 
-            Print( " group hom: ", MappingGeneratorsImages(maps[1][1]), "\n" ); 
+            Print( " group hom: ", MappingGeneratorsImages(map1[1]), "\n" ); 
         else 
             Print( " magma hom: " ); 
-            Display( maps[1][1] ); 
+            Display( map1[1] ); 
         fi;
         Print( "object map: ", src!.objects, " -> ", imo, "\n"); 
-        Print( "ray images: ", maps[1][3], "\n" ); 
+        if ( Length(map1) > 2 ) then 
+            Print( "ray images: ", map1[3], "\n" ); 
+        fi; 
     else
         Print( " with pieces:\n" );
         pieces := Pieces( src );

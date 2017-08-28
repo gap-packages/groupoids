@@ -61,11 +61,9 @@ DeclareAttribute( "InvolutoryArcs", IsFpWeightedDigraph );
 
 ############################################################################# 
 ## 
-#O  GroupoidWeightedAdjacencyMatrix( <dig> ) 
-#O  GroupoidWeightedSpanningTree( <dig> ) 
+#O  FpWeightedAdjacencyMatrix( <dig> ) 
 #O  ArcsIsosFromMatrices( <vertices>, <wt_adj_mx>, <isos_mx> ) 
-DeclareOperation( "GroupoidWeightedAdjacencyMatrix", [ GroupoidIsDigraph ] ); 
-DeclareOperation( "GroupoidWeightedSpanningTree", [ IsFpWeightedDigraph ] ); 
+DeclareOperation( "FpWeightedAdjacencyMatrix", [ GroupoidIsDigraph ] ); 
 DeclareOperation( "ArcsIsosFromMatrices", 
     [ IsHomogeneousList, IsHomogeneousList, IsHomogeneousList ] ); 
 
@@ -219,15 +217,14 @@ DeclareOperation( "GraphOfGroupsWord", [ IsGraphOfGroups, IsInt, IsList ] );
 ############################################################################# 
 ## 
 #A  GraphOfGroupsOfWord( <ggword> ) 
-#?  GGTail, GGHead added temporarity (08/04/08)
-#A  GGTail( <ggword> ) 
-#A  GGHead( <ggword> ) 
+#A  HeadOfGraphOfGroupsWord( <ggword> ) 
+#A  TailOfGraphOfGroupsWord( <ggword> ) 
 #A  WordOfGraphOfGroupsWord( <ggword> )                                       
 #O  ReducedGraphOfGroupsWord( <ggword> )    
 ## 
 DeclareAttribute( "GraphOfGroupsOfWord", IsGraphOfGroupsWordRep ); 
-DeclareAttribute( "GGTail", IsGraphOfGroupsWordRep ); 
-DeclareAttribute( "GGHead", IsGraphOfGroupsWordRep ); 
+DeclareAttribute( "HeadOfGraphOfGroupsWord", IsGraphOfGroupsWordRep ); 
+DeclareAttribute( "TailOfGraphOfGroupsWord", IsGraphOfGroupsWordRep ); 
 DeclareAttribute( "WordOfGraphOfGroupsWord", IsGraphOfGroupsWordRep); 
 DeclareOperation( "ReducedGraphOfGroupsWord", [ IsGraphOfGroupsWordRep ] );   
  

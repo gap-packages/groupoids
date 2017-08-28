@@ -299,9 +299,9 @@ function( gg, tv, wL )
     ggword := Objectify( NewType( fam, filter ), rec () );
     SetIsGraphOfGroupoidsWord( ggword, true );
     SetGraphOfGroupoidsOfWord( ggword, gg );
-    SetGGTail( ggword, tv );
+    SetTailOfGraphOfGroupsWord( ggword, tv );
     if ( Length( wL ) = 1 ) then
-        SetGGHead( ggword, tv );
+        SetHeadOfGraphOfGroupsWord( ggword, tv );
     fi;
     SetWordOfGraphOfGroupoidsWord( ggword, wL );
     return ggword; 
@@ -375,13 +375,13 @@ function( ggword )
     arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
     ## arcs := GroupoidArcs( DigraphOfGraphOfGroupoids( gg ) );
     w := WordOfGraphOfGroupoidsWord( ggword );
-    Print( "(", GGTail( ggword ), ")", w[1] );
+    Print( "(", TailOfGraphOfGroupsWord( ggword ), ")", w[1] );
     i := 1;
     while ( i < Length(w) ) do
         i := i+2;
         Print( ".", arcs[w[i-1]][1], ".", w[i] );
     od;
-    Print( "(", GGHead( ggword ), ")" );
+    Print( "(", HeadOfGraphOfGroupsWord( ggword ), ")" );
 end );
 
 InstallMethod( PrintObj, "for a graph of groupoids word", 
@@ -394,20 +394,20 @@ function( ggword )
     arcs := DigraphOfGraphOfGroupoids( gg )!.arcs;
     ## arcs := GroupoidArcs( DigraphOfGraphOfGroupoids( gg ) );
     w := WordOfGraphOfGroupoidsWord( ggword );
-    Print( "(", GGTail( ggword ), ")", w[1] );
+    Print( "(", TailOfGraphOfGroupsWord( ggword ), ")", w[1] );
     i := 1;
     while ( i < Length(w) ) do
         i := i+2;
         Print( ".", arcs[w[i-1]][1], ".", w[i] );
     od;
-    Print( "(", GGHead( ggword ), ")" );
+    Print( "(", HeadOfGraphOfGroupsWord( ggword ), ")" );
 end );
 
 #############################################################################
 ##
-#M  GGHead                                             
+#M  HeadOfGraphOfGroupsWord                                             
 ##
-InstallOtherMethod( GGHead, "generic method for a graph of groupoids word",
+InstallOtherMethod( HeadOfGraphOfGroupsWord, "generic method for a graph of groupoids word",
     true, [ IsGraphOfGroupoidsWordRep ], 0,
 function( ggword )
 
@@ -438,8 +438,8 @@ function( ggword )
         return ggword;
     fi;
     w := ShallowCopy( WordOfGraphOfGroupoidsWord( ggword ) );
-    tw := GGTail( ggword );
-    hw := GGHead( ggword );
+    tw := TailOfGraphOfGroupsWord( ggword );
+    hw := HeadOfGraphOfGroupsWord( ggword );
     lw := Length( w );
     len := (lw-1)/2;
     gg := GraphOfGroupoidsOfWord( ggword );
@@ -553,8 +553,8 @@ function( ggword )
                 Info( InfoGroupoids, 2, "k = ", k, ", shorter w = ", w );
                 if ( len = 0 ) then
                      rw := GraphOfGroupoidsWordNC( gg, u, w );
-                     SetGGTail( rw, u );
-                     SetGGHead( rw, u );
+                     SetTailOfGraphOfGroupsWord( rw, u );
+                     SetHeadOfGraphOfGroupsWord( rw, u );
                      return rw;
                 else
                      k := k-2;
@@ -575,8 +575,8 @@ function( ggword )
         w[lw] := NormalFormKBRWS( gu, w[lw] );
     fi;
     rw := GraphOfGroupoidsWordNC( gg, tw, w );
-    SetGGTail( rw, tw );
-    SetGGHead( rw, hw );
+    SetTailOfGraphOfGroupsWord( rw, tw );
+    SetHeadOfGraphOfGroupsWord( rw, hw );
     SetIsReducedGraphOfGroupoidsWord( rw, true );
     return rw;
 end);
@@ -590,7 +590,7 @@ InstallOtherMethod( \=,
     IsIdenticalObj, [ IsGraphOfGroupoidsWordRep, IsGraphOfGroupoidsWordRep ], 0,
 function ( w1, w2 )
 return ( ( GraphOfGroupoidsOfWord(w1) = GraphOfGroupoidsOfWord(w2) )
-     and ( GGTail( w1 ) = GGTail( w2 ) )
+     and ( TailOfGraphOfGroupsWord( w1 ) = TailOfGraphOfGroupsWord( w2 ) )
      and ( WordOfGraphOfGroupoidsWord(w1) = WordOfGraphOfGroupoidsWord(w2) ) );
 end );
 
@@ -604,9 +604,9 @@ function ( ggw1, ggw2 )
 
     local w1, w2, h1, len1, len2, w;
 
-    if not ( GGHead( ggw1 ) = GGTail( ggw2 ) ) then
+    if not ( HeadOfGraphOfGroupsWord(ggw1)=TailOfGraphOfGroupsWord(ggw2) ) then
         Info( InfoGroupoids, 1, 
-              "GGHead(ggw1) <> GGTail(ggw2), so no composite" );
+              "Head <> Tail for GraphOfGroupsWord(ggw1), so no composite" );
         return fail;
     fi;
     w1 := WordOfGraphOfGroupoidsWord( ggw1 );
@@ -615,7 +615,7 @@ function ( ggw1, ggw2 )
     len2 := Length( w2 );
     w := Concatenation( w1{[1..len1-1]}, [w1[len1]*w2[1]], w2{[2..len2]} );
     return GraphOfGroupoidsWord( GraphOfGroupoidsOfWord(ggw1), 
-                                 GGTail(ggw1), w );
+                                 TailOfGraphOfGroupsWord(ggw1), w );
 end );
 
 ##############################################################################
@@ -642,8 +642,8 @@ function ( ggw )
         j := j-2;
         iw[i] := w[j]^(-1);
     od;
-    iggw := GraphOfGroupoidsWord( gg, GGHead( ggw ), iw );
-    SetGGHead( iggw, GGTail( ggw ) );
+    iggw := GraphOfGroupoidsWord( gg, HeadOfGraphOfGroupsWord( ggw ), iw );
+    SetHeadOfGraphOfGroupsWord( iggw, TailOfGraphOfGroupsWord( ggw ) );
     if IsReducedGraphOfGroupoidsWord( ggw ) then
         iggw := ReducedGraphOfGroupoidsWord( iggw );
     fi;
@@ -666,12 +666,13 @@ function ( ggw, n )
     elif ( n = -1 ) then
         return InverseOp( ggw );
     fi;
-    if not ( GGHead( ggw ) = GGTail( ggw ) ) then
-        Info( InfoGroupoids, 1, "GGHead(ggw) <> GGTail(ggw), so no composite" );
+    if not ( HeadOfGraphOfGroupsWord(ggw) = TailOfGraphOfGroupsWord(ggw) ) then
+        Info( InfoGroupoids, 1, 
+              "Head <> Tailfor GraphOfGroupsWord(ggw), so no composite" );
         return fail;
     fi;
     if ( n = 0 ) then
-        tv := GGTail( ggw );
+        tv := TailOfGraphOfGroupsWord( ggw );
         gg := GraphOfGroupoidsOfWord( ggw );
         g := GroupoidsOfGraphOfGroupoids( gg )[tv];
         return GraphOfGroupoidsWordNC( gg, tv, [ One(g) ] ); 
