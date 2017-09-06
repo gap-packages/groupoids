@@ -110,7 +110,7 @@ function( mag1, mag2, images )
     fam := GeneralMappingWithObjectsFamily; 
     filter := IsMappingToSinglePieceRep and IsMagmaWithObjectsHomomorphism;
     map := rec(); 
-    ObjectifyWithAttributes( map, NewType( fam, filter ), 
+    ObjectifyWithAttributes( map, IsMWOMappingToSinglePieceType, 
         Source, mag1, 
         Range, mag2, 
         SinglePieceMappingData, images,
@@ -119,13 +119,11 @@ function( mag1, mag2, images )
         IsHomomorphismToSinglePiece, true );
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
-    if ( IsMagmaWithObjectsAndOnes( mag1 )   
-           and IsMagmaWithObjectsAndOnes( mag2 ) ) then 
+    if ( ( IsMonoidWithObjects in CategoriesOfObject( mag1 ) ) and 
+         ( IsMonoidWithObjects in CategoriesOfObject( mag2 ) ) ) then 
         SetIsMonoidWithObjectsHomomorphism( map, true ); 
-    elif ( ( HasIsSemigroupWithObjects( mag1 ) 
-         and IsSemigroupWithObjects( mag1 ) )  
-           and ( HasIsSemigroupWithObjects( mag2 ) 
-                 and IsSemigroupWithObjects( mag2 ) ) ) then 
+    elif ( ( IsSemigroupWithObjects in CategoriesOfObject( mag1 ) ) 
+         and ( IsSemigroupWithObjects in CategoriesOfObject( mag2 ) ) ) then 
         SetIsSemigroupWithObjectsHomomorphism( map, true );
     elif ( IsMagmaWithObjects( mag1 ) and IsMagmaWithObjects( mag2 ) ) then 
         SetIsMagmaWithObjectsHomomorphism( map, true );
@@ -144,7 +142,7 @@ function( gpd1, gpd2, homs )
     fam := GeneralMappingWithObjectsFamily; 
     filter := IsMappingToSinglePieceRep and IsGroupoidHomomorphism; 
     map := rec(); 
-    ObjectifyWithAttributes( map, NewType( fam, filter ), 
+    ObjectifyWithAttributes( map, IsGroupoidMappingToSinglePieceType, 
         Source, gpd1, 
         Range, gpd2, 
         SinglePieceMappingData, homs,  
@@ -219,7 +217,7 @@ InstallMethod( HomomorphismByUnionNC,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0,  
 function( mag1, mag2, maps )
 
-    local fam, filter, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
+    local fam, filter, type, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
           part, i, m, src;
 
     if IsSinglePiece( mag2 ) then 
@@ -228,12 +226,19 @@ function( mag1, mag2, maps )
         ## return HomomorphismToSinglePiece( mag1, mag2, maps );
     fi; 
     fam := GeneralMappingWithObjectsFamily;
-    filter := IsMappingWithPiecesRep and IsMagmaWithObjectsHomomorphism;
-    map := Objectify( NewType( fam, filter ), rec () );
-    SetSource( map, mag1 );
-    SetRange( map, mag2 );
-    SetPiecesOfMapping( map, maps );
-    SetIsGeneralMappingToSinglePiece( map, false ); 
+    filter := IsMappingWithPiecesRep and IsMagmaWithObjectsHomomorphism; 
+    if ( ( IsGroupoid in CategoriesOfObject( mag1 ) ) and 
+         ( IsGroupoid in CategoriesOfObject( mag2 ) ) ) then 
+        type := IsGroupoidMappingWithPiecesType; 
+    else 
+        type := IsMWOMappingWithPiecesType; 
+    fi;
+    map := rec(); 
+    ObjectifyWithAttributes( map, type, 
+        Source, mag1,
+        Range, mag2,
+        PiecesOfMapping, maps,
+        IsGeneralMappingToSinglePiece, false );
     inj := IsInjectiveOnObjects( map ); 
     #? added 10/05/06 -- it is useful ?? 
     pieces1 := Pieces( mag1 );
@@ -550,15 +555,15 @@ end );
 InstallMethod( IsSemigroupWithObjectsHomomorphism, 
     "for a mapping with objects", true, [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map ) 
-    return ( IsSemigroupWithObjects( Source(map) ) 
-             and IsSemigroupWithObjects( Range(map) ) ); 
+    return ( ( IsSemigroupWithObjects in CategoriesOfObject( Source(map) ) ) and  
+             ( IsSemigroupWithObjects in CategoriesOfObject( Range(map) ) ) ); 
 end );
 
 InstallMethod( IsMonoidWithObjectsHomomorphism, "for a mapping with objects", 
     true, [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map ) 
-    return ( IsMagmaWithObjectsAndOnes( Source(map) ) 
-             and IsMagmaWithObjectsAndOnes( Range(map) ) ); 
+    return ( ( IsMonoidWithObjects in CategoriesOfObject( Source(map) ) ) and 
+             ( IsMonoidWithObjects in CategoriesOfObject( Range(map) ) ) ); 
 end );
 
 InstallMethod( IsGroupWithObjectsHomomorphism, "for a mapping with objects", 
@@ -606,7 +611,7 @@ function( map )
 
     imo := ImagesOfObjects( map );
     if not ( imo = fail ) then 
-        return IsDuplicateFree( Flat( ImagesOfObjects( map ) ) );
+        return IsDuplicateFree( Flat( imo ) );
     elif IsHomomorphismToSinglePiece( map ) then
         images := SinglePieceMappingData( map );
         imo := Flat( List( images, L -> L[2] ) ); 

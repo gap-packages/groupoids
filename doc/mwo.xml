@@ -96,9 +96,11 @@ The output from function <C>MagmaWithObjects</C> lies in the categories
 <Index Key="IsDomainWithObjects"> <C>IsDomainWithObjects</C> </Index>
 <C>IsDomainWithObjects</C>, 
 <Index Key="IsMagmaWithObjects"> <C>IsMagmaWithObjects</C> </Index>
-<C>IsMagmaWithObjects</C>, 
-<C>CategoryCollections(IsMultiplicativeElementWithObjects)</C> and 
-<C>IsMagma</C>. 
+<C>IsMagmaWithObjects</C> and
+<C>CategoryCollections(IsMultiplicativeElementWithObjects)</C>. 
+As composition is only partial, the output does <E>not</E> 
+lie in the category <C>IsMagma</C>. 
+<P/>
 The <E>root object</E> of <M>M</M> is the first element in <M>s</M>. 
 <P/>
 </Description>
@@ -119,8 +121,10 @@ magma with objects :-
     magma = m
   objects = [ -8, -7 ]
 gap> SetName( M78, "M78" ); 
-gap> [ IsAssociative(M78), IsCommutative(M78), IsDomainWithObjects(M78) ]; 
-[ false, false, true ]
+gap> [ IsAssociative(M78), IsCommutative(M78) ]; 
+[ false, false ]
+gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
+[ true, true, false ]
 gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
 [ -8, [ -8, -7 ] ]
 ]]>
@@ -135,8 +139,6 @@ gap> [ RootObject( M78 ), ObjectList( M78 ) ];
          Arg="arr" />
    <Attr Name="HeadOfArrow"
          Arg="arr" />
-   <Oper Name="IsArrowIn"
-         Arg="arr,mwo" />
 <Description>
 Arrows in a magma with objects lie in the category 
 <Index Key="IsMultiplicativeElementWithObjects">
@@ -151,17 +153,14 @@ Similarly, the <E>tail</E> object <M>u</M> and the <E>head</E> object <M>v</M>
 may be obtained using <C>TailOfArrow(arr)</C> 
 and <C>HeadOfArrow(arr)</C> respectively. 
 <P/> 
-The operation <C>IsArrowIn</C> is added due to 
-difficulties found when attempting to write a method for <C>\in</C>. 
-<P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
 gap> a78 := Arrow( M78, m2, -7, -8 ); 
 [m2 : -7 -> -8]
-gap> [ a78 in M78, IsArrowIn( a78, M78 ) ]; 
-[ false, true ]
+gap> a78 in M78; 
+true
 gap> b87 := Arrow( M78, m4, -8, -7 );;
 gap> [ ElementOfArrow( b87 ), TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
 [ m4, -8, -7 ]
@@ -251,7 +250,7 @@ gap> sr21 := s23 * r31;
 [Transformation( [ 3, 3, 4, 4 ] ) : -2 -> -1]
 gap> rt32 := r31 * t12;
 [Transformation( [ 1, 2, 3, 3 ] ) : -3 -> -2]
-gap>  tsr1 := ts13 * r31;
+gap> tsr1 := ts13 * r31;
 [Transformation( [ 3, 3, 3 ] ) : -1 -> -1]
 ]]>
 </Example>
@@ -295,17 +294,26 @@ monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
   objects = [ -9, -4 ]
 gap> ktpo := KnownTruePropertiesOfObject( M49 );
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsAssociative", "IsSinglePieceDomain", 
+[ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
   "IsDirectProductWithCompleteGraphDomain" ]
-gap> genM := GeneratorsOfMagmaWithObjects( M49 );
+gap> catobj := CategoriesOfObject( M49 );; 
+[ "IsListOrCollection", "IsCollection", "IsExtLElement", 
+  "CategoryCollections(IsExtLElement)", "IsExtRElement", 
+  "CategoryCollections(IsExtRElement)", 
+  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
+  "IsDomainWithObjects", 
+  "CategoryCollections(IsMultiplicativeElementWithObjects)", 
+  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
+  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)", 
+  "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ]
+gap> genM := GeneratorsOfMonoidWithObjects( M49 );
 [ [f1 : -9 -> -9], [f2 : -9 -> -9], [<identity ...> : -9 -> -4], 
   [<identity ...> : -4 -> -9] ]
-gap> g2:=genM[2];; g3:=genM[3];; g4:=genM[4];; g5:=genM[5];; 
+gap> g1:=genM[2];; g2:=genM[3];; g3:=genM[4];; g4:=genM[5];; 
 gap> [g5,g3,g2,g4];
 [ [<identity ...> : -4 -> -9], [f2 : -9 -> -9], [f1 : -9 -> -9], 
   [<identity ...> : -9 -> -4] ]
-gap> g5*g3*g2*g4;
+gap> g4*g2*g1*g3;
 [f2*f1 : -4 -> -4]
 ]]>
 </Example>
@@ -334,8 +342,12 @@ gap> d8 := Group( (1,2,3,4), (1,3) );;
 gap> SetName( d8, "d8" );
 gap> D0 := DomainWithSingleObject( d8, 0 );
 single piece groupoid: < d8, [ 0 ] >
-gap> GeneratorsOfMagmaWithInverses( D0 );
+gap> GeneratorsOfGroupoid( D0 );
 [ [(1,2,3,4) : 0 -> 0], [(1,3) : 0 -> 0] ]
+gap> p0 := Arrow( D0, (1,2,3,4), 0, 0 );; 
+gap> q0 := Arrow( D0, (1,3), 0, 0 );; 
+gap> p0*q0; 
+[(1,2)(3,4) : 0 -> 0]
 gap> Size( D0 );
 8
 ]]>
@@ -371,6 +383,8 @@ gap> N2 := UnionOfPieces( [ M49, D0 ] );;  Pieces( N2 );
         magma = Monoid( [ f1, f2 ] )
       objects = [ -9, -4 ]
     , single piece groupoid: < d8, [ 0 ] > ]
+gap> ObjectList( N2 ); 
+[ -9, -4, 0 ]
 gap> N3 := UnionOfPieces( [ N1, N2 ] );
 magma with objects having 4 pieces :-
 1: monoid with objects :-

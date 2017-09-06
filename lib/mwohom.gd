@@ -105,6 +105,10 @@ BindGlobal( "GroupoidHomomorphismFamily",
 ## 
 #R  IsMappingToSinglePieceRep( <map> )                
 #R  IsMappingWithPiecesRep( <map> )
+#T  IsMWOMappingToSinglePieceType( <map> )
+#T  IsGroupoidMappingToSinglePieceType( <map> )
+#T  IsMWOMappingWithPiecesType( <map> ) 
+#T  IsGrouppooidMappingWithPiecesType( <map> )
 ## 
 ##  A mapping to a single piece magma with objects is determined by:
 ##   - mappings from each magma in the source to the range magma,
@@ -120,6 +124,18 @@ DeclareRepresentation( "IsMappingWithPiecesRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
         and IsGeneralMapping, 
     [ "Source", "Range", "PiecesOfMapping" ] );
+BindGlobal( "IsMWOMappingToSinglePieceType", 
+            NewType( GeneralMappingWithObjectsFamily, 
+            IsMappingToSinglePieceRep and IsMagmaWithObjectsHomomorphism ) );
+BindGlobal( "IsGroupoidMappingToSinglePieceType", 
+            NewType( GeneralMappingWithObjectsFamily, 
+            IsMappingToSinglePieceRep and IsGroupoidHomomorphism ) );
+BindGlobal( "IsMWOMappingWithPiecesType", 
+            NewType( GeneralMappingWithObjectsFamily, 
+            IsMappingWithPiecesRep and IsMagmaWithObjectsHomomorphism ) );
+BindGlobal( "IsGroupoidMappingWithPiecesType", 
+            NewType( GeneralMappingWithObjectsFamily, 
+            IsMappingWithPiecesRep and IsGroupoidHomomorphism ) );
 
 ############################################################################## 
 ## 

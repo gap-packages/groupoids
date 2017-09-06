@@ -18,14 +18,20 @@
               becomes part of the general GAP distribution. 
  * (27/08/17) (see line 59 in 2-mwohom.tst) check whether package semigroups 
               contains:  NaturalHomomorphismByGenerators( sgp, sgp2 );
+ * (06/09/17) Revisit the Objectify commands for cosets etc in gpd.gi 
 
-## 1.51 -> 1.52  (28/08/17) 
+## 1.51 -> 1.52  (06/09/17) 
 
+ * (05/09/17) added lots of new default types, avoiding NewType(fam,filter)'s
+ * (05/09/17) added properties IsMagmaWithObjectsInPieces etc 
+ * (05/09/17) op TypeOfDomainWithObjects -> attribute KindOfDomainWithObjects
+ * (04/09/17) revised the various category structures, so operations 
+              IsArrowIn and IsElementInGroupoid now replaced by \in 
  * (27/08/17) GGHead/GGTail renamed Head/TailOfGraphOfGroupsWord 
  * (25/08/17) converted aut-test.g, hom-tst.g to .xtst; added tst/testextra.g
  * (18/08/17) provided a method for < for groupoid elements 
  * (14/08/17) redesign of homs proceeds : new InverseGeneralMapping for isos 
- * (11/09/17) PieceImages -> SinglePieceMappingData (temporarily?) 
+ * (11/09/17) PieceImages -> SinglePieceMappingData 
  * (08/08/17) testall.g copied to testing.g; testall now calls TestDirectory
 
 ## 1.46 -> 1.51  (06/08/17) 

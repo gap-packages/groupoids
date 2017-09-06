@@ -29,16 +29,18 @@ magma with objects :-
   objects = [ -8, -7 ]
 
 gap> SetName( M78, "M78" ); 
-gap> [ IsAssociative(M78), IsCommutative(M78), IsDomainWithObjects(M78) ]; 
-[ false, false, true ]
+gap> [ IsAssociative(M78), IsCommutative(M78) ]; 
+[ false, false ]
+gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
+[ true, true, false ]
 gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
 [ -8, [ -8, -7 ] ]
 
 ## SubSection 2.1.2 
 gap> a78 := Arrow( M78, m2, -7, -8 ); 
 [m2 : -7 -> -8]
-gap> [ a78 in M78, IsArrowIn( a78, M78 ) ]; 
-[ false, true ]
+gap> a78 in M78; 
+true 
 gap> b87 := Arrow( M78, m4, -8, -7 );;
 gap> [ ElementOfArrow( b87 ), TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
 [ m4, -8, -7 ]
@@ -47,6 +49,7 @@ gap> ba := b87*a78;  ab := a78*b87;
 [m3 : -7 -> -7]
 gap> [ a78^2, ba^2, ba^3 ]; 
 [ fail, [m1 : -8 -> -8], [m3 : -8 -> -8] ]
+gap> ## this demonstrates non-associativity:  
 gap> [ a78*ba, ab*a78, a78*ba = ab*a78 ]; 
 [ [m3 : -7 -> -8], [m4 : -7 -> -8], false ]
 
@@ -78,9 +81,10 @@ gap> CategoriesOfObject( S123 );
   "CategoryCollections(IsExtLElement)", "IsExtRElement", 
   "CategoryCollections(IsExtRElement)", 
   "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
-  "IsMagma", "IsDomainWithObjects", 
+  "IsDomainWithObjects", 
   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
-  "IsMagmaWithObjects" ]
+  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
+  "IsMagmaWithObjects", "IsSemigroupWithObjects" ]
 gap> t12 := Arrow( S123, t, -1, -2 );; 
 gap> s23 := Arrow( S123, s, -2, -3 );; 
 gap> r31 := Arrow( S123, r, -3, -1 );; 
@@ -103,9 +107,8 @@ monoid with objects :-
 gap> [ IsAssociative(M49), IsCommutative(M49) ]; 
 [ true, false ]
 gap> ktpo := KnownTruePropertiesOfObject( M49 );; 
-gap> ans := [ "CanEasilyCompareElements", "CanEasilySortElements", 
->  "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
->  "IsDirectProductWithCompleteGraphDomain" ];;
+gap> ans := [ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
+> "IsDirectProductWithCompleteGraphDomain" ];;  
 gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
 gap> catobj := CategoriesOfObject( M49 );; 
@@ -113,13 +116,14 @@ gap> ans := [ "IsListOrCollection", "IsCollection", "IsExtLElement",
 >   "CategoryCollections(IsExtLElement)", "IsExtRElement", 
 >   "CategoryCollections(IsExtRElement)", 
 >   "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
->   "IsMagma", "IsDomainWithObjects", 
+>   "IsDomainWithObjects", 
 >   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
 >   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
->   "IsMagmaWithObjects", "IsMagmaWithObjectsAndOnes" ];;
+>   "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)", 
+>   "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ];;
 gap> ForAll( ans, a -> ( a in catobj ) ); 
 true
-gap> genM := GeneratorsOfMagmaWithOne( M49 ); 
+gap> genM := GeneratorsOfMonoidWithObjects( M49 ); 
 [ [f1 : -9 -> -9], [f2 : -9 -> -9], [<identity ...> : -9 -> -4], 
   [<identity ...> : -4 -> -9] ]
 gap> g1 := genM[1];; g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; 
@@ -134,9 +138,9 @@ gap> SetName( d8, "d8" );
 gap> D0 := DomainWithSingleObject( d8, 0 ); 
 single piece groupoid: < d8, [ 0 ] >
 gap> ktpD0 := KnownTruePropertiesOfObject( D0 );;
-gap> ForAll( [ "CanEasilyCompareElements", "CanEasilySortElements", 
->     "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
->     "IsDirectProductWithCompleteGraphDomain" ], p -> p in ktpD0 ); 
+gap> ans := [ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
+> "IsDirectProductWithCompleteGraphDomain" ];;  
+gap> ForAll( ans, a -> ( a in ktpD0 ) );
 true
 gap> p0 := Arrow( D0, (1,2,3,4), 0, 0 );; 
 gap> q0 := Arrow( D0, (1,3), 0, 0 );; 

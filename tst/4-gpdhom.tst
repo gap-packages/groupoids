@@ -84,6 +84,18 @@ groupoid homomorphism :
       [(1,2,4) : -14 -> -12] ] ]
 
 ## SubSection 5.1.7
+gap> IsInjectiveOnObjects( mor2 ); 
+true
+gap> IsSurjectiveOnObjects( mor2 );
+false
+gap> IsBijectiveOnObjects( iso1 );
+true
+gap> IsEndomorphismWithObjects( inc );
+false
+gap> IsAutomorphismWithObjects( inc );
+false
+
+## SubSection 5.1.8
 gap> ObjectGroupHomomorphism( iso2, -12 );
 [ (1,2,4,3), (2,3) ] -> [ (1,2,3,4), (1,3) ]
 
@@ -216,7 +228,9 @@ gap> Display( inv123 );
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (1,2,3) ] ]
 images of objects: [ -11, -15, -13 ]
    images of rays: [ [() : -11 -> -11], [(1,2,4) : -11 -> -15], 
-  [(1,2,3) : -11 -> -13] ]
+  [(1,2,3) : -11 -> -13] ] 
+
+# SubSection 5.4.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 <group with 8 generators>
 gap> AGgens := GeneratorsOfGroup( AGa4);; 
@@ -235,7 +249,7 @@ gap> ngen := Length( autgen );;
 gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); 
 true
 
-## SubSection 5.4.2
+## SubSection 5.4.4
 gap> Hs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); 
 homogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >
 gap> aut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); 

@@ -66,8 +66,11 @@ More functions will be released as soon as possible.
 <P/>
 Once the package is loaded, it is possible to check the correct 
 installation by running the test suite of the package with the command  
-<C> ReadPackage( "groupoids", "tst/testall.g" ); </C>
-
+<C> ReadPackage("groupoids","tst/testing.g"); </C>. 
+Additional tests may be run using 
+<C> ReadPackage("groupoids","tst/testextra.g");.</C> 
+(The file <C>"tst/testall.g"</C> is used for automated testing.)  
+<P/>
 You may reference this package by mentioning <Cite Key="BrMoPoWe" />, 
 <Cite Key="emma-thesis" /> and <Cite Key="AlWe" />. 
 

@@ -7,25 +7,25 @@
 ##  
 
 ############################################################################# 
-##  
+##
 #O  RootGroup( <gpd> ) 
 #O  RayElementsOfGroupoid( <gpd> ) 
 #O  RaysOfGroupoid( <gpd> ) 
-#O  GeneratorsOfGroupoid( <gpd> )
-#O  PiecesOfGroupoid( <gpd> ) 
+#A  GeneratorsOfGroupoid( <gpd> )
+##?? #O  PiecesOfGroupoid( <gpd> ) 
 ## 
-#?  (03/10/08)  changed these from Attributes to Operations 
-#?              and call equivalent MagmaWithObjects attributes
-##
+##??  (03/10/08)  changed these from Attributes to Operations 
+##??              and call equivalent MagmaWithObjects attributes 
 DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] ); 
 DeclareOperation( "RayElementsOfGroupoid", [ IsGroupoid ] ); 
 DeclareOperation( "RaysOfGroupoid", [ IsGroupoid ] ); 
-DeclareOperation( "GeneratorsOfGroupoid", [ IsGroupoid ] );
-DeclareOperation( "PiecesOfGroupoid", [ IsGroupoid ] );  
+DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
+##?? DeclareOperation( "PiecesOfGroupoid", [ IsGroupoid ] );  
   
 ############################################################################## 
 ## 
 #R  IsSinglePieceRaysRep( <gpd> ) 
+#T  IsSinglePieceRaysType( <gpd> ) 
 #A  LargerDirectProductGroupoid( <gpd> ) 
 ## 
 ##  A connected groupoid with variable object groups is a wide subgroupoid 
@@ -35,6 +35,8 @@ DeclareOperation( "PiecesOfGroupoid", [ IsGroupoid ] );
 DeclareRepresentation( "IsSinglePieceRaysRep",
   IsGroupoid and IsAttributeStoringRep and IsComponentObjectRep, 
   [ "parent", "rootGroup", "rays" ] ); 
+BindGlobal( "IsSinglePieceRaysType", 
+            NewType( IsGroupoidFamily, IsSinglePieceRaysRep ) );
 DeclareAttribute( "LargerDirectProductGroupoid", IsSinglePieceRaysRep ); 
  
 ############################################################################# 
@@ -93,16 +95,20 @@ DeclareAttribute( "ObjectGroups", IsGroupoid );
 ## 
 #P  IsHomogeneousDiscreteGroupoid( <gpd> ) 
 #R  IsHomogeneousDiscreteGroupoidRep( <gpd> ) 
+#T  IsHomogeneousDiscreteGroupoidType( <gpd> ) 
 ## 
 ##  A homogeneous, discrete groupoid is a union of identical, single domain 
 ##  groupoids - just the thing for the source of an xmod of groupoids! 
-##  So such structures deserve their own representation. 
+##  So such structures deserve their own representation and type. 
 ## 
 DeclareSynonymAttr( "IsHomogeneousDiscreteGroupoid", IsGroupoid and 
     IsDiscreteDomainWithObjects and IsHomogeneousDomainWithObjects ); 
 DeclareRepresentation( "IsHomogeneousDiscreteGroupoidRep",
   IsGroupoid and IsAttributeStoringRep and IsComponentObjectRep, 
   [ "magma", "objects" ] ); 
+BindGlobal( "IsHomogeneousDiscreteGroupoidType", 
+            NewType( IsGroupoidFamily, 
+                     IsHomogeneousDiscreteGroupoidRep and IsGroupoid ) );
 
 ############################################################################## 
 ## 
@@ -207,14 +213,6 @@ DeclareOperation( "LeftCoset", [ IsGroupoid, IsGroupoid, IsGroupoidElement ] );
 DeclareOperation( "DoubleCosetRepresentatives", 
     [ IsGroupoid, IsGroupoid, IsGroupoid ] ); 
 
-############################################################################## 
-## 
-#O  IsElementInGroupoid( <e>, <gpd> ) 
-##
-##  this takes the place of an implementation of \in 
-##  
-DeclareOperation( "IsElementInGroupoid", [ IsGroupoidElement, IsGroupoid ] ); 
-
 
 ## ======================================================================== ##
 ##                               Subgroupoids                               ##
@@ -261,7 +259,8 @@ DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
 ##
 #O  ConjugateArrow( <x>, <y> ) . . . . groupoid conjugate of x by y
 ## 
-#?  can now change this to  e^g  ??
+#?  no longer needed since x^y now works, but keep it for a while 
+##
 DeclareOperation( "ConjugateArrow", [ IsGroupoidElement, IsGroupoidElement ] );
 
 ############################################################################## 

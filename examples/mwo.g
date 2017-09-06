@@ -42,8 +42,7 @@ Print( "M78 has root object and object list ",
 
 a78 := Arrow( M78, m2, -7, -8 ); 
 Print( "a78 = ", a78, "\n" );
-Print( "[ a78 in M78, IsArrowIn( a78, M78 ) ] = ", 
-        [ a78 in M78, IsArrowIn( a78, M78 ) ] );
+Print( "a78 in M78 ? ", a78 in M78, "\n" );
 b87 := Arrow( M78, m4, -8, -7 ); 
 Print( "b87 = ", b87, "\n" );
 ba := b87*a78; 

@@ -213,7 +213,7 @@ we just require that the object lists in the new union are disjoint.
 </ManSection>
 <Example>
 <![CDATA[
-gap> U3 := UnionOfPieces( [ Gs4, Gd8, Gc6 ] );;
+gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
 gap> Display( U3 );
 groupoid with 3 pieces:
 < objects: [ -15 .. -11 ]
@@ -231,15 +231,27 @@ gap> [ Size(Gs4), Size(Gd8), Size(Gc6), Size(U3) ];
 [ 600, 72, 6, 678 ]
 gap> [ Size(Gf2), Size(Gq8), Size(U2) ];           
 [ infinity, 32, infinity ]
-gap> U5 := UnionOfPieces( [ U3, Gf2, Gq8 ] );
+gap> U5 := UnionOfPieces( [ U3, U2 ] );
 groupoid with 5 pieces:
 [ Gq8, Gf2, Gs4, Gd8, Gc6 ]
+gap> Display( U5 );
+groupoid with 5 pieces:
+< objects: [ -28, -27 ]
+    group: q8 = <[ f1, f2, f3 ]> >
+< objects: [ -22 ]
+    group: f2 = <[ f1, f2 ]> >
+< objects: [ -15 .. -11 ]
+    group: s4 = <[ (1,2,3,4), (3,4) ]> >
+< objects: [ -9, -8, -7 ]
+    group: d8 = <[ (1,2,3,4), (1,3) ]> >
+< objects: [ -6 ]
+    group: c6 = <[ (5,6,7)(8,9) ]> >
 gap> V5 := ReplaceOnePieceInUnion( U5, 3, Gsl43 ); 
 groupoid with 5 pieces:
 [ Gsl43, Gq8, Gf2, Gd8, Gc6 ]
 gap> ObjectList(V5);             
 [ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
-gap> U5 = V5; 
+gap> U5 = V5;
 false
 gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
 groupoid with 5 pieces:
@@ -289,6 +301,8 @@ gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
 2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
+gap> Size(Hd8);
+144
 gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
 gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
@@ -325,8 +339,6 @@ true
          Arg="elt" />
    <Oper Name="HeadOfArrow"
          Arg="elt" />
-   <Oper Name="IsArrowIn"
-         Arg="arr,gpd" />
 <Description>
 A <E>groupoid element</E> is an arrow in a magma with objects, 
 as described in subsection <Ref Sect="man-arrow"/>. 
@@ -337,7 +349,7 @@ and the head (target) object, <C>HeadOfArrow(e)</C>.
 Arrows have a <E>partial composition</E>: 
 two arrows may be multiplied when the head of the first 
 coincides with the tail of the second. 
-When an attempt is made to multiply arrows where this condition does not hold, 
+If an attempt is made to multiply arrows where this condition does not hold, 
 then the value <C>fail</C> is returned. 
 (In earlier versions of the package there were functions <C>GroupoidElement</C> 
 and <C>MultiplicativeElementWithObjects</C>, 
@@ -372,8 +384,9 @@ gap> loop^2;
 <Description>
 The identity arrow <M>1_o</M> of <M>G</M> at object <M>o</M> 
 is <M>(e:o \to o)</M> where <M>e</M> is the identity element in the 
-object group.  
-The inverse <M>e^{-1}</M> of <M>e = (c : p \to q)</M> is 
+object group. 
+The <Index Key="inverse arrow"> inverse arrow </Index>
+<E>inverse arrow</E> <M>e^{-1}</M> of <M>e = (c : p \to q)</M> is 
 <M>(c^{-1} : q \to p)</M>, 
 so that <M>e*e^{-1}=1_p</M> and <M>e^{-1}*e = 1_q</M>. 
 <P/>
@@ -485,17 +498,7 @@ gap> for e in hsetq8 do Print(e,"\n"); od;
          Arg="gpd, obhoms" />
    <Oper Name="IsSubgroupoid"
          Arg="gpd, sgpd" />
-   <Oper Name="FullSubgroupoid"
-         Arg="gpd, obs" />
-   <Attr Name="MaximalDiscreteSubgroupoid"
-         Arg="gpd" />
-   <Oper Name="DiscreteSubgroupoid"
-         Arg="gpd, sgps, obs" />
-   <Attr Name="FullTrivialSubgroupoid"
-         Arg="gpd" />
-   <Attr Name="DiscreteTrivialSubgroupoid"
-         Arg="gpd" />
-   <Oper Name="IsWide"
+   <Oper Name="IsWideSubgroupoid"
          Arg="gpd, sgpd" />
 <Description>
 A <E>subgroupoid</E> <C>sgpd</C> of a groupoid <C>gpd</C> has as objects 
@@ -513,20 +516,9 @@ Its two parameters are a groupoid and a list of pieces,
 each piece being specified as a list <C>[sgp,obs]</C>,  
 where <C>sgp</C> is a subgroup of the root group in that piece, 
 and <C>obs</C> is a subset of the objects in that piece.
-The <C>FullSubgroupoid</C> of a groupoid <C>gpd</C> 
-on a subset <C>obs</C> of its objects 
-contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
-A subgroupoid is <E>discrete</E> if it is a union of groups. 
-The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
-is the union of all the single-object full subgroupoids of <C>gpd</C>.
-A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
-<E>trivial subgroupoid</E> 
-has trivial object groups, but need not be discrete.
-A single piece trivial groupoid is sometimes called a 
-<Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
-(The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
-<E>identity subgroupoid</E> was used in versions up to 1.14.)  
-The global function <C>Subgroupoid</C> should call the appropriate operation.
+<P/> 
+A subgroupoid <C>S</C> is <E>wide</E> in <C>G</C> 
+if <C>S</C> anbd <C>G</C> have the same object set. 
 <P/>
 </Description>
 </ManSection>
@@ -548,12 +540,48 @@ gap> [ Parent( Ud8 ), IsWide( Gd8, Ud8 ) ];
 gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 [ f1^2, f2^2 ]
 gap> f2b := Subgroup( f2, genf2b );;
-gap> SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
+gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < q8, [ -27 ] >
 2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
+gap> IsWideSubgroupoid( U2, SU2 );
+false
 gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
 true
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="FullSubgroupoid"
+         Arg="gpd, obs" />
+   <Attr Name="MaximalDiscreteSubgroupoid"
+         Arg="gpd" />
+   <Oper Name="DiscreteSubgroupoid"
+         Arg="gpd, sgps, obs" />
+   <Attr Name="FullTrivialSubgroupoid"
+         Arg="gpd" />
+   <Attr Name="DiscreteTrivialSubgroupoid"
+         Arg="gpd" />
+<Description>
+The <C>FullSubgroupoid</C> of a groupoid <C>gpd</C> 
+on a subset <C>obs</C> of its objects 
+contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
+A subgroupoid is <E>discrete</E> if it is a union of groups. 
+The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
+is the union of all the single-object full subgroupoids of <C>gpd</C>.
+A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
+<E>trivial subgroupoid</E> 
+has trivial object groups, but need not be discrete.
+A single piece trivial groupoid is sometimes called a 
+<Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
+(The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
+<E>identity subgroupoid</E> was used in versions up to 1.14.)  
+The global function <C>Subgroupoid</C> should call the appropriate operation.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
 gap> FullSubgroupoid( U3, [-7,-6] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -7 ] >
@@ -727,12 +755,12 @@ gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 
 <Index>\^{} for arrows</Index>
 <ManSection>
-   <Oper Name="ConjugateArrow"
+   <Oper Name="\^"
          Arg="e1, e" />
 <Description>
-When <M>e = (c : p \to q)</M> conjugation by <M>e</M> 
+Conjugation by an arrow <M>e = (c : p \to q)</M> 
 is the groupoid automorphism defined as follows. 
-There are two cases.
+There are two cases to consider.
 <P/>
 In the case <M>p \neq q</M>, 
 <List>
@@ -780,8 +808,6 @@ and <M>(b : p \to r) \mapsto (c^{-1}b : p \to r)</M>;
 <P/>
 The details of this construction may be found in <Cite Key="AlWe" />. 
 <P/>
-(Note that it is more desirable to use the command <C>e1^e2</C>, 
-but it has not yet been possible to get this to work!) 
 </Description>
 </ManSection>
 <Example>
@@ -791,21 +817,21 @@ gap> y := Arrow( Gd8, (1,2,3,4), -8, -9 );;
 gap> z := Arrow( Gd8, (1,2)(3,4), -9, -7 );; 
 gap> w := Arrow( Gd8, (1,2,3,4), -7, -8 );; 
 gap> ##  conjugation with elements x, y, and z in Gd8: 
-gap> ConjugateArrow(x,y);
+gap> x^y;
 [(2,4) : -8 -> -8]
-gap> ConjugateArrow(x,z);
+gap> x^z;
 [(2,4) : -7 -> -7]
-gap> ConjugateArrow(y,x);
+gap> y^x;
 [() : -8 -> -9]
-gap> ConjugateArrow(y,z);
+gap> y^z;
 [(2,4) : -8 -> -7]
-gap> ConjugateArrow(z,x);
+gap> z^x;
 [(1,4,3,2) : -9 -> -7]
-gap> ConjugateArrow(z,y);
+gap> z^y;
 [(2,4) : -8 -> -7]
-gap> ConjugateArrow(w,y);
+gap> w^y;
 [(1,3)(2,4) : -7 -> -9]
-gap> ConjugateArrow(w,z);
+gap> w^z
 [(1,3) : -9 -> -8]
 ]]>
 </Example>
@@ -817,7 +843,7 @@ gap> ConjugateArrow(w,z);
 A set of arrows generates a groupoid by taking all possible 
 products and inverses.  
 So far, the only implementation is for the case of loops generating a 
-group at an object <M>o</M> andf a set of rays from <M>o</M>, 
+group at an object <M>o</M> together with a set of rays from <M>o</M>, 
 where <M>o</M> is <E>not</E> the least object. 
 A suitably large supergroupoid, which must be a direct product with a 
 complete graph, should be provided. 
@@ -832,7 +858,7 @@ gap> u := Arrow( Gs4, (1,2,3), -15, -13 );
 gap> gensa := GeneratorsOfGroupoid( Hd8a );
 [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
   [(3,4) : -14 -> -12] ]
-gap> imsa := List( gensa, g -> ConjugateArrow( g, u ) ); 
+gap> imsa := List( gensa, g -> g^u ); 
 [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
   [(3,4) : -14 -> -12] ]
 gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 

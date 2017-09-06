@@ -539,7 +539,7 @@ function( src, rng, gens, images )
     if not ( gens = GeneratorsOfGroupoid( src ) ) then 
         Error( "gens <> GeneratorsOfGroupoid(src)" ); 
     fi; 
-    if not ForAll( images, g -> IsElementInGroupoid( g, rng ) ) then 
+    if not ForAll( images, g -> ( g in rng ) ) then 
         Error( "images not all in rng" ); 
     fi; 
     if not ( Length( gens ) = Length( images ) ) then 
@@ -1238,7 +1238,7 @@ function ( map, e )
     local p1, t2, g2, a;
 
     Info( InfoGroupoids, 5, 
-        "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1140" ); 
+        "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1241" ); 
     #?  need to include some tests here ?? 
     p1 := Position( Source( map )!.objects, e![2] ); 
     t2 := ImagesOfObjects( map )[ p1 ]; 

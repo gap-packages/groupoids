@@ -190,28 +190,6 @@ gap> ImageElementsOfRays( mor2 );
 ]]>
 </Example>
 
-<Subsection Label="subsec-prop-homs">
-<Heading>Properties of a groupoid homomorphism</Heading>
-The properties listed in subsection <Ref Sect="sec-hompieces"/> 
-for homomorphisms of magmas with objects also apply to groupoid homomorphisms.
-<P/>
-<Example>
-<![CDATA[
-gap> IsInjectiveOnObjects( mor2 ); 
-true
-gap> IsSurjectiveOnObjects( mor2 );
-false
-gap> IsBijectiveOnObjects( iso1 );
-true
-gap> IsEndomorphismWithObjects( inc );
-false
-gap> IsAutomorphismWithObjects( inc );
-false
-]]>
-</Example>
-
-</Subsection>
-
 <ManSection>
    <Oper Name="InclusionMappingGroupoids"
          Arg="gpd, sgpd" />
@@ -268,6 +246,28 @@ groupoid homomorphism :
       [(1,2,4) : -14 -> -12] ] ]
 ]]>
 </Example>
+
+<Subsection Label="subsec-prop-homs">
+<Heading>Properties of a groupoid homomorphism</Heading>
+The properties listed in subsection <Ref Sect="sec-hompieces"/> 
+for homomorphisms of magmas with objects also apply to groupoid homomorphisms.
+<P/>
+<Example>
+<![CDATA[
+gap> IsInjectiveOnObjects( mor2 ); 
+true
+gap> IsSurjectiveOnObjects( mor2 );
+false
+gap> IsBijectiveOnObjects( iso1 );
+true
+gap> IsEndomorphismWithObjects( inc );
+false
+gap> IsAutomorphismWithObjects( inc );
+false
+]]>
+</Example>
+
+</Subsection>
 
 <ManSection>
    <Oper Name="ObjectGroupHomomorphism"
@@ -336,16 +336,13 @@ gap> homc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;
 gap> incFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; 
 gap> ihomc6 := homc6 * incFs3; 
 groupoid homomorphism : Gc6 -> Gs3
-[ [ GroupHomomorphismByImages( c6, s3, [ (5,6,7)(8,9) ], 
-        [ (15,16)(17,20)(18,19) ] ), [ -35 ], [ () ] ] ]
+[ [ [(5,6,7)(8,9) : -6 -> -6] ], [ [(15,16)(17,20)(18,19) : -35 -> -35] ] ]
 gap> idGs3 := IdentityMapping( Gs3 );;
 gap> V3 := ReplaceOnePieceInUnion( U3, 1, Gs3 ); 
 groupoid with 3 pieces:
 [ Gs3, Gd8, Gc6 ]
-gap> images3 := [ SinglePieceMappingData( idGs3 )[1], 
->                 SinglePieceMappingData( homd8 )[1], 
->                 SinglePieceMappingData( ihomc6 )[1] ];; 
-gap> homV3 := HomomorphismToSinglePiece( V3, Gs3, images3 );; 
+gap> homs3 := [ idGs3, homd8, ihomc6 ];; 
+gap> homV3 := HomomorphismToSinglePiece( V3, Gs3, homs3 );; 
 gap> Display( homV3 );         
 homomorphism to single piece groupoid with pieces:
 (1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ]
@@ -541,41 +538,21 @@ Note that <C>ImageElm</C> at present only works on generating elements.
 <![CDATA[
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 <group with 8 generators>
-gap> Print( GeneratorsOfGroup( AGa4 ), "\n" ); 
-[ groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (2,3,4) ), [ -15, -13, -11 ], 
-          [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ ConjugatorAutomorphism( a4, (1,4,2,3) ), [ -15, -13, -11 ], 
-          [ (), (), () ] ] ], groupoid homomorphism : Ga4 -> Ga4
-    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
-            [ (1,2,3), (2,3,4) ] ), [ -13, -11, -15 ], [ (), (), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], 
-            [ (1,2,3), (2,3,4) ] ), [ -13, -15, -11 ], [ (), (), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (1,2,3), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (2,3,4), () ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (1,2,3) ] ] ], 
-  groupoid homomorphism : Ga4 -> Ga4
-    [ [ IdentityMapping( a4 ), [ -15, -13, -11 ], [ (), (), (2,3,4) ] ] ] ]
-gap> NGa4 := NiceObject( AGa4 ); 
-Group([ f6, f3, f11*f12, f12, f2, f1, f4*f9, f4^2, f5*f9*f10*f11*f12, f5^2 ])
+gap> AGgens := GeneratorsOfGroup( AGa4);; 
+gap> NGa4 := NiceObject( AGa4 );; 
 gap> MGa4 := NiceMonomorphism( AGa4 );; 
 gap> Size( AGa4 ); 
 20736
 gap> SetName( AGa4, "AGa4" ); 
 gap> SetName( NGa4, "NGa4" ); 
-gap> Print( Image( MGa4 ), "\n" ); 
-Group( [ f4*f5*f6, f3*f9*f10*f11, f2, f1*f2, f5*f11, f5^2, f4*f9, f4^2 ] )
+gap> ##  cannot test images of AGgens because of random variations 
 gap> ##  Now do some tests!
 gap> mgi := MappingGeneratorsImages( MGa4 );; 
 gap> autgen := mgi[1];; 
 gap> pcgen := mgi[2];;
 gap> ngen := Length( autgen );; 
 gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); 
-true 
+true
 ]]>
 </Example>
 
@@ -608,10 +585,10 @@ IdentityMapping( s3 )
 gap> gens3 := GeneratorsOfGroup( s3 );; 
 gap> g1 := gens3[1];; 
 gap> g2 := gens3[2];; 
-gap> b1 := GroupHomomorphismByImages( s3, s3, gens3, [ g1, g2^g1 ] );; 
-gap> b2 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^g2, g2 ] );; 
-gap> b3 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^g2, g2^(g1*g2) ] );; 
-gap> b4 := GroupHomomorphismByImages( s3, s3, gens3, [ g1^(g2*g1), g2^g1 ] );; 
+gap> b1 := GroupHomomorphismByImages( s3, s3, gens3, [g1, g2^g1 ] );; 
+gap> b2 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2 ] );; 
+gap> b3 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2^(g1*g2) ] );; 
+gap> b4 := GroupHomomorphismByImages( s3, s3, gens3, [g1^(g2*g1), g2^g1 ] );; 
 gap> aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1,b2,b3,b4] ); 
 groupoid homomorphism : morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
@@ -628,16 +605,37 @@ GroupHomomorphismByImages( s3, s3,
 GroupHomomorphismByImages( s3, s3, 
 [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
 [ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
-gap> AHs3 := AutomorphismGroupOfGroupoid( Hs3 );
-<group of size 31104 with 4 generators>
-gap> GeneratorsOfGroup( AHs3 )[2];
+gap> AHs3 := AutomorphismGroupOfGroupoid( Hs3 ); 
+<group with 4 generators>
+gap> Size( AHs3 );
+31104
+gap> genAHs3 := GeneratorsOfGroup( AHs3 );;
+gap> Length( genAHs3 ); 
+4
+gap> nobAHs3 := NiceObject( AHs3 );; 
+gap> nmonAHs3 := NiceMonomorphism( AHs3 );;
+gap> w := genAHs3[1];; 
+gap> w1 := ImageElm( nmonAHs3, w );; 
+gap> x := genAHs3[2];; 
+gap> x1 := ImageElm( nmonAHs3, x );; 
+gap> y := genAHs3[3];; 
+gap> y1 := ImageElm( nmonAHs3, y );; 
+gap> z := genAHs3[4];; 
+gap> z1 := ImageElm( nmonAHs3, z );; 
+gap> u := z*w*y*x*z; 
 groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
+[ -13, -12, -11, -10 ] -> [ -11, -13, -10, -12 ]
 object homomorphisms:
+IdentityMapping( s3 )
 ConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )
 IdentityMapping( s3 )
-IdentityMapping( s3 )
-IdentityMapping( s3 )
+ConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )
+gap> u1 := z1*w1*y1*x1*z1; 
+(1,2,4,3)(5,17,23,16,8,20,26,13)(6,18,24,15,7,19,25,14)(9,21,27,12,10,22,28,
+11)
+gap> imu := ImageElm( nmonAHs3, u );; 
+gap> u1 = imu;
+true
 ]]>
 </Example>
 <P/>

@@ -41,22 +41,19 @@ InstallMethod( SinglePieceGroupoidNC, "method for a connected groupoid",
     true, [ IsGroup, IsHomogeneousList ], 0,
 function( gp, obs ) 
 
-    local fam, filter, cf, gpd, gens;
+    local gpd, gens;
 
-    fam := GroupoidFamily; 
-    filter := IsMWOSinglePieceRep and IsGroupoid; 
-    gpd := Objectify( NewType( fam, filter ), 
-           rec( objects := obs, magma := gp, 
-                rays := List( obs, o -> One( gp ) ) ) ); 
-    SetIsSinglePieceDomain( gpd, true );
-    SetIsAssociative( gpd, true ); 
-    SetIsCommutative( gpd, IsCommutative( gp ) ); 
-    ## (06/02/13) one-object groupoid is single piece, not discrete 
+    gpd := rec( objects := obs, magma := gp, 
+                rays := List( obs, o -> One( gp ) ) ); 
+    ObjectifyWithAttributes( gpd, IsGroupoidType, 
+        IsSinglePieceDomain, true,
+        IsAssociative, true, 
+        IsCommutative, IsCommutative( gp ), 
+        IsDirectProductWithCompleteGraphDomain, true ); 
+    gens := GeneratorsOfMagmaWithObjects( gpd ); 
     if ( Length( obs ) = 1 ) then 
         SetIsDiscreteDomainWithObjects( gpd, false );
     fi; 
-    SetIsDirectProductWithCompleteGraphDomain( gpd, true ); 
-    gens := GeneratorsOfMagmaWithObjects( gpd ); 
     return gpd; 
 end );
 
@@ -84,9 +81,9 @@ function( pgpd, rgp, rays )
 
     local obs, rob, fam, filter, gpd, id;
 
-    fam := GroupoidFamily;
+    fam := IsGroupoidFamily;
     filter := IsSinglePieceRaysRep;
-    gpd := Objectify( NewType( fam, filter ), rec () ); 
+    gpd := Objectify( IsSinglePieceRaysType, rec () ); 
     gpd!.objects := pgpd!.objects; 
     gpd!.magma := rgp; 
     gpd!.rays := rays;
@@ -150,7 +147,7 @@ function( anc, gens )
     local ok, ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
           g, c, p, q, r, rays, par; 
 
-    ok := ForAll( gens, g -> ( FamilyObj(g) = GroupoidElementFamily ) ); 
+    ok := ForAll( gens, g -> ( FamilyObj(g) = IsGroupoidElementFamily ) ); 
     if not ok then 
         Error( "list supplied is not a list of groupoid elements," ); 
     fi;  
@@ -450,29 +447,27 @@ function ( gpd )
             Print( gpd!.magma, ", ", gpd!.objects, ", ", 
                                      gpd!.rays, " >" );
         fi; 
-    else 
-        if ( HasIsHomogeneousDiscreteGroupoid( gpd ) 
+    elif ( HasIsHomogeneousDiscreteGroupoid( gpd ) 
            and IsHomogeneousDiscreteGroupoid( gpd ) ) then 
             Print( "homogeneous, discrete groupoid: < " ); 
             Print( gpd!.magma, ", ", gpd!.objects, " >" ); 
-        else 
-            comp := Pieces( gpd ); 
-            len := Length( comp ); 
-            if ( HasIsHomogeneousDomainWithObjects( gpd ) 
-                 and IsHomogeneousDomainWithObjects( gpd ) ) then 
-                Print( "homogeneous " ); 
-            fi; 
-            Print( "groupoid with ", len, " pieces:\n" ); 
-            if ForAll( comp, c -> HasName(c) ) then 
-                Print( comp ); 
-            else 
-                for i in [1..len-1] do
-                    c := comp[i]; 
-                    Print( i, ":  ", c, "\n" );
-                od; 
-                Print( len, ":  ", comp[len] ); 
-            fi; 
+    else 
+        comp := Pieces( gpd ); 
+        len := Length( comp ); 
+        if ( HasIsHomogeneousDomainWithObjects( gpd ) 
+             and IsHomogeneousDomainWithObjects( gpd ) ) then 
+            Print( "homogeneous " ); 
         fi; 
+        Print( "groupoid with ", len, " pieces:\n" ); 
+        if ForAll( comp, c -> HasName(c) ) then 
+            Print( comp ); 
+        else 
+            for i in [1..len-1] do
+                c := comp[i]; 
+                Print( i, ":  ", c, "\n" );
+            od; 
+            Print( len, ":  ", comp[len] ); 
+        fi;  
     fi;
 end );
 
@@ -774,16 +769,16 @@ function( gp, obs )
     if ( Length( obs ) = 1 ) then 
         Error( "hom discrete groupoids should have more than one object" ); 
     fi;
-    fam := GroupoidFamily; 
+    fam := IsGroupoidFamily; 
     filter := IsHomogeneousDiscreteGroupoidRep; 
-    gpd := Objectify( NewType( fam, filter ), 
-           rec( objects := obs, magma := gp ) ); 
-    SetIsAssociative( gpd, true ); 
-    SetIsDiscreteDomainWithObjects( gpd, true ); 
-    SetIsHomogeneousDomainWithObjects( gpd, true ); 
-    SetIsAssociative( gpd, true ); 
-    SetIsCommutative( gpd, IsCommutative( gp ) ); 
-    SetIsSinglePieceDomain( gpd, false ); 
+    gpd := rec( objects := obs, magma := gp ); 
+    ObjectifyWithAttributes( gpd, IsHomogeneousDiscreteGroupoidType, 
+        IsAssociative, true, 
+        IsDiscreteDomainWithObjects, true, 
+        IsHomogeneousDomainWithObjects, true, 
+        IsAssociative, true, 
+        IsCommutative, IsCommutative( gp ), 
+        IsSinglePieceDomain, false ); 
     return gpd; 
 end );
 
@@ -836,7 +831,7 @@ function( gpd, elt )
     local gens, ims, conj;
 
     gens := GeneratorsOfGroupoid( gpd ); 
-    ims := List( gens, g -> ConjugateArrow( g, elt ) ); 
+    ims := List( gens, g -> g^elt ); 
     conj := SinglePieceSubgroupoidByGenerators( Ancestor( gpd ), ims );
     #? leftovers from the version for groups: 
     #? OnTuples( GeneratorsOfGroupoid( gpd ), elt ), One( gpd ) );
@@ -876,21 +871,7 @@ end );
 ##
 #M  <e> in <G> 
 ##
-#?  (12/09/08)  tried again - but no joy! 
-
-InstallOtherMethod( \in, "for groupoid element and a standard groupoid", 
-    IsElmsColls, 
-    [ IsGroupoidElement, IsGroupoid and IsDirectProductWithCompleteGraph ], 0,
-function( e, gpd ) 
-
-    local obs;
-
-    obs := gpd!.objects; 
-    return ( (e![1] in gpd!.magma) and (e![2] in obs) and (e![3] in obs) );
-end );
-
-InstallMethod( IsElementInGroupoid, 
-    "for groupoid element and a standard groupoid", true, 
+InstallMethod( \in, "for groupoid element and a standard groupoid", true, 
     [ IsGroupoidElement, IsGroupoid and IsSinglePiece ], 0,
 function( e, gpd )
 
@@ -911,25 +892,11 @@ function( e, gpd )
     fi; 
 end );
 
-InstallMethod( IsElementInGroupoid, 
-    "for groupoid element and a union of constituents", true, 
+InstallMethod( \in, "for groupoid element and a union of constituents", true, 
     [ IsGroupoidElement, IsGroupoid and HasPieces ], 0,
 function( e, gpd )
-    return IsElementInGroupoid( e, PieceOfObject( gpd, e![2] ) ); 
+    return e in PieceOfObject( gpd, e![2] ); 
 end );
-
-##  InstallMethod( \in, "for a groupoid element and a groupoid",
-##      true, [ IsGroupoidElement, IsGroupoid ], 0,
-##  function( e, gpd )
-##      local comp;
-##      comp := PieceOfObject( gpd, e![2] );
-##  Print("comp = ",comp,"\n");
-##      if ( comp = fail ) then
-##          return false;
-##      else
-##          return ( e in comp );
-##      fi;
-##  end );
 
 #############################################################################
 ##
@@ -1893,7 +1860,7 @@ function( cset )
     e := Representative( cset ); 
     G := SuperDomain( cset ); 
     U := ActingDomain( cset ); 
-    if not IsElementInGroupoid( e, G ) then 
+    if not e in G then 
         Error( "element e not in groupoid G," ); 
     fi; 
     filter := IsHomsetCosetsRep; 
@@ -1965,7 +1932,7 @@ function( G, U )
 
     local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     gg := G!.magma;
@@ -1998,7 +1965,7 @@ function( G, U )
 
     local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     pos := PiecePositions( G, U );
@@ -2029,7 +1996,7 @@ function( G, U )
 
     local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     gg := G!.magma;
@@ -2062,7 +2029,7 @@ function( G, U )
 
     local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     pos := PiecePositions( G, U );
@@ -2093,7 +2060,7 @@ function( G, U, o )
 
     local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     gg := G!.magma;
@@ -2126,7 +2093,7 @@ function( G, U, o )
 
     local pos, cG, co, i, cU, ncU, filt, piece, m, j, subU;
 
-    if not IsWide( G, U ) then
+    if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
     pos := PiecePositions( G, U );
@@ -2158,7 +2125,7 @@ function( G, U, V )
 
     local gg, obG, nobG, reps, cu, ou, gu, cv, ov, gv, dc, c, r;
 
-    if not ( IsWide( G, U ) and IsWide( G, V ) ) then
+    if not ( IsWideSubgroupoid( G, U ) and IsWideSubgroupoid( G, V ) ) then
         Error( "U,V not wide subgroupoids of G," );
     fi;
     gg := G!.magma;
@@ -2279,8 +2246,7 @@ end );
 
 ##  This operator now (05/03/08) follows the definitions in preprint 07.10
 
-##  InstallOtherMethod( \^, "for two groupoid elements", IsIdenticalObj, 
-InstallMethod( ConjugateArrow, "for two groupoid elements", 
+InstallMethod( \^, "for two groupoid elements", 
     IsIdenticalObj, [ IsGroupoidElement, IsGroupoidElement ], 0,
 function( e1, e2 )
 
@@ -2327,6 +2293,12 @@ function( e1, e2 )
             return e1; 
         fi;
     fi; 
+end );
+
+InstallMethod( ConjugateArrow, "for two groupoid elements", 
+    IsIdenticalObj, [ IsGroupoidElement, IsGroupoidElement ], 0,
+function( e1, e2 )
+    return e1^e2; 
 end );
 
 #############################################################################

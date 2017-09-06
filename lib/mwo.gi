@@ -18,36 +18,37 @@
 
 ############################################################################# 
 ## 
-#M  TypeOfDomainWithObjects( <dwo> ) 
+#M  KindOfDomainWithObjects( <dwo> ) 
 ##
-InstallMethod( TypeOfDomainWithObjects, "for a list of domains with objects", 
+InstallMethod( KindOfDomainWithObjects, "for a list of domains with objects", 
     true, [ IsList ], 0, 
 function( pieces ) 
 
-    local type; 
+    local kind; 
 
-    ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
-    type := 0; 
-    if ForAll( pieces, p -> ( FamilyObj(p) =  GroupoidFamily ) ) then 
-        type := 1; 
+    ## kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
+    kind := 0; 
+    if ForAll( pieces, p -> ( FamilyObj(p) =  IsGroupoidFamily ) ) then 
+        kind := 1; 
+    elif ForAll( pieces, p -> ( ( FamilyObj(p) = IsMonoidWithObjectsFamily ) 
+                             or ( FamilyObj(p) = IsGroupoidFamily ) ) ) then
+        kind := 2; 
+    elif ForAll( pieces, p -> ( ( FamilyObj(p) = IsSemigroupWithObjectsFamily ) 
+                             or ( FamilyObj(p) = IsMonoidWithObjectsFamily ) 
+                             or ( FamilyObj(p) = IsGroupoidFamily ) ) ) then 
+        kind := 3; 
     elif ForAll( pieces, p -> 
-            HasIsMonoidWithObjects(p) and IsMonoidWithObjects(p) ) then 
-        type := 2; 
+        ( "IsMagmaWithObjects" in CategoriesOfObject(p) ) ) then 
+##??                         and IsMagmaWithObjects(p) ) then 
+        kind := 4; 
     elif ForAll( pieces, p -> 
-            HasIsSemigroupWithObjects(p) and IsSemigroupWithObjects(p) ) then 
-        type := 3; 
-    elif ForAll( pieces, p -> 
-        ( "IsMagmaWithObjects" in CategoriesOfObject(p) ) 
-                              and IsMagmaWithObjects(p) ) then 
-        type := 4; 
-    elif ForAll( pieces, p -> 
-        ( "IsDomainWithObjects" in CategoriesOfObject(p) )  
-                              and IsDomainWithObjects(p) ) then 
-        type := 5; 
+        ( "IsDomainWithObjects" in CategoriesOfObject(p) ) ) then 
+##??                           and IsDomainWithObjects(p) ) then 
+        kind := 5; 
     else 
         Info( InfoGroupoids, 2, "just an ordinary list?" ); 
     fi; 
-    return type; 
+    return kind; 
 end );
 
 #####################  MULT ELTS WITH OBJECTS  ############################## 
@@ -64,16 +65,13 @@ function( isge, e, t, h )
 
     local obs, elt, fam;
 
-    ## ?? (30/04/10)  fam := mwo!.eltsfam; 
-    ## ?? (21/09/10)  yet another attempt to make groupoid elements special! 
+##?? now using new types 
     if isge then 
-        fam := GroupoidElementFamily; 
-        elt := Objectify( 
-            NewType( fam, IsGroupoidElement ), [ e, t, h ] ); 
+        fam := IsGroupoidElementFamily; 
+        elt := Objectify( IsGroupoidElementType, [ e, t, h ] );
     else 
-        fam := MultiplicativeElementWithObjectsFamily; 
-        elt := Objectify( 
-            NewType( fam, IsMultiplicativeElementWithObjects ), [ e, t, h ] ); 
+        fam := IsMultiplicativeElementWithObjectsFamily; 
+        elt := Objectify( IsMultiplicativeElementWithObjectsType, [ e, t, h ] ); 
     fi; 
     return elt; 
 end ); 
@@ -287,25 +285,14 @@ function( mag, obs )
 
     local cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
 
-    ## (23/04/10) commented out: 
-    ##    cf := CollectionsFamily( FamilyObj( mag ) ); 
-    ##  and replaced by: 
-    cf := MagmaWithObjectsFamily; 
-    r := obs[1];  ## root object  
-    isa := IsAssociative( mag ); 
-    isc := IsCommutative( mag ); 
-#?  how to make the next command work ?? 
-##  ObjectifyWithAttributes( mwo, NewType( cf, IsMWOSinglePieceRep ), 
-##         rec( objects := obs, magma := mag, eltsfam := cf ), 
-##         IsAssociative, isa, IsCommutative, isc ); 
-    mwo:= Objectify( NewType( cf, IsMWOSinglePieceRep ), 
-           rec( objects := obs, magma := mag ) ); 
+    mwo := rec( objects := obs, magma := mag); 
+    ObjectifyWithAttributes( mwo, IsMagmaWithObjectsType, 
 #?  associative magmas are semigroups, so omit next line ?? 
-    SetIsAssociative( mwo, IsAssociative( mag ) ); 
-    SetIsCommutative( mwo, IsCommutative( mag ) ); 
-    SetIsFinite( mwo, IsFinite( mag ) ); 
-    SetIsSinglePieceDomain( mwo, true ); 
-    SetIsDirectProductWithCompleteGraphDomain( mwo, true ); 
+        IsAssociative, IsAssociative( mag ), 
+        IsCommutative, IsCommutative( mag ), 
+        IsFinite, IsFinite( mag ), 
+        IsSinglePieceDomain, true, 
+        IsDirectProductWithCompleteGraphDomain, true );
     gens := GeneratorsOfMagmaWithObjects( mwo );
     return mwo; 
 end ); 
@@ -345,32 +332,13 @@ end );
 ##
 #M  \in( <elt>, <mwo> ) . . . . test if an element is in a magma with objects 
 ##
-#? (20/05/11) this method only gets value 18, so does not get called!    ?? 
-#?            which is why there is an IsArrowIn 
 
-InstallMethod( \in, "for elements of a magma with objects", true,
-    [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects ], 0, 
-function ( elt, mwo ) 
-
-    local obs; 
-
-    obs := ObjectList( mwo ); 
-    if not ( ( elt![2] in obs ) and ( elt![3] in obs ) ) then 
-        return false; 
-    fi; 
-    if not IsDirectProductWithCompleteGraphDomain( mwo ) then 
-        Error( "method now yet implemented," ); 
-    fi; 
-    return ( elt![1] in mwo!.magma ); 
-end ); 
-
-InstallMethod( IsArrowIn, 
-    "for mwo element and a standard magma with objects", true, 
+InstallMethod( \in, "for mwo element and a standard magma with objects", true, 
     [ IsMultiplicativeElementWithObjects, 
       IsMagmaWithObjects and IsSinglePiece ], 0,
 function( e, mwo ) 
 
-    local obs, r1, r2;
+    local obs; 
 
     obs := mwo!.objects; 
     if not ( (e![2] in obs) and (e![3] in obs) ) then 
@@ -382,13 +350,12 @@ function( e, mwo )
     else 
         Error( "mwo not a standard magma with objects" ); 
     fi; 
-end );
+end ); 
 
-InstallMethod( IsArrowIn, 
-    "for mwo element and a union of constituents", true, 
+InstallMethod( \in, "for mwo element and a union of constituents", true, 
     [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects and HasPieces ], 0,
 function( e, mwo )
-    return IsArrowIn( e, PieceOfObject( mwo, e![2] ) ); 
+    return e in PieceOfObject( mwo, e![2] ); 
 end );
 
 #############################################################################
@@ -400,16 +367,16 @@ InstallMethod( String, "for a magma with objects", true,
     [ IsMagmaWithObjects ], 0, 
 function( mwo ) 
 
-    local type; 
+    local kind; 
 
-    type := TypeOfDomainWithObjects( [ mwo ] ); 
-    if ( type = 1 ) then 
+    kind := KindOfDomainWithObjects( [ mwo ] ); 
+    if ( kind = 1 ) then 
         return( STRINGIFY( "groupoid" ) ); 
-    elif ( type = 2 ) then 
+    elif ( kind = 2 ) then 
         return( STRINGIFY( "monoid with objects" ) ); 
-    elif ( type = 3 ) then 
+    elif ( kind = 3 ) then 
         return( STRINGIFY( "semigroup with objects" ) ); 
-    elif ( type = 4 ) then 
+    elif ( kind = 4 ) then 
         return( STRINGIFY( "magma with objects" ) ); 
     else 
         return( STRINGIFY( "domain with objects" ) ); 
@@ -429,16 +396,16 @@ InstallMethod( ViewObj, "for a single piece magma with objects", true,
     [ IsSinglePiece ], 0,   
 function( mwo )
 
-    local type; 
+    local kind; 
 
-    type := TypeOfDomainWithObjects( [ mwo ] ); 
-    if ( type = 1 ) then 
+    kind := KindOfDomainWithObjects( [ mwo ] ); 
+    if ( kind = 1 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
-    elif ( type = 2 ) then 
+    elif ( kind = 2 ) then 
         Print( "monoid with objects :-\n" ); 
-    elif ( type = 3 ) then 
+    elif ( kind = 3 ) then 
         Print( "semigroup with objects :-\n" ); 
-    elif ( type = 4 ) then 
+    elif ( kind = 4 ) then 
         Print( "magma with objects :-\n" ); 
     else 
         Print( "not yet implemented for general domains with objects\n" ); 
@@ -451,16 +418,16 @@ InstallMethod( PrintObj, "for a single piece magma with objects", true,
     [ IsSinglePiece ], 0, 
 function( mwo )
 
-    local type; 
+    local kind; 
 
-    type := TypeOfDomainWithObjects( [ mwo ] ); 
-    if ( type = 1 ) then 
+    kind := KindOfDomainWithObjects( [ mwo ] ); 
+    if ( kind = 1 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
-    elif ( type = 2 ) then 
+    elif ( kind = 2 ) then 
         Print( "monoid with objects :-\n" ); 
-    elif ( type = 3 ) then 
+    elif ( kind = 3 ) then 
         Print( "semigroup with objects :-\n" ); 
-    elif ( type = 4 ) then 
+    elif ( kind = 4 ) then 
         Print( "magma with objects :-\n" ); 
     else 
         Print( "not yet implemented for general domains with objects\n" ); 
@@ -473,17 +440,17 @@ InstallMethod( ViewObj, "for more than one piece", true,
     [ IsDomainWithObjects and IsPiecesRep ], 10,   
 function( dwo )
 
-    local i, pieces, np, type; 
+    local i, pieces, np, kind; 
 
     pieces := Pieces( dwo ); 
     np := Length( pieces ); 
-    type := TypeOfDomainWithObjects( Pieces( dwo ) ); 
-    if (type=1) then Print( "groupoid" );  
-      elif (type=2) then Print( "monoid with objects" ); 
-      elif (type=3) then Print( "semigroup with objects" ); 
-      elif (type=4) then Print( "magma with objects" ); 
-      elif (type=5) then Print( "domain with objects" ); 
-      elif (type=0) then Error( "invalid domain with objects," ); 
+    kind := KindOfDomainWithObjects( Pieces( dwo ) ); 
+    if (kind=1) then Print( "groupoid" );  
+      elif (kind=2) then Print( "monoid with objects" ); 
+      elif (kind=3) then Print( "semigroup with objects" ); 
+      elif (kind=4) then Print( "magma with objects" ); 
+      elif (kind=5) then Print( "domain with objects" ); 
+      elif (kind=0) then Error( "invalid domain with objects," ); 
     fi;
     Print( " having ", np, " pieces :-\n" ); 
     for i in [1..np] do 
@@ -495,12 +462,13 @@ function( dwo )
 end ); 
 
 InstallMethod( PrintObj, "for more than one piece", true, 
-    [ IsDomainWithObjects and IsPiecesRep ], 10,   
-function( dwo )
+    [ IsMagmaWithObjects and IsPiecesRep ], 0,   
+#?  [ IsMagmaWithObjects and IsPiecesRep and IsMagmaWithObjectsInPieces ], 0,   
+function( mwo )
 
     local i, pieces, np; 
 
-    pieces := Pieces( dwo ); 
+    pieces := Pieces( mwo ); 
     np := Length( pieces ); 
     Print( "domain with objects having ", np, " pieces :-\n" ); 
     for i in [1..np] do 
@@ -577,6 +545,8 @@ function( mwo )
     return fail; 
 end ); 
 
+##?? should also have methods for GeneratorsOfSemigroupWithObjects, 
+##??                          and GeneratorsOfMonoidWithObjects ???
 #############################################################################
 ##
 #M  GeneratorsOfMagmaWithObjects( <mwo> )  for a connected magma with objects 
@@ -585,7 +555,7 @@ InstallMethod( GeneratorsOfMagmaWithObjects, "for a single piece mwo",
     true, [ IsSinglePiece ], 0,
 function( mwo )
 
-    local obs, nobs, o1, m, mgens, type, id, gens1, gens2, gens, rays, 
+    local obs, nobs, o1, m, mgens, kind, id, gens1, gens2, gens, rays, 
           i, j, k, g;
 
     obs := mwo!.objects;
@@ -594,20 +564,20 @@ function( mwo )
     m := mwo!.magma; 
     mgens := GeneratorsOfMagma( m ); 
     if HasGeneratorsOfMagmaWithInverses( m ) then 
-        type := 4; 
+        kind := 4; 
         mgens := GeneratorsOfGroup( m );
     elif HasGeneratorsOfMagmaWithOne( m ) then 
-        type := 3; 
+        kind := 3; 
         mgens := GeneratorsOfMonoid( m ); 
     elif ( HasIsSemigroup( m ) and IsSemigroup( m ) ) then 
-        type := 2; 
+        kind := 2; 
         mgens := GeneratorsOfSemigroup( m );
     else  ## just a magma 
-        type := 1; 
+        kind := 1; 
     fi; 
-    if ( type > 2 ) then 
+    if ( kind > 2 ) then 
         id := One( m ); 
-        if ( type = 4 ) then ## a groupoid 
+        if ( kind = 4 ) then ## a groupoid 
             gens1 := List( mgens, 
                 g -> ArrowNC( true, g, o1, o1 ) ); 
             if ( HasIsDirectProductWithCompleteGraph( mwo ) 
@@ -620,7 +590,8 @@ function( mwo )
                     i -> GroupoidElement( mwo, rays[i], o1, obs[i] ) ); 
             fi; 
             gens := Immutable( Concatenation( gens1, gens2 ) ); 
-            SetGeneratorsOfMagmaWithInverses( mwo, gens ); 
+##??            SetGeneratorsOfMagmaWithInverses( mwo, gens ); 
+            SetGeneratorsOfGroupoid( mwo, gens ); 
         else 
             gens1 := List( mgens, 
                 g -> ArrowNC( false, g, o1, o1 ) );
@@ -635,7 +606,8 @@ function( mwo )
                 od;
             od;
             gens := Immutable( Concatenation( gens1, gens2 ) ); 
-            SetGeneratorsOfMagmaWithOne( mwo, gens ); 
+##??            SetGeneratorsOfMagmaWithOne( mwo, gens ); 
+            SetGeneratorsOfMonoidWithObjects( mwo, gens ); 
         fi; 
     else  
     ## add in all possible generators? 
@@ -649,7 +621,8 @@ function( mwo )
               od;
            od; 
         od;
-        SetGeneratorsOfMagma( mwo, gens ); 
+##??        SetGeneratorsOfMagma( mwo, gens ); 
+        SetGeneratorsOfMagmaWithObjects( mwo, gens ); 
     fi; 
     return gens; 
 end );
@@ -681,11 +654,11 @@ end );
 ## 
 #M  GeneratorsOfMagma( <m> ) 
 ## 
-InstallMethod( GeneratorsOfMagma, "for a magma with objects", 
-    true, [ IsMagmaWithObjects ], 0,
-function( m )
-    return GeneratorsOfMagmaWithObjects( m ); 
-end );
+##?? InstallMethod( GeneratorsOfMagma, "for a magma with objects", 
+##??     true, [ IsMagmaWithObjects ], 0,
+##?? function( m )
+##??     return GeneratorsOfMagmaWithObjects( m ); 
+##?? end );
 
 #############################  MORE THAN ONE PIECE  ######################### 
 
@@ -727,13 +700,13 @@ end );
 #M  UnionOfPiecesNC . . . . . . . for a list of connected magmas with objects
 #M  UnionOfPieces
 ##
-InstallMethod( UnionOfPiecesNC, "method for magmas with objects, and type",
+InstallMethod( UnionOfPiecesNC, "method for magmas with objects, and kind",
     true, [ IsList, IsInt ], 0,
-function( comps, type )
+function( comps, kind )
 
     local len, pieces, L, fam, filter, mwo, i, obs, par;
 
-    ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
+    ## kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
 
     ## order pieces by first object
     len := Length( comps ); 
@@ -746,25 +719,30 @@ function( comps, type )
         Info( InfoGroupoids, 2, "reordering pieces by first object" ); 
         pieces := List( L, i -> comps[i] );
     fi; 
-    if ( type = 1 ) then 
-        fam := GroupoidFamily; 
+    if ( kind = 1 ) then 
+        fam := IsGroupoidFamily; 
         filter := IsPiecesRep and IsGroupoid and IsAssociative; 
-    elif ( type = 2 ) then 
-        fam := MonoidWithObjectsFamily; 
-        filter := IsPiecesRep and IsMagmaWithObjectsAndOnes 
-                              and IsAssociative; 
-    elif ( type = 3 ) then 
-        fam := SemigroupWithObjectsFamily; 
-        filter := IsPiecesRep and IsMagmaWithObjects and IsAssociative; 
-    elif ( type = 4 ) then 
-        fam := MagmaWithObjectsFamily; 
+        mwo := Objectify( IsGroupoidPiecesType, rec () );
+#?      SetIsGroupoidInPieces( mwo, true ); 
+    elif ( kind = 2 ) then 
+        fam := IsMonoidWithObjectsFamily; 
+        filter := IsPiecesRep and IsMonoidWithObjects; 
+        mwo := Objectify( IsMonoidWOPiecesType, rec () );
+#?      SetIsMonoidWithObjectsInPieces( mwo, true ); 
+    elif ( kind = 3 ) then 
+        fam := IsSemigroupWithObjectsFamily; 
+        filter := IsPiecesRep and IsSemigroupWithObjects; 
+        mwo := Objectify( IsSemigroupWOPiecesType, rec () );
+#?      SetIsSemigroupWithObjectsInPieces( mwo, true ); 
+    elif ( kind = 4 ) then 
+        fam := IsMagmaWithObjectsFamily; 
         filter := IsPiecesRep and IsMagmaWithObjects; 
+        mwo := Objectify( IsMagmaWOPiecesType, rec () );
+#?      SetIsMagmaWithObjectsInPieces( mwo, true ); 
     else 
         ## ?? (23/04/10) fam := FamilyObj( [ pieces ] ); 
         Error( "union of unstructured domains not yet implemented," ); 
     fi; 
-    #?  should use ObjectifyWithAttributes here ??
-    mwo := Objectify( NewType( fam, filter ), rec () );
     SetIsSinglePieceDomain( mwo, false ); 
     SetPieces( mwo, pieces ); 
     if HasParent( pieces[1] ) then 
@@ -773,7 +751,7 @@ function( comps, type )
             SetParent( mwo, par ); 
         fi; 
     fi; 
-    if ( type = 1 ) then 
+    if ( kind = 1 ) then 
         if ForAll( pieces, p -> HasIsPermGroupoid(p) and IsPermGroupoid(p) )
              then SetIsPermGroupoid( mwo, true ); 
         elif ForAll( pieces, p -> HasIsPcGroupoid(p) and IsPcGroupoid(p) )
@@ -789,7 +767,7 @@ InstallMethod( UnionOfPieces, "generic method for magmas with objects",
     true, [ IsList ], 0,
 function( parts )
 
-    local npa, part, pieces, p, nco, obs, obp, i, gi, nobj, type;
+    local npa, part, pieces, p, nco, obs, obp, i, gi, nobj, kind;
 
     npa := Length( parts );
     pieces := [ ]; 
@@ -817,9 +795,9 @@ function( parts )
         fi;
         obs := Union( obs, obp ); 
     od;
-    type := TypeOfDomainWithObjects( pieces ); 
-    Info( InfoGroupoids, 2, "union has type ", type ); 
-    return UnionOfPiecesNC( pieces, type );
+    kind := KindOfDomainWithObjects( pieces ); 
+    Info( InfoGroupoids, 2, "union has kind ", kind ); 
+    return UnionOfPiecesNC( pieces, kind );
 end );
 
 #############################################################################
@@ -1026,9 +1004,9 @@ end );
 
 #############################################################################
 ##
-#F  IsWide( <D>, <U> )
+#F  IsWideSubgroupoid( <D>, <U> )
 ##
-InstallMethod( IsWide, "for two domains with objects", true, 
+InstallMethod( IsWideSubgroupoid, "for two domains with objects", true, 
     [ IsDomainWithObjects, IsDomainWithObjects ], 0, 
 function( D, U )
     return ( IsSubdomainWithObjects( D, U ) and 
@@ -1070,20 +1048,15 @@ InstallMethod( SinglePieceSemigroupWithObjects,
     "for objects, semigroup", true, [ IsSemigroup, IsCollection ], 0, 
 function( sgp, obs ) 
 
-    local cf, one, r, gens, swo, isa, isc; 
+    local gens, swo; 
 
-    ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( sgp ) ); 
-    cf := SemigroupWithObjectsFamily; 
-    r := obs[1];  ## root object  
-    isa := IsAssociative( sgp ); 
-    isc := IsCommutative( sgp ); 
-    swo:= Objectify( NewType(  cf, IsMWOSinglePieceRep ), 
-           rec( objects := obs, magma := sgp ) ); 
-    SetIsAssociative( swo, IsAssociative( sgp ) ); 
-    SetIsCommutative( swo, IsCommutative( sgp ) ); 
-    SetIsFinite( swo, IsFinite( sgp ) ); 
-    SetIsSinglePieceDomain( swo, true ); 
-    SetIsDirectProductWithCompleteGraphDomain( swo, true ); 
+    swo := rec( objects := obs, magma := sgp ); 
+    ObjectifyWithAttributes( swo, IsSemigroupWithObjectsType, 
+        IsAssociative, IsAssociative( sgp ), 
+        IsCommutative, IsCommutative( sgp ), 
+        IsFinite, IsFinite( sgp ), 
+        IsSinglePieceDomain, true, 
+        IsDirectProductWithCompleteGraphDomain, true ); 
     gens := GeneratorsOfMagmaWithObjects( swo ); 
     return swo; 
 end ); 
@@ -1121,36 +1094,23 @@ InstallMethod( SinglePieceMonoidWithObjects,
     "for objects, monoid", true, [ IsMonoid, IsCollection ], 0, 
 function( mon, obs ) 
 
-    local cf, one, r, gens, mwo, fmwo, cmwo, isa, isc; 
+    local gens, mwo; 
 
-    ## ?? (23/04/10)  cf := CollectionsFamily( FamilyObj( mon ) ); 
-    cf := MonoidWithObjectsFamily; 
-    r := obs[1];  ## root object  
-    isa := IsAssociative( mon ); 
-    isc := IsCommutative( mon ); 
-    mwo:= Objectify( NewType(  cf, IsMWOSinglePieceRep 
-                               and IsMagmaWithObjectsAndOnes ), 
-           rec( objects := obs, magma := mon ) ); 
-    SetIsAssociative( mwo, IsAssociative( mon ) ); #? must be true?
-    SetIsCommutative( mwo, IsCommutative( mon ) ); #? ditto?
-    if ( HasIsFinite( mon ) and IsFinite( mon ) ) then 
-        SetIsFinite( mwo, true );
-    fi; 
-    SetIsSinglePieceDomain( mwo, true ); 
-    SetIsDirectProductWithCompleteGraphDomain( mwo, true ); 
-    one := One( mon ); 
+    mwo := rec( objects := obs, magma := mon ); 
+    ObjectifyWithAttributes( mwo, IsMonoidWithObjectsType, 
+        IsAssociative, IsAssociative( mon ),                #? must be true?
+        IsCommutative, IsCommutative( mon ),                #? ditto?
+        IsSinglePieceDomain, true, 
+        IsDirectProductWithCompleteGraphDomain, true, 
+        IsFinite, HasIsFinite( mon ) and IsFinite( mon ) );
     gens := GeneratorsOfMagmaWithObjects( mwo ); 
     return mwo; 
 end ); 
 
 
-
-
 ##################################  GROUPS  ################################# 
 ##  A *group with objects* is a magma with objects where the vertex magmas 
 ##  are groups, and so is a *groupoid* - see file gpd.gi.
-
-
 
 
 #################################  SUBMAGMAS  ############################### 
@@ -1237,7 +1197,7 @@ function( mwo, A )
     mag := mwo!.magma; 
     C := SubmagmaWithObjectsElementsTable( mag, A ); 
     ## ?? (23/04/10)  cf := mwo!.eltsfam; 
-    cf := MagmaWithObjectsFamily; 
+    cf := IsMagmaWithObjectsFamily; 
     isa := IsAssociative( mag ); 
     isc := IsCommutative( mag ); 
     swo:= Objectify( NewType(  cf, IsSubmagmaWithObjectsTableRep ), 
@@ -1247,7 +1207,7 @@ function( mwo, A )
     SetIsCommutative( swo, IsCommutative( mag ) ); 
     SetIsFinite( swo, IsFinite( mag ) ); 
     SetIsSinglePieceDomain( swo, true ); 
-    #? (13/10/08)  still need to set GeneratorsOfMagma ?? 
+    ##?? (13/10/08)  still need to set GeneratorsOfMagmaWithObjects ?? 
     return swo; 
 end ); 
 

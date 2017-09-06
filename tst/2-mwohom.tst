@@ -26,13 +26,13 @@ gap> im1 := ImageElm( hom1, b87 );
 [m3 : -8 -> -7]
 gap> i56 := IsomorphismNewObjects( M78, [-5,-6] ); 
 magma with objects homomorphism : [ [ IdentityMapping( m ), [ -5, -6 ] ] ]
+gap> ib87 := ImageElm( i56, b87 );
+[m4 : -5 -> -6]
 gap> M65 := Range( i56);; 
 gap> SetName( M65, "M65" ); 
 gap> j56 := InverseGeneralMapping( i56 );; 
 gap> ImagesOfObjects( j56 ); 
 [ -7, -8 ]
-gap> ib87 := ImageElm( i56, b87 );
-[m4 : -5 -> -6]
 gap> comp := j56 * hom1;
 magma with objects homomorphism : M65 -> M78
 [ [ <mapping: m -> m >, [ -7, -8 ] ] ]

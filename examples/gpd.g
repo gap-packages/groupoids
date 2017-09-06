@@ -137,7 +137,8 @@ Ud8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );
 SetName( Ud8, "Ud8" );
 Display( Ud8 );
 Print( "Ud8 has parent ", Parent( Ud8 ), "\n" ); 
-Print( "Ud8 is a wide subgroupoid of Gd8? ", IsWide( Gd8, Ud8 ), "\n" ); 
+Print( "Ud8 is a wide subgroupoid of Gd8? ", 
+       IsWideSubgroupoid( Gd8, Ud8 ), "\n" ); 
 
 genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 Print( "genf2b = ", genf2b, "\n" ); 

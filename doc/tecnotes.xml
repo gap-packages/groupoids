@@ -48,7 +48,7 @@ For the various structures we have:
 </Item>
 <Item>
 <C>DeclareCategory( "IsMagmaWithObjects", IsDomainWithObjects and 
-    IsMagma and IsMultiplicativeElementWithObjectsCollection );</C>
+    IsMultiplicativeElementWithObjectsCollection );</C>
 </Item>
 <Item>
 <C>DeclareCategory( "IsMagmaWithObjectsAndOnes", 
@@ -57,7 +57,7 @@ For the various structures we have:
 </Item>
 <Item>
 <C>DeclareCategory( "IsMagmaWithObjectsAndInverses", 
-    IsMagmaWithObjectsAndOnes and </C>
+    IsMagmaWithObjectsAndOnes and </C> 
 <P/>
 <C>IsMultiplicativeElementWithObjectsAndInversesCollection ); </C>
 </Item>

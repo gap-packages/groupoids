@@ -199,7 +199,7 @@ function( gpd, w0 )
     local comp, ogp, id, iso, inviso, smg, rwsmg, smggen, fsmg,
           iw, uiw, ruw, fam1, riw, rw;
 
-    if not IsElementInGroupoid( w0, gpd ) then
+    if not w0 in gpd then
         Error( "word not in the groupoid" );
     fi;
     comp := PieceOfObject( gpd, w0![2] );
@@ -323,7 +323,7 @@ function( gg, tv, wL )
     g := gpds[ posv ];
     w := wL[1];
     cg := PieceOfObject( g, w![2] );
-    if not IsElementInGroupoid( w, cg ) then
+    if not w in cg then
         Error( "first groupoid element not in tail groupoid" );
     fi;
     j := 1;
@@ -341,7 +341,7 @@ function( gg, tv, wL )
         j := j+2;
         w := wL[j];
         cg := PieceOfObject( g, w![2] );
-        if not IsElementInGroupoid( w, cg ) then
+        if not w in cg then
             Error( "entry ", j, " not in groupoid at vertex ", v );
         fi;
     od;    
@@ -491,7 +491,7 @@ function( ggword )
             if ( itword = fail ) then 
                 found := false;
             else
-                found := IsElementInGroupoid( itword, ch );
+                found := itword in ch;
             fi;
         od;
         tsp := [ tran[i], itword ];
