@@ -181,10 +181,10 @@ function( gpd1, gpd2, homs )
         MappingToSinglePieceMaps, homs,  
         RespectsMultiplication, true, 
         IsHomomorphismToSinglePiece, true );
-##??    ok := IsInjectiveOnObjects( map ); 
-#    ok := IsSurjectiveOnObjects( map ); 
-#    ok := IsGroupWithObjectsHomomorphism( map ); 
-#    ok := IsHomomorphismFromSinglePiece( map ); 
+    ok := IsInjectiveOnObjects( map ); 
+    ok := IsSurjectiveOnObjects( map ); 
+    ok := IsGroupWithObjectsHomomorphism( map ); 
+    ok := IsHomomorphismFromSinglePiece( map ); 
     return map; 
 end );
 

@@ -86,15 +86,15 @@ groupoid homomorphism :
       [(1,2,4) : -14 -> -12] ] ]
 
 ## SubSection 5.1.8
-gap> N2 := NormalSubgroups( q8 )[2];; 
+gap> N2 := Subgroup( q8, [ q8.2] );; 
+gap> SetName( N2, "N2" );
 gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); 
-single piece groupoid with rays: < Group( [ f2, f3 ] ), [ -28, -27 ], 
-[ <identity> of ..., f1 ] >
-gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );
-groupoid homomorphism : 
-[ [ [f2 : -28 -> -28], [f3 : -28 -> -28], [f1 : -28 -> -27] ], 
-  [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,4)(2,6)(3,7)(5,8) : -28 -> -28], 
-      [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ]
+single piece groupoid with rays: < N2, [ -28, -27 ], [ <identity> of ..., f1 ] >
+gap> SetName( Hq8, "Hq8" );
+gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );;
+gap> MappingToSinglePieceData( isoHq8 );       
+[ [ [ f2 ] -> [ (1,3,4,7)(2,5,6,8) ], [ -28, -27 ], 
+      [ (), (1,2,4,6)(3,8,7,5) ] ] ]
 
 ## SubSection 5.1.9
 gap> IsInjectiveOnObjects( mor2 ); 
