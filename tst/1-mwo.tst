@@ -85,12 +85,29 @@ gap> CategoriesOfObject( S123 );
   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
   "IsMagmaWithObjects", "IsSemigroupWithObjects" ]
-gap> t12 := Arrow( S123, t, -1, -2 );; 
-gap> s23 := Arrow( S123, s, -2, -3 );; 
-gap> r31 := Arrow( S123, r, -3, -1 );; 
-gap> ts13 := t12 * s23;  tsr1 := ts13 * r31;
+gap> t12 := Arrow( S123, t, -1, -2 );
+[Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2]
+gap> s23 := Arrow( S123, s, -2, -3 );
+[Transformation( [ 2, 2, 3, 3 ] ) : -2 -> -3]
+gap> r31 := Arrow( S123, r, -3, -1 );
+[Transformation( [ 2, 3, 4, 4 ] ) : -3 -> -1]
+gap> ts13 := t12 * s23;
 [Transformation( [ 2, 2, 2, 3 ] ) : -1 -> -3]
+gap> sr21 := s23 * r31;
+[Transformation( [ 3, 3, 4, 4 ] ) : -2 -> -1]
+gap> rt32 := r31 * t12;
+[Transformation( [ 1, 2, 3, 3 ] ) : -3 -> -2]
+gap> tsr1 := ts13 * r31;
 [Transformation( [ 3, 3, 3 ] ) : -1 -> -1]
+
+gap> S0 := DomainWithSingleObject( sgp, 0 );
+semigroup with objects :-
+    magma = sgp<t,s,r>
+  objects = [ 0 ]
+gap> t0 := Arrow( S0, t, 0, 0 );            
+[Transformation( [ 1, 1, 2, 3 ] ) : 0 -> 0]
+gap> Size( S0 );
+17
 
 ## Section 2.3, Monoids with objects 
 
@@ -123,33 +140,30 @@ gap> ans := [ "IsListOrCollection", "IsCollection", "IsExtLElement",
 >   "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ];;
 gap> ForAll( ans, a -> ( a in catobj ) ); 
 true
-gap> genM := GeneratorsOfMonoidWithObjects( M49 ); 
+
+## Section 2.4, Generators of magmas with objects 
+
+gap> GeneratorsOfMagmaWithObjects( M78 );
+[ [m1 : -8 -> -8], [m2 : -8 -> -8], [m3 : -8 -> -8], [m4 : -8 -> -8], 
+  [m1 : -8 -> -7], [m2 : -8 -> -7], [m3 : -8 -> -7], [m4 : -8 -> -7], 
+  [m1 : -7 -> -8], [m2 : -7 -> -8], [m3 : -7 -> -8], [m4 : -7 -> -8], 
+  [m1 : -7 -> -7], [m2 : -7 -> -7], [m3 : -7 -> -7], [m4 : -7 -> -7] ]
+gap> genS := GeneratorsOfSemigroupWithObjects( S123 );;
+gap> Length( genS );                                   
+27
+gap> genM := GeneratorsOfMonoidWithObjects( M49 );
 [ [f1 : -9 -> -9], [f2 : -9 -> -9], [<identity ...> : -9 -> -4], 
   [<identity ...> : -4 -> -9] ]
-gap> g1 := genM[1];; g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; 
-gap> g4*g2*g1*g3; 
+gap> g1:=genM[1];; g2:=genM[2];; g3:=genM[3];; g4:=genM[4];; 
+gap> [g4,g2,g1,g3];
+[ [<identity ...> : -4 -> -9], [f2 : -9 -> -9], [f1 : -9 -> -9], 
+  [<identity ...> : -9 -> -4] ]
+gap> g4*g2*g1*g3;
 [f2*f1 : -4 -> -4]
 
-## Section 2.4, Structures with one or more pieces 
+## Section 2.5, Structures with more than one piece 
 
 ## SubSection 2.4.1
-gap> d8 := Group( (1,2,3,4), (1,3) );; 
-gap> SetName( d8, "d8" );
-gap> D0 := DomainWithSingleObject( d8, 0 ); 
-single piece groupoid: < d8, [ 0 ] >
-gap> ktpD0 := KnownTruePropertiesOfObject( D0 );;
-gap> ans := [ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
-> "IsDirectProductWithCompleteGraphDomain" ];;  
-gap> ForAll( ans, a -> ( a in ktpD0 ) );
-true
-gap> p0 := Arrow( D0, (1,2,3,4), 0, 0 );; 
-gap> q0 := Arrow( D0, (1,3), 0, 0 );; 
-gap> p0*q0; 
-[(1,2)(3,4) : 0 -> 0]
-gap> Size( D0 );
-8
-
-## SubSection 2.4.2
 gap> N1 := UnionOfPieces( [ M78, S123 ] ); 
 magma with objects having 2 pieces :-
 1: M78
@@ -159,19 +173,23 @@ magma with objects having 2 pieces :-
 
 gap> ObjectList( N1 ); 
 [ -8, -7, -3, -2, -1 ]
-gap> N2 := UnionOfPieces( [ M49, D0 ] );  
-monoid with objects having 2 pieces :-
+gap> Pieces(N1);
+[ M78, semigroup with objects :-
+        magma = sgp<t,s,r>
+      objects = [ -3, -2, -1 ]
+     ]
+
+gap> N2 := UnionOfPieces( [ M49, S0 ] );  
+semigroup with objects having 2 pieces :-
 1: monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
   objects = [ -9, -4 ]
-2: single piece groupoid: < d8, [ 0 ] >
+2: semigroup with objects :-
+    magma = sgp<t,s,r>
+  objects = [ 0 ]
 gap> ObjectList( N2 ); 
 [ -9, -4, 0 ]
-gap> Pieces( N2 ); 
-[ monoid with objects :-
-        magma = Monoid( [ f1, f2 ] )
-      objects = [ -9, -4 ]
-    , single piece groupoid: < d8, [ 0 ] > ]
+
 gap> N3 := UnionOfPieces( [ N1, N2] );  
 magma with objects having 4 pieces :-
 1: monoid with objects :-
@@ -181,14 +199,16 @@ magma with objects having 4 pieces :-
 3: semigroup with objects :-
     magma = sgp<t,s,r>
   objects = [ -3, -2, -1 ]
-4: single piece groupoid: < d8, [ 0 ] >
+4: semigroup with objects :-
+    magma = sgp<t,s,r>
+  objects = [ 0 ]
 gap> ObjectList( N3 ); 
 [ -9, -8, -7, -4, -3, -2, -1, 0 ]
 gap> Length( GeneratorsOfMagmaWithObjects( N3 ) ); 
-49
+50
 
 ## this should fail since the object sets are not disjoint: 
-gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( d8, -2 ) ] );  
+gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );  
 fail
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

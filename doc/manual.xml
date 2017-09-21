@@ -63,10 +63,12 @@ Recent versions implement many of the constructions described in the paper
 <P/>
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;.  
 <P/>
-Bug reports, suggestions and comments are, of course, welcome. 
-Please submit an issue at 
+Bug reports, comments, suggestions for additional features, 
+and offers to implement some of these, will all be very welcome. 
+<P/>
+Please submit any issues at 
 <URL>http://github.com/gap-packages/groupoids/issues/</URL>
-or send an email to the last author at 
+or send an email to the second author at 
 <Email>c.d.wensley@bangor.ac.uk</Email>. 
 </Abstract>
 

@@ -38,9 +38,10 @@ magma with objects homomorphism : M65 -> M78
 [ [ <mapping: m -> m >, [ -7, -8 ] ] ]
 gap> ImageElm( comp, ib87 );
 [m3 : -8 -> -7]
+
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
-gap> images := [ SinglePieceMappingData( hom1 )[1], 
-> SinglePieceMappingData( j56 )[1] ]; 
+gap> images := [ MappingToSinglePieceData( hom1 )[1], 
+> MappingToSinglePieceData( j56 )[1] ]; 
 [ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 magma with objects homomorphism : [ [ <mapping: m -> m >, [ -8, -7 ] ], 
@@ -108,6 +109,10 @@ magma with objects homomorphism :
 [ magma with objects homomorphism : M78 -> M78
     [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
+gap> ImageElm( h14, a78 );
+[m1 : -7 -> -8]
+gap> ImageElm( h14, r31 );
+[Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13]
 
 ## SubSection 3.3.2
 gap> IsInjectiveOnObjects( h14 );

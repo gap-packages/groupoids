@@ -2,26 +2,27 @@
 
 ## ToDo: 
 
- * (15/06/11) HomomorphismByUnion needs revisiting for multi-component cases. 
- * (21/11/14) Arrows are the elements in any mwo, but in a groupoid the code 
-              still makes GroupoidElement different - but IsGroupoidElement 
-              is declared to be a synonym of Arrow in `gpd.gi`. 
-              This needs to be sorted out: maybe the ElementFamilies need 
-              to be different but, when it comes to composition of arrows 
-              the type of mwo hardly matters!? 
- * (16/11/15) why does ElementsFamily( FamilyObj( gpd ) ) fail? 
  * (12/01/16) in this temporary version there have been a number of changes 
               of function name, such as IsDigraph becoming GpdIsDigraph, 
               later changed to GroupoidIsDigraph: this is in order to avoid 
               conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution. 
- * (27/08/17) (see line 59 in 2-mwohom.tst) check whether package semigroups 
-              contains:  NaturalHomomorphismByGenerators( sgp, sgp2 );
+ * (14/04/16) InAutomorphismGroupOfGroupoid should just be \in 
  * (06/09/17) Revisit the Objectify commands for cosets etc in gpd.gi 
+ * (16/09/17) revise RestrictedMappingGroupoids and Subgroupoid 
+ * (20/09/17) need more in the manual concerning cosets (left, right, double) 
+              and it is probably necessary to revise and test these functions 
 
-## 1.51 -> 1.52  (06/09/17) 
+## 1.51 -> 1.52  (21/09/17) 
 
+ * (21/09/17) revised HomomorphismToSinglePiece and associated functions 
+ * (21/09/17) SinglePieceMappingData now MappingToSinglePieceData 
+ * (21/09/17) revised IsomorphismPermGroupoid and added IsomorphismPcGroupoid 
+ * (20/09/17) revised RestrictedMappingGroupoids 
+ * (13/09/17) removed (essentially unused) attribute HomsOfMapping
+ * (13/09/17) now method for Size works for all magmas with objects 
+ * (12/09/17) revised methods for GeneratorsOfMagmaWithObjects etc. 
  * (05/09/17) added lots of new default types, avoiding NewType(fam,filter)'s
  * (05/09/17) added properties IsMagmaWithObjectsInPieces etc 
  * (05/09/17) op TypeOfDomainWithObjects -> attribute KindOfDomainWithObjects
@@ -36,7 +37,7 @@
 
 ## 1.46 -> 1.51  (06/08/17) 
 
- * (06/08/17) version 1.51 released - for GAP 4.8.8 or 4.9.0
+ * (06/08/17) version 1.51 released - for GAP 4.8.8 
  * (03/07/17) README and CHANGES now in MarkDown format as .md files 
  * (14/06/17) added various methods for String, ViewString, PrintString 
  * (07/04/17) renamed the package 'groupoids' so most files needed editing 

@@ -97,7 +97,7 @@ Print( "Is M49 associative, commutative? ",
     [ IsAssociative(M49), IsCommutative(M49) ], "\n\n" ); 
 Print( KnownTruePropertiesOfObject( M49 ), "\n\n" ); 
 Print( CategoriesOfObject( M49 ), "\n\n" ); 
-genM := GeneratorsOfMagmaWithOne( M49 ); 
+genM := GeneratorsOfMonoidWithObjects( M49 ); 
 Print( "M49 has generators ", genM, "\n" ); 
 g1 := genM[1];; g2 := genM[2];; g3 := genM[3];; g4 := genM[4];; 
 Print( "g4*g2*g1*g3 = ", g4*g2*g1*g3, "\n" ); 

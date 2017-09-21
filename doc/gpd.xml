@@ -31,7 +31,7 @@ The objects will generally be chosen to be consecutive negative integers,
 but any suitable ordered set is acceptable, 
 and `consecutive' is not a requirement.
 The root group will usually be taken to be a permutation group,
-but pc-groups and fp-groups are also supported. 
+but pc-groups, fp-groups and matrix groups are also supported. 
 <P/>
 A <E>group</E> may be considered as a single piece groupoid with one object.
 <P/>
@@ -89,9 +89,6 @@ provided for groupoids and the other types of object in this package.
 Users are advised to supply names for all the groups and groupoids 
 they construct.
 <P/> 
-In the last two examples <C>Gf2c6</C> and <C>Gabc</C> show that 
-the objects need not be integers.
-<P/>
 </Description>
 </ManSection>
 <Example>
@@ -129,18 +126,26 @@ and the loops at a particular object <M>o</M> form a group,
 the <C>ObjectGroup</C> at <M>o</M>. 
 The <C>RootGroup</C> is the <C>ObjectGroup</C> at the <C>RootObject</C>. 
 <P/> 
+In the example the groupoids <C>Gf2c6</C> and <C>Gabc</C> show that 
+the objects need not be integers.
+<P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
 gap> ObjectList( Gs4 );    
 [ -15, -14, -13, -12, -11 ]
-gap> RootObject( Gd8 );
--9
-gap> RootGroup( Gc6 );
-c6
-gap> ObjectGroup( Gs4, -11 );
-s4
+gap> [ RootObject( Gd8 ), RootGroup( Gc6 ), ObjectGroup( Gs4, -11 ) ];
+[ -9, c6, s4 ]
+gap> f2 := FreeGroup(2);;
+gap> Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );
+single piece groupoid: < c6, [ f1, f2 ] >
+gap> Arrow( Gf2c6, (5,7,6), f2.1, f2.2 );
+[(5,7,6) : f1 -> f2]
+gap> Gabc := Groupoid( d8, [ "a", "b", "c" ] );
+single piece groupoid: < d8, [ "a", "b", "c" ] >
+gap> Arrow( Gabc, (2,4), "c", "b" );
+[(2,4) : c -> b]
 ]]>
 </Example>
 
@@ -153,13 +158,16 @@ s4
          Arg="gpd" />
    <Prop Name="IsMatrixGroupoid"
          Arg="gpd" />
+   <Prop Name="IsFreeGroupoid"
+         Arg="gpd" />
 <Description>
 A groupoid is a permutation groupoid if all its pieces have 
 permutation groups.
 Most of the examples in this chapter are permutation groupoids,
-but in principle any type of group known to &GAP; may be used.
-In the following example <C>Gf2</C> is an fp-groupoid, 
-<C>Gq8</C> is a pc-groupoid, and <C>Gsl43</C> is a matrix groupoid. 
+but in principle any type of group known to &GAP; may be used. 
+<P/>
+In the following example <C>Gf2</C> is an fp-groupoid and also a free groupoid, 
+<C>Gq8</C> is a pc-groupoid, and <C>Ggl43</C> is a matrix groupoid. 
 <P/>
 </Description>
 </ManSection>
@@ -171,12 +179,12 @@ gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" );
 gap> q8 := SmallGroup( 8, 4 );;
 gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
-gap> sl43 := SpecialLinearGroup( 4, 3 );;
-gap> Gsl43 := SinglePieceGroupoid( sl43, [ -35..-31 ] );;
-gap> SetName( sl43, "sl43" );  SetName( Gsl43, "Gsl43" );
-gap> [ IsMatrixGroupoid( Gsl43 ), IsFpGroupoid( Gf2 ), 
+gap> gl43 := SpecialLinearGroup( 4, 3 );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
+gap> [ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ), 
 >      IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; 
-[ true, true, true, true ]
+[ true, true, true, true, true ]
 ]]>
 </Example>
 
@@ -198,15 +206,16 @@ The pieces are sorted by the least object in their object lists.
 The <Index Key="ObjectList" Subkey="for groupoids"> <C>ObjectList</C> </Index> 
 <C>ObjectList</C> is the sorted concatenation of the objects in the pieces.
 <P/>
-The <C>Size</C> of a groupoid is the number of its arrows which, 
-for a single piece groupoid, is the product of the size of the group 
-with the square of the number of objects.
+The <C>Size</C> of a groupoid is the number of its arrows. 
+For a single piece groupoid, this is the product of the size of the group 
+with the square of the number of objects. 
+For a non-connected groupoid, the size is the sum of the sizes of its pieces. 
 <P/>
 One of the pieces in a groupoid may be replaced by an alternative piece 
 using the operation <C>ReplaceOnePieceInUnion</C>. 
-The <E>old_piece</E> may be either the <E>position</E> oif the piece to be replaced, or one of the pieces in <C>U</C>.  
+The <E>old_piece</E> may be either the <E>position</E> of the piece to be replaced, or one of the pieces in <C>U</C>.  
 The objects in the new piece may or may not overlap the objects 
-in the piece removed -- 
+in the piece being removed -- 
 we just require that the object lists in the new union are disjoint. 
 <P/>
 </Description>
@@ -246,16 +255,19 @@ groupoid with 5 pieces:
     group: d8 = <[ (1,2,3,4), (1,3) ]> >
 < objects: [ -6 ]
     group: c6 = <[ (5,6,7)(8,9) ]> >
-gap> V5 := ReplaceOnePieceInUnion( U5, 3, Gsl43 ); 
+gap> V5 := ReplaceOnePieceInUnion( U5, 3, Ggl43 ); 
 groupoid with 5 pieces:
-[ Gsl43, Gq8, Gf2, Gd8, Gc6 ]
-gap> ObjectList(V5);             
+[ Ggl43, Gq8, Gf2, Gd8, Gc6 ]
+gap> ObjectList( V5 );             
 [ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
 gap> U5 = V5;
 false
 gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
 groupoid with 5 pieces:
-[ Gsl43, Gq8, Gf2, Gs4, Gd8 ]
+[ Ggl43, Gq8, Gf2, Gs4, Gd8 ]
+gap> ObjectList( W5 );
+[ -35, -34, -33, -32, -31, -28, -27, -22, -15, -14, -13, -12, -11, -9, -8, -7 
+ ]
 ]]>
 </Example>
 
@@ -266,7 +278,7 @@ groupoid with 5 pieces:
          Arg="gp, obs" />
 <Description>
 Special functions are provided for the case where a groupoid has 
-more than one connected component, and these components are identical 
+more than one connected component, and when these components are identical 
 except for their object sets. 
 Such groupoids are said to be <E>homogeneous</E>. 
 <P/>
@@ -301,12 +313,14 @@ gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
 2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
-gap> Size(Hd8);
+gap> Size(Hd8);   ## 8x3x3 + 8x3x3
 144
 gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
 gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
 homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
+gap> Size(Hc6);   ## 6x4
+24
 gap> RepresentationsOfObject(Gd8);
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 gap> RepresentationsOfObject(Hd8);
@@ -331,7 +345,7 @@ true
 <Heading>Groupoid elements; stars; costars; homsets</Heading>
 
 <ManSection>
-   <Oper Name="Arrow"
+   <Oper Name="GroupoidElement"
          Arg="gpd, elt, tail, head" />
    <Oper Name="ElementOfArrow"
          Arg="elt" />
@@ -339,9 +353,10 @@ true
          Arg="elt" />
    <Oper Name="HeadOfArrow"
          Arg="elt" />
-<Description>
-A <E>groupoid element</E> is an arrow in a magma with objects, 
-as described in subsection <Ref Sect="man-arrow"/>. 
+<Description> 
+<Index Key="Arrow" Subkey="for groupoid elements"> <C>Arrow</C> </Index>
+The operation <C>GroupoidElement</C> is a synonym for the operation 
+<C>Arrow</C>, as described in subsection <Ref Sect="man-arrow"/>. 
 To recapitulate, an arrow <C>e</C> consists of 
 a group element, <C>ElementOfArrow(e)</C>; 
 the tail (source) object, <C>TailOfArrow(e)</C>;
@@ -351,21 +366,18 @@ two arrows may be multiplied when the head of the first
 coincides with the tail of the second. 
 If an attempt is made to multiply arrows where this condition does not hold, 
 then the value <C>fail</C> is returned. 
-(In earlier versions of the package there were functions <C>GroupoidElement</C> 
-and <C>MultiplicativeElementWithObjects</C>, 
-but these have now been replaced by <C>Arrow</C>.)  
 <P/>
 </Description>
 </ManSection>
 <Index>* for groupoid elements</Index>
 <Example>
 <![CDATA[
-gap> e1 := Arrow( Gd8, (1,2,3,4), -9, -8 );
+gap> e1 := GroupoidElement( Gd8, (1,2,3,4), -9, -8 );
 [(1,2,3,4) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (1,3), -8, -7 );
 [(1,3) : -8 -> -7]
-gap> Print( [ ElementOfArrow(e2), TailOfArrow(e2), HeadOfArrow(e2) ], "\n" );
-[ (1,3), -8, -7 ]
+gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
+[ (1,2,3,4), -9, -8 ]
 gap> prod := e1*e2;
 [(1,2)(3,4) : -9 -> -7]
 gap> e2*e1;
@@ -554,21 +566,12 @@ true
 <ManSection>
    <Oper Name="FullSubgroupoid"
          Arg="gpd, obs" />
-   <Attr Name="MaximalDiscreteSubgroupoid"
-         Arg="gpd" />
-   <Oper Name="DiscreteSubgroupoid"
-         Arg="gpd, sgps, obs" />
    <Attr Name="FullTrivialSubgroupoid"
-         Arg="gpd" />
-   <Attr Name="DiscreteTrivialSubgroupoid"
          Arg="gpd" />
 <Description>
 The <C>FullSubgroupoid</C> of a groupoid <C>gpd</C> 
 on a subset <C>obs</C> of its objects 
 contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
-A subgroupoid is <E>discrete</E> if it is a union of groups. 
-The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
-is the union of all the single-object full subgroupoids of <C>gpd</C>.
 A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
 <E>trivial subgroupoid</E> 
 has trivial object groups, but need not be discrete.
@@ -586,19 +589,43 @@ gap> FullSubgroupoid( U3, [-7,-6] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -7 ] >
 2:  single piece groupoid: < c6, [ -6 ] >
-gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < c4, [ -9 ] >
-2:  single piece groupoid: < k4, [ -7 ] >
 gap> FullTrivialSubgroupoid( Ud8 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(k4), [ -9 ] >
 2:  single piece groupoid: < id(c4), [ -8, -7 ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="DiscreteSubgroupoid"
+         Arg="gpd, sgps, obs" />
+   <Attr Name="MaximalDiscreteSubgroupoid"
+         Arg="gpd" />
+   <Attr Name="DiscreteTrivialSubgroupoid"
+         Arg="gpd" />
+<Description>
+A subgroupoid is <E>discrete</E> if it is a union of groups. 
+The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
+is the union of all the single-object full subgroupoids of <C>gpd</C>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < c4, [ -9 ] >
+2:  single piece groupoid: < k4, [ -7 ] >
 gap> MaximalDiscreteSubgroupoid(U2);
 groupoid with 3 pieces:
 1:  single piece groupoid: < q8, [ -28 ] >
 2:  single piece groupoid: < q8, [ -27 ] >
 3:  single piece groupoid: < f2, [ -22 ] >
+gap> DiscreteTrivialSubgroupoid( U2 );
+groupoid with 3 pieces:
+1:  single piece groupoid: < id(q8), [ -28 ] >
+2:  single piece groupoid: < id(q8), [ -27 ] >
+3:  single piece groupoid: < id(f2), [ -22 ] >
 ]]>
 </Example>
 
@@ -669,6 +696,38 @@ single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ),
 [ -13, -12 ], [ (), (2,4,3) ] >
 gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
 single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SinglePieceSubgroupoidByGenerators"
+         Arg="parent, gens" />
+<Description>
+A set of arrows generates a groupoid by taking all possible 
+products and inverses.  
+So far, the only implementation is for the case of loops generating a 
+group at an object <M>o</M> together with a set of rays from <M>o</M>, 
+where <M>o</M> is <E>not</E> the least object. 
+A suitably large supergroupoid, which must be a direct product with a 
+complete graph, should be provided. 
+This is the case needed for <C>ConjugateGroupoid</C> 
+in section <Ref Sect="subsec-conjgpd"/>. 
+Other cases will be added as time permits. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
+[(1,2,3) : -15 -> -13]
+gap> gensa := GeneratorsOfGroupoid( Hd8a );
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
+  [(3,4) : -14 -> -12] ]
+gap> imsa := List( gensa, g -> g^u ); 
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
+  [(3,4) : -14 -> -12] ]
+gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 
+single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
+[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
 ]]>
 </Example>
 
@@ -760,8 +819,7 @@ gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 <Description>
 Conjugation by an arrow <M>e = (c : p \to q)</M> 
 is the groupoid automorphism defined as follows. 
-There are two cases to consider.
-<P/>
+There are two cases to consider. 
 In the case <M>p \neq q</M>, 
 <List>
 <Item>
@@ -829,46 +887,13 @@ gap> z^x;
 [(1,4,3,2) : -9 -> -7]
 gap> z^y;
 [(2,4) : -8 -> -7]
-gap> w^y;
-[(1,3)(2,4) : -7 -> -9]
 gap> w^z
 [(1,3) : -9 -> -8]
 ]]>
 </Example>
 
-<ManSection>
-   <Oper Name="SinglePieceSubgroupoidByGenerators"
-         Arg="parent, gens" />
-<Description>
-A set of arrows generates a groupoid by taking all possible 
-products and inverses.  
-So far, the only implementation is for the case of loops generating a 
-group at an object <M>o</M> together with a set of rays from <M>o</M>, 
-where <M>o</M> is <E>not</E> the least object. 
-A suitably large supergroupoid, which must be a direct product with a 
-complete graph, should be provided. 
-This is the case needed for <C>ConjugateGroupoid</C> in the following section. 
-Other cases will be added as time permits. 
-</Description>
-</ManSection>
-<Example>
-<![CDATA[
-gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
-[(1,2,3) : -15 -> -13]
-gap> gensa := GeneratorsOfGroupoid( Hd8a );
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
-  [(3,4) : -14 -> -12] ]
-gap> imsa := List( gensa, g -> g^u ); 
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
-  [(3,4) : -14 -> -12] ]
-gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
-]]>
-</Example>
-
 <Index>\^{} for groupoids</Index>
-<ManSection>
+<ManSection Label="subsec-conjgpd">
    <Oper Name="ConjugateGroupoid"
          Arg="gpd, e" />
 <Description>

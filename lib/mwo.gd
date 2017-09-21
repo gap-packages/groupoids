@@ -58,7 +58,6 @@ DeclareAttribute( "RootObject", IsSinglePieceDomain );
 ##  A domain with objects is a list of single piece domains
 ## 
 DeclareRepresentation( "IsPiecesRep", 
-##??    IsDomainWithObjects and IsAttributeStoringRep, 
     IsComponentObjectRep and IsAttributeStoringRep and IsDomainWithObjects, 
     [ "Pieces", "ObjectList" ] ); 
 
@@ -178,24 +177,8 @@ DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] );
 ##  associative) partial mutliplication. 
 ## 
 DeclareCategory( "IsMagmaWithObjects", IsDomainWithObjects and 
-##??    IsMagma and IsMultiplicativeElementWithObjectsCollection ); 
-    IsMultiplicativeElementWithObjectsCollection );  ##?? 
+    IsMultiplicativeElementWithObjectsCollection );  
 DeclareCategoryCollections( "IsMagmaWithObjects" ); 
-##?? (23/04/10) Declare more CategoryColections ?? 
-##?? try to reduce the number of categories 
-##?? DeclareSynonymAttr( "IsSemigroupWithObjects",
-##??     IsMagmaWithObjects and IsAssociative );
-##?? DeclareCategory( "IsMagmaWithObjectsAndOnes", 
-##??     IsMagmaWithObjects and 
-##??     IsMultiplicativeElementWithObjectsAndOnesCollection ); 
-##?? DeclareSynonymAttr( "IsMonoidWithObjects", 
-##??     IsMagmaWithObjectsAndOnes and IsAssociative );
-##?? DeclareCategory( "IsMagmaWithObjectsAndInverses", 
-##??     IsMagmaWithObjectsAndOnes and 
-##??     IsMultiplicativeElementWithObjectsAndInversesCollection ); 
-##?? DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInverses 
-##??     and IsGroupoidElementCollection ); 
-##?? here is the revised version: 
 DeclareCategory( "IsSemigroupWithObjects",
     IsMagmaWithObjects and IsAssociative ); 
 DeclareCategory( "IsMonoidWithObjects", 
@@ -203,6 +186,7 @@ DeclareCategory( "IsMonoidWithObjects",
     IsMultiplicativeElementWithObjectsAndOnesCollection ); 
 DeclareCategory( "IsGroupoid", IsMonoidWithObjects and 
     IsGroupoidElementCollection ); 
+DeclareCategoryCollections( "IsGroupoid" ); 
 
 ############################################################################# 
 ##  
@@ -211,7 +195,6 @@ DeclareCategory( "IsGroupoid", IsMonoidWithObjects and
 #V  IsMonoidWithObjectsFamily . . . . . . . . family for monoids with objects 
 #V  IsGroupoidFamily . . . . . . . . . . . . . . . . . . family for groupoids
 ##  
-##??
 IsMagmaWithObjectsFamily := CollectionsFamily( 
     IsMultiplicativeElementWithObjectsFamily ); 
 IsSemigroupWithObjectsFamily := CollectionsFamily( 
@@ -250,7 +233,6 @@ DeclareGlobalFunction( "MagmaWithObjects" );
 #A  GeneratorsOfSemigroupWithObjects( <mwo> ) 
 #A  GeneratorsOfMonoidWithObjects( <mwo> ) 
 ## 
-##?? changed 'Operation' into 'Attribute'
 DeclareAttribute( "GeneratorsOfMagmaWithObjects", IsMagmaWithObjects ); 
 DeclareAttribute( "GeneratorsOfSemigroupWithObjects", IsSemigroupWithObjects );
 DeclareAttribute( "GeneratorsOfMonoidWithObjects", IsMonoidWithObjects ); 
@@ -268,7 +250,6 @@ DeclareAttribute( "GeneratorsOfMonoidWithObjects", IsMonoidWithObjects );
 DeclareRepresentation( "IsMWOSinglePieceRep", 
     IsComponentObjectRep and IsAttributeStoringRep and IsMagmaWithObjects, 
     [ "objects", "magma" ] ); 
-#? (07/09/11) add "rays" here ?? 
 
 BindGlobal( "IsMagmaWithObjectsType", 
             NewType( IsMagmaWithObjectsFamily, IsMWOSinglePieceRep ) );
@@ -320,7 +301,6 @@ BindGlobal( "IsGroupoidPiecesType",
 ## 
 DeclareOperation( "SinglePieceMagmaWithObjects", [ IsMagma, IsCollection ] ); 
 DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );    
-
 
 ############################################################################# 
 ## 
@@ -410,21 +390,12 @@ DeclareOperation( "DiscreteSubdomain",
 DeclareAttribute( "MaximalDiscreteSubdomain", IsDomainWithObjects );
 DeclareOperation( "FullSubdomain", [IsDomainWithObjects,IsHomogeneousList] );
 
-############################################################################## 
-## 
-#P  IsWideSubgroupoid( <dwo>, <swo> )                            
-## 
-DeclareOperation( "IsWideSubgroupoid", 
-    [ IsDomainWithObjects, IsDomainWithObjects ] ); 
-
 
 ################################  SUBMAGMAS  ################################ 
 
 ############################################################################# 
 ## 
 #R  IsSubmagmaWithObjectsTableRep 
-## 
-#?  (30/04/10)  .eltsfam  removed 
 ##
 DeclareRepresentation( "IsSubmagmaWithObjectsTableRep", 
     IsComponentObjectRep and IsAttributeStoringRep and IsMagmaWithObjects, 

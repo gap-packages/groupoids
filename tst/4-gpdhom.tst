@@ -58,6 +58,8 @@ groupoid homomorphism : Hd8b -> Hs4
       [(1,2,4) : -14 -> -12] ], 
   [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
       [(1,2,4) : -14 -> -12] ] ]
+
+## SubSection 5.1.7
 gap> iso1 := IsomorphismNewObjects( Hs4, [-30,-20,-10] ); 
 groupoid homomorphism : 
 [ [ [(1,2,3,4) : -14 -> -14], [(3,4) : -14 -> -14], [() : -14 -> -13], 
@@ -83,7 +85,18 @@ groupoid homomorphism :
   [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
       [(1,2,4) : -14 -> -12] ] ]
 
-## SubSection 5.1.7
+## SubSection 5.1.8
+gap> N2 := NormalSubgroups( q8 )[2];; 
+gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); 
+single piece groupoid with rays: < Group( [ f2, f3 ] ), [ -28, -27 ], 
+[ <identity> of ..., f1 ] >
+gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );
+groupoid homomorphism : 
+[ [ [f2 : -28 -> -28], [f3 : -28 -> -28], [f1 : -28 -> -27] ], 
+  [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,4)(2,6)(3,7)(5,8) : -28 -> -28], 
+      [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ]
+
+## SubSection 5.1.9
 gap> IsInjectiveOnObjects( mor2 ); 
 true
 gap> IsSurjectiveOnObjects( mor2 );
@@ -95,7 +108,7 @@ false
 gap> IsAutomorphismWithObjects( inc );
 false
 
-## SubSection 5.1.8
+## SubSection 5.1.10
 gap> ObjectGroupHomomorphism( iso2, -12 );
 [ (1,2,4,3), (2,3) ] -> [ (1,2,3,4), (1,3) ]
 
@@ -134,7 +147,7 @@ groupoid with 3 pieces:
 gap> homs3 := [ idGs3, homd8, ihomc6 ];; 
 gap> homV3 := HomomorphismToSinglePiece( V3, Gs3, homs3 );; 
 gap> Display( homV3 );         
-homomorphism to single piece groupoid with pieces:
+homomorphism to single piece groupoid with mappings:
 (1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ]
 root homomorphism: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
   [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] ]

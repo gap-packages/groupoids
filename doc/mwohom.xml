@@ -29,8 +29,8 @@ f_A(a : u \to v) * f_A(b : v \to w) ~=~ f_A(a*b : u \to w)
 </Display> 
 with tail <M>f_O(u)</M> and head <M>f_O(w)</M>. 
 <P/>
-When <M>M</M> is a monoid or group, the map <M>f_A</M> 
-is required to preserve object identities and inverses.  
+When the underlying magma of <M>M</M> is a monoid or group, 
+the map <M>f_A</M> is required to preserve identities and inverses.  
 <P/>
 
 <Section Label="sec-mwohom">
@@ -43,9 +43,7 @@ is required to preserve object identities and inverses.
          Arg="src,rng,hom,imobs" />
    <Oper Name="HomomorphismToSinglePiece"
          Arg="src,rng,images" />
-   <Attr Name="SinglePieceMappingData"
-         Arg="mwohom" />
-   <Attr Name="HomsOfMapping"
+   <Attr Name="MappingToSinglePieceData"
          Arg="mwohom" />
    <Attr Name="PiecesOfMapping"
          Arg="mwohom" />
@@ -63,11 +61,11 @@ It is implemented as
 with attributes 
 <Index Key="Source"> <C>Source</C> </Index> <C>Source</C>, 
 <Index Key="Range">  <C>Range</C>  </Index> <C>Range</C> 
-and <C>SinglePieceMappingData</C>. 
+and <C>MappingToSinglePieceData</C>. 
 The operation requires the following information: 
 <List>
 <Item>
-a magma homomorphism <C>f</C> from the underlying magma of <M>M</M> 
+a magma homomorphism <C>hom</C> from the underlying magma of <M>M</M> 
 to the underlying magma of <M>N</M>, 
 </Item>
 <Item>
@@ -120,8 +118,8 @@ and so is a union of homomorphisms <E>from</E> single pieces.
 <Example>
 <![CDATA[
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
-gap> images := [ SinglePieceMappingData( hom1 )[1], 
-> SinglePieceMappingData( j56 )[1] ]; 
+gap> images := [ MappingToSinglePieceData( hom1 )[1], 
+> MappingToSinglePieceData( j56 )[1] ]; 
 [ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 magma with objects homomorphism : 
@@ -217,6 +215,10 @@ magma with objects homomorphism :
 [ magma with objects homomorphism : M78 -> M78
     [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
+gap> ImageElm( h14, a78 );
+[m1 : -7 -> -8]
+gap> ImageElm( h14, r31 );
+[Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13]
 ]]>
 </Example>
 
@@ -232,6 +234,7 @@ magma with objects homomorphism :
    <Prop Name="IsAutomorphismWithObjects" 
          Arg="mwohom" />
 <Description>
+The meaning of these five properties is obvious. 
 </Description>
 </ManSection>
 

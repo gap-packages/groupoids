@@ -21,6 +21,15 @@ gap> SetName( c6, "c6" );
 gap> Gc6 := DomainWithSingleObject( c6, -6 );
 single piece groupoid: < c6, [ -6 ] >
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+gap> f2 := FreeGroup(2);;
+gap> Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );
+single piece groupoid: < c6, [ f1, f2 ] >
+gap> Arrow( Gf2c6, (5,7,6), f2.1, f2.2 );
+[(5,7,6) : f1 -> f2]
+gap> Gabc := Groupoid( d8, [ "a", "b", "c" ] );
+single piece groupoid: < d8, [ "a", "b", "c" ] >
+gap> Arrow( Gabc, (2,4), "c", "b" );
+[(2,4) : c -> b]
 
 ## SubSection 4.1.2
 gap> ObjectList( Gs4 );    
@@ -39,12 +48,12 @@ gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" );
 gap> q8 := SmallGroup( 8, 4 );;
 gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
-gap> sl43 := SpecialLinearGroup( 4, 3 );;
-gap> Gsl43 := SinglePieceGroupoid( sl43, [ -35..-31 ] );;
-gap> SetName( sl43, "sl43" );  SetName( Gsl43, "Gsl43" );
-gap> [ IsMatrixGroupoid( Gsl43 ), IsFpGroupoid( Gf2 ), 
+gap> gl43 := SpecialLinearGroup( 4, 3 );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
+gap> [ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ),
 >      IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; 
-[ true, true, true, true ]
+[ true, true, true, true, true ]
 
 ## SubSection 4.1.4
 gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
@@ -80,28 +89,33 @@ groupoid with 5 pieces:
     group: d8 = <[ (1,2,3,4), (1,3) ]> >
 < objects: [ -6 ]
     group: c6 = <[ (5,6,7)(8,9) ]> >
-gap> V5 := ReplaceOnePieceInUnion( U5, 3, Gsl43 ); 
+gap> V5 := ReplaceOnePieceInUnion( U5, 3, Ggl43 ); 
 groupoid with 5 pieces:
-[ Gsl43, Gq8, Gf2, Gd8, Gc6 ]
+[ Ggl43, Gq8, Gf2, Gd8, Gc6 ]
 gap> ObjectList(V5);             
 [ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
 gap> U5 = V5;
 false
 gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
 groupoid with 5 pieces:
-[ Gsl43, Gq8, Gf2, Gs4, Gd8 ]
+[ Ggl43, Gq8, Gf2, Gs4, Gd8 ]
+gap> ObjectList(W5);
+[ -35, -34, -33, -32, -31, -28, -27, -22, -15, -14, -13, -12, -11, -9, -8, -7 
+ ]
 
 ## SubSection 4.1.5
 gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
 homogeneous groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
 2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
-gap> Size(Hd8);
+gap> Size(Hd8);   ## 8x3x3 + 8x3x3
 144
 gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
 gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
 homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
+gap> Size(Hc6);   ## 6x4
+24
 gap> RepresentationsOfObject(Gd8);
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 gap> RepresentationsOfObject(Hd8);
@@ -119,12 +133,12 @@ true
 ## Section 4.2 : Groupoid elements: stars; costars; homsets ###
 
 ## SubSection 4.2.1
-gap> e1 := Arrow( Gd8, (1,2,3,4), -9, -8 );
+gap> e1 := GroupoidElement( Gd8, (1,2,3,4), -9, -8 );
 [(1,2,3,4) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (1,3), -8, -7 );
 [(1,3) : -8 -> -7]
-gap> Print( [ ElementOfArrow(e2), TailOfArrow(e2), HeadOfArrow(e2) ], "\n" );
-[ (1,3), -8, -7 ]
+gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
+[ (1,2,3,4), -9, -8 ]
 gap> prod := e1*e2;
 [(1,2)(3,4) : -9 -> -7]
 gap> e2*e1;
@@ -225,6 +239,11 @@ groupoid with 3 pieces:
 1:  single piece groupoid: < q8, [ -28 ] >
 2:  single piece groupoid: < q8, [ -27 ] >
 3:  single piece groupoid: < f2, [ -22 ] >
+gap> DiscreteTrivialSubgroupoid( U2 );
+groupoid with 3 pieces:
+1:  single piece groupoid: < id(q8), [ -28 ] >
+2:  single piece groupoid: < id(q8), [ -27 ] >
+3:  single piece groupoid: < id(f2), [ -22 ] >
 
 ## SubSection 4.3.3
 gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 

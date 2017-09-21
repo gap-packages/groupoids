@@ -15,10 +15,10 @@ DeclareGlobalFunction( "GroupoidHomomorphism" );
 ############################################################################# 
 ## 
 #A  IsomorphismPermGroupoid( <gpd> )
-#A  IsomorphismSmallPermGroupoid( <gpd> )
+#A  IsomorphismPcGroupoid( <gpd> )
 ## 
 DeclareAttribute( "IsomorphismPermGroupoid", IsGroupoid );
-DeclareAttribute( "IsomorphismSmallPermGroupoid", IsGroupoid );
+DeclareAttribute( "IsomorphismPcGroupoid", IsGroupoid );
 
 ############################################################################# 
 ## 
@@ -40,7 +40,6 @@ DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
 ## 
 #O  InclusionMappingGroupoids( <G>, <H> )
 #O  RestrictedMappingGroupoids( <hom>, <src> )
-#? #O  HomomorphismToTrivialGroupoid( <G>, <H> )
 ## 
 DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "RestrictedMappingGroupoids", 
@@ -72,8 +71,8 @@ DeclareOperation( "IsomorphismStandardGroupoid",
 ##   - mapping from the root group in the source to that in the range,
 ##   - images for the objects, 
 ##   - images for the rays.
-##  In this representation, however, we just store the source; the range; 
-##  and then put all the necessary detail into the list SinglePieceMappingData. 
+##  In this representation, however, we just store the source; the range; and 
+##  then put all the necessary detail into the list MappingToSinglePieceData. 
 ##  This third attribute can vary in contents, according to context. 
 ##  For general groupoids a PieceImage is a list [hom,oims,rims], 
 ##  giving a root group hom; list of object images; list of ray images. 

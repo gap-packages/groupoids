@@ -105,7 +105,7 @@ e3 := Arrow( Gd8, (2,4), -7, -9 );
 loop := prod*e3;
 Print("e3 = ",e3, "\nloop = ",loop, ",  loop^2 = ", loop^2, "\n" ); 
 Print("loop has order = ", Order(loop), "\n" );
-ce1 := ConjugateArrow( loop, e1 ); 
+ce1 := loop^e1; 
 Print( "conjugate of loop by e1 is ", ce1, "\n\n" ); 
 
 ### Section 3.2 : Groupoid elements: star, costar and homset ###
@@ -188,17 +188,12 @@ y := Arrow( Gd8, (1,2,3,4), -8, -9 );
 z := Arrow( Gd8, (1,2)(3,4), -9, -7 );
 Print( "\n[x,y,z] = ", [x,y,z], "\n" ); 
 ##  conjugation with elements x, y, and z in Gd8: 
-ConjugateArrow(x,y);
-ConjugateArrow(x,z);
-ConjugateArrow(y,x);
-ConjugateArrow(y,z);
-ConjugateArrow(z,x);
-Print( "x^y = ", ConjugateArrow(x,y), "\n" );
-Print( "x^z = ", ConjugateArrow(x,z), "\n" );
-Print( "y^x = ", ConjugateArrow(y,x), "\n" );
-Print( "y^z = ", ConjugateArrow(y,z), "\n" );
-Print( "z^x = ", ConjugateArrow(z,x), "\n" );
-Print( "z^y = ", ConjugateArrow(z,y), "\n" );
+Print( "x^y = ", x^y, "\n" );
+Print( "x^z = ", x^z, "\n" );
+Print( "y^x = ", y^x, "\n" );
+Print( "y^z = ", y^z, "\n" );
+Print( "z^x = ", z^x, "\n" );
+Print( "z^y = ", z^y, "\n" );
 
 
 #######################   conjugation of subgroupoids   ##################

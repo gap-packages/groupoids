@@ -89,10 +89,6 @@ function( pgpd, rgp, rays )
     gpd!.rays := rays;
     SetIsSinglePieceDomain( gpd, true ); 
     SetLargerDirectProductGroupoid( gpd, pgpd ); 
-    #?  changed 27/05/11
-    ## if HasParentAttr( pgpd ) then 
-    ##     SetParent( gpd, Parent( pgpd ) ); 
-    ## fi; 
     SetParent( gpd, pgpd ); 
     id := One( pgpd!.magma ); 
     SetIsDirectProductWithCompleteGraphDomain( gpd, 
@@ -283,18 +279,29 @@ end );
 ##
 #M  GeneratorsOfGroupoid
 ##
-InstallMethod( GeneratorsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 
-    0, GeneratorsOfMagmaWithObjects );
-
-#############################################################################
-##
-#M  IsSinglePieceDomain
-##
-#? does ObjectList return a list of lists in general ??
-InstallMethod( IsSinglePieceDomain, "for a groupoid", true,
-    [ IsGroupoid ], 0,
+InstallMethod( GeneratorsOfGroupoid, "for a single piece groupoid", true, 
+    [ IsGroupoid and IsSinglePiece ], 0, 
 function( gpd )
-    return ( Length( ObjectList( gpd ) ) = 1 );
+
+    local obs, nobs, o1, m, mgens, id, gens1, gens2, gens, rays; 
+
+    obs := gpd!.objects;
+    nobs := Length( obs );
+    o1 := obs[1];
+    m := gpd!.magma; 
+    mgens := GeneratorsOfGroup( m ); 
+    id := One( m ); 
+    gens1 := List( mgens, g -> ArrowNC( true, g, o1, o1 ) ); 
+    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
+        and IsDirectProductWithCompleteGraph( gpd ) ) then 
+        gens2 := List( obs{[2..nobs]}, o -> GroupoidElement(gpd,id,o1,o) ); 
+    elif IsSinglePieceRaysRep( gpd ) then  
+        rays := gpd!.rays; 
+        gens2 := List( [2..nobs], i -> GroupoidElement(gpd,rays[i],o1,obs[i]) ); 
+    fi; 
+    gens := Immutable( Concatenation( gens1, gens2 ) ); 
+    SetGeneratorsOfGroupoid( gpd, gens ); 
+    return gens; 
 end );
 
 #############################################################################
@@ -347,6 +354,16 @@ function( gpd )
                                   and IsRectangularTable( g ) ); 
     else 
         return ForAll( Pieces(gpd), c -> IsMatrixGroupoid(c) );   
+    fi; 
+end ); 
+
+InstallMethod( IsFreeGroupoid, "for a groupoid", true,
+    [ IsGroupoid ], 0,
+function( gpd )
+    if IsSinglePiece( gpd ) then 
+        return IsFreeGroup( gpd!.magma ); 
+    else 
+        return ForAll( Pieces(gpd), c -> IsFreeGroupoid(c) );   
     fi; 
 end ); 
 
@@ -613,34 +630,6 @@ function ( g1, g2 )
         fi;
     od;
     return true;
-end );
-
-#############################################################################
-##
-#M  Size 
-##
-InstallOtherMethod( Size, "generic method for a groupoid", true,
-    [ IsGroupoid ], 0,
-function( gpd )
-
-    local c, s, sg;
-
-    s := 0;
-    for c in Pieces( gpd ) do
-        if ( s <> infinity ) then 
-            if IsDirectProductWithCompleteGraph( c ) then 
-                sg := Size( c!.magma );
-            else 
-                sg := Size( c!.magma );
-            fi;
-            if ( sg = infinity ) then
-                s := infinity;
-            else
-                s := s + Length( c!.objects )^2 * sg;
-            fi;
-        fi;
-    od;
-    return s;
 end );
 
 ############################################################################# 
@@ -980,8 +969,6 @@ function( hc )
             else 
                 iter!.hpos := iter!.hpos + 1;
             fi; 
-            #? (08/09/10) removed all the NC's and let back in the .mwo's 
-            #? (21/09/10) removed the .mwo's and replaced them by 'true'
             if ( hc![6] in [ "c", "r" ] ) then 
                 return    ## GroupoidElement( iter!.fgpd!.mwo, 
                     ArrowNC( true, (hc![5][iter!.tpos])*(iter!.gpelt), 
@@ -1397,7 +1384,14 @@ function( G, U )
     return true; 
 end ); 
 
-#############################################################################
+InstallMethod( IsWideSubgroupoid, "for two groupoids", true, 
+    [ IsGroupoid, IsGroupoid ], 0, 
+function( D, S )
+    return ( IsSubgroupoid( D, S ) and 
+             ObjectList( D ) = ObjectList( S ) ); 
+end ); 
+
+############################################################################
 ##
 #M  SubgroupoidBySubgroup
 ##
@@ -1464,7 +1458,7 @@ function( G, gps, obs )
     obsg := ObjectList( G );
     len := Length( obs ); 
     if ( len = 1 ) then 
-        Error( "since len=1, call DomainWithSingleObject" ); 
+        return DomainWithSingleObject( gps[1], obs[1] ); 
     fi; 
     pieceU := ListWithIdenticalEntries( len, 0 );
     if not ( len = Length( gps ) ) then
@@ -1627,6 +1621,12 @@ function( gpd )
     return DiscreteSubgroupoid( gpd, gps, obs );
 end );
 
+InstallMethod( DiscreteTrivialSubgroupoid, "for a connected groupoid", 
+    true, [ IsGroupoid and IsDiscreteDomainWithObjects ], 0,
+function( gpd )
+    return FullTrivialSubgroupoid( gpd );
+end );
+
 InstallMethod( DiscreteTrivialSubgroupoid, "generic method for a groupoid", 
     true, [ IsGroupoid ], 0,
 function( gpd )
@@ -1642,7 +1642,7 @@ end );
 ##
 #M  ReplaceOnePieceInUnion 
 ##
-InstallMethod( ReplaceOnePieceInUnion, "for union gpd, posint and gpd", true, 
+InstallOtherMethod( ReplaceOnePieceInUnion, "for union, posint and gpd", true, 
     [ IsGroupoid and IsPiecesRep, IsPosInt, IsGroupoid and IsSinglePiece ], 0,
 function( U, pos, new )
 
@@ -1674,12 +1674,6 @@ function( U, old, new )
     ## OK to replace old by new in the pn-th place 
     pieces[pos] := new; 
     return UnionOfPieces( pieces ); 
-end ); 
-
-InstallMethod( ReplaceOnePieceInUnion, "for union, object and gpd", true, 
-    [ IsGroupoid and IsPiecesRep, IsObject, IsGroupoid and IsSinglePiece ], 0,
-function( U, obj, new )
-    Error( "obj must be a positive integer or a single piece groupoid" );
 end ); 
 
 #############################################################################
@@ -1736,7 +1730,7 @@ end );
 ##
 #? (24/09/08)  decided to include the larger groupoid - a mistake ?? 
 #? (24/09/08)  should split this into a non-NC and an NC operation ?? 
-## (03/10/08)  now allowing U not to be wide in G (see RightCosets). 
+#? (03/10/08)  now allowing U not to be wide in G (see RightCosets). 
 
 InstallOtherMethod( RightCoset, "for groupoid, subgroupoid and element", 
     true,  ##  IsCollsElms ?? 
@@ -1761,9 +1755,6 @@ function( gpd, sgpd, e )
     if not IsSubdomainWithObjects( G, U ) then 
         Error( "U not a subgroupoid of G," ); 
     fi; 
-    #?  (30/04/10)  will this still work ?? 
-    #?  (27/05/10)  trying something else! 
-    ##  fam := FamilyObj( G ); 
     fam := FamilyObj( One( G!.magma ) ); 
     if not IsBound(fam!.rightGroupoidCosetsDefaultSizeType) then
         fam!.rightGroupoidCosetsDefaultSizeType 
@@ -1777,7 +1768,7 @@ function( gpd, sgpd, e )
         IsGroupoidCoset, true, 
         SuperDomain, G, 
         ActingDomain, U, 
-##        FunctionAction, OnLeftInverse,  #? (18/09/08) incorrect! 
+#?        FunctionAction, OnLeftInverse,           (18/09/08) incorrect! 
         Size, Size( ObjectCostar( U, e![2] ) ), 
         Representative, e ); 
     hc := HomsetCosetsGroupoidCoset( r ); 
@@ -1819,7 +1810,7 @@ function( gpd, sgpd, e )
         IsGroupoidCoset, true, 
         SuperDomain, G, 
         ActingDomain, U, 
-##        FunctionAction, OnLeftInverse,  #? (18/09/08) incorrect!
+#?        FunctionAction, OnLeftInverse,           (18/09/08) incorrect!
         Size, Size( ObjectStar( U, e![3] ) ),   
         Representative, e ); 
     hc := HomsetCosetsGroupoidCoset( l ); 
@@ -1950,8 +1941,7 @@ function( G, U )
             g := Representative(b);
             for o in obG do
                 j := j+1; 
-                #? (08/09/10) removed NC and added back the G 
-                L[j] := Arrow( G, g, o1, o );
+                L[j] := ArrowNC( true, g, o1, o );
             od;
         od;
         Append( reps, L );
@@ -2014,8 +2004,7 @@ function( G, U )
             g := Representative(b)^(-1);
             for o in obG do
                 j := j+1;
-                #? (08/09/10) removed NC and added back the G 
-                L[j] := Arrow( G, g, o, o1 );
+                L[j] := ArrowNC( true, g, o, o1 );
             od;
         od;
         Append( reps, L );
@@ -2079,8 +2068,7 @@ function( G, U, o )
         for b in rc do
             g := Representative(b)^(-1);
             j := j+1;
-            #? (08/09/10) removed NC and added back the G 
-            L[j] := Arrow( G, g, o, o1 );
+            L[j] := ArrowNC( true, g, o, o1 );
         od;
         Append( reps, L );
     od;
@@ -2141,8 +2129,7 @@ function( G, U, V )
             dc := DoubleCosets( gg, gu, gv );
             for c in dc do
                 r := Representative( c );
-                #? (08/09/10) removed NC and added back the G 
-                Add( reps, Arrow( G, r, ou, ov ) );
+                Add( reps, ArrowNC( true, r, ou, ov ) );
             od;
         od;
     od;
@@ -2252,7 +2239,6 @@ function( e1, e2 )
 
     local c, p, q;
 
-    #? gpd := FamilyObj( e1 )!.mwo; 
     c := e2![1]; 
     p := e2![2]; 
     if ( e2![3] = p ) then  
@@ -2293,12 +2279,6 @@ function( e1, e2 )
             return e1; 
         fi;
     fi; 
-end );
-
-InstallMethod( ConjugateArrow, "for two groupoid elements", 
-    IsIdenticalObj, [ IsGroupoidElement, IsGroupoidElement ], 0,
-function( e1, e2 )
-    return e1^e2; 
 end );
 
 #############################################################################

@@ -2,9 +2,7 @@
 
 ## Introduction
 
-This is the 'gpd' package, renamed 'groupoids' and waiting for GAP 4.9. 
-
-This package allows for the computation of finite groupoids: both connected, and with several components.  Graphs of groups and graphs of groupoids are also constructed, allowing the calculation of normal forms for Free Products with Amalgamation and for HNN extensions when the initial groups have rewriting systems.
+This package allows for the computation of finite groupoids: both connected, and with several components.  Graphs of groups and graphs of groupoids are also constructed, allowing the calculation of normal forms for Free Products with Amalgamation and for HNN extensions when the initial groups have rewriting systems.  This package was, until very recently, named Gpd. 
 
 ## History
 
@@ -49,6 +47,6 @@ For details, see: <http://www.gnu.org/licenses/gpl.html>
 Contact
 -------
 If you have a question relating to groupoids, encounter any problems, or have a suggestion for extending the package in any way, please 
- - email c.d.wensley@bangor.ac.uk 
- - or report an issue at https://github.com/gap-packages/groupoids/issues/new 
+ * email c.d.wensley@bangor.ac.uk 
+ * or report an issue at https://github.com/gap-packages/groupoids/issues/new 
 

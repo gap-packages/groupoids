@@ -66,7 +66,6 @@ InstallMethod( HomomorphismFromSinglePieceNC,
     [ IsSinglePiece, IsSinglePiece, IsMagmaHomomorphism, IsHomogeneousList ], 
     0,
 function( m1, m2, hom, imo )
-    #?  (17/11/08)  put separate code here ?? 
     return HomomorphismToSinglePieceNC( m1, m2, [ [ hom, imo ] ] );
 end );
 
@@ -113,23 +112,54 @@ function( mag1, mag2, images )
     ObjectifyWithAttributes( map, IsMWOMappingToSinglePieceType, 
         Source, mag1, 
         Range, mag2, 
-        SinglePieceMappingData, images,
+        MappingToSinglePieceData, images,
         ImagesOfObjects, Flat( List( images, L -> L[2] ) ),   
         RespectsMultiplication, true, 
         IsHomomorphismToSinglePiece, true );
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
-    if ( ( IsMonoidWithObjects in CategoriesOfObject( mag1 ) ) and 
-         ( IsMonoidWithObjects in CategoriesOfObject( mag2 ) ) ) then 
+    if ( ( "IsMonoidWithObjects" in CategoriesOfObject( mag1 ) ) and 
+         ( "IsMonoidWithObjects" in CategoriesOfObject( mag2 ) ) ) then 
         SetIsMonoidWithObjectsHomomorphism( map, true ); 
-    elif ( ( IsSemigroupWithObjects in CategoriesOfObject( mag1 ) ) 
-         and ( IsSemigroupWithObjects in CategoriesOfObject( mag2 ) ) ) then 
+    elif ( ( "IsSemigroupWithObjects" in CategoriesOfObject( mag1 ) ) and 
+           ( "IsSemigroupWithObjects" in CategoriesOfObject( mag2 ) ) ) then 
         SetIsSemigroupWithObjectsHomomorphism( map, true );
-    elif ( IsMagmaWithObjects( mag1 ) and IsMagmaWithObjects( mag2 ) ) then 
+    elif ( ( "IsMagmaWithObjects" in CategoriesOfObject( mag1 ) ) and 
+           ( "IsMagmaWithObjects" in CategoriesOfObject( mag2 ) ) ) then 
         SetIsMagmaWithObjectsHomomorphism( map, true );
     fi; 
     ok := IsHomomorphismFromSinglePiece( map ); 
     return map; 
+end );
+
+InstallMethod( HomomorphismToSinglePiece, 
+    "generic method for a mapping to a single piece magma", true,
+    [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
+function( mwo1, mwo2, maps )
+
+    local pieces, o2, m2, j, pj, h, mor;
+
+    Info( InfoGroupoids, 3, "homomorphism to a single piece magma:", maps ); 
+    pieces := Pieces( mwo1 ); 
+    o2 := mwo2!.objects;
+    m2 := mwo2!.magma;
+    for j in [1..Length(pieces)] do 
+        pj := pieces[j];
+        h := maps[j][1];
+        if not IsMagmaHomomorphism( h ) then
+            Error( "h is not a magma homomorphism" );
+        fi;
+        if not ( ( Source(h) = pj!.magma ) and ( Range(h) = m2 ) ) then
+            Error( "homs not a mapping m1!.magma -> m2!.magma" );
+        fi;
+        if not ( Length( maps[j][2] ) = Length( pj!.objects ) ) then 
+            Error( "incorrect length for maps of objects" ); 
+        fi;
+        if not IsSubset( o2, maps[j][2] ) then 
+            Error( "objects in the image not objects in m2" );
+        fi;
+    od;
+    return HomomorphismToSinglePieceNC( mwo1, mwo2, maps ); 
 end );
 
 InstallMethod( HomomorphismToSinglePieceNC,
@@ -137,52 +167,25 @@ InstallMethod( HomomorphismToSinglePieceNC,
     [ IsGroupoid, IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, gpd2, homs )
 
-    local fam, filter, map, ok, imo;
+    local fam, filter, data, map, ok, imo;
 
+    Info( InfoGroupoids, 3, "homomorphism to a single piece groupoid - NC" ); 
     fam := GeneralMappingWithObjectsFamily; 
     filter := IsMappingToSinglePieceRep and IsGroupoidHomomorphism; 
+    data := List( homs, h -> MappingToSinglePieceData(h)[1] ); 
     map := rec(); 
     ObjectifyWithAttributes( map, IsGroupoidMappingToSinglePieceType, 
         Source, gpd1, 
         Range, gpd2, 
-        SinglePieceMappingData, homs,  
+        MappingToSinglePieceData, data,  
+        MappingToSinglePieceMaps, homs,  
         RespectsMultiplication, true, 
         IsHomomorphismToSinglePiece, true );
-    ok := IsInjectiveOnObjects( map ); 
-    ok := IsSurjectiveOnObjects( map ); 
-    ok := IsGroupWithObjectsHomomorphism( map ); 
-    ok := IsHomomorphismFromSinglePiece( map ); 
+##??    ok := IsInjectiveOnObjects( map ); 
+#    ok := IsSurjectiveOnObjects( map ); 
+#    ok := IsGroupWithObjectsHomomorphism( map ); 
+#    ok := IsHomomorphismFromSinglePiece( map ); 
     return map; 
-end );
-
-InstallMethod( HomomorphismToSinglePiece,
-    "generic method for a mapping to a single piece magma", true,
-    [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
-function( mwo1, mwo2, images )
-
-    local pieces, o2, m2, j, pj, h, mor;
-
-    Info( InfoGroupoids, 3, "homomorphism to a single piece magma:", images ); 
-    pieces := Pieces( mwo1 ); 
-    o2 := mwo2!.objects;
-    m2 := mwo2!.magma;
-    for j in [1..Length(pieces)] do 
-        pj := pieces[j];
-        h := images[j][1];
-        if not IsMagmaHomomorphism( h ) then
-            Error( "h is not a magma homomorphism" );
-        fi;
-        if not ( ( Source(h) = pj!.magma ) and ( Range(h) = m2 ) ) then
-            Error( "homs not a mapping m1!.magma -> m2!.magma" );
-        fi;
-        if not ( Length( images[j][2] ) = Length( pj!.objects ) ) then 
-            Error( "incorrect length for images of objects" ); 
-        fi;
-        if not IsSubset( o2, images[j][2] ) then 
-            Error( "objects in the image not objects in m2" );
-        fi;
-    od;
-    return HomomorphismToSinglePieceNC( mwo1, mwo2, images ); 
 end );
 
 InstallMethod( HomomorphismToSinglePiece,
@@ -194,6 +197,9 @@ function( mwo1, mwo2, homs )
 
     Info( InfoGroupoids, 3, "homomorphism to a single piece groupoid:", homs ); 
     pieces := Pieces( mwo1 ); 
+    if not ( Length( pieces ) = Length( homs ) ) then 
+        Error( "there should be one homomorphism for each piece in mwo1" ); 
+    fi;
     o2 := mwo2!.objects;
     for j in [1..Length(pieces)] do 
         h := homs[j];
@@ -201,7 +207,7 @@ function( mwo1, mwo2, homs )
             Error( "h is not a magma with objects homomorphism" );
         fi;
         if not ( ( Source(h) = pieces[j] ) and ( Range(h) = mwo2 ) ) then
-            Error( "homs not a mapping mwo1!.magma -> mwo2!.magma" );
+            Error( "sources/ranges of homs do not agree with mwo1/mwo2" );
         fi;
     od;
     return HomomorphismToSinglePieceNC( mwo1, mwo2, homs );
@@ -215,20 +221,19 @@ end );
 InstallMethod( HomomorphismByUnionNC, 
     "generic method for a magma mapping", true,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0,  
-function( mag1, mag2, maps )
+function( mag1, mag2, images )
 
     local fam, filter, type, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
           part, i, m, src;
 
     if IsSinglePiece( mag2 ) then 
         Info( InfoGroupoids, 1, "better to use single piece function" );
-        #?  (17/11/08)  fix it so the following works ?? 
-        ## return HomomorphismToSinglePiece( mag1, mag2, maps );
+        return HomomorphismToSinglePiece( mag1, mag2, images );
     fi; 
     fam := GeneralMappingWithObjectsFamily;
     filter := IsMappingWithPiecesRep and IsMagmaWithObjectsHomomorphism; 
-    if ( ( IsGroupoid in CategoriesOfObject( mag1 ) ) and 
-         ( IsGroupoid in CategoriesOfObject( mag2 ) ) ) then 
+    if ( ( "IsGroupoid" in CategoriesOfObject( mag1 ) ) and 
+         ( "IsGroupoid" in CategoriesOfObject( mag2 ) ) ) then 
         type := IsGroupoidMappingWithPiecesType; 
     else 
         type := IsMWOMappingWithPiecesType; 
@@ -237,7 +242,7 @@ function( mag1, mag2, maps )
     ObjectifyWithAttributes( map, type, 
         Source, mag1,
         Range, mag2,
-        PiecesOfMapping, maps,
+        PiecesOfMapping, images,
         IsGeneralMappingToSinglePiece, false );
     inj := IsInjectiveOnObjects( map ); 
     #? added 10/05/06 -- it is useful ?? 
@@ -248,7 +253,7 @@ function( mag1, mag2, maps )
     obs1 := List( pieces1, g -> g!.objects[1] ); 
     part := ListWithIdenticalEntries( nc2, 0 );
     for i in [1..nc2] do
-        m := maps[i];
+        m := images[i];
         src := Source( m );
         if IsSinglePiece( src ) then
             part[i] := [ Position( obs1, src!.objects[1] ) ];
@@ -276,10 +281,8 @@ function( mag1, mag2, maps )
         Error( "all maps should have IsGeneralMappingWithObjects" ); 
     fi; 
     if IsSinglePiece( mag2 ) then 
-        Info( InfoGroupoids, 3, 
-              "using the special case in HomomorphismByUnion" ); 
-        piecesmap := Concatenation( List( maps, m -> SinglePieceMappingData(m) ) ); 
-        return HomomorphismToSinglePieceNC( mag1, mag2, piecesmap ); 
+        Info( InfoGroupoids, 1, "better to use single piece function" );
+        return HomomorphismToSinglePieceNC( mag1, mag2, maps ); 
     fi;
     pieces1 := Pieces( mag1 );
     nc1 := Length( pieces1 );
@@ -489,44 +492,28 @@ InstallMethod( ImagesOfObjects, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism and IsHomomorphismToSinglePiece ], 0,
 function( map )
 
-    local images, src, obs, ims, i, j, c, srcc, obc, imc, o, pos, 
-          gensims, len, rng, obr, imobr;
+    local data, src, obs, ims, c, i, obc, imc, j, pos;
 
-    if not HasPiecesOfMapping( map ) then
-        images := SinglePieceMappingData( map );
-        if ( Length( images ) = 1 ) then
-            return ImagesOfObjects( images[1] );
-        else
-            src := Source( map );
-            obs := ObjectList( src );
-            ims := ShallowCopy( obs );
-            c := Pieces( src ); 
-            for i in [1..Length(c)] do 
-                obc := c[i]!.objects;
-                imc := ImagesOfObjects( images[i] );
-                for j in [1..Length(obc)] do
-                    pos := Position( obs, obc[j] );
-                    ims[pos] := imc[j];
-                od;
-            od;
-            return ims;
-        fi;
-    else  ## does have PiecesOfMapping
+    data := MappingToSinglePieceData( map );
+    if ( Length( data ) = 1 ) then
+        return data[1][2];
+    else
         src := Source( map );
         obs := ObjectList( src );
         ims := ShallowCopy( obs );
-        for c in PiecesOfMapping( map ) do
-            obc := Source(c)!.objects;
-            for i in [1..Length(obc)] do
-                pos := Position( obs, obc[i] );
-                ims[pos] := ImagesOfObjects(c)[2][i];
+        c := Pieces( src ); 
+        for i in [1..Length(c)] do 
+            obc := c[i]!.objects;
+            imc := data[i][2];
+            for j in [1..Length(obc)] do
+                pos := Position( obs, obc[j] );
+                ims[pos] := imc[j];
             od;
         od;
         return ims;
     fi;
 end );
 
-########### this method now appears to be redundant ###########
 InstallMethod( ImagesOfObjects, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map )
@@ -555,15 +542,17 @@ end );
 InstallMethod( IsSemigroupWithObjectsHomomorphism, 
     "for a mapping with objects", true, [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map ) 
-    return ( ( IsSemigroupWithObjects in CategoriesOfObject( Source(map) ) ) and  
-             ( IsSemigroupWithObjects in CategoriesOfObject( Range(map) ) ) ); 
+    return 
+        ( ( "IsSemigroupWithObjects" in CategoriesOfObject( Source(map) ) ) and  
+          ( "IsSemigroupWithObjects" in CategoriesOfObject( Range(map) ) ) ); 
 end );
 
 InstallMethod( IsMonoidWithObjectsHomomorphism, "for a mapping with objects", 
     true, [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map ) 
-    return ( ( IsMonoidWithObjects in CategoriesOfObject( Source(map) ) ) and 
-             ( IsMonoidWithObjects in CategoriesOfObject( Range(map) ) ) ); 
+    return 
+        ( ( "IsMonoidWithObjects" in CategoriesOfObject( Source(map) ) ) and 
+          ( "IsMonoidWithObjects" in CategoriesOfObject( Range(map) ) ) ); 
 end );
 
 InstallMethod( IsGroupWithObjectsHomomorphism, "for a mapping with objects", 
@@ -613,7 +602,7 @@ function( map )
     if not ( imo = fail ) then 
         return IsDuplicateFree( Flat( imo ) );
     elif IsHomomorphismToSinglePiece( map ) then
-        images := SinglePieceMappingData( map );
+        images := MappingToSinglePieceData( map );
         imo := Flat( List( images, L -> L[2] ) ); 
         return IsDuplicateFree( imo ); 
     elif ( HasIsGeneralMappingFromHomogeneousDiscrete( map ) 
@@ -621,7 +610,7 @@ function( map )
         return IsDuplicateFree( map!.oims ); 
     else  ## mapping has constituents
         imo := List( PiecesOfMapping( map ), 
-                     m -> SinglePieceMappingData(m)[2] );
+                     m -> MappingToSinglePieceData(m)[2] );
         return IsDuplicateFree( Flat( imo ) );
     fi;
 end );
@@ -649,11 +638,11 @@ function( map )
     if HasImagesOfObjects( map ) then 
         imo := Flat( ImagesOfObjects( map ) );
     elif IsHomomorphismToSinglePiece( map ) then
-        images := SinglePieceMappingData( map );
+        images := MappingToSinglePieceData( map );
         imo := Flat( List( images, L -> L[2] ) );
     else  ## mapping has constituents
         imo := Flat( List( PiecesOfMapping( map ), 
-                     m -> SinglePieceMappingData(m)[1][2] ) );
+                     m -> MappingToSinglePieceData(m)[1][2] ) );
     fi;
     return ( Set(imo) = obr );
 end );
@@ -746,7 +735,7 @@ function( map )
     ob1 := m1!.objects;
     ob2 := m2!.objects;
     nob := Length( ob1 );
-    obhom1 := SinglePieceMappingData( map );
+    obhom1 := MappingToSinglePieceData( map );
     len := Length( obhom1 );
     sc1 := ShallowCopy( ob1 );
     sc2 := ShallowCopy( obhom1[1][2] );
@@ -948,7 +937,7 @@ function( m1, m2 )
           "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
     return ( ( Source( m1 ) =  Source( m2 ) ) and
              ( Range( m1 ) = Range( m2 ) ) and 
-             ( SinglePieceMappingData( m1 ) = SinglePieceMappingData( m2 ) ) );
+             ( MappingToSinglePieceData( m1 ) = MappingToSinglePieceData( m2 ) ) );
 end );
 
 InstallMethod( \=, "for 2 magma mappings", true,
@@ -1075,15 +1064,15 @@ function( map1, map2 )
     pieces1 := PiecesOfMapping( map1 );
     len1 := Length( pieces1 );
     maps := ListWithIdenticalEntries( len1, 0 );
-    images := SinglePieceMappingData( map2 );
+    images := MappingToSinglePieceData( map2 );
     for i in [1..len1] do
         m := pieces1[i];
         if not IsSinglePiece( Source(m) ) then
             Print( "general * not yet implemented\n" );
             return fail;
         fi;
-        imo1 := SinglePieceMappingData(m)[1][2];
-        hom1 := SinglePieceMappingData(m)[1][1];
+        imo1 := MappingToSinglePieceData(m)[1][2];
+        hom1 := MappingToSinglePieceData(m)[1][1];
         s1 := Source( m );
         ob1 := s1!.objects;
         nob1 := Length( ob1 );
@@ -1123,11 +1112,11 @@ function( m1, m2 )
     if not IsSubdomainWithObjects( s2, r1 ) then
         Error( "Range(m1) not a submagma of Source(m2)" );
     fi;
-    oi1 := SinglePieceMappingData( m1 )[1];
+    oi1 := MappingToSinglePieceData( m1 )[1];
     ob1 := s1!.objects;
     nob1 := Length( ob1 );
     ob2 := s2!.objects;
-    oi2 := SinglePieceMappingData( m2 )[1];
+    oi2 := MappingToSinglePieceData( m2 )[1];
     oi12 := ListWithIdenticalEntries( nob1, 0 );
     for j in [1..nob1] do
         o := oi1[2][j];
@@ -1329,7 +1318,7 @@ function ( hom )
     if ( "IsGroupoidHomomorphism" in CategoriesOfObject(hom) ) then 
         Print( MappingGeneratorsImages( hom ) ); 
     else 
-        Print( SinglePieceMappingData( hom ) ); 
+        Print( MappingToSinglePieceData( hom ) ); 
     fi;
 end );
 
@@ -1349,19 +1338,27 @@ function ( hom )
 
     local h; 
 
-    Print( "groupoid homomorphism : " );
-    if ( HasName( Source(hom) ) and HasName( Range(hom) ) ) then 
-        Print( Source(hom), " -> ", Range(hom), "\n" ); 
-    elif IsGroupoidHomomorphismFromHomogeneousDiscrete( hom ) then 
-        Print( "morphism from a homogeneous discrete groupoid:\n" ); 
-        Print( ObjectList(Source(hom)), " -> ", ImagesOfObjects(hom), "\n" ); 
-        Print( "object homomorphisms:\n" );  
-        for h in ObjectHomomorphisms( hom ) do 
+    if HasPiecesOfMapping( hom ) then 
+        Print( "groupoid homomorphism from several pieces : \n" );
+        for h in PiecesOfMapping( hom ) do 
             Print( h, "\n" ); 
         od; 
     else 
-        Print( SinglePieceMappingData( hom ) ); 
-    fi; 
+        Print( "groupoid homomorphism : " );
+        if ( HasName( Source(hom) ) and HasName( Range(hom) ) ) then 
+            Print( Source(hom), " -> ", Range(hom), "\n" ); 
+        elif IsGroupoidHomomorphismFromHomogeneousDiscrete( hom ) then 
+            Print( "morphism from a homogeneous discrete groupoid:\n" ); 
+            Print( ObjectList(Source(hom)), " -> ", 
+                   ImagesOfObjects(hom), "\n" ); 
+            Print( "object homomorphisms:\n" );  
+            for h in ObjectHomomorphisms( hom ) do 
+                Print( h, "\n" ); 
+            od; 
+        else 
+            Print( MappingToSinglePieceData( hom ) ); 
+        fi; 
+    fi;
 end ); 
 
 #############################################################################
@@ -1382,8 +1379,12 @@ function ( hom )
     else 
         Print( "homomorphism to single piece magma" );
     fi;
-    imo := ImagesOfObjects( hom );
-    maps := SinglePieceMappingData( hom );
+    imo := ImagesOfObjects( hom ); 
+    if HasMappingToSinglePieceMaps( hom ) then 
+        maps := MappingToSinglePieceMaps( hom ); 
+    else 
+        maps := MappingToSinglePieceData( hom );
+    fi;
     len := Length( maps );
     if ( len = 1 ) then 
         if ( HasName( src ) and HasName( rng ) ) then 
@@ -1404,8 +1405,7 @@ function ( hom )
             Print( "ray images: ", map1[3], "\n" ); 
         fi; 
     else
-        Print( " with pieces:\n" );
-        pieces := Pieces( src );
+        Print( " with mappings:\n" );
         for i in [1..len] do
             Print( "(", i, ") : " ); 
             Display( maps[i] );
@@ -1424,7 +1424,11 @@ function ( hom )
     for chom in PiecesOfMapping( hom ) do
         src := Source( chom );
         rng := Range( chom );
-        maps := SinglePieceMappingData( chom );
+        if HasMappingToSinglePieceMaps( chom ) then 
+            maps := MappingToSinglePieceMaps( chom ); 
+        else 
+            maps := MappingToSinglePieceData( chom );
+        fi;
         len := Length( maps );
         if ( len = 1 ) then
             Display( maps[1] ); 
@@ -1456,8 +1460,8 @@ function ( map, e )
     pe := Position( C1, ce );
     Ge := C1[pe];
     obs1 := Ge!.objects;
-    hom := SinglePieceMappingData( map )[pe][1];
-    obs2 := SinglePieceMappingData( map )[pe][2]; 
+    hom := MappingToSinglePieceData( map )[pe][1];
+    obs2 := MappingToSinglePieceData( map )[pe][2]; 
     #?  this is not the correct range magma ??
     mag2 := Range( map ); 
     t2 := obs2[ Position( obs1, e![2] ) ];
@@ -1479,7 +1483,7 @@ function ( map, e )
     pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
     obs1 := C1[pe]!.objects; 
     pom := PiecesOfMapping( map )[pe]; 
-    pim := SinglePieceMappingData( pom )[1];
+    pim := MappingToSinglePieceData( pom )[1];
     obs2 := pim[2]; 
     t2 := obs2[ Position( obs1, e![2] ) ];
     h2 := obs2[ Position( obs1, e![3] ) ]; 
@@ -1487,7 +1491,7 @@ function ( map, e )
     return MultiplicativeElementWithObjects( Range( map ), g2, t2, h2 );
 end ); 
 
-InstallOtherMethod( ImageElm, "for a magma endomorphism", true,
+InstallOtherMethod( ImageElm, "for a magma with objects endomorphism", true,
     [ IsHomomorphismToSinglePiece and IsEndomorphismWithObjects, 
       IsMultiplicativeElementWithObjects ], 0,
 function ( map, elt )
@@ -1503,7 +1507,8 @@ function ( map, elt )
     gensims := MappingGeneratorsImages( map )[1];
     gens := gensims[1]; 
     ims := gensims[2];
-    rhom := HomsOfMapping( map )[1]; 
+    #? (13/09/17) was: rhom := HomsOfMapping( map )[1]; 
+    rhom := MappingToSinglePieceData( map )[1][1]; 
     e := ImageElm( rhom, elt![1] ); 
     j := elt![2];
     pj := Position( obs, elt![2] );
@@ -1537,7 +1542,7 @@ function ( map )
     fi;
     imo := ShallowCopy( ImagesOfObjects( map ) );
     Sort( imo );
-    hom := SinglePieceMappingData( map )[1][1];
+    hom := MappingToSinglePieceData( map )[1][1];
     img := Image( hom );
     rng := Range( map );
     if ( ( imo = rng!.objects ) and ( img = rng!.magma ) ) then
@@ -1564,7 +1569,7 @@ function ( map )
     local obs; 
 
     obs := Source( map )!.objects; 
-    return ForAll( SinglePieceMappingData( map ), 
+    return ForAll( MappingToSinglePieceData( map ), 
         c -> ( IsEndoGeneralMapping( c[1] ) and IsSubset( obs, c[2] ) ) ); 
 end ); 
 

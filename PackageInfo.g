@@ -9,15 +9,15 @@ PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 
 Version := "1.52",
-Date := "06/09/2017", 
+Date := "21/09/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GROUPOIDSVERSION "1.52">
-##  <!ENTITY GROUPOIDSRELEASEDATE "06/09/2017">
+##  <!ENTITY GROUPOIDSRELEASEDATE "21/09/2017">
 ##  <!ENTITY GROUPOIDSTARFILENAME "groupoids-1.52.tar.gz">
 ##  <!ENTITY GROUPOIDSHTMLFILENAME "groupoids.html">
-##  <!ENTITY GROUPOIDSLONGRELEASEDATE "6th September 2017">
+##  <!ENTITY GROUPOIDSLONGRELEASEDATE "21st September 2017">
 ##  <!ENTITY GROUPOIDSCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
 
@@ -91,7 +91,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8.7",
+  GAP := ">=4.8.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
                            [ "fga", ">= 1.3.1" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0"] ],

@@ -12,15 +12,13 @@
 #O  RayElementsOfGroupoid( <gpd> ) 
 #O  RaysOfGroupoid( <gpd> ) 
 #A  GeneratorsOfGroupoid( <gpd> )
-##?? #O  PiecesOfGroupoid( <gpd> ) 
 ## 
-##??  (03/10/08)  changed these from Attributes to Operations 
-##??              and call equivalent MagmaWithObjects attributes 
+##  (03/10/08)  changed these from Attributes to Operations which
+##              call the equivalent MagmaWithObjects attributes 
 DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] ); 
 DeclareOperation( "RayElementsOfGroupoid", [ IsGroupoid ] ); 
 DeclareOperation( "RaysOfGroupoid", [ IsGroupoid ] ); 
 DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
-##?? DeclareOperation( "PiecesOfGroupoid", [ IsGroupoid ] );  
   
 ############################################################################## 
 ## 
@@ -130,7 +128,11 @@ DeclareOperation( "HomogeneousDiscreteGroupoid",
 #O  ReplaceOnePieceInUnion( <union>, <old>, <new> ) 
 ## 
 DeclareOperation( "ReplaceOnePieceInUnion", 
-    [ IsGroupoid and IsPiecesRep, IsObject,  IsGroupoid and IsSinglePiece ] ); 
+    [ IsGroupoid and IsPiecesRep, IsGroupoid and IsSinglePiece,  
+      IsGroupoid and IsSinglePiece ] ); 
+DeclareOperation( "ReplaceOnePieceInUnion", 
+    [ IsGroupoid and IsPiecesRep, IsPosInt,  
+      IsGroupoid and IsSinglePiece ] ); 
 
 
 ## ======================================================================== ##
@@ -184,8 +186,6 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 
 ############################################################################## 
 ##  
-#?  (26/09/08)  RightCosetReps should be RightTransversal ?? 
-##
 #P  IsGroupoidCoset( <cset> ) 
 #A  SuperDomain( <cset> );                        #? rename ?? 
 #A  HomsetCosetsGroupoidCoset( <cset> ) 
@@ -221,10 +221,12 @@ DeclareOperation( "DoubleCosetRepresentatives",
 ############################################################################# 
 ## 
 #F  Subgroupoid( <args> )              
-#O  IsSubgroupoid( <G>, <U> )
+#O  IsSubgroupoid( <G>, <S> )
+#O  IsWideSubgroupoid( <G>, <S> )                            
 ## 
 DeclareGlobalFunction( "Subgroupoid" );
 DeclareOperation( "IsSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
 
 ############################################################################# 
 ## 
@@ -254,14 +256,6 @@ DeclareAttribute( "DiscreteTrivialSubgroupoid", IsGroupoid );
 #O  ConjugateGroupoid( <gpd>, <elt> ) . . . . . . conjugate of <gpd> by <elt>
 ##
 DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
-
-#############################################################################
-##
-#O  ConjugateArrow( <x>, <y> ) . . . . groupoid conjugate of x by y
-## 
-#?  no longer needed since x^y now works, but keep it for a while 
-##
-DeclareOperation( "ConjugateArrow", [ IsGroupoidElement, IsGroupoidElement ] );
 
 ############################################################################## 
 ## 

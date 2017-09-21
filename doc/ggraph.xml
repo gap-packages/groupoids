@@ -73,13 +73,13 @@ In the second example the graph is a complete digraph on three vertices.
 <![CDATA[
 gap> fg3 := FreeGroup( 3, "z" );;
 gap> z1 := fg3.1;;  z2 := fg3.2;;  z3 := fg3.3;;
-gap> V3 := [ 7, 8, 9 ];;
+gap> ob3 := [ 7, 8, 9 ];;
 gap> A3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;
-gap> D3 := FpWeightedDigraph( fg3, V3, A3 );
+gap> D3 := FpWeightedDigraph( fg3, ob3, A3 );
 weighted digraph with vertices: [ 7, 8, 9 ]
 and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
   [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
-[gap> inv3 := InvolutoryArcs( D3 );
+[gap> inob3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 ]]>
 </Example>

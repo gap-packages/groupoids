@@ -73,7 +73,6 @@ end );
 #F  GroupoidHomomorphism( <g>,<auto> )             automorphism by group auto
 #F  GroupoidHomomorphism( <g>,<imobs> )           automorphism by object perm
 #F  GroupoidHomomorphism( <g>,<rays> )           automorphism by ray products
-#?  more cases ?? 
 ##
 InstallGlobalFunction( GroupoidHomomorphism, function( arg )
 
@@ -90,6 +89,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     fi; 
     # various types of automorphism 
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] ) ) then 
+        Info( InfoGroupoids, 3, "gpd hom with 2 arguments" ); 
         if IsGroupHomomorphism( arg[2] ) then 
             return GroupoidAutomorphismByGroupAuto( arg[1], arg[2] ); 
         elif ( IsHomogeneousList( arg[2] ) 
@@ -101,6 +101,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     # gpd, gpd, group hom 
     elif ( ( nargs = 3 ) and IsSinglePiece( arg[1] ) 
            and IsSinglePiece( arg[2] ) and IsGroupHomomorphism( arg[3] ) ) then 
+        Info( InfoGroupoids, 3, "gpd hom with 3 arguments" ); 
         gens1 := GeneratorsOfGroupoid( arg[1] ); 
         ob1 := arg[1]!.objects; 
         ngens := Length( gens1 );
@@ -129,9 +130,11 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         return HomomorphismToSinglePiece( arg[1], arg[2], arg[3] ); 
     elif ( ( nargs = 4 ) and IsHomogeneousList( arg[3] ) 
            and ( IsHomogeneousList( arg[4] ) ) ) then 
+        Info( InfoGroupoids, 2, "HomomorphismFromSinglePiece" ); 
         return GroupoidHomomorphismFromSinglePieceNC( 
                    arg[1], arg[2], arg[3], arg[4] ); 
     elif ( nargs = 5 ) then 
+        Info( InfoGroupoids, 3, "gpd hom with 5 arguments" ); 
         gens1 := GeneratorsOfGroupoid( arg[1] ); 
         images := ShallowCopy( gens1 ); 
         ngens := Length( images );
@@ -145,10 +148,12 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
                 e := ImageElm( arg[3], g![1] ); 
                 a := Arrow( arg[2], e, pt, ph ); 
             else 
+##Print([i-ngens+nobs,arg[5][i-ngens+nobs],pt,ph],"\n");
                 a := Arrow( arg[2], arg[5][i-ngens+nobs], pt, ph ); 
             fi;
             images[i] := a; 
         od; 
+##Error("here");
         return GroupoidHomomorphism( arg[1], arg[2], gens1, images ); 
     else
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
@@ -231,63 +236,42 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid and IsSinglePiece ], 0,
 function( mor, U )
 
-    local smor, rmor, images, imo, hom, obsrc, obsU, len, imobsU, i, 
-          pos, sres, sgen, rres, qres, qgen, rhom, gens, imgens, ghom, 
-          rays, rims, e, V, res;
+    local smor, rmor, genU, imres, V, res;
 
     smor := Source( mor );
     rmor := Range( mor );
-    if not ( IsDirectProductWithCompleteGraph( smor ) and 
-             IsDirectProductWithCompleteGraph( rmor ) ) then 
-        Error( "only implemented for standard groupoids at present" ); 
-    fi;
     if not ( IsSubdomainWithObjects( smor, U ) ) then
         Error( "U not a submagma of Source(mor)" );
-    fi;
-    images := SinglePieceMappingData( mor );
-    imo := images[1][2];
-    hom := images[1][1];
-    obsrc := smor!.objects; 
-    obsU := ObjectList( U );
-    len := Length( obsU );
-    imobsU := ListWithIdenticalEntries( len, 0 ); 
-    for i in [1..len] do 
-        pos := Position( obsrc, obsU[i] );
-        imobsU[i] := imo[pos]; 
-    od;
-    sres := U!.magma; 
-    rhom := RestrictedMapping( hom, sres );
-    rres := Image( rhom );
-    sgen := GeneratorsOfGroup( sres ); 
-    gens := List( GeneratorsOfGroup(sres), s -> Arrow(U,s,obsU[1],obsU[1]) ); 
-    imgens := List( gens, s -> ImageElm(mor,s) ); 
-    rays := RaysOfGroupoid( U );
-    rims := List( rays, r -> ImageElm(mor,r) ); 
-    V := SinglePieceSubgroupoidByGenerators( rmor, 
-             Concatenation( imgens, rims{[2..len]} ) ); 
-    qres := RootGroup( V );
-    qgen := GeneratorsOfGroup( qres ); 
-    ghom := GroupHomomorphismByImages( sres, qres, sgen, qgen );  
-    rims := List( rims, r -> r![1] ); 
-res := fail;
-##    res := GroupoidHomomorphismFromSinglePiece( U, V, imobsU, rims ); 
+    fi; 
+    genU := GeneratorsOfGroupoid( U ); 
+    imres := List( genU, g -> ImageElm( mor, g ) ); 
+    V := SinglePieceSubgroupoidByGenerators( Range(mor), imres );
+    res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres ); 
     return res; 
 end );
 
-#?  this one not checked: use GeneralRestrictedMapping? 
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoid ], 0,
-function( mor, ssrc )
+function( mor, src )
 
-    local comp, len, rcomp, j, m;
+    local mrng, psrc, lsrc, rcomp, rrng, j, P, genP, imgenP, pos, hom, rng;
 
-    comp := PiecesOfMapping( mor );
-    len := Length( comp );
-    rcomp := ListWithIdenticalEntries( len, 0 );
-    for j in [1..len] do
-        rcomp[j] := RestrictedMappingGroupoids( comp[j], ssrc );
-    od;
-    return HomomorphismByUnionNC( Source(mor), Range(mor), rcomp );
+    mrng := Range( mor );
+    psrc := Pieces( src ); 
+    lsrc := Length( psrc );
+    rcomp := ListWithIdenticalEntries( lsrc, 0 ); 
+    rrng := ListWithIdenticalEntries( lsrc, 0 );
+    for j in [1..lsrc] do 
+        P := psrc[j]; 
+        genP := GeneratorsOfGroupoid( P ); 
+        imgenP := List( genP, g -> ImageElm( mor, g ) ); 
+        pos := PieceNrOfObject( mrng, imgenP[1]![2] ); 
+        hom := GroupoidHomomorphism( P, Pieces(mrng)[pos], genP, imgenP ); 
+        rcomp[j] := hom; 
+        rrng[j] := Range( hom );
+    od; 
+    rng := Groupoid( rrng );
+    return HomomorphismByUnionNC( src, rng, rcomp );
 end );
 
 ############################################################################# 
@@ -435,7 +419,7 @@ function ( hom )
     
     local maps; 
 
-    maps := SinglePieceMappingData( hom ); 
+    maps := MappingToSinglePieceMaps( hom ); 
     return List( maps, m -> MappingGeneratorsImages(m) ); 
 end );
 
@@ -516,9 +500,7 @@ function( src, rng, gens, images )
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
     SetIsHomomorphismFromSinglePiece( map, true ); 
-    #? (10/10/08) do we really need this ?? 
-    ## (15/06/11) added extra [ ] 
-    SetSinglePieceMappingData( map, [ [ hom, oims, rims ] ] );
+    SetMappingToSinglePieceData( map, [ [ hom, oims, rims ] ] );
     if ( src = rng ) then 
         SetIsEndoGeneralMapping( map, true ); 
         SetIsEndomorphismWithObjects( map, true ); 
@@ -1170,7 +1152,8 @@ InstallMethod( InAutomorphismGroupOfGroupoid,
     "for groupoid hom and automorphism group : single piece", 
     true, [ IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep, 
             IsAutomorphismGroupOfGroupoid ], 0,
-function( a, aut )
+function( a, aut ) 
+    #? this needs to be coded 
     Error( "not yet written" ); 
 end ); 
 
@@ -1216,9 +1199,11 @@ function ( map, e )
 
     local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
 
-    #?  need to include some tests here ?? 
+    if not ( e in Source(map) ) then 
+        Error( "the element e is not in the source of mapping map" ); 
+    fi; 
     m1 := Source( map ); 
-    imo := ImagesOfObjects( map );                   ### BUT NOT YET USED!!! 
+    imo := ImagesOfObjects( map ); 
     obs1 := m1!.objects; 
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
@@ -1239,7 +1224,9 @@ function ( map, e )
 
     Info( InfoGroupoids, 5, 
         "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1241" ); 
-    #?  need to include some tests here ?? 
+    if not ( e in Source(map) ) then 
+        Error( "the element e is not in the source of mapping map" ); 
+    fi; 
     p1 := Position( Source( map )!.objects, e![2] ); 
     t2 := ImagesOfObjects( map )[ p1 ]; 
     g2 := ImageElm( ObjectHomomorphisms( map )[ p1 ], e![1] ); 
@@ -1251,27 +1238,28 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoidElement ], 0,
 function ( map, e )
 
-    local G1, C1, pe, obs1, pim, obs2, t2, h2, g2;
+    local src, rng, pe, mape;
 
     Info( InfoGroupoids, 5, 
-        "using ImageElm for general groupoid homomorphisms, line 1158" ); 
-    #?  need to include some tests here ??
-    G1 := Source( map ); 
-    C1 := Pieces( G1 );
-    pe := Position( C1, PieceOfObject( G1, e![2] ) ); 
-    obs1 := C1[pe]!.objects; 
-    pim := SinglePieceMappingData( map )[pe]; 
-    obs2 := pim[1]; 
-    t2 := obs2[ Position( obs1, e![2] ) ];
-    h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := ImageElm( pim[2], e![1] );
-    return Arrow( Range( map ), g2, t2, h2 );
+        "using ImageElm for general groupoid homomorphisms, line 1244" ); 
+    if not ( e in Source(map) ) then 
+        Error( "the element e is not in the source of mapping map" ); 
+    fi; 
+    src := Source( map ); 
+    rng := Range( map ); 
+    pe := Position( Pieces(src), PieceOfObject( src, e![2] ) ); 
+    if ( HasIsSinglePiece( rng ) and IsSinglePiece( rng ) ) then 
+        mape := MappingToSinglePieceMaps( map )[pe]; 
+    else 
+        mape := PiecesOfMapping( map )[pe]; 
+    fi;
+    return ImageElm( mape, e ); 
 end );
 
 InstallOtherMethod( ImagesRepresentative, "for a groupoid homomorphism", true, 
     [ IsGroupoidHomomorphism, IsGroupoidElement ], 0, 
 function( map, e ) 
-    Info( InfoGroupoids, 3, "ImagesRep at gpdhom.gi line 1175" ); 
+    Info( InfoGroupoids, 3, "ImagesRepresentative at gpdhom.gi line 1258" ); 
     return ImageElm( map, e ); 
 end );
 
@@ -1316,23 +1304,36 @@ end );
 #############################################################################
 ##
 #M  IsomorphismPermGroupoid
+#M  IsomorphismPcGroupoid
 ##
 InstallMethod( IsomorphismPermGroupoid, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece ], 0,
 function( g1 )
 
-    local iso, obs, g, g2p, p, g2;
+    local obs, gp1, iso, gp2, g2, par1, isopar, par2, ray1, ray2, 
+          gen1, gen2, isog;
 
     obs := g1!.objects;
-    g := g1!.magma;
-    g2p := IsomorphismPermGroupoid( g );
-    p := Image( g2p );
-    g2 := SinglePieceMagmaWithObjects( p, obs ); 
-    #? (28/01/11) added "NC" and the rays, but not checked! 
-    iso := GroupoidHomomorphismFromSinglePieceNC( g1, g2, obs, g2p );
-    SetIsInjectiveOnObjects( iso, true );
-    SetIsSurjectiveOnObjects( iso, true );
-    return iso;
+    gp1 := g1!.magma;
+    if ( HasIsDirectProductWithCompleteGraphDomain( g1 ) 
+         and IsDirectProductWithCompleteGraphDomain( g1 ) ) then 
+        iso := IsomorphismPermGroup( gp1 );
+        gp2 := Image( iso ); 
+        g2 := Groupoid( gp2, obs ); 
+    else 
+        par1 := LargerDirectProductGroupoid( g1 ); 
+        isopar := IsomorphismPermGroupoid( par1 ); 
+        iso := RootGroupHomomorphism( isopar ); 
+        par2 := Image( isopar ); 
+        gp2 := Image( iso, gp1 ); 
+        ray1 := RaysOfGroupoid( g1 );  
+        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
+    fi; 
+    gen1 := GeneratorsOfGroupoid( g1 ); 
+    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    isog := GroupoidHomomorphismFromSinglePieceNC( g1, g2, gen1, gen2 );
+    return isog;
 end );
 
 InstallMethod( IsomorphismPermGroupoid, "generic method for a groupoid", 
@@ -1349,8 +1350,64 @@ function( g1 )
     od;
     g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
     iso := HomomorphismByUnion( g1, g2, isos );
-    SetIsInjectiveOnObjects( iso, true );
-    SetIsSurjectiveOnObjects( iso, true );
+    return iso;
+end );
+
+InstallMethod( IsomorphismPcGroupoid, "for a connected groupoid", true,
+    [ IsGroupoid and IsSinglePiece ], 0,
+function( g1 )
+
+    local obs, gp1, iso, gp2, g2, par1, isopar, par2, ray1, ray2, 
+          gen1, gen2, isog;
+
+    obs := g1!.objects;
+    gp1 := g1!.magma;
+    if ( HasIsDirectProductWithCompleteGraphDomain( g1 ) 
+         and IsDirectProductWithCompleteGraphDomain( g1 ) ) then 
+        iso := IsomorphismPcGroup( gp1 ); 
+        if ( iso = fail ) then 
+            Info( InfoGroupoids, 1, "IsomorphismPcGroup fails" ); 
+            return fail;
+        fi;
+        gp2 := Image( iso ); 
+        g2 := Groupoid( gp2, obs ); 
+    else 
+        par1 := LargerDirectProductGroupoid( g1 ); 
+        isopar := IsomorphismPcGroupoid( par1 ); 
+        if ( isopar = fail ) then 
+            Info( InfoGroupoids, 1, "IsomorphismPcGroup fails with parent" ); 
+            return fail;
+        fi;
+        iso := RootGroupHomomorphism( isopar ); 
+        par2 := Image( isopar ); 
+        gp2 := Image( iso, gp1 ); 
+        ray1 := RaysOfGroupoid( g1 );  
+        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
+    fi; 
+    gen1 := GeneratorsOfGroupoid( g1 ); 
+    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    if not ( Length( gen1 ) = Length( gen2 ) ) then 
+        Error("generating sets have different lengths");
+    fi;
+    isog := GroupoidHomomorphismFromSinglePieceNC( g1, g2, gen1, gen2 );
+    return isog;
+end );
+
+InstallMethod( IsomorphismPcGroupoid, "generic method for a groupoid", 
+    true, [ IsGroupoid ], 0,
+function( g1 )
+
+    local isos, comp1, nc1, i, g2, iso;
+
+    comp1 := Pieces( g1 );
+    nc1 := Length( comp1 );
+    isos := ListWithIdenticalEntries( nc1, 0 );
+    for i in [1..nc1] do 
+        isos[i] := IsomorphismPcGroupoid( comp1[i] );
+    od;
+    g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
+    iso := HomomorphismByUnion( g1, g2, isos );
     return iso;
 end );
 
@@ -1445,7 +1502,7 @@ function( src, rng, homs, oims )
 #    p := ObjectTransformationOfGroupoidHomomorphism( map ); 
 #    ok := IsSurjectiveOnObjects( map ); 
     SetIsGeneralMappingFromSinglePiece( map, false ); 
-    SetSinglePieceMappingData( map, [ [ homs, oims, [ ] ] ] );
+    SetMappingToSinglePieceData( map, [ [ homs, oims, [ ] ] ] );
 #    if ( src = rng ) then 
 #        SetIsEndoGeneralMapping( map, true ); 
 #        SetIsEndomorphismWithObjects( map, true ); 
