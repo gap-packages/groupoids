@@ -92,15 +92,6 @@ DeclareCategoryCollections( "IsGroupoidHomomorphism" );
 DeclareCategoryCollections( "IsGroupoidHomomorphismCollection" );
 DeclareCategoryCollections( "IsGroupoidHomomorphismCollColl" );
 
-############################################################################# 
-##  
-#V  GroupoidHomomorphismFamily . . . . . family for homomorphisms of groupies 
-##  
-BindGlobal( "GroupoidHomomorphismFamily", 
-    NewFamily( "GroupoidHomomorphismFamily", IsGroupoidHomomorphism, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
-
 ############################################################################## 
 ## 
 #R  IsMappingToSinglePieceRep( <map> )                

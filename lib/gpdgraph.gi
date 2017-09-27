@@ -21,12 +21,13 @@ function( dig, gpds, subgpds, isos )
     local fam, filter, gg;
      
     fam := GraphOfGroupoidsFamily; 
-    filter := IsGraphOfGroupoidsRep;
-    gg := Objectify( NewType( fam, filter ), rec () );
-    SetDigraphOfGraphOfGroupoids( gg, dig );
-    SetGroupoidsOfGraphOfGroupoids( gg, gpds );
-    SetSubgroupoidsOfGraphOfGroupoids( gg, subgpds );
-    SetIsomorphismsOfGraphOfGroupoids( gg, isos );
+    filter := IsGraphOfGroupoidsRep; 
+    gg := rec(); 
+    ObjectifyWithAttributes( gg, GraphOfGroupoidsType, 
+        DigraphOfGraphOfGroupoids, dig, 
+        GroupoidsOfGraphOfGroupoids, gpds, 
+        SubgroupoidsOfGraphOfGroupoids, subgpds, 
+        IsomorphismsOfGraphOfGroupoids, isos );
     if ForAll( gpds, g -> IsPermGroupoid( g ) ) then
         SetIsGraphOfPermGroupoids( gg, true );
     elif ForAll( gpds, g -> IsFpGroupoid( g ) ) then
@@ -296,14 +297,15 @@ function( gg, tv, wL )
 
     fam := FamilyObj( [ gg, wL] );
     filter := IsGraphOfGroupoidsWordRep;
-    ggword := Objectify( NewType( fam, filter ), rec () );
-    SetIsGraphOfGroupoidsWord( ggword, true );
-    SetGraphOfGroupoidsOfWord( ggword, gg );
-    SetTailOfGraphOfGroupsWord( ggword, tv );
+    ggword := rec(); 
+    ObjectifyWithAttributes( ggword, IsGraphOfGroupoidsWordType, 
+        GraphOfGroupoidsOfWord, gg, 
+        TailOfGraphOfGroupsWord, tv, 
+        WordOfGraphOfGroupoidsWord, wL, 
+        IsGraphOfGroupoidsWord, true );
     if ( Length( wL ) = 1 ) then
         SetHeadOfGraphOfGroupsWord( ggword, tv );
     fi;
-    SetWordOfGraphOfGroupoidsWord( ggword, wL );
     return ggword; 
 end );
 

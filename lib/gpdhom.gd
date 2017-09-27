@@ -83,6 +83,18 @@ DeclareRepresentation( "IsDefaultGroupoidHomomorphismRep",
 
 ############################################################################# 
 ##  
+#V  GroupoidHomomorphismFamily  . . . . family for homomorphisms of groupoids 
+#T  GroupoidHomomorphismType  . . . . . . type for homomorphisms of groupoids 
+##  
+BindGlobal( "GroupoidHomomorphismFamily", 
+    NewFamily( "GroupoidHomomorphismFamily", IsGroupoidHomomorphism, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "GroupoidHomomorphismType", 
+    NewType( GroupoidHomomorphismFamily, 
+             IsDefaultGroupoidHomomorphismRep and IsGroupoidHomomorphism ) );
+
+############################################################################# 
+##  
 #O  MappingPermObjectsImages( <obs>, <ims> ) 
 #O  MappingTransObjectsImages( <obs>, <ims> ) 
 #A  ObjectTransformationOfGroupoidHomomorphism( <hom> ) 
@@ -160,7 +172,7 @@ DeclareOperation( "TestAllProductsUnderGroupoidHomomorphism",
 
 ############################################################################## 
 ## 
-#R  IsGroupoidHomomorphismFromHomogeneousdDiscreteRep( <map> ) 
+#R  IsGroupoidHomomorphismFromHomogeneousDiscreteRep( <map> ) 
 ## 
 ##  A groupoid mapping from a homogeneous, discrete groupoid is determined by:
 ##   - homs from the object groups in the source to those in the range,
@@ -180,6 +192,7 @@ DeclareRepresentation( "IsGroupoidHomomorphismFromHomogeneousDiscreteRep",
 #P  IsAutomorphismOfHomogeneousDiscreteGroupoid( IsGroup ) 
 #O  GroupoidAutomorphismByGroupAutosNC( <gpd, homs> )
 #O  GroupoidAutomorphismByGroupAutos( <gpd, homs> )
+#T  GroupoidHomomorphismDiscreteType  . . type for homomorphisms of groupoids 
 ##  
 DeclareOperation( "GroupoidHomomorphismFromHomogeneousDiscrete", 
     [ IsHomogeneousDiscreteGroupoid, IsGroupoid, IsHomogeneousList, 
@@ -199,6 +212,10 @@ DeclareOperation( "GroupoidAutomorphismByGroupAutos",
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAutosNC", 
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
+BindGlobal( "GroupoidHomomorphismDiscreteType", 
+    NewType( GroupoidHomomorphismFamily, 
+             IsGroupoidHomomorphismFromHomogeneousDiscreteRep 
+             and IsGroupoidHomomorphismFromHomogeneousDiscrete ) );
 
 ############################################################################## 
 ## 

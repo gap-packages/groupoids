@@ -782,6 +782,9 @@ As with stars and homsets, these cosets are implemented with representation
 Note that, when <M>U</M> has more than one piece, 
 cosets may have differing lengths.
 <P/>
+In the example the representative for the right coset <C>re2</C> 
+is the last one in the list <C>rcrd8</C>, namely <C>[(2,4):-8->-7]</C>. 
+<P/>
 </Description>
 </ManSection>
 <Example>

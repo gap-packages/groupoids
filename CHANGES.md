@@ -14,6 +14,10 @@
  * (20/09/17) need more in the manual concerning cosets (left, right, double) 
               and it is probably necessary to revise and test these functions 
 
+## 1.52 -> 1.53  (27/09/17) 
+
+ * (27/09/17) introduced lots of Types and adjusted Objectify commands 
+
 ## 1.51 -> 1.52  (21/09/17) 
 
  * (21/09/17) revised HomomorphismToSinglePiece and associated functions 

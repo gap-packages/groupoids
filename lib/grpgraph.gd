@@ -29,16 +29,21 @@ DeclareOperation( "GroupoidArcs", [ GroupoidIsDigraph ] );
 
 ############################################################################## 
 ## 
-#R  IsFpWeightedDigraph( <dig> )                
+#R  IsFpWeightedDigraphRep( <dig> )                
+#V  IsFpWeightedDigraphFamily( <dig> )                
+#T  IsFpWeightedDigraphType( <dig> )                
+#P  IsFpWeightedDigraph( <dig> )                
 ## 
 ##  A FpWeightedDigraph is a set of vertices and a set of directed arcs  
 ## 
-DeclareRepresentation( "IsFpWeightedDigraph",
+DeclareRepresentation( "IsFpWeightedDigraphRep",
     GroupoidIsDigraph and IsComponentObjectRep, 
     [ "group", "vertices", "arcs" ] ); 
-##  (24/01/13) switched from IsAttributeStoringRep to IsComponentObjectRep
-##    GroupoidIsDigraph and IsAttributeStoringRep, 
-##    [ "GroupOfFpWeightedDigraph" ] ); 
+DeclareProperty( "IsFpWeightedDigraph", GroupoidIsDigraph ); 
+BindGlobal( "IsFpWeightedDigraphFamily", 
+            NewFamily( "IsFpWeightedDigraphFamily", IsFpWeightedDigraphRep ) ); 
+BindGlobal( "IsFpWeightedDigraphType", 
+            NewType( IsFpWeightedDigraphFamily, IsFpWeightedDigraphRep ) ); 
  
 ############################################################################# 
 ## 
@@ -81,8 +86,9 @@ DeclareProperty( "IsStructuredDigraph", GroupoidIsDigraph );
 ############################################################################# 
 ## 
 #C  IsGraphOfGroups( <gg> ) 
-#V  GraphOfGroupsFamily
 #R  IsGraphOfGroupsRep( <gg> )                                                
+#V  IsGraphOfGroupsFamily
+#T  IsGraphOfGroupsType
 ## 
 ##  A FpWeightedDigraph of groups is a 4-tuple containing 
 ##  - a FpWeightedDigraph,  
@@ -91,13 +97,15 @@ DeclareProperty( "IsStructuredDigraph", GroupoidIsDigraph );
 ##  - an isomorphism associated to each edge.  
 ## 
 DeclareCategory( "IsGraphOfGroups", GroupoidIsDigraph ); 
-BindGlobal( "GraphOfGroupsFamily", 
-    NewFamily( "GraphOfGroupsFamily", IsGraphOfGroups ) ); 
 DeclareRepresentation( "IsGraphOfGroupsRep",
     IsStructuredDigraph and IsAttributeStoringRep, 
     [ "DigraphOfGraphOfGroups", "GroupsOfGraphOfGroups", 
-##    "SubgroupsOfGraphOfGroups", 
+      #?  "SubgroupsOfGraphOfGroups", 
       "IsomorphismsOfGraphOfGroups" ] ); 
+BindGlobal( "IsGraphOfGroupsFamily", 
+    NewFamily( "IsGraphOfGroupsFamily", IsGraphOfGroups ) ); 
+BindGlobal( "IsGraphOfGroupsType", 
+    NewType( IsGraphOfGroupsFamily, IsGraphOfGroupsRep ) ); 
  
 ############################################################################## 
 ## 
@@ -189,13 +197,22 @@ DeclareOperation( "NormalFormGGRWS", [ IsFpGroup, IsObject ] );
 ############################################################################## 
 ## 
 #R  IsGraphOfGroupsWordRep( <ggword> )                
+#V  IsGraphOfGroupsWordFamily( <ggword> )                
+#T  IsGraphOfGroupsWordType( <ggword> )                
 ## 
 ##  A GraphOfGroupsWord is a word made from elements in the group 
 ##  and arcs in the digraph  
 ## 
 DeclareRepresentation( "IsGraphOfGroupsWordRep", 
-    IsGroupoidElement and IsAttributeStoringRep, 
-   [ "GraphOfGroupsOfWord", "Tail", "WordOfGraphOfGroupsWord" ] ); 
+    ## IsGroupoidElement and IsAttributeStoringRep, 
+    IsObject and IsAttributeStoringRep, 
+    [ "GraphOfGroupsOfWord", 
+      "TailOfGraphOfGroupsWord", "WordOfGraphOfGroupsWord" ] ); 
+BindGlobal( "IsGraphOfGroupsWordFamily", 
+            NewFamily( "IsGraphOfGroupsWordFamily", 
+                       IsGraphOfGroupsWordRep ) );
+BindGlobal( "IsGraphOfGroupsWordType", 
+            NewType( IsGraphOfGroupsWordFamily, IsGraphOfGroupsWordRep ) );
  
 ############################################################################## 
 ## 

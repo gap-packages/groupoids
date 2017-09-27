@@ -782,7 +782,7 @@ end );
 ##
 InstallMethod( Arrow, "generic method for a groupoid element",
     true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
-function( gpd, g, i, j )
+function( gpd, g, i, j ) 
 
     local comp, obs, ok1, ok2, rays;
 
@@ -1015,10 +1015,9 @@ InstallMethod( ObjectStarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local gp, obs, nobs, fam, filter, st, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, st, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    filter := IsHomsetCosetsRep; 
     if ( HasIsDirectProductWithCompleteGraph( gpd ) 
          and IsDirectProductWithCompleteGraph( gpd ) ) then 
         gp := gpd!.magma; 
@@ -1034,8 +1033,7 @@ function( gpd, obj )
             rays := List( [1..Length(obs)], j -> rpos*rays[j] ); 
         fi; 
     fi; 
-    fam := FamilyObj( [ fgpd, gp, [obj], obs, rays, "s" ] ); 
-    st := Objectify( NewType( fam, filter ), 
+    st := Objectify( IsHomsetCosetsType, 
                      [ fgpd, gp, [obj], obs, rays, "s" ]);
     SetIsHomsetCosets( st, true ); 
     return st;
@@ -1069,10 +1067,9 @@ InstallMethod( ObjectCostarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local gp, obs, nobs, fam, filter, cst, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, cst, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    filter := IsHomsetCosetsRep; 
     if ( HasIsDirectProductWithCompleteGraph( gpd ) 
          and IsDirectProductWithCompleteGraph( gpd ) ) then 
         gp := gpd!.magma; 
@@ -1088,8 +1085,7 @@ function( gpd, obj )
             rays := List( [1..Length(obs)], j -> rays[j]*rpos ); 
         fi; 
     fi; 
-    fam := FamilyObj( [ fgpd, gp, obs, [obj], rays, "c" ] ); 
-    cst := Objectify( NewType( fam, filter ), 
+    cst := Objectify( IsHomsetCosetsType, 
                       [ fgpd, gp, obs, [obj], rays, "c" ] );
     SetIsHomsetCosets( cst, true ); 
     return cst;
@@ -1123,10 +1119,9 @@ InstallMethod( HomsetNC, "for a connected groupoid and two objects",
     true, [ IsGroupoid and IsSinglePiece, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
-    local gp, obs, fgpd, fam, filter, rays, gen, hs, p1, p2;
+    local gp, obs, fgpd, rays, gen, hs, p1, p2;
     
     obs := gpd!.objects; 
-    filter := IsHomsetCosetsRep; 
     if ( HasIsDirectProductWithCompleteGraph( gpd ) 
          and IsDirectProductWithCompleteGraph( gpd ) ) then 
         gp := gpd!.magma;
@@ -1139,8 +1134,7 @@ function( gpd, o1, o2 )
         p2 := Position( obs, o2 );
         gen := [ gpd!.rays[p1]^(-1) * gpd!.rays[p2] ]; 
     fi; 
-    fam := FamilyObj( [ fgpd, gp, [o1], [o2], gen, "h" ] ); 
-    hs := Objectify( NewType( fam, filter ), 
+    hs := Objectify( IsHomsetCosetsType, 
                      [ fgpd, gp, [o1], [o2], gen, "h" ] );
     SetIsHomsetCosets( hs, true ); 
     return hs;
@@ -1763,7 +1757,8 @@ function( gpd, sgpd, e )
     fi;
     #?  (16/05/11)  r thinks it is groupoid, so PrintObj fails ?? 
     #?              probably using the wrong family construction ??  
-    r := rec();
+    r := rec(); 
+    #?  seems not possible to use IsHomsetCosetsType here 
     ObjectifyWithAttributes( r, fam!.rightGroupoidCosetsDefaultSizeType, 
         IsGroupoidCoset, true, 
         SuperDomain, G, 
@@ -1846,7 +1841,7 @@ InstallMethod( HomsetCosetsGroupoidCoset, "for right coset of groupoid",
 function( cset )
 
     local U, e, G, obs, ogp, o1, o2, gpcset, fgpd, rays, pos, rpos, 
-          fam, filter, hc, isrt, C; 
+          hc, isrt, C; 
 
     e := Representative( cset ); 
     G := SuperDomain( cset ); 
@@ -1854,7 +1849,6 @@ function( cset )
     if not e in G then 
         Error( "element e not in groupoid G," ); 
     fi; 
-    filter := IsHomsetCosetsRep; 
     isrt := IsRightCosetDefaultRep( cset ); 
     o1 := e![2];
     o2 := e![3]; 
@@ -1863,7 +1857,6 @@ function( cset )
     else 
         ogp := ObjectGroup( U, o2 ); 
     fi; 
-    filter := IsHomsetCosetsRep; 
     if ( HasIsSinglePiece(U) and IsSinglePiece(U) ) then 
         C := U; 
     elif isrt then 
@@ -1897,13 +1890,11 @@ function( cset )
     fi; 
     if isrt then 
         gpcset := RightCoset( ogp, e![1] ); 
-        fam := FamilyObj( [ fgpd, gpcset, obs, [o2], rays, "r" ] );
-        hc := Objectify( NewType( fam, filter ), 
+        hc := Objectify( IsHomsetCosetsType, 
                          [ fgpd, gpcset, obs, [o2], rays, "r" ] );
     elif IsLeftCosetWithObjectsDefaultRep( cset ) then 
         gpcset := RightCoset( ogp, e![1]^(-1) ); 
-        fam := FamilyObj( [ fgpd, gpcset, [o1], obs, rays, "l" ] );
-        hc := Objectify( NewType( fam, filter ), 
+        hc := Objectify( IsHomsetCosetsType, 
                          [ fgpd, gpcset, [o1], obs, rays, "l" ] ); 
     fi; 
     SetIsHomsetCosets( hc, true ); 

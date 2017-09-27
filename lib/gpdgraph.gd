@@ -9,8 +9,9 @@
 ############################################################################# 
 ## 
 #C  IsGraphOfGroupoids( <gg> ) 
-#V  GraphOfGroupoidsFamily
 #R  IsGraphOfGroupoidsRep( <gg> ) 
+#V  GraphOfGroupoidsFamily
+#T  GraphOfGroupoidsType 
 ## 
 ##  A FpWeightedDigraph of groupoids is a 4-tuple containing 
 ##  - a FpWeightedDigraph,  
@@ -19,13 +20,16 @@
 ##  - an isomorphism associated to each edge.  
 ## 
 DeclareCategory( "IsGraphOfGroupoids", GroupoidIsDigraph ); 
-BindGlobal( "GraphOfGroupoidsFamily", 
-    NewFamily( "GraphOfGroupoidsFamily", IsGraphOfGroupoids ) ); 
 DeclareRepresentation( "IsGraphOfGroupoidsRep",
     IsStructuredDigraph and IsAttributeStoringRep,
     [ "DigraphOfGraphOfGroupoids", "GroupoidsOfGraphOfGroupoids", 
       "SubgroupoidsOfGraphOfGroupoids", "IsomorphismsOfGraphOfGroupoids" ] ); 
- 
+BindGlobal( "GraphOfGroupoidsFamily", 
+    NewFamily( "GraphOfGroupoidsFamily", IsGraphOfGroupoids ) ); 
+BindGlobal( "GraphOfGroupoidsType", 
+            NewType( GraphOfGroupoidsFamily, IsGraphOfGroupoidsRep ) ); 
+
+
 ############################################################################## 
 ## 
 #P  IsGraphOfPermGroupoids( <gg> ) 
@@ -79,13 +83,22 @@ DeclareAttribute( "LeftTransversalsOfGraphOfGroupoids", IsGraphOfGroupoids );
 ######################################### #################################### 
 ## 
 #R  IsGraphOfGroupoidsWordRep( <ggword> )                
+#V  IsGraphOfGroupoidsWordFamily( <ggword> )                
+#T  IsGraphOfGroupoidsWordType( <ggword> )                
 ## 
 ##  A GraphOfGroupoidsWord is a word made from elements in the groupoid 
 ##  and edges in the digraph  
 ## 
 DeclareRepresentation( "IsGraphOfGroupoidsWordRep", 
     IsObject and IsAttributeStoringRep, 
-   [ "GraphOfGroupoidsOfWord", "GGTail", "WordOfGraphOfGroupoidsWord" ] ); 
+   [ "GraphOfGroupoidsOfWord", 
+     "TailOfGraphOfGroupsWord", "WordOfGraphOfGroupoidsWord" ] ); 
+BindGlobal( "IsGraphOfGroupoidsWordFamily", 
+            NewFamily( "IsGraphOfGroupoidsWordFamily", 
+                       IsGraphOfGroupoidsWordRep ) ); 
+BindGlobal( "IsGraphOfGroupoidsWordType", 
+            NewType( IsGraphOfGroupoidsWordFamily, 
+                     IsGraphOfGroupoidsWordRep ) );
  
 ######################################### #################################### 
 ## 

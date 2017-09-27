@@ -44,17 +44,13 @@ InstallMethod( FpWeightedDigraphNC, "generic method for a digraph",
     true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
 function( gp, v, e )
 
-    local fam, filter, dig;
+    local dig;
      
-    fam := FamilyObj( [ v, e ] );
-    filter := IsFpWeightedDigraph;
-    dig := Objectify( NewType( fam, filter ), rec () );
-    ## changed from attributes to components 04/04/06 
-    ## and changed back again 25/10/12 (but conflicts with Grape!) 
-    ## and changed back to components again 12/01/13 
+    dig := Objectify( IsFpWeightedDigraphType, rec () );
     dig!.group := gp; 
     dig!.vertices := v;
     dig!.arcs := e; 
+    SetIsFpWeightedDigraph( dig, true );
     return dig; 
 end );
 
@@ -203,14 +199,13 @@ InstallMethod( GraphOfGroupsNC, "generic method for a digraph of groups",
     true, [ IsFpWeightedDigraph, IsList, IsList ], 0,
 function( dig, gps, isos )
 
-    local fam, filter, gg, ok; 
+    local gg, ok; 
      
-    fam := GraphOfGroupsFamily; 
-    filter := IsGraphOfGroupsRep;
-    gg := Objectify( NewType( fam, filter ), rec () );
-    SetDigraphOfGraphOfGroups( gg, dig );
-    SetGroupsOfGraphOfGroups( gg, gps );
-    SetIsomorphismsOfGraphOfGroups( gg, isos );
+    gg := rec(); 
+    ObjectifyWithAttributes( gg, IsGraphOfGroupsType, 
+        DigraphOfGraphOfGroups, dig, 
+        GroupsOfGraphOfGroups, gps, 
+        IsomorphismsOfGraphOfGroups, isos );
     if ForAll( gps, g -> IsPermGroup( g ) ) then
         SetIsGraphOfPermGroups( gg, true );
     elif ForAll( gps, g -> IsFpGroup( g ) ) then
@@ -249,8 +244,8 @@ function( dig, gps, isos )
     # checking that isomorphisms are isos and form correct groups.
     inv := InvolutoryArcs(dig);
     for i in [1..lenE] do
-    ### THIS LINE DOES NOT MAKE SENSE :-
-    ###        einvpos := Position( e, e[inv[i]] );
+    #?  THIS LINE DOES NOT MAKE SENSE :-
+    #?         einvpos := Position( e, e[inv[i]] );
         for g in GeneratorsOfGroup( Source( isos[i] ) ) do
             if not ( ImageElm( isos[inv[i]], ImageElm(isos[i],g) ) = g ) then
                 Error( "isos are not correct");
@@ -428,18 +423,17 @@ InstallMethod( GraphOfGroupsWordNC, "generic method for a word",
     true, [ IsGraphOfGroups, IsInt, IsList ], 0,
 function( gg, tv, wL )
 
-    local fam, filter, ggword;
+    local ggword;
     
-    fam := FamilyObj( [ gg, wL] );
-    filter := IsGraphOfGroupsWordRep;
-    ggword := Objectify( NewType( fam, filter ), rec () );
-    SetIsGraphOfGroupsWord( ggword, true );
-    SetGraphOfGroupsOfWord( ggword, gg );
-    SetTailOfGraphOfGroupsWord( ggword, tv );
+    ggword := rec(); 
+    ObjectifyWithAttributes( ggword, IsGraphOfGroupsWordType, 
+        GraphOfGroupsOfWord, gg, 
+        TailOfGraphOfGroupsWord, tv, 
+        WordOfGraphOfGroupsWord, wL, 
+        IsGraphOfGroupsWord, true ); 
     if ( Length( wL ) = 1 ) then
         SetHeadOfGraphOfGroupsWord( ggword, tv );
     fi;
-    SetWordOfGraphOfGroupsWord( ggword, wL );
     return ggword; 
 end );
 

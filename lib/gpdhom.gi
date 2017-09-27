@@ -467,11 +467,9 @@ InstallMethod( GroupoidHomomorphismFromSinglePieceNC,
       IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, gens, images )
 
-    local fam, filter, obs, nobs, ngens, nggens, posr, imr, map, 
+    local obs, nobs, ngens, nggens, posr, imr, map, 
           gps, gpr, hgen, himg, hom, oims, rims, ok;
 
-    fam := GroupoidHomomorphismFamily; 
-    filter := IsDefaultGroupoidHomomorphismRep and IsGroupoidHomomorphism; 
     obs := ObjectList( src ); 
     nobs := Length( obs ); 
     ngens := Length( gens ); 
@@ -487,7 +485,7 @@ function( src, rng, gens, images )
     rims := Concatenation( [ One( gpr ) ], 
                            List( [posr..ngens], i -> images[i]![1] ) );
     map := rec(); 
-    ObjectifyWithAttributes( map, NewType( fam, filter ), 
+    ObjectifyWithAttributes( map, GroupoidHomomorphismType, 
         Source, src, 
         Range, rng, 
         RootGroupHomomorphism, hom, 
@@ -1484,13 +1482,10 @@ InstallMethod( GroupoidHomomorphismFromHomogeneousDiscreteNC,
       IsHomogeneousList ], 0,
 function( src, rng, homs, oims )
 
-    local fam, filter, map, ok, p;
+    local map, ok, p;
 
-    fam := GroupoidHomomorphismFamily; 
-    filter := IsGroupoidHomomorphismFromHomogeneousDiscreteRep 
-              and IsGroupoidHomomorphismFromHomogeneousDiscrete; 
     map := rec(); 
-    ObjectifyWithAttributes( map, NewType( fam, filter ), 
+    ObjectifyWithAttributes( map, GroupoidHomomorphismDiscreteType, 
         Source, src, 
         Range, rng, 
         ObjectHomomorphisms, homs, 
@@ -1498,16 +1493,16 @@ function( src, rng, homs, oims )
         IsGeneralMappingWithObjects, true, 
         IsGroupoidHomomorphism, true, 
         RespectsMultiplication, true ); 
-#    ok := IsInjectiveOnObjects( map ); 
-#    p := ObjectTransformationOfGroupoidHomomorphism( map ); 
-#    ok := IsSurjectiveOnObjects( map ); 
+#?  ok := IsInjectiveOnObjects( map ); 
+#?  p := ObjectTransformationOfGroupoidHomomorphism( map ); 
+#?  ok := IsSurjectiveOnObjects( map ); 
     SetIsGeneralMappingFromSinglePiece( map, false ); 
     SetMappingToSinglePieceData( map, [ [ homs, oims, [ ] ] ] );
-#    if ( src = rng ) then 
-#        SetIsEndoGeneralMapping( map, true ); 
-#        SetIsEndomorphismWithObjects( map, true ); 
-        ## ok := IsAutomorphismWithObjects( map ); 
-#    fi; 
+#?  if ( src = rng ) then 
+#?      SetIsEndoGeneralMapping( map, true ); 
+#?      SetIsEndomorphismWithObjects( map, true ); 
+#?      ok := IsAutomorphismWithObjects( map ); 
+#?  fi; 
     return map; 
 end );
 

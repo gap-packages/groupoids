@@ -142,10 +142,12 @@ DeclareOperation( "ReplaceOnePieceInUnion",
 ############################################################################## 
 ## 
 #O  GroupoidElement( <gpd>, <elt>, <src>, <tgt> ) 
+#O  IdentityArrow( <gpd>, <obj> )
 ## 
 ##  A connected groupoid element is [ group element, tail, head ]
 ## 
 DeclareSynonym( "GroupoidElement", Arrow ); 
+DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] ); 
 
 ############################################################################## 
 ## 
@@ -153,7 +155,7 @@ DeclareSynonym( "GroupoidElement", Arrow );
 ##  of a connected groupoid for which an iterator is required
 ##  
 ##  Six items of data are required: 
-##  1.  the family of objects of the parent groupoid, 
+##  1.  the family of objects of the parent groupoid,    #? why? 
 ##  2.  a set of group elements, e.g. an object group, 
 ##  3.  a list of source objects, 
 ##  4.  a list of target objects, 
@@ -163,6 +165,8 @@ DeclareSynonym( "GroupoidElement", Arrow );
 ##
 #P  IsHomsetCosets( <obj> )
 #R  IsHomsetCosetsRep( <obj> )
+#R  IsHomsetCosetsFamily( <obj> )
+#R  IsHomsetCosetsType( <obj> )
 #O  ObjectStarNC( <gpd>, <obj> ) 
 #O  ObjectStar( <gpd>, <obj> ) 
 #O  ObjectCostarNC( <gpd>, <obj> ) 
@@ -174,8 +178,10 @@ DeclareSynonym( "GroupoidElement", Arrow );
 DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 DeclareRepresentation( "IsHomsetCosetsRep", 
     IsHomsetCosets and IsPositionalObjectRep, [1..6] ); 
-## DeclareAttribute( "UnionHomsets", IsGroupoid );
-DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] ); 
+BindGlobal( "IsHomsetCosetsFamily", 
+            NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
+BindGlobal( "IsHomsetCosetsType", 
+            NewType( IsHomsetCosetsFamily, IsHomsetCosetsRep ) );
 DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] ); 
 DeclareOperation( "ObjectStar", [ IsGroupoid, IsObject ] ); 
 DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsObject ] ); 
