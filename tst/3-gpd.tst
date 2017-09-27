@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  gpd.tst                 groupoids Package                    Chris Wensley
+#W  3-gpd.tst               groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -21,6 +21,10 @@ gap> SetName( c6, "c6" );
 gap> Gc6 := DomainWithSingleObject( c6, -6 );
 single piece groupoid: < c6, [ -6 ] >
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+
+## SubSection 4.1.2 
+gap> ObjectList( Gs4 );
+[ -15 .. -11 ] 
 gap> f2 := FreeGroup(2);;
 gap> Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );
 single piece groupoid: < c6, [ f1, f2 ] >
@@ -30,16 +34,6 @@ gap> Gabc := Groupoid( d8, [ "a", "b", "c" ] );
 single piece groupoid: < d8, [ "a", "b", "c" ] >
 gap> Arrow( Gabc, (2,4), "c", "b" );
 [(2,4) : c -> b]
-
-## SubSection 4.1.2
-gap> ObjectList( Gs4 );    
-[ -15 .. -11 ]
-gap> RootObject( Gd8 );
--9
-gap> RootGroup( Gc6 );
-c6
-gap> ObjectGroup( Gs4, -11 );
-s4
 
 ## SubSection 4.1.3
 gap> f2 := FreeGroup( 2 );;
@@ -218,22 +212,24 @@ groupoid with 2 pieces:
 2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
 gap> IsWideSubgroupoid( U2, SU2 ); 
 false
-
-## SubSection 4.3.2
 gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
 true
+
+## SubSection 4.3.2
 gap> FullSubgroupoid( U3, [-7,-6] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -7 ] >
 2:  single piece groupoid: < c6, [ -6 ] >
-gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < c4, [ -9 ] >
-2:  single piece groupoid: < k4, [ -7 ] >
 gap> FullTrivialSubgroupoid( Ud8 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(k4), [ -9 ] >
 2:  single piece groupoid: < id(c4), [ -8, -7 ] >
+
+## SubSection 4.3.3
+gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < c4, [ -9 ] >
+2:  single piece groupoid: < k4, [ -7 ] >
 gap> MaximalDiscreteSubgroupoid(U2);
 groupoid with 3 pieces:
 1:  single piece groupoid: < q8, [ -28 ] >
@@ -245,7 +241,7 @@ groupoid with 3 pieces:
 2:  single piece groupoid: < id(q8), [ -27 ] >
 3:  single piece groupoid: < id(f2), [ -22 ] >
 
-## SubSection 4.3.3
+## SubSection 4.3.4
 gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
@@ -275,6 +271,18 @@ single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ),
 gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
 single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
 
+## SubSection 4.3.5 
+gap> u := Arrow( Gs4, (1,2,3), -15, -13 );
+[(1,2,3) : -15 -> -13]
+gap> gensa := GeneratorsOfGroupoid( Hd8a );
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13],
+  [(3,4) : -14 -> -12] ]
+gap> imsa := List( gensa, g -> g^u );
+[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15],
+  [(3,4) : -14 -> -12] ]
+gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa );
+single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
+[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
 
 ### Section 4.4 : Left, Right and Double Cosets ###
 
@@ -324,19 +332,6 @@ gap> w^z;
 [(1,3) : -9 -> -8]
 
 ## SubSection 4.5.2
-gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
-[(1,2,3) : -15 -> -13]
-gap> gensa := GeneratorsOfGroupoid( Hd8a );
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
-  [(3,4) : -14 -> -12] ]
-gap> imsa := List( gensa, g -> g^u ); 
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
-  [(3,4) : -14 -> -12] ]
-gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
-
-## SubSection 4.5.3
 gap> ConjugateGroupoid( Hd8a, u^-1 ); 
 single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
@@ -345,4 +340,4 @@ gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;
 
 #############################################################################
 ##
-#E  gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  3-gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  ggraph.tst              groupoids Package                    Chris Wensley
+#W  5-ggraph.tst            groupoids Package                    Chris Wensley
 #W                                                                & Emma Moore
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -216,6 +216,8 @@ isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
   groupoid homomorphism : Uhybar -> Uhy
     [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
       [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
+
+## Subsection 6.5.2
 gap> f1 := Arrow( Gfa, a^7, -1, -2);;
 gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
 gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;
@@ -234,4 +236,4 @@ gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;
 
 #############################################################################
 ##
-#E  ggraph.tst . . . .. . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  5-ggraph.tst . . . . . . . . . . . . . . . . . . . . . . . . . ends here

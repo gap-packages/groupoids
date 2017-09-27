@@ -134,7 +134,7 @@ the objects need not be integers.
 <Example>
 <![CDATA[
 gap> ObjectList( Gs4 );    
-[ -15, -14, -13, -12, -11 ]
+[ -15 .. -11 ]
 gap> [ RootObject( Gd8 ), RootGroup( Gc6 ), ObjectGroup( Gs4, -11 ) ];
 [ -9, c6, s4 ]
 gap> f2 := FreeGroup(2);;

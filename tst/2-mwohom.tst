@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  mwohom.tst              groupoids Package                    Chris Wensley
+#W  2-mwohom.tst            groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -130,4 +130,4 @@ gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;
 
 ##############################################################################
 ##
-#E  mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  2-mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  gpdhom.tst              groupoids Package                    Chris Wensley
+#W  4-gpdhom.tst            groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -362,4 +362,4 @@ gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;
 
 #############################################################################
 ##
-#E  gpdhom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  4-gpdhom.tst . . . . . . . . . . . . . . . . . . . . . . . . . ends here
