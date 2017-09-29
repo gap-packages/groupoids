@@ -1,14 +1,15 @@
 ##############################################################################
 ##
-#W  3-gpd.tst               groupoids Package                    Chris Wensley
+#W  gpd.tst                 groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-
-## SubSection 4.1.1 
+gap> START_TEST( "groupoids package: gpd.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
+
+## SubSection 4.1.1 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
 gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
 gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
@@ -337,7 +338,8 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 [ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
+gap> STOP_TEST( "gpd.tst", 10000 );
 
 #############################################################################
 ##
-#E  3-gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

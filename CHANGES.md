@@ -14,8 +14,9 @@
  * (20/09/17) need more in the manual concerning cosets (left, right, double) 
               and it is probably necessary to revise and test these functions 
 
-## 1.52 -> 1.53  (27/09/17) 
+## 1.52 -> 1.53  (29/09/17) 
 
+ * (29/09/17) test files back to original names and made independent 
  * (27/09/17) introduced lots of Types and adjusted Objectify commands 
 
 ## 1.51 -> 1.52  (21/09/17) 

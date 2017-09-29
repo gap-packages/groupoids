@@ -14,8 +14,7 @@ TestGroupoids := function( pkgname )
     pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
     # Arrange chapters as required
     testfiles := 
-        [ "1-mwo.tst", "2-mwohom.tst", "3-gpd.tst", "4-gpdhom.tst", 
-          "5-ggraph.tst" ];
+        [ "mwo.tst", "mwohom.tst", "gpd.tst", "gpdhom.tst", "ggraph.tst" ];
     testresult := true;
     for ff in testfiles do
         fn := Filename( pkgdir, ff );

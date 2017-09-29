@@ -1,11 +1,11 @@
 ##############################################################################
 ##
-#W  5-ggraph.tst            groupoids Package                    Chris Wensley
+#W  ggraph.tst              groupoids Package                    Chris Wensley
 #W                                                                & Emma Moore
 #Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-
+gap> START_TEST( "groupoids package: ggraph.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
@@ -233,7 +233,8 @@ gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
 (5)[a^-1 : -1 -> -2].y.[b^-1 : -4 -> -4].y^-1.[a^10 : -2 -> -1](5)
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
+gap> STOP_TEST( "ggraph.tst", 10000 );
 
 #############################################################################
 ##
-#E  5-ggraph.tst . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  ggraph.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

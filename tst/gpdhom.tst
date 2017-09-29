@@ -1,16 +1,42 @@
 ##############################################################################
 ##
-#W  4-gpdhom.tst            groupoids Package                    Chris Wensley
+#W  gpdhom.tst              groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-
+gap> START_TEST( "groupoids package: gpdhom.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
-###  Subsection 5.1.1
+## make mwohom.tst independent of mwo.tst 
+gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
+gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
+gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );; 
+gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
+gap> c6 := Group( (5,6,7)(8,9) );;
+gap> SetName( c6, "c6" );
+gap> Gc6 := DomainWithSingleObject( c6, -6 );;
+gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+gap> f2 := FreeGroup( 2 );;
+gap> Gf2 := Groupoid( f2, -22 );;
+gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
+gap> q8 := SmallGroup( 8, 4 );;
+gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
+gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
+gap> gl43 := SpecialLinearGroup( 4, 3 );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
+gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
+gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> SetName( Hs4, "Hs4" ); 
+gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
+gap> SetName( Hd8b, "Hd8b" );
 
+
+
+###  Subsection 5.1.1
 gap> gen1 := GeneratorsOfGroupoid( Gq8 ); 
 [ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
   [<identity> of ... : -28 -> -27] ]
@@ -359,7 +385,8 @@ gap> u1 = imu;
 true
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+gap> STOP_TEST( "gpdhom.tst", 10000 );
 
 #############################################################################
 ##
-#E  4-gpdhom.tst . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  gpdhom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

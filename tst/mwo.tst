@@ -1,15 +1,15 @@
 ##############################################################################
 ##
-#W  1-mwo.tst               Groupoids Package                    Chris Wensley
+#W  mwo.tst                 Groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-
-## SubSection 2.1.1 
+gap> START_TEST( "groupoids package: mwo.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
+## SubSection 2.1.1 
 ## ========================  MAGMA  ================================ ## 
 gap> tm := [[1,2,4,3],[1,2,4,3],[3,4,2,1],[3,4,2,1]];; 
 gap> Display( tm );
@@ -212,7 +212,8 @@ gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );
 fail
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+gap> STOP_TEST( "mwo.tst", 10000 );
 
 #############################################################################
 ##
-#E  1-mwo.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  mwo.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

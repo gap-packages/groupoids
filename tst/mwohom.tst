@@ -1,14 +1,36 @@
 ##############################################################################
 ##
-#W  2-mwohom.tst            groupoids Package                    Chris Wensley
+#W  mwohom.tst              groupoids Package                    Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-
-## SubSection 3.1.1
+gap> START_TEST( "groupoids package: mwohom.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
+
+## make mwohom.tst independent of mwo.tst 
+gap> tm := [[1,2,4,3],[1,2,4,3],[3,4,2,1],[3,4,2,1]];; 
+gap> m := MagmaByMultiplicationTable( tm );; 
+gap> SetName( m, "m" );;
+gap> m1 := MagmaElement(m,1);;  m2 := MagmaElement(m,2);; 
+gap> m3 := MagmaElement(m,3);;  m4 := MagmaElement(m,4);; 
+gap> M78 := MagmaWithObjects( m, [-8,-7] );; 
+gap> SetName( M78, "M78" );; 
+gap> a78 := Arrow( M78, m2, -7, -8 );; 
+gap> b87 := Arrow( M78, m4, -8, -7 );;
+gap> t := Transformation( [1,1,2,3] );; 
+gap> s := Transformation( [2,2,3,3] );;
+gap> r := Transformation( [2,3,4,4] );; 
+gap> sgp := Semigroup( t, s, r );; 
+gap> SetName( sgp, "sgp<t,s,r>" ); 
+gap> S123 := SemigroupWithObjects( sgp, [-3,-2,-1] );; 
+gap> t12 := Arrow( S123, t, -1, -2 );;
+gap> s23 := Arrow( S123, s, -2, -3 );;
+gap> r31 := Arrow( S123, r, -3, -1 );;
+gap> N1 := UnionOfPieces( [ M78, S123 ] );; 
+
+## SubSection 3.1.1
 gap> tup1 := 
 >      [ Tuple([m1,m2]), Tuple([m2,m1]), Tuple([m3,m4]), Tuple([m4,m3]) ];; 
 gap> f1 := GeneralMappingByElements( m, m, tup1 ); 
@@ -127,7 +149,8 @@ gap> IsAutomorphismWithObjects( h14 );
 false
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+gap> STOP_TEST( "mwohom.tst", 10000 );
 
 ##############################################################################
 ##
-#E  2-mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
