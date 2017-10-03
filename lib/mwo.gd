@@ -32,12 +32,12 @@ DeclareGlobalFunction( "DomainWithObjects" );
 ## 
 #P  IsSinglePieceDomain( <dwo> ) . . . . . . . . . . . . . a connected domain
 #P  IsDiscreteDomainWithObjects( <dwo> ) . . . . .  with at least two objects
-#P  IsDirectProductWithCompleteGraphDomain( <dwo> ) 
+#P  IsDirectProductWithCompleteDigraphDomain( <dwo> ) 
 #P  IsHomogeneousDomainWithObjects( <dwo> ) 
 ## 
 DeclareProperty( "IsSinglePieceDomain", IsDomainWithObjects );  
 DeclareProperty( "IsDiscreteDomainWithObjects", IsDomainWithObjects ); 
-DeclareProperty( "IsDirectProductWithCompleteGraphDomain", 
+DeclareProperty( "IsDirectProductWithCompleteDigraphDomain", 
     IsDomainWithObjects ); 
 DeclareProperty( "IsHomogeneousDomainWithObjects", IsDomainWithObjects ); 
 
@@ -207,14 +207,14 @@ IsGroupoidFamily := CollectionsFamily( IsGroupoidElementFamily );
 ## 
 #P  IsSinglePiece( <mwo> )
 #P  IsDiscrete( <mwo> ) 
-#P  IsDirectProductWithCompleteGraph( <mwo> )
+#P  IsDirectProductWithCompleteDigraph( <mwo> )
 ## 
 DeclareSynonymAttr( "IsSinglePiece", 
     IsMagmaWithObjects and IsSinglePieceDomain );
 DeclareSynonymAttr( "IsDiscrete", 
     IsMagmaWithObjects and IsDiscreteDomainWithObjects );
-DeclareSynonymAttr( "IsDirectProductWithCompleteGraph", 
-    IsMagmaWithObjects and IsDirectProductWithCompleteGraphDomain );
+DeclareSynonymAttr( "IsDirectProductWithCompleteDigraph", 
+    IsMagmaWithObjects and IsDirectProductWithCompleteDigraphDomain );
 
 ############################################################################ 
 ## 

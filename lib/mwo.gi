@@ -93,7 +93,7 @@ function( mwo, e, t, h )
     if not ( ( t in obs ) and ( h in obs ) ) then  
         Error( "<t> and <h> must be objects in <piece>," ); 
     fi;
-    if not IsDirectProductWithCompleteGraph( piece ) then 
+    if not IsDirectProductWithCompleteDigraph( piece ) then 
         if not IsBound( piece!.table ) then 
             TryNextMethod(); 
         fi;
@@ -288,7 +288,7 @@ function( mag, obs )
         IsCommutative, IsCommutative( mag ), 
         IsFinite, IsFinite( mag ), 
         IsSinglePieceDomain, true, 
-        IsDirectProductWithCompleteGraphDomain, true );
+        IsDirectProductWithCompleteDigraphDomain, true );
     gens := GeneratorsOfMagmaWithObjects( mwo );
     return mwo; 
 end ); 
@@ -339,8 +339,8 @@ function( e, mwo )
     if not ( (e![2] in obs) and (e![3] in obs) ) then 
         return false; 
     fi; 
-    if ( HasIsDirectProductWithCompleteGraph( mwo ) 
-         and IsDirectProductWithCompleteGraph( mwo ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( mwo ) 
+         and IsDirectProductWithCompleteDigraph( mwo ) ) then 
         return (e![1] in mwo!.magma);
     else 
         Error( "mwo not a standard magma with objects" ); 
@@ -363,8 +363,8 @@ function( mwo )
 
     local p, s;
 
-    if ( HasIsDirectProductWithCompleteGraphDomain( mwo ) and 
-            IsDirectProductWithCompleteGraphDomain( mwo ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraphDomain( mwo ) and 
+            IsDirectProductWithCompleteDigraphDomain( mwo ) ) then 
         return Size( mwo!.magma ) * Length( mwo!.objects )^2; 
     elif ( HasIsDiscreteDomainWithObjects( mwo ) and 
               IsDiscreteDomainWithObjects( mwo ) ) then 
@@ -511,7 +511,7 @@ function( mwo )
     local comp, c, i, m, len;
 
     if IsSinglePiece( mwo ) then 
-        if IsDirectProductWithCompleteGraph( mwo ) then 
+        if IsDirectProductWithCompleteDigraph( mwo ) then 
             Print( "Single constituent magma with objects: " );
             if HasName( mwo ) then
                 Print( mwo );
@@ -534,7 +534,7 @@ function( mwo )
         Print( "Magma with objects with ", len, " constituents:\n" );
         for i in [1..len] do
             c := comp[i];
-            if IsDirectProductWithCompleteGraph( c ) then 
+            if IsDirectProductWithCompleteDigraph( c ) then 
                 Print( "< objects: ", c!.objects, "\n" );
                 m := c!.magma;
                 Print( "    magma: " );
@@ -587,8 +587,8 @@ function( mwo )
     if ( "IsGroupoid" in CategoriesOfObject( mwo ) ) then 
         return GeneratorsOfGroupoid( mwo ); 
     fi;
-    if not ( HasIsDirectProductWithCompleteGraphDomain( mwo ) and 
-                IsDirectProductWithCompleteGraphDomain( mwo ) ) then 
+    if not ( HasIsDirectProductWithCompleteDigraphDomain( mwo ) and 
+                IsDirectProductWithCompleteDigraphDomain( mwo ) ) then 
         Info( InfoGroupoids, 1, "expecting product with complete graph" ); 
         return fail; 
     fi;
@@ -1052,7 +1052,7 @@ function( sgp, obs )
         IsCommutative, IsCommutative( sgp ), 
         IsFinite, IsFinite( sgp ), 
         IsSinglePieceDomain, true, 
-        IsDirectProductWithCompleteGraphDomain, true ); 
+        IsDirectProductWithCompleteDigraphDomain, true ); 
     gens := GeneratorsOfSemigroupWithObjects( swo ); 
     return swo; 
 end ); 
@@ -1097,7 +1097,7 @@ function( mon, obs )
         IsAssociative, IsAssociative( mon ), 
         IsCommutative, IsCommutative( mon ), 
         IsSinglePieceDomain, true, 
-        IsDirectProductWithCompleteGraphDomain, true, 
+        IsDirectProductWithCompleteDigraphDomain, true, 
         IsFinite, HasIsFinite( mon ) and IsFinite( mon ) );
     gens := GeneratorsOfMonoidWithObjects( mwo ); 
     return mwo; 
@@ -1277,8 +1277,8 @@ function( mwo )
             else 
                 iter!.hpos := iter!.hpos + 1;
             fi;
-            if ( HasIsDirectProductWithCompleteGraph( mwo ) 
-                 and IsDirectProductWithCompleteGraph( mwo ) ) then 
+            if ( HasIsDirectProductWithCompleteDigraph( mwo ) 
+                 and IsDirectProductWithCompleteDigraph( mwo ) ) then 
                return Arrow( mwo, iter!.melt, 
                    iter!.obs[iter!.tpos], iter!.obs[iter!.hpos] );
             else 

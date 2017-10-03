@@ -35,7 +35,6 @@ gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
 
 
-
 ###  Subsection 5.1.1
 gap> gen1 := GeneratorsOfGroupoid( Gq8 ); 
 [ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
@@ -240,7 +239,7 @@ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
 images of objects: [ -13, -11, -15 ]
    images of rays: [ [() : -13 -> -13], [() : -13 -> -11], [() : -13 -> -15] ]
 gap> h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
-gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; 
+gap> aut2 := GroupoidIsomorphismByGroupIso( Ga4, h2 );; 
 gap> Display( aut2 ); 
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
@@ -383,6 +382,44 @@ gap> u1 := z1*w1*y1*x1*z1;
 gap> imu := ImageElm( nmonAHs3, u );; 
 gap> u1 = imu;
 true
+
+## Section 5.5 
+gap> reps := IrreducibleRepresentations( s4 );;
+gap> rep4 := reps[4]; 
+Pcgs([ (3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ]) -> 
+[ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], 
+  [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], 
+  [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], 
+  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]
+gap> ImageElm( rep4, (1,4,2,3) );
+[ [ 0, 1, 0 ], [ -1, 0, 0 ], [ 0, 0, -1 ] ]
+gap> mor := GroupoidIsomorphismByGroupIso( Hs4, rep4 );
+groupoid homomorphism : 
+[ [ [(1,2,3,4) : -14 -> -14], [(3,4) : -14 -> -14], [() : -14 -> -13], 
+      [() : -14 -> -12] ], 
+  [ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -14 -> -14], 
+      [[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ] : -14 -> -14], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -14 -> -13], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -14 -> -12] ] ]
+gap> Rs4 := Range( mor ); 
+single piece groupoid: < Group([ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], 
+  [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], 
+  [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], 
+  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]), [ -14, -13, -12 ] >
+gap> IsMatrixGroupoid( Rs4 ); 
+true
+gap> a := Arrow( Hs4, (1,4,2), -12, -13 );
+[(1,4,2) : -12 -> -13]
+gap> ImageElm( mor, a );
+[[ [ 0, 0, -1 ], [ -1, 0, 0 ], [ 0, 1, 0 ] ] : -12 -> -13]
+gap> rmor := RestrictedMappingGroupoids( mor, Hd8b );
+groupoid homomorphism : 
+[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
+      [(1,2,4) : -14 -> -12] ], 
+  [ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -14 -> -14], 
+      [[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, -1, 0 ] ] : -14 -> -14], 
+      [[ [ 0, 0, 1 ], [ -1, 0, 0 ], [ 0, -1, 0 ] ] : -14 -> -13], 
+      [[ [ 0, -1, 0 ], [ 0, 0, 1 ], [ -1, 0, 0 ] ] : -14 -> -12] ] ]
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "gpdhom.tst", 10000 );

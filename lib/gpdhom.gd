@@ -102,7 +102,7 @@ BindGlobal( "GroupoidHomomorphismType",
 DeclareOperation( "MappingPermObjectsImages", [ IsList, IsList ] ); 
 DeclareOperation( "MappingTransObjectsImages", [ IsList, IsList ] ); 
 DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism", 
-    IsDefaultGroupoidHomomorphismRep );
+    IsGroupWithObjectsHomomorphism );
 
 ############################################################################# 
 ## 
@@ -110,12 +110,8 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <gens>, <images> )  
 #O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> )  
-#O  GroupoidAutomorphismByGroupAutoNC( <gpd, ims> )
-#O  GroupoidAutomorphismByGroupAuto( <gpd, auto> )
-#O  GroupoidAutomorphismByObjectPermNC( <gpd, oims> )
-#O  GroupoidAutomorphismByObjectPerm( <gpd, oims> )
-#O  GroupoidAutomorphismByRayShiftsNC( <gpd, rims> ) 
-#O  GroupoidAutomorphismByRayShifts( <gpd, rims> ) 
+#O  GroupoidIsoomorphismByGroupIsoNC( <src>, <rng>, <iso> )
+#O  GroupoidIsoomorphismByGroupIso( <src>, <iso> )
 ## 
 DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
@@ -125,10 +121,19 @@ DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC",
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
+DeclareOperation( "GroupoidIsomorphismByGroupIsoNC", 
+    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
+      IsGroupHomomorphism and IsBijective ] );
+DeclareOperation( "GroupoidIsomorphismByGroupIso", 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
-DeclareOperation( "GroupoidAutomorphismByGroupAuto", 
-    [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
+
+############################################################################# 
+## 
+#O  GroupoidAutomorphismByObjectPermNC( <gpd, oims> )
+#O  GroupoidAutomorphismByObjectPerm( <gpd, oims> )
+#O  GroupoidAutomorphismByRayShiftsNC( <gpd, rims> ) 
+#O  GroupoidAutomorphismByRayShifts( <gpd, rims> ) 
+## 
 DeclareOperation( "GroupoidAutomorphismByObjectPermNC", 
     [ IsGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByObjectPerm", 

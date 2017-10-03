@@ -52,8 +52,8 @@ Print( "[ba,ab,a78^2,ba^2,ba^3] = ", [ba,ab,a78^2,ba^2,ba^3], "\n" );
 ### Section 1.1.3 : IsSinglePiece ###
 
 Print( "\nIsSinglePiece( M78 ) ? ", IsSinglePiece( M78 ), "\n" ); 
-Print( "IsDirectProductWithCompleteGraph( M78 ) ? ", 
-        IsDirectProductWithCompleteGraph( M78 ), "\n" ); 
+Print( "IsDirectProductWithCompleteDigraph( M78 ) ? ", 
+        IsDirectProductWithCompleteDigraph( M78 ), "\n" ); 
 Print( "IsDiscrete( M78 ) ? ", IsDiscrete( M78 ), "\n" ); 
 
 Print("\n\n====================  SEMIGROUP  ==========================\n\n");

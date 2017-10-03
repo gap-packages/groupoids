@@ -868,7 +868,7 @@ function( aut )
     rhom := RootGroupHomomorphism( aut ); 
     irhom := InverseGeneralMapping( rhom );
     ok := IsGroupHomomorphism( irhom );
-    inv := GroupoidAutomorphismByGroupAuto( gpd, irhom ); 
+    inv := GroupoidIsomorphismByGroupIso( gpd, gpd, irhom ); 
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
@@ -1155,7 +1155,7 @@ InstallMethod( \*, "for maps from hom discrete groupoids", true,
 function( m1, m2 )
 
     local s1, r1, s2, r2, ob1, nob1, ob2, io1, io2, 
-          homs, oims, hom1, hom2, pos, j;
+          homs, oims, hom1, hom2, pos, j, m;
 
     Info( InfoGroupoids, 3, "method 2 for * with maps from hom discrete gpds" );
     s1 := Source( m1 ); 
@@ -1179,7 +1179,9 @@ function( m1, m2 )
         oims[j] := io2[ pos ]; 
         homs[j] := hom1[j] * hom2[pos]; 
     od; 
-    return GroupoidHomomorphismFromHomogeneousDiscreteNC( s1, r2, homs, oims );
+    m := GroupoidHomomorphismFromHomogeneousDiscreteNC( s1, r2, homs, oims ); 
+    SetIsGroupWithObjectsHomomorphism( m, true );
+    return m; 
 end );
 
 InstallMethod( \*, "for map from hom discrete with any gpd hom", true,

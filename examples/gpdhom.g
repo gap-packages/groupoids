@@ -83,7 +83,7 @@ Display( hom4 );
 genq8 := GeneratorsOfGroup(q8);
 genq8a := List( genq8, g -> g^genq8[2] );
 autq8 := GroupHomomorphismByImages( q8, q8, genq8, genq8a ); 
-autGq8 := GroupoidAutomorphismByGroupAuto( Gq8, autq8 ); 
+autGq8 := GroupoidIsomorphismByGroupIso( Gq8, autq8 ); 
 isoq8b := autGq8*isoq8; 
 Print( "isoq8 = isoq8b ? ", isoq8 = isoq8b, "\n" ); 
 hom4b := HomomorphismByUnion( V4, Vs3q8b, [ homV3, isoq8b ] ); 
@@ -103,7 +103,7 @@ Print( "\nmapping aut1 = \n" );
 Display( aut1 ); 
 
 h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] ); 
-aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 ); 
+aut2 := GroupoidIsomorphismByGroupIso( Ga4, h2 ); 
 Print( "\nmapping aut2 = \n" ); 
 Display( aut2 ); 
 
@@ -197,3 +197,15 @@ Print( " with pc-group representation :-\n", NHs3, "\n" );
 SetName( NHs3, "NHs3" ); 
 MHs3 := NiceMonomorphism( AHs3 ); 
 Print( "NHs3 has nice monomorphism :-\n", MHs3, "\n\n" ); 
+
+reps := IrreducibleRepresentations( s4 );;
+rep4 := reps[4];;
+Print( "rep4 = ", rep4, "\n" );
+Print( "rep4 maps ", (1,4,3,2), " to ", ImageElm( rep4, (1,4,2,3) ), "\n" );
+mor := GroupoidIsomorphismByGroupIso( Hs4, rep4 );;
+Rs4 := Range( mor );;
+Print( "the range Rs4 of the isomorphism mor is:\n", Rs4, "\n" ); 
+a := Arrow( Hs4, (1,4,2), -12, -13 );
+Print( "the image of ", a, " under mor is ", ImageElm( mor, a ), "\n" );
+rmor := RestrictedMappingGroupoids( mor, Hd8b );
+Print( "the restriction of mor to Hd8b is:\n", rmor, "\n" ); 

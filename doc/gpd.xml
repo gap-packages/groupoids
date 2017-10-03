@@ -20,7 +20,7 @@ The usual terminology is `connected component', but in &GAP; `component'
 is used for `record component', so we use the term <E>single piece</E>.  
 <P/>
 The simplest form for a <E>single piece groupoid</E> 
-is the direct product of a group and a complete graph,
+is the direct product of a group and a complete digraph,
 and so is determined by a set of <E>objects</E> <C>obs</C> <M>= \Omega</M> 
 (the least of which is the <E>root object</E>), 
 and a <E>root group</E> <C>grp</C> <M>= G</M>. 
@@ -64,7 +64,7 @@ recently revised and reissued as ``Topology and Groupoids''
          Arg="gp, obj" />
 <Description>
 The simplest construction of a groupoid 
-is as the direct product of a group and a complete graph. 
+is as the direct product of a group and a complete digraph. 
 Such a groupoid will be called a <Index Key="standard groupoid"> 
 standard groupoid</Index> <E>standard groupoid</E>. 
 Many subgroupoids of such a groupoid do not have this simple form, 
@@ -168,6 +168,7 @@ but in principle any type of group known to &GAP; may be used.
 <P/>
 In the following example <C>Gf2</C> is an fp-groupoid and also a free groupoid, 
 <C>Gq8</C> is a pc-groupoid, and <C>Ggl43</C> is a matrix groupoid. 
+See section <Ref Sect="sec-mxreps"/> for matrix representations of groupoids. 
 <P/>
 </Description>
 </ManSection>
@@ -709,7 +710,7 @@ So far, the only implementation is for the case of loops generating a
 group at an object <M>o</M> together with a set of rays from <M>o</M>, 
 where <M>o</M> is <E>not</E> the least object. 
 A suitably large supergroupoid, which must be a direct product with a 
-complete graph, should be provided. 
+complete digraph, should be provided. 
 This is the case needed for <C>ConjugateGroupoid</C> 
 in section <Ref Sect="subsec-conjgpd"/>. 
 Other cases will be added as time permits. 

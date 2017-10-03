@@ -27,7 +27,7 @@ DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
 #A  LargerDirectProductGroupoid( <gpd> ) 
 ## 
 ##  A connected groupoid with variable object groups is a wide subgroupoid 
-##  of an IsDirectProductWithCompleteGraph with the same objects, and is 
+##  of an IsDirectProductWithCompleteDigraph with the same objects, and is 
 ##  determined by a root group, and a set of conjugating elements 
 ## 
 DeclareRepresentation( "IsSinglePieceRaysRep",
@@ -246,7 +246,7 @@ DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 #A  DiscreteTrivialSubgroupoid( <gpd> )  
 ## 
 DeclareOperation( "SubgroupoidBySubgroup", 
-    [ IsGroupoid and IsDirectProductWithCompleteGraph, IsGroup ] ); 
+    [ IsGroupoid and IsDirectProductWithCompleteDigraph, IsGroup ] ); 
 DeclareOperation( "SubgroupoidByPieces",
     [ IsGroupoid, IsList ] );
 ##  DeclareOperation( "PiecePositions", [ IsGroupoid, IsGroupoid ] );

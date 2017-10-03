@@ -49,7 +49,7 @@ function( gp, obs )
         IsSinglePieceDomain, true,
         IsAssociative, true, 
         IsCommutative, IsCommutative( gp ), 
-        IsDirectProductWithCompleteGraphDomain, true ); 
+        IsDirectProductWithCompleteDigraphDomain, true ); 
     gens := GeneratorsOfMagmaWithObjects( gpd ); 
     if ( Length( obs ) = 1 ) then 
         SetIsDiscreteDomainWithObjects( gpd, false );
@@ -91,7 +91,7 @@ function( pgpd, rgp, rays )
     SetLargerDirectProductGroupoid( gpd, pgpd ); 
     SetParent( gpd, pgpd ); 
     id := One( pgpd!.magma ); 
-    SetIsDirectProductWithCompleteGraphDomain( gpd, 
+    SetIsDirectProductWithCompleteDigraphDomain( gpd, 
         ForAll( rays, r -> r = id ) );
     return gpd; 
 end );
@@ -110,8 +110,8 @@ function( gpd, rgp, rays )
     if not IsSubgroup( gpd!.magma, rgp ) then
         Error( "subgroupoid root group not a subgroup of the root group," );
     fi;
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-         and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         grays := List( obs, o -> One( rgp ) );
     else 
         grays := gpd!.rays; 
@@ -229,8 +229,8 @@ end );
 InstallMethod( RayElementsOfGroupoid, "for a connected groupoid",
     true, [ IsGroupoid and IsSinglePiece ], 0,
 function( G ) 
-    if ( HasIsDirectProductWithCompleteGraphDomain( G ) 
-         and IsDirectProductWithCompleteGraphDomain( G ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraphDomain( G ) 
+         and IsDirectProductWithCompleteDigraphDomain( G ) ) then 
         return ListWithIdenticalEntries( 
                    Length( G!.objects ), One( G!.magma ) ); 
     else 
@@ -292,8 +292,8 @@ function( gpd )
     mgens := GeneratorsOfGroup( m ); 
     id := One( m ); 
     gens1 := List( mgens, g -> ArrowNC( true, g, o1, o1 ) ); 
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-        and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+        and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gens2 := List( obs{[2..nobs]}, o -> GroupoidElement(gpd,id,o1,o) ); 
     elif IsSinglePieceRaysRep( gpd ) then  
         rays := gpd!.rays; 
@@ -456,7 +456,7 @@ function ( gpd )
         Print( "pc " );
     fi; 
     if IsSinglePiece( gpd ) then  
-        if IsDirectProductWithCompleteGraph( gpd ) then 
+        if IsDirectProductWithCompleteDigraph( gpd ) then 
             Print( "single piece groupoid: < " ); 
             Print( gpd!.magma, ", ", gpd!.objects, " >" );
         else 
@@ -505,7 +505,7 @@ function( gpd )
         Print( "pc " );
     fi;
     if IsSinglePiece( gpd ) then 
-        if IsDirectProductWithCompleteGraph( gpd ) then 
+        if IsDirectProductWithCompleteDigraph( gpd ) then 
             Print( "single piece groupoid: " );
             if HasName( gpd ) then
                 Print( gpd );
@@ -558,7 +558,7 @@ function( gpd )
         Print( "groupoid with ", len, " pieces:\n" );
         for i in [1..len] do
             c := comp[i];
-            if IsDirectProductWithCompleteGraph( c ) then 
+            if IsDirectProductWithCompleteDigraph( c ) then 
                 Print( "< objects: ", c!.objects, "\n" );
                 gp := c!.magma;
                 Print( "    group: " );
@@ -595,11 +595,11 @@ function ( g1, g2 )
     if not IsSinglePiece( g2 ) then
         return false;
     fi; 
-    if not ( IsDirectProductWithCompleteGraph( g1 ) = 
-             IsDirectProductWithCompleteGraph( g2 ) ) then
+    if not ( IsDirectProductWithCompleteDigraph( g1 ) = 
+             IsDirectProductWithCompleteDigraph( g2 ) ) then
         return false;
     fi;
-    if IsDirectProductWithCompleteGraph( g1 ) then
+    if IsDirectProductWithCompleteDigraph( g1 ) then
         return ( ( g1!.objects = g2!.objects ) and ( g1!.magma = g2!.magma ) ); 
     elif ( IsSinglePieceRaysRep( g1 ) and IsSinglePieceRaysRep( g2 ) ) then 
         return ( ( Parent( g1 ) = Parent( g2 ) ) and 
@@ -645,7 +645,7 @@ function( G, obj )
     if not ( obj in G!.objects ) then
         Error( "obj not an object of G," );
     fi;
-    if IsDirectProductWithCompleteGraph( G ) then 
+    if IsDirectProductWithCompleteDigraph( G ) then 
         return G!.magma;
     fi; 
     if HasObjectGroups( G ) then 
@@ -794,8 +794,8 @@ function( gpd, g, i, j )
     fi; 
     obs := comp!.objects; 
     ok1 := ( ( i in obs ) and ( j in obs ) ); 
-    if ( HasIsDirectProductWithCompleteGraph( comp ) 
-         and IsDirectProductWithCompleteGraph( comp ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( comp ) 
+         and IsDirectProductWithCompleteDigraph( comp ) ) then 
         ok2 := ( g in comp!.magma ); 
     else 
         rays := comp!.rays; 
@@ -870,8 +870,8 @@ function( e, gpd )
     if not ( (e![2] in obs) and (e![3] in obs) ) then 
         return false; 
     fi; 
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-         and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         return (e![1] in gpd!.magma);
     else 
         rays := gpd!.rays; 
@@ -1018,8 +1018,8 @@ function( gpd, obj )
     local gp, obs, nobs, st, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-         and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gp := gpd!.magma; 
         fgpd := FamilyObj( gpd ); 
         rays := gpd!.rays; 
@@ -1070,8 +1070,8 @@ function( gpd, obj )
     local gp, obs, nobs, cst, fgpd, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-         and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gp := gpd!.magma; 
         fgpd := FamilyObj( gpd ); 
         rays := gpd!.rays; 
@@ -1122,8 +1122,8 @@ function( gpd, o1, o2 )
     local gp, obs, fgpd, rays, gen, hs, p1, p2;
     
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-         and IsDirectProductWithCompleteGraph( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gp := gpd!.magma;
         fgpd := FamilyObj( gpd ); 
         gen := [ One(gp) ]; 
@@ -1223,8 +1223,8 @@ function( gpd )
             else 
                 iter!.hpos := iter!.hpos + 1;
             fi;
-            if ( HasIsDirectProductWithCompleteGraph( gpd ) 
-                 and IsDirectProductWithCompleteGraph( gpd ) ) then 
+            if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+                 and IsDirectProductWithCompleteDigraph( gpd ) ) then 
                 return ArrowNC( true, iter!.gpelt, 
                                 iter!.obs[iter!.tpos], iter!.obs[iter!.hpos] );
             else 
@@ -1391,7 +1391,7 @@ end );
 ##
 InstallMethod( SubgroupoidBySubgroup,
     "generic method for direct prod with complete graph and subgroup", true,
-    [ IsGroupoid and IsDirectProductWithCompleteGraph, IsGroup ], 0,
+    [ IsGroupoid and IsDirectProductWithCompleteDigraph, IsGroup ], 0,
 function( gpd, sgp ) 
 
     local sub, gp; 
@@ -1513,8 +1513,8 @@ function( G, sobs )
 
     local sgpd, rgp, rayG, pG, spG, pos, rays, r1; 
 
-    if ( HasIsDirectProductWithCompleteGraph( G ) 
-         and IsDirectProductWithCompleteGraph( G ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( G ) 
+         and IsDirectProductWithCompleteDigraph( G ) ) then 
         if not HasIsSSortedList( sobs ) then 
             Sort( sobs ); 
         fi; 
@@ -1865,8 +1865,8 @@ function( cset )
         C := PieceOfObject( U, o2 ); 
     fi; 
     obs := C!.objects;
-    if ( HasIsDirectProductWithCompleteGraph( C ) 
-         and IsDirectProductWithCompleteGraph( C ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( C ) 
+         and IsDirectProductWithCompleteDigraph( C ) ) then 
         Info( InfoGroupoids, 2, "Option 1 in HomsetCosetsGroupoidCoset" ); 
         fgpd := FamilyObj( C ); 
         rays := C!.rays; 

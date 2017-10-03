@@ -56,7 +56,7 @@ gap> [ a78*ba, ab*a78, a78*ba = ab*a78 ];
 ## SubSection 2.1.3 
 gap> IsSinglePiece( M78 ); 
 true
-gap> IsDirectProductWithCompleteGraph( M78 );
+gap> IsDirectProductWithCompleteDigraph( M78 );
 true
 gap> IsDiscrete( M78 );
 false
@@ -125,7 +125,7 @@ gap> [ IsAssociative(M49), IsCommutative(M49) ];
 [ true, false ]
 gap> ktpo := KnownTruePropertiesOfObject( M49 );; 
 gap> ans := [ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
-> "IsDirectProductWithCompleteGraphDomain" ];;  
+> "IsDirectProductWithCompleteDigraphDomain" ];;  
 gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
 gap> catobj := CategoriesOfObject( M49 );; 
