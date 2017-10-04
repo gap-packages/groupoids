@@ -110,8 +110,8 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <gens>, <images> )  
 #O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> )  
-#O  GroupoidIsoomorphismByGroupIsoNC( <src>, <rng>, <iso> )
-#O  GroupoidIsoomorphismByGroupIso( <src>, <iso> )
+#O  GroupoidAutomorphismByGroupAutoNC( <gpd>, <auto> )
+#O  GroupoidAutomorphismByGroupAuto( <src>, <auto> )
 ## 
 DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
@@ -121,10 +121,9 @@ DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC",
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
-DeclareOperation( "GroupoidIsomorphismByGroupIsoNC", 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism and IsBijective ] );
-DeclareOperation( "GroupoidIsomorphismByGroupIso", 
+DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
+    [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
+DeclareOperation( "GroupoidAutomorphismByGroupAuto", 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
 
 ############################################################################# 

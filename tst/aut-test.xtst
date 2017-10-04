@@ -41,7 +41,7 @@ groupoid homomorphism :
       [() : -9 -> -8] ] ]
 gap> autk := GroupHomomorphismByImages( a4, a4, a4gens, [ (1,3,2), (1,3,4) ] ); 
 [ (1,2,3), (2,3,4) ] -> [ (1,3,2), (1,3,4) ]
-gap> k := GroupoidIsomorphismByGroupIso( Ga4, autk ); 
+gap> k := GroupoidAutomorphismByGroupAuto( Ga4, autk ); 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
@@ -49,7 +49,7 @@ groupoid homomorphism :
       [() : -9 -> -7] ] ]
 gap> autl := GroupHomomorphismByImages( a4, a4, a4gens, [ (1,4,3), (2,4,3) ] ); 
 [ (1,2,3), (2,3,4) ] -> [ (1,4,3), (2,4,3) ]
-gap> l := GroupoidIsomorphismByGroupIso( Ga4, autl ); 
+gap> l := GroupoidAutomorphismByGroupAuto( Ga4, autl ); 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
@@ -145,7 +145,7 @@ false
 
 gap> autm := GroupHomomorphismByImages( a4, a4, a4gens, 
 >    [ (1,2,3)^(2,3,4), (2,3,4)^(2,3,4) ] );; 
-gap> m := GroupoidIsomorphismByGroupIso( Ga4, autm ); 
+gap> m := GroupoidAutomorphismByGroupAuto( Ga4, autm ); 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 

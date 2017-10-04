@@ -16,7 +16,7 @@ GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "2.  GroupoidHomomorphismFromSinglePiece( src, rng, gens, images );\n",
     "3.  HomomorphismToSinglePiece( src, rng, list of [gens,images]'s );\n",
     "4.  HomomorphismByUnion( src, rng, list of disjoint homomorphisms );\n", 
-    "5.  GroupoidIsomorphismByGroupIso( gpd, iso );\n", 
+    "5.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
     "6.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
     "7.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
 
@@ -91,7 +91,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] ) ) then 
         Info( InfoGroupoids, 3, "gpd hom with 2 arguments" ); 
         if IsGroupHomomorphism( arg[2] ) then 
-            return GroupoidIsomorphismByGroupIso( arg[1], arg[2] ); 
+            return GroupoidAutomorphismByGroupAuto( arg[1], arg[2] ); 
         elif ( IsHomogeneousList( arg[2] ) 
                and ( arg[2][1] in arg[1]!.objects ) ) then 
             return GroupoidAutomorphismByObjectPerm( arg[1], arg[2] ); 
@@ -616,55 +616,42 @@ end );
 
 #############################################################################
 ##
-#M  GroupoidIsomorphismByGroupIsoNC  
-#M  GroupoidIsomorphismByGroupIso 
+#M  GroupoidAutomorphismByGroupAutoNC  
+#M  GroupoidAutomorphismByGroupAuto 
 ##
-InstallMethod( GroupoidIsomorphismByGroupIsoNC , 
+InstallMethod( GroupoidAutomorphismByGroupAutoNC , 
     "for a groupoid and an automorphism of the root group", true, 
-    [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsGroupHomomorphism and IsBijective ], 0,
-function( src, rng, iso ) 
+    [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism and IsBijective ], 0,
+function( gpd, hom ) 
 
     local gens, images, mor; 
 
-    gens := GeneratorsOfGroupoid( src ); 
+    gens := GeneratorsOfGroupoid( gpd ); 
     images := List( gens, 
-        a -> Arrow( rng, ImageElm( iso, a![1] ), a![2], a![3] ) ); 
-    mor := GroupoidHomomorphismFromSinglePiece( src, rng, gens, images ); 
+                    a -> Arrow( gpd, ImageElm( hom, a![1] ), a![2], a![3] ) ); 
+    mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
-    if ( src = rng ) then 
-        SetOrder( mor, Order( iso ) ); 
-        SetIsGroupoidAutomorphismByGroupAuto( mor, true ); 
-    fi;
+    SetOrder( mor, Order( hom ) ); 
+    SetIsGroupoidAutomorphismByGroupAuto( mor, true ); 
     return mor; 
 end ); 
 
-InstallMethod( GroupoidIsomorphismByGroupIso, 
+InstallMethod( GroupoidAutomorphismByGroupAuto, 
     "for a groupoid and an automorphism of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ], 0,
-function( src, iso ) 
+function( gpd, hom ) 
 
-    local siso, riso, rng, obs; 
+    local rgp; 
 
-    siso := Source( iso ); 
-    riso := Range( iso ); 
-    if not ( siso = src!.magma ) then 
-        Error( "iso is not an isomorphism on the root group of src" ); 
+    rgp := gpd!.magma; 
+    if not ( (Source(hom) = rgp) and (Range(hom) = rgp) ) then 
+        Error( "hom not an endomorphism of the root group" ); 
     fi; 
-    if not IsBijective( iso ) then 
-        Error( "iso is not a bijective homomorphism" ); 
-    fi; 
-    if ( siso = riso ) then 
-        rng := src; 
-    else 
-        ## construct an isomorphic groupoid 
-        if not IsDirectProductWithCompleteDigraphDomain( src ) then 
-            Error( "src not a direct product with a complete graph" ); 
-        fi; 
-        rng := Groupoid( riso, src!.objects ); 
-    fi; 
-    return GroupoidIsomorphismByGroupIsoNC( src, rng, iso ); 
+    if not IsBijective( hom ) then 
+        Error( "hom is not an automorphism" ); 
+    fi;
+    return GroupoidAutomorphismByGroupAutoNC( gpd, hom ); 
 end ); 
 
 #############################################################################
@@ -995,7 +982,7 @@ function( gpd )
     agp := AutomorphismGroup( rgp ); 
     genagp := SmallGeneratingSet( agp ); 
     for a in genagp do  
-        Add( autgen, GroupoidIsomorphismByGroupIsoNC( gpd, gpd, a ) );  
+        Add( autgen, GroupoidAutomorphismByGroupAutoNC( gpd, a ) );  
     od; 
     ##  second: permutations of the objects 
     obs := gpd!.objects; 

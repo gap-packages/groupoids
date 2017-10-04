@@ -868,7 +868,7 @@ function( aut )
     rhom := RootGroupHomomorphism( aut ); 
     irhom := InverseGeneralMapping( rhom );
     ok := IsGroupHomomorphism( irhom );
-    inv := GroupoidIsomorphismByGroupIso( gpd, gpd, irhom ); 
+    inv := GroupoidAutomorphismByGroupAuto( gpd, irhom ); 
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
