@@ -58,6 +58,12 @@ In August 2017 the implementation of groupoid homomorphisms was completely
 revised with the emphasis now on a mapping from a set of generating arrows 
 to their images. 
 <P/>
+In September 2017 various functions were revised so that, at last, 
+the operation <C>DiscreteNormalPreXModWithObjects</C> 
+in <Package>XMod</Package> works again. 
+This constructs a crossed module of groupoids with a connected range 
+and a homogeneous, discrete source. 
+<P/>
 The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
 for &GAP; 4.9. 
 <P/>
