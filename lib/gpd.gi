@@ -304,6 +304,11 @@ function( gpd )
     return gens; 
 end );
 
+InstallMethod( GeneratorsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
+function( gpd ) 
+    return Flat( List( Pieces( gpd ), p -> GeneratorsOfGroupoid( p ) ) ); 
+end );
+
 #############################################################################
 ##
 #M  IsPermGroupoid

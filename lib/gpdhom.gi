@@ -470,7 +470,7 @@ function( src, rng, gens, images )
     local obs, nobs, ngens, nggens, posr, imr, map, 
           gps, gpr, hgen, himg, hom, oims, rims, ok;
 
-    obs := ObjectList( src ); 
+    obs := src!.objects; 
     nobs := Length( obs ); 
     ngens := Length( gens ); 
     nggens := ngens-nobs+1; 
@@ -481,7 +481,7 @@ function( src, rng, gens, images )
     hgen := List( [1..nggens], i -> gens[i]![1] ); 
     himg := List( [1..nggens], i -> images[i]![1] ); 
     gpr := ObjectGroup( rng, imr );
-    hom := GroupHomomorphismByImages( gps, gpr, hgen, himg ); 
+    hom := GroupHomomorphismByImagesNC( gps, gpr, hgen, himg ); 
     oims := Concatenation( [imr], List( [posr..ngens], i -> images[i]![3] ) ); 
     rims := Concatenation( [ One( gpr ) ], 
                            List( [posr..ngens], i -> images[i]![1] ) );
@@ -512,7 +512,7 @@ end );
 InstallMethod( GroupoidHomomorphismFromSinglePiece,
     "generic method for a mapping of connected groupoids", true,
     [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece, 
-      IsHomogeneousList, IsHomogeneousList ], 0,
+      IsHomogeneousList, IsHomogeneousList ], 0, 
 function( src, rng, gens, images ) 
 
     local obs, nobs, ngens, nggens, posr, imr, i; 
@@ -1494,7 +1494,7 @@ function( src, rng, homs, oims )
         ObjectHomomorphisms, homs, 
         ImagesOfObjects, oims, 
         IsGeneralMappingWithObjects, true, 
-        IsGroupoidHomomorphism, true, 
+        IsGroupWithObjectsHomomorphism, true, 
         RespectsMultiplication, true ); 
 #?  ok := IsInjectiveOnObjects( map ); 
 #?  p := ObjectTransformationOfGroupoidHomomorphism( map ); 
