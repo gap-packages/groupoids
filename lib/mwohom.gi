@@ -937,7 +937,8 @@ function( m1, m2 )
           "\\= for IsHomomorphismToSinglePiece in mwohom.gi" ); 
     return ( ( Source( m1 ) =  Source( m2 ) ) and
              ( Range( m1 ) = Range( m2 ) ) and 
-             ( MappingToSinglePieceData( m1 ) = MappingToSinglePieceData( m2 ) ) );
+             ( MappingToSinglePieceData( m1 ) 
+               = MappingToSinglePieceData( m2 ) ) );
 end );
 
 InstallMethod( \=, "for 2 magma mappings", true,
@@ -996,6 +997,18 @@ function( m1, m2 )
     else 
         return fail; 
     fi; 
+end );
+
+InstallMethod( \=, "for 2 mappings of homogeneous discrete groupoids", true,
+    [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep, 
+      IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
+function( m1, m2 )
+    Info( InfoGroupoids, 4, 
+          "\\= for discrete homogensous groupoids in mwohom.gi" ); 
+    return ( ( Source( m1 ) =  Source( m2 ) ) and
+             ( Range( m1 ) = Range( m2 ) ) and 
+             ( ImagesOfObjects( m1 ) = ImagesOfObjects( m2 ) ) and 
+             ( ObjectHomomorphisms( m1 ) = ObjectHomomorphisms( m2 ) ) );
 end );
 
 #############################################################################

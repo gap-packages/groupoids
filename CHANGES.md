@@ -13,6 +13,12 @@
  * (16/09/17) revise RestrictedMappingGroupoids and Subgroupoid 
  * (20/09/17) need more in the manual concerning cosets (left, right, double) 
               and it is probably necessary to revise and test these functions 
+ * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
+ * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
+
+## 1.53 -> 1.54  (10/10/17) 
+
+ * (09/10/17) added operation GroupoidInnerAutomorphism 
 
 ## 1.52 -> 1.53  (04/10/17) 
 

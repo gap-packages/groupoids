@@ -232,12 +232,16 @@ gap> gensa4 := GeneratorsOfGroup( a4 );;
 gap> Ga4 := SubgroupoidByPieces( Gs4, [ [a4, [-15,-13,-11]] ] ); 
 single piece groupoid: < a4, [ -15, -13, -11 ] >
 gap> SetName( Ga4, "Ga4" ); 
+gap> d := Arrow( Ga4, (1,3,4), -11, -13 ); 
+[(1,3,4) : -11 -> -13]
 gap> aut1 := GroupoidAutomorphismByObjectPerm( Ga4, [-13,-11,-15] );; 
 gap> Display( aut1 ); 
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
 images of objects: [ -13, -11, -15 ]
    images of rays: [ [() : -13 -> -13], [() : -13 -> -11], [() : -13 -> -15] ]
+gap> d1 := ImageElm( aut1, d ); 
+[(1,3,4) : -15 -> -11]
 gap> h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
 gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; 
 gap> Display( aut2 ); 
@@ -245,6 +249,8 @@ gap> Display( aut2 );
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
 images of objects: [ -15, -13, -11 ]
    images of rays: [ [() : -15 -> -15], [() : -15 -> -13], [() : -15 -> -11] ]
+gap> d2 := ImageElm( aut2, d1 );
+[(1,2,4) : -15 -> -11]
 gap> im3 := [(), (1,3,2), (2,4,3)];; 
 gap> aut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 );; 
 gap> Display( aut3 ); 
@@ -253,20 +259,34 @@ root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
 images of objects: [ -15, -13, -11 ]
    images of rays: [ [() : -15 -> -15], [(1,3,2) : -15 -> -13], 
   [(2,4,3) : -15 -> -11] ]
-gap> aut123 := aut1*aut2*aut3;; 
-gap> Display( aut123 ); 
+gap> d3 := ImageElm( aut3, d2 );
+[(1,4)(2,3) : -15 -> -11]
+gap> d0 := Arrow( Ga4, (2,3,4), -11, -13 );; 
+gap> aut4 := GroupoidInnerAutomorphism( Ga4, d0 );;
+gap> Display( aut4 );
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (2,4,3) ] ]
-images of objects: [ -13, -11, -15 ]
-   images of rays: [ [() : -13 -> -13], [(1,4,3) : -13 -> -11], 
-  [(1,2,3) : -13 -> -15] ]
-gap> inv123 := InverseGeneralMapping( aut123 );; 
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
+images of objects: [ -15, -11, -13 ]
+   images of rays: [ [() : -15 -> -15], [(2,4,3) : -15 -> -11], 
+  [(2,3,4) : -15 -> -13] ]
+gap> d4 := ImageElm( aut4, d3 );
+[(1,2,4) : -15 -> -13]
+gap> aut1234 := aut1*aut2*aut3*aut4;; 
+gap> Display( aut1234 ); 
+groupoid homomorphism : Ga4 -> Ga4
+[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
+      [() : -15 -> -11] ], 
+  [ [(1,4,3) : -11 -> -11], [(2,4,3) : -11 -> -11], [(1,2)(3,4) : -11 -> -13],
+      [(1,2)(3,4) : -11 -> -15] ] ]
+gap> d4  = ImageElm( aut1234, d );
+true
+gap> inv1234 := InverseGeneralMapping( aut1234 );; 
 gap> Display( inv123 ); 
- groupoid mapping: [ Ga4 ] -> [ Ga4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (1,2,3) ] ]
-images of objects: [ -11, -15, -13 ]
-   images of rays: [ [() : -11 -> -11], [(1,2,4) : -11 -> -15], 
-  [(1,2,3) : -11 -> -13] ] 
+groupoid homomorphism : Ga4 -> Ga4
+[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
+      [() : -15 -> -11] ], 
+  [ [(1,2,4) : -11 -> -11], [(1,2,3) : -11 -> -11], [() : -11 -> -13], 
+      [(1,4)(2,3) : -11 -> -15] ] ]
 
 # SubSection 5.4.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 

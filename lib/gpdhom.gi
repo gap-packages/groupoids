@@ -294,6 +294,8 @@ function( mor )
 
     local gpd1, gpd2, ob2, imobs, roh, mgi, ray, gp2, im2, hom;
 
+    Info( InfoGroupoids, 3, 
+          "method for RootGroupHomomorphism in gpdhom.gi" ); 
     gpd2 := Range( mor ); 
     ob2 := gpd2!.objects; 
     imobs := ImagesOfObjects( mor ); 
@@ -750,6 +752,41 @@ function( gpd, shifts )
     return GroupoidAutomorphismByRayShiftsNC( gpd, shifts ); 
 end ); 
 
+InstallMethod( GroupoidInnerAutomorphism, 
+    "for a groupoid and an element", true, 
+    [ IsGroupoid, IsGroupoidElement ], 0,
+function( gpd, e ) 
+    Error( "not yet implemented for unions of groupooids" );
+end );
+
+InstallMethod( GroupoidInnerAutomorphism, 
+    "for a groupoid and an element", true, 
+    [ IsGroupoid and IsSinglePieceDomain, IsGroupoidElement ], 0,
+function( gpd, e ) 
+
+    local gens, images; 
+
+   gens := GeneratorsOfGroupoid( gpd ); 
+    images := List( gens, g -> g^e ); 
+    return GroupoidHomomorphism( gpd, gpd, gens, images );
+end );
+
+InstallMethod( GroupoidInnerAutomorphism, 
+    "for a groupoid and an element", true, 
+    [ IsGroupoid and IsDiscreteDomainWithObjects, IsGroupoidElement ], 0,
+function( gpd, e ) 
+
+    local obs, nobs, pos, id, auts; 
+
+    obs := gpd!.objects; 
+    nobs := Length( obs );
+    pos := Position( obs, e![2] ); 
+    id := IdentityMapping( gpd!.magma );
+    auts := List( [1..nobs], i -> id ); 
+    auts[pos] := InnerAutomorphism( gpd!.magma, e![1] ); 
+    return GroupoidAutomorphismByGroupAutosNC( gpd, auts ); 
+end );
+
 #############################################################################
 ##
 #M  NiceObjectAutoGroupGroupoid( <gpd>, <aut> ) . . create a nice monomorphism 
@@ -1198,21 +1235,36 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping between single pieces",
     IsGroupoidElement ], 0,
 function ( map, e )
 
-    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
+    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2, 
+          rgh;
 
-    if not ( e in Source(map) ) then 
+    Info( InfoGroupoids, 3, 
+          "this is the first ImageElm method in gpdhom.gi" ); 
+    m1 := Source( map ); 
+    if not ( e in m1 ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
-    m1 := Source( map ); 
     imo := ImagesOfObjects( map ); 
     obs1 := m1!.objects; 
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
+##Print( "[pt1,ph1] = ", [pt1,ph1], "\n" );
     ray1 := RayElementsOfGroupoid( m1 ); 
     loop := ray1[pt1] * e![1] * ray1[ph1]^-1; 
-    iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
+##Print( "loop = ", loop, "\n" );
+      iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
+##rgh := RootGroupHomomorphism( map ); 
+##iloop := ImageElm( rgh, loop );
+##Print( "iloop:\n" );
+##Display(iloop); 
     rims := ImageElementsOfRays( map ); 
+##Print( "rims[pt1]:\n" );
+##Display( rims[pt1] );
+##Print("is self-inverse? ", rims[pt1]=rims[pt1]^-1, "\n" );
+##Print( "rims[ph1]:\n" );
+##Display( rims[ph1] );
     g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
+##Error("stop for testing");
     return ArrowNC( true, g2, imo[pt1], imo[ph1] );
 end ); 
 
@@ -1223,8 +1275,8 @@ function ( map, e )
 
     local p1, t2, g2, a;
 
-    Info( InfoGroupoids, 5, 
-        "using ImageElm for IsGeneralMappingFromHomDiscrete, line 1241" ); 
+    Info( InfoGroupoids, 3, 
+          "this is the second ImageElm method in gpdhom.gi" ); 
     if not ( e in Source(map) ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
@@ -1241,8 +1293,8 @@ function ( map, e )
 
     local src, rng, pe, mape;
 
-    Info( InfoGroupoids, 5, 
-        "using ImageElm for general groupoid homomorphisms, line 1244" ); 
+    Info( InfoGroupoids, 3, 
+          "this is the third ImageElm method in gpdhom.gi" ); 
     if not ( e in Source(map) ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 

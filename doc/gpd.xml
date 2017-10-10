@@ -822,7 +822,8 @@ gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
          Arg="e1, e" />
 <Description>
 Conjugation by an arrow <M>e = (c : p \to q)</M> 
-is the groupoid automorphism defined as follows. 
+is the groupoid inner automorphism 
+(see section <Ref Sect="sec-autos"/>) defined as follows. 
 There are two cases to consider. 
 In the case <M>p \neq q</M>, 
 <List>
@@ -839,12 +840,12 @@ arrows between <M>p</M> and <M>q</M>:
 and <M>(b : q \to p) \mapsto (cbc : p \to q)</M>; 
 </Item>
 <Item>
-costar at <M>p,q</M>: 
+costars at <M>p,q</M>: 
 <M>(b : r \to p) \mapsto (bc : r \to q)</M> 
 and <M>(b : r \to q) \mapsto (bc^{-1} : r \to p)</M>; 
 </Item>
 <Item>
-star at <M>p,q</M>: 
+stars at <M>p,q</M>: 
 <M>(b : p \to r) \mapsto (c^{-1}b :  \to q)</M> 
 and <M>(b : q \to r) \mapsto (cb : p \to r)</M>; 
 </Item>
@@ -857,18 +858,21 @@ In the case <M>p=q</M>,
 <List>
 <Item> all the objects are fixed; 
 </Item>
-<Item> loops at <M>p</M> are conjugated by <M>c</M>,
+<Item> loops at <M>p</M> are conjugated by <M>c</M>, so 
 <M>(b : p \to p) \mapsto (b^c : p \to p)</M>; 
 </Item>
 <Item> the rest of the costar and star at <M>p</M> are permuted, 
-<M>(b : r \to p) \mapsto (bc : r \to p)</M> 
-and <M>(b : p \to r) \mapsto (c^{-1}b : p \to r)</M>; 
+<Display>
+(b : r \to p) \mapsto (bc : r \to p) 
+\quad\mbox{and}\quad (b : p \to r) \mapsto (c^{-1}b : p \to r); 
+</Display>
 </Item>
 <Item> the remaining arrows are unchanged. 
 </Item>
 </List>
 <P/>
-The details of this construction may be found in <Cite Key="AlWe" />. 
+The details of this construction may be found in 
+section 3.2 of <Cite Key="AlWe"/>. 
 <P/>
 </Description>
 </ManSection>
