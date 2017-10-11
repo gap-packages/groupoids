@@ -14,7 +14,7 @@
 #C  IsNonSPGeneralMappingWithObjects( <map> )
 #C  IsSPGeneralMappingWithObjects( <map> )
 ## 
-#T  do we need the SP and nonSP division ?
+#?  do we need the SP and nonSP division ?
 ##  Category and groupoid mapping declarations 
 
 DeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); 
@@ -61,7 +61,7 @@ DeclareSynonymAttr( "IsEndoMappingWithObjects",
 DeclareSynonymAttr( "IsMagmaWithObjectsGeneralMapping", 
     IsGeneralMappingWithObjects and RespectsMultiplication );
 DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", 
-    IsMagmaWithObjectsGeneralMapping and IsMapping );
+    IsMagmaWithObjectsGeneralMapping and IsSPGeneralMappingWithObjects );
 
 #?  modify these next three to SynonymAttr's ??
 DeclareProperty( "IsSemigroupWithObjectsHomomorphism", 
@@ -75,12 +75,7 @@ DeclareProperty( "IsGroupWithObjectsHomomorphism",
 ## 
 #C  IsGroupoidHomomorphism( <map> )
 ## 
-##  (29/04/10) : replaced the Property with a Category : 
-##  DeclareProperty( "IsGroupoidHomomorphism", 
-##      IsMagmaWithObjectsHomomorphism );
-##  
-DeclareCategory( "IsGroupoidHomomorphism", ## IsGeneralMappingWithObjects ); 
-    IsMagmaWithObjectsHomomorphism ); 
+DeclareCategory( "IsGroupoidHomomorphism", IsMagmaWithObjectsHomomorphism ); 
 
 #############################################################################
 ##
@@ -140,11 +135,10 @@ BindGlobal( "IsGroupoidMappingWithPiecesType",
 ##    - a list of mappings from the constituents of the source, 
 ##    - a list of lists of images of objects
 ## 
-DeclareProperty("IsConstantOnObjects", IsGeneralMappingWithObjects );  
+DeclareProperty("IsConstantOnObjects", IsGeneralMappingWithObjects); 
 DeclareProperty("IsGeneralMappingToSinglePiece", IsGeneralMappingWithObjects);
-##                 IsGeneralMappingToSinglePiece );  
 DeclareProperty("IsGeneralMappingFromSinglePiece", IsGeneralMappingWithObjects);
-##                 IsGeneralMappingToSinglePiece );  
+DeclareProperty("IsMappingWithObjectsByFunction", IsGeneralMappingWithObjects);
 DeclareSynonymAttr( "IsHomomorphismToSinglePiece", 
     IsGeneralMappingToSinglePiece and IsMagmaWithObjectsHomomorphism );
 DeclareSynonymAttr( "IsHomomorphismFromSinglePiece", 
@@ -158,6 +152,7 @@ DeclareGlobalFunction( "MagmaWithObjectsHomomorphism" );
 
 ############################################################################# 
 ## 
+#O  MappingWithObjectsByFunction( <src>, <rng>, <fun>, <imobs> )
 #O  HomomorphismFromSinglePieceNC( <src>, <rng>, <hom>, <imobs> )  
 #O  HomomorphismFromSinglePiece( <src>, <rng>, <hom>, <imobs> )  
 #O  HomomorphismToSinglePieceNC( <src>, <rng>, <piece images> )  
@@ -166,6 +161,8 @@ DeclareGlobalFunction( "MagmaWithObjectsHomomorphism" );
 #O  HomomorphismByUnion( <g1>, <g2>, <list> )  
 #O  HomomorphismFromSinglePieceGeneratorsImages( <src>, <rng>, <gens>, <ims> )
 ## 
+DeclareOperation( "MappingWithObjectsByFunction", 
+  [ IsSinglePiece, IsSinglePiece, IsFunction, IsHomogeneousList ] );
 DeclareOperation( "HomomorphismFromSinglePieceNC",
   [ IsSinglePiece, IsSinglePiece, IsMagmaHomomorphism, IsHomogeneousList ] );
 DeclareOperation( "HomomorphismFromSinglePiece",
@@ -198,6 +195,7 @@ DeclareOperation( "IsomorphismNewObjects",
 #A  PartitionOfSource( <map> )
 #A  ImagesOfObjects( <map> ) 
 #A  ImageElementsOfRays( <map> ) 
+#A  UnderlyingFunction( <map> )
 ## 
 DeclareAttribute( "MappingToSinglePieceData", IsMappingToSinglePieceRep );
 DeclareAttribute( "MappingToSinglePieceMaps", IsMappingToSinglePieceRep );
@@ -205,6 +203,7 @@ DeclareAttribute( "PiecesOfMapping", IsMappingWithPiecesRep );
 DeclareAttribute( "PartitionOfSource", IsMappingWithPiecesRep );
 DeclareAttribute( "ImagesOfObjects", IsMagmaWithObjectsHomomorphism ); 
 DeclareAttribute( "ImageElementsOfRays", IsMagmaWithObjectsHomomorphism ); 
+DeclareAttribute( "UnderlyingFunction", IsMappingWithObjectsByFunction ); 
 
 ############################################################################# 
 ## 

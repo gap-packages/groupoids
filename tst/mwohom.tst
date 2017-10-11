@@ -151,6 +151,19 @@ gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "mwohom.tst", 10000 );
 
+## SubSection 3.3.2
+gap> swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
+function( a ) ... end
+gap> swapmap := MappingWithObjectsByFunction( M78, M78, swap, [-7,-8] );
+magma with objects mapping by function : M78 -> M78
+function: function ( a )
+    return Arrow( M78, a![1], a![3], a![2] );
+end
+
+gap> a78; ImageElm( swapmap, a78 );              
+[m2 : -7 -> -8]
+[m2 : -8 -> -7]
+
 ##############################################################################
 ##
 #E  mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

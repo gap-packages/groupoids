@@ -58,6 +58,31 @@ end );
 
 #############################################################################
 ##
+#M  MappingWithObjectsByFunction 
+##
+InstallMethod( MappingWithObjectsByFunction,
+    "generic method for a mapping by function of connected magmas", true,
+    [ IsSinglePiece, IsSinglePiece, IsFunction, IsHomogeneousList ], 0,
+function( m1, m2, fun, imo )
+
+    local map, ok;
+
+    map := rec(); 
+    ObjectifyWithAttributes( map, IsMWOMappingToSinglePieceType, 
+        Source, m1, 
+        Range, m2, 
+        UnderlyingFunction, fun, 
+        ImagesOfObjects, imo,   
+        RespectsMultiplication, true, 
+        IsGeneralMappingToSinglePiece, true, 
+        IsMappingWithObjectsByFunction, true );
+    ## ok := IsInjectiveOnObjects( map ); 
+    ## ok := IsSurjectiveOnObjects( map ); 
+    return map; 
+end );
+
+#############################################################################
+##
 #M  HomomorphismFromSinglePieceNC 
 #M  HomomorphismFromSinglePiece 
 ##
@@ -104,10 +129,8 @@ InstallMethod( HomomorphismToSinglePieceNC,
     [ IsMagmaWithObjects, IsSinglePiece, IsHomogeneousList ], 0,
 function( mag1, mag2, images )
 
-    local fam, filter, map, ok, imo;
+    local map, ok, imo;
 
-    fam := GeneralMappingWithObjectsFamily; 
-    filter := IsMappingToSinglePieceRep and IsMagmaWithObjectsHomomorphism;
     map := rec(); 
     ObjectifyWithAttributes( map, IsMWOMappingToSinglePieceType, 
         Source, mag1, 
@@ -167,11 +190,9 @@ InstallMethod( HomomorphismToSinglePieceNC,
     [ IsGroupoid, IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, gpd2, homs )
 
-    local fam, filter, data, map, ok, imo;
+    local data, map, ok, imo;
 
     Info( InfoGroupoids, 3, "homomorphism to a single piece groupoid - NC" ); 
-    fam := GeneralMappingWithObjectsFamily; 
-    filter := IsMappingToSinglePieceRep and IsGroupoidHomomorphism; 
     data := List( homs, h -> MappingToSinglePieceData(h)[1] ); 
     map := rec(); 
     ObjectifyWithAttributes( map, IsGroupoidMappingToSinglePieceType, 
@@ -223,15 +244,13 @@ InstallMethod( HomomorphismByUnionNC,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0,  
 function( mag1, mag2, images )
 
-    local fam, filter, type, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
+    local type, map, inj, pieces1, nc1, pieces2, nc2, obs1, 
           part, i, m, src;
 
     if IsSinglePiece( mag2 ) then 
         Info( InfoGroupoids, 1, "better to use single piece function" );
         return HomomorphismToSinglePiece( mag1, mag2, images );
     fi; 
-    fam := GeneralMappingWithObjectsFamily;
-    filter := IsMappingWithPiecesRep and IsMagmaWithObjectsHomomorphism; 
     if ( ( "IsGroupoid" in CategoriesOfObject( mag1 ) ) and 
          ( "IsGroupoid" in CategoriesOfObject( mag2 ) ) ) then 
         type := IsGroupoidMappingWithPiecesType; 
@@ -1337,6 +1356,14 @@ function ( hom )
     fi;
 end );
 
+InstallMethod( PrintObj, "for a general mwo mapping by function", true,
+    [ IsMappingWithObjectsByFunction ], 10, 
+function ( map ) 
+    Print( "magma with objects mapping by function : " );  
+    Print( Source( map ), " -> ", Range( map ), "\n" );  
+    Print( "function: ", UnderlyingFunction( map ) );  
+end );
+
 InstallMethod( PrintObj, "for a general mwo homomorphism", true,
     [ IsMagmaWithObjectsHomomorphism ], 0, 
 function ( hom ) 
@@ -1545,6 +1572,28 @@ function ( map, elt )
     im := MagmaElement( mag, ej^(-1)*e*ek, j, k );
     return im;
 end );
+
+InstallOtherMethod( ImageElm, "for a mapping with objects by function", true,
+   [ IsMappingWithObjectsByFunction, IsMultiplicativeElementWithObjects ], 10,
+function ( map, e )
+
+    local fun, fe, obs, imo, pt, ph; 
+
+    Info( InfoGroupoids, 3, 
+          "this is the fourth ImageElm function in mwohom.gi" ); 
+    fun := UnderlyingFunction( map ); 
+    fe := fun( e ); 
+    obs := Source( map )!.objects; 
+    imo := ImagesOfObjects( map );
+    pt := Position( obs, e![2] ); 
+    ph := Position( obs, e![3] ); 
+    if not ( ( fe![2] = imo[pt] ) and ( fe![3] = imo[ph] ) ) then 
+Error("wrong objects");
+        return fail; 
+    else 
+        return fe; 
+    fi;
+end ); 
 
 InstallOtherMethod( ImagesSource, "for a magma mapping", true, 
     [ IsHomomorphismToSinglePiece ], 0,

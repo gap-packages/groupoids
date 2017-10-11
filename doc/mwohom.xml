@@ -10,7 +10,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-homwo">
-<Heading>Homomorphisms of many-object structures</Heading>
+<Heading>Mappings of many-object structures</Heading>
 
 A <E>homomorphism</E> <M>f</M> from a magma with objects <M>M</M> 
 to a magma with objects <M>N</M> consists of 
@@ -250,6 +250,40 @@ gap> IsEndomorphismWithObjects( h14 );
 false
 gap> IsAutomorphismWithObjects( h14 ); 
 false
+]]>
+</Example>
+
+</Section>
+
+<Section Label="sec-mapbyfun">
+<Heading>Mappings defined by a function</Heading>
+
+<ManSection>
+   <Oper Name="MappingWithObjectsByFunction"
+         Arg="src,rng,fun,imobs" />
+   <Prop Name="IsMappingWithObjectsByFunction"
+         Arg="map" />
+   <Attr Name="UnderlyingFunction"
+         Arg="map" />
+<Description>
+More general mappings, which need not preserve multiplication, 
+are available using this operation. 
+See section <Ref Sect="sec-autos"/> for an application. 
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> flip := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
+function( a ) ... end
+gap> flipmap := MappingWithObjectsByFunction( M78, M78, flip, [-8,-7] );
+magma with objects mapping by function : M78 -> M78
+function: function ( a )
+    return Arrow( M78, a![1], a![3], a![2] );
+end
+gap> a78; ImageElm( flipmap, a78 );                                     
+[m2 : -7 -> -8]
+[m2 : -8 -> -7]
 ]]>
 </Example>
 

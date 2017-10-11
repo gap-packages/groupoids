@@ -266,8 +266,8 @@ false
 gap> ## check the formula a_c * a_pi = a_pi * a_pi(c)
 gap> prayr := List( ImagesOfObjects(p), o -> rayr[ Position(obs,o) ] );
 [ (2,3,4), (), (1,3,4) ]
-gap> g := prayr[1]; 
-(2,3,4)
+gap> g := prayr[1];;
+gap> autg := InnerAutomorphism( a4, g );;
 gap> prayr := List( prayr, e -> g^-1*e );
 [ (), (2,4,3), (1,3,2) ]
 gap> r0 := GroupoidAutomorphismByGroupAuto( Ga4, autg )       
@@ -325,6 +325,14 @@ gap> ImageElm( q2, c );
 [(1,3,4) : -8 -> -8]
 gap> ida4 := IdentityMapping( a4 );; 
 gap> k2 := GroupoidAutomorphismByGroupAutos( Na4, [autk,autk,ida4] );
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -9, -8, -7 ] -> [ -9, -8, -7 ]
+object homomorphisms:
+GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,3,2), (1,3,4) 
+ ] )
+GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,3,2), (1,3,4) 
+ ] )
+IdentityMapping( a4 )
 gap> ImageElm( k2, c ) = c;
 true
 gap> qk2 := q2 * k2;;

@@ -544,6 +544,7 @@ gap> d4 := ImageElm( aut4, d3 );
 ]]>
 </Example>
 
+
 <Subsection Label="subsec-autos-with-rays">
 <Heading>Automorphisms of a groupoid with rays</Heading>
 
@@ -555,7 +556,6 @@ then it restricts to an automorphism of <M>S</M> provided the objects
 in each orbit have the same ray elements. 
 <P/>
 This subsection needs to be expanded and examples added. 
-
 </Subsection>
 
 
@@ -565,7 +565,6 @@ This subsection needs to be expanded and examples added.
    <Oper Name="NiceObjectAutoGroupGroupoid"
          Arg="gpd, aut" />
 <Description>
-
 The <Index Key="AutomorphismGroup"> <C>AutomorphismGroup</C> </Index> 
 <C>AutomorphismGroup</C> of <M>G</M> is isomorphic to the quotient of 
 <M>S_n \times A \times g^n</M> by a subgroup isomorphic to <M>g</M>, 
@@ -603,6 +602,59 @@ gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) );
 true
 ]]>
 </Example>
+
+
+<Subsection Label="subsec-inner-autos">
+<Heading>Inner automorphisms</Heading>
+
+The inner automorphism subgroup <M>\mathrm{Inn}(G)</M> 
+<Index Key="inner automorphism group"> inner automorphism group </Index> 
+of the automorphism group of <M>G</M> is the group of inner automorphisms 
+<M>\wedge a : b \mapsto b^a</M> for <M>a \in G</M>. 
+It is <E>not</E> the case that the map 
+<M>G \to \mathrm{Inn}(G), a \mapsto \wedge a</M> 
+preserves multiplication. 
+Indeed, when <M>a=(o,g,p), b=(p,h,r) \in G</M> with objects <M>p,q,r</M> 
+all distict, then 
+<Display>
+\wedge(ab) ~=~ (\wedge a)(\wedge b)(\wedge a) 
+           ~=~ (\wedge b)(\wedge a)(\wedge b).  
+</Display>
+(Compare this with the permutation identity 
+<M>(pq)(qr)(pq) = (pr) = (qr)(pq)(qr)</M>.) 
+So the map <M>G \to \mathrm{Inn}(G)</M> is of type  
+<C>IsMappingWithObjectsByFunction</C>. 
+<P/> 
+In the example we convert the automorphism group <C>AGa4</C> 
+into a single object groupoid, and then define the inner automorphism map. 
+<P/>
+<Example>
+<![CDATA[
+gap> AGa40 := Groupoid( AGa4, [0] );
+single piece groupoid: < AGa4, [ 0 ] >
+gap> conj := function(a) 
+>            return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
+>            end;; 
+gap> inner := MappingWithObjectsByFunction( Ga4, AGa40, conj, [0,0,0] );;
+gap> a1 := Arrow( Ga4, (1,2,3), -15, -13 );;
+gap> inn1 := ImageElm( inner, a1 );;                        
+gap> a2 := Arrow( Ga4, (2,3,4), -13, -11 );;
+gap> inn2 := ImageElm( inner, a2 );;       
+gap> a3 := a1*a2;                      
+[(1,3)(2,4) : -15 -> -11]
+gap> inn3 := ImageElm( inner, a3 );  
+[groupoid homomorphism : Ga4 -> Ga4
+[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
+      [() : -15 -> -11] ], 
+  [ [(1,3,4) : -11 -> -11], [(1,2,4) : -11 -> -11], [(1,3)(2,4) : -11 -> -13],
+      [() : -11 -> -15] ] ] : 0 -> 0]
+gap> (inn3 = inn1*inn2*inn1) and (inn3 = inn2*inn1*inn2);
+true
+]]>
+</Example>
+
+</Subsection>
+
 
 <ManSection>
    <Oper Name="GroupoidAutomorphismByGroupAutos"
@@ -689,6 +741,7 @@ true
 <P/>
 
 </Section>
+
 
 <Section Label="sec-mxreps">
 <Heading>Matrix representations of groupoids</Heading>

@@ -148,12 +148,10 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
                 e := ImageElm( arg[3], g![1] ); 
                 a := Arrow( arg[2], e, pt, ph ); 
             else 
-##Print([i-ngens+nobs,arg[5][i-ngens+nobs],pt,ph],"\n");
                 a := Arrow( arg[2], arg[5][i-ngens+nobs], pt, ph ); 
             fi;
             images[i] := a; 
         od; 
-##Error("here");
         return GroupoidHomomorphism( arg[1], arg[2], gens1, images ); 
     else
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
@@ -477,7 +475,6 @@ function( src, rng, gens, images )
     ngens := Length( gens ); 
     nggens := ngens-nobs+1; 
     posr := nggens+1; 
-##Error( "**********" );
     imr := images[1]![2];
     gps := src!.magma; 
     hgen := List( [1..nggens], i -> gens[i]![1] ); 
@@ -940,12 +937,6 @@ function( gpd, aut )
     iso1 := IsomorphismPermGroup( ag1 ); 
     genag2 := List( genag1, g -> ImageElm( iso1, g ) ); 
     ag2 := Group( genag2 ); 
-    ## iso2 := SmallerDegreePermutationRepresentation( ag2 );
-    ## ag3 := Image( iso2 ); 
-    ## iso := iso1*iso2; 
-    ## genag3 := List( genag1, a -> ImageElm( iso, a ) ); 
-    ## nag3 := Length( genag3 ); 
-    ## now form the m-fold direct product of ag2
     mag2 := DirectProduct( ListWithIdenticalEntries( m, ag2 ) ); 
     genmag2 := GeneratorsOfGroup( mag2 ); 
     nmag2 := Length( genmag2 );
@@ -1235,8 +1226,7 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping between single pieces",
     IsGroupoidElement ], 0,
 function ( map, e )
 
-    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2, 
-          rgh;
+    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
 
     Info( InfoGroupoids, 3, 
           "this is the first ImageElm method in gpdhom.gi" ); 
@@ -1248,23 +1238,11 @@ function ( map, e )
     obs1 := m1!.objects; 
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
-##Print( "[pt1,ph1] = ", [pt1,ph1], "\n" );
     ray1 := RayElementsOfGroupoid( m1 ); 
     loop := ray1[pt1] * e![1] * ray1[ph1]^-1; 
-##Print( "loop = ", loop, "\n" );
-      iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
-##rgh := RootGroupHomomorphism( map ); 
-##iloop := ImageElm( rgh, loop );
-##Print( "iloop:\n" );
-##Display(iloop); 
+    iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
     rims := ImageElementsOfRays( map ); 
-##Print( "rims[pt1]:\n" );
-##Display( rims[pt1] );
-##Print("is self-inverse? ", rims[pt1]=rims[pt1]^-1, "\n" );
-##Print( "rims[ph1]:\n" );
-##Display( rims[ph1] );
     g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
-##Error("stop for testing");
     return ArrowNC( true, g2, imo[pt1], imo[ph1] );
 end ); 
 

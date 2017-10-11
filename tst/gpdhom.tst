@@ -273,20 +273,20 @@ gap> d4 := ImageElm( aut4, d3 );
 [(1,2,4) : -15 -> -13]
 gap> aut1234 := aut1*aut2*aut3*aut4;; 
 gap> Display( aut1234 ); 
-groupoid homomorphism : Ga4 -> Ga4
-[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
-      [() : -15 -> -11] ], 
-  [ [(1,4,3) : -11 -> -11], [(2,4,3) : -11 -> -11], [(1,2)(3,4) : -11 -> -13],
-      [(1,2)(3,4) : -11 -> -15] ] ]
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,4,3), (2,4,3) ] ]
+images of objects: [ -11, -13, -15 ]
+   images of rays: [ [() : -11 -> -11], [(1,2)(3,4) : -11 -> -13], 
+  [(1,2)(3,4) : -11 -> -15] ]
 gap> d4  = ImageElm( aut1234, d );
 true
 gap> inv1234 := InverseGeneralMapping( aut1234 );; 
-gap> Display( inv123 ); 
-groupoid homomorphism : Ga4 -> Ga4
-[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
-      [() : -15 -> -11] ], 
-  [ [(1,2,4) : -11 -> -11], [(1,2,3) : -11 -> -11], [() : -11 -> -13], 
-      [(1,4)(2,3) : -11 -> -15] ] ]
+gap> Display( inv1234 ); 
+ groupoid mapping: [ Ga4 ] -> [ Ga4 ]
+root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (1,2,3) ] ]
+images of objects: [ -11, -13, -15 ]
+   images of rays: [ [() : -11 -> -11], [() : -11 -> -13], 
+  [(1,4)(2,3) : -11 -> -15] ]
 
 # SubSection 5.4.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
@@ -308,6 +308,28 @@ gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) );
 true
 
 ## SubSection 5.4.4
+gap> AGa40 := Groupoid( AGa4, [0] );
+single piece groupoid: < AGa4, [ 0 ] >
+gap> conj := function(a) 
+>            return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
+>            end;; 
+gap> inner := MappingWithObjectsByFunction( Ga4, AGa40, conj, [0,0,0] );;
+gap> a1 := Arrow( Ga4, (1,2,3), -15, -13 );;
+gap> inn1 := ImageElm( inner, a1 );;                        
+gap> a2 := Arrow( Ga4, (2,3,4), -13, -11 );;
+gap> inn2 := ImageElm( inner, a2 );;       
+gap> a3 := a1*a2;                      
+[(1,3)(2,4) : -15 -> -11]
+gap> inn3 := ImageElm( inner, a3 );  
+[groupoid homomorphism : Ga4 -> Ga4
+[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], 
+      [() : -15 -> -11] ], 
+  [ [(1,3,4) : -11 -> -11], [(1,2,4) : -11 -> -11], [(1,3)(2,4) : -11 -> -13],
+      [() : -11 -> -15] ] ] : 0 -> 0]
+gap> (inn3 = inn1*inn2*inn1) and (inn3 = inn2*inn1*inn2);
+true
+
+## SubSection 5.4.5
 gap> Hs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); 
 homogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >
 gap> aut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); 
