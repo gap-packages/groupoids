@@ -11,14 +11,15 @@
 
 GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "The standard operations which construct a groupoid mapping are:\n", 
-    "1.  GroupoidHomomorphism( src, rng, hom | src, rng, hom, oims );\n", 
+    "1.  GroupoidHomomorphism( src, rng, hom );\n", 
+    "2.  GroupoidHomomorphism( src, rng, hom, oims, imrays );\n", 
     " or GroupoidHomomorphism( one of the following parameter options );\n",
-    "2.  GroupoidHomomorphismFromSinglePiece( src, rng, gens, images );\n",
-    "3.  HomomorphismToSinglePiece( src, rng, list of [gens,images]'s );\n",
-    "4.  HomomorphismByUnion( src, rng, list of disjoint homomorphisms );\n", 
-    "5.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
-    "6.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
-    "7.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
+    "3.  GroupoidHomomorphismFromSinglePiece( src, rng, gens, images );\n",
+    "4.  HomomorphismToSinglePiece( src, rng, list of [gens,images]'s );\n",
+    "5.  HomomorphismByUnion( src, rng, list of disjoint homomorphisms );\n", 
+    "6.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
+    "7.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
+    "8.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
 
 #############################################################################
 ##
@@ -152,7 +153,8 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
             fi;
             images[i] := a; 
         od; 
-        return GroupoidHomomorphism( arg[1], arg[2], gens1, images ); 
+        return GroupoidHomomorphismFromSinglePieceNC( 
+                   arg[1], arg[2], gens1, images ); 
     else
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
@@ -498,6 +500,7 @@ function( src, rng, gens, images )
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
     SetIsHomomorphismFromSinglePiece( map, true ); 
+Info(InfoGroupoids,3,"gpdhom.gi, line 501");
     SetMappingToSinglePieceData( map, [ [ hom, oims, rims ] ] );
     if ( src = rng ) then 
         SetIsEndoGeneralMapping( map, true ); 
@@ -1529,6 +1532,7 @@ function( src, rng, homs, oims )
 #?  ok := IsInjectiveOnObjects( map ); 
 #?  p := ObjectTransformationOfGroupoidHomomorphism( map ); 
 #?  ok := IsSurjectiveOnObjects( map ); 
+Info(InfoGroupoids,3,"gpdhom.gi, line 1533");
     SetIsGeneralMappingFromSinglePiece( map, false ); 
     SetMappingToSinglePieceData( map, [ [ homs, oims, [ ] ] ] );
 #?  if ( src = rng ) then 

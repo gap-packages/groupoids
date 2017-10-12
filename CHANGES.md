@@ -16,8 +16,9 @@
  * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
  * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
 
-## 1.53 -> 1.54  (11/10/17) 
+## 1.53 -> 1.54  (12/10/17) 
 
+ * (12/10/17) added DirectProductOp for groupoids; Projection & Embedding 
  * (11/10/17) added MappingWithObjectsByFunction and associated prop/attr and 
               then added new manual section on the inner automorphism group
  * (09/10/17) added operation GroupoidInnerAutomorphism 

@@ -2302,6 +2302,101 @@ function( gpd, obj )
     return ArrowNC( true, One(comp!.magma), obj, obj );
 end );
 
+############################################################################# 
+## 
+#M  DirectProductOp
+#M  Projection 
+#M  Embedding 
+## 
+InstallOtherMethod( DirectProductOp, "for a list of connected groupoids",
+    true, [ IsList, IsGroupoid ], 0,
+function( L, G )
+
+    local Lobs, Lgps, obs, gp, prod; 
+
+    Lobs := List( L, g -> g!.objects ); 
+    obs := Cartesian( Lobs ); 
+    Lgps := List( L, g -> g!.magma ); 
+    gp := DirectProduct( Lgps ); 
+    prod := Groupoid( gp, obs );
+    SetDirectProductInfo( prod, rec( groupoids := L, 
+                                     groups := Lgps, 
+                                     objectlists := Lobs,
+                                     first  := G, 
+                                     embeddings := [], 
+                                     projections := [] ) ); 
+    return prod; 
+end );
+
+InstallMethod( Projection, "groupoid direct product and integer",
+    [ IsGroupoid and HasDirectProductInfo, IsPosInt ], 
+function( D, i )
+
+    local info, gphom, gens, ngens, images, j, g, pg, hom;
+
+    # check
+    info := DirectProductInfo( D );
+    if IsBound( info.projections[i] ) then 
+        return info.projections[i];
+    fi;
+    # compute projection
+    gphom := Projection( D!.magma, i ); 
+    gens := GeneratorsOfGroupoid( D ); 
+    ngens := Length( gens );
+    images := ListWithIdenticalEntries( ngens, 0 ); 
+    for j in [1..ngens] do 
+        g := gens[j]; 
+        pg := ImageElm( gphom, g![1] ); 
+        images[j] := ArrowNC( true, pg, g![2][i], g![3][i] );  
+    od; 
+    hom := GroupoidHomomorphism( D, info.groupoids[i], gens, images ); 
+    # store information
+    info.projections[i] := hom;
+    return hom;
+end );
+
+InstallMethod( Embedding, "groupoid direct product and integer",
+    [ IsGroupoid and HasDirectProductInfo, IsPosInt ], 
+function( D, i )
+
+    local info, gphom, oblists, roots, len, ro, G, obG, nobG, imobG, 
+          gens, ngens, images, j, L, g, tg, hg, eg, hom;
+
+    # check
+    info := DirectProductInfo( D );
+    if IsBound( info.embeddings[i] ) then 
+        return info.embeddings[i];
+    fi;
+    gphom := Embedding( D!.magma, i ); 
+    oblists := info.objectlists; 
+    roots := List( oblists, L -> L[1] ); 
+    len := Length( roots );
+    ro := roots[i]; 
+    G := info.groupoids[i]; 
+    obG := G!.objects; 
+    nobG := Length( obG ); 
+    imobG := ShallowCopy( obG ); 
+    for j in [1..nobG] do 
+        L := ShallowCopy( roots ); 
+        L[i] := obG[j];
+        imobG[j] := L; 
+    od;
+    gens := GeneratorsOfGroupoid( G ); 
+    ngens := Length( gens ); 
+    images := ListWithIdenticalEntries( ngens, 0 ); 
+    for j in [1..ngens] do 
+        g := gens[j]; 
+        tg := Position( obG, g![2] );
+        hg := Position( obG, g![3] );
+        eg := ImageElm( gphom, g![1] );
+        images[j] := ArrowNC( true, eg, imobG[tg], imobG[hg] ); 
+    od; 
+    hom := GroupoidHomomorphism( G, D, gens, images ); 
+    # store information
+    info.embeddings[i] := hom;
+    return hom;
+end );
+
 ##############################################################################
 ##
 #E  gpd.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

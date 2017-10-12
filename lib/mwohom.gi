@@ -102,6 +102,7 @@ function( m1, m2, hom, imo )
 
     local o1, o2, no2, mag1, mag2;
 
+    Info( InfoGroupoids, 3, "homomorphism from single piece magma" ); 
     o1 := m1!.objects;
     o2 := m2!.objects;
     no2 := Length( o2 );
@@ -131,6 +132,7 @@ function( mag1, mag2, images )
 
     local map, ok, imo;
 
+    Info( InfoGroupoids, 3, "homomorphism to a single piece magma - NC" ); 
     map := rec(); 
     ObjectifyWithAttributes( map, IsMWOMappingToSinglePieceType, 
         Source, mag1, 

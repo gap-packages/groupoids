@@ -125,6 +125,36 @@ gap> ans :=
 gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
 
+## SubSection 4.1.6
+gap> prod := DirectProductOp( [Gd8,Gc6], Gd8 );
+single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), 
+[ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ] >
+gap> Projection( prod, 1 );                    
+groupoid homomorphism : 
+[ [ [(1,2,3,4) : [ -9, -6 ] -> [ -9, -6 ]], [(1,3) : [ -9, -6 ] -> [ -9, -6 ]]
+        , [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]], 
+      [() : [ -9, -6 ] -> [ -8, -6 ]], [() : [ -9, -6 ] -> [ -7, -6 ]] ], 
+  [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -9], 
+      [() : -9 -> -8], [() : -9 -> -7] ] ]
+gap> Embedding(prod,2);                        
+groupoid homomorphism : 
+[ [ [(5,6,7)(8,9) : -6 -> -6] ], 
+  [ [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]] ] ]
+gap> DirectProductInfo( prod );
+rec( embeddings := [ , groupoid homomorphism : 
+        [ [ [(5,6,7)(8,9) : -6 -> -6] ], 
+          [ [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]] ] ] ], first := Gd8, 
+  groupoids := [ Gd8, Gc6 ], groups := [ d8, c6 ], 
+  objectlists := [ [ -9, -8, -7 ], [ -6 ] ], 
+  projections := [ groupoid homomorphism : 
+        [ [ [(1,2,3,4) : [ -9, -6 ] -> [ -9, -6 ]], 
+              [(1,3) : [ -9, -6 ] -> [ -9, -6 ]], 
+              [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]], 
+              [() : [ -9, -6 ] -> [ -8, -6 ]], 
+              [() : [ -9, -6 ] -> [ -7, -6 ]] ], 
+          [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -9], 
+              [() : -9 -> -8], [() : -9 -> -7] ] ] ] )
+
 ## Section 4.2 : Groupoid elements: stars; costars; homsets ###
 
 ## SubSection 4.2.1
