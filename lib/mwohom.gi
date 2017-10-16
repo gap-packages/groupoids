@@ -62,7 +62,7 @@ end );
 ##
 InstallMethod( MappingWithObjectsByFunction,
     "generic method for a mapping by function of connected magmas", true,
-    [ IsSinglePiece, IsSinglePiece, IsFunction, IsHomogeneousList ], 0,
+    [ IsGroupoid, IsGroupoid, IsFunction, IsHomogeneousList ], 0,
 function( m1, m2, fun, imo )
 
     local map, ok;
@@ -1590,8 +1590,7 @@ function ( map, e )
     pt := Position( obs, e![2] ); 
     ph := Position( obs, e![3] ); 
     if not ( ( fe![2] = imo[pt] ) and ( fe![3] = imo[ph] ) ) then 
-Error("wrong objects");
-        return fail; 
+        Error( "wrong objects in ImageElm" );
     else 
         return fe; 
     fi;

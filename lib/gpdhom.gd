@@ -43,15 +43,7 @@ DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
 ## 
 DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "RestrictedMappingGroupoids", 
-    [ IsGroupoidHomomorphism, IsGroupoid ] );
-
-############################################################################# 
-## 
-#O  GroupoidHomomorphismFromDiscreteToSinglePiece( <src>, <rng>, <mors> )
-##  
-DeclareOperation( "GroupoidHomomorphismFromDiscreteToSinglePiece", 
-    [ IsGroupoid and IsDiscrete, IsGroupoid and IsSinglePiece, 
-      IsHomogeneousList ] );
+    [ IsGeneralMappingWithObjects, IsGroupoid ] );
 
 ############################################################################# 
 ## 
@@ -109,7 +101,7 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #A  RootGroupHomomorphism( <map> ) 
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <gens>, <images> )  
-#O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> )  
+#O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> ) 
 #O  GroupoidAutomorphismByGroupAutoNC( <gpd>, <auto> )
 #O  GroupoidAutomorphismByGroupAuto( <src>, <auto> )
 ## 
@@ -120,7 +112,7 @@ DeclareOperation( "ObjectGroupHomomorphism",
 DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC", 
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
-    [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
+    [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] ); 
 DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAuto", 

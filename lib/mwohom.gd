@@ -162,7 +162,7 @@ DeclareGlobalFunction( "MagmaWithObjectsHomomorphism" );
 #O  HomomorphismFromSinglePieceGeneratorsImages( <src>, <rng>, <gens>, <ims> )
 ## 
 DeclareOperation( "MappingWithObjectsByFunction", 
-  [ IsSinglePiece, IsSinglePiece, IsFunction, IsHomogeneousList ] );
+  [ IsGroupoid, IsGroupoid, IsFunction, IsHomogeneousList ] );
 DeclareOperation( "HomomorphismFromSinglePieceNC",
   [ IsSinglePiece, IsSinglePiece, IsMagmaHomomorphism, IsHomogeneousList ] );
 DeclareOperation( "HomomorphismFromSinglePiece",
