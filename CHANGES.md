@@ -15,10 +15,13 @@
               and it is probably necessary to revise and test these functions 
  * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
  * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
+ * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
 
-## 1.53 -> 1.54  (16/10/17) 
+## 1.53 -> 1.54  (18/10/17) 
 
- * (16/10/17) added method for RestrictedMappingGroupoids for hom. disc. 
+ * (18/10/17) fixed bug in DiscreteSubgroupoid; RestrictedMG now in manual
+ * (17/10/17) added other method for GroupoidInnerAutomorphism(R,S,r); 
+ * (16/10/17) added method for RestrictedMappingGroupoids for homdisc 
  * (12/10/17) added DirectProductOp for groupoids; Projection & Embedding 
  * (11/10/17) added MappingWithObjectsByFunction and associated prop/attr and 
               then added new manual section on the inner automorphism group

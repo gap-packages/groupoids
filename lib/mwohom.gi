@@ -62,7 +62,8 @@ end );
 ##
 InstallMethod( MappingWithObjectsByFunction,
     "generic method for a mapping by function of connected magmas", true,
-    [ IsGroupoid, IsGroupoid, IsFunction, IsHomogeneousList ], 0,
+    [ IsMagmaWithObjects, IsMagmaWithObjects, IsFunction, IsHomogeneousList ], 
+    0,
 function( m1, m2, fun, imo )
 
     local map, ok;

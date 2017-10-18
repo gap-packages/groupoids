@@ -212,6 +212,35 @@ groupoid homomorphism : Hd8b -> Hs4
 </Example>
 
 <ManSection>
+   <Oper Name="RestrictedMappingGroupoids"
+         Arg="mor, sgpd" />
+<Description>
+The operation <C>RestrictedMappingGroupoids(mor,sgpd)</C> 
+returns the restriction of the homomorphism <C>mor</C> 
+to the subgroupoid <C>sgpd</C> of its source. 
+The range is usually set to the <C>ImagesSource</C> of the restriction. 
+For another example see section <Ref Sect="sec-mxreps"/>
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> max := MaximalDiscreteSubgroupoid( Hd8b );;
+gap> res := RestrictedMappingGroupoids( inc, max );
+groupoid homomorphism from several pieces : 
+groupoid homomorphism : 
+[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ], 
+  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ] ]
+groupoid homomorphism : 
+[ [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ], 
+  [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ] ]
+groupoid homomorphism : 
+[ [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ], 
+  [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ] ]
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="IsomorphismNewObjects"
          Arg="src,objlist" />
    <Oper Name="IsomorphismStandardGroupoid"

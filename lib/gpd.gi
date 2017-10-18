@@ -51,9 +51,7 @@ function( gp, obs )
         IsCommutative, IsCommutative( gp ), 
         IsDirectProductWithCompleteDigraphDomain, true ); 
     gens := GeneratorsOfMagmaWithObjects( gpd ); 
-    if ( Length( obs ) = 1 ) then 
-        SetIsDiscreteDomainWithObjects( gpd, false );
-    fi; 
+    SetIsDiscreteDomainWithObjects( gpd, Length(obs) = 1 );
     return gpd; 
 end );
 
@@ -306,6 +304,11 @@ end );
 
 InstallMethod( GeneratorsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( gpd ) 
+    local p;
+    for p in Pieces( gpd ) do 
+        Print( "p = ", p, " with generators:\n" ); 
+        Print( GeneratorsOfGroupoid(p), "\n" );
+    od;
     return Flat( List( Pieces( gpd ), p -> GeneratorsOfGroupoid( p ) ) ); 
 end );
 
@@ -645,26 +648,29 @@ InstallMethod( ObjectGroup, "generic method for groupoid and object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( G, obj )
 
-    local pos, id, c, rgp; 
+    local obs, nobs, pos, gps, i, c, rgp; 
 
-    if not ( obj in G!.objects ) then
+    obs := G!.objects; 
+    if not ( obj in obs ) then
         Error( "obj not an object of G," );
     fi;
     if IsDirectProductWithCompleteDigraph( G ) then 
         return G!.magma;
     fi; 
-    if HasObjectGroups( G ) then 
-        pos := Position( G!.objects, obj ); 
-        return ObjectGroups(G)[ pos ];
+    pos := Position( obs, obj ); 
+    if HasObjectGroups(G) then 
+        return ObjectGroups(G)[pos];
     else 
+        ## construct all the object groups 
+        nobs := Length( obs ); 
+        gps := ListWithIdenticalEntries( nobs, 0 ); 
         rgp := G!.magma; 
-        pos := Position( G!.objects, obj );
-        c := G!.rays[ pos ];
-        if ( c = One( rgp ) ) then
-            return rgp;
-        else
-            return rgp^c;
-        fi;
+        gps[1] := rgp; 
+        for i in [2..nobs] do
+            c := G!.rays[i]; 
+            gps[i] := rgp^c; 
+        od;
+        return gps[pos];
     fi;
 end );
 
@@ -889,7 +895,15 @@ end );
 InstallMethod( \in, "for groupoid element and a union of constituents", true, 
     [ IsGroupoidElement, IsGroupoid and HasPieces ], 0,
 function( e, gpd )
-    return e in PieceOfObject( gpd, e![2] ); 
+
+    local p; 
+
+    p := PieceOfObject( gpd, e![2] ); 
+    if p = fail then 
+        return false; 
+    else 
+        return e in p; 
+    fi;
 end );
 
 #############################################################################
@@ -1421,7 +1435,11 @@ function( gpd, pieces )
 
     local pieceU, U, c, piece;
 
-    pieceU := List( pieces, c -> SinglePieceGroupoid( c[1], c[2] ) ); 
+    if IsList( pieces[1] ) then 
+        pieceU := List( pieces, c -> SinglePieceGroupoid( c[1], c[2] ) ); 
+    else 
+        pieceU := pieces; 
+    fi;
     if ( Length( pieceU ) > 1 ) then
         U := UnionOfPieces( pieceU );
     else
@@ -1431,7 +1449,7 @@ function( gpd, pieces )
         Info( InfoGroupoids, 1, "union of pieces is not a subgroupoid of gpd" );
         return fail;
     fi;
-    if ForAll( pieces, c -> ( Length( c[2] ) = 1 ) ) then
+    if ForAll( pieceU, p -> ( Length(p!.objects) = 1 ) ) then
         SetIsDiscreteDomainWithObjects( U, true );
     else
         SetIsDiscreteDomainWithObjects( U, false );
@@ -1452,7 +1470,7 @@ InstallMethod( DiscreteSubgroupoid, "generic method for a groupoid", true,
     [ IsGroupoid, IsList, IsHomogeneousList ], 0,
 function( G, gps, obs )
 
-    local pieceU, U, len, o, pieceG, obsg, C, i;
+    local pieceU, U, len, o, pieceG, obsg, C, i, gpo;
 
     obsg := ObjectList( G );
     len := Length( obs ); 
@@ -1468,8 +1486,9 @@ function( G, gps, obs )
         if not ( o in obsg ) then
             Error( "subgroupoid object not in groupoid," );
         fi;
-        C := PieceOfObject( G, o );
-        if not IsSubgroup( C!.magma, gps[i] ) then
+        C := PieceOfObject( G, o ); 
+        gpo := ObjectGroup( C, o ); 
+        if not IsSubgroup( gpo, gps[i] ) then
             Error( "not a subgroup of object group," );
         fi;
         pieceU[i] := [ gps[i], [o] ];
@@ -1501,7 +1520,7 @@ function( gpd )
     gps := ListWithIdenticalEntries( len, 0 );
     for i in [1..len] do
         piece := PieceOfObject( gpd, obs[i] );
-        gps[i] := piece!.magma;
+        gps[i] := ObjectGroup( piece, obs[i] ); 
     od;
     return DiscreteSubgroupoid( gpd, gps, obs );
 end );

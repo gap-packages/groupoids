@@ -238,6 +238,7 @@ function( mor, U )
 
     local smor, rmor, genU, imres, V, res;
 
+    Info( InfoGroupoids, 3, "RestrictedMapping from a single piece" ); 
     smor := Source( mor );
     rmor := Range( mor );
     if not ( IsSubdomainWithObjects( smor, U ) ) then
@@ -247,63 +248,57 @@ function( mor, U )
     imres := List( genU, g -> ImageElm( mor, g ) ); 
     V := SinglePieceSubgroupoidByGenerators( Range(mor), imres );
     res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres ); 
+    SetIsSurjective( mor, true ); 
+    if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
+        SetIsInjective( res, true );
+    fi;
     return res; 
 end );
 
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGeneralMappingWithObjects, 
+    [ IsGroupWithObjectsHomomorphism, 
       IsGroupoid and IsHomogeneousDiscreteGroupoid ], 0,
 function( mor, U )
 
-    local smor, rmor, genrmor, S, fun, 
-          pieces, nobs, imobs, autos, i, P, genP, imP, obi, imobi, res;
+    local smor, rmor, pieces, nobs, imobs, autos, 
+          i, P, genP, imP, obi, imobi, ogi, imgpi, impieces, imU;
 
+    Info( InfoGroupoids, 3, "RestrictedMapping from hom discrete" ); 
     smor := Source( mor );
     rmor := Range( mor );
     if not ( IsSubdomainWithObjects( smor, U ) ) then
         Error( "U not a submagma of Source(mor)" );
     fi; 
-    if HasIsMappingWithObjectsByFunction( mor ) then 
-        ## assume we are in a crossed module of groupoids situation 
-        Info( InfoGroupoids, 3, "restricted mapping by function from homdisc" ); 
-        genrmor := GeneratorsOfGroupoid( rmor ); 
-        g1 := genrmor[1]![1]; 
-        S := Source( g1 ); 
-        fun := function(a) 
-                   return ArrowNC( true, GroupoidInnerAutomorphism(S,a), 0, 0 );
-               end; 
-        imobs := ListWithIdenticalEntries( Length( smor!.objects ), 0 ); 
-        res := MappingWithObjectsByFunction( U, rmor, fun, imobs );     
-    elif HasIsGroupWithObjectsHomomorphism( mor ) then
-        Info( InfoGroupoids, 3, "restricted mapping: hom from discrete" ); 
-        pieces := Pieces( U );
-        nobs := Length( pieces );
-        imobs := ListWithIdenticalEntries( nobs, 0 ); 
-        autos := ListWithIdenticalEntries( nobs, 0 ); 
-        for i in [1..nobs] do 
-            P := pieces[i];
-            genP := GeneratorsOfGroupoid( P ); 
-            obi := genP[1]![2]; 
-            imP := List( genP, g -> ImageElm( mor, g ) ); 
-            imobi := imP[1]![2];
-            imobs[i] := imobi;  
-            autos[i] := GroupHomomorphismByImages( 
-                            ObjectGroup( P, obi ), ObjectGroup( rmor, imobi ), 
-                            List( genP, g->g![1] ), List( imP, g->g![1] ) ); 
-        od; 
-        res := GroupoidHomomorphismFromHomogeneousDiscrete(U,rmor,autos,imobs); 
-    else 
-        Error( "wrong type of mapping in RestrictedMappingGroupoids" );
-    fi; 
-    return res; 
+    pieces := Pieces( U );
+    nobs := Length( pieces );
+    imobs := ListWithIdenticalEntries( nobs, 0 ); 
+    autos := ListWithIdenticalEntries( nobs, 0 ); 
+    impieces := [ ]; 
+    for i in [1..nobs] do 
+        P := pieces[i];
+        genP := GeneratorsOfGroupoid( P ); 
+        obi := genP[1]![2]; 
+        imP := List( genP, a -> ImageElm( mor, a ) ); 
+        imobi := imP[1]![2];
+        imobs[i] := imobi; 
+        ogi := ObjectGroup( rmor, imobi ); 
+        imgpi := Subgroup( ogi, List( imP, a -> a![1] ) ); 
+        autos[i] := GroupHomomorphismByImages( ObjectGroup( P, obi ), imgpi, 
+                        List( genP, g->g![1] ), List( imP, g->g![1] ) ); 
+        Add( impieces, SubgroupoidByPieces( rmor, [ [imgpi,[imobi]] ] ) );
+    od; 
+    imU := SubgroupoidByPieces( rmor, impieces );
+    return GroupoidHomomorphismFromHomogeneousDiscrete(U,imU,autos,imobs); 
 end );
 
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGeneralMappingWithObjects, IsGroupoid ], 0,
 function( mor, src )
 
-    local mrng, psrc, lsrc, rcomp, rrng, j, P, genP, imgenP, pos, hom, rng;
+    local mrng, psrc, lsrc, rcomp, rrng, j, P, genP, imgenP, imP, 
+          pos, hom, rng, res;
 
+    Info( InfoGroupoids, 3, "RestrictedMapping from a union" ); 
     mrng := Range( mor );
     psrc := Pieces( src ); 
     lsrc := Length( psrc );
@@ -314,12 +309,17 @@ function( mor, src )
         genP := GeneratorsOfGroupoid( P ); 
         imgenP := List( genP, g -> ImageElm( mor, g ) ); 
         pos := PieceNrOfObject( mrng, imgenP[1]![2] ); 
-        hom := GroupoidHomomorphism( P, Pieces(mrng)[pos], genP, imgenP ); 
+        imP := SinglePieceSubgroupoidByGenerators( Pieces(mrng)[pos], imgenP );
+        hom := GroupoidHomomorphism( P, imP, genP, imgenP ); 
         rcomp[j] := hom; 
         rrng[j] := Range( hom );
     od; 
     rng := Groupoid( rrng );
-    return HomomorphismByUnionNC( src, rng, rcomp );
+    res := HomomorphismByUnionNC( src, rng, rcomp ); 
+    if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
+        SetIsInjective( res, true );
+    fi;
+    return res;
 end );
 
 #############################################################################
@@ -437,7 +437,7 @@ function( map )
     local obs, ims; 
 
     ims := ImagesOfObjects( map );
-    obs := Filtered( Range( map )!.objects, o -> o in ims ); 
+    obs := Filtered( ObjectList( Range(map) ), o -> o in ims ); 
     if not ( Length(obs) = Length(ims) ) then 
         Info( InfoGroupoids, 1, 
             "ObjectTransformationOfGroupoidHomomorphism set to <fail>" );
@@ -539,7 +539,6 @@ function( src, rng, gens, images )
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
     SetIsHomomorphismFromSinglePiece( map, true ); 
-Info(InfoGroupoids,3,"gpdhom.gi, line 501");
     SetMappingToSinglePieceData( map, [ [ hom, oims, rims ] ] );
     if ( src = rng ) then 
         SetIsEndoGeneralMapping( map, true ); 
@@ -791,11 +790,15 @@ function( gpd, shifts )
     return GroupoidAutomorphismByRayShiftsNC( gpd, shifts ); 
 end ); 
 
+#############################################################################
+##
+#M  GroupoidInnerAutomorphism 
+##
 InstallMethod( GroupoidInnerAutomorphism, 
     "for a groupoid and an element", true, 
     [ IsGroupoid, IsGroupoidElement ], 0,
 function( gpd, e ) 
-    Error( "not yet implemented for unions of groupooids" );
+    Error( "not yet implemented for unions of groupoids" );
 end );
 
 InstallMethod( GroupoidInnerAutomorphism, 
@@ -805,7 +808,8 @@ function( gpd, e )
 
     local gens, images; 
 
-   gens := GeneratorsOfGroupoid( gpd ); 
+    Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism from single piece" );  
+    gens := GeneratorsOfGroupoid( gpd ); 
     images := List( gens, g -> g^e ); 
     return GroupoidHomomorphism( gpd, gpd, gens, images );
 end );
@@ -817,6 +821,7 @@ function( gpd, e )
 
     local obs, nobs, pos, id, auts; 
 
+    Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism from discrete domain" );  
     obs := gpd!.objects; 
     nobs := Length( obs );
     pos := Position( obs, e![2] ); 
@@ -824,6 +829,24 @@ function( gpd, e )
     auts := List( [1..nobs], i -> id ); 
     auts[pos] := InnerAutomorphism( gpd!.magma, e![1] ); 
     return GroupoidAutomorphismByGroupAutosNC( gpd, auts ); 
+end );
+
+InstallOtherMethod( GroupoidInnerAutomorphism, 
+    "for a groupoid, a subgroupoid, and an element", true, 
+    [ IsGroupoid and IsSinglePieceDomain, IsGroupoid, IsGroupoidElement ], 0,
+function( gpd, sub, e ) 
+
+    local gens, images, inn, res; 
+
+    Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism for a subgroupoid" ); 
+    if not IsSubgroupoid( gpd, sub ) then 
+        Error( "sub is not a subgroupoid of gpd" ); 
+    fi; 
+    gens := GeneratorsOfGroupoid( gpd ); 
+    images := List( gens, g -> g^e ); 
+    inn := GroupoidHomomorphism( gpd, gpd, gens, images ); 
+    res := RestrictedMappingGroupoids( inn, sub ); 
+    return res;
 end );
 
 #############################################################################
@@ -1616,8 +1639,8 @@ function( src, rng, homs, oims )
     local gps, obs, obr, lens; 
 
     Info( InfoGroupoids,3, "method for GpdHomFromHomDiscNC to general gpd" );
-    obs := src!.objects; 
-    obr := rng!.objects; 
+    obs := ObjectList( src ); 
+    obr := ObjectList( rng); 
     lens := Length( obs ); 
     if not ( Length(oims) = lens ) then 
         Error( "<oims> has incorrect length" ); 

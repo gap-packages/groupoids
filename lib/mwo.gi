@@ -780,7 +780,7 @@ function( parts )
     npa := Length( parts );
     pieces := [ ]; 
     if ( Length( parts ) = 1 ) then 
-        Error( "only one part supplied," ); 
+        return parts[1]; 
     fi; 
     for part in parts do 
         if not IsDomainWithObjects( part ) then
