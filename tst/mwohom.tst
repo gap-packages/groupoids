@@ -147,9 +147,6 @@ gap> IsEndomorphismWithObjects( h14 );
 false
 gap> IsAutomorphismWithObjects( h14 ); 
 false
-gap> #
-gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-gap> STOP_TEST( "mwohom.tst", 10000 );
 
 ## SubSection 3.3.2
 gap> swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
@@ -163,6 +160,9 @@ end
 gap> a78; ImageElm( swapmap, a78 );              
 [m2 : -7 -> -8]
 [m2 : -8 -> -7]
+gap> #
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
+gap> STOP_TEST( "mwohom.tst", 10000 );
 
 ##############################################################################
 ##

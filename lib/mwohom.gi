@@ -394,51 +394,6 @@ end );
 
 #############################################################################
 ##
-#M  HomomorphismFromSinglePieceGeneratorsImages 
-##
-InstallMethod( HomomorphismFromSinglePieceGeneratorsImages,
-    "generic method for a mapping of single piece magmas", true,
-    [ IsSinglePiece, IsSinglePiece, IsHomogeneousList, IsHomogeneousList ], 0,
-function( m1, m2, gens, ims )
-
-    local obs1, nobs1, mag1, gens1, obs2, nobs2, mag2, ims2, g, map, r, rhom;
-
-    obs1 := m1!.objects;
-    nobs1 := Length( obs1 );
-    obs2 := m2!.objects;
-    nobs2 := Length( obs2 );
-    if not ( gens = GeneratorsOfMagma( m1 ) ) then
-        Error( "expecting gens = GeneratorsOfMagma( m1 )" );
-    fi;
-    if not ( Length( gens ) = Length( ims ) ) then
-        Error( "images of incorrect length" );
-    fi;
-    mag1 := m1!.magma;
-    gens1 := GeneratorsOfMagma( mag1 );
-    mag2 := m2!.magma;
-    for g in ims do 
-        if not ( g![1] in mag2 ) then 
-            Error( "element not in the image magma" );
-        fi;
-        if not ( ( g![2] in obs2 ) and ( g![3] in obs2 ) ) then 
-            Error( "object not in the image objects" );
-        fi;
-    od;
-    ## NEED MORE SOME CHECKS HERE? 
-    r := Length( gens ) - nobs1 +1;
-    gens1 := List( [1..r], i -> gens[i]![1] );
-    ims2 := List( [1..r], i -> ims[i]![1] ); 
-##  Print( "gens1, ims2 = ", gens1, ims2, "\n" ); 
-##  rhom := MagmaMappingByImages( mag1, mag2, gens1, ims2 );
-##  Print( "rhom = ", rhom, "\n" );
-    map := HomomorphismToSinglePieceNC( m1, m2, [ [gens,ims,rhom] ] );
-##  Print( "in HomomorphismFromSinglePieceGeneratorsImages:\nmap=",map,"\n" );
-    SetMappingGeneratorsImages( map, [ [gens,ims] ] ); 
-    return map;
-end );
-
-#############################################################################
-##
 #M  IsomorphismNewObjects
 ##
 InstallMethod( IsomorphismNewObjects, "for a single piece mwo", true,

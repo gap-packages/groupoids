@@ -984,7 +984,7 @@ function( gpd, aut )
 
     local pieces, obs, m, p1, g1, geng1, ng1, ag1, genag1, nag, 
           iso1, ag2, genag2, mag2, genmag2, nmag2, minfo, i, k, memb, 
-          L, symm, gensymm, imact, pi, actgp, ok, action, sdp, sinfo, 
+          K, L, symm, gensymm, imact, pi, actgp, ok, action, sdp, sinfo, 
           siso, ssdp, esymm, egensymm, emag2, egenmag2, agens, 
           im1, im2, im3, eno;  
 
@@ -1012,17 +1012,21 @@ function( gpd, aut )
     od; 
     memb := minfo!.embeddings; 
     ## second: permutations of the objects 
-    if ( m = 2 ) then 
+    if ( m = 1 ) then 
+        Error( "only one object, so no permutations" ); 
+    elif ( m = 2 ) then 
+        K := [1]; 
         gensymm := [ (1,2) ]; 
     else 
+        K := [1,2]; 
         L := [2..m]; 
         Append( L, [1] ); 
         gensymm := [ PermList(L), (1,2) ];  #? replace (1,2) with (m-1,m) ?? 
     fi;
     symm := Group( gensymm ); 
     ## action of symm on mag2 = ag2^m 
-    imact := [1,2]; 
-    for i in [1,2] do 
+    imact := ShallowCopy( K ); 
+    for i in K do 
         pi := gensymm[i]^-1; 
         imact[i] := GroupHomomorphismByImages( mag2, mag2, genmag2,  
             List( [1..nmag2], j -> genmag2[ RemInt( j-1, nag ) + 1  
@@ -1060,6 +1064,33 @@ end );
 ##
 #M  AutomorphismGroupOfGroupoid( <gpd> )
 ##
+InstallMethod( AutomorphismGroupOfGroupoid, "for one-object groupoid", true, 
+    [ IsGroupoid and IsSinglePieceDomain and IsDiscreteDomainWithObjects ], 0,
+function( gpd ) 
+
+    local autgen, rgp, agp, genagp, a, a0, ok, id, aut;  
+
+    Info( InfoGroupoids, 2, 
+          "AutomorphismGroupOfGroupoid for one-object groupoids" ); 
+    autgen := [ ]; 
+    rgp := gpd!.magma; 
+    agp := AutomorphismGroup( rgp ); 
+    genagp := SmallGeneratingSet( agp ); 
+    for a in genagp do  
+        a0 := GroupoidAutomorphismByGroupAutoNC( gpd, a ); 
+        ok := IsAutomorphismWithObjects( a0 ); 
+        Add( autgen, a0 );  
+    od; 
+    id := IdentityMapping( gpd ); 
+    aut := GroupWithGenerators( autgen, id ); 
+    SetIsAutomorphismGroup( aut, true ); 
+    SetIsFinite( aut, true ); 
+    SetIsAutomorphismGroupOfGroupoid( aut, true ); 
+    SetAutomorphismGroup( gpd, aut );
+    Info( InfoGroupoids, 2, "nice object not yet coded in this case" ); 
+    return aut; 
+end ); 
+
 InstallMethod( AutomorphismGroupOfGroupoid, "for a single piece groupoid", 
     true, [ IsGroupoid and IsSinglePieceDomain ], 0,
 function( gpd ) 
@@ -1067,7 +1098,8 @@ function( gpd )
     local autgen, nautgen, rgp, genrgp, agp, genagp, a, obs, n, imobs, 
           L, ok, id, ids, cids, i, c, aut, niceob, nicemap, rgh, ioo, ior;  
 
-    Info( InfoGroupoids, 2, "AutomorphismGroup for single piece groupoids" ); 
+    Info( InfoGroupoids, 2, 
+          "AutomorphismGroupOfGroupoid for single piece groupoids" ); 
     ##  first: automorphisms of the root group 
     autgen := [ ]; 
     rgp := gpd!.magma; 
@@ -1080,10 +1112,6 @@ function( gpd )
     ##  second: permutations of the objects 
     obs := gpd!.objects; 
     n := Length( obs );
-    if ( n = 1 ) then 
-        Print( "#I  single object case not yet dealt with\n" ); 
-        # return pagp; 
-    fi; 
     if ( n = 2 ) then 
         imobs := [ obs[2], obs[1] ]; 
         Add( autgen, GroupoidAutomorphismByObjectPerm( gpd, imobs ) );
@@ -1160,7 +1188,7 @@ function( gpd )
           obs, n, imobs, L, ok, id, ids, aut, niceob, nicemap;  
 
     Info( InfoGroupoids, 2, 
-          "AutomorphismGroup for homogeneous discrete groupoids" ); 
+          "AutomorphismGroupOfGroupoid for homogeneous discrete groupoids" ); 
     pieces := Pieces( gpd ); 
     obs := ObjectList( gpd ); 
     n := Length( obs );

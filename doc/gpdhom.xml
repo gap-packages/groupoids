@@ -252,7 +252,8 @@ elements but with a different set <C>obs</C> of objects.
 <P/>
 The operation <C>IsomorphismStandardGroupoid(gpd,obs)</C> 
 returns the isomorphism from a groupoid with rays to the groupoid of type 
-<C>IsDirectProductWithCompleteGraph</C> on the given set <C>obs</C> of objects.
+<C>IsDirectProductWithCompleteDigraphDomain</C> 
+on the given set <C>obs</C> of objects.
 <P/>
 </Description>
 </ManSection>

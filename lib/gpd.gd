@@ -263,6 +263,14 @@ DeclareAttribute( "DiscreteTrivialSubgroupoid", IsGroupoid );
 ##
 DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
 
+############################################################################# 
+## 
+#O  NormalSubgroupoid( <G>, <S> )              
+#O  IsNormalSubgroupoid( <G>, <S> )
+## 
+DeclareOperation( "NormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+DeclareOperation( "IsNormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+
 ############################################################################## 
 ## 
 #E  gpd.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 

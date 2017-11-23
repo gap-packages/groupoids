@@ -558,12 +558,12 @@ gap> for e in hsetq8 do Print(e,"\n"); od;
    <Oper Name="IsWideSubgroupoid"
          Arg="gpd, sgpd" />
 <Description>
-A <E>subgroupoid</E> <C>sgpd</C> of a groupoid <C>gpd</C> has as objects 
-some subset of the objects of <C>gpd</C>.
-It is <E>wide</E> if all the objects are included.
-It is <E>full</E> if, for any two objects in <C>sgpd</C>, 
-the <C>Homset</C> is the same as that in <C>gpd</C>.
-The arrows of <C>sgpd</C> are a subset of those of <C>gpd</C>,
+A <E>subgroupoid</E> <M>S</M> of a groupoid <M>G</M> has as objects 
+some subset of the objects of <M>G</M>.
+It is <E>wide</E> in <M>G</M> if both groupoids have the same object set.
+It is <E>full</E> if, for any two objects in <M>S</M>, 
+the <C>Homset</C> is the same as that in <M>G</M>.
+The arrows of <M>S</M> are a subset of those of <M>G</M>,
 closed under multiplication and
 with tail and head in the chosen object set.
 <P/>
@@ -573,9 +573,6 @@ Its two parameters are a groupoid and a list of pieces,
 each piece being specified as a list <C>[sgp,obs]</C>,  
 where <C>sgp</C> is a subgroup of the root group in that piece, 
 and <C>obs</C> is a subset of the objects in that piece.
-<P/> 
-A subgroupoid <C>S</C> is <E>wide</E> in <C>G</C> 
-if <C>S</C> anbd <C>G</C> have the same object set. 
 <P/>
 </Description>
 </ManSection>
@@ -682,7 +679,7 @@ groupoid with 3 pieces:
    <Oper Name="RayElementsOfGroupoid"
          Arg="gpd" />
 <Description>
-If groupoid <M>G</M> is of type <C>IsDirectProductWithCompleteGraph</C> 
+If groupoid <M>G</M> is of type <C>IsDirectProductWithCompleteDigraph</C> 
 with group <M>g</M> and <M>n</M> objects, 
 then a typical wide subgroupoid <M>H</M> of <M>G</M> is formed by choosing 
 a subgroup <M>h</M> of <M>g</M> to be the object group 

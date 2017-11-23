@@ -304,11 +304,6 @@ end );
 
 InstallMethod( GeneratorsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( gpd ) 
-    local p;
-    for p in Pieces( gpd ) do 
-        Print( "p = ", p, " with generators:\n" ); 
-        Print( GeneratorsOfGroupoid(p), "\n" );
-    od;
     return Flat( List( Pieces( gpd ), p -> GeneratorsOfGroupoid( p ) ) ); 
 end );
 
@@ -723,7 +718,7 @@ function( gpd, oblist )
     local pieces, hgpd; 
 
     pieces := List( oblist, L -> Range( IsomorphismNewObjects( gpd, L ) ) ); 
-    hgpd := UnionOfPiecesNC( pieces, 1 ); 
+    hgpd := UnionOfPiecesOp( pieces, pieces[1] ); 
     SetIsHomogeneousDomainWithObjects( hgpd, true ); 
     SetIsSinglePieceDomain( hgpd, false ); 
     return hgpd; 
@@ -1658,6 +1653,31 @@ end );
 
 #############################################################################
 ##
+#M  IsNormalSubgroupoid 
+##
+InstallMethod( IsNormalSubgroupoid, "for two subgroupoids", true, 
+    [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
+function( G, N )
+
+    local gpG, gpN; 
+
+    if not IsWideSubgroupoid( G, N ) then 
+        return false; 
+    fi; 
+    if not IsNormal( G!.magma, N!.magma ) then 
+        return false; 
+    fi;
+    if IsSinglePiece( N ) then 
+        return true; 
+    elif IsDiscreteDomainWithObjects( N ) then 
+        return true; 
+    else 
+        return false; 
+    fi;
+end ); 
+
+#############################################################################
+##
 #M  ReplaceOnePieceInUnion 
 ##
 InstallOtherMethod( ReplaceOnePieceInUnion, "for union, posint and gpd", true, 
@@ -1984,7 +2004,7 @@ function( G, U )
         if ( Length(filt) = 1 ) then
             subU := piece[1];
         else
-            subU := UnionOfPiecesNC( piece, 1 );
+            subU := UnionOfPiecesOp( piece, piece[1] );
         fi;
         Append( reps, RightCosetRepresentatives( cG[i], subU ) );
     od;
@@ -2047,7 +2067,7 @@ function( G, U )
         if ( Length(filt) = 1 ) then
             subU := piece[1];
         else
-            subU := UnionOfPiecesNC( piece, 1 );
+            subU := UnionOfPiecesOp( piece, piece[1] );
         fi;
         Append( reps, LeftCosetRepresentatives( cG[i], subU ) );
     od;
@@ -2113,7 +2133,7 @@ function( G, U, o )
     if ( Length(filt) = 1 ) then
         subU := piece[1];
     else
-        subU := UnionOfPiecesNC( piece, 1 );
+        subU := UnionOfPiecesOp( piece, piece[1] );
     fi;
     return LeftCosetRepresentativesFromObject( co, subU, o );
 end );

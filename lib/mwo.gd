@@ -63,11 +63,11 @@ DeclareRepresentation( "IsPiecesRep",
 
 ############################################################################# 
 ## 
-#O  UnionOfPiecesNC( <pieces>, <type> )              
 #O  UnionOfPieces( <pieces> )              
+#O  UnionOfPiecesOp( <pieces>, <dom> )              
 ## 
-DeclareOperation( "UnionOfPiecesNC", [ IsList, IsInt ] );    
-DeclareOperation( "UnionOfPieces", [ IsList ] );
+DeclareGlobalFunction( "UnionOfPieces" );
+DeclareOperation( "UnionOfPiecesOp", [ IsList, IsDomainWithObjects ] );    
 
 ############################################################################# 
 ## 

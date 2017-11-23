@@ -705,17 +705,70 @@ end );
 
 #############################################################################
 ##
-#M  UnionOfPiecesNC . . . . . . . for a list of connected magmas with objects
-#M  UnionOfPieces
+#M  UnionOfPieces . . . . . . . . for a list of connected magmas with objects
+#M  UnionOfPiecesOp 
 ##
-InstallMethod( UnionOfPiecesNC, "method for magmas with objects, and kind",
-    true, [ IsList, IsInt ], 0,
-function( comps, kind )
+InstallGlobalFunction( UnionOfPieces, 
+function( arg )
 
-    local len, pieces, L, fam, filter, mwo, i, obs, par;
+    local L, npa, part, pieces, p, nco, obs, obp, i, gi, nobj;
 
-    ## kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
+    if IsList( arg[1] ) then 
+        L := arg[1]; 
+    else 
+        L := arg; 
+    fi; 
+    npa := Length( L );
+    pieces := [ ]; 
+    if ( Length( L ) = 1 ) then 
+        return L[1]; 
+    fi; 
+    for part in L do 
+        if not IsDomainWithObjects( part ) then
+            Info( InfoGroupoids, 1, "part ", part, "not an mwo" );
+            return fail;
+        fi;
+        if ( HasIsSinglePiece(part) and IsSinglePiece(part) ) then
+            Add( pieces, part );
+        else
+            Append( pieces, Pieces( part ) );
+        fi;
+    od; 
+    obs := [ ]; 
+    for p in pieces do 
+        obp := ObjectList( p );
+        if ( Intersection( obs, obp ) <> [ ] ) then
+            Info( InfoGroupoids, 1, 
+                  "constituents must have disjoint object sets" );
+            return fail;
+        fi;
+        obs := Union( obs, obp ); 
+    od;
+    return UnionOfPiecesOp( pieces, pieces[1] );
+end );
 
+InstallMethod( UnionOfPiecesOp, "method for magmas with objects",
+    true, [ IsList, IsDomainWithObjects ], 0,
+function( comps, dom )
+
+    local kind, len, pieces, L, fam, filter, mwo, i, obs, par;
+
+    ## determine which kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
+    if ForAll( comps, c -> "IsGroupoid" in CategoriesOfObject( c ) ) then 
+        kind := 1; 
+    elif ForAll( comps, 
+                 c -> "IsMonoidWithObjects" in CategoriesOfObject( c ) ) then 
+        kind := 2; 
+    elif ForAll( comps, 
+                 c -> "IsSemigroupWithObjects" in CategoriesOfObject( c ) ) then 
+        kind := 3; 
+    elif ForAll( comps, 
+                 c -> "IsMagmaWithObjects" in CategoriesOfObject( c ) ) then 
+        kind := 4; 
+    else 
+        Print( "kind not in {1,2,3,4} so TryNextMethod()\n" ); 
+        TryNextMethod(); 
+    fi;
     ## order pieces by first object
     len := Length( comps ); 
     obs := List( comps, g -> g!.objects[1] );
@@ -769,43 +822,6 @@ function( comps, kind )
         fi; 
     fi; 
     return mwo; 
-end );
-
-InstallMethod( UnionOfPieces, "generic method for magmas with objects",
-    true, [ IsList ], 0,
-function( parts )
-
-    local npa, part, pieces, p, nco, obs, obp, i, gi, nobj, kind;
-
-    npa := Length( parts );
-    pieces := [ ]; 
-    if ( Length( parts ) = 1 ) then 
-        return parts[1]; 
-    fi; 
-    for part in parts do 
-        if not IsDomainWithObjects( part ) then
-            Info( InfoGroupoids, 1, "part ", part, "not an mwo" );
-            return fail;
-        fi;
-        if ( HasIsSinglePiece(part) and IsSinglePiece(part) ) then
-            Add( pieces, part );
-        else
-            Append( pieces, Pieces( part ) );
-        fi;
-    od; 
-    obs := [ ]; 
-    for p in pieces do 
-        obp := ObjectList( p );
-        if ( Intersection( obs, obp ) <> [ ] ) then
-            Info( InfoGroupoids, 1, 
-                  "constituents must have disjoint object sets" );
-            return fail;
-        fi;
-        obs := Union( obs, obp ); 
-    od;
-    kind := KindOfDomainWithObjects( pieces ); 
-    Info( InfoGroupoids, 2, "union has kind ", kind ); 
-    return UnionOfPiecesNC( pieces, kind );
 end );
 
 #############################################################################

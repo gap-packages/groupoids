@@ -164,7 +164,7 @@ gap> g4*g2*g1*g3;
 ## Section 2.5, Structures with more than one piece 
 
 ## SubSection 2.4.1
-gap> N1 := UnionOfPieces( [ M78, S123 ] ); 
+gap> N1 := UnionOfPieces( M78, S123 ); 
 magma with objects having 2 pieces :-
 1: M78
 2: semigroup with objects :-
@@ -179,7 +179,7 @@ gap> Pieces(N1);
       objects = [ -3, -2, -1 ]
      ]
 
-gap> N2 := UnionOfPieces( [ M49, S0 ] );  
+gap> N2 := UnionOfPieces( M49, S0 );  
 semigroup with objects having 2 pieces :-
 1: monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
@@ -190,7 +190,7 @@ semigroup with objects having 2 pieces :-
 gap> ObjectList( N2 ); 
 [ -9, -4, 0 ]
 
-gap> N3 := UnionOfPieces( [ N1, N2] );  
+gap> N3 := UnionOfPieces( N1, N2 );  
 magma with objects having 4 pieces :-
 1: monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
@@ -208,7 +208,7 @@ gap> Length( GeneratorsOfMagmaWithObjects( N3 ) );
 50
 
 ## this should fail since the object sets are not disjoint: 
-gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );  
+gap> N4 := UnionOfPieces( S123, DomainWithSingleObject( sgp, -2 ) );  
 fail
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

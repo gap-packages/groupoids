@@ -159,7 +159,6 @@ DeclareGlobalFunction( "MagmaWithObjectsHomomorphism" );
 #O  HomomorphismToSinglePiece( <src>, <rng>, <piece images> )  
 #O  HomomorphismByUnionNC( <g1>, <g2>, <mors> )  
 #O  HomomorphismByUnion( <g1>, <g2>, <list> )  
-#O  HomomorphismFromSinglePieceGeneratorsImages( <src>, <rng>, <gens>, <ims> )
 ## 
 DeclareOperation( "MappingWithObjectsByFunction", 
   [ IsMagmaWithObjects, IsMagmaWithObjects, IsFunction, IsHomogeneousList ] );
@@ -175,8 +174,6 @@ DeclareOperation( "HomomorphismByUnionNC",
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ] );
 DeclareOperation( "HomomorphismByUnion",
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ] );
-DeclareOperation( "HomomorphismFromSinglePieceGeneratorsImages",
-  [ IsSinglePiece, IsSinglePiece, IsHomogeneousList, IsHomogeneousList ] );
 
 ############################################################################# 
 ## 

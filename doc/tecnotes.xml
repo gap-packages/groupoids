@@ -90,11 +90,11 @@ NewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116,
   117, 119, 120, 123, 205, 501, 2690, 2703, 2707, 2711, 2715, 2718, 2720, 
   2721, 2722 ] )
 gap> KnownAttributesOfObject( Gd8 ); 
-[ "Name", "Size", "GeneratorsOfMagmaWithInverses", "ObjectList", "Pieces" ]
+[ "Name", "Size", "ObjectList", "GeneratorsOfMagmaWithObjects", 
+  "GeneratorsOfGroupoid" ]
 gap> KnownTruePropertiesOfObject( Gd8 ); 
-[ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", 
-  "CanEasilySortElements", "IsDuplicateFree", "IsAssociative", 
-  "IsSinglePieceDomain", "IsDirectProductWithCompleteGraphDomain" ]
+[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", 
+  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ]
 gap> RepresentationsOfObject( Gd8 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 gap> RepresentationsOfObject( U5 ); 
