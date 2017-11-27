@@ -13,13 +13,14 @@ GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "The standard operations which construct a groupoid mapping are:\n", 
     "1.  GroupoidHomomorphism( src, rng, hom );\n", 
     "2.  GroupoidHomomorphism( src, rng, hom, oims, imrays );\n", 
+    "3.  GroupoidHomomorphismFromHomogeneousDiscrete(src,rng,homs,oims);\n", 
     " or GroupoidHomomorphism( one of the following parameter options );\n",
-    "3.  GroupoidHomomorphismFromSinglePiece( src, rng, gens, images );\n",
-    "4.  HomomorphismToSinglePiece( src, rng, list of [gens,images]'s );\n",
-    "5.  HomomorphismByUnion( src, rng, list of disjoint homomorphisms );\n", 
-    "6.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
-    "7.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
-    "8.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
+    "4.  GroupoidHomomorphismFromSinglePiece( src, rng, gens, images );\n",
+    "5.  HomomorphismToSinglePiece( src, rng, list of [gens,images]'s );\n",
+    "6.  HomomorphismByUnion( src, rng, list of disjoint homomorphisms );\n", 
+    "7.  GroupoidAutomorphismByGroupAuto( gpd, auto );\n", 
+    "8.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
+    "9.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
 
 #############################################################################
 ##
