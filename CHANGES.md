@@ -18,8 +18,9 @@
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
 
-## 1.53 -> 1.54  (23/11/17) 
+## 1.53 -> 1.54  (27/11/17) 
 
+ * (27/11/17) added MappingGeneratorsImages method for hom discrete mappings
  * (18/10/17) fixed bug in DiscreteSubgroupoid; RestrictedMapGpd now in manual
  * (17/10/17) added other method for GroupoidInnerAutomorphism(R,S,r); 
  * (16/10/17) added method for RestrictedMappingGroupoids for homdisc 

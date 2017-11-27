@@ -464,6 +464,35 @@ function ( hom )
     return List( maps, m -> MappingGeneratorsImages(m) ); 
 end );
 
+InstallMethod( MappingGeneratorsImages, "for mapping from hom discrete", true,
+    [ IsGroupoidHomomorphism and 
+      IsGroupoidHomomorphismFromHomogeneousDiscrete ], 0,
+function ( hom ) 
+    
+    local src, rng, obs, nobs, obhoms, oims, gens, ngens, imgs, 
+          i, a, g, o, pos, imo, img; 
+
+    src := Source( hom ); 
+    rng := Range( hom ); 
+    obs := ObjectList( src );
+    nobs := Length( obs );
+    oims := ImagesOfObjects( hom );
+    obhoms := ObjectHomomorphisms( hom ); 
+    gens := GeneratorsOfGroupoid( src ); 
+    ngens := Length( gens ); 
+    imgs := ListWithIdenticalEntries( ngens, 0 ); 
+    for i in [1..ngens] do 
+        a := gens[i]; 
+        g := a![1]; 
+        o := a![2]; 
+        pos := Position( obs, o ); 
+        imo := oims[pos];         
+        img := ImageElm( obhoms[pos], g ); 
+        imgs[i] := ArrowNC( true, img, imo, imo ); 
+    od;
+    return [ gens, imgs ]; 
+end );
+
 #############################################################################
 ##
 #M  Display
@@ -1608,8 +1637,9 @@ InstallMethod( GroupoidHomomorphismFromHomogeneousDiscreteNC,
       IsHomogeneousList ], 0,
 function( src, rng, homs, oims )
 
-    local map, ok, p;
+    local obs, map, ok, oki, oks, mgi, p;
 
+    obs := ObjectList( src ); 
     map := rec(); 
     ObjectifyWithAttributes( map, GroupoidHomomorphismDiscreteType, 
         Source, src, 
@@ -1619,10 +1649,10 @@ function( src, rng, homs, oims )
         IsGeneralMappingWithObjects, true, 
         IsGroupWithObjectsHomomorphism, true, 
         RespectsMultiplication, true ); 
-    ok := IsInjectiveOnObjects( map ); 
-    ok := IsSurjectiveOnObjects( map ); 
+    oki := IsInjectiveOnObjects( map ); 
+    oks := IsSurjectiveOnObjects( map ); 
     SetIsGeneralMappingFromSinglePiece( map, false ); 
-    SetMappingToSinglePieceData( map, [ [ homs, oims, [ ] ] ] );
+    mgi := MappingGeneratorsImages( map ); 
     if ( src = rng ) then 
         SetIsEndoGeneralMapping( map, true ); 
         SetIsEndomorphismWithObjects( map, true ); 
