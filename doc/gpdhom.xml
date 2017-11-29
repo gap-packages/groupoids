@@ -158,12 +158,20 @@ gap> IsInjectiveOnObjects( mor2 );
 true
 gap> IsSurjectiveOnObjects( mor2 );
 false
-gap> IsBijectiveOnObjects( iso1 );
+gap> ad8 := GroupHomomorphismByImages( d8, d8, 
+>               [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );; 
+gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [-7,-9,-8], [(),(1,3),(2,4)] );
+groupoid homomorphism : Gd8 -> Gd8
+[ [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -8], 
+      [() : -9 -> -7] ], 
+  [ [(1,4,3,2) : -7 -> -7], [(2,4) : -7 -> -7], [(1,3) : -7 -> -9], 
+      [(2,4) : -7 -> -8] ] ]
+gap> IsBijectiveOnObjects( md8 );
 true
-gap> IsEndomorphismWithObjects( inc );
-false
-gap> IsAutomorphismWithObjects( inc );
-false
+gap> IsEndomorphismWithObjects( md8 );
+true
+gap> IsAutomorphismWithObjects( md8 );
+true
 ]]>
 </Example>
 

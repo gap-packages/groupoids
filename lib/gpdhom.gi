@@ -151,6 +151,9 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
                 a := Arrow( arg[2], e, pt, ph ); 
             else 
                 a := Arrow( arg[2], arg[5][i-ngens+nobs], pt, ph ); 
+                if ( a = fail ) then 
+                    Error( "image arrow = fail" ); 
+                fi;
             fi;
             images[i] := a; 
         od; 
