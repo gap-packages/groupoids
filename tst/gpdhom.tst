@@ -97,8 +97,8 @@ gap> ImageElementsOfRays( mor2 );
 [ (), (1,2,4) ]
 
 ## SubSection 5.2.6
-gap> ObjectGroupHomomorphism( iso2, -12 );
-[ (1,2,4,3), (2,3) ] -> [ (1,2,3,4), (1,3) ]
+gap> ObjectGroupHomomorphism( mor1, -27 );
+[ f1, f2, f3 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
 
 ## SubSection 5.3.1
 gap> inc := InclusionMappingGroupoids( Hs4, Hd8b );
