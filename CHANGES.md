@@ -20,7 +20,7 @@
 
 ## 1.53 -> 1.54  (29/11/17) 
 
- * (29/11/17) revised manual Ch.5; added test to GroupoidHomomorphism  
+ * (29/11/17) revised manual Ch.5; added test to GroupoidHomomorphism; release!  
  * (27/11/17) added MappingGeneratorsImages method for hom discrete mappings
  * (18/10/17) fixed bug in DiscreteSubgroupoid; RestrictedMapGpd now in manual
  * (17/10/17) added other method for GroupoidInnerAutomorphism(R,S,r); 
