@@ -1719,6 +1719,40 @@ function( src, rng, homs, oims )
     return GroupoidHomomorphismFromHomogeneousDiscreteNC( src,rng,homs,oims ); 
 end );
 
+#?  this should replace "InAutomorphismGroupOfGroupoid" 
+InstallMethod( \in,
+    "method for an automorphism of a single piece groupoid", true,
+    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoidAsGroupoid ], 
+    0,
+function( arr, aut0 )
+
+    local o;
+
+    o := ObjectList( aut0 )[1]; 
+    if not ( ( o = arr![2] ) and ( o = arr![3] ) ) then 
+        return false; 
+    fi; 
+    return ( arr![1] in aut0!.magma ); 
+end ); 
+
+InstallMethod( \in,
+    "method for an automorphism of a single piece groupoid", true,
+    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoid ], 
+    10,
+function( a, aut )
+
+    local gpd, gens;
+
+    gpd := AutomorphismDomain( aut ); 
+    if not ( ( gpd = Range( a ) ) and ( gpd = Source( a ) ) ) then 
+        return false; 
+    fi; 
+    if ( a in GeneratorsOfGroup( aut ) ) then 
+        return true; 
+    fi; 
+    Error( "need more work on this method" ); 
+end ); 
+    
 ##############################################################################
 ##
 #E  gpdhom.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

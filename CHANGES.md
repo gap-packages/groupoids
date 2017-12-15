@@ -18,6 +18,11 @@
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
 
+## 1.54 -> 1.54dev  (15/12/17) 
+
+ * (14/12/17) added property IsAutomorphismGroupOfGroupoidAsGroupoid 
+              added method for \in for automorphisms of groupoids 
+
 ## 1.53 -> 1.54  (29/11/17) 
 
  * (29/11/17) revised manual Ch.5; added test to GroupoidHomomorphism; release!  

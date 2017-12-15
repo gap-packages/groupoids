@@ -143,11 +143,13 @@ DeclareOperation( "GroupoidInnerAutomorphism",
 #O  AutomorphismGroupOfGroupoid( <gpd> ) 
 #O  NiceObjectAutoGroupGroupoid( <gpd>, <aut> )
 #A  EmbeddingsInNiceObject( <gp> ) 
+#P  IsAutomorphismGroupOfGroupoidAsGroupoid( <gpd> ) 
 ##  
 DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
 DeclareOperation( "AutomorphismGroupOfGroupoid", [ IsGroupoid ] ); 
 DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
 DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
+DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
 
 ############################################################################# 
 ## 

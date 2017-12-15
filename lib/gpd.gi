@@ -379,7 +379,7 @@ InstallMethod( DomainWithSingleObject, "generic method for a group",
     true, [ IsGroup, IsObject ], 0,
 function( gp, obj ) 
 
-    local o; 
+    local o, gpd; 
 
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
         o := obj[1]; 
@@ -388,7 +388,12 @@ function( gp, obj )
     else 
         Error( "usage: DomainWithSingleObject( <group>, <object> );" ); 
     fi; 
-    return SinglePieceGroupoidNC( gp, [ o ] );
+    gpd := SinglePieceGroupoidNC( gp, [ o ] ); 
+    if ( HasIsAutomorphismGroupOfGroupoid( gp ) 
+         and IsAutomorphismGroupOfGroupoid( gp ) ) then 
+        SetIsAutomorphismGroupOfGroupoidAsGroupoid( gpd, true ); 
+    fi;
+    return gpd; 
 end );
 
 #############################################################################
@@ -2266,7 +2271,7 @@ function( e, n )
     return fail; 
 end );
 
-##  This operator now (05/03/08) follows the definitions in preprint 07.10
+##  This operator follows the definitions in Alp/Wensley 2010
 
 InstallMethod( \^, "for two groupoid elements", 
     IsIdenticalObj, [ IsGroupoidElement, IsGroupoidElement ], 0,

@@ -20,10 +20,10 @@
   <author>
     <name><first>Max</first><last>Horn</last></name>
   </author>
-  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.1)</C></title>
-  <year>2014</year>
+  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.2)</C></title>
+  <year>2017</year>
   <other type="note">
-    GAP package, <URL>https://github.com/fingolfin/GitHubPagesForGAP/</URL>
+    GAP package, <URL>https://gap-system.github.io/GitHubPagesForGAP/</URL>
   </other>
 </manual></entry>
 
