@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  iso-test.xtst              Groupoids Package                 Chris Wensley
+#W  iso-test.tst              Groupoids Package                 Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -63,4 +63,4 @@ gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;
 
 #############################################################################
 ##
-#E  iso-test.xtst . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  iso-test.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

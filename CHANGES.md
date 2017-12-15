@@ -20,6 +20,8 @@
 
 ## 1.54 -> 1.54dev  (15/12/17) 
 
+ * (15/12/17) removed examples/*.g; added expt/; .xtst files not in xtst/ 
+              split off autogroup functions from gpdhom.g{d,i} to gpdaut.g{d,i} 
  * (14/12/17) added property IsAutomorphismGroupOfGroupoidAsGroupoid 
               added method for \in for automorphisms of groupoids 
 

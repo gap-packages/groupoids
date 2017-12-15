@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  sub-test.xtst              Groupoids Package                 Chris Wensley
+#W  sub-test.tst              Groupoids Package                 Chris Wensley
 ##
 #Y  Copyright (C) 2000-2017, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -54,4 +54,4 @@ gap> ImageElm( res2, ArrowNC( true, (2,3,4), -7, -7 ) );
 
 #############################################################################
 ##
-#E  sub-test.xtst . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  sub-test.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

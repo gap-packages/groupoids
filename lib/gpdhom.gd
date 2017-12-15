@@ -23,18 +23,8 @@ DeclareAttribute( "IsomorphismPcGroupoid", IsGroupoid );
 ############################################################################# 
 ## 
 #P  IsGroupoidEndomorphism( <mor> )                        
-#P  IsGroupoidAutomorphism( <mor> )                        
-#P  IsGroupoidAutomorphismByGroupAuto( <aut> )
-#P  IsGroupoidAutomorphismByObjectPerm( <aut> )
-#P  IsGroupoidAutomorphismByRayShifts( <aut> ) 
-##
 DeclareSynonym( "IsGroupoidEndomorphism", 
     IsGroupoidHomomorphism and IsEndomorphismWithObjects );  
-DeclareSynonym( "IsGroupoidAutomorphism", 
-    IsGroupoidHomomorphism and IsAutomorphismWithObjects );  
-DeclareProperty( "IsGroupoidAutomorphismByGroupAuto", IsGroupoidAutomorphism );
-DeclareProperty( "IsGroupoidAutomorphismByObjectPerm", IsGroupoidAutomorphism );
-DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
  
 ############################################################################# 
 ## 
@@ -102,8 +92,6 @@ DeclareAttribute( "ObjectTransformationOfGroupoidHomomorphism",
 #O  ObjectGroupHomomorphism( <map>, <obj> ) 
 #O  GroupoidHomomorphismFromSinglePieceNC( <src>, <rng>, <gens>, <images> )  
 #O  GroupoidHomomorphismFromSinglePiece( <src>, <rng>, <gens>, <images> ) 
-#O  GroupoidAutomorphismByGroupAutoNC( <gpd>, <auto> )
-#O  GroupoidAutomorphismByGroupAuto( <src>, <auto> )
 ## 
 DeclareAttribute( "RootGroupHomomorphism", 
     IsGroupoidHomomorphism and IsHomomorphismToSinglePiece );  
@@ -113,52 +101,6 @@ DeclareOperation( "GroupoidHomomorphismFromSinglePieceNC",
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] );
 DeclareOperation( "GroupoidHomomorphismFromSinglePiece", 
     [ IsGroupoid, IsGroupoid, IsHomogeneousList, IsHomogeneousList ] ); 
-DeclareOperation( "GroupoidAutomorphismByGroupAutoNC", 
-    [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
-DeclareOperation( "GroupoidAutomorphismByGroupAuto", 
-    [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism ] );
-
-############################################################################# 
-## 
-#O  GroupoidAutomorphismByObjectPermNC( <gpd>, <oims> )
-#O  GroupoidAutomorphismByObjectPerm( <gpd>, <oims> )
-#O  GroupoidAutomorphismByRayShiftsNC( <gpd>, <rims> ) 
-#O  GroupoidAutomorphismByRayShifts( <gpd>, <rims> ) 
-#O  GroupoidInnerAutomorphism( <gpd>, <arr> )
-## 
-DeclareOperation( "GroupoidAutomorphismByObjectPermNC", 
-    [ IsGroupoid, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByObjectPerm", 
-    [ IsGroupoid, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByRayShiftsNC", 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByRayShifts", 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] ); 
-DeclareOperation( "GroupoidInnerAutomorphism", 
-    [ IsGroupoid, IsGroupoidElement ] ); 
-
-############################################################################# 
-## 
-#P  IsAutomorphismGroupOfGroupoid( <gp> ) 
-#O  AutomorphismGroupOfGroupoid( <gpd> ) 
-#O  NiceObjectAutoGroupGroupoid( <gpd>, <aut> )
-#A  EmbeddingsInNiceObject( <gp> ) 
-#P  IsAutomorphismGroupOfGroupoidAsGroupoid( <gpd> ) 
-##  
-DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
-DeclareOperation( "AutomorphismGroupOfGroupoid", [ IsGroupoid ] ); 
-DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
-DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
-DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
-
-############################################################################# 
-## 
-##  this should be a method for \in, but cannot make that work at present 
-## 
-#O  InAutomorphismGroupOfGroupoid( <a, aut> )
-##  
-DeclareOperation( "InAutomorphismGroupOfGroupoid", 
-    [ IsGroupoidHomomorphism, IsAutomorphismGroupOfGroupoid ] );
 
 ############################################################################# 
 ## 
@@ -190,10 +132,6 @@ DeclareRepresentation( "IsGroupoidHomomorphismFromHomogeneousDiscreteRep",
 #A  ObjectHomomorphisms( <map> ) 
 #P  IsGeneralMappingFromHomogeneousDiscrete( <map> ) 
 #P  IsGroupoidHomomorphismFromHomogeneousDiscrete( <map> ) 
-#P  IsAutomorphismOfHomogeneousDiscreteGroupoid( IsGroup ) 
-#O  GroupoidAutomorphismByGroupAutosNC( <gpd, homs> )
-#O  GroupoidAutomorphismByGroupAutos( <gpd, homs> )
-#T  GroupoidHomomorphismDiscreteType  . . type for homomorphisms of groupoids 
 ##  
 DeclareOperation( "GroupoidHomomorphismFromHomogeneousDiscrete", 
     [ IsHomogeneousDiscreteGroupoid, IsGroupoid, IsHomogeneousList, 
@@ -207,16 +145,6 @@ DeclareProperty( "IsGeneralMappingFromHomogeneousDiscrete",
     IsGeneralMappingWithObjects );
 DeclareProperty( "IsGroupoidHomomorphismFromHomogeneousDiscrete", 
     IsGeneralMappingWithObjects );
-DeclareProperty( "IsAutomorphismOfHomogeneousDiscreteGroupoid", 
-    IsGroupoidAutomorphism );
-DeclareOperation( "GroupoidAutomorphismByGroupAutos", 
-    [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
-DeclareOperation( "GroupoidAutomorphismByGroupAutosNC", 
-    [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
-BindGlobal( "GroupoidHomomorphismDiscreteType", 
-    NewType( GroupoidHomomorphismFamily, 
-             IsGroupoidHomomorphismFromHomogeneousDiscreteRep 
-             and IsGroupoidHomomorphismFromHomogeneousDiscrete ) );
 
 ############################################################################## 
 ## 

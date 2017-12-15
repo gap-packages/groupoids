@@ -9,9 +9,9 @@
 LoadPackage( "groupoids" );
 
 pkgname := "groupoids"; 
-pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
-testfiles := [ "aut-test.xtst", "hom-test.xtst", 
-               "iso-test.xtst", "sub-test.xtst" ];
+pkgdir := DirectoriesPackageLibrary( pkgname, "xtst" );
+testfiles := [ "aut-test.tst", "hom-test.tst", 
+               "iso-test.tst", "sub-test.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );
