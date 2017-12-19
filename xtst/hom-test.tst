@@ -258,6 +258,9 @@ gap> ImageElm( gkad, x1 ) = x4;
 true
 gap> ImageElm( gkad, y1 ) = y4;
 true
+gap> gl43 := SpecialLinearGroup( 4, 3 );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
 gap> sl43 := NormalSubgroups( gl43 )[3];;
 gap> gengl43 := GeneratorsOfGroup( gl43 );; 
 gap> Hgl43 := SubgroupoidWithRays( Ggl43, sl43, 
@@ -288,6 +291,14 @@ single piece groupoid with rays: < Group(
     (11,34,20,31,21,58,12,61)(14,36,74,40,27,59,39,79)(15,63,65,43,26,32,48,76
      )(17,35,47,49,24,60,66,70)(18,62,38,52,23,33,75,67)(41,54,77,42,81,68,45,
      80)(44,53,50,51,78,69,72,71) ] >
+
+gap> q8 := SmallGroup( 8, 4 );;
+gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
+gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
+gap> N2 := Subgroup( q8, [ q8.2] );; 
+gap> SetName( N2, "N2" );
+gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] );; 
+gap> SetName( Hq8, "Hq8" );
 gap> Uq8gl43 := UnionOfPieces( [ Hq8, Hgl43 ] );;
 gap> isoUq8gl43 := IsomorphismPermGroupoid( Uq8gl43 );; 
 gap> ImageElm( isoUq8gl43, Arrow( Hq8, q8.1^3, -28, -27 ) );
@@ -306,6 +317,18 @@ gap> a5 := Group( (1,2,3,4,5), (1,2,3) );;
 gap> Ga5 := Groupoid( a5, [-8..-6] );;
 gap> iso:=IsomorphismPcGroupoid(Ga5); 
 fail
+
+## make this part of hom-test.tst independent of other tests 
+gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
+gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
+gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );; 
+gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
+gap> c6 := Group( (5,6,7)(8,9) );;
+gap> SetName( c6, "c6" );
+gap> Gc6 := DomainWithSingleObject( c6, -6 );;
+gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
 gap> isoU3 := IsomorphismPcGroupoid( U3 ); 
 groupoid homomorphism from several pieces : 
 groupoid homomorphism : 

@@ -19,8 +19,11 @@
 /doc/*.tex
 /doc/*.toc
 
+/expt 
+
 /gh-pages/
 
 /tmp/
 
 /tst/*.g
+/xtst/*.g

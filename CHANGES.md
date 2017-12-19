@@ -8,9 +8,7 @@
               conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution. 
- * (14/04/16) InAutomorphismGroupOfGroupoid should just be \in 
  * (06/09/17) Revisit the Objectify commands for cosets etc in gpd.gi 
- * (16/09/17) revise RestrictedMappingGroupoids and Subgroupoid 
  * (20/09/17) need more in the manual concerning cosets (left, right, double) 
               and it is probably necessary to revise and test these functions 
  * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
