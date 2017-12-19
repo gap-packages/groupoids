@@ -18,8 +18,9 @@
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
 
-## 1.54 -> 1.54dev  (18/12/17) 
+## 1.54 -> 1.54dev  (19/12/17) 
 
+ * (19/12/17) add IsomorphismNewObjects method for hom discrete 
  * (15/12/17) removed examples/*.g; added expt/; .xtst files not in xtst/ 
               split off autogroup functions from gpdhom.g{d,i} to gpdaut.g{d,i} 
  * (14/12/17) added property IsAutomorphismGroupOfGroupoidAsGroupoid 

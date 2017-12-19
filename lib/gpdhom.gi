@@ -848,30 +848,45 @@ end );
 #M  IsomorphismNewObjects
 ##
 InstallMethod( IsomorphismNewObjects, "for a single piece groupoid", true,
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
+    [ IsGroupoid, IsHomogeneousList ], 0,
 function( gpd1, ob2 )
 
-    local iso, ob1, gp, gpd2, gens1, gens2, ngens, i, g, pt, ph;
+    local iso, ob1, nobs, gp, gpd2, gens1, gens2, ngens, i, g, pt, ph, 
+          gpgens, id, homs;
 
-    if not IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
-        Error( "make an isomorphism for the parent groupoid first" );
-    fi;
-    ob1 := gpd1!.objects; 
-    if not ( Length(ob1) = Length(ob2) ) then
+    ob1 := ObjectList( gpd1 ); 
+    nobs := Length( ob1 );
+    if not ( Length(ob2) = nobs ) then
         Error( "object sets have different lengths" );
     fi;
     gp := gpd1!.magma;
-    gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
-    gens1 := GeneratorsOfGroupoid( gpd1 ); 
-    ngens := Length( gens1 );
-    gens2 := [1..ngens]; 
-    for i in [1..ngens] do 
-        g := gens1[i]; 
-        pt := Position( ob1, g![2] ); 
-        ph := Position( ob1, g![3] ); 
-        gens2[i] := Arrow( gpd2, g![1], ob2[pt], ob2[ph] );
-    od;
-    iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
+    if IsSinglePiece( gpd1 ) then 
+        if not IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
+            Error( "make an isomorphism for the parent groupoid first" );
+        fi;
+        gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
+        gens1 := GeneratorsOfGroupoid( gpd1 ); 
+        ngens := Length( gens1 );
+        gens2 := [1..ngens]; 
+        for i in [1..ngens] do 
+            g := gens1[i]; 
+            pt := Position( ob1, g![2] ); 
+            ph := Position( ob1, g![3] ); 
+            gens2[i] := Arrow( gpd2, g![1], ob2[pt], ob2[ph] );
+        od;
+        iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
+    elif IsHomogeneousDiscreteGroupoid( gpd1 ) then 
+        gpd2 := HomogeneousDiscreteGroupoid( gp, ob2 ); 
+        gpgens := GeneratorsOfGroup( gp ); 
+        id := GroupHomomorphismByImages( gp, gp, gpgens, gpgens );
+        homs := ListWithIdenticalEntries( nobs, id ); 
+        iso := GroupoidHomomorphismFromHomogeneousDiscrete( 
+                   gpd1, gpd2, homs, ob2 ); 
+    elif HasPieces( gpd1 ) then 
+        Error( "apply IsomorphismNewObjects to individual pieces" );  
+    else 
+        return fail; 
+    fi;
     return iso;
 end );
 

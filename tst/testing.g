@@ -11,7 +11,8 @@ LoadPackage( "groupoids" );
 pkgname := "groupoids"; 
 pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
 testfiles := 
-    [ "mwo.tst", "mwohom.tst", "gpd.tst", "gpdhom.tst", "ggraph.tst" ];
+    [ "mwo.tst", "mwohom.tst", "gpd.tst", "gpdhom.tst", "gpdaut.tst", 
+      "ggraph.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );

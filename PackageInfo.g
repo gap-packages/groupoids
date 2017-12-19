@@ -9,14 +9,14 @@ PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 
 Version := "1.54dev",
-Date := "18/12/2017", 
+Date := "19/12/2017", 
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY GROUPOIDSVERSION "1.54dev">
 ##  <!ENTITY GROUPOIDSTARFILENAME "groupoids-1.54dev.tar.gz">
-##  <!ENTITY GROUPOIDSRELEASEDATE "18/12/2017">
-##  <!ENTITY GROUPOIDSLONGRELEASEDATE "18th December 2017">
+##  <!ENTITY GROUPOIDSRELEASEDATE "19/12/2017">
+##  <!ENTITY GROUPOIDSLONGRELEASEDATE "19th December 2017">
 ##  <!ENTITY GROUPOIDSHTMLFILENAME "groupoids.html">
 ##  <!ENTITY GROUPOIDSCOPYRIGHTYEARS "2000-2017">
 ##  <#/GAPDoc>
