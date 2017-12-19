@@ -62,15 +62,6 @@ DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
 DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
 DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
 
-############################################################################# 
-## 
-##  this should be a method for \in, but cannot make that work at present 
-## 
-#O  InAutomorphismGroupOfGroupoid( <a, aut> )
-##  
-DeclareOperation( "InAutomorphismGroupOfGroupoid", 
-    [ IsGroupoidHomomorphism, IsAutomorphismGroupOfGroupoid ] );
-
 ## ======================================================================== ##
 ##                     Homogeneous groupoid automorphisms                   ##
 ## ======================================================================== ##

@@ -272,6 +272,32 @@ end );
 
 #############################################################################
 ##
+#M  Size( <agpd> ) . . . . . . . . . . . . . . . . . for a connected groupoid
+##
+InstallMethod( Size, "for a groupoid automorphism group", true,  
+    [ IsAutomorphismGroupOfGroupoid ], 0,
+function( agpd ) 
+
+    local gpd, gp, n, aut; 
+
+    gpd := AutomorphismDomain( agpd ); 
+    gp := gpd!.magma; 
+    if IsSinglePieceDomain( gpd ) then  
+        n := Length( ObjectList( gpd ) ); 
+        aut := AutomorphismGroup( gpd!.magma ); 
+        return Factorial( n ) * Size( aut ) * Size( gp )^(n-1); 
+    elif IsDiscreteDomainWithObjects( gpd ) 
+             and IsHomogeneousDomainWithObjects( gpd ) then 
+        n := Length( ObjectList( gpd ) ); 
+        aut := AutomorphismGroup( gpd!.magma ); 
+        return Factorial( n ) * Size( aut )^n;             
+    fi;
+    return fail; 
+end ); 
+
+
+#############################################################################
+##
 #M  NiceObjectAutoGroupGroupoid( <gpd>, <aut> ) . . create a nice monomorphism 
 ##
 InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", 
@@ -596,7 +622,7 @@ function( gpd )
         end); 
 
     SetNiceMonomorphism( aut, nicemap ); 
-    SetIsHandledByNiceMonomorphism( aut, true ); 
+    ## SetIsHandledByNiceMonomorphism( aut, true ); 
     SetIsCommutative( aut, IsCommutative( niceob[1] ) );
     return aut; 
 end ); 
@@ -679,28 +705,55 @@ function( gpd )
         end); 
 
     SetNiceMonomorphism( aut, nicemap ); 
-    SetIsHandledByNiceMonomorphism( aut, true ); 
+    ## SetIsHandledByNiceMonomorphism( aut, true ); 
     #?  SetInnerAutomorphismsAutomorphismGroup( aut, ?? );  
     SetIsCommutative( aut, IsCommutative( niceob[1] ) );
     return aut; 
 end ); 
 
-#############################################################################
-##
-#M  InAutomorphismGroupOfGroupoid( <a>, <aut> ) 
-##  . . . . for an element in an automorphism group of a groupoid 
-##  . . . . should be a method for \in, but cannot make that work at present 
-##
-InstallMethod( InAutomorphismGroupOfGroupoid, 
-    "for groupoid hom and automorphism group : single piece", 
-    true, [ IsGroupoidHomomorphism and IsDefaultGroupoidHomomorphismRep, 
-            IsAutomorphismGroupOfGroupoid ], 0,
-function( a, aut ) 
-    #? this needs to be coded 
-    Error( "not yet written" ); 
+## ========================================================================
+##                     Homogeneous groupoid automorphisms                  
+## ======================================================================== ##
+
+InstallMethod( \in,
+    "method for an automorphism of a single piece groupoid", true,
+    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoidAsGroupoid ], 
+    0,
+function( arr, aut0 )
+
+    local o;
+
+    o := ObjectList( aut0 )[1]; 
+    if not ( ( o = arr![2] ) and ( o = arr![3] ) ) then 
+        return false; 
+    fi; 
+    return ( arr![1] in aut0!.magma ); 
 end ); 
 
-InstallMethod( InAutomorphismGroupOfGroupoid, 
+InstallMethod( \in,
+    "method for an automorphism of a single piece groupoid", true,
+    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoid ], 
+    0,
+function( a, aut )
+
+    local gpd, gp, data;
+
+    gpd := AutomorphismDomain( aut ); 
+    gp := gpd!.magma; 
+    data := MappingToSinglePieceData( a )[1];
+    if not ( data[1] in AutomorphismGroup( gp ) ) then 
+        return false; 
+    fi; 
+    if not ForAll( data[2], o -> o in ObjectList( gpd ) ) then 
+        return false; 
+    fi; 
+    if not ForAll( data[3], e -> e in gp ) then 
+        return false; 
+    fi;
+    return true; 
+end ); 
+
+InstallMethod( \in,
     "for groupoid hom and automorphism group : discrete", true, 
     [ IsGroupoidHomomorphismFromHomogeneousDiscrete and IsGroupoidHomomorphism,
       IsAutomorphismGroupOfGroupoid ], 0, 
@@ -709,7 +762,7 @@ function( a, aut )
     local gens, g1, gpd, obs, imobs, G, AG; 
 
     gens := GeneratorsOfGroup( aut ); 
-    gpd := Source( gens[1] ); 
+    gpd := AutomorphismDomain( aut ); 
     if not ( ( Source(a) = gpd ) and ( Range(a) = gpd ) ) then 
         Info( InfoGroupoids, 2, "require Source(a) = Range(a) = gpd" ); 
         return false; 
@@ -729,44 +782,6 @@ function( a, aut )
     fi; 
     #? is there anything else to test? 
     return true; 
-end ); 
-
-## ========================================================================
-##                     Homogeneous groupoid automorphisms                  
-## ======================================================================== ##
-
-#?  this should replace "InAutomorphismGroupOfGroupoid" 
-InstallMethod( \in,
-    "method for an automorphism of a single piece groupoid", true,
-    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoidAsGroupoid ], 
-    0,
-function( arr, aut0 )
-
-    local o;
-
-    o := ObjectList( aut0 )[1]; 
-    if not ( ( o = arr![2] ) and ( o = arr![3] ) ) then 
-        return false; 
-    fi; 
-    return ( arr![1] in aut0!.magma ); 
-end ); 
-
-InstallMethod( \in,
-    "method for an automorphism of a single piece groupoid", true,
-    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoid ], 
-    10,
-function( a, aut )
-
-    local gpd, gens;
-
-    gpd := AutomorphismDomain( aut ); 
-    if not ( ( gpd = Range( a ) ) and ( gpd = Source( a ) ) ) then 
-        return false; 
-    fi; 
-    if ( a in GeneratorsOfGroup( aut ) ) then 
-        return true; 
-    fi; 
-    Error( "need more work on this method" ); 
 end ); 
     
 ##############################################################################

@@ -27,6 +27,15 @@ gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 );
 <group with 8 generators>
 gap> Size( AGa4 );
 20736
+gap> Agens := GeneratorsOfGroup( AGa4 );; 
+gap> Length( Agens );
+8
+gap> g37 := Agens[3]*Agens[7];;
+gap> g37 in AGa4; 
+true
+gap> g73 := Agens[7]*Agens[3];;
+gap> g37 = g73; 
+false
 
 gap> a := Arrow( Ga4, (1,2,3), -9, -8 );
 [(1,2,3) : -9 -> -8]
