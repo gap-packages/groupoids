@@ -176,12 +176,16 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 #A  ElementsOfGroupoid( <gpd> ) 
 ##
 DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
-DeclareRepresentation( "IsHomsetCosetsRep", 
-    IsHomsetCosets and IsPositionalObjectRep, [1..6] ); 
+DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
+    and IsAttributeStoringRep and IsComponentObjectRep, 
+    [ "group", "tobj", "hobj", "element", "rays", "type" ] ); 
 BindGlobal( "IsHomsetCosetsFamily", 
             NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
 BindGlobal( "IsHomsetCosetsType", 
             NewType( IsHomsetCosetsFamily, IsHomsetCosetsRep ) );
+BindGlobal( "IsNewHomsetCosetsType", 
+            NewType( CollectionsFamily( IsGroupoidElementFamily ), 
+                     IsHomsetCosetsRep ) );
 DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] ); 
 DeclareOperation( "ObjectStar", [ IsGroupoid, IsObject ] ); 
 DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsObject ] ); 

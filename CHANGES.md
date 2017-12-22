@@ -15,9 +15,12 @@
  * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
+ * (22/12/17) HomsetCosetsGroupoidCoset needs rewriting (not sure what it does!)
 
-## 1.54 -> 1.54dev  (19/12/17) 
+## 1.54 -> 1.54dev  (22/12/17) 
 
+ * (21/12/17) changed HomsetCosets from IsPositionalObjectRep 
+              corrected SubgroupoidByPieces when rays are involved 
  * (19/12/17) add IsomorphismNewObjects method for hom discrete 
               methods for \in for AutomorphismGroupOfGroupoid 
  * (15/12/17) removed examples/*.g; added expt/; .xtst files not in xtst/ 
