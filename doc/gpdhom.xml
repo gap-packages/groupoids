@@ -66,8 +66,8 @@ restriced mappings, and groupoid automorphisms (see <Ref Sect="sec-autos"/>).
          Arg="src, rng, gens, images" />
    <Func Name="GroupoidHomomorphism"
          Arg="args" />
-   <Oper Name="MappingToSinglePieceData" 
-         Arg="map" /> 
+   <Attr Name="MappingToSinglePieceData" 
+         Arg="map" Label="for groupoids" /> 
 <Description>
 The simplest groupoid homomorphism is a mapping <M>\phi : G \to H</M> 
 from a connected groupoid <M>G</M> to a connected groupoid <M>H</M>. 
@@ -334,7 +334,7 @@ groupoid homomorphism :
 
 <ManSection>
    <Oper Name="IsomorphismNewObjects"
-         Arg="src,objlist" />
+         Arg="src,objlist" Label="for groupoids" />
    <Oper Name="IsomorphismStandardGroupoid"
          Arg="gpd,obs" />
 <Description>
@@ -414,7 +414,7 @@ groupoid homomorphism :
 
 <ManSection>
    <Oper Name="HomomorphismToSinglePiece"
-         Arg="src, rng, piecehoms" />
+         Arg="src, rng, piecehoms" Label="for groupoids" />
 <Description>
 When <M>G</M> is made up of two or more pieces, all of which get mapped 
 to a connected groupoid, we have a <E>homomorphism to a single piece</E>. 
@@ -516,7 +516,7 @@ IdentityMapping( d8 )
 
 <ManSection>
    <Oper Name="HomomorphismByUnion"
-         Arg="src, rng, homs" />
+         Arg="src, rng, homs" Label="for groupoids" />
 <Description>
 As in section <Ref Sect="sec-hompieces"/>,  
 when the range <M>H</M> has more than one connected component, 

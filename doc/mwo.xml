@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  mwo.xml          groupoids documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -70,9 +70,9 @@ is a <E>group with objects</E>, usually called a <E>groupoid</E>.
    <Oper Name="SinglePieceMagmaWithObjects"
          Arg="magma, obs" />
    <Attr Name="ObjectList"
-         Arg="mwo" />
+         Arg="mwo" Label="for magmas with objects" />
    <Attr Name="RootObject"
-         Arg="mwo" />
+         Arg="mwo" Label="for magmas with objects" />
 <Description>
 The simplest construction for a magma with objects <M>M</M> 
 is to take a magma <M>m</M> and an ordered set <M>s</M>, 
@@ -134,11 +134,11 @@ gap> [ RootObject( M78 ), ObjectList( M78 ) ];
    <Oper Name="Arrow"
          Arg="mwo,elt,tail,head" />
    <Oper Name="ElementOfArrow"
-         Arg="arr" />
+         Arg="arr" Label="for magmas with objects" />
    <Oper Name="TailOfArrow"
-         Arg="arr" />
+         Arg="arr" Label="for magmas with objects" />
    <Oper Name="HeadOfArrow"
-         Arg="arr" />
+         Arg="arr" Label="for magmas with objects" />
 <Description>
 Arrows in a magma with objects lie in the category 
 <Index Key="IsMultiplicativeElementWithObjects">
@@ -223,7 +223,7 @@ false
    <Oper Name="SinglePieceSemigroupWithObjects"
          Arg="sgp, obs" />
    <Oper Name="DomainWithSingleObject"
-         Arg="dom,obj" />
+         Arg="dom,obj" Label="for semigroups" />
 <Description>
 The constructions in section <Ref Sect="sec-mwo"/> give a 
 <C>SinglePieceSemigroupWithObjects</C> when the magma is a semigroup. 
@@ -387,9 +387,9 @@ gap> g4*g2*g1*g3;
 
 <ManSection>
   <Oper Name="UnionOfPieces" 
-         Arg="pieces" />
+         Arg="pieces" Label="for magmas with objects" />
   <Attr Name="Pieces" 
-         Arg="mwo" />
+         Arg="mwo" Label="for magmas with objects" />
 <Description>
 A magma with objects whose underlying digraph has two or more connected 
 components can be constructed by taking the union of two or more 

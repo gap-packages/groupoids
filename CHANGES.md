@@ -17,8 +17,9 @@
  * (27/10/17) need to add DirectProductInfo stuff 
  * (22/12/17) HomsetCosetsGroupoidCoset needs rewriting (not sure what it does!)
 
-## 1.54 -> 1.54dev  (22/12/17) 
+## 1.54 -> 1.54dev  (11/01/18) 
 
+ * (11/01/18) now using AutoDoc to build the manual 
  * (21/12/17) changed HomsetCosets from IsPositionalObjectRep 
               corrected SubgroupoidByPieces when rays are involved 
  * (19/12/17) add IsomorphismNewObjects method for hom discrete 

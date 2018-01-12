@@ -5,21 +5,12 @@
 ##
 
 SetPackageInfo( rec(
+
+Packagename := "groupoids",
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-
 Version := "1.54dev",
-Date := "21/12/2017", 
-
-##  duplicate these values for inclusion in the manual: 
-##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY GROUPOIDSVERSION "1.54dev">
-##  <!ENTITY GROUPOIDSTARFILENAME "groupoids-1.54dev.tar.gz">
-##  <!ENTITY GROUPOIDSRELEASEDATE "21/12/2017">
-##  <!ENTITY GROUPOIDSLONGRELEASEDATE "21st December 2017">
-##  <!ENTITY GROUPOIDSHTMLFILENAME "groupoids.html">
-##  <!ENTITY GROUPOIDSCOPYRIGHTYEARS "2000-2017">
-##  <#/GAPDoc>
+Date := "12/01/2018", 
 
 Persons := [
   rec(
@@ -94,11 +85,20 @@ Dependencies := rec(
   GAP := ">=4.8.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5.1" ], 
                            [ "fga", ">= 1.3.1" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0"] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0"],
+                              [ "AutoDoc", ">= 2017.09.15" ] ],
   ExternalConditions := [ ]
 ),
 
 AvailabilityTest := ReturnTrue,
+
+Autoload := false, 
+
+TestFile := "tst/testall.g", 
+
+Keywords := [ "magma with objects", "groupoid", "graph of groups", 
+              "free product with amalgamation", "HNN extension", 
+              "automorphisms" ], 
 
 BannerString := Concatenation(
     "Loading groupoids ", String( ~.Version ), 
@@ -106,10 +106,59 @@ BannerString := Concatenation(
     "by Emma Moore and Chris Wensley (http://pages.bangor.ac.uk/~mas023/)\n",
     "--------------------------------------------------------------------\n" ),
 
-TestFile := "tst/testall.g", 
-
-Keywords := [ "magma with objects", "groupoid", "graph of groups", 
-              "free product with amalgamation", "HNN extension", 
-              "automorphisms" ]
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 2000-2018, Emma Moore and Chris Wensley.<P/>\n", 
+            "The &groupoids; package is free software; you can redistribute ", 
+            "it and/or modify it under the terms of the GNU General ", 
+            "Public License as published by the Free Software Foundation; ", 
+            "either version 2 of the License, or (at your option) ", 
+            "any later version.\n"
+            ),
+        Abstract := Concatenation( 
+            "The &groupoids; package provides functions for computation with\n",
+            "groupoids (categories with every arrow invertible) and their ", 
+            "morphisms; for graphs of groups, and graphs of groupoids.\n", 
+            "The most basic structure introduced is that of ", 
+            "<E>magma with objects</E>, followed by ", 
+            "<E>semigroup with objects</E>, then <E>monoid with objects</E> ", 
+            "and finally <E>groupoid</E> which is a ", 
+            "<E>group with objects</E>.\n <P/>", 
+            "It provides normal forms for Free Products with Amalgamation ", 
+            "and for HNN-extensions when the initial groups have ", 
+            "rewrite systems and the subgroups have finite index.\n <P/>", 
+            "The &groupoids; package was originally implemented in 2000 ", 
+            "(as <Package>GraphGpd</Package>) ", 
+            "when the first author was studying for a Ph.D. in Bangor.\n <P/>", 
+            "The package was then renamed <Package>Gpd</Package> ", 
+            "and version 1.07 was released in July 2011, ", 
+            "to be tested with &GAP; 4.5.\n <P/>", 
+            "<Package>Gpd</Package> became an accepted &GAP; package ", 
+            "in May 2015.\n <P/>", 
+            "In April 2017 the package was renamed again, as ", 
+            "<Package>groupoids</Package>.\n <P/>",  
+            "Recent versions implement many of the constructions ", 
+            "described in the paper <Cite Key='AlWe' /> ", 
+            "for automorphisms of groupoids.\n <P/>", 
+            "Bug reports, comments, suggestions for additional features, ", 
+            "and offers to implement some of these, will all be ", 
+            "very welcome.\n <P/>", 
+            "Please submit any issues at ", 
+            "<URL>https://github.com/gap-packages/groupoids/issues/</URL> ", 
+            "or send an email to the second author at ", 
+            "<Email>c.d.wensley@bangor.ac.uk</Email>.\n <P/>" 
+            ), 
+        Acknowledgements := Concatenation( 
+            "This documentation was prepared with the ", 
+            "&GAPDoc; <Cite Key='GAPDoc'/> and ", 
+            "&AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>\n", 
+            "The procedure used to produce new releases uses the package ", 
+            "<Package>GitHubPagesForGAP</Package> ", 
+            "<Cite Key='GitHubPagesForGAP' /> ", 
+            "and the package <Package>ReleaseTools</Package>.<P/>" 
+            ),
+    ) 
+),
 
 ));

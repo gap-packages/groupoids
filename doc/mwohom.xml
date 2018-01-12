@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  mwohom.xml       groupoids documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -42,13 +42,13 @@ the map <M>f_A</M> is required to preserve identities and inverses.
    <Oper Name="HomomorphismFromSinglePiece"
          Arg="src,rng,hom,imobs" />
    <Oper Name="HomomorphismToSinglePiece"
-         Arg="src,rng,images" />
+         Arg="src,rng,images" Label="for magmas with objects" />
    <Attr Name="MappingToSinglePieceData"
-         Arg="mwohom" />
+         Arg="mwohom" Label="for magmas with objects" />
    <Attr Name="PiecesOfMapping"
          Arg="mwohom" />
    <Oper Name="IsomorphismNewObjects"
-         Arg="src,objlist" />
+         Arg="src,objlist" Label="for magmas with objects" />
 <Description>
 There are a variety of homomorphism constructors. 
 <P/> 
@@ -196,7 +196,7 @@ gap> ir31 := ImageElm( shom, r31 );;  [ r31, ir31 ];
 
 <ManSection>
    <Oper Name="HomomorphismByUnion"
-         Arg="src,rng,homs" />
+         Arg="src,rng,homs" Label="for magmas with objects" />
 <Description>
 When <M>f : M \to N</M> and <M>N</M> has more than one connected component, 
 then <M>f</M> is a union of homomorphisms, one for each piece in the range. 

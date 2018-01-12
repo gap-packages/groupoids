@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml      groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -63,9 +63,6 @@ the operation <C>DiscreteNormalPreXModWithObjects</C>
 in <Package>XMod</Package> works again. 
 This constructs a crossed module of groupoids with a connected range 
 and a homogeneous, discrete source. 
-<P/>
-The latest version is &GROUPOIDSVERSION; of &GROUPOIDSLONGRELEASEDATE;, 
-for &GAP; 4.9. 
 <P/>
 In recent versions there have been a number of changes of function 
 name, such as <C>IsDigraph</C> becoming <C>GroupoidIsDigraph</C>. 
