@@ -51,20 +51,19 @@ For the various structures we have:
     IsMultiplicativeElementWithObjectsCollection );</C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsMagmaWithObjectsAndOnes", 
-    IsMagmaWithObjects and 
-    IsMultiplicativeElementWithObjectsAndOnesCollection ); </C>
+<C>DeclareCategory( "IsSemigroupWithObjects",
+    IsMagmaWithObjects and IsAssociative ); </C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsMagmaWithObjectsAndInverses", 
-    IsMagmaWithObjectsAndOnes and </C> 
+<C>DeclareCategory( "IsMonoidWithObjects", 
+    IsSemigroupWithObjects and 
+    IsMultiplicativeElementWithObjectsAndOnesCollection ); </C> 
 <P/>
 <C>IsMultiplicativeElementWithObjectsAndInversesCollection ); </C>
 </Item>
 <Item>
-<C>DeclareCategory( "IsGroupoid", IsMagmaWithObjectsAndInverses 
-    and IsGroupoidElementCollection ); 
-</C>
+<C>DeclareCategory( "IsGroupoid", IsMonoidWithObjects and 
+    IsGroupoidElementCollection ); </C>
 </Item>
 </List>
 

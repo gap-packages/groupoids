@@ -82,14 +82,11 @@ function( pgpd, rgp, rays )
     fam := IsGroupoidFamily;
     filter := IsSinglePieceRaysRep; 
     gpd := rec( objects := pgpd!.objects, magma := rgp, rays := rays ); 
-##    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
-##        IsSinglePieceDomain, true, 
-##        LargerDirectProductGroupoid, pgpd, 
-##        Parent, pgpd ); 
-    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType );
-        SetIsSinglePieceDomain( gpd, true ); 
-        SetLargerDirectProductGroupoid( gpd, pgpd ); 
-        SetParent( gpd, pgpd ); 
+    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
+        IsSinglePieceDomain, true, 
+        LargerDirectProductGroupoid, pgpd ); 
+    SetRaysOfGroupoid( gpd, rays );
+    SetParent( gpd, pgpd );
     id := One( pgpd!.magma ); 
     SetIsDirectProductWithCompleteDigraphDomain( gpd, 
         ForAll( rays, r -> r = id ) );
@@ -105,18 +102,16 @@ function( gpd, rgp, rays )
 
     obs := gpd!.objects; 
     if not ( Length( obs ) = Length( rays ) ) then 
-        Error( "should be one ray for each object in the groupoid," ); 
+        Error( "should be one ray element for each object in the groupoid," ); 
     fi; 
     if not IsSubgroup( gpd!.magma, rgp ) then
         Error( "subgroupoid root group not a subgroup of the root group," );
     fi;
-    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
-         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
-        grays := List( obs, o -> One( rgp ) );
-    else 
-        grays := gpd!.rays; 
-    fi; 
+    grays := RaysOfGroupoid( gpd ); 
     gp := gpd!.magma; 
+    if not IsSubgroup( gp, rgp ) then 
+        Error( "rgp is not a subgroup of gpd!.magma" ); 
+    fi; 
     if not ( rays[1] = One( rgp ) ) then
         Error( "first ray element is not the identity element," );
     fi;
@@ -224,45 +219,34 @@ end );
 
 #############################################################################
 ##
-#M  RayElementsOfGroupoid
-##
-InstallMethod( RayElementsOfGroupoid, "for a connected groupoid",
-    true, [ IsGroupoid and IsSinglePiece ], 0,
-function( G ) 
-    if ( HasIsDirectProductWithCompleteDigraphDomain( G ) 
-         and IsDirectProductWithCompleteDigraphDomain( G ) ) then 
-        return ListWithIdenticalEntries( 
-                   Length( G!.objects ), One( G!.magma ) ); 
-    else 
-        return G!.rays; 
-    fi;
-end );
-
-InstallMethod( RayElementsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
-function( G ) 
-    return List( Pieces( G ), p -> RayElementsOfGroupoid( p ) ); 
-end ); 
-
-#############################################################################
-##
 #M  RaysOfGroupoid
+#M  RayArrowsOfGroupoid
 ##
 InstallMethod( RaysOfGroupoid, "for a connected groupoid",
     true, [ IsGroupoid and IsSinglePiece ], 0,
-function( gpd ) 
-
-    local obs, nobs, rays; 
-
-    obs := gpd!.objects; 
-    nobs := Length( obs ); 
-    rays := gpd!.rays; 
-    return List( [1..nobs], 
-               i -> Arrow( gpd, rays[i], obs[1], obs[i] ) ); 
+function( G ) 
+    return G!.rays; 
 end );
 
 InstallMethod( RaysOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( G ) 
     return List( Pieces( G ), p -> RaysOfGroupoid( p ) ); 
+end ); 
+
+InstallMethod( RayArrowsOfGroupoid, "for a connected groupoid",
+    true, [ IsGroupoid and IsSinglePiece ], 0,
+function( gpd ) 
+    local obs, root, elts; 
+    obs := ObjectList( gpd ); 
+    root := obs[1]; 
+    elts := RaysOfGroupoid( gpd ); 
+    return List( [1..Length(obs)], 
+                 i -> ArrowNC( true, elts[i], root, obs[i] ) );
+end );
+
+InstallMethod( RayArrowsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
+function( G ) 
+    return List( Pieces( G ), p -> RayArrowsOfGroupoid( p ) ); 
 end ); 
 
 #############################################################################
@@ -773,7 +757,7 @@ function( gp, obs )
     fi;
     fam := IsGroupoidFamily; 
     filter := IsHomogeneousDiscreteGroupoidRep; 
-    gpd := rec( objects := obs, magma := gp ); 
+    gpd := rec( objects := obs, magma := gp); 
     ObjectifyWithAttributes( gpd, IsHomogeneousDiscreteGroupoidType, 
         IsAssociative, true, 
         IsDiscreteDomainWithObjects, true, 
@@ -926,10 +910,13 @@ function ( hc )
         Print( "<homset ", hc!.tobs[1], " -> ", hc!.hobs[1],
                " with group ", hc!.group, ">" );
     elif ( hc!.type = "r" ) then 
-        Print( "<right coset of (", hc!.element, " : ", 
-                 hc!.tobs[1], " -> ", hc!.hobs[1], ") >" );
-    elif ( hc!.type in [ "l", "d" ] ) then 
-        Print( "homset-cosets for coset" );
+        Print( "<right coset of ", hc!.ActingDomain, 
+               " with representative ", hc!.Representative,">" );
+    elif ( hc!.type = "l" ) then 
+        Print( "<left coset of ", hc!.ActingDomain, 
+               " with representative ", hc!.Representative,">" );
+    elif ( hc!.type = "d" ) then 
+        Print( "double cosets not yet implemented" );
     else
         Print( "<object>");
     fi; 
@@ -937,22 +924,14 @@ end );
 
 #############################################################################
 ##
-#M  Iterator( <cset> ) . . . . . . . . . . . . . iterator for groupoid coset 
-##
-InstallMethod( Iterator, "for a groupoid coset", [ IsGroupoidCoset ], 
-    cset -> Iterator( HomsetCosetsGroupoidCoset( cset ) ) ); 
-
-#############################################################################
-##
 #M  \=( <cset> ) . . . . . . . . . . . . . . . . . . . . for groupoid cosets 
 ##
 InstallMethod( \=, "for groupoid cosets", [IsGroupoidCoset, IsGroupoidCoset], 
 function( c1, c2 ) 
+Print("??? Warning: sufficient checks made ???\n" );
     return ( ( Representative(c1) = Representative(c2) ) 
-           and ( ActingDomain(c1) = ActingDomain(c2) ) 
-        and ( SuperDomain(c1) = SuperDomain(c2) ) 
-     and (HomsetCosetsGroupoidCoset(c1)![6]=HomsetCosetsGroupoidCoset(c2)![6])
-    );
+               and ( ActingDomain(c1) = ActingDomain(c2) ) 
+               and ( SuperDomain(c1) = SuperDomain(c2) ) );
 end );
 
 #############################################################################
@@ -994,24 +973,21 @@ function( hc )
                 iter!.hpos := iter!.hpos + 1;
             fi; 
             if ( hc!.type in [ "c", "r" ] ) then 
-                return    ## GroupoidElement( iter!.fgpd!.mwo, 
-                    ArrowNC( true, (hc!.rays[iter!.tpos])*(iter!.gpelt), 
-                        iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
+                return ArrowNC( true, (hc!.rays[iter!.tpos])*(iter!.gpelt), 
+                           iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             elif ( hc!.type in [ "s", "h" ] ) then 
-                return    ## GroupoidElement( iter!.fgpd!.mwo, 
-                    ArrowNC( true, (iter!.gpelt)*(hc!.rays[iter!.hpos]), 
-                        iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
+                return ArrowNC( true, (iter!.gpelt)*hc!.rays[iter!.hpos], 
+                           iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             elif ( hc!.type in [ "l" ] ) then 
-                return    ## GroupoidElement( iter!.fgpd!.mwo, 
-                    ArrowNC( true, (iter!.gpelt)^(-1)*(hc!.rays[iter!.hpos]), 
-                        iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
+                return ArrowNC( true, (iter!.gpelt)^(-1)*(hc!.rays[iter!.hpos]), 
+                           iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             elif ( hc!.type in [ "d" ] ) then 
                 Error( "double cosets not yet implemented," ); 
             fi; 
             end,
         ShallowCopy := iter -> 
             rec( groupIterator := ShallowCopy( iter!.groupIterator ), 
-                 fgpd := iter!.fgpd, 
+                 ## fgpd := iter!.fgpd, 
                  gpelt := iter!.gpelt,
                  tobs := iter!.tobs,
                  tlen := iter!.tlen,
@@ -1039,28 +1015,19 @@ InstallMethod( ObjectStarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local gp, obs, nobs, st, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, st, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
-         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
-        gp := gpd!.magma; 
-        fgpd := FamilyObj( gpd ); 
-        rays := gpd!.rays; 
-    else 
-        fgpd := FamilyObj( Parent( gpd ) ); 
-        gp := ObjectGroup( gpd, obj ); 
-        rays := gpd!.rays; 
-        pos := Position( obs, obj ); 
-        if ( pos <> 1 ) then  ## not the root object 
-            rpos := rays[pos]^(-1); 
-            rays := List( [1..Length(obs)], j -> rpos*rays[j] ); 
-        fi; 
+    gp := ObjectGroup( gpd, obj ); 
+    rays := gpd!.rays; 
+    pos := Position( obs, obj ); 
+    if ( pos <> 1 ) then  ## not the root object 
+        rpos := rays[pos]^(-1); 
+        rays := List( [1..Length(obs)], j -> rpos*rays[j] ); 
     fi; 
-    #### [ fgpd, gp, [obj], obs, rays, "s" ]
     st := rec( group := gp, tobs := [ obj ], hobs := obs, 
                rays := rays, type := "s" );
-    ObjectifyWithAttributes( st, IsNewHomsetCosetsType, 
+    ObjectifyWithAttributes( st, IsHomsetCosetsType, 
         IsHomsetCosets, true ); 
     return st;
 end );
@@ -1093,27 +1060,19 @@ InstallMethod( ObjectCostarNC, "for a connected groupoid and an object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( gpd, obj )
 
-    local gp, obs, nobs, cst, fgpd, rays, pos, rpos;
+    local gp, obs, nobs, cst, rays, pos, rpos;
 
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
-         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
-        gp := gpd!.magma; 
-        fgpd := FamilyObj( gpd ); 
-        rays := gpd!.rays; 
-    else 
-        fgpd := FamilyObj( Parent( gpd ) ); 
-        gp := ObjectGroup( gpd, obj ); 
-        rays := List( gpd!.rays, r -> r^(-1) ); 
-        pos := Position( obs, obj ); 
-        if ( pos <> 1 ) then  ## not the root object 
-            rpos := rays[pos]^(-1); 
-            rays := List( [1..Length(obs)], j -> rays[j]*rpos ); 
-        fi; 
+    gp := ObjectGroup( gpd, obj ); 
+    rays := List( gpd!.rays, r -> r^(-1) ); 
+    pos := Position( obs, obj ); 
+    if ( pos <> 1 ) then  ## not the root object 
+        rpos := rays[pos]; 
+        rays := List( [1..Length(obs)], j -> rays[j]^(-1)*rpos ); 
     fi; 
     cst := rec( group := gp, tobs := obs, hobs := [ obj ], 
                 rays := rays, type := "c" ); 
-    ObjectifyWithAttributes( cst, IsNewHomsetCosetsType, 
+    ObjectifyWithAttributes( cst, IsHomsetCosetsType, 
         IsHomsetCosets, true ); 
     return cst;
 end );
@@ -1146,25 +1105,19 @@ InstallMethod( HomsetNC, "for a connected groupoid and two objects",
     true, [ IsGroupoid and IsSinglePiece, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
-    local gp, obs, fgpd, rays, gen, hs, p1, p2;
+    local gp, obs, rays, ray, hs, p1, p2;
     
     obs := gpd!.objects; 
-    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
-         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
-        gp := gpd!.magma;
-        fgpd := FamilyObj( gpd ); 
-        gen := [ One(gp) ]; 
-    else 
-        fgpd := FamilyObj( Parent( gpd ) ); 
-        gp := ObjectGroup( gpd, o1 ); 
-        p1 := Position( obs, o1 ); 
-        p2 := Position( obs, o2 );
-        gen := gpd!.rays[p1]^(-1) * gpd!.rays[p2]; 
-    fi; 
+    rays := RaysOfGroupoid( gpd );
+    gp := ObjectGroup( gpd, o1 ); 
+    p1 := Position( obs, o1 ); 
+    p2 := Position( obs, o2 );
+    ray := rays[p1]^(-1) * rays[p2]; 
     hs := rec( group := gp, tobs := [ o1 ], hobs := [ o2 ], 
-               element := gen, type := "h" ); 
-    ObjectifyWithAttributes( hs, IsNewHomsetCosetsType, 
-        IsHomsetCosets, true ); 
+               rays := [ ray ], type := "h" ); 
+    ObjectifyWithAttributes( hs, IsHomsetCosetsType, 
+        IsHomsetCosets, true,
+        Representative, ray ); 
     return hs;
 end );
 
@@ -1442,7 +1395,8 @@ InstallMethod( SubgroupoidByPieces,
     [ IsGroupoid, IsList ], 0, 
 function( gpd, pieces )
 
-    local p1, withrays, pieceU, len, i, pi, par, sub, U, c, piece;
+    local p1, withrays, pieceU, len, i, pi, par, sub, U, c, piece, 
+          gobs, grays, nobspi, j, ob, rays, rootpi, rootpos, obpos;
 
     p1 := pieces[1]; 
     withrays := ( ( "IsSinglePieceRaysRep" in RepresentationsOfObject(gpd) ) 
@@ -1455,10 +1409,24 @@ function( gpd, pieces )
             pi := pieces[i]; 
             if withrays then 
                 if not ( Length( pi ) = 3 ) then 
-                    Error( "each piece should have a list of rays" ); 
+                    ## keep the rays of the larger gpd 
+                    gobs := ObjectList( gpd ); 
+                    grays := RaysOfGroupoid( gpd ); 
+                    rays := ShallowCopy( pi[2] ); 
+                    nobspi := Length( pi[2] );
+                    rootpi := pi[2][1]; 
+                    rootpos := Position( gobs, rootpi );
+                    for j in [1..nobspi] do 
+                        ob := pi[2][j]; 
+                        obpos := Position( gobs, ob ); 
+                        rays[j] := grays[rootpos]^(-1) * grays[obpos]; 
+                    od;
+                    par := FullSubgroupoid( gpd, pi[2] ); 
+                    sub := SubgroupoidWithRays( par, pi[1], rays ); 
+                else 
+                    par := FullSubgroupoid( gpd, pi[2] ); 
+                    sub := SubgroupoidWithRays( par, pi[1], pi[3] ); 
                 fi; 
-                par := FullSubgroupoid( gpd, pi[2] ); 
-                sub := SubgroupoidWithRays( par, pi[1], pi[3] );
             else 
                 sub := SinglePieceGroupoid( pi[1], pi[2] ); 
             fi; 
@@ -1793,67 +1761,58 @@ end );
 
 ##############################################################################
 ##
-#M  RightTransversal 
 #M  RightCoset 
 #M  LeftCoset
 #M  DoubleCoset
 ##
 #? (24/09/08)  decided to include the larger groupoid - a mistake ?? 
-#? (24/09/08)  should split this into a non-NC and an NC operation ?? 
+## (24/09/08)  could split this into a non-NC and an NC operation -
+##             but there is no RightCosetNC in the library 
 #? (03/10/08)  now allowing U not to be wide in G (see RightCosets). 
 
 InstallOtherMethod( RightCoset, "for groupoid, subgroupoid and element", 
-    true,  ##  IsCollsElms ?? 
-    [ IsGroupoid, IsGroupoid, IsMultiplicativeElementWithObjects ],
-    0, 
+    true, [ IsGroupoid, IsGroupoid, IsMultiplicativeElementWithObjects ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, U, fam, r, rc, hc; 
+    local G, U, obs, nobs, gpU, rayU, rays, rt, rc; 
 
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
-        Info( InfoGroupoids, 2, "comment: gpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: gpd is not a single piece!" ); 
         G := PieceOfObject( gpd, e![2] ); 
     fi; 
     if IsSinglePiece( sgpd ) then 
         U := sgpd; 
     else
-        Info( InfoGroupoids, 2, "comment: sgpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: sgpd is not a single piece!" ); 
         U := PieceOfObject( sgpd, e![2] ); 
     fi; 
     if not IsSubdomainWithObjects( G, U ) then 
         Error( "U not a subgroupoid of G," ); 
     fi; 
-    fam := FamilyObj( One( G!.magma ) ); 
-    if not IsBound(fam!.rightGroupoidCosetsDefaultSizeType) then
-        fam!.rightGroupoidCosetsDefaultSizeType 
-            := NewType( fam, IsRightCosetDefaultRep and HasActingDomain 
-               and HasFunctionAction and HasRepresentative and HasSize );
-    fi;
-    #?  (16/05/11)  r thinks it is groupoid, so PrintObj fails ?? 
-    #?              probably using the wrong family construction ??  
-    rc := rec( group := U!.magma, objects := U!.objects, 
-               tobs := [ e![2] ], hobs := [ e![3] ], 
-               element := e![1], type := "r" ); 
-    ObjectifyWithAttributes( rc, IsNewHomsetCosetsType, 
+    obs := ObjectList( U );
+    nobs := Length( obs ); 
+    gpU := ObjectGroup( U, e![3] );
+    rayU := RaysOfGroupoid( U );
+    rt := rayU[ Position( obs, e![2] ) ]; 
+    rays := List( [1..nobs], j -> rayU[j]^(-1)*rt*e![1] ); 
+    rc := rec( group := gpU, tobs := obs, hobs := [ e![3] ], 
+               rays := rays, type := "r" ); 
+    ObjectifyWithAttributes( rc, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, U,  
-#?        FunctionAction, OnLeftInverse,           (18/09/08) incorrect! 
-        Size, Size( ObjectCostar( U, e![2] ) ), 
+        Size, Size( gpU ) * nobs, 
         Representative, e ); 
-##??    hc := HomsetCosetsGroupoidCoset( r ); 
     return rc; 
 end ); 
 
 InstallMethod( LeftCoset, "for groupoid, subgroupoid and element", 
-    true,  ##  IsCollsElms ?? 
-    [ IsGroupoid, IsGroupoid, IsGroupoidElement ],
-    0, 
+    true, [ IsGroupoid, IsGroupoid, IsGroupoidElement ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, U, fam, lc, hc; 
+    local G, U, obs, nobs, gpU, rayU, rays, rh, lc; 
 
     if IsSinglePiece( gpd ) then 
         G := gpd; 
@@ -1870,16 +1829,20 @@ function( gpd, sgpd, e )
     if not IsSubdomainWithObjects( G, U ) then 
         Error( "U not a subgroupoid of G," ); 
     fi; 
-    lc := rec( group := U!.magma, objects := U!.objects, 
-               head := e![2], tail := e![3], element := e![1], type := "r" ); 
-    ObjectifyWithAttributes( lc, IsNewHomsetCosetsType, 
+    obs := ObjectList( U );
+    nobs := Length( obs ); 
+    gpU := ObjectGroup( U, e![2] );
+    rayU := RaysOfGroupoid( U );
+    rh := rayU[ Position( obs, e![3] ) ]; 
+    rays := List( [1..nobs], j -> e![1]*rh^(-1)*rayU[j] ); 
+    lc := rec( group := gpU, tobs := [ e![2] ], hobs := obs, 
+               rays := rays, type := "l" ); 
+    ObjectifyWithAttributes( lc, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, U, 
-#?        FunctionAction, OnLeftInverse,           (18/09/08) incorrect! 
-        Size, Size( ObjectCostar( U, e![3] ) ), 
+        Size, Size( gpU ) * nobs, 
         Representative, e ); 
-#?    hc := HomsetCosetsGroupoidCoset( l ); 
     return lc;
 end ); 
 
@@ -1911,12 +1874,12 @@ InstallMethod( \in, "for stars, costars, homsets, cosets, etc.", true,
     [ IsGroupoidElement, IsHomsetCosets ], 0,
 function( e, hc ) 
 
-    local r, pos; 
+    local r, pos, rep; 
 
     if ( hc!.type = "h" ) then ## homset 
         if ( e![2] <> hc!.tobs[1] ) then return false; fi; 
         if ( e![3] <> hc!.hobs[1] ) then return false; fi; 
-        r := hc!.element^-1; 
+        r := hc!.Representative^-1; 
         if not ( e![1]*r in hc!.group ) then return false; fi; 
         return true;
     elif ( hc!.type = "s" ) then ## star  
@@ -1933,83 +1896,28 @@ function( e, hc )
         r := hc!.rays[pos]^-1; 
         if not ( r*e![1] in hc!.group ) then return false; fi; 
         return true;
-    elif ( hc!.type = "r" ) then ## right coset
-        return false; 
+    elif ( hc!.type = "r" ) then ## right coset 
+        rep := Representative( hc ); 
+        if ( e![3] <> hc!.hobs[1] ) then return false; fi; 
+        pos := Position( hc!.tobs, e![2] ); 
+        if ( pos = fail ) then return false; fi; 
+        r := hc!.rays[pos]^(-1) * e![1]; 
+        if not ( r in hc!.group ) then return false; fi; 
+        return true; 
     elif ( hc!.type = "l" ) then ## left coset 
-        return false; 
+        rep := Representative( hc ); 
+        if ( e![2] <> hc!.tobs[1] ) then return false; fi; 
+        pos := Position( hc!.hobs, e![3] ); 
+        if ( pos = fail ) then return false; fi; 
+        r := hc!.rays[pos]^(-1) * e![1]; 
+        if not ( r in hc!.group ) then return false; fi; 
+        return true; 
     elif ( hc!.type = "d" ) then ## double coset   
-        return false;
+        Error( "'in' not yet implemented for double cosets" );
     else 
         Error( "type of HomsetCosets not recognised" ); 
     fi;
 end );
-
-## ?????
-
-InstallMethod( HomsetCosetsGroupoidCoset, "for right coset of groupoid",
-    true, [ IsGroupoidCoset ], 0,
-function( cset )
-
-    local U, e, G, obs, ogp, o1, o2, gpcset, fgpd, rays, pos, rpos, 
-          hc, isrt, C; 
-
-    e := Representative( cset ); 
-    G := SuperDomain( cset ); 
-    U := ActingDomain( cset ); 
-    if not e in G then 
-        Error( "element e not in groupoid G," ); 
-    fi; 
-    isrt := IsRightCosetDefaultRep( cset ); 
-    o1 := e![2];
-    o2 := e![3]; 
-    if isrt then 
-        ogp := ObjectGroup( U, o1 ); 
-    else 
-        ogp := ObjectGroup( U, o2 ); 
-    fi; 
-    if ( HasIsSinglePiece(U) and IsSinglePiece(U) ) then 
-        C := U; 
-    elif isrt then 
-        C := PieceOfObject( U, o1 ); 
-    else 
-        C := PieceOfObject( U, o2 ); 
-    fi; 
-    obs := C!.objects;
-    if ( HasIsDirectProductWithCompleteDigraph( C ) 
-         and IsDirectProductWithCompleteDigraph( C ) ) then 
-        Info( InfoGroupoids, 2, "Option 1 in HomsetCosetsGroupoidCoset" ); 
-        fgpd := FamilyObj( C ); 
-        rays := C!.rays; 
-    else 
-        Info( InfoGroupoids, 2, "Option 2 in HomsetCosetsGroupoidCoset" ); 
-        fgpd := FamilyObj( Parent( C ) );  
-        rays := List( C!.rays, r -> r^(-1) ); 
-        if isrt then 
-            pos := Position( obs, o1 ); 
-        else 
-            pos := Position( obs, o2 ); 
-        fi; 
-        if ( pos <> 1 ) then   ## not the root object 
-            rpos := rays[pos]^(-1); 
-            if isrt then 
-                rays := List( [1..Length(obs)], j -> rays[j]*rpos ); 
-            else
-                rays := List( [1..Length(obs)], j -> rpos*rays[j] ); 
-            fi; 
-        fi; 
-    fi; 
-    if isrt then 
-        gpcset := RightCoset( ogp, e![1] ); 
-        hc := Objectify( IsHomsetCosetsType, 
-                         [ fgpd, gpcset, obs, [o2], rays, "r" ] );
-    elif IsLeftCosetWithObjectsDefaultRep( cset ) then 
-        gpcset := RightCoset( ogp, e![1]^(-1) ); 
-        hc := Objectify( IsHomsetCosetsType, 
-                         [ fgpd, gpcset, [o1], obs, rays, "l" ] ); 
-    fi; 
-    SetIsHomsetCosets( hc, true ); 
-    return hc;
-end);
 
 #############################################################################
 ########  Why not `IsIdenticalObj' in the following declarations ??? ########
@@ -2022,7 +1930,7 @@ InstallMethod( RightCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
 function( G, U )
 
-    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
+    local gg, obG, nobG, reps, p, op, gp, nrc, o, rco, r;
 
     if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
@@ -2031,24 +1939,19 @@ function( G, U )
     obG := G!.objects;
     nobG := Length( obG );
     reps := [ ];
-    for c in Pieces( U ) do
-        o1 := c!.objects[1];
-        gc := c!.magma;
-        rc := RightCosets( gg, gc );
-        nrc := Length( rc );
-        L := ListWithIdenticalEntries( nrc*nobG, 0 );
-        j := 0;
-        for b in rc do
-            g := Representative(b);
-            for o in obG do
-                j := j+1; 
-                L[j] := ArrowNC( true, g, o1, o );
+    for p in Pieces( U ) do
+        op := p!.objects; 
+        gp := p!.magma;
+        nrc := Size( gg )/Size( gp );
+        for o in op do 
+            rco := RightCosets( ObjectGroup( G, o ), ObjectGroup( U, o ) ); 
+            for r in rco do
+                Add( reps, ArrowNC( true, Representative(r), o, o ) );
             od;
         od;
-        Append( reps, L );
     od;
     return reps;
-end );    
+end ); 
 
 InstallMethod( RightCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid, IsGroupoid ], 0,

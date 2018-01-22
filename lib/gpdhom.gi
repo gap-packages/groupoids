@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -349,7 +349,7 @@ function( mor )
         hom := roh; 
     else 
         mgi := MappingGeneratorsImages( roh ); 
-        ray := RayElementsOfGroupoid( gpd2 )[ Position( ob2, imobs[1] ) ]; 
+        ray := RaysOfGroupoid( gpd2 )[ Position( ob2, imobs[1] ) ]; 
         gp2 := ObjectGroup( gpd2, imobs[1] ); 
         im2 := List( mgi[2], g -> g^ray ); 
         hom := GroupHomomorphismByImages( Source( roh ), gp2, mgi[1], im2 );  
@@ -511,7 +511,7 @@ function ( map )
            MappingGeneratorsImages( RootGroupHomomorphism(map) ), "\n" ); 
     Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
     Print( "   images of rays: ", 
-           List( RaysOfGroupoid( Source(map) ), r -> ImageElm(map,r) ), 
+           List( RayArrowsOfGroupoid( Source(map) ), r -> ImageElm(map,r) ), 
            "\n" ); 
 end );
 
@@ -639,7 +639,7 @@ function ( map, e )
     obs1 := m1!.objects; 
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
-    ray1 := RayElementsOfGroupoid( m1 ); 
+    ray1 := RaysOfGroupoid( m1 ); 
     loop := ray1[pt1] * e![1] * ray1[ph1]^-1; 
     iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
     rims := ImageElementsOfRays( map ); 
@@ -758,7 +758,7 @@ function( g1 )
         iso := RootGroupHomomorphism( isopar ); 
         par2 := Image( isopar ); 
         gp2 := Image( iso, gp1 ); 
-        ray1 := RaysOfGroupoid( g1 );  
+        ray1 := RayArrowsOfGroupoid( g1 );  
         ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
         g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
     fi; 
@@ -813,7 +813,7 @@ function( g1 )
         iso := RootGroupHomomorphism( isopar ); 
         par2 := Image( isopar ); 
         gp2 := Image( iso, gp1 ); 
-        ray1 := RaysOfGroupoid( g1 );  
+        ray1 := RayArrowsOfGroupoid( g1 );  
         ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
         g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
     fi; 

@@ -2,6 +2,7 @@
 <!--                                                                     -->
 <!--  gpd.xml          groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
+<!--                                                                     -->
 <!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
@@ -38,6 +39,18 @@ A <E>group</E> may be considered as a single piece groupoid with one object.
 A <E>groupoid</E> is a set of one or more single piece groupoids, 
 its <E>pieces</E>, and is represented as <C>IsGroupoidRep</C>, 
 with attribute <C>PiecesOfGroupoid</C>.
+<P/>
+The underlying digraph of a single piece groupoid is a regular, 
+complete digraph on the object set <M>\Omega</M> with 
+<M>|G|</M> arrows from any one object to any other object. 
+It will be convenient to specify a set of <E>rays</E> 
+<Index Key="rays"></Index> 
+consisting of <M>|\Omega|</M> arrows <M>r_i : o_1 \to o_i</M>, 
+where <M>o_1</M> is the root object and <M>r_1</M> 
+is the identity in <M>G</M>. 
+In the simplest examples all the <M>r_i</M> will be identity elements, 
+but rays are useful when forming subgroupoids 
+(see <Ref Func="SubgroupoidWithRays"/>).
 <P/>
 A groupoid is <E>homogeneous</E> if it has two of more isomorphic pieces, 
 with identical groups. 
@@ -511,7 +524,7 @@ for which an <C>Iterator</C> is provided.
 <Example>
 <![CDATA[
 gap> star9 := ObjectStar( Gd8, -9 );
-<star at [ -9 ] with group d8>
+<star at -9 with group d8>
 gap> Size( star9 ); 
 24
 gap> for e in star9 do
@@ -524,7 +537,7 @@ gap> for e in star9 do
 [(1,2,3,4) : -9 -> -8]
 [(1,2,3,4) : -9 -> -7]
 gap> costar6 := ObjectCostar( Gc6, -6 );
-<costar at [ -6 ] with group c6>
+<costar at -6 with group c6>
 gap> Size( costar6 ); 
 6
 gap> hsetq8 := Homset( Gq8, -28, -27 );
@@ -552,7 +565,7 @@ gap> for e in hsetq8 do Print(e,"\n"); od;
    <Func Name="Subgroupoid"
          Arg="args" />
    <Oper Name="SubgroupoidByPieces"
-         Arg="gpd, obhoms" />
+         Arg="gpd, pieces" />
    <Oper Name="IsSubgroupoid"
          Arg="gpd, sgpd" />
    <Oper Name="IsWideSubgroupoid"
@@ -570,9 +583,10 @@ with tail and head in the chosen object set.
 There are a variety of constructors for a subgroupoid of a standard groupoid, 
 and the most general is the operation <C>SubgroupoidByPieces</C>. 
 Its two parameters are a groupoid and a list of pieces, 
-each piece being specified as a list <C>[sgp,obs]</C>,  
+each piece being specified either as a list <C>[sgp,obs]</C>,  
 where <C>sgp</C> is a subgroup of the root group in that piece, 
-and <C>obs</C> is a subset of the objects in that piece.
+and <C>obs</C> is a subset of the objects in that piece, 
+or as a list <C>[sgp,obs,rays]</C> when a set of rays is required. 
 <P/>
 </Description>
 </ManSection>
@@ -686,8 +700,7 @@ a subgroup <M>h</M> of <M>g</M> to be the object group
 at the root object <M>q</M>, and an arrow  
 <M>r : q \to p</M> for each of the objects <M>p</M>. 
 The chosen loop arrow at <M>q</M> must be the identity arrow. 
-These <M>n</M> arrows are called the 
-<Index Key="rays"> rays</Index> <E>rays</E> of the subgroupoid. 
+These <M>n</M> arrows are called the <E>rays</E> of the subgroupoid. 
 The arrows in the homset from <M>p</M> to <M>p'</M> have the form 
 <M>r^{-1}xr'</M> where <M>r,r'</M> are the rays from <M>q</M> 
 to <M>p,p'</M> respectively, and <M>x \in h</M>. 
@@ -715,12 +728,12 @@ gap> SetName( Hs4, "Hs4" );
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
  ] >
-gap> hs1413 := Homset( Hd8a, -14, -13 );
-<homset -14 -> -13 with group d8>
-gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
-[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
-(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
-(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
+gap> hs1312 := Homset( Hd8a, -13, -12 );
+<homset -13 -> -12 with group Group( [ (1,3,2,4), (1,2) ] )>
+gap> for e in hs1312 do  Print(e,", "); od;  Print( "\n");
+[(2,4,3) : -13 -> -12], [(2,4) : -13 -> -12], [(1,4,2) : -13 -> -12], [
+(1,4,3,2) : -13 -> -12], [(1,3) : -13 -> -12], [(1,3,4) : -13 -> -12], [
+(1,2,3,4) : -13 -> -12], [(1,2,3) : -13 -> -12], 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
 [ (), (1,2,3), (1,2,4) ] >
@@ -780,6 +793,7 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 <Section Label="sec-cosets">
 <Heading>Left, right and double cosets</Heading>
 
+<Index Key="Cosets (left,right,double)"></Index>
 <ManSection>
    <Oper Name="RightCoset"
          Arg="G, U, elt" />
@@ -832,21 +846,20 @@ is the last one in the list <C>rcrd8</C>, namely <C>[(2,4):-8->-7]</C>.
 <Example>
 <![CDATA[
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
-RightCoset(single piece groupoid: < c4, [ -8, -7 ] >,[(1,3) : -8 -> -7])
+<right coset of single piece groupoid: < c4, 
+[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
 gap> for x in re2 do Print( x, "\n" ); od;
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
 [(2,4) : -8 -> -7]
 [(2,4) : -7 -> -7]
-[(1,4)(2,3) : -8 -> -7]
-[(1,4)(2,3) : -7 -> -7]
 [(1,2)(3,4) : -8 -> -7]
 [(1,2)(3,4) : -7 -> -7]
+[(1,4)(2,3) : -8 -> -7]
+[(1,4)(2,3) : -7 -> -7]
 gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
-[ [() : -9 -> -9], [() : -9 -> -8], [() : -9 -> -7], [(2,4) : -9 -> -9],
-  [(2,4) : -9 -> -8], [(2,4) : -9 -> -7], [() : -8 -> -9], [() : -8 -> -8],
-  [() : -8 -> -7], [(2,4) : -8 -> -9], [(2,4) : -8 -> -8], [(2,4) : -8 -> -7]
- ]
+[ [() : -9 -> -9], [(2,4) : -9 -> -9], [() : -8 -> -8], [(2,4) : -8 -> -8], 
+  [() : -7 -> -7], [(2,4) : -7 -> -7] ]
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 [ [() : -7 -> -9], [(2,4) : -7 -> -9], [() : -7 -> -8], [(2,4) : -7 -> -8] ]
 ]]>

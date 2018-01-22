@@ -92,15 +92,6 @@ and monoids with objects, and these all have the property
 <C>IsDirectProductWithCompleteDigraph</C>. 
 There are other constructions implemented for groupoids. 
 <P/>
-The output from function <C>MagmaWithObjects</C> lies in the categories 
-<Index Key="IsDomainWithObjects"> <C>IsDomainWithObjects</C> </Index>
-<C>IsDomainWithObjects</C>, 
-<Index Key="IsMagmaWithObjects"> <C>IsMagmaWithObjects</C> </Index>
-<C>IsMagmaWithObjects</C> and
-<C>CategoryCollections(IsMultiplicativeElementWithObjects)</C>. 
-As composition is only partial, the output does <E>not</E> 
-lie in the category <C>IsMagma</C>. 
-<P/>
 The <E>root object</E> of <M>M</M> is the first element in <M>s</M>. 
 <P/>
 </Description>
@@ -123,10 +114,29 @@ magma with objects :-
 gap> SetName( M78, "M78" ); 
 gap> [ IsAssociative(M78), IsCommutative(M78) ]; 
 [ false, false ]
-gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
-[ true, true, false ]
 gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
 [ -8, [ -8, -7 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Filt Name="IsDomainWithObjects"
+         Arg="obj" />
+   <Filt Name="IsMagmaWithObjects"
+         Arg="obj" />
+<Description>
+The output from function <C>MagmaWithObjects</C> lies in the categories 
+<C>IsDomainWithObjects</C>, <C>IsMagmaWithObjects</C> and
+<C>CategoryCollections(IsMultiplicativeElementWithObjects)</C>. 
+As composition is only partial, the output does <E>not</E> 
+lie in the category <C>IsMagma</C>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
+[ true, true, false ]
 ]]>
 </Example>
 
@@ -179,6 +189,8 @@ gap> [ a78*ba, ab*a78, a78*ba=ab*a78 ];
 
 
 <ManSection>
+   <Prop Name="IsSinglePieceDomain"
+         Arg="mwo" />
    <Prop Name="IsSinglePiece"
          Arg="mwo" />
    <Prop Name="IsDirectProductWithCompleteDigraph"
@@ -193,8 +205,10 @@ by magmas with objects from digraphs.
 Unfortunately the terms <C>Component</C> and <C>Constituent</C> 
 are already in considerable use elsewhere in &GAP;, 
 so (and this may change if a more suitable word is suggested) 
-we use the term <C>IsSinglePiece</C> 
-to describe a connected magma with objects. 
+we use the term <C>IsSinglePieceDomain</C> 
+to describe an object with an underlying connected digraph.
+The property <C>IsSinglePiece</C> is a synonym for 
+<C>IsSinglePieceDomain and IsMagmaWithObjects</C>. 
 When each connected component has a single object, 
 and there is more than one component, 
 the magma with objects is <E>discrete</E>. 

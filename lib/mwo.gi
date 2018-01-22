@@ -369,6 +369,10 @@ function( mwo )
     elif ( HasIsDiscreteDomainWithObjects( mwo ) and 
               IsDiscreteDomainWithObjects( mwo ) ) then 
         return Size( mwo!.magma ) * Length( mwo!.objects ); 
+    elif ( HasIsSinglePieceDomain( mwo ) and 
+              IsSinglePieceDomain( mwo ) ) then 
+        return Size( mwo!.magma ) * Length( mwo!.objects )^2;
+Print("reached here\n");
     elif HasPieces( mwo ) then 
         s := 0; 
         for p in Pieces( mwo ) do 
@@ -376,8 +380,7 @@ function( mwo )
         od;
         return s; 
     else 
-        Info( InfoGroupoids, 1, "expecting product with complete graph" ); 
-        return fail; 
+        TryNextMethod();  
     fi;
 end );
 

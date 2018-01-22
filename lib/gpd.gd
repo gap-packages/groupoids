@@ -2,22 +2,22 @@
 ## 
 #W  gpd.gd                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
 ############################################################################# 
 ##
 #O  RootGroup( <gpd> ) 
-#O  RayElementsOfGroupoid( <gpd> ) 
-#O  RaysOfGroupoid( <gpd> ) 
+#A  RaysOfGroupoid( <gpd> ) 
+#O  RayArrowsOfGroupoid( <gpd> ) 
 #A  GeneratorsOfGroupoid( <gpd> )
 ## 
 ##  (03/10/08)  changed these from Attributes to Operations which
 ##              call the equivalent MagmaWithObjects attributes 
 DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] ); 
-DeclareOperation( "RayElementsOfGroupoid", [ IsGroupoid ] ); 
-DeclareOperation( "RaysOfGroupoid", [ IsGroupoid ] ); 
+DeclareAttribute( "RaysOfGroupoid", IsGroupoid ); 
+DeclareOperation( "RayArrowsOfGroupoid", [ IsGroupoid ] ); 
 DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
   
 ############################################################################## 
@@ -160,7 +160,7 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 ##  3.  a list of source objects, 
 ##  4.  a list of target objects, 
 ##  5.  a list of rays, 
-##  6.  a single character string "c" with c in {s,c,h,u,r,l,d}, 
+##  6.  a single character string 'c' in {s,c,h,u,r,l,d}, 
 ##      specifying star; costar; homset; union; right/left/double coset.
 ##
 #P  IsHomsetCosets( <obj> )
@@ -178,12 +178,10 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
     and IsAttributeStoringRep and IsComponentObjectRep, 
-    [ "group", "tobj", "hobj", "element", "rays", "type" ] ); 
+    [ "group", "tobj", "hobj", "rays", "type" ] ); 
 BindGlobal( "IsHomsetCosetsFamily", 
             NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
 BindGlobal( "IsHomsetCosetsType", 
-            NewType( IsHomsetCosetsFamily, IsHomsetCosetsRep ) );
-BindGlobal( "IsNewHomsetCosetsType", 
             NewType( CollectionsFamily( IsGroupoidElementFamily ), 
                      IsHomsetCosetsRep ) );
 DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] ); 
@@ -198,7 +196,6 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 ##  
 #P  IsGroupoidCoset( <cset> ) 
 #A  SuperDomain( <cset> );                        #? rename ?? 
-#A  HomsetCosetsGroupoidCoset( <cset> ) 
 #O  RightCosetRepresentatives( <gpd>, <sgpd> )    #? should be Iterator ?? 
 #R  IsLeftCosetWithObjectsDefaultRep( <gp>, <obj> ) 
 #O  LeftCosetRepresentatives( <gpd>, <sgpd> )     #? should be Iterator ?? 
@@ -209,7 +206,6 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 ## 
 DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
 DeclareAttribute( "SuperDomain", IsRightCosetDefaultRep ); 
-DeclareAttribute( "HomsetCosetsGroupoidCoset", IsRightCosetDefaultRep ); 
 DeclareCategory( "IsLeftCosetWithObjects", IsDomain and IsExternalOrbit );
 DeclareRepresentation( "IsLeftCosetWithObjectsDefaultRep", 
     IsComponentObjectRep and IsAttributeStoringRep 

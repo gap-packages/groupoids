@@ -3,7 +3,8 @@
 ##  Needs: GAPDoc & AutoDoc packages, latex, pdflatex, mkindex
 ##  call this with GAP from within the package root directory 
 
-LoadPackage("groupoids");
+LoadPackage( "groupoids" );
+LoadPackage( "AutoDoc" ); 
 
 AutoDoc(rec( 
     scaffold := rec(
@@ -14,7 +15,6 @@ AutoDoc(rec(
         bib := "bib.xml", 
         gapdoc_latex_options := rec( EarlyExtraPreamble := """
             \usepackage[all]{xy} 
-            \newcommand{\bbZ} {\mathbb{Z}}
         """ ),  
         entities := rec( 
             AutoDoc := "<Package>AutoDoc</Package>",
@@ -22,8 +22,5 @@ AutoDoc(rec(
         )
     )
 ));
-
-# Create VERSION file for "make towww"
-PrintTo( "VERSION", GAPInfo.PackageInfoCurrent.Version );
 
 QUIT;

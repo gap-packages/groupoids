@@ -2,7 +2,7 @@
 ##
 #W  mwo.tst                 Groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: mwo.tst" );

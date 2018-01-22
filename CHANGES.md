@@ -15,10 +15,14 @@
  * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
- * (22/12/17) HomsetCosetsGroupoidCoset needs rewriting (not sure what it does!)
+ * (20/01/18) sort out (left/right)CosetRepresentatives(to/from)Object
 
-## 1.54 -> 1.54dev  (11/01/18) 
+## 1.54 -> 1.54.dev  (22/01/18) 
 
+ * (22/01/18) Corrections to methods for RightCoset and LeftCoset
+ * (18/01/18) Removed HomsetCosetsGroupoidCoset + old IsHomsetCosetsType
+ * (17/01/18) Operation RayElementsOfGroupoid now Attribute RaysOfGroupoid 
+              and Attribute RaysOfGroupoid now Operation RayArrowsOfGroupoid 
  * (11/01/18) now using AutoDoc to build the manual 
  * (21/12/17) changed HomsetCosets from IsPositionalObjectRep 
               corrected SubgroupoidByPieces when rays are involved 
