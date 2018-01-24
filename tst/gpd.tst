@@ -193,22 +193,20 @@ gap> star9 := ObjectStar( Gd8, -9 );
 <star at -9 with group d8>
 gap> Size( star9 ); 
 24
-gap> for e in star9 do
->      if ( Order( ElementOfArrow(e) ) = 4 ) then Print( e, "\n" ); fi;
->    od;
-[(1,4,3,2) : -9 -> -9]
-[(1,4,3,2) : -9 -> -8]
-[(1,4,3,2) : -9 -> -7]
-[(1,2,3,4) : -9 -> -9]
-[(1,2,3,4) : -9 -> -8]
-[(1,2,3,4) : -9 -> -7]
+gap> PrintSelection( star9, 19, 1 );
+19 : [(1,2,3,4) : -9 -> -9]
+20 : [(1,2,3,4) : -9 -> -8]
+21 : [(1,2,3,4) : -9 -> -7]
+22 : [(1,2)(3,4) : -9 -> -9]
+23 : [(1,2)(3,4) : -9 -> -8]
+24 : [(1,2)(3,4) : -9 -> -7]
 gap> costar6 := ObjectCostar( Gc6, -6 );
 <costar at -6 with group c6>
 gap> Size( costar6 ); 
 6
 gap> hsetq8 := Homset( Gq8, -28, -27 );
 <homset -28 -> -27 with group q8>
-gap> for e in hsetq8 do Print(e,"\n"); od;
+gap> PrintOneItemPerLine( hsetq8 );
 [<identity> of ... : -28 -> -27]
 [f3 : -28 -> -27]
 [f2 : -28 -> -27]
@@ -320,8 +318,8 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 ## SubSection 4.4.1
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
 <right coset of single piece groupoid: < c4, 
-[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
-gap> for x in re2 do Print( x, "\n" ); od;
+[ -8, -7 ] > with representative [(2,4) : -7 -> -7]>
+gap> PrintOneItemPerLine( re2 );
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
 [(2,4) : -8 -> -7]
