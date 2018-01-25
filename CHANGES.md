@@ -17,7 +17,7 @@
  * (27/10/17) need to add DirectProductInfo stuff 
  * (20/01/18) sort out (left/right)CosetRepresentatives(to/from)Object
 
-## 1.54 -> 1.54.dev  (24/01/18) 
+## 1.54 -> 1.54.dev  (25/01/18) 
 
  * (24/01/18) Corrections to methods for RightCoset and LeftCoset
  * (18/01/18) Removed HomsetCosetsGroupoidCoset + old IsHomsetCosetsType

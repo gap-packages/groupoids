@@ -178,7 +178,7 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
     and IsAttributeStoringRep and IsComponentObjectRep, 
-    [ "group", "tobj", "hobj", "rep", "rays", "type" ] ); 
+    [ "tgroup", "hgroup", "tobj", "hobj", "trays", "hrays", "rep", "type" ] ); 
 BindGlobal( "IsHomsetCosetsFamily", 
             NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
 BindGlobal( "IsHomsetCosetsType", 

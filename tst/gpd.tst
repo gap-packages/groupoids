@@ -277,7 +277,7 @@ gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
  ] >
 gap> hs1312 := Homset( Hd8a, -13, -12 );
-<homset -13 -> -12 with group Group( [ (1,3,2,4), (1,2) ] )>
+<homset -13 -> -12 with group Group( [ (1,2,4,3), (1,4) ] )>
 gap> for e in hs1312 do  Print(e,", "); od;  Print( "\n");
 [(2,4,3) : -13 -> -12], [(2,4) : -13 -> -12], [(1,4,2) : -13 -> -12], [
 (1,4,3,2) : -13 -> -12], [(1,3) : -13 -> -12], [(1,3,4) : -13 -> -12], [
@@ -318,16 +318,16 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
 ## SubSection 4.4.1
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
 <right coset of single piece groupoid: < c4, 
-[ -8, -7 ] > with representative [(2,4) : -7 -> -7]>
+[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
 gap> PrintOneItemPerLine( re2 );
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
 [(2,4) : -8 -> -7]
 [(2,4) : -7 -> -7]
-[(1,2)(3,4) : -8 -> -7]
-[(1,2)(3,4) : -7 -> -7]
 [(1,4)(2,3) : -8 -> -7]
 [(1,4)(2,3) : -7 -> -7]
+[(1,2)(3,4) : -8 -> -7]
+[(1,2)(3,4) : -7 -> -7]
 gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
 [ [() : -9 -> -9], [(2,4) : -9 -> -9], [() : -8 -> -8], [(2,4) : -8 -> -8], 
   [() : -7 -> -7], [(2,4) : -7 -> -7] ]

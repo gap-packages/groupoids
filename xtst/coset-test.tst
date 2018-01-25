@@ -21,7 +21,7 @@ single piece groupoid with rays: < s4, [ -9, -8, -7, -6, -5 ],
 [ (), (4,5), (3,5), (2,5), (1,5) ] >
 
 gap> star7 := ObjectStar( Hs4, -7 ); 
-<star at -7 with group Group( [ (1,2,5,4), (4,5) ] )>
+<star at -7 with vertex group Group( [ (1,2,5,4), (4,5) ] )>
 gap> PrintSelection( star7, 24, 24 );
 24 : [(2,4,3) : -7 -> -6]
 48 : [(1,5,4,2) : -7 -> -7]
@@ -32,7 +32,7 @@ gap> a76 := Arrow( Hs4, (2,5,3), -7, -6 );;
 gap> a76 in star7; 
 true
 gap> costar6 := ObjectCostar( Hs4, -6 ); 
-<costar at -6 with group Group( [ (1,5,3,4), (3,4) ] )>
+<costar at -6 with vertex group Group( [ (1,5,3,4), (3,4) ] )>
 gap> PrintSelection( costar6, 24, 24 );
 24 : [(3,5,4) : -6 -> -6]
 48 : [(1,3,2,4) : -7 -> -6]
@@ -42,7 +42,7 @@ gap> PrintSelection( costar6, 24, 24 );
 gap> a76 in costar6;
 true
 gap> hs85 := Homset( Hs4, -8, -5 ); 
-<homset -8 -> -5 with group Group( [ (1,2,3,5), (3,5) ] )>
+<homset -8 -> -5 with head group Group( [ (2,3,4,5), (3,4) ] )>
 gap> PrintSelection( hs85, 1, 6 );
 1 : [(1,5,4) : -8 -> -5]
 7 : [(1,3,5,2,4) : -8 -> -5]
@@ -74,7 +74,7 @@ gap> IsWideSubgroupoid( Gs5, Uc3c4 );
 true
 
 gap> hs85U := Homset( Uc3c4, -8, -5 ); 
-<homset -8 -> -5 with group Group( [ (2,5,3) ] )>
+<homset -8 -> -5 with head group Group( [ (2,4,3) ] )>
 gap> PrintOneItemPerLine( hs85U );
 [(1,5,3,2,4) : -8 -> -5]
 [(1,5,4) : -8 -> -5]
@@ -83,33 +83,35 @@ gap> a85 in Uc3c4;
 false
 gap> rc85 := RightCoset( Hs4, Uc3c4, a85 ); 
 <right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(4,5) : -5 -> -5]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,4) : -8 -> -5]>
 gap> PrintOneItemPerLine( rc85 );
 [(1,3,5) : -9 -> -5]
 [(1,4) : -8 -> -5]
 [(2,3,5,4) : -5 -> -5]
-[(1,4,2,3,5) : -9 -> -5]
-[(1,2,3,4) : -8 -> -5]
-[(2,4,3,5) : -5 -> -5]
-[(1,2,4,3,5) : -9 -> -5]
-[(1,3,2,4) : -8 -> -5]
-[(3,5) : -5 -> -5]
+[(1,5)(2,3) : -9 -> -5]
+[(1,4)(2,3,5) : -8 -> -5]
+[(2,5,4,3) : -5 -> -5]
+[(1,2,5) : -9 -> -5]
+[(1,4)(2,5,3) : -8 -> -5]
+[(4,5) : -5 -> -5]
 gap> b85 := Arrow( Hs4, (1,5), -9, -5 );; 
 gap> b85 in rc85; 
 false
 gap> lc85 := LeftCoset( Hs4, Uc3c4, a85 ); 
 <left coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2,3,5) : -8 -> -8]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,4) : -8 -> -5]>
 gap> PrintOneItemPerLine( lc85 );         
 [(1,2)(4,5) : -8 -> -9]
 [(1,2,3,5) : -8 -> -8]
 [(1,4) : -8 -> -5]
-[(1,2,4,5,3) : -8 -> -9]
-[(1,2) : -8 -> -8]
-[(1,4)(2,5,3) : -8 -> -5]
-[(1,2,3,4,5) : -8 -> -9]
-[(1,2,5,3) : -8 -> -8]
-[(1,4)(2,3,5) : -8 -> -5]
+[(2,3)(4,5) : -8 -> -9]
+[(1,3,2,5) : -8 -> -8]
+[(1,2,3,4) : -8 -> -5]
+[(1,3)(4,5) : -8 -> -9]
+[(1,5) : -8 -> -8]
+[(1,3,2,4) : -8 -> -5]
+gap> a85 in lc85; 
+true
 gap> b85 in lc85; 
 false
 
