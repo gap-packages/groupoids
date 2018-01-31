@@ -616,12 +616,12 @@ true
 </Example>
 
 <ManSection>
-   <Oper Name="FullSubgroupoid"
+   <Oper Name="SubgroupoidByObjects"
          Arg="gpd, obs" />
    <Attr Name="FullTrivialSubgroupoid"
          Arg="gpd" />
 <Description>
-The <C>FullSubgroupoid</C> of a groupoid <C>gpd</C> 
+The <C>SubgroupoidByObjects</C> of a groupoid <C>gpd</C> 
 on a subset <C>obs</C> of its objects 
 contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
 A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
@@ -637,7 +637,7 @@ The global function <C>Subgroupoid</C> should call the appropriate operation.
 </ManSection>
 <Example>
 <![CDATA[
-gap> FullSubgroupoid( U3, [-7,-6] );
+gap> SubgroupoidByObjects( U3, [-7,-6] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -7 ] >
 2:  single piece groupoid: < c6, [ -6 ] >
@@ -719,34 +719,35 @@ Note also that the function <Index Key="Ancestor"> <C>Ancestor</C></Index>
 </ManSection>
 <Example>
 <![CDATA[
-gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
  ] >
-gap> hs1312 := Homset( Hd8a, -13, -12 );
-<homset -13 -> -12 with group Group( [ (1,3,2,4), (1,2) ] )>
-gap> for e in hs1312 do  Print(e,", "); od;  Print( "\n");
-[(2,4,3) : -13 -> -12], [(2,4) : -13 -> -12], [(1,4,2) : -13 -> -12], [
-(1,4,3,2) : -13 -> -12], [(1,3) : -13 -> -12], [(1,3,4) : -13 -> -12], [
-(1,2,3,4) : -13 -> -12], [(1,2,3) : -13 -> -12], 
+gap> hs1413 := Homset( Hd8a, -14, -13 );
+<homset -14 -> -13 with head group Group( [ (1,3,2,4), (1,2) ] )>
+gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
+[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
+(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
+(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
 [ (), (1,2,3), (1,2,4) ] >
 gap> Hd8a = Hd8b; 
 true
-gap> SetName( Hd8b, "Hd8b" ); 
-gap> RayElementsOfGroupoid( Hd8b ); 
+gap> SetName( Hd8b, "Hd8b" );
+gap> RaysOfGroupoid( Hd8b ); 
 [ (), (1,2,3), (1,2,4) ]
 gap> Parent( Hd8a );
 Hs4
 gap> Ancestor( Hd8a ); 
 Gs4
-gap> Fd8a := FullSubgroupoid( Hd8a, [-13,-12] );            
+gap> Fd8a := SubgroupoidByObjects( Hd8a, [-13,-12] );            
 single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
 [ -13, -12 ], [ (), (2,4,3) ] >
-gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
-single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
+gap> Kd8a := SubgroupoidWithRays( Fd8a, k4^(2,3), [ (), (1,3) ] ); 
+single piece groupoid with rays: < Group( [ (1,2), (3,4) ] ), [ -13, -12 ], 
+[ (), (1,3) ] >
 ]]>
 </Example>
 
@@ -812,7 +813,7 @@ are the equivalence classes for the relation on the arrows of <M>G</M>
 where  <M>g1</M> is related to <M>g2</M> if and only if <M>g2 = u*g1</M>
 for some arrow <M>u</M> of <M>U</M>.
 The right coset containing <M>g</M> is written <M>Ug</M>.
-These right cosets partition the costars of <M>G</M> at objects in <M>U</M> and, 
+These right cosets partition the costars of <M>G</M> and, 
 in particular, the costar <M>U1\_{o}</M> of <M>U</M> at object <M>o</M>, 
 so that (unlike groups) <M>U</M> is itself a coset only when 
 <M>G</M> has a single object. 
@@ -824,10 +825,9 @@ the group element chosen is the right coset representative
 of the group of <M>U</M> in the group of <M>G</M>.
 <P/>
 Similarly, the <E>left cosets</E> <M>gU</M> refine the stars of <M>G</M> 
-at objects in <M>U</M>, 
 while <E>double cosets</E> are unions of left and right cosets.
 The operation <C>LeftCosetRepresentativesFromObject( G, U, obj )</C> 
-is used in Chapter 4, 
+is used in Chapter <Ref Sect="chap-ggraph"/> , 
 and returns only those representatives which have tail at <C>obj</C>. 
 <P/>
 As with stars and homsets, these cosets are implemented with representation 
@@ -835,8 +835,8 @@ As with stars and homsets, these cosets are implemented with representation
 Note that, when <M>U</M> has more than one piece, 
 cosets may have differing lengths.
 <P/>
-In the example the representative for the right coset <C>re2</C> 
-is the first one in the printed list <C>rcrd8</C>, namely <C>[(2,4):-8->-7]</C>. 
+In the example the representative for the right coset <C>re2</C> is the 
+tenth one in the printed list <C>rcrd8</C>, namely <C>[(2,4):-7->-7]</C>. 
 <P/>
 </Description>
 </ManSection>
@@ -855,10 +855,13 @@ gap> PrintOneItemPerLine( re2 );
 [(1,2)(3,4) : -8 -> -7]
 [(1,2)(3,4) : -7 -> -7]
 gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
-[ [() : -9 -> -9], [(2,4) : -9 -> -9], [() : -8 -> -8], [(2,4) : -8 -> -8], 
-  [() : -7 -> -7], [(2,4) : -7 -> -7] ]
+[ [() : -9 -> -9], [(1,4,3,2) : -9 -> -9], [() : -9 -> -8], 
+  [(1,4,3,2) : -9 -> -8], [() : -9 -> -7], [(1,4,3,2) : -9 -> -7], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
+  [() : -8 -> -9], [(2,4) : -8 -> -9] ]
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
-[ [() : -7 -> -9], [(2,4) : -7 -> -9], [() : -7 -> -8], [(2,4) : -7 -> -8] ]
+[ [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], [() : -7 -> -7], 
+  [(2,4) : -7 -> -7] ]
 ]]>
 </Example>
 </Section>

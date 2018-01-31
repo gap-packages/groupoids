@@ -2,7 +2,7 @@
 ##
 #W  ggraph.tst              groupoids Package                    Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: ggraph.tst" );
@@ -230,7 +230,7 @@ gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
 (5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : 
 -3 -> -4].y^-1.[a^7 : -2 -> -1](5)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
-(5)[a^-1 : -1 -> -2].y.[b^-1 : -4 -> -4].y^-1.[a^10 : -2 -> -1](5)
+(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -1](5)
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 gap> STOP_TEST( "ggraph.tst", 10000 );

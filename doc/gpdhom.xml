@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gpdhom.xml       groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -451,7 +451,7 @@ groupoid homomorphism : Gd8 -> Gs3
       [() : -36 -> -35], [() : -36 -> -34] ] ]
 gap> hc6 := GroupHomomorphismByImages( c6, s3, 
 >            [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;
-gap> Fs3 := FullSubgroupoid( Gs3, [ -35 ] );; 
+gap> Fs3 := SubgroupoidByObjects( Gs3, [ -35 ] );; 
 gap> SetName( Fs3, "Fs3" ); 
 gap> homc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;
 gap> incFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; 

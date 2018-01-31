@@ -190,7 +190,7 @@ gap> loop; Order(loop);
 
 ## SubSection 4.2.4
 gap> star9 := ObjectStar( Gd8, -9 );
-<star at -9 with group d8>
+<star at -9 with vertex group d8>
 gap> Size( star9 ); 
 24
 gap> PrintSelection( star9, 19, 1 );
@@ -201,11 +201,11 @@ gap> PrintSelection( star9, 19, 1 );
 23 : [(1,2)(3,4) : -9 -> -8]
 24 : [(1,2)(3,4) : -9 -> -7]
 gap> costar6 := ObjectCostar( Gc6, -6 );
-<costar at -6 with group c6>
+<costar at -6 with vertex group c6>
 gap> Size( costar6 ); 
 6
 gap> hsetq8 := Homset( Gq8, -28, -27 );
-<homset -28 -> -27 with group q8>
+<homset -28 -> -27 with head group q8>
 gap> PrintOneItemPerLine( hsetq8 );
 [<identity> of ... : -28 -> -27]
 [f3 : -28 -> -27]
@@ -220,14 +220,14 @@ gap> PrintOneItemPerLine( hsetq8 );
 
 ## SubSection 4.3.1
 gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
-gap> k4 := Subgroup( d8, [ (1,2)(3,4), (1,3)(2,4) ] );;
+gap> k4 := Subgroup( d8, [ (1,3), (2,4) ] );;
 gap> SetName( c4, "c4" );  SetName( k4, "k4" );
 gap> Ud8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );;
 gap> SetName( Ud8, "Ud8" );
 gap> Display( Ud8 );
 groupoid with 2 pieces:
 < objects: [ -9 ]
-    group: k4 = <[ (1,2)(3,4), (1,3)(2,4) ]> >
+    group: k4 = <[ (1,3), (2,4) ]> >
 < objects: [ -8, -7 ]
     group: c4 = <[ (1,2,3,4) ]> >
 gap> [ Parent( Ud8 ), IsWideSubgroupoid( Gd8, Ud8 ) ]; 
@@ -245,7 +245,7 @@ gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
 true
 
 ## SubSection 4.3.2
-gap> FullSubgroupoid( U3, [-7,-6] );
+gap> SubgroupoidByObjects( U3, [-7,-6] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < d8, [ -7 ] >
 2:  single piece groupoid: < c6, [ -6 ] >
@@ -271,17 +271,17 @@ groupoid with 3 pieces:
 3:  single piece groupoid: < id(f2), [ -22 ] >
 
 ## SubSection 4.3.4
-gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
  ] >
-gap> hs1312 := Homset( Hd8a, -13, -12 );
-<homset -13 -> -12 with group Group( [ (1,2,4,3), (1,4) ] )>
-gap> for e in hs1312 do  Print(e,", "); od;  Print( "\n");
-[(2,4,3) : -13 -> -12], [(2,4) : -13 -> -12], [(1,4,2) : -13 -> -12], [
-(1,4,3,2) : -13 -> -12], [(1,3) : -13 -> -12], [(1,3,4) : -13 -> -12], [
-(1,2,3,4) : -13 -> -12], [(1,2,3) : -13 -> -12], 
+gap> hs1413 := Homset( Hd8a, -14, -13 );
+<homset -14 -> -13 with head group Group( [ (1,3,2,4), (1,2) ] )>
+gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
+[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
+(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
+(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
 single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
 [ (), (1,2,3), (1,2,4) ] >
@@ -294,11 +294,12 @@ gap> Parent( Hd8a );
 Hs4
 gap> Ancestor( Hd8a ); 
 Gs4
-gap> Fd8a := FullSubgroupoid( Hd8a, [-13,-12] );            
+gap> Fd8a := SubgroupoidByObjects( Hd8a, [-13,-12] );            
 single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
 [ -13, -12 ], [ (), (2,4,3) ] >
-gap> Kd8a := SubgroupoidWithRays( Fd8a, k4, [ (), (1,3) ] ); 
-single piece groupoid with rays: < k4, [ -13, -12 ], [ (), (1,3) ] >
+gap> Kd8a := SubgroupoidWithRays( Fd8a, k4^(2,3), [ (), (1,3) ] ); 
+single piece groupoid with rays: < Group( [ (1,2), (3,4) ] ), [ -13, -12 ], 
+[ (), (1,3) ] >
 
 ## SubSection 4.3.5 
 gap> u := Arrow( Gs4, (1,2,3), -15, -13 );
@@ -329,10 +330,13 @@ gap> PrintOneItemPerLine( re2 );
 [(1,2)(3,4) : -8 -> -7]
 [(1,2)(3,4) : -7 -> -7]
 gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
-[ [() : -9 -> -9], [(2,4) : -9 -> -9], [() : -8 -> -8], [(2,4) : -8 -> -8], 
-  [() : -7 -> -7], [(2,4) : -7 -> -7] ]
+[ [() : -9 -> -9], [(1,4,3,2) : -9 -> -9], [() : -9 -> -8], 
+  [(1,4,3,2) : -9 -> -8], [() : -9 -> -7], [(1,4,3,2) : -9 -> -7], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
+  [() : -8 -> -9], [(2,4) : -8 -> -9] ]
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
-[ [() : -7 -> -9], [(2,4) : -7 -> -9], [() : -7 -> -8], [(2,4) : -7 -> -8] ]
+[ [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], [() : -7 -> -7], 
+  [(2,4) : -7 -> -7] ]
 
 ### Section 4.5 : conjugation ###
 

@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gi                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -17,19 +17,18 @@ GPD_CONSTRUCTORS := Concatenation(
     "4.  SinglePieceSubgroupoidByGenerators( list of elements );\n", 
     "5.  SubgroupoidWithRays( parent gpd, root gp, ray mults. );\n", 
     "6.  Groupoid( one of the previous parameter options );" );
-
 ##  these are called by the GlobalFunction Groupoid 
 
 SUB_CONSTRUCTORS := Concatenation( 
     "The standard operations which construct a subgroupoid are:\n", 
     "1.  SubgroupoidByPieces( groupoid, list of [imobs,hom] pairs );\n",
-    "2.  FullSubgroupoid( groupoid, list of objects );\n", 
-    "3.  MaximalDiscreteSubgroupoid( groupoid );\n", 
-    "4.  DiscreteSubgroupoid( groupoid, list of obs, list of subgps );\n",
-    "5.  FullTrivialSubgroupoid( groupoid );\n", 
-    "6.  DiscreteTrivialSubgroupoid( groupoid );\n", 
-    "7.  Subgroupoid( one of the previous parameter options );" );
-
+    "2.  SubgroupoidBySubgroup( groupoid, group );\n", 
+    "3.  SubgroupoidByObjects( groupoid, list of objects );\n", 
+    "4.  MaximalDiscreteSubgroupoid( groupoid );\n", 
+    "5.  DiscreteSubgroupoid( groupoid, list of obs, list of subgps );\n",
+    "6.  FullTrivialSubgroupoid( groupoid );\n", 
+    "7.  DiscreteTrivialSubgroupoid( groupoid );\n", 
+    "8.  Subgroupoid( one of the previous parameter options );" );
 ##  and these are called by the GlobalFunction Subgroupoid 
 
 #############################################################################
@@ -200,7 +199,7 @@ function( anc, gens )
             fi;  
         od; 
     fi; 
-    par := FullSubgroupoid( anc, obs ); 
+    par := SubgroupoidByObjects( anc, obs ); 
     return SubgroupoidWithRays( par, gp, rays ); 
 end );
 
@@ -730,7 +729,8 @@ function( gpd, oblist )
     ob1 := oblist[1]; 
     for j in [2..Length(oblist)] do 
         if ( Intersection( ob1, oblist[j] ) <> [ ] ) then
-            Info( InfoGroupoids, 1, "constituents must have disjoint object sets," );
+            Info( InfoGroupoids, 1, 
+                  "constituents must have disjoint object sets," );
             return fail;
         fi; 
     od; 
@@ -1393,20 +1393,24 @@ end );
 ##
 #M  SubgroupoidBySubgroup
 ##
-InstallMethod( SubgroupoidBySubgroup,
-    "generic method for direct prod with complete graph and subgroup", true,
-    [ IsGroupoid and IsDirectProductWithCompleteDigraph, IsGroup ], 0,
-function( gpd, sgp ) 
+InstallMethod( SubgroupoidBySubgroup, "for single piece groupoid and subgroup", 
+    true, [ IsGroupoid and IsSinglePiece, IsGroup ], 0,
+function( G, sgp ) 
 
-    local sub, gp; 
+    local gpG, U;     
 
-    gp := gpd!.magma; 
-    if not IsSubgroup( gp, sgp ) then 
-        Error( "sgp is not a subgroup of gpd!.magma," ); 
+    gpG := G!.magma; 
+    if not IsSubgroup( gpG, sgp ) then 
+        Error( "sgp is not a subgroup of RootGroup(G)" ); 
     fi; 
-    sub := SinglePieceGroupoid( sgp, gpd!.objects );
-    SetParentAttr( sub, gpd );
-    return sub; 
+    if ( HasIsDirectProductWithCompleteDigraphDomain( G ) 
+         and IsDirectProductWithCompleteDigraphDomain( G ) ) then 
+        U := SinglePieceGroupoid( sgp, G!.objects );
+    else
+        U := SubgroupoidWithRays( G, sgp, RaysOfGroupoid( G ) ); 
+    fi;
+    SetParentAttr( U, G );
+    return U; 
 end ); 
 
 #############################################################################
@@ -1444,10 +1448,10 @@ function( gpd, pieces )
                         obpos := Position( gobs, ob ); 
                         rays[j] := grays[rootpos]^(-1) * grays[obpos]; 
                     od;
-                    par := FullSubgroupoid( gpd, pi[2] ); 
+                    par := SubgroupoidByObjects( gpd, pi[2] ); 
                     sub := SubgroupoidWithRays( par, pi[1], rays ); 
                 else 
-                    par := FullSubgroupoid( gpd, pi[2] ); 
+                    par := SubgroupoidByObjects( gpd, pi[2] ); 
                     sub := SubgroupoidWithRays( par, pi[1], pi[3] ); 
                 fi; 
             else 
@@ -1475,7 +1479,7 @@ function( gpd, pieces )
     SetParentAttr( U, gpd );
     for c in pieceU do 
         piece := PieceOfObject( gpd, c!.objects[1] ); 
-        SetParentAttr( c, FullSubgroupoid( piece, ObjectList(c) ) );
+        SetParentAttr( c, SubgroupoidByObjects( piece, ObjectList(c) ) );
     od;
     return U;
 end );
@@ -1488,7 +1492,7 @@ InstallMethod( DiscreteSubgroupoid, "generic method for a groupoid", true,
     [ IsGroupoid, IsList, IsHomogeneousList ], 0,
 function( G, gps, obs )
 
-    local pieceU, U, len, o, pieceG, obsg, C, i, gpo;
+    local pieceU, U, len, o, pieceG, obsg, C, i, gpo, ishomo;
 
     obsg := ObjectList( G );
     len := Length( obs ); 
@@ -1502,21 +1506,22 @@ function( G, gps, obs )
     for i in [1..len] do
         o := obs[i];
         if not ( o in obsg ) then
-            Error( "subgroupoid object not in groupoid," );
+            Error( "i-th subgroupoid object not in groupoid," );
         fi;
         C := PieceOfObject( G, o ); 
         gpo := ObjectGroup( C, o ); 
         if not IsSubgroup( gpo, gps[i] ) then
-            Error( "not a subgroup of object group," );
+            Error( "i-th group not a subgroup of the object group," );
         fi;
-        pieceU[i] := [ gps[i], [o] ];
+        pieceU[i] := DomainWithSingleObject( gpo, o );
     od; 
-    if ForAll( gps, g -> ( g = gps[1] ) ) then 
+    ishomo := ForAll( gps, g -> ( g = gps[1] ) ); 
+    if ishomo then 
         Info( InfoGroupoids, 2, 
               "all groups equal, so using HomogeneousDiscreteGroupoid" ); 
         U := HomogeneousDiscreteGroupoid( gps[1], obs ); 
     else 
-        U := SubgroupoidByPieces( G, pieceU ); 
+        U := UnionOfPieces( pieceU ); 
     fi;
     SetIsDiscreteDomainWithObjects( U, true );
     SetParentAttr( U, G );
@@ -1525,84 +1530,76 @@ end );
 
 #############################################################################
 ##
-#M  MaximalDiscreteSubgroupoid
+#M  SubgroupoidByObjects
 ##
-InstallMethod( MaximalDiscreteSubgroupoid,
-    "generic method for a groupoid", true, [ IsGroupoid ], 0,
-function( gpd )
+InstallMethod( SubgroupoidByObjects, "for direct product groupoid + objects", 
+    true, [ IsGroupoid and IsDirectProductWithCompleteDigraphDomain, 
+    IsHomogeneousList ], 10,
+function( G, obsU )
 
-    local obs, len, gps, i, piece;
+    local obsG, nobs, U; 
 
-    obs := ObjectList( gpd );
-    len := Length( obs );
-    gps := ListWithIdenticalEntries( len, 0 );
-    for i in [1..len] do
-        piece := PieceOfObject( gpd, obs[i] );
-        gps[i] := ObjectGroup( piece, obs[i] ); 
-    od;
-    return DiscreteSubgroupoid( gpd, gps, obs );
-end );
-
-#############################################################################
-##
-#M  FullSubgroupoid
-#M  FullTrivialSubgroupoid
-#M  DiscreteTrivialSubgroupoid
-##
-InstallMethod( FullSubgroupoid, "for a connected groupoid and set of objects", 
-    true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( G, sobs )
-
-    local sgpd, rgp, rayG, pG, spG, pos, rays, r1; 
-
-    if ( HasIsDirectProductWithCompleteDigraph( G ) 
-         and IsDirectProductWithCompleteDigraph( G ) ) then 
-        if not HasIsSSortedList( sobs ) then 
-            Sort( sobs ); 
-        fi; 
-        sgpd :=  SinglePieceGroupoidNC( G!.magma, sobs ); 
-        SetParentAttr( sgpd, G ); 
-    else 
-        if HasLargerDirectProductGroupoid( G ) then 
-            pG := LargerDirectProductGroupoid( G ); 
-        else 
-            Print( "#I should not reach this point!\n" ); 
-            pG := Parent( G ); 
-        fi; 
-        spG := FullSubgroupoid( pG, sobs ); 
-        rgp := ObjectGroup( G, sobs[1] );  
-        rayG := G!.rays; 
-        pos := List( sobs, j -> Position( G!.objects, j ) ); 
-        r1 := rayG[ pos[1] ]^(-1); 
-        rays := List( pos, j -> r1*rayG[j] ); 
-        sgpd := SubgroupoidWithRays( spG, rgp, rays );
-        SetParentAttr( sgpd, spG ); 
+    obsG := ObjectList( G ); 
+    if not ForAll( obsU, o -> o in obsG ) then 
+        Error( "<obsU> not a subset of the objects in G" ); 
     fi; 
-    return sgpd; 
+    nobs := Length( obsU ); 
+    if not ForAll( [1..nobs-1], j -> obsU[j] < obsU[j+1] ) then 
+        Sort( obsU ); 
+    fi; 
+    U := SinglePieceGroupoidNC( G!.magma, obsU ); 
+    SetParentAttr( U, G ); 
+    return U;
+end ); 
+
+InstallMethod( SubgroupoidByObjects, "for a connected groupoid + object set", 
+    true, [ IsGroupoid and IsSinglePieceRaysRep, IsHomogeneousList ], 0,
+function( G, obsU )
+
+    local obsG, nobs, ro, gpU, pos, rayG, rayU, ray1, j, anc; 
+
+    obsG := ObjectList( G ); 
+    if not ForAll( obsU, o -> o in obsG ) then 
+        Error( "<obsU> not a subset of the objects in G" ); 
+    fi; 
+    nobs := Length( obsU ); 
+    if not ForAll( [1..nobs-1], j -> obsU[j] < obsU[j+1] ) then 
+        Sort( obsU ); 
+    fi; 
+    ro := obsU[1]; 
+    gpU := ObjectGroup( G, ro ); 
+    pos := List( [1..nobs], j -> Position ( obsG, obsU[j] ) ); 
+    rayG := RaysOfGroupoid( G ); 
+    rayU := ShallowCopy( obsU ); 
+    ray1 := rayG[ pos[1] ]^(-1);  
+    for j in [1..nobs] do 
+        rayU[j] := ray1 * rayG[ pos[j] ]; 
+    od; 
+    anc := SubgroupoidByObjects( Ancestor( G ), obsU ); 
+    return SubgroupoidWithRays( anc, gpU, rayU ); 
 end );
 
-InstallMethod( FullSubgroupoid, "for a groupoid and set of objects", true,
-    [ IsGroupoid, IsHomogeneousList ], 0,
+InstallMethod( SubgroupoidByObjects, "for a groupoid and set of objects", 
+    true, [ IsGroupoid, IsHomogeneousList ], 0,
 function( G, sobs ) 
 
-    local c1, c2, len, j, c, obc, sobc;
+    local pieceG, pieceU, j, P, obsP, sobsP;
 
-    c1 := Pieces( G );
-    len := Length( c1 );
-    c2 := [ ];
-    for j in [1..len] do
-        c := c1[j];
-        obc := c!.objects;
-        sobc := Intersection( sobs, obc );
-        if ( sobc <> [ ] ) then
-            Add( c2, [ c!.magma, sobc ] );
+    pieceG := Pieces( G );
+    pieceU := [ ];
+    for j in [1..Length(pieceG)] do
+        P := pieceG[j];
+        obsP := P!.objects;
+        sobsP := Intersection( sobs, obsP );
+        if ( sobsP <> [ ] ) then 
+            Add( pieceU, SubgroupoidByObjects( P, sobsP ) );
         fi;
     od;
-    return SubgroupoidByPieces( G, c2 );
+    return UnionOfPieces( pieceU );
 end );
 
-InstallMethod( FullSubgroupoid, "for a homogeneous discrete groupoid", true,
-    [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
+InstallMethod( SubgroupoidByObjects, "for a homogeneous discrete groupoid", 
+    true, [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
 function( gpd, sobs )
     local obs;
     obs := gpd!.objects; 
@@ -1614,6 +1611,35 @@ function( gpd, sobs )
     else 
         return HomogeneousDiscreteGroupoid( gpd!.magma, sobs ); 
     fi; 
+end );
+
+#############################################################################
+##
+#M  MaximalDiscreteSubgroupoid
+#M  FullTrivialSubgroupoid
+#M  DiscreteTrivialSubgroupoid
+##
+InstallMethod( MaximalDiscreteSubgroupoid,
+    "generic method for a groupoid", true, [ IsGroupoid ], 0,
+function( gpd )
+
+    local obs, len, gps, i, piece, U;
+
+    if ( HasIsDirectProductWithCompleteDigraphDomain( gpd ) 
+         and IsDirectProductWithCompleteDigraphDomain( gpd ) ) then 
+        U := HomogeneousDiscreteGroupoid( gpd!.magma, gpd!.objects ); 
+    else 
+        obs := ObjectList( gpd );
+        len := Length( obs );
+        gps := ListWithIdenticalEntries( len, 0 );
+        for i in [1..len] do
+            piece := PieceOfObject( gpd, obs[i] );
+            gps[i] := ObjectGroup( piece, obs[i] ); 
+        od;
+        U := DiscreteSubgroupoid( gpd, gps, obs ); 
+    fi;
+    SetParentAttr( U, gpd ); 
+    return U;
 end );
 
 InstallMethod( FullTrivialSubgroupoid, "for a connected groupoid", 
@@ -1799,6 +1825,9 @@ function( gpd, sgpd, e )
 
     local G, U, obsU, nobsU, rayU, rays, rt, gpt, rcos; 
 
+    if not IsSubgroupoid( gpd, sgpd ) then
+        Error( "sgpd not a subgroupoid of gpd," );
+    fi;
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
@@ -1807,6 +1836,9 @@ function( gpd, sgpd, e )
     fi; 
     if IsSinglePiece( sgpd ) then 
         U := sgpd; 
+        if not ( e![2] in ObjectList( U ) ) then
+            Error( "tail of e not in U" ); 
+        fi; 
     else
         Info( InfoGroupoids, 2, "comment: sgpd is not a single piece!" ); 
         U := PieceOfObject( sgpd, e![2] ); 
@@ -1837,6 +1869,9 @@ function( gpd, sgpd, e )
 
     local G, V, obsV, nobsV, rayV, rays, rh, gph, lcos; 
 
+    if not IsSubgroupoid( gpd, sgpd ) then
+        Error( "sgpd not a subgroupoid of gpd," );
+    fi;
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
@@ -1845,8 +1880,11 @@ function( gpd, sgpd, e )
     fi; 
     if IsSinglePiece( sgpd ) then 
         V := sgpd; 
+        if not ( e![3] in ObjectList( V ) ) then
+            Error( "head of e not in V" ); 
+        fi; 
     else
-        Info( InfoGroupoids, 2, "comment: sgpd not a single piece!" ); 
+        Info( InfoGroupoids, 2, "comment: sgpd is not a single piece!" ); 
         V := PieceOfObject( sgpd, e![3] ); 
     fi; 
     if not IsSubdomainWithObjects( G, V ) then 
@@ -1876,6 +1914,9 @@ function( gpd, lsgpd, rsgpd, e )
     local G, U, V, obsU, nobsU, obsV, nobsV, gpU, gpV, gpUV, 
           rayU, rayV, ray0, rays, j, k, rt, rh, dc; 
 
+    if not ( IsSubgroupoid( gpd, lsgpd ) and IsSubgroupoid( gpd, rsgpd ) ) then
+        Error( "one of lsgpd and rsgpd not a subgroupoid of gpd," );
+    fi;
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
@@ -2023,25 +2064,33 @@ InstallMethod( RightCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
 function( G, U )
 
-    local gg, obG, nobG, reps, p, op, gp, nrc, o, rco, r;
+    local gpG, obG, nobG, reps, P, obP, gpP, nrc, o, rco, r, ro, obs;
 
-    if not IsWideSubgroupoid( G, U ) then
-        Error( "U not a wide subgroupoid of G," );
+    if not IsSubgroupoid( G, U ) then
+        Error( "U not a subgroupoid of G," );
     fi;
-    gg := G!.magma;
+    gpG := G!.magma;
     obG := G!.objects;
     nobG := Length( obG );
     reps := [ ];
-    for p in Pieces( U ) do
-        op := p!.objects; 
-        gp := p!.magma;
-        nrc := Size( gg )/Size( gp );
-        for o in op do 
-            rco := RightCosets( ObjectGroup( G, o ), ObjectGroup( U, o ) ); 
+    for P in Pieces( U ) do
+        obP := P!.objects; 
+        gpP := P!.magma;
+        nrc := Size( gpG )/Size( gpP );
+        for o in obP do 
+            rco := RightCosets( ObjectGroup( G, o ), ObjectGroup( P, o ) ); 
             for r in rco do
                 Add( reps, ArrowNC( true, Representative(r), o, o ) );
             od;
         od;
+        obs := Difference( obG, obP );
+        ro := obP[1]; 
+        rco := RightCosets( ObjectGroup( G, ro ), ObjectGroup( P, ro ) ); 
+        for o in obs do 
+            for r in rco do
+                Add( reps, ArrowNC( true, Representative(r), ro, o ) );
+            od;            
+        od; 
     od;
     return reps;
 end ); 
@@ -2052,8 +2101,8 @@ function( G, U )
 
     local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
-    if not IsWideSubgroupoid( G, U ) then
-        Error( "U not a wide subgroupoid of G," );
+    if not IsSubgroupoid( G, U ) then
+        Error( "U not a subgroupoid of G," );
     fi;
     pos := PiecePositions( G, U );
     reps := [ ];
@@ -2081,30 +2130,35 @@ InstallMethod( LeftCosetRepresentatives, "generic method for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid ], 0,
 function( G, U )
 
-    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g, o;
+    local gpG, obG, nobG, reps, P, obP, gpP, nlc, o, rco, r, rep, ro, obs;
 
-    if not IsWideSubgroupoid( G, U ) then
-        Error( "U not a wide subgroupoid of G," );
+    if not IsSubgroupoid( G, U ) then
+        Error( "U not a subgroupoid of G," );
     fi;
-    gg := G!.magma;
+    gpG := G!.magma; 
     obG := G!.objects;
     nobG := Length( obG );
     reps := [ ];
-    for c in Pieces( U ) do
-        o1 := c!.objects[1];
-        gc := c!.magma;
-        rc := RightCosets( gg, gc );
-        nrc := Length( rc );
-        L := ListWithIdenticalEntries( nrc*nobG, 0 );
-        j := 0;
-        for b in rc do
-            g := Representative(b)^(-1);
-            for o in obG do
-                j := j+1;
-                L[j] := ArrowNC( true, g, o, o1 );
-            od;
+    for P in Pieces( U ) do
+        obP := P!.objects;
+        gpP := P!.magma; 
+        nlc := Size( gpG )/Size( gpP ); 
+        for o in obP do 
+            rco := RightCosets( ObjectGroup( G, o ), ObjectGroup( P, o ) );
+            for r in rco do 
+                rep := Representative( r ); 
+                Add( reps, ArrowNC( true, rep^(-1), o, o ) ); 
+            od; 
         od;
-        Append( reps, L );
+        obs := Difference( obG, obP ); 
+        ro := obP[1]; 
+        rco := RightCosets( ObjectGroup( G, ro ), ObjectGroup( P, ro ) );
+        for o in obs do 
+            for r in rco do 
+                rep := Representative( r ); 
+                Add( reps, ArrowNC( true, rep^(-1), o, ro ) ); 
+            od; 
+        od; 
     od;
     return reps;
 end );    
@@ -2115,8 +2169,8 @@ function( G, U )
 
     local pos, cG, cU, ncU, reps, i, filt, piece, m, j, subU;
 
-    if not IsWideSubgroupoid( G, U ) then
-        Error( "U not a wide subgroupoid of G," );
+    if not IsSubgroupoid( G, U ) then
+        Error( "U not a subgroupoid of G," );
     fi;
     pos := PiecePositions( G, U );
     reps := [ ];
@@ -2144,30 +2198,35 @@ InstallMethod( LeftCosetRepresentativesFromObject, "for a subgroupoid",
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid, IsObject ], 0,
 function( G, U, o )
 
-    local gg, obG, nobG, reps, c, o1, gc, rc, nrc, L, j, b, g;
+    local gpG, obG, reps, P, obP, gpP, rco, obs, r, rep, ro;
 
     if not IsWideSubgroupoid( G, U ) then
         Error( "U not a wide subgroupoid of G," );
     fi;
-    gg := G!.magma;
+    gpG := G!.magma;
     obG := G!.objects;
     if not ( o in obG ) then
         Error( "chosen object not in the groupoid," );
     fi;
     reps := [ ];
-    for c in Pieces( U ) do
-        o1 := c!.objects[1];
-        gc := c!.magma;
-        rc := RightCosets( gg, gc );
-        nrc := Length( rc );
-        L := ListWithIdenticalEntries( nrc, 0 );
-        j := 0;
-        for b in rc do
-            g := Representative(b)^(-1);
-            j := j+1;
-            L[j] := ArrowNC( true, g, o, o1 );
-        od;
-        Append( reps, L );
+    for P in Pieces( U ) do
+        obP := P!.objects;
+        gpP := P!.magma;
+        obs := Difference( obG, obP ); 
+        if o in obP then 
+            rco := RightCosets( ObjectGroup( G, o ), ObjectGroup( P, o ) ); 
+            for r in rco do 
+                rep := Representative( r ); 
+                Add( reps, ArrowNC( true, rep^(-1), o, o ) ); 
+            od;
+        else 
+            ro := obP[1]; 
+            rco := RightCosets( ObjectGroup( G, ro ), ObjectGroup( P, ro ) ); 
+            for r in rco do 
+                rep := Representative( r ); 
+                Add( reps, ArrowNC( true, rep^(-1), o, ro ) ); 
+            od; 
+        fi; 
     od;
     return reps;
 end );    
@@ -2245,7 +2304,7 @@ end );
 ##
 ##  RightCosets(G,U) is normally defined only when U is wide in G. 
 ##  For computational purposes we shall use, for the more general case, 
-##  RightCosets(F,U) where F is the FullSubgroupoid of G on Objects(U). 
+##  RightCosets(F,U) where F is the SubgroupoidByObjects of G on Objects(U). 
 ##
 InstallOtherMethod( RightCosetsNC, "for groupoids", true,
     [ IsGroupoid, IsGroupoid ], 0,

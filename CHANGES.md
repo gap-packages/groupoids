@@ -16,9 +16,11 @@
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
  * (20/01/18) sort out (left/right)CosetRepresentatives(to/from)Object
+ * (31/01/18) generalise SubgroupoidBySubgroup to groupoids with rays 
 
-## 1.54 -> 1.54.dev  (25/01/18) 
+## 1.54 -> 1.55  (31/01/18) 
 
+ * (30/01/18) Rewrote to Left(Right)CosetRepresentatives(FromObject) 
  * (24/01/18) Corrections to methods for RightCoset and LeftCoset
  * (18/01/18) Removed HomsetCosetsGroupoidCoset + old IsHomsetCosetsType
  * (17/01/18) Operation RayElementsOfGroupoid now Attribute RaysOfGroupoid 

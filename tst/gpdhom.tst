@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdhom.tst" );
@@ -29,7 +29,7 @@ gap> gl43 := SpecialLinearGroup( 4, 3 );;
 gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
 gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
 gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
-gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
@@ -180,7 +180,7 @@ groupoid homomorphism : Gd8 -> Gs3
       [() : -36 -> -35], [() : -36 -> -34] ] ]
 gap> hc6 := GroupHomomorphismByImages( c6, s3, 
 >            [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;
-gap> Fs3 := FullSubgroupoid( Gs3, [ -35 ] );; 
+gap> Fs3 := SubgroupoidByObjects( Gs3, [ -35 ] );; 
 gap> SetName( Fs3, "Fs3" ); 
 gap> homc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;
 gap> incFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; 

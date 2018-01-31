@@ -195,14 +195,14 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 ############################################################################## 
 ##  
 #P  IsGroupoidCoset( <cset> ) 
-#A  SuperDomain( <cset> );                        #? rename ?? 
-#O  RightCosetRepresentatives( <gpd>, <sgpd> )    #? should be Iterator ?? 
+#A  SuperDomain( <cset> );                          #? rename ?? 
+#O  RightCosetRepresentatives( <gpd>, <sgpd> )      #? should be Iterator ?? 
 #R  IsLeftCosetWithObjectsDefaultRep( <gp>, <obj> ) 
-#O  LeftCosetRepresentatives( <gpd>, <sgpd> )     #? should be Iterator ?? 
+#O  LeftCosetRepresentatives( <gpd>, <sgpd> )       #? should be Iterator ?? 
 #O  LeftCosetRepresentativesFromObject( <gpd>, <sgpd>, <obj> ) 
 #O  LeftCosetsNC( <gpd>, <sgpd> ) 
 #O  LeftCoset( <gpd>, <sgpd>, <elt> )
-#O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )        #? ditto ?? 
+#O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )          #? ditto ?? 
 ## 
 DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
 DeclareAttribute( "SuperDomain", IsRightCosetDefaultRep ); 
@@ -237,23 +237,24 @@ DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 ############################################################################# 
 ## 
 #O  SubgroupoidBySubgroup( <gpd>, <sgp> ) 
+#O  SubgroupoidByObjects( <gpd>, <obs> ) 
 #O  SubgroupoidByPieces( <gpd>, <obhoms> )              
 #O  PiecePositions( <gpd>, <sgpd> )
 #O  DiscreteSubgroupoid( <gpd>, <gps>, <obs> )              
 #A  MaximalDiscreteSubgroupoid( <gpd> )  
-#O  FullSubgroupoid( <gpd>, <obs> )              
 #A  FullTrivialSubgroupoid( <gpd> )  
 #A  DiscreteTrivialSubgroupoid( <gpd> )  
 ## 
 DeclareOperation( "SubgroupoidBySubgroup", 
-    [ IsGroupoid and IsDirectProductWithCompleteDigraph, IsGroup ] ); 
+    [ IsGroupoid and IsSinglePiece, IsGroup ] ); 
+DeclareOperation( "SubgroupoidByObjects", [ IsGroupoid, IsHomogeneousList ] );
+DeclareSynonym( "FullSubgroupoid", SubgroupoidByObjects ); 
 DeclareOperation( "SubgroupoidByPieces",
     [ IsGroupoid, IsList ] );
 ##  DeclareOperation( "PiecePositions", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "DiscreteSubgroupoid",
     [ IsGroupoid, IsList, IsHomogeneousList ] );
 DeclareAttribute( "MaximalDiscreteSubgroupoid", IsGroupoid );
-DeclareOperation( "FullSubgroupoid", [ IsGroupoid, IsHomogeneousList ] );
 DeclareAttribute( "FullTrivialSubgroupoid", IsGroupoid );
 DeclareAttribute( "DiscreteTrivialSubgroupoid", IsGroupoid );
 

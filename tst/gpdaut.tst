@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdaut.tst" );
@@ -15,7 +15,7 @@ gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
 gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
 gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );; 
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
-gap> Hs4 := FullSubgroupoid( Gs4, [-14,-13,-12] );; 
+gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
