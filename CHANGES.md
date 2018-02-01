@@ -18,7 +18,7 @@
  * (20/01/18) sort out (left/right)CosetRepresentatives(to/from)Object
  * (31/01/18) generalise SubgroupoidBySubgroup to groupoids with rays 
 
-## 1.54 -> 1.55  (31/01/18) 
+## 1.54 -> 1.55  (01/02/18) 
 
  * (30/01/18) Rewrote to Left(Right)CosetRepresentatives(FromObject) 
  * (24/01/18) Corrections to methods for RightCoset and LeftCoset

@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  sub-test.tst              Groupoids Package                 Chris Wensley
+#W  subgpds.tst                Groupoids Package                 Chris Wensley
 ##
 #Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -111,4 +111,4 @@ groupoid with 8 pieces:
 
 #############################################################################
 ##
-#E  sub-test.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+#E  subgpds.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
