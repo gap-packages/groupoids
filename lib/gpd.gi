@@ -1513,7 +1513,7 @@ function( G, gps, obs )
         if not IsSubgroup( gpo, gps[i] ) then
             Error( "i-th group not a subgroup of the object group," );
         fi;
-        pieceU[i] := DomainWithSingleObject( gpo, o );
+        pieceU[i] := DomainWithSingleObject( gps[i], o );
     od; 
     ishomo := ForAll( gps, g -> ( g = gps[1] ) ); 
     if ishomo then 

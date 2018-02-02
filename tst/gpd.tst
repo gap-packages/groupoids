@@ -218,7 +218,43 @@ gap> PrintOneItemPerLine( hsetq8 );
 
 ### Section 4.3 : Subgroupoids ###
 
-## SubSection 4.3.1
+## SubSection 4.3.2 : SubgroupoidWithRays
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
+gap> SetName( a4, "a4" ); 
+gap> Ua4 := SubgroupoidWithRays( Gs4, a4, [(),(1,2),(2,3),(3,4),(1,4)] );      
+single piece groupoid with rays: < a4, [ -15 .. -11 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
+gap> IsSubgroupoid( Gs4, Ua4 );
+true
+gap> IsWideSubgroupoid( Gs4, Ua4 );
+true
+gap> RaysOfGroupoid( Ua4 );       
+[ (), (1,2), (2,3), (3,4), (1,4) ]
+gap> RayArrowsOfGroupoid( Ua4 );  
+[ [() : -15 -> -15], [(1,2) : -15 -> -14], [(2,3) : -15 -> -13], 
+  [(3,4) : -15 -> -12], [(1,4) : -15 -> -11] ]
+gap> c3 := Subgroup( a4, [ (1,2,3) ] );; 
+gap> SetName( c3, "c3" ); 
+gap> Uc3 := SubgroupoidWithRays( Ua4, c3, 
+>               [ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] );
+single piece groupoid with rays: < c3, [ -15 .. -11 ], 
+[ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] >
+gap> ObjectGroup( Uc3, -14 );
+Group([ (2,3,4) ])
+
+## SubSection 4.3.3
+gap> Va4 := SubgroupoidByObjects( Ua4, [-14,-13,-12] );  
+single piece groupoid with rays: < Group( [ (1,3,2), (1,3,4) ] ), 
+[ -14, -13, -12 ], [ (), (1,3,2), (1,2)(3,4) ] >
+gap> Vc3 := SubgroupoidBySubgroup( Va4, c3 );
+single piece groupoid with rays: < c3, [ -14, -13, -12 ], 
+[ (), (1,3,2), (1,2)(3,4) ] >
+
+## SubSection 4.3.4 : SubgroupoidByPieces 
+gap> Display(Gd8);
+single piece groupoid: Gd8
+  objects: [ -9, -8, -7 ]
+    group: d8 = <[ (1,2,3,4), (1,3) ]>
 gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
 gap> k4 := Subgroup( d8, [ (1,3), (2,4) ] );;
 gap> SetName( c4, "c4" );  SetName( k4, "k4" );
@@ -232,6 +268,9 @@ groupoid with 2 pieces:
     group: c4 = <[ (1,2,3,4) ]> >
 gap> [ Parent( Ud8 ), IsWideSubgroupoid( Gd8, Ud8 ) ]; 
 [ Gd8, true ]
+gap> U2;
+groupoid with 2 pieces:
+[ Gq8, Gf2 ]
 gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 [ f1^2, f2^2 ]
 gap> f2b := Subgroup( f2, genf2b );;
@@ -239,80 +278,45 @@ gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
 groupoid with 2 pieces:
 1:  single piece groupoid: < q8, [ -27 ] >
 2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
-gap> IsWideSubgroupoid( U2, SU2 ); 
+gap> IsWideSubgroupoid( U2, SU2 );
 false
 gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
 true
 
-## SubSection 4.3.2
-gap> SubgroupoidByObjects( U3, [-7,-6] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < d8, [ -7 ] >
-2:  single piece groupoid: < c6, [ -6 ] >
+## SubSection 4.3.5
 gap> FullTrivialSubgroupoid( Ud8 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(k4), [ -9 ] >
 2:  single piece groupoid: < id(c4), [ -8, -7 ] >
-
-## SubSection 4.3.3
-gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < c4, [ -9 ] >
-2:  single piece groupoid: < k4, [ -7 ] >
-gap> MaximalDiscreteSubgroupoid(U2);
+gap> DiscreteTrivialSubgroupoid( Ud8 );
 groupoid with 3 pieces:
-1:  single piece groupoid: < q8, [ -28 ] >
-2:  single piece groupoid: < q8, [ -27 ] >
-3:  single piece groupoid: < f2, [ -22 ] >
-gap> DiscreteTrivialSubgroupoid( U2 );
+1:  single piece groupoid: < id(k4), [ -9 ] >
+2:  single piece groupoid: < id(c4), [ -8 ] >
+3:  single piece groupoid: < id(c4), [ -7 ] >
+
+## SubSection 4.3.6
+gap> U3;
 groupoid with 3 pieces:
-1:  single piece groupoid: < id(q8), [ -28 ] >
-2:  single piece groupoid: < id(q8), [ -27 ] >
-3:  single piece groupoid: < id(f2), [ -22 ] >
+[ Gs4, Gd8, Gc6 ]
+gap> DiscreteSubgroupoid( U3, [ a4, a4, c4, k4 ], [-15,-11,-9,-7] );
+groupoid with 4 pieces:
+1:  single piece groupoid: < a4, [ -15 ] >
+2:  single piece groupoid: < a4, [ -11 ] >
+3:  single piece groupoid: < c4, [ -9 ] >
+4:  single piece groupoid: < k4, [ -7 ] >
+gap> MaximalDiscreteSubgroupoid( Vc3 );
+groupoid with 3 pieces:
+1:  single piece groupoid: < c3, [ -14 ] >
+2:  single piece groupoid: < Group( [ (1,2,3) ] ), [ -13 ] >
+3:  single piece groupoid: < Group( [ (1,4,2) ] ), [ -12 ] >
 
-## SubSection 4.3.4
-gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
-gap> SetName( Hs4, "Hs4" ); 
-gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
- ] >
-gap> hs1413 := Homset( Hd8a, -14, -13 );
-<homset -14 -> -13 with head group Group( [ (1,3,2,4), (1,2) ] )>
-gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
-[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
-(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
-(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
-gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
-[ (), (1,2,3), (1,2,4) ] >
-gap> Hd8a = Hd8b; 
-true
-gap> SetName( Hd8b, "Hd8b" );
-gap> RaysOfGroupoid( Hd8b ); 
-[ (), (1,2,3), (1,2,4) ]
-gap> Parent( Hd8a );
-Hs4
-gap> Ancestor( Hd8a ); 
-Gs4
-gap> Fd8a := SubgroupoidByObjects( Hd8a, [-13,-12] );            
-single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
-[ -13, -12 ], [ (), (2,4,3) ] >
-gap> Kd8a := SubgroupoidWithRays( Fd8a, k4^(2,3), [ (), (1,3) ] ); 
-single piece groupoid with rays: < Group( [ (1,2), (3,4) ] ), [ -13, -12 ], 
-[ (), (1,3) ] >
-
-## SubSection 4.3.5 
-gap> u := Arrow( Gs4, (1,2,3), -15, -13 );
-[(1,2,3) : -15 -> -13]
-gap> gensa := GeneratorsOfGroupoid( Hd8a );
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13],
-  [(3,4) : -14 -> -12] ]
-gap> imsa := List( gensa, g -> g^u );
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15],
-  [(3,4) : -14 -> -12] ]
-gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa );
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+## SubSection 4.3.7 
+gap> a1 := Arrow( Ua4, (2,3,4), -15, -15 );;
+gap> a2 := Arrow( Ua4, (1,2,3,4), -15, -13 );;
+gap> a3 := Arrow( Ua4, (2,3), -15, -11 );;
+gap> SinglePieceSubgroupoidByGenerators( Ua4, [a1,a2,a3] );
+single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ], 
+[ (), (1,2,3,4), (2,3) ] >
 
 ### Section 4.4 : Left, Right and Double Cosets ###
 
@@ -364,9 +368,14 @@ gap> w^z;
 [(1,3) : -9 -> -8]
 
 ## SubSection 4.5.2
-gap> ConjugateGroupoid( Hd8a, u^-1 ); 
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+gap> Hd8 := SubgroupoidWithRays( Gs4, d8, [(),(1,2),(2,3),(3,4),(1,4)] );
+single piece groupoid with rays: < d8, [ -15 .. -11 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
+gap> u := Arrow( Gs4, (1,2,3), -15, -14 );
+[(1,2,3) : -15 -> -14]
+gap> ConjugateGroupoid( Hd8, u );                                        
+single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
+[ -15, -14, -13, -12, -11 ], [ (), (1,2), (), (2,4,3), (1,4)(2,3) ] >
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 gap> STOP_TEST( "gpd.tst", 10000 );

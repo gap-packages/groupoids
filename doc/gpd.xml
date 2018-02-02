@@ -560,8 +560,6 @@ gap> PrintOneItemPerLine( hsetq8 );
 <ManSection>
    <Func Name="Subgroupoid"
          Arg="args" />
-   <Oper Name="SubgroupoidByPieces"
-         Arg="gpd, pieces" />
    <Oper Name="IsSubgroupoid"
          Arg="gpd, sgpd" />
    <Oper Name="IsWideSubgroupoid"
@@ -577,109 +575,12 @@ closed under multiplication and
 with tail and head in the chosen object set.
 <P/>
 There are a variety of constructors for a subgroupoid of a standard groupoid, 
-and the most general is the operation <C>SubgroupoidByPieces</C>. 
-Its two parameters are a groupoid and a list of pieces, 
-each piece being specified either as a list <C>[sgp,obs]</C>,  
-where <C>sgp</C> is a subgroup of the root group in that piece, 
-and <C>obs</C> is a subset of the objects in that piece, 
-or as a list <C>[sgp,obs,rays]</C> when a set of rays is required. 
+as described in for following sections. 
+The global function <C>Subgroupoid</C> should call the operation 
+appropriate to the parameters provided. 
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
-gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
-gap> k4 := Subgroup( d8, [ (1,2)(3,4), (1,3)(2,4) ] );;
-gap> SetName( c4, "c4" );  SetName( k4, "k4" );
-gap> Ud8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );;
-gap> SetName( Ud8, "Ud8" );
-gap> Display( Ud8 );
-groupoid with 2 pieces:
-< objects: [ -9 ]
-    group: k4 = <[ (1,2)(3,4), (1,3)(2,4) ]> >
-< objects: [ -8, -7 ]
-    group: c4 = <[ (1,2,3,4) ]> >
-gap> [ Parent( Ud8 ), IsWide( Gd8, Ud8 ) ]; 
-[ Gd8, true ]
-gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
-[ f1^2, f2^2 ]
-gap> f2b := Subgroup( f2, genf2b );;
-gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < q8, [ -27 ] >
-2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
-gap> IsWideSubgroupoid( U2, SU2 );
-false
-gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
-true
-]]>
-</Example>
-
-<ManSection>
-   <Oper Name="SubgroupoidByObjects"
-         Arg="gpd, obs" />
-   <Attr Name="FullTrivialSubgroupoid"
-         Arg="gpd" />
-<Description>
-The <C>SubgroupoidByObjects</C> of a groupoid <C>gpd</C> 
-on a subset <C>obs</C> of its objects 
-contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
-A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
-<E>trivial subgroupoid</E> 
-has trivial object groups, but need not be discrete.
-A single piece trivial groupoid is sometimes called a 
-<Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
-(The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
-<E>identity subgroupoid</E> was used in versions up to 1.14.)  
-The global function <C>Subgroupoid</C> should call the appropriate operation.
-<P/>
-</Description>
-</ManSection>
-<Example>
-<![CDATA[
-gap> SubgroupoidByObjects( U3, [-7,-6] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < d8, [ -7 ] >
-2:  single piece groupoid: < c6, [ -6 ] >
-gap> FullTrivialSubgroupoid( Ud8 );
-groupoid with 2 pieces:
-1:  single piece groupoid: < id(k4), [ -9 ] >
-2:  single piece groupoid: < id(c4), [ -8, -7 ] >
-]]>
-</Example>
-
-<ManSection>
-   <Oper Name="DiscreteSubgroupoid"
-         Arg="gpd, sgps, obs" />
-   <Attr Name="MaximalDiscreteSubgroupoid"
-         Arg="gpd" />
-   <Attr Name="DiscreteTrivialSubgroupoid"
-         Arg="gpd" />
-<Description>
-A subgroupoid is <E>discrete</E> if it is a union of groups. 
-The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
-is the union of all the single-object full subgroupoids of <C>gpd</C>.
-<P/>
-</Description>
-</ManSection>
-<Example>
-<![CDATA[
-gap> DiscreteSubgroupoid( U3, [ c4, k4 ], [-9,-7] );
-groupoid with 2 pieces:
-1:  single piece groupoid: < c4, [ -9 ] >
-2:  single piece groupoid: < k4, [ -7 ] >
-gap> MaximalDiscreteSubgroupoid(U2);
-groupoid with 3 pieces:
-1:  single piece groupoid: < q8, [ -28 ] >
-2:  single piece groupoid: < q8, [ -27 ] >
-3:  single piece groupoid: < f2, [ -22 ] >
-gap> DiscreteTrivialSubgroupoid( U2 );
-groupoid with 3 pieces:
-1:  single piece groupoid: < id(q8), [ -28 ] >
-2:  single piece groupoid: < id(q8), [ -27 ] >
-3:  single piece groupoid: < id(f2), [ -22 ] >
-]]>
-</Example>
 
 <ManSection>
    <Oper Name="SubgroupoidWithRays"
@@ -705,49 +606,178 @@ The operation <C>RaysOfGroupoid</C> returns a list of arrows,
 one for each object, while the operation <C>RayElementsOfGroupoid</C> 
 returns the list of group elements in these arrows. 
 <P/>
-In the following example we construct a subgroupoid with rays 
-on three of the five objects.  It is therefore necessary to construct 
-the full subgroupoid on these three objects first. 
-<P/> 
 Note that it is also possible to construct a subgroupoid with rays 
 of a subgroupoid with rays. 
-<P/>
-Note also that the function <Index Key="Ancestor"> <C>Ancestor</C></Index> 
-<C>Ancestor</C> provides an iteration of <C>Parent</C>. 
+<P/> 
+In the following example we construct a subgroupoid <C>Ua4</C> 
+of the groupoid <C>Gs4</C>, and then a second subgroupoid <C>Uc3</C>. 
+The initial standard groupoid <C>Gs4</C> is set as the parent for 
+both <C>Ua4</C> and <C>Uc3</C>.   
 <P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
-gap> SetName( Hs4, "Hs4" ); 
-gap> Hd8a := SubgroupoidWithRays( Hs4, d8, [(),(2,3),(3,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ], [ (), (2,3), (3,4) 
- ] >
-gap> hs1413 := Homset( Hd8a, -14, -13 );
-<homset -14 -> -13 with head group Group( [ (1,3,2,4), (1,2) ] )>
-gap> for e in hs1413 do  Print(e,", "); od;  Print( "\n");
-[(2,3) : -14 -> -13], [(2,4,3) : -14 -> -13], [(1,2,4,3) : -14 -> -13], [
-(1,2,3) : -14 -> -13], [(1,4,2) : -14 -> -13], [(1,4) : -14 -> -13], [
-(1,3,4) : -14 -> -13], [(1,3,4,2) : -14 -> -13], 
-gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );
-single piece groupoid with rays: < d8, [ -14, -13, -12 ], 
-[ (), (1,2,3), (1,2,4) ] >
-gap> Hd8a = Hd8b; 
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
+gap> SetName( a4, "a4" ); 
+gap> Ua4 := SubgroupoidWithRays( Gs4, a4, [(),(1,2),(2,3),(3,4),(1,4)] );      
+single piece groupoid with rays: < a4, [ -15 .. -11 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
+gap> IsSubgroupoid( Gs4, Ua4 );
 true
-gap> SetName( Hd8b, "Hd8b" );
-gap> RaysOfGroupoid( Hd8b ); 
-[ (), (1,2,3), (1,2,4) ]
-gap> Parent( Hd8a );
-Hs4
-gap> Ancestor( Hd8a ); 
-Gs4
-gap> Fd8a := SubgroupoidByObjects( Hd8a, [-13,-12] );            
-single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
-[ -13, -12 ], [ (), (2,4,3) ] >
-gap> Kd8a := SubgroupoidWithRays( Fd8a, k4^(2,3), [ (), (1,3) ] ); 
-single piece groupoid with rays: < Group( [ (1,2), (3,4) ] ), [ -13, -12 ], 
-[ (), (1,3) ] >
+gap> IsWideSubgroupoid( Gs4, Ua4 );
+true
+gap> RaysOfGroupoid( Ua4 );       
+[ (), (1,2), (2,3), (3,4), (1,4) ]
+gap> RayArrowsOfGroupoid( Ua4 );  
+[ [() : -15 -> -15], [(1,2) : -15 -> -14], [(2,3) : -15 -> -13], 
+  [(3,4) : -15 -> -12], [(1,4) : -15 -> -11] ]
+gap> c3 := Subgroup( a4, [ (1,2,3) ] );; 
+gap> SetName( c3, "c3" ); 
+gap> Uc3 := SubgroupoidWithRays( Ua4, c3, 
+>               [ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] );
+single piece groupoid with rays: < c3, [ -15 .. -11 ], 
+[ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] >
+gap> ObjectGroup( Uc3, -14 );
+Group([ (2,3,4) ])
+
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SubgroupoidByObjects"
+         Arg="gpd, obs" />
+   <Attr Name="SubgroupoidBySubgroup"
+         Arg="gpd sgp" />
+<Description>
+The <C>SubgroupoidByObjects</C> of a groupoid <C>gpd</C> 
+on a subset <C>obs</C> of its objects 
+contains all the arrows of <C>gpd</C> with tail and head in <C>obs</C>.
+<P/>
+The <C>SubgroupoidBySubgroup</C> of a connected groupoid <C>gpd</C> 
+determinded by a subgroup <C>sgp</C> of the root group is the wide subgroupoid 
+with root group <C>sgp</C> and containing the rays of <C>gpd</C>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Va4 := SubgroupoidByObjects( Ua4, [-14,-13,-12] );  
+single piece groupoid with rays: < Group( [ (1,3,2), (1,3,4) ] ), 
+[ -14, -13, -12 ], [ (), (1,3,2), (1,2)(3,4) ] >
+gap> Vc3 := SubgroupoidBySubgroup( Va4, c3 );
+single piece groupoid with rays: < c3, [ -14, -13, -12 ], 
+[ (), (1,3,2), (1,2)(3,4) ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SubgroupoidByPieces"
+         Arg="gpd, pieces" />
+<Description>
+The most general way to construct a subgroupoid is to use the operation <C>SubgroupoidByPieces</C>. 
+Its two parameters are a groupoid and a list of <E>pieces</E>, 
+each piece being specified either as a list <C>[sgp,obs]</C>,  
+where <C>sgp</C> is a subgroup of the root group in that piece, 
+and <C>obs</C> is a subset of the objects in that piece, 
+or as a list <C>[sgp,obs,rays]</C> when a set of rays is required. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Display(Gd8);
+single piece groupoid: Gd8
+  objects: [ -9, -8, -7 ]
+    group: d8 = <[ (1,2,3,4), (1,3) ]>
+gap> c4 := Subgroup( d8, [ (1,2,3,4) ] );;
+gap> k4 := Subgroup( d8, [ (1,3), (2,4) ] );;
+gap> SetName( c4, "c4" );  SetName( k4, "k4" );
+gap> Ud8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );;
+gap> SetName( Ud8, "Ud8" );
+gap> Display( Ud8 );
+groupoid with 2 pieces:
+< objects: [ -9 ]
+    group: k4 = <[ (1,3), (2,4) ]> >
+< objects: [ -8, -7 ]
+    group: c4 = <[ (1,2,3,4) ]> >
+gap> [ Parent( Ud8 ), IsWideSubgroupoid( Gd8, Ud8 ) ]; 
+[ Gd8, true ]
+gap> U2;
+groupoid with 2 pieces:
+[ Gq8, Gf2 ]
+gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
+[ f1^2, f2^2 ]
+gap> f2b := Subgroup( f2, genf2b );;
+gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
+groupoid with 2 pieces:
+1:  single piece groupoid: < q8, [ -27 ] >
+2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
+gap> IsWideSubgroupoid( U2, SU2 );
+false
+gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );
+true
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="FullTrivialSubgroupoid"
+         Arg="gpd" />
+   <Attr Name="DiscreteTrivialSubgroupoid"
+         Arg="gpd" />
+<Description>
+A <Index Key="trivial subgroupoid"> trivial subgroupoid </Index> 
+<E>trivial subgroupoid</E> 
+has trivial object groups, but need not be discrete.
+A single piece trivial groupoid is sometimes called a 
+<Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
+(The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
+<E>identity subgroupoid</E> was used in versions up to 1.14.)  
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> FullTrivialSubgroupoid( Ud8 );
+groupoid with 2 pieces:
+1:  single piece groupoid: < id(k4), [ -9 ] >
+2:  single piece groupoid: < id(c4), [ -8, -7 ] >
+gap> DiscreteTrivialSubgroupoid( Ud8 );
+groupoid with 3 pieces:
+1:  single piece groupoid: < id(k4), [ -9 ] >
+2:  single piece groupoid: < id(c4), [ -8 ] >
+3:  single piece groupoid: < id(c4), [ -7 ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="DiscreteSubgroupoid"
+         Arg="gpd, sgps, obs" />
+   <Attr Name="MaximalDiscreteSubgroupoid"
+         Arg="gpd" />
+<Description>
+A subgroupoid is <E>discrete</E> if it is a union of groups. 
+The <C>MaximalDiscreteSubgroupoid</C> of <C>gpd</C> 
+is the union of all the single-object full subgroupoids of <C>gpd</C>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> U3;
+groupoid with 3 pieces:
+[ Gs4, Gd8, Gc6 ]
+gap> DiscreteSubgroupoid( U3, [ a4, a4, c4, k4 ], [-15,-11,-9,-7] );
+groupoid with 4 pieces:
+1:  single piece groupoid: < a4, [ -15 ] >
+2:  single piece groupoid: < a4, [ -11 ] >
+3:  single piece groupoid: < c4, [ -9 ] >
+4:  single piece groupoid: < k4, [ -7 ] >
+gap> MaximalDiscreteSubgroupoid( Vc3 );
+groupoid with 3 pieces:
+1:  single piece groupoid: < c3, [ -14 ] >
+2:  single piece groupoid: < Group( [ (1,2,3) ] ), [ -13 ] >
+3:  single piece groupoid: < Group( [ (1,4,2) ] ), [ -12 ] >
 ]]>
 </Example>
 
@@ -769,17 +799,12 @@ Other cases will be added as time permits.
 </ManSection>
 <Example>
 <![CDATA[
-gap> u := Arrow( Gs4, (1,2,3), -15, -13 ); 
-[(1,2,3) : -15 -> -13]
-gap> gensa := GeneratorsOfGroupoid( Hd8a );
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(2,3) : -14 -> -13], 
-  [(3,4) : -14 -> -12] ]
-gap> imsa := List( gensa, g -> g^u ); 
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,3) : -14 -> -15], 
-  [(3,4) : -14 -> -12] ]
-gap> C := SinglePieceSubgroupoidByGenerators( Gs4, imsa ); 
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+gap> a1 := Arrow( Ua4, (2,3,4), -15, -15 );
+gap> a2 := Arrow( Ua4, (1,2,3,4), -15, -13 );
+gap> a3 := Arrow( Ua4, (2,3), -15, -11 );
+gap> SinglePieceSubgroupoidByGenerators( Ua4, [a1,a2,a3] );
+single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ], 
+[ (), (1,2,3,4), (2,3) ] >
 ]]>
 </Example>
 
@@ -802,10 +827,6 @@ single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ),
          Arg="G, U" />
    <Oper Name="LeftCosetRepresentativesFromObject"
          Arg="G, U, obj" />
-   <Oper Name="DoubleCoset"
-         Arg="G, U, elt, V" />
-   <Oper Name="DoubleCosetRepresentatives"
-         Arg="G, U, V" />
 <Description>
 If <C>U</C> is a subgroupoid of <M>G</M>, 
 the <E>right cosets</E> <M>Ug</M> of <M>U</M> in <M>G</M>
@@ -966,9 +987,14 @@ is the subgroupoid generated by the conjugates of the generators of <M>H</M>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> ConjugateGroupoid( Hd8a, u^-1 ); 
-single piece groupoid with rays: < Group( [ (1,4,3,2), (1,3) ] ), 
-[ -15, -14, -12 ], [ (), (1,3), (1,4,3) ] >
+gap> Hd8 := SubgroupoidWithRays( Gs4, d8, [(),(1,2),(2,3),(3,4),(1,4)] );
+single piece groupoid with rays: < d8, [ -15 .. -11 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
+gap> u := Arrow( Gs4, (1,2,3), -15, -14 );
+[(1,2,3) : -15 -> -14]
+gap> ConjugateGroupoid( Hd8, u );                                        
+single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
+[ -15, -14, -13, -12, -11 ], [ (), (1,2), (), (2,4,3), (1,4)(2,3) ] >
 ]]>
 </Example>
 </Section>

@@ -8,18 +8,15 @@
               conflicts with the new digraphs package. 
               Further changes will need to be made once the digraphs package 
               becomes part of the general GAP distribution. 
- * (06/09/17) Revisit the Objectify commands for cosets etc in gpd.gi 
- * (20/09/17) need more in the manual concerning cosets (left, right, double) 
-              and it is probably necessary to revise and test these functions 
+ * (20/09/17) DoubleGroupoids, and their reps, still require revision 
  * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
  * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
- * (20/01/18) sort out (left/right)CosetRepresentatives(to/from)Object
- * (31/01/18) generalise SubgroupoidBySubgroup to groupoids with rays 
 
-## 1.54 -> 1.55  (01/02/18) 
+## 1.54 -> 1.55  (02/02/18) 
 
+ * (01/02/18) renamed test files in folder xtst/ 
  * (30/01/18) Rewrote to Left(Right)CosetRepresentatives(FromObject) 
  * (24/01/18) Corrections to methods for RightCoset and LeftCoset
  * (18/01/18) Removed HomsetCosetsGroupoidCoset + old IsHomsetCosetsType
