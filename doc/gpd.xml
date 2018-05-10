@@ -587,7 +587,7 @@ appropriate to the parameters provided.
          Arg="gpd, sgp, rays" />
    <Oper Name="RaysOfGroupoid"
          Arg="gpd" />
-   <Oper Name="RayElementsOfGroupoid"
+   <Oper Name="RayArrowsOfGroupoid"
          Arg="gpd" />
 <Description>
 If groupoid <M>G</M> is of type <C>IsDirectProductWithCompleteDigraph</C> 
@@ -597,13 +597,13 @@ a subgroup <M>h</M> of <M>g</M> to be the object group
 at the root object <M>q</M>, and an arrow  
 <M>r : q \to p</M> for each of the objects <M>p</M>. 
 The chosen loop arrow at <M>q</M> must be the identity arrow. 
-These <M>n</M> arrows are called the <E>rays</E> of the subgroupoid. 
+These <M>n</M> arrows are called the <E>ray arrows</E> of the subgroupoid. 
 The arrows in the homset from <M>p</M> to <M>p'</M> have the form 
 <M>r^{-1}xr'</M> where <M>r,r'</M> are the rays from <M>q</M> 
 to <M>p,p'</M> respectively, and <M>x \in h</M>. 
 <P/>
-The operation <C>RaysOfGroupoid</C> returns a list of arrows, 
-one for each object, while the operation <C>RayElementsOfGroupoid</C> 
+The operation <C>RayArrowsOfGroupoid</C> returns a list of arrows, 
+one for each object, while the operation <C>RaysOfGroupoid</C> 
 returns the list of group elements in these arrows. 
 <P/>
 Note that it is also possible to construct a subgroupoid with rays 

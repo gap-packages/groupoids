@@ -14,6 +14,10 @@
  * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
  * (27/10/17) need to add DirectProductInfo stuff 
 
+## 1.55 -> 1.56  (00/05/18) 
+
+ * (09/05/18) added attribute ParentMappingGroupoids for restricted mappings
+
 ## 1.54 -> 1.55  (02/02/18) 
 
  * (01/02/18) renamed test files in folder xtst/ 

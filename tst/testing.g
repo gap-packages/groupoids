@@ -2,7 +2,7 @@
 ##
 #W  testing.g               groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -17,7 +17,8 @@ testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );
     Print( "#I  Testing ", fn, "\n" );
-    if not Test( fn, rec(compareFunction := "uptowhitespace") ) then
+    if not Test( fn, rec(compareFunction := "uptowhitespace", 
+                            showProgress := true ) ) then
         testresult := false;
     fi;
 od;

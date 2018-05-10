@@ -240,7 +240,7 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGeneralMappingWithObjects, IsGroupoid and IsSinglePiece ], 0,
 function( mor, U )
 
-    local smor, rmor, genU, imres, V, res;
+    local smor, rmor, genU, imres, V, res, par;
 
     Info( InfoGroupoids, 3, "RestrictedMapping from a single piece" ); 
     smor := Source( mor );
@@ -256,6 +256,11 @@ function( mor, U )
     if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
         SetIsInjective( res, true );
     fi;
+    par := mor; 
+    if HasParentMappingGroupoids( mor ) then 
+        par := ParentMappingGroupoids( mor ); 
+    fi; 
+    SetParentMappingGroupoids( res, mor );
     return res; 
 end );
 

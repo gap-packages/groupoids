@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 Version := "1.55dev",
-Date := "12/02/2018", 
+Date := "00/05/2018", 
 
 Persons := [
   rec(
@@ -85,7 +85,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.6.1" ], 
                            [ "fga", ">= 1.3.1" ],
                            [ "utils", ">=0.54" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 2.8.0" ] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 3.0.14" ] ],
   ExternalConditions := [ ]
 ),
 

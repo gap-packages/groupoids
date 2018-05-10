@@ -306,12 +306,16 @@ groupoid homomorphism : Hd8b -> Hs4
 <ManSection>
    <Oper Name="RestrictedMappingGroupoids"
          Arg="mor, sgpd" />
+   <Attr Name="ParentMappingGroupoids"
+         Arg="mor" />
 <Description>
 The operation <C>RestrictedMappingGroupoids(mor,sgpd)</C> 
 returns the restriction of the homomorphism <C>mor</C> 
 to the subgroupoid <C>sgpd</C> of its source. 
 The range is usually set to the <C>ImagesSource</C> of the restriction. 
-For another example see section <Ref Sect="sec-mxreps"/>
+The restriction is assigned the attribute <C>ParentMappingGroupoids</C> 
+with value <C>mor</C> (or that of <C>mor</C> is one exists). 
+For another example see section <Ref Sect="sec-mxreps"/>.
 <P/>
 </Description>
 </ManSection>
