@@ -1,6 +1,6 @@
 # CHANGES to the 'groupoids' package 
 
-## 1.55 -> 1.56  (28/08/18) 
+## 1.55 -> 1.57  (28/08/18) 
 
  * (28/08/18) removed Semigroups from SuggestedOtherPackages (temporarily?) 
  * (10/05/18) added attribute PieceIsomorphisms for homogeneous dwos

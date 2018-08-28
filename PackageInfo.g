@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.56",
+Version := "1.57",
 Date := "28/08/2018", 
 
 Persons := [
