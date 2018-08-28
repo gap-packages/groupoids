@@ -1,18 +1,10 @@
 # CHANGES to the 'groupoids' package 
 
-## ToDo: 
+## 1.55 -> 1.56  (28/08/18) 
 
- * (12/01/16) in this temporary version there have been a number of changes 
-              of function name, such as IsDigraph becoming GpdIsDigraph, 
-              later changed to GroupoidIsDigraph: this is in order to avoid 
-              conflicts with the new digraphs package. 
-              Further changes will need to be made once the digraphs package 
-              becomes part of the general GAP distribution. 
- * (20/09/17) DoubleGroupoids, and their reps, still require revision 
- * (04/10/17) problem with autos of hom discrete gpds? xmod/tst/act-test.xtst
- * (09/10/17) add construction of the Automorphism Groupoid of a groupoid 
- * (17/10/17) check if MappingToSinglePieceData correct for map from homdisc 
- * (27/10/17) need to add DirectProductInfo stuff 
+ * (28/08/18) removed Semigroups from SuggestedOtherPackages (temporarily?) 
+ * (10/05/18) added attribute PieceIsomorphisms for homogeneous dwos
+ * (09/05/18) added attribute ParentMappingGroupoids for restricted mappings
 
 ## 1.54 -> 1.55  (02/02/18) 
 

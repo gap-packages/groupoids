@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -30,10 +30,12 @@ DeclareSynonym( "IsGroupoidEndomorphism",
 ## 
 #O  InclusionMappingGroupoids( <G>, <H> )
 #O  RestrictedMappingGroupoids( <hom>, <src> )
+#A  ParentMappingGroupoids( <hom> )
 ## 
 DeclareOperation( "InclusionMappingGroupoids", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "RestrictedMappingGroupoids", 
     [ IsGeneralMappingWithObjects, IsGroupoid ] );
+DeclareAttribute( "ParentMappingGroupoids", IsGeneralMappingWithObjects ); 
 
 ############################################################################# 
 ## 

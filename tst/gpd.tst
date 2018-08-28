@@ -99,26 +99,38 @@ gap> ObjectList(W5);
  ]
 
 ## SubSection 4.1.5
-gap> Hd8 := HomogeneousGroupoid( Gd8, [ [-12,-11,-10], [-16,-15,-14] ] );
-homogeneous groupoid with 2 pieces:
-1:  single piece groupoid: < d8, [ -16, -15, -14 ] >
-2:  single piece groupoid: < d8, [ -12, -11, -10 ] >
+gap> Hd8 := HomogeneousGroupoid( Gd8, 
+>               [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );
+homogeneous groupoid with 3 pieces:
+1:  single piece groupoid: < d8, [ -20, -19, -18 ] >
+2:  single piece groupoid: < d8, [ -16, -15, -14 ] >
+3:  single piece groupoid: < d8, [ -12, -11, -10 ] >
 gap> Size(Hd8);   ## 8x3x3 + 8x3x3
-144
+216
 gap> IsHomogeneousDomainWithObjects( Hd8 );               
 true
+gap> PieceIsomorphisms( Hd8 );
+[ groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], 
+          [() : -16 -> -14] ] ], groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
+          [() : -12 -> -10] ] ] ]
 gap> Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); 
 homogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >
-gap> Size(Hc6);   ## 6x4
+gap> Size( Hc6 );   ## 6x4
 24
-gap> RepresentationsOfObject(Gd8);
+gap> RepresentationsOfObject( Gd8 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
-gap> RepresentationsOfObject(Hd8);
+gap> RepresentationsOfObject( Hd8 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ]
-gap> RepresentationsOfObject(Hc6);
+gap> RepresentationsOfObject( Hc6 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", 
   "IsHomogeneousDiscreteGroupoidRep" ]
-gap> ktpo := KnownTruePropertiesOfObject(Hc6);; 
+gap> ktpo := KnownTruePropertiesOfObject( Hc6 );; 
 gap> ans := 
 > [ "IsDuplicateFree", "IsAssociative", "IsCommutative", 
 >   "IsDiscreteDomainWithObjects", "IsHomogeneousDomainWithObjects" ];;
@@ -368,12 +380,12 @@ gap> w^z;
 [(1,3) : -9 -> -8]
 
 ## SubSection 4.5.2
-gap> Hd8 := SubgroupoidWithRays( Gs4, d8, [(),(1,2),(2,3),(3,4),(1,4)] );
+gap> Kd8 := SubgroupoidWithRays( Gs4, d8, [(),(1,2),(2,3),(3,4),(1,4)] );
 single piece groupoid with rays: < d8, [ -15 .. -11 ], 
 [ (), (1,2), (2,3), (3,4), (1,4) ] >
 gap> u := Arrow( Gs4, (1,2,3), -15, -14 );
 [(1,2,3) : -15 -> -14]
-gap> ConjugateGroupoid( Hd8, u );                                        
+gap> ConjugateGroupoid( Kd8, u );                                        
 single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2), (), (2,4,3), (1,4)(2,3) ] >
 gap> #

@@ -858,12 +858,15 @@ InstallMethod( InverseGeneralMapping, "for gpd auto by ray shifts", true,
     [ IsGroupoidAutomorphismByRayShifts ], 0,
 function( aut )
 
-    local gpd, c, inv; 
+    local gpd, r, len, s, h, inv; 
 
     Info( InfoGroupoids, 1, "InverseGeneralMapping for ray shifts auto" );
     gpd := Source( aut );
-    c := ImageElementsOfRays( aut );
-    inv := GroupoidAutomorphismByRayShifts( gpd, List( c, g -> g^-1 ) ); 
+    r := RaysOfGroupoid( gpd );
+    len := Length( r );
+    s := ImageElementsOfRays( aut );
+    h := List( [1..len], i -> s[i]^-1 * r[i] ); 
+    inv := GroupoidAutomorphismByRayShifts( gpd, h ); 
     SetIsEndomorphismWithObjects( inv, true );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
@@ -1556,10 +1559,21 @@ InstallOtherMethod( ImagesSource, "for a magma mapping", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( map )
 
-    local imo, hom, img, rng;
+    local src, par, impar, gens, imgs, imo, hom, img, rng;
 
     if not IsInjectiveOnObjects( map ) then
         Error( "not yet implemented when not injective on objects" );
+    fi;
+    src := Source( map );
+    if not IsSinglePiece( src ) then 
+        Error( "not yet implemented when source not a single piece" ); 
+    fi; 
+    if HasParentMappingGroupoids( map ) then 
+        par := ParentMappingGroupoids( map ); 
+        impar := ImagesSource( par );
+        gens := GeneratorsOfGroupoid( src );
+        imgs := List( gens, g -> ImageElm( map, g ) ); 
+        return SinglePieceSubgroupoidByGenerators( impar, imgs ); 
     fi;
     imo := ShallowCopy( ImagesOfObjects( map ) );
     Sort( imo );
@@ -1568,6 +1582,9 @@ function ( map )
     rng := Range( map );
     if ( ( imo = rng!.objects ) and ( img = rng!.magma ) ) then
         return rng;
+    elif HasLargerDirectProductGroupoid( rng ) then 
+        return SubdomainWithObjects( 
+                   LargerDirectProductGroupoid( rng ), [ [ imo, img ] ] );
     else
         return SubdomainWithObjects( rng, [ [ imo, img ] ] );
     fi;

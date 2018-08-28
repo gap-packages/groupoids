@@ -1028,6 +1028,32 @@ function( D, U )
     return ok; 
 end );
 
+#############################################################################
+##
+#F  SubdomainWithObjects( <M>, <U> )
+##
+InstallGlobalFunction( SubdomainWithObjects, function( arg ) 
+
+    local nargs, dwo, isgpd; 
+
+    nargs := Length( arg ); 
+    dwo := arg[1]; 
+    isgpd := ( "IsGroupoid" in CategoriesOfObject( dwo ) ); 
+    if isgpd then 
+        if ( nargs = 2 ) then 
+            return Subgroupoid( arg[1], arg[2] ); 
+        elif ( nargs = 2 ) then 
+            return Subgroupoid( arg[1], arg[2], arg[3] ); 
+        elif ( nargs = 4 ) then 
+            return Subgroupoid( arg[1], arg[2], arg[3], arg[4] ); 
+        else 
+            Error( "expecting 2, 3 or 4 arguments" ); 
+        fi;
+    else 
+        Error( "SubdomainWithObjects needs more implementation" ); 
+    fi; 
+end );
+
 
 ################################  SEMIGROUPS  ############################### 
 

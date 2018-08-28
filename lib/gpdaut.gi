@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -85,11 +85,14 @@ InstallMethod( GroupoidAutomorphismByGroupAutoNC ,
     [ IsGroupoid and IsSinglePiece, IsGroupHomomorphism and IsBijective ], 0,
 function( gpd, hom ) 
 
-    local gens, images, mor; 
+    local gens, images, i, a, mor; 
 
     gens := GeneratorsOfGroupoid( gpd ); 
-    images := List( gens, 
-                    a -> Arrow( gpd, ImageElm( hom, a![1] ), a![2], a![3] ) ); 
+    images := ShallowCopy( gens );
+    for i in [1..Length(gens) - Length(ObjectList(gpd)) + 1] do 
+        a := gens[i];
+        images[i] := Arrow( gpd, ImageElm(hom,a![1]), a![2], a![3] ); 
+    od;
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
@@ -300,8 +303,8 @@ end );
 ##
 #M  NiceObjectAutoGroupGroupoid( <gpd>, <aut> ) . . create a nice monomorphism 
 ##
-InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", 
-    true, [ IsGroupoid and IsSinglePieceDomain, IsAutomorphismGroup ], 0,
+InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", true, 
+    [ IsGroupoid and IsSinglePieceDomain, IsAutomorphismGroupOfGroupoid ], 0,
 function( gpd, aut ) 
 
     local genaut, rgp, genrgp, nrgp, agp, genagp, nagp, iso1, im1, iso2, 
@@ -425,8 +428,8 @@ function( gpd, aut )
     return [ niceob, eno ]; 
 end );
 
-InstallMethod( NiceObjectAutoGroupGroupoid, "for a hom discrete groupoid", 
-    true, [ IsHomogeneousDiscreteGroupoid, IsAutomorphismGroup ], 0,
+InstallMethod( NiceObjectAutoGroupGroupoid, "for a hom discrete groupoid", true,
+    [ IsHomogeneousDiscreteGroupoid, IsAutomorphismGroupOfGroupoid ], 0,
 function( gpd, aut ) 
 
     local pieces, obs, m, p1, g1, geng1, ng1, ag1, genag1, nag, 
@@ -667,8 +670,8 @@ function( gpd )
         imobs[2] := obs[1]; 
         Add( autgen, GroupoidAutomorphismByObjectPerm( gpd, imobs ) );
     fi; 
-    nautgen := Length( autgen ); 
     ##  generating set for the automorphism group now complete 
+    nautgen := Length( autgen ); 
     for a in autgen do 
         ok := IsAutomorphismWithObjects( a ); 
     od; 
