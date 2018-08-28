@@ -45,10 +45,12 @@ DeclareProperty( "IsHomogeneousDomainWithObjects", IsDomainWithObjects );
 ## 
 #A  ObjectList( <dwo> ) 
 #A  Pieces( <dwo> ) 
+#A  PieceIsomorphisms( <dwo> )
 #A  RootObject( <dwo> )
 ## 
 DeclareAttribute( "ObjectList", IsDomainWithObjects ); 
 DeclareAttribute( "Pieces", IsDomainWithObjects );  
+DeclareAttribute( "PieceIsomorphisms", IsHomogeneousDomainWithObjects );  
 DeclareAttribute( "RootObject", IsSinglePieceDomain ); 
   
 ############################################################################## 

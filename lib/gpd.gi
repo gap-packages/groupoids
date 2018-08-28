@@ -702,12 +702,18 @@ InstallMethod( HomogeneousGroupoidNC,
     [ IsGroupoid, IsHomogeneousList ], 0,
 function( gpd, oblist )
 
-    local pieces, hgpd; 
+    local len, isos, inv1, pieces, hgpd, pisos; 
 
-    pieces := List( oblist, L -> Range( IsomorphismNewObjects( gpd, L ) ) ); 
+    
+    len := Length( oblist );
+    isos := List( oblist, L -> IsomorphismNewObjects( gpd, L ) ); 
+    inv1 := InverseGeneralMapping( isos[1] ); 
+    pieces := List( isos, f -> ImagesSource( f ) ); 
     hgpd := UnionOfPiecesOp( pieces, pieces[1] ); 
+    pisos := List( [2..len], i -> inv1 * isos[i] );
     SetIsHomogeneousDomainWithObjects( hgpd, true ); 
     SetIsSinglePieceDomain( hgpd, false ); 
+    SetPieceIsomorphisms( hgpd, pisos );
     return hgpd; 
 end );
 
@@ -716,7 +722,7 @@ InstallMethod( HomogeneousGroupoid,
     [ IsGroupoid, IsHomogeneousList ], 0,
 function( gpd, oblist )
 
-    local len, obs, ob1, j; 
+    local len, obs, ob1, j, L; 
 
     if not ForAll( oblist, L -> IsHomogeneousList(L) ) then 
         Error( "oblist must be a list of lists," ); 
@@ -734,11 +740,10 @@ function( gpd, oblist )
             return fail;
         fi; 
     od; 
-    for j in oblist do 
-        if not ForAll( [1..Length(j)-1], i -> (j[i]<j[i+1]) ) then 
-            Error( "each list in oblist should be strictly increasing," ); 
-        fi;
-    od; 
+    for L in oblist do 
+        Sort( L );
+    od;
+    Sort( oblist );
     return HomogeneousGroupoidNC( gpd, oblist );
 end );
 

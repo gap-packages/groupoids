@@ -303,8 +303,8 @@ end );
 ##
 #M  NiceObjectAutoGroupGroupoid( <gpd>, <aut> ) . . create a nice monomorphism 
 ##
-InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", 
-    true, [ IsGroupoid and IsSinglePieceDomain, IsAutomorphismGroup ], 0,
+InstallMethod( NiceObjectAutoGroupGroupoid, "for a single piece groupoid", true, 
+    [ IsGroupoid and IsSinglePieceDomain, IsAutomorphismGroupOfGroupoid ], 0,
 function( gpd, aut ) 
 
     local genaut, rgp, genrgp, nrgp, agp, genagp, nagp, iso1, im1, iso2, 
@@ -428,8 +428,8 @@ function( gpd, aut )
     return [ niceob, eno ]; 
 end );
 
-InstallMethod( NiceObjectAutoGroupGroupoid, "for a hom discrete groupoid", 
-    true, [ IsHomogeneousDiscreteGroupoid, IsAutomorphismGroup ], 0,
+InstallMethod( NiceObjectAutoGroupGroupoid, "for a hom discrete groupoid", true,
+    [ IsHomogeneousDiscreteGroupoid, IsAutomorphismGroupOfGroupoid ], 0,
 function( gpd, aut ) 
 
     local pieces, obs, m, p1, g1, geng1, ng1, ag1, genag1, nag, 
@@ -670,8 +670,8 @@ function( gpd )
         imobs[2] := obs[1]; 
         Add( autgen, GroupoidAutomorphismByObjectPerm( gpd, imobs ) );
     fi; 
-    nautgen := Length( autgen ); 
     ##  generating set for the automorphism group now complete 
+    nautgen := Length( autgen ); 
     for a in autgen do 
         ok := IsAutomorphismWithObjects( a ); 
     od; 
