@@ -114,7 +114,7 @@ using both methods.
 <Example>
 <![CDATA[
 gap> gen1 := GeneratorsOfGroupoid( Gq8 ); 
-[ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
+[ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
   [<identity> of ... : -28 -> -27] ]
 gap> gen2 := GeneratorsOfGroupoid( Hd8b ); 
 [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
@@ -124,19 +124,19 @@ gap> images := [ gen2[1]^2, gen2[1]*gen2[2], IdentityArrow(Hd8b,-14), gen2[4] ];
   [(1,2,4) : -14 -> -12] ]
 gap> mor1 := GroupoidHomomorphism( Gq8, Hd8b, gen1, images );
 groupoid homomorphism : Gq8 -> Hd8b
-[ [ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
+[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
       [<identity> of ... : -28 -> -27] ], 
   [ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], 
       [(1,2,4) : -14 -> -12] ] ]
 gap> genq8 := GeneratorsOfGroup( q8 );;
 gap> imh := [ (1,3)(2,4), (1,2)(3,4), () ];;
 gap> h := GroupHomomorphismByImages( q8, d8, genq8, imh );                     
-[ f1, f2, f3 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
+[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
 gap> mor2 := GroupoidHomomorphism( Gq8, Hd8b, h, [-14,-12], [(),(1,2,4)] );;
 gap> mor1=mor2;
 true
 gap> e := Arrow( Gq8, Product(genq8), -27, -28 );
-[f1*f2*f3 : -27 -> -28]
+[x*y*y2 : -27 -> -28]
 gap> ImageElm( mor2, e );
 [(2,4,3) : -12 -> -14]
 ]]>
@@ -248,7 +248,7 @@ in the range groupoid which are the images of the rays in the source.
 <Example>
 <![CDATA[
 gap> RootGroupHomomorphism( mor2 );
-[ f1, f2, f3 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
+[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
 gap> ImagesOfObjects( mor2 );      
 [ -14, -12 ]
 gap> ImageElementsOfRays( mor2 );
@@ -268,7 +268,7 @@ the source to the object group at the image object in the range.
 <Example>
 <![CDATA[
 gap> ObjectGroupHomomorphism( mor1, -27 );
-[ f1, f2, f3 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
+[ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
 ]]>
 </Example>
 
@@ -363,7 +363,7 @@ groupoid homomorphism :
       [() : -30 -> -10] ] ]
 gap> inc2 := mor2*inc*iso1;
 groupoid homomorphism : 
-[ [ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
+[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
       [<identity> of ... : -28 -> -27] ], 
   [ [(1,3)(2,4) : -30 -> -30], [(1,2)(3,4) : -30 -> -30], [() : -30 -> -30], 
       [(1,2,4) : -30 -> -10] ] ]
@@ -400,11 +400,11 @@ Similarly, <C>IsomorphismPcGroupoid(gpd)</C> changes the group into a pc-group
 <![CDATA[
 gap> N2 := NormalSubgroups( q8 )[2];; 
 gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); 
-single piece groupoid with rays: < Group( [ f2, f3 ] ), [ -28, -27 ], 
-[ <identity> of ..., f1 ] >
+single piece groupoid with rays: < N2, [ -28, -27 ], [ <identity> of ..., x 
+ ] >
 gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );
 groupoid homomorphism : 
-[ [ [f2 : -28 -> -28], [f3 : -28 -> -28], [f1 : -28 -> -27] ], 
+[ [ y : -28 -> -28], [y2 : -28 -> -28], [x : -28 -> -27] ], 
   [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,4)(2,6)(3,7)(5,8) : -28 -> -28], 
       [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ]
 ]]>
@@ -532,9 +532,9 @@ a homomorphism is a union of homomorphisms, one for each piece in the range.
 <![CDATA[
 gap> isoq8 := IsomorphismNewObjects( Gq8, [-38,-37] ); 
 groupoid homomorphism : 
-[ [ [f1 : -28 -> -28], [f2 : -28 -> -28], [f3 : -28 -> -28], 
+[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
       [<identity> of ... : -28 -> -27] ], 
-  [ [f1 : -38 -> -38], [f2 : -38 -> -38], [f3 : -38 -> -38], 
+  [ [x : -38 -> -38], [y : -38 -> -38], [y2 : -38 -> -38], 
       [<identity> of ... : -38 -> -37] ] ]
 gap> Gq8b := Range( isoq8 );; 
 gap> SetName( Gq8b, "Gq8b" ); 
@@ -547,7 +547,7 @@ gap> SetName( Vs3q8b, "Vs3q8b" );
 gap> hom4 := HomomorphismByUnion( V4, Vs3q8b, [ homV3, isoq8 ] );; 
 gap> Display( hom4 );
 magma homomorphism: V4 -> Vs3q8b with pieces :
-[ Pcgs([ f1, f2, f3 ]) -> [ f1, f2, f3 ], [ -38, -37 ], 
+[ Pcgs([ x, y, y2 ]) -> [ x, y, y2 ], [ -38, -37 ], 
   [ <identity> of ..., <identity> of ... ] ]
 (1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ]
 root homomorphism: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 

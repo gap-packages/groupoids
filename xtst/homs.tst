@@ -292,7 +292,7 @@ single piece groupoid with rays: < Group(
      )(17,35,47,49,24,60,66,70)(18,62,38,52,23,33,75,67)(41,54,77,42,81,68,45,
      80)(44,53,50,51,78,69,72,71) ] >
 
-gap> q8 := SmallGroup( 8, 4 );;
+gap> q8 := QuaternionGroup( 8 );;
 gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> N2 := Subgroup( q8, [ q8.2] );; 

@@ -40,7 +40,7 @@ gap> Arrow( Gabc, (2,4), "c", "b" );
 gap> f2 := FreeGroup( 2 );;
 gap> Gf2 := Groupoid( f2, -22 );;
 gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
-gap> q8 := SmallGroup( 8, 4 );;
+gap> q8 := QuaternionGroup( 8 );;
 gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> gl43 := SpecialLinearGroup( 4, 3 );;
@@ -75,7 +75,7 @@ groupoid with 5 pieces:
 gap> Display( U5 );
 groupoid with 5 pieces:
 < objects: [ -28, -27 ]
-    group: q8 = <[ f1, f2, f3 ]> >
+    group: q8 = <[ x, y, y2 ]> >
 < objects: [ -22 ]
     group: f2 = <[ f1, f2 ]> >
 < objects: [ -15 .. -11 ]
@@ -220,13 +220,13 @@ gap> hsetq8 := Homset( Gq8, -28, -27 );
 <homset -28 -> -27 with head group q8>
 gap> PrintOneItemPerLine( hsetq8 );
 [<identity> of ... : -28 -> -27]
-[f3 : -28 -> -27]
-[f2 : -28 -> -27]
-[f2*f3 : -28 -> -27]
-[f1 : -28 -> -27]
-[f1*f3 : -28 -> -27]
-[f1*f2 : -28 -> -27]
-[f1*f2*f3 : -28 -> -27]
+[y2 : -28 -> -27]
+[y : -28 -> -27]
+[y*y2 : -28 -> -27]
+[x : -28 -> -27]
+[x*y2 : -28 -> -27]
+[x*y : -28 -> -27]
+[x*y*y2 : -28 -> -27]
 
 ### Section 4.3 : Subgroupoids ###
 
