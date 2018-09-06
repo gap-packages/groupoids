@@ -2,7 +2,7 @@
 ##
 #W  mwohom.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: mwohom.tst" );
@@ -31,8 +31,8 @@ gap> r31 := Arrow( S123, r, -3, -1 );;
 gap> N1 := UnionOfPieces( [ M78, S123 ] );; 
 
 ## SubSection 3.1.1
-gap> tup1 := 
->      [ Tuple([m1,m2]), Tuple([m2,m1]), Tuple([m3,m4]), Tuple([m4,m3]) ];; 
+gap> tup1 := [ DirectProductElement([m1,m2]), DirectProductElement([m2,m1]), 
+>              DirectProductElement([m3,m4]), DirectProductElement([m4,m3]) ];; 
 gap> f1 := GeneralMappingByElements( m, m, tup1 ); 
 <general mapping: m -> m >
 gap> IsMagmaHomomorphism( f1 ); 

@@ -78,7 +78,8 @@ In the first example we construct endomappings of <C>m</C> and <C>M78</C>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> tup1 := [Tuple([m1,m2]), Tuple([m2,m1]), Tuple([m3,m4]), Tuple([m4,m3])]; 
+gap> tup1 := [ DirectProductElement([m1,m2]), DirectProductElement([m2,m1]), 
+>              DirectProductElement([m3,m4]), DirectProductElement([m4,m3]) ];; 
 gap> f1 := GeneralMappingByElements( m, m, tup1 ); 
 gap> IsMagmaHomomorphism( f1 ); 
 true
