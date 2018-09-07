@@ -218,7 +218,7 @@ gap> Size( costar6 );
 6
 gap> hsetq8 := Homset( Gq8, -28, -27 );
 <homset -28 -> -27 with head group q8>
-gap> PrintOneItemPerLine( hsetq8 );
+gap> Perform( hsetq8, Display );
 [<identity> of ... : -28 -> -27]
 [y2 : -28 -> -27]
 [y : -28 -> -27]
@@ -336,7 +336,7 @@ single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
 <right coset of single piece groupoid: < c4, 
 [ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
-gap> PrintOneItemPerLine( re2 );
+gap> Perform( re2, Display );
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
 [(2,4) : -8 -> -7]

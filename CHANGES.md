@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## 1.57 -> 1.58  (05/09/18) 
+
+ * (05/09/18) replaced SmallGroup(8,4) with QuaternionGroup(8)
+
 ## 1.55 -> 1.57  (28/08/18) 
 
  * (28/08/18) removed Semigroups from SuggestedOtherPackages (temporarily?) 
