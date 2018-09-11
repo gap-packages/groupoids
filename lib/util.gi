@@ -13,7 +13,7 @@
 #V  InfoGroupoids
 ##
 DeclareInfoClass( "InfoGroupoids" );
-SetInfoLevel( InfoGroupoids, 1 );
+SetInfoLevel( InfoGroupoids, 0 );
 
 #############################################################################
 ##

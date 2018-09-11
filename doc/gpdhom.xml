@@ -571,6 +571,9 @@ images of objects: [ -35 ]
 <Section Label="sec-autos">
 <Heading>Automorphisms of groupoids</Heading>
 
+In this sections we consider automorphisms of single piece groupoids, 
+then homogeneous discrete groupoids, and then homogeneous groupoids. 
+
 <ManSection>
    <Oper Name="GroupoidAutomorphismByObjectPerm"
          Arg="gpd, imobs" />
@@ -698,7 +701,9 @@ Note that <C>ImageElm</C> at present only works on generating elements.
 <Example>
 <![CDATA[
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
-<group with 8 generators>
+Aut(Ga4)
+gap> Length( GeneratorsOfGroup( AGa4 ) );
+8
 gap> AGgens := GeneratorsOfGroup( AGa4);; 
 gap> NGa4 := NiceObject( AGa4 );; 
 gap> MGa4 := NiceMonomorphism( AGa4 );; 
@@ -745,7 +750,7 @@ into a single object groupoid, and then define the inner automorphism map.
 <Example>
 <![CDATA[
 gap> AGa40 := Groupoid( AGa4, [0] );
-single piece groupoid: < AGa4, [ 0 ] >
+single piece groupoid: < Aut(Ga4), [ 0 ] >
 gap> conj := function(a) 
 >            return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
 >            end;; 
@@ -854,7 +859,52 @@ true
 </Example>
 <P/>
 
+
+<ManSection>
+   <Attr Name="AutomorphismGroupoidOfGroupoid"
+         Arg="gpd" />
+<Description>
+If <M>G</M> is a single piece groupoid with automorphism group <M>A</M>, 
+and if <M>H</M> is a homogeneous groupoid consisting of 
+<M>n</M> copies of <M>G</M>, then the automorphism group of <M>H</M> 
+is the wreath product of <M>A</M> with the symmetric group <M>S_n</M>. 
+However, we find it more convenient to construct 
+the <E>automorphism groupoid</E> of <M>H</M>. 
+This is a single piece groupoid <M>\mathrm{Aut}(H)</M> 
+with <M>n</M> objects -- the object lists of the pieces of <M>H</M> -- 
+and root object <M>A</M>. 
+The rays of <M>\mathrm{Aut}(H)</M> are given by <C>IsomorphismNewObjects</C> 
+applied to the first piece and the objects of the other pieces. 
+For the example we use <C>Hd8</C> 
+constructed in subsection <Ref Oper="HomogeneousGroupoid"/>. 
+<P/> 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Hd8 := HomogeneousGroupoid( Gd8,
+>           [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );;
+gap> AHd8 := AutomorphismGroupoidOfGroupoid( Hd8 ); 
+gap> ObjectList( AHd8 );
+[ [ -20, -19, -18 ], [ -16, -15, -14 ], [ -12, -11, -10 ] ]
+gap> RaysOfGroupoid( AHd8 ){[2..3]};
+[ groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], 
+          [() : -16 -> -14] ] ], groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
+          [() : -12 -> -10] ] ] ]
+gap> ObjectGroup( AHd8, [ -12, -11, -10 ] );
+<group with 8 generators>
+]]>
+</Example>
+<P/>
+
 </Section>
+
 
 
 <Section Label="sec-mxreps">

@@ -675,7 +675,7 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping", true,
     [ IsGroupoidHomomorphism, IsGroupoidElement ], 0,
 function ( map, e )
 
-    local src, rng, pe, mape;
+    local src, rng, pe, mape, part;
 
     Info( InfoGroupoids, 3, 
           "this is the third ImageElm method in gpdhom.gi" ); 
@@ -688,7 +688,12 @@ function ( map, e )
     if ( HasIsSinglePiece( rng ) and IsSinglePiece( rng ) ) then 
         mape := MappingToSinglePieceMaps( map )[pe]; 
     else 
-        mape := PiecesOfMapping( map )[pe]; 
+        part := PartitionOfSource( map ); 
+        if ( part = fail ) then 
+            Error( "map does not have PartitionOfSource" ); 
+        fi; 
+        pe := Position( part, [ pe ] ); 
+        mape := PiecesOfMapping( map )[ pe ]; 
     fi;
     return ImageElm( mape, e ); 
 end );

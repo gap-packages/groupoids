@@ -79,7 +79,7 @@ function( pgpd, rgp, rays )
     local obs, rob, fam, filter, gpd, id;
 
     fam := IsGroupoidFamily;
-    filter := IsSinglePieceRaysRep; 
+    ## filter := IsSinglePieceRaysRep; 
     gpd := rec( objects := pgpd!.objects, magma := rgp, rays := rays ); 
     ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
         IsSinglePieceDomain, true, 
@@ -205,6 +205,47 @@ end );
 
 #############################################################################
 ##
+#M  SinglePieceGroupoidWithRaysNC                                            
+#M  SinglePieceGroupoidWithRays                                            
+##
+InstallMethod( SinglePieceGroupoidWithRaysNC, "method for a connected groupoid",
+    true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+function( gp, obs, rays ) 
+
+    local gpd, gens1, gens;
+
+    gpd := rec( objects := obs, magma := gp, rays := rays ); 
+    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
+        IsSinglePieceDomain, true,
+        IsAssociative, true, 
+        IsCommutative, IsCommutative( gp ), 
+        IsSinglePieceGroupoidWithRays, true, 
+        IsDirectProductWithCompleteDigraphDomain, false ); 
+    gens := GeneratorsOfMagmaWithObjects( gpd ); 
+    return gpd; 
+end );
+
+InstallMethod( SinglePieceGroupoidWithRays, "method for a connected groupoid",
+    true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+function( gp, obs, rays ) 
+    if not IsSet( obs ) then 
+        Sort( obs ); 
+    fi; 
+    if not IsDuplicateFree( obs ) then
+        Error( "objects must be distinct," );
+    fi; 
+    if not ( Length( obs ) = Length( rays ) ) then 
+        Error( "obs and rays should have the same length" ); 
+    fi;
+    #?  how detailed should tests on the rays be? 
+    if ( One( gp ) * rays[1] = fail ) then 
+        Error( "cannot compose One(gp) with the first ray" ); 
+    fi;
+    return SinglePieceGroupoidWithRaysNC( gp, obs, rays );
+end ); 
+
+#############################################################################
+##
 #M  RootGroup
 ##
 InstallMethod( RootGroup, "for a connected groupoid",
@@ -275,7 +316,7 @@ function( gpd )
     if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gens2 := List( obs{[2..nobs]}, o -> GroupoidElement(gpd,id,o1,o) ); 
-    elif IsSinglePieceRaysRep( gpd ) then  
+    elif IsSinglePieceRaysRep( gpd ) then 
         rays := gpd!.rays; 
         gens2 := List( [2..nobs], i -> GroupoidElement(gpd,rays[i],o1,obs[i]) ); 
     fi; 
@@ -626,7 +667,7 @@ end );
 ## 
 #M  ObjectGroup
 ## 
-InstallMethod( ObjectGroup, "generic method for groupoid and object",
+InstallMethod( ObjectGroup, "generic method for single piece gpd and object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
 function( G, obj )
 
@@ -668,6 +709,31 @@ function( G, obj )
     nC := PieceNrOfObject( G, obj ); 
     C := Pieces( G )[ nC ];
     return ObjectGroup( C, obj );
+end );
+
+InstallMethod( ObjectGroup, "generic method for single piece gpd with rays",
+    true, [ IsSinglePieceGroupoidWithRays, IsObject ], 0,
+function( G, obj )
+
+    local H, pieceH, obs, np, p, genp;
+
+    ##  added 11/09/18 to deal with automorphism gpds of homogeneous gpds 
+    if HasAutomorphismDomain( G ) then 
+        H := AutomorphismDomain( G ); 
+        pieceH := Pieces( H ); 
+        obs := List( pieceH, p -> ObjectList( p ) ); 
+        if not ( obj in obs ) then
+            Error( "obj not an object of G," );
+        fi;
+        np := Position( obs, obj ); 
+        p := pieceH[ np ]; 
+        if not IsGroupoid( p ) then 
+            Error( "P is not a groupoid" ); 
+        fi; 
+        return AutomorphismGroupOfGroupoid( p ); 
+    else 
+        TryNextMethod(); 
+    fi;
 end );
 
 ############################################################################# 
