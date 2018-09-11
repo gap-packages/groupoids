@@ -298,8 +298,7 @@ function( agpd )
     return fail; 
 end ); 
 
-
-#############################################################################
+##############################################################################
 ##
 #M  NiceObjectAutoGroupGroupoid( <gpd>, <aut> ) . . create a nice monomorphism 
 ##
@@ -537,6 +536,7 @@ function( gpd )
     SetIsFinite( aut, true ); 
     SetIsAutomorphismGroupOfGroupoid( aut, true ); 
     SetAutomorphismGroup( gpd, aut );
+    SetAutomorphismDomain( aut, gpd );
     Info( InfoGroupoids, 2, "nice object not yet coded in this case" ); 
     return aut; 
 end ); 
@@ -600,6 +600,7 @@ function( gpd )
     SetEmbeddingsInNiceObject( aut, niceob[2] ); 
     #?  SetInnerAutomorphismsAutomorphismGroup( aut, ?? ); 
     SetAutomorphismGroup( gpd, aut );
+    SetAutomorphismDomain( aut, gpd );
 
     ## now construct nicemap using GroupHomomorphismByFunction 
     nicemap := GroupHomomorphismByFunction( aut, niceob[1], 
@@ -627,6 +628,9 @@ function( gpd )
     SetNiceMonomorphism( aut, nicemap ); 
     ## SetIsHandledByNiceMonomorphism( aut, true ); 
     SetIsCommutative( aut, IsCommutative( niceob[1] ) );
+    if HasName( gpd ) then 
+        SetName( aut, Concatenation( "Aut(", Name( gpd ), ")" ) ); 
+    fi;
     return aut; 
 end ); 
 
@@ -685,6 +689,7 @@ function( gpd )
     SetNiceObject( aut, niceob[1] ); 
     SetEmbeddingsInNiceObject( aut, niceob[3] ); 
     SetAutomorphismGroup( gpd, aut ); 
+    SetAutomorphismDomain( aut, gpd );
 
     ## now construct nicemap using GroupHomomorphismByFunction 
     nicemap := GroupHomomorphismByFunction( aut, niceob[1], 
@@ -711,6 +716,9 @@ function( gpd )
     ## SetIsHandledByNiceMonomorphism( aut, true ); 
     #?  SetInnerAutomorphismsAutomorphismGroup( aut, ?? );  
     SetIsCommutative( aut, IsCommutative( niceob[1] ) );
+    if HasName( gpd ) then 
+        SetName( aut, Concatenation( "Aut(", Name( gpd ), ")" ) ); 
+    fi;
     return aut; 
 end ); 
 
@@ -719,7 +727,7 @@ end );
 ## ======================================================================== ##
 
 InstallMethod( \in,
-    "method for an automorphism of a single piece groupoid", true,
+    "method for an automorphism of a single object groupoid", true,
     [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoidAsGroupoid ], 
     0,
 function( arr, aut0 )
@@ -786,7 +794,66 @@ function( a, aut )
     #? is there anything else to test? 
     return true; 
 end ); 
-    
+
+############################################################################## 
+##  methods added 11/09/18 for automorphisms of homogeneous groupoids 
+
+InstallMethod( GroupoidAutomorphismByPiecesPermNC,  
+    "for a homogeneous groupoid and a permutation of the pieces", true, 
+    [ IsGroupoid and IsHomogeneousDomainWithObjects, IsPerm ], 0,
+function( gpd, p )
+
+    local pieces, n, isos, mor; 
+
+    pieces := Pieces( gpd ); 
+    n := Length( pieces ); 
+    isos := List( [1..n], 
+                i -> IsomorphismNewObjects( pieces[i], pieces[i^p]!.objects ) );
+    mor := HomomorphismByUnion( gpd, gpd, isos );
+    SetOrder( mor, Order( p ) );
+    SetIsGroupoidAutomorphismByPiecesPerm( mor, true ); 
+    return mor; 
+end ); 
+
+InstallMethod( GroupoidAutomorphismByPiecesPerm, 
+    "for a homogeneous groupoid and a permutation of pieces", true, 
+    [ IsGroupoid and IsHomogeneousDomainWithObjects, IsPerm ], 0,
+function( gpd, p ) 
+
+    local pieces, n, obs, pos; 
+
+    pieces := Pieces( gpd ); 
+    n := Length( pieces ); 
+    if ( LargestMovedPoint( p ) > n ) then 
+        Error( "degree of permutation too large" ); 
+    fi; 
+    return GroupoidAutomorphismByPiecesPermNC( gpd, p ); 
+end ); 
+
+InstallMethod( AutomorphismGroupoidOfGroupoid, "for a homogeneous groupoid", 
+    true, [ IsGroupoid and IsHomogeneousDomainWithObjects ], 0,
+function( gpd ) 
+
+    local pieces, obs, n, p1, ap1, rays, aut, niceob, nicemap;  
+
+    Info( InfoGroupoids, 2, 
+          "AutomorphismGroupoidOfGroupoid for homogeneous groupoids" ); 
+    pieces := Pieces( gpd ); 
+    obs := List( pieces, p -> p!.objects ); 
+    n := Length( pieces );
+    p1 := pieces[1]; 
+    ap1 := AutomorphismGroupOfGroupoid( p1 ); 
+    rays := Concatenation( [ One( ap1 ) ], 
+            List( [1..n-1], i -> IsomorphismNewObjects( p1, obs[i+1] ) ) ); 
+    aut := SinglePieceGroupoidWithRays( ap1, obs, rays ); 
+    if HasName( gpd ) then 
+        SetName( aut, Concatenation( "Aut(", Name( gpd ), ")" ) ); 
+    fi;
+    SetAutomorphismDomain( aut, gpd );
+    return aut; 
+end );
+
+
 ##############################################################################
 ##
 #E  gpdaut.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

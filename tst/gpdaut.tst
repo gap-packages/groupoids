@@ -96,7 +96,9 @@ images of objects: [ -11, -13, -15 ]
 
 # SubSection 5.6.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
-<group with 8 generators>
+Aut(Ga4)
+gap> Length( GeneratorsOfGroup( AGa4 ) );
+8
 gap> AGgens := GeneratorsOfGroup( AGa4);; 
 gap> NGa4 := NiceObject( AGa4 );; 
 gap> MGa4 := NiceMonomorphism( AGa4 );; 
@@ -115,7 +117,7 @@ true
 
 ## SubSection 5.6.4
 gap> AGa40 := Groupoid( AGa4, [0] );
-single piece groupoid: < AGa4, [ 0 ] >
+single piece groupoid: < Aut(Ga4), [ 0 ] >
 gap> conj := function(a) 
 >            return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
 >            end;; 
@@ -230,6 +232,27 @@ gap> u1 := z1*w1*y1*x1*z1;
 gap> imu := ImageElm( nmonAHs3, u );; 
 gap> u1 = imu;
 true
+
+## SubSection 5.6.5
+gap> Hd8 := HomogeneousGroupoid( Gd8,
+>           [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );;
+gap> SetName( Hd8, "Hd8" );
+gap> AHd8 := AutomorphismGroupoidOfGroupoid( Hd8 ); 
+Aut(Hd8)
+gap> ObjectList( AHd8 );
+[ [ -20, -19, -18 ], [ -16, -15, -14 ], [ -12, -11, -10 ] ]
+gap> RaysOfGroupoid( AHd8 ){[2..3]};
+[ groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], 
+          [() : -16 -> -14] ] ], groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
+          [() : -20 -> -18] ], 
+      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
+          [() : -12 -> -10] ] ] ]
+gap> ObjectGroup( AHd8, [ -12, -11, -10 ] );
+<group with 8 generators>
 
 ## Section 5.7 
 gap> reps := IrreducibleRepresentations( s4 );;

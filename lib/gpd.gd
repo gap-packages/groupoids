@@ -39,17 +39,19 @@ DeclareAttribute( "LargerDirectProductGroupoid", IsSinglePieceRaysRep );
  
 ############################################################################# 
 ## 
-#P  IsPermGroupoid( <gpd> )                                    
-#P  IsFpGroupoid( <gpd> )                                    
-#P  IsPcGroupoid( <gpd> )                                    
-#P  IsMatrixGroupoid( <gpd> )                                    
-#P  IsFreeGroupoid( <gpd> )                                    
+#P  IsPermGroupoid( <gpd> ) 
+#P  IsFpGroupoid( <gpd> ) 
+#P  IsPcGroupoid( <gpd> ) 
+#P  IsMatrixGroupoid( <gpd> ) 
+#P  IsFreeGroupoid( <gpd> ) 
+#P  IsSinglePieceGroupoidWithRays( <gpd> )
 ## 
 DeclareProperty( "IsPermGroupoid", IsGroupoid );  
 DeclareProperty( "IsFpGroupoid", IsGroupoid );  
 DeclareProperty( "IsPcGroupoid", IsGroupoid );  
 DeclareProperty( "IsMatrixGroupoid", IsGroupoid );  
 DeclareProperty( "IsFreeGroupoid", IsGroupoid );  
+DeclareProperty( "IsSinglePieceGroupoidWithRays", IsGroupoid );  
   
 ############################################################################# 
 ## 
@@ -64,6 +66,8 @@ DeclareGlobalFunction( "Groupoid" );
 #O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
 #O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
 #O  SinglePieceSubgroupoidByGenerators( <ancestor>, <gens> )
+#O  SinglePieceGroupoidWithRaysNC( <group>, <objects>, <rays> )              
+#O  SinglePieceGroupoidWithRays( <group>, <objects>, <rays> ) 
 ## 
 DeclareOperation( "SinglePieceGroupoidNC", 
     [ IsGroup, IsHomogeneousList ] ); 
@@ -75,6 +79,10 @@ DeclareOperation( "SubgroupoidWithRays",
     [ IsGroupoid, IsGroup, IsHomogeneousList ] );
 DeclareOperation( "SinglePieceSubgroupoidByGenerators", 
     [ IsGroupoid, IsList ] ); 
+DeclareOperation( "SinglePieceGroupoidWithRaysNC", 
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] ); 
+DeclareOperation( "SinglePieceGroupoidWithRays", 
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] ); 
 
 ############################################################################# 
 ##                         

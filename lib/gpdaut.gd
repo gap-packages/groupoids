@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -12,11 +12,13 @@
 #P  IsGroupoidAutomorphismByGroupAuto( <aut> )
 #P  IsGroupoidAutomorphismByObjectPerm( <aut> )
 #P  IsGroupoidAutomorphismByRayShifts( <aut> ) 
+#P  IsGroupoidAutomorphismByPiecesPerm( <aut> )
 ##
 DeclareSynonym( "IsGroupoidAutomorphism", 
     IsGroupoidHomomorphism and IsAutomorphismWithObjects );  
 DeclareProperty( "IsGroupoidAutomorphismByGroupAuto", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByObjectPerm", IsGroupoidAutomorphism );
+DeclareProperty( "IsGroupoidAutomorphismByPiecesPerm", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
  
 ############################################################################# 
@@ -63,10 +65,10 @@ DeclareAttribute( "EmbeddingsInNiceObject", IsGroup );
 DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
 
 ## ======================================================================== ##
-##                     Homogeneous groupoid automorphisms                   ##
+##                Homogeneous discrete groupoid automorphisms               ##
 ## ======================================================================== ##
 
-############################################################################# 
+############################################################################## 
 ## 
 #P  IsAutomorphismOfHomogeneousDiscreteGroupoid( IsGroup ) 
 #O  GroupoidAutomorphismByGroupAutosNC( <gpd, homs> )
@@ -83,6 +85,22 @@ BindGlobal( "GroupoidHomomorphismDiscreteType",
     NewType( GroupoidHomomorphismFamily, 
              IsGroupoidHomomorphismFromHomogeneousDiscreteRep 
              and IsGroupoidHomomorphismFromHomogeneousDiscrete ) );
+    
+## ======================================================================== ##
+##                     Homogeneous groupoid automorphisms                   ##
+## ======================================================================== ##
+
+############################################################################# 
+## 
+#A  AutomorphismGroupoidOfGroupooid( <gpd> ) 
+#O  GroupoidAutomorphismByPiecesPermNC( <gpd>, <perm> )
+#O  GroupoidAutomorphismByPiecesPerm( <gpd>, <perm> )
+##  
+DeclareAttribute( "AutomorphismGroupoidOfGroupoid", IsGroupoid );
+DeclareOperation( "GroupoidAutomorphismByPiecesPermNC", 
+    [ IsGroupoid, IsPerm ] );
+DeclareOperation( "GroupoidAutomorphismByPiecesPerm", 
+    [ IsGroupoid, IsPerm ] );
     
 ##############################################################################
 ##
