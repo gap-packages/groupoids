@@ -149,14 +149,11 @@ DeclareAttribute( "LeftTransversalsOfGraphOfGroups", IsGraphOfGroups );
  
 ############################################################################# 
 ## 
-#A  InverseOfIsomorphismFpSemigroup 
 #A  FreeSemigroupOfKnuthBendixRewritingSystem( <kbrws> ) 
 #O  NormalFormKBRWS( <group>, <word> )                                  
 ## 
 ##  creates inverse to  iso = IsomorphismFpSemigroup 
 ## 
-DeclareAttribute( "InverseOfIsomorphismFpSemigroup", 
-    IsNonSPMappingByFunctionRep ); 
 DeclareAttribute( "FreeSemigroupOfKnuthBendixRewritingSystem", 
     IsKnuthBendixRewritingSystem ); 
 DeclareOperation( "NormalFormKBRWS", [ IsFpGroup, IsObject ] );    

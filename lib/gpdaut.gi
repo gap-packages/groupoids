@@ -28,6 +28,9 @@ function( gpd, oims )
         ph := Position( obs, a![3] );
         images[i] := Arrow( gpd, a![1], oims[pt], oims[ph] ); 
     od; 
+    if ( fail in images ) then 
+        Error( "the set of images contains 'fail'" ); 
+    fi;
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images );
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 

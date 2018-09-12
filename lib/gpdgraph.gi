@@ -2,7 +2,7 @@
 ##
 #W  gpdgraph.gi             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains methods for FpWeightedDigraphs of groupoids, 
@@ -207,7 +207,7 @@ function( gpd, w0 )
     ogp := comp!.magma;
     id := One( ogp );
     iso := IsomorphismFpSemigroup( ogp );
-    inviso := InverseOfIsomorphismFpSemigroup( iso );
+    inviso := InverseGeneralMapping( iso );
     smg := Range( iso );
     rwsmg := KnuthBendixRewritingSystem( smg );
     MakeConfluent( rwsmg );  ### this should not be necessary here !! ###

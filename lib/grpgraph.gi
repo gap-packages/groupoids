@@ -864,41 +864,6 @@ end );
  
 #############################################################################
 ##
-#M  InverseOfIsomorphismFpSemigroup
-##
-InstallMethod( InverseOfIsomorphismFpSemigroup, "for iso to fp-semigroup",
-    true, [ IsNonSPMappingByFunctionRep ], 0,
-function( iso )
-
-    local gp, smg, fgp, id, i, nat, fun, smgword2gpword;
-
-    smgword2gpword := function( id, w )
-        local wlist, i;
-        wlist := ShallowCopy( ExtRepOfObj( w ) );
-        if ( ( wlist = [ 1, 1 ] ) or ( Length( wlist ) = 0 ) ) then
-            return id;
-        fi;
-        for i in [1..Length(wlist)/2] do
-            if ( RemInt( wlist[2*i-1], 2 ) = 0 ) then
-                wlist[2*i] := - wlist[2*i];
-            fi;
-            wlist[2*i-1] := QuoInt( wlist[2*i-1], 2 );
-        od;
-        return ObjByExtRep( FamilyObj( id ), wlist );
-    end;
-
-    gp := Source( iso );
-    smg := Range( iso );
-    fgp := FreeGroupOfFpGroup( gp );
-    id := One( fgp );
-    nat := GroupHomomorphismByImages( fgp, gp, GeneratorsOfGroup( fgp ),
-                                               GeneratorsOfGroup( gp ) );
-    fun := x -> ImageElm( nat, smgword2gpword( id, UnderlyingElement( x ) ) );
-    return MagmaHomomorphismByFunctionNC( smg, gp, fun );
-end);
-
-#############################################################################
-##
 #M  FreeSemigroupOfKnuthBendixRewritingSystem(<KB RWS>)
 ##
 ##
@@ -922,7 +887,7 @@ function( gp, w0 )
         Error( "word not in the group" );
     fi;
     iso := IsomorphismFpSemigroup( gp );
-    inviso := InverseOfIsomorphismFpSemigroup( iso );
+    inviso := InverseGeneralMapping( iso ); 
     smg := Range( iso );
     rwsmg := KnuthBendixRewritingSystem( smg );
     MakeConfluent( rwsmg );  ### this should not be necessary here !! ###

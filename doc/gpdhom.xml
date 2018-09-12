@@ -605,7 +605,8 @@ are shifted by <M>g_j\;</M>: they map to <M>(r_jg_j : o_1 \to o_j)</M>;
 <Item>
 <Index>inner automorphism</Index> 
 given <M>g \in G</M>, the <E>inner automorphism</E> of <M>G</M> by <M>g</M> is 
-the mapping <M>h \mapsto h^g</M> as defined in section <Ref Sect="sec-conj"/>.
+the mapping <M>h \mapsto h^g</M> wehere conjugation of arrows 
+is defined in section <Ref Sect="sec-conj"/>.
 </Item>
 </List> 
 <P/>

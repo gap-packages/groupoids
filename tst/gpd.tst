@@ -148,7 +148,7 @@ groupoid homomorphism :
       [() : [ -9, -6 ] -> [ -8, -6 ]], [() : [ -9, -6 ] -> [ -7, -6 ]] ], 
   [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -9], 
       [() : -9 -> -8], [() : -9 -> -7] ] ]
-gap> Embedding(prod,2);                        
+gap> Embedding( prod, 2 );                        
 groupoid homomorphism : 
 [ [ [(5,6,7)(8,9) : -6 -> -6] ], 
   [ [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]] ] ]
@@ -176,12 +176,12 @@ gap> e2 := Arrow( Gd8, (1,3), -8, -7 );
 [(1,3) : -8 -> -7]
 gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
 [ (1,2,3,4), -9, -8 ]
-gap> prod := e1*e2;
+gap> e1e2 := e1*e2;
 [(1,2)(3,4) : -9 -> -7]
 gap> e2*e1;
 fail
 gap> e3 := Arrow( Gd8, (2,4), -7, -9 );;
-gap> loop := prod*e3;
+gap> loop := e1e2*e3;
 [(1,4,3,2) : -9 -> -9]
 gap> loop^2;
 [(1,3)(2,4) : -9 -> -9]

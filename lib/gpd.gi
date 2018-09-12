@@ -780,6 +780,7 @@ function( gpd, oblist )
     SetIsHomogeneousDomainWithObjects( hgpd, true ); 
     SetIsSinglePieceDomain( hgpd, false ); 
     SetPieceIsomorphisms( hgpd, pisos );
+    SetObjectList( hgpd, Set( Flat( oblist ) ) ); 
     return hgpd; 
 end );
 
