@@ -94,7 +94,67 @@ images of objects: [ -11, -13, -15 ]
    images of rays: [ [() : -11 -> -11], [() : -11 -> -13], 
   [(1,4)(2,3) : -11 -> -15] ]
 
-# SubSection 5.6.3 
+# Subsection 5.6.2 
+gap> s4c := Group( (1,2,3,4), (3,4) );; 
+gap> SetName( s4c, "s4c" );
+gap> s3c := Subgroup( s4c, [ (1,2), (2,3) ] );; 
+gap> SetName( s3c, "s3c" ); 
+gap> Gs4c := SinglePieceGroupoid( s4c, [-9,-8,-7,-6] );; 
+gap> SetName( Gs4c, "Gs4c" ); 
+gap> Hs3c := SubgroupoidWithRays( Gs4c, s3c, [ (), (1,4), (2,4), (3,4) ] );; 
+gap> SetName( Hs3c, "Hs3c" ); 
+gap> ## (1) automorphism by group auto 
+gap> a1 := GroupHomomorphismByImages( s3c, s3c, [(1,2),(2,3)], [(1,3),(2,3)] );;
+gap> aut1 := GroupoidAutomorphismByGroupAuto( Hs3c, a1 );
+groupoid homomorphism : Hs3c -> Hs3c
+[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], 
+  [ [(1,3) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ] ]
+gap> a := Arrow( Hs3c, (2,3,4), -8, -8 );
+[(2,3,4) : -8 -> -8]
+gap> ImageElm( aut1, a );
+[(2,4,3) : -8 -> -8]
+gap> b := Arrow( Hs3c, (1,2,3,4), -7, -6 );
+[(1,2,3,4) : -7 -> -6]
+gap> ##  b = (2,4)(1,2)(3,4) -> (2,4)(1,3)(3,4)
+gap> ImageElm( aut1, b );
+[(1,4,2,3) : -7 -> -6]
+gap> ## (2) automorphism by object perm 
+gap> aut2 := GroupoidAutomorphismByObjectPerm( Hs3c, [-8,-7,-6,-9] );
+groupoid homomorphism : Hs3c -> Hs3c
+[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], 
+  [ [(2,4) : -8 -> -8], [(2,3) : -8 -> -8], [(1,2,4) : -8 -> -7], 
+      [(1,3,4) : -8 -> -6], [(1,4) : -8 -> -9] ] ] 
+gap> ImageElm( aut2, a );                                           
+[(1,4,3) : -7 -> -7]
+gap> ImageElm( aut2, b );                                           
+[(1,2)(3,4) : -6 -> -9]
+gap> ## (3) automorphism by ray shifts 
+gap> aut3 := GroupoidAutomorphismByRayShifts( Hs3c, [(),(2,3),(1,3),(1,2)] );   
+groupoid homomorphism : Hs3c -> Hs3c
+[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], 
+  [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4)(2,3) : -9 -> -8], 
+      [(1,3)(2,4) : -9 -> -7], [(1,2)(3,4) : -9 -> -6] ] ]
+gap> ImageElm( aut3, a );
+[(2,4,3) : -8 -> -8]
+gap> ImageElm( aut3, b );
+[(1,4,2,3) : -7 -> -6]
+gap> ## (4) combine these three automorphisms 
+gap> aut := aut1 * aut2 * aut3;
+groupoid homomorphism : Hs3c -> Hs3c
+[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], 
+  [ [(2,4) : -8 -> -8], [(2,3) : -8 -> -8], [(1,2)(3,4) : -8 -> -7], 
+      [(1,3)(2,4) : -8 -> -6], [(1,4)(2,3) : -8 -> -9] ] ]
+gap> ImageElm( aut, a ); 
+[(1,4,3) : -7 -> -7]
+gap> ImageElm( aut, b );
+[(1,2,3,4) : -6 -> -9]
+
+# Subsection 5.6.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 Aut(Ga4)
 gap> Length( GeneratorsOfGroup( AGa4 ) );

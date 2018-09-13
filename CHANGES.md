@@ -1,7 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
-## 1.57 -> 1.58  (12/09/18) 
+## 1.57 -> 1.59  (13/09/18) 
 
+ * (13/09/18) GroupoidAutomorphismByObjectPerm method for groupoid with rays
+ * (13/09/18) removed dependency on Utils - but still used by xtst/testextra.g
  * (12/09/18) removed attribute InverseOfIsomorphismFpSemigroup 
  * (11/09/18) added AutomorphismGroupoidOfGroupoid for homogeneous groupoids
  * (05/09/18) replaced SmallGroup(8,4) with QuaternionGroup(8)

@@ -13,7 +13,8 @@
 ##
 InstallMethod( GroupoidAutomorphismByObjectPermNC , 
     "for a single piece groupoid and a permutation of objects", true, 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
+    [ IsGroupoid and IsDirectProductWithCompleteDigraphDomain, 
+      IsHomogeneousList ], 0,
 function( gpd, oims ) 
 
     local obs, gens, ngens, images, i, a, pt, ph, mor, L; 
@@ -39,6 +40,20 @@ function( gpd, oims )
     SetOrder( mor, Order( PermList( L ) ) ); 
     SetIsGroupoidAutomorphismByObjectPerm( mor, true ); 
     return mor; 
+end ); 
+
+InstallMethod( GroupoidAutomorphismByObjectPermNC , 
+    "for a single piece groupoid with rays rep", true, 
+    [ IsGroupoid and IsSinglePieceRaysRep, IsHomogeneousList ], 0,
+function( gpd, oims ) 
+
+    local iso, inv, sgpd, aut; 
+
+    iso := IsomorphismStandardGroupoid( gpd, ObjectList( gpd ) ); 
+    inv := InverseGeneralMapping( iso ); 
+    sgpd := Image( iso ); 
+    aut := GroupoidAutomorphismByObjectPermNC( sgpd, oims ); 
+    return iso * aut * inv; 
 end ); 
 
 InstallMethod( GroupoidAutomorphismByObjectPermNC,  
@@ -209,7 +224,7 @@ function( gpd, shifts )
     rays := gpd!.rays; 
     nobs := Length( gpd!.objects );
     if not ForAll( shifts, s -> s in rgp ) then  
-        Error( "ray shifts not all in the relevant homsets" ); 
+        Error( "ray shifts not all in the root group" ); 
     fi; 
     if not ( shifts[1] = One( rgp ) ) then 
         Error( "the first ray shift is not the identity" ); 

@@ -205,7 +205,10 @@ gap> star9 := ObjectStar( Gd8, -9 );
 <star at -9 with vertex group d8>
 gap> Size( star9 ); 
 24
-gap> PrintSelection( star9, 19, 1 );
+gap> ## PrintSelection( star9, 19, 1 ); 
+gap> iter := Iterator( star9 );;              
+gap> for i in [1..18] do a := NextIterator( iter ); od; 
+gap> for i in [19..24] do Print( i, " : ", NextIterator( iter ), "\n" ); od; 
 19 : [(1,2,3,4) : -9 -> -9]
 20 : [(1,2,3,4) : -9 -> -8]
 21 : [(1,2,3,4) : -9 -> -7]

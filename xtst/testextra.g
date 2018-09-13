@@ -6,6 +6,7 @@
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
+LoadPackage( "utils" );
 LoadPackage( "groupoids" );
 
 pkgname := "groupoids"; 
