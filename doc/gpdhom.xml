@@ -53,7 +53,7 @@ is homogeneous and discrete, <C>GroupoidHomomorphismFromHomogeneousDiscrete</C>,
 </Item> 
 <Item>
 Finally, there are special operations for inclusion mappings, 
-restriced mappings, and groupoid automorphisms (see <Ref Sect="sec-autos"/>).
+restricted mappings, and groupoid automorphisms (see <Ref Sect="sec-autos"/>).
 </Item>
 </List>
 <P/> 
