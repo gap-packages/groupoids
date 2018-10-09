@@ -153,6 +153,13 @@ gap> ImageElm( aut, a );
 [(1,4,3) : -7 -> -7]
 gap> ImageElm( aut, b );
 [(1,2,3,4) : -6 -> -9]
+gap> e86 := Arrow( Hs3c, (1,3,2,4), -8, -6 );;
+gap> aut86 := GroupoidInnerAutomorphism( Hs3c, e86 );
+groupoid homomorphism : Hs3c -> Hs3c
+[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], 
+      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], 
+  [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(2,4,3) : -9 -> -6], 
+      [(2,4) : -9 -> -7], [(1,4)(2,3) : -9 -> -8] ] ]
 
 # Subsection 5.6.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
