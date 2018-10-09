@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gd             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations for involutory FpWeightedDigraphs 
@@ -160,22 +160,22 @@ DeclareOperation( "NormalFormKBRWS", [ IsFpGroup, IsObject ] );
  
 ############################################################################# 
 ## 
-#O  FreeProductWithAmalgamation( <grp>, <grp>, <iso> ) 
+#O  FreeProductWithAmalgamationGGRWS( <grp>, <grp>, <iso> ) 
 #P  IsFpaGroup( <fpgrp> )  
 #A  FpaInfo( <fpa> )
 ## 
-DeclareOperation( "FreeProductWithAmalgamation",
+DeclareOperation( "FreeProductWithAmalgamationGGRWS",
     [ IsGroup, IsGroup, IsGroupHomomorphism ] );    
 DeclareProperty( "IsFpaGroup", IsFpGroup );
 DeclareAttribute( "FpaInfo", IsFpaGroup, "mutable" );    
  
 ############################################################################# 
 ## 
-#O  HnnExtension( <grp>, <iso> ) 
+#O  HnnExtensionGGRWS( <grp>, <iso> ) 
 #P  IsHnnGroup( <fpgrp> )  
 #A  HnnInfo( <fpa> )
 ## 
-DeclareOperation( "HnnExtension", [ IsGroup, IsGroupHomomorphism ] );    
+DeclareOperation( "HnnExtensionGGRWS", [ IsGroup, IsGroupHomomorphism ] );    
 DeclareProperty( "IsHnnGroup", IsFpGroup );
 DeclareAttribute( "HnnInfo", IsHnnGroup, "mutable" );    
  

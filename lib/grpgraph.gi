@@ -904,9 +904,9 @@ end);
 
 #############################################################################
 ##
-#M  FreeProductWithAmalgamation
+#M  FreeProductWithAmalgamationGGRWS
 ##
-InstallMethod( FreeProductWithAmalgamation,
+InstallMethod( FreeProductWithAmalgamationGGRWS,
     "for two fp-groups and an isomorphism of subgroups", true,
     [ IsFpGroup, IsFpGroup, IsGroupHomomorphism ], 0,
 function( fp1, fp2, iso ) 
@@ -944,16 +944,16 @@ function( fp1, fp2, iso )
     fpa := fa/rela;
     SetIsFpaGroup( fpa, true );
     gfpa := GeneratorsOfGroup( fpa );
-#    e1 := GroupHomomorphismByImages( fp1, fpa, gfp1, gfpa{[1..ng1]} );
-#    e2 := GroupHomomorphismByImages( fp2, fpa, gfp2, gfpa{[ng1+1..num]} );
+    e1 := GroupHomomorphismByImages( fp1, fpa, gfp1, gfpa{[1..ng1]} );
+    e2 := GroupHomomorphismByImages( fp2, fpa, gfp2, gfpa{[ng1+1..num]} );
     SetFpaInfo( fpa, rec( groups := [ fp1, fp2 ],
-#                          embeddings := [ e1, e2 ],
+                          embeddings := [ e1, e2 ],
                           positions := [ [1..ng1], [ng1+1..num] ],
                           isomorphism := iso ) );
     return fpa;
 end );
 
-InstallMethod( FreeProductWithAmalgamation,
+InstallMethod( FreeProductWithAmalgamationGGRWS,
     "for two perm groups and an isomorphism of subgroups", true,
     [ IsPermGroup, IsPermGroup, IsGroupHomomorphism ], 0,
 function( p1, p2, iso )
@@ -974,7 +974,7 @@ function( p1, p2, iso )
     fgen2 := ImageElm( p2f2, gen2 );
     fsub2 := Subgroup( fp2, fgen2 );
     fiso := GroupHomomorphismByImages( fsub1, fsub2, fgen1, fgen2 );
-    return FreeProductWithAmalgamation( fp1, fp2, fiso );
+    return FreeProductWithAmalgamationGGRWS( fp1, fp2, fiso );
 end );
 
 #############################################################################
@@ -1101,9 +1101,9 @@ end);
 
 #############################################################################
 ##
-#M  HnnExtension
+#M  HnnExtensionGGRWS
 ##
-InstallMethod( HnnExtension,
+InstallMethod( HnnExtensionGGRWS,
     "for an fp-groups and an isomorphism of subgroups", true,
     [ IsFpGroup, IsGroupHomomorphism ], 0, 
 function( fp, iso )

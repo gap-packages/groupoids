@@ -119,7 +119,7 @@ gap> b1 := ga4[1];;  b2:=ga4[2];;
 gap> H2 := Subgroup(a4,[b1]);;
 gap> iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;
 gap> inv := InverseGeneralMapping(iso);;
-gap> fpa := FreeProductWithAmalgamation( s3, a4, iso );
+gap> fpa := FreeProductWithAmalgamationGGRWS( s3, a4, iso );
 <fp group on the generators [ fa1, fa2, fa3, fa4 ]>
 gap> RelatorsOfFpGroup( fpa );
 [ fa1^3, fa2^2, (fa1*fa2)^2, fa3^3, fa4^3, (fa3*fa4)^2, fa1*fa3^-1 ]
@@ -142,7 +142,7 @@ fa2*fa3*(fa4^-1*fa2)^2*fa4^-1*fa3
 ## Subsection 6.4.2
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
-gap> hnn := HnnExtension( a4, i23 );
+gap> hnn := HnnExtensionGGRWS( a4, i23 );
 <fp group on the generators [ fe1, fe2, fe3 ]>
 gap> phnn := PresentationFpGroup( hnn );;
 gap> TzPrint( phnn );
@@ -163,7 +163,8 @@ fe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2
 gap> n3 := NormalFormGGRWS( hnn, w3 );
 (fe2*fe1*fe3)^2
 gap> fpainfo := FpaInfo( fpa );
-rec( groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
+rec( embeddings := [ [ a1, a2 ] -> [ fa1, fa2 ], [ b1, b2 ] -> [ fa3, fa4 ] ],
+  groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
   positions := [ [ 1, 2 ], [ 3, 4 ] ] )
 gap> hnninfo := HnnInfo( hnn );
 rec( group := a4, isomorphism := [ b1 ] -> [ b2 ] )

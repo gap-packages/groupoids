@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## 1.59 -> 1.61  (09/10/18) 
+
+ * (09/10/18) Added 'GGRWS' to 'FreeProductWithAmalgamation', 'HnnExtension'
+
 ## 1.57 -> 1.59  (13/09/18) 
 
  * (13/09/18) GroupoidAutomorphismByObjectPerm method for groupoid with rays
