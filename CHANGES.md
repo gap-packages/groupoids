@@ -5,6 +5,7 @@
  * (23/10/18) Added ReducedImageElm for IsMappingToFreeProductWithAmalgamation
               IsFpaGroup now IsFreeProductWithAmalgamation; sim. IsHnnGroup 
  * (15/10/18) Undid previous commit; revised FreeProductWithAmalgamation(Op) 
+              and made similar changes to HnnExtension(Op) inc. Embeddings 
               FpaInfo is now FreeProductWithAmalgamationInfo; sim. HnnInfo 
 
 ## 1.59 -> 1.61  (09/10/18) 
