@@ -1,5 +1,12 @@
 # CHANGES to the 'groupoids' package 
 
+## 1.61 -> 1.62  (23/10/18) 
+
+ * (23/10/18) Added ReducedImageElm for IsMappingToFreeProductWithAmalgamation
+              IsFpaGroup now IsFreeProductWithAmalgamation; sim. IsHnnGroup 
+ * (15/10/18) Undid previous commit; revised FreeProductWithAmalgamation(Op) 
+              FpaInfo is now FreeProductWithAmalgamationInfo; sim. HnnInfo 
+
 ## 1.59 -> 1.61  (09/10/18) 
 
  * (09/10/18) Added 'GGRWS' to 'FreeProductWithAmalgamation', 'HnnExtension'

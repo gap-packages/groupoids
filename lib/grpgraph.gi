@@ -717,7 +717,34 @@ function( ggword )
     SetIsReducedGraphOfGroupsWord( rw, true );
     return rw;
 end);
- 
+
+#############################################################################
+##
+#M  IsMappingToGroupWithGGRWS( <map> )  
+##
+InstallMethod( IsMappingToGroupWithGGRWS, "for a mapping", true, 
+    [ IsGroupGeneralMappingByImages ], 0,
+function( map ) 
+    return HasGraphOfGroupsRewritingSystem( Range( map ) ); 
+end ); 
+
+#############################################################################
+##
+#M  ReducedImageElm( <hom>, <elm> )  
+##
+InstallMethod( ReducedImageElm, "for word in graph of groups", true, 
+    [ IsMappingToGroupWithGGRWS, 
+      IsMultiplicativeElementWithInverse ], 0,
+function( hom, elm )
+
+    local rng, im, rim;  
+
+    rng := Range( hom ); 
+    im := ImageElm( hom, elm ); 
+    rim := NormalFormGGRWS( rng, im );
+    return ElementOfFpGroup( FamilyObj( rng.1 ), rim ); 
+end );
+
 ##############################################################################
 ##
 #M  \=( <ggw1>, <ggw2> ) . . . . . test if two graph of group words are equal
@@ -902,111 +929,181 @@ function( gp, w0 )
     return rw;
 end);
 
+###############################################################################
+##
+#F  FreeProductWithAmalgamation( group, group, isomorphism between subgroups ) 
+##
+InstallMethod( FreeProductWithAmalgamation, "for 2 groups and an isomorphism", 
+    true, [ IsGroup, IsGroup, IsGroupHomomorphism ], 0, 
+function( G, H, hom )
+
+    local SG, SH; 
+
+    ## Checks to verify the arguments 
+    SG := Source( hom ); 
+    SH := Range( hom ); 
+    if not ( IsSubgroup( G, SG ) and IsSubgroup( H, SH ) ) then 
+        Error( "source and range of hom not subgroups of G,H" ); 
+    fi; 
+    if not IsBijective( hom ) then 
+        Error( "hom : SG -> SH not an isomorphism" ); 
+    fi; 
+    ## Delegate the construction to FreeProductWithAmalgamationOp
+    return FreeProductWithAmalgamationOp( G, H, hom ); 
+end );
+
+############################################################################
+##
+#O  FreeProductWithAmalgamationOp( group, group, isomorphism ) 
+##
+InstallMethod( FreeProductWithAmalgamationOp, "for 2 groups and an isomorphism",
+    true, [ IsGroup, IsGroup, IsGroupHomomorphism ], 0,
+function( G, H, iso ) 
+
+    local gG, gH,       # generating sets for G,H 
+          ngG, ngH,     # lengths of these generating sets 
+          Giso, Hiso,   # isomorphisms from G,H to fp-groups 
+          fpG, fpH,     # images of G,H under these isomorphisms 
+          fG, fH,       # free groups of fpG,fpH 
+          gfG, gfH,     # generators of the groups fG,fH 
+          gfpG, gfpH,   # generators of the groups fpG,fpH 
+          SG, SH,       # subgroups of G,H which are isomorphic  
+          fpSG, fpSH,   # images of SG,SH under Giso,Hiso 
+          ngF,          # ngG + ngH = total number of free generators 
+          F, gF,        # free group of the fpa and its generating set 
+          gFG, gFH,     # subsets of gF given by the embeddings of G,H 
+          rels, r,      # set of relators for the fpa; relations index 
+          mgi,          # mapping generators images for iso 
+          gSG, gSH,     # generating sets for SG,SH 
+          gfpSG, gfpSH, # images of gSG,gSH under Giso,Hiso
+          i,            # index of generator range
+          g, h,         # elements in the two subgroups 
+          wg, wh,       # mapped words for g,h 
+          FPA, gFPA,    # the free product with amalgamation; its generators 
+          gFPAG, gFPAH, # images for the two embeddings 
+          eG, eH,       # embeddings of G,H in FPA 
+          embeddings,   # monomorphisms of base groups into free product 
+          rws;          # graph of groups rewriting system 
+        
+    ## no need to check the arguments - this is the NC version 
+    ## create isomorphisms from the given groups list to fp-groups
+    gG := SmallGeneratingSet( G );
+    ngG := Length( gG ); 
+    Giso := IsomorphismFpGroupByGenerators( G, gG ); 
+    fpG := ImagesSource( Giso ); 
+    gfpG := List( gG, g -> ImageElm( Giso, g ) ); 
+    gH := SmallGeneratingSet( H );
+    ngH := Length( gH ); 
+    Hiso := IsomorphismFpGroupByGenerators( H, gH );
+    fpH := Image( Hiso ); 
+    gfpH := List( gH, h -> ImageElm( Hiso, h ) ); 
+    fG := FreeGroupOfFpGroup( fpG ); 
+    gfG := GeneratorsOfGroup( fG );
+    fH := FreeGroupOfFpGroup( fpH ); 
+    gfH := GeneratorsOfGroup( fH );
+    ngF := ngG + ngH; 
+    SG := Source( iso ); 
+    SH := Range( iso ); 
+    fpSG := Image( Giso, SG ); 
+    fpSH := Image( Hiso, SH ); 
+    ## Create the free group of the fpa
+    F := FreeGroup( ngF );
+    gF := GeneratorsOfGroup( F ); 
+    gFG := gF{[1..ngG]}; 
+    gFH := gF{[ngG+1..ngF]}; 
+    ## create the G,H relations for the fpa 
+    rels := [];
+    for r in RelatorsOfFpGroup( fpG ) do 
+        Add( rels, MappedWord( UnderlyingElement(r), gfG, gFG ) ); 
+    od; 
+    for r in RelatorsOfFpGroup( fpH ) do 
+        Add( rels, MappedWord( UnderlyingElement(r), gfH, gFH ) ); 
+    od; 
+    ## create the subgroup relations 
+    mgi := MappingGeneratorsImages( iso ); 
+    gSG := mgi[1]; 
+    gfpSG := List( gSG, g -> Image( Giso, g ) ); 
+    gSH := mgi[2];
+    gfpSH := List( gSH, h -> Image( Hiso, h ) ); 
+    for i in [1..Length(gSG)] do 
+        g := UnderlyingElement( gfpSG[i] ); 
+        wg := MappedWord( g, gfG, gFG ); 
+        h := UnderlyingElement( gfpSH[i] ); 
+        wh := MappedWord( h, gfH, gFH ); 
+        Add( rels, wg * wh^-1 ); 
+    od;
+    ## create the fpa
+    FPA := F/rels; 
+    gFPA := GeneratorsOfGroup( FPA ); 
+    gFPAG := gFPA{[1..ngG]}; 
+    gFPAH := gFPA{[ngG+1..ngF]}; 
+    SetIsFreeProductWithAmalgamation( FPA, true ); 
+    ## create the two embeddings into the fpa 
+    eG := GroupHomomorphismByImagesNC( G, FPA, gG, gFPAG );
+    SetIsInjective( eG, true ); 
+    SetIsMappingToGroupWithGGRWS( eG, true ); 
+    eH := GroupHomomorphismByImagesNC( H, FPA, gH, gFPAH );
+    SetIsInjective( eH, true ); 
+    SetIsMappingToGroupWithGGRWS( eH, true ); 
+    embeddings := [ eG, eH ]; 
+    ## Save the embedding information for possible use later.
+    SetFreeProductWithAmalgamationInfo( FPA, 
+        rec( embeddings := embeddings, 
+             groups := [ G, H ], 
+             isomorphism := iso, 
+             positions := [ [1..ngG], [ngG+1..ngF] ], 
+             subgroups := [ SG, SH ] ) );
+    rws := GraphOfGroupsRewritingSystem( FPA );
+    return FPA; 
+end );
+
 #############################################################################
 ##
-#M  FreeProductWithAmalgamationGGRWS
+#M  Embedding (for free product with amalgamation and hnn extension) 
 ##
-InstallMethod( FreeProductWithAmalgamationGGRWS,
-    "for two fp-groups and an isomorphism of subgroups", true,
-    [ IsFpGroup, IsFpGroup, IsGroupHomomorphism ], 0,
-function( fp1, fp2, iso ) 
-
-    local H1, H2, gfp1, gfp2, ng1, ng2, num, fa, gfa, f1, f2, gf1, gf2,
-          gfa1, gfa2, rel1, rel2, rela, gH1, igH1, relH, fpa, gfpa, e1, e2;
-
-    H1 := Source( iso );
-    H2 := Range( iso );
-    if not ( IsSubgroup( fp1, H1 ) and IsSubgroup( fp2, H2 ) 
-             and IsTotal( iso ) and IsSingleValued( iso ) ) then
-        Error( "iso not an isomorphism of subgroups" );
-    fi;
-    gfp1 := GeneratorsOfGroup( fp1 );
-    gfp2 := GeneratorsOfGroup( fp2 );
-    ng1 := Length( gfp1 );
-    ng2 := Length( gfp2 );
-    num := ng1 + ng2;
-    fa := FreeGroup( num, "fa" );
-    gfa := GeneratorsOfGroup( fa );
-    f1 := FreeGroupOfFpGroup( fp1 );
-    gf1 := GeneratorsOfGroup( f1 );
-    f2 := FreeGroupOfFpGroup( fp2 );
-    gf2 := GeneratorsOfGroup( f2 );
-    rel1 := RelatorsOfFpGroup( fp1 );
-    rel2 := RelatorsOfFpGroup( fp2 );
-    gfa1 := gfa{[1..ng1]};
-    gfa2 := gfa{[ng1+1..num]};
-    gH1 := GeneratorsOfGroup( H1 );
-    igH1 := List( gH1, h -> ImageElm( iso, h ) );
-    relH := List( [1..Length(gH1)], i -> MappedWord( gH1[i], gfp1, gfa1 )
-                * MappedWord( igH1[i], gfp2, gfa2 )^(-1) );
-    rela := Concatenation( List( rel1, w -> MappedWord( w, gf1, gfa1 ) ),
-                List( rel2, w -> MappedWord( w, gf2, gfa2 ) ), relH );
-    fpa := fa/rela;
-    SetIsFpaGroup( fpa, true );
-    gfpa := GeneratorsOfGroup( fpa );
-    e1 := GroupHomomorphismByImages( fp1, fpa, gfp1, gfpa{[1..ng1]} );
-    e2 := GroupHomomorphismByImages( fp2, fpa, gfp2, gfpa{[ng1+1..num]} );
-    SetFpaInfo( fpa, rec( groups := [ fp1, fp2 ],
-                          embeddings := [ e1, e2 ],
-                          positions := [ [1..ng1], [ng1+1..num] ],
-                          isomorphism := iso ) );
-    return fpa;
-end );
-
-InstallMethod( FreeProductWithAmalgamationGGRWS,
-    "for two perm groups and an isomorphism of subgroups", true,
-    [ IsPermGroup, IsPermGroup, IsGroupHomomorphism ], 0,
-function( p1, p2, iso )
-
-    local p2f1, fp1, sub1, gen1, fgen1, fsub1, 
-          p2f2, fp2, sub2, gen2, fgen2, fsub2, fiso;
-
-    p2f1 := IsomorphismFpGroup( p1 );
-    fp1 := Image( p2f1 );
-    sub1 := Source( iso );
-    gen1 := GeneratorsOfGroup( sub1 );
-    fgen1 := ImageElm( p2f1, gen1 );
-    fsub1 := Subgroup( fp1, fgen1 );
-    p2f2 := IsomorphismFpGroup( p2 );
-    fp2 := Image( p2f2 );
-    sub2 := Range( iso );
-    gen2 := ImageElm( iso, gen1 );
-    fgen2 := ImageElm( p2f2, gen2 );
-    fsub2 := Subgroup( fp2, fgen2 );
-    fiso := GroupHomomorphismByImages( fsub1, fsub2, fgen1, fgen2 );
-    return FreeProductWithAmalgamationGGRWS( fp1, fp2, fiso );
-end );
-
+InstallMethod( Embedding, "free product with amalgamation", true, 
+    [ IsGroup and HasFreeProductWithAmalgamationInfo, IsPosInt ], 0,
+    function( G, i )
+        if i > Length(FreeProductWithAmalgamationInfo(G).embeddings) then
+            Error("Base group with index ",i, " does not exist");
+        else
+            return FreeProductWithAmalgamationInfo(G).embeddings[i];
+        fi;
+    end
+);
+   
+InstallMethod( Embedding, "hnn extension", true, 
+    [ IsGroup and HasHnnExtensionInfo, IsPosInt ], 0,
+    function( G, i )
+        if ( i <> 1 ) then
+            Error("Base group with index 1 does not exist");
+        else
+            return HnnExtensionInfo(G).embeddings[1];
+        fi;
+    end
+);
+   
 #############################################################################
 ##
 #M  GraphOfGroupsRewritingSystem
 ##
 InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an fpa",
-    true, [ IsFpaGroup ], 0,
+    true, [ IsFreeProductWithAmalgamation ], 0,
 function( fpa )
 
-    local fy, y, verts, arcs, dig, inva, info, f1, f2, e1, e2, pos1, pos2,
-          iso, inv, h1, h2, gg;
+    local fy, y, verts, arcs, dig, info, f1, f2, iso, inv;
 
-    fy := FreeGroup("y");
-    y := fy.1;
+    fy := FreeGroup( "y" );
+    y := fy.1; 
     verts := [5,6];
-    arcs := [ [y,5,6], [y^-1,6,5]];
+    arcs := [ [y,verts[1],verts[2]], [y^-1,verts[2],verts[1]]];
     dig := FpWeightedDigraph( fy, verts, arcs );
-    inva := InvolutoryArcs( dig );
-    info := FpaInfo( fpa );
+    info := FreeProductWithAmalgamationInfo( fpa );
     f1 := info!.groups[1];
     f2 := info!.groups[2];
-#    e1 := info!.embeddings[1];
-#    e2 := info!.embeddings[2];
-    pos1 := info!.positions[1];
-    pos2 := info!.positions[2];
     iso := info!.isomorphism;
-    h1 := Source( iso );
-    h2 := Range( iso );
     inv := InverseGeneralMapping( iso );
-    gg := GraphOfGroups( dig, [f1,f2], [iso,inv] );
-    return gg;
+    return GraphOfGroups( dig, [f1,f2], [iso,inv] );
 end );
 
 #############################################################################
@@ -1014,7 +1111,7 @@ end );
 #M  NormalFormGGRWS
 ##
 InstallMethod( NormalFormGGRWS, "generic method for fpa normal form",
-    true, [ IsFpaGroup, IsObject ], 0,
+    true, [ IsFreeProductWithAmalgamation, IsObject ], 0,
 function( fpa, w )
 
     local iso, gg, dig, verts, ew, len, ff, idff, famff, wL, info, pos, p,
@@ -1028,6 +1125,7 @@ function( fpa, w )
     dig := DigraphOfGraphOfGroups( gg );
     verts := dig!.vertices;
     ew := ExtRepOfObj( w );
+    Info( InfoGroupoids, 2, "ew = ", ew ); 
     if ( ew = [ ] ) then
         return One( fpa );
     fi;
@@ -1035,7 +1133,7 @@ function( fpa, w )
     idff := One( ff );
     famff := FamilyObj( idff );
     len := Length( ew );
-    info := FpaInfo( fpa );
+    info := FreeProductWithAmalgamationInfo( fpa );
     pos := info!.positions;
     ng1 := Length( pos[1] );
     gff := GeneratorsOfGroup( ff );
@@ -1053,6 +1151,7 @@ function( fpa, w )
     else
         Error( "first vertex not found" );
     fi;
+    Info( InfoGroupoids, 2, "wL = ", wL ); 
     j := 0;
     while ( j < len ) do
         k := j+2;
@@ -1061,7 +1160,9 @@ function( fpa, w )
         od;
         es := ew{[j+1..k]};
         s := MappedWord( ObjByExtRep( famff, es ), gff12[p], gen12[p] );
+        Info( InfoGroupoids, 2, "es = ", es, ", s = ", s ); 
         Append( wL, [ s, p ] );
+        Info( InfoGroupoids, 2, "wL = ", wL ); 
         p := 3-p;
         j := k;
     od;
@@ -1069,7 +1170,9 @@ function( fpa, w )
     if ( p = 2 ) then 
         Append( wL, [ One( gps[2] ), 2 ] ); 
     fi; 
+    Info( InfoGroupoids, 2, "wL = ", wL ); 
     wL := wL{[1..(Length(wL)-1)]};
+    Info( InfoGroupoids, 2, "wL = ", wL ); 
     ##  now have w in the form of a graph of groups word
     ggw := GraphOfGroupsWord( gg, tv, wL );
     Info( InfoGroupoids, 2, "ggw = ", ggw );
@@ -1101,15 +1204,15 @@ end);
 
 #############################################################################
 ##
-#M  HnnExtensionGGRWS
+#M  HnnExtension
 ##
-InstallMethod( HnnExtensionGGRWS,
+InstallMethod( HnnExtension,
     "for an fp-groups and an isomorphism of subgroups", true,
     [ IsFpGroup, IsGroupHomomorphism ], 0, 
 function( fp, iso )
 
     local H1, H2, gfp, ng, fe, gfe, gfe1, ffp, gffp, z,
-          rel, rele, gH1, igH1, relH, hnn, ghnn, e1, e2;
+          rel, rele, gH1, igH1, relH, hnn, ghnn, emb, rws;
 
     H1 := Source( iso );
     H2 := Range( iso );
@@ -1132,13 +1235,16 @@ function( fp, iso )
                 * z * MappedWord( igH1[i], gfp, gfe1 )^(-1) );
     rele := Concatenation( List( rel, w -> MappedWord(w, gffp, gfe1) ), relH );
     hnn := fe/rele;
-    SetIsHnnGroup( hnn, true );
+    SetIsHnnExtension( hnn, true );
     ghnn := GeneratorsOfGroup( hnn );
-#    e1 := GroupHomomorphismByImages( fp1, hnn, gfp1, ghnn{[1..ng1]} );
-#    e2 := GroupHomomorphismByImages( fp2, hnn, gfp2, ghnn{[ng1+1..num]} );
-    SetHnnInfo( hnn, rec( group := fp,
-#                          embeddings := [ e1, e2 ],
-                          isomorphism := iso ) );
+    emb := GroupHomomorphismByImages( fp, hnn, gfp, ghnn{[1..ng]} );
+    SetIsInjective( emb, true ); 
+    SetIsMappingToGroupWithGGRWS( emb, true ); 
+    SetHnnExtensionInfo( hnn, rec( group := fp,
+                                   subgroups := [ H1, H2 ], 
+                                   embeddings := [ emb ],
+                                   isomorphism := iso ) );
+    rws := GraphOfGroupsRewritingSystem( hnn );
     return hnn;
 end );
 
@@ -1147,7 +1253,7 @@ end );
 #M  GraphOfGroupsRewritingSystem
 ##
 InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an hnn",
-    true, [ IsHnnGroup ], 0,
+    true, [ IsHnnExtension ], 0,
 function( hnn )
 
     local fz, z, verts, arcs, dig, inva, info, fp, iso, inv;
@@ -1158,7 +1264,7 @@ function( hnn )
     arcs := [ [z,7,7], [z^-1,7,7]];
     dig := FpWeightedDigraph( fz, verts, arcs );
     inva := InvolutoryArcs( dig );
-    info := HnnInfo( hnn );
+    info := HnnExtensionInfo( hnn );
     fp := info!.group;
     iso := info!.isomorphism;
     inv := InverseGeneralMapping( iso );
@@ -1170,7 +1276,7 @@ end );
 #M  NormalFormGGRWS
 ##
 InstallMethod( NormalFormGGRWS, "generic method for hnn normal form",
-    true, [ IsHnnGroup, IsObject ], 0,
+    true, [ IsHnnExtension, IsObject ], 0,
 function( hnn, w )
 
     local iso, gg, dig, v, ew, len, ff, idff, famff, wL, info, z, p, q,
@@ -1193,7 +1299,7 @@ function( hnn, w )
     idff := One( ff );
     famff := FamilyObj( idff );
     len := Length( ew );
-    info := HnnInfo( hnn );
+    info := HnnExtensionInfo( hnn );
     gff := GeneratorsOfGroup( ff );
     p := Length( gff );
     z := gff[p];

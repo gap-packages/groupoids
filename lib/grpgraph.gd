@@ -160,24 +160,28 @@ DeclareOperation( "NormalFormKBRWS", [ IsFpGroup, IsObject ] );
  
 ############################################################################# 
 ## 
-#O  FreeProductWithAmalgamationGGRWS( <grp>, <grp>, <iso> ) 
-#P  IsFpaGroup( <fpgrp> )  
-#A  FpaInfo( <fpa> )
+#O  FreeProductWithAmalgamation( <grp>, <grp>, <iso> ) 
+#O  FreeProductWithAmalgamationOp( <grp>, <grp>, <iso> ) 
+#A  FreeProductWithAmalgamationInfo( <fpagrp> )
+#P  IsFreeProductWithAmalgamation( <fpgrp> )  
 ## 
-DeclareOperation( "FreeProductWithAmalgamationGGRWS",
+DeclareOperation( "FreeProductWithAmalgamation",
     [ IsGroup, IsGroup, IsGroupHomomorphism ] );    
-DeclareProperty( "IsFpaGroup", IsFpGroup );
-DeclareAttribute( "FpaInfo", IsFpaGroup, "mutable" );    
+DeclareOperation( "FreeProductWithAmalgamationOp",
+    [ IsGroup, IsGroup, IsGroupHomomorphism ] );    
+DeclareProperty( "IsFreeProductWithAmalgamation", IsFpGroup );
+DeclareAttribute( "FreeProductWithAmalgamationInfo", 
+    IsFreeProductWithAmalgamation, "mutable" );    
  
 ############################################################################# 
 ## 
-#O  HnnExtensionGGRWS( <grp>, <iso> ) 
-#P  IsHnnGroup( <fpgrp> )  
-#A  HnnInfo( <fpa> )
+#O  HnnExtension( <grp>, <iso> ) 
+#P  IsHnnExtension( <fpgrp> )  
+#A  HnnExtensionInfo( <fpa> )
 ## 
-DeclareOperation( "HnnExtensionGGRWS", [ IsGroup, IsGroupHomomorphism ] );    
-DeclareProperty( "IsHnnGroup", IsFpGroup );
-DeclareAttribute( "HnnInfo", IsHnnGroup, "mutable" );    
+DeclareOperation( "HnnExtension", [ IsGroup, IsGroupHomomorphism ] );    
+DeclareProperty( "IsHnnExtension", IsFpGroup );
+DeclareAttribute( "HnnExtensionInfo", IsHnnExtension, "mutable" );    
  
 ############################################################################# 
 ## 
@@ -242,6 +246,17 @@ DeclareAttribute( "TailOfGraphOfGroupsWord", IsGraphOfGroupsWordRep );
 DeclareAttribute( "WordOfGraphOfGroupsWord", IsGraphOfGroupsWordRep); 
 DeclareOperation( "ReducedGraphOfGroupsWord", [ IsGraphOfGroupsWordRep ] );   
  
+############################################################################# 
+## 
+#P  IsMappingToGroupWithGGRWS( <map> ) 
+#O  ReducedImageElm( <hom>, <elm> )    
+## 
+DeclareProperty( "IsMappingToGroupWithGGRWS", 
+    IsGroupGeneralMappingByImages ); 
+DeclareOperation( "ReducedImageElm", [ IsMappingToGroupWithGGRWS, 
+    IsMultiplicativeElementWithInverse ] );   
+
+
 ## ------------------------------------------------------------------------##
 ##         Graph of Groups Groupoid - still be to implemented              ##
 ## ------------------------------------------------------------------------##
