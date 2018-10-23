@@ -34,7 +34,7 @@ Similarly, the <C>Vertices</C> and <C>Arcs</C> of an <C>FpWeightedDigraph</C>
 were changed from attributes to record components.
 <P/>
 In the spring of 2006 the package was extensively rewritten 
-and renamed <Package>gpd</Package>. 
+and renamed <Package>Gpd</Package>. 
 Version 1.01 was submitted as a deposited package in June 2006.
 Version 1.03, of October 2007, fixed some file protections, 
 and introduced the test file <F>gpd_manual.tst</F>. 
@@ -50,7 +50,7 @@ have been added, but this is ongoing work.
 Versions 1.09 to 1.15 were prepared for the anticipated release of &GAP; 4.5 
 in June 2012. 
 <P/> 
-<Package>gpd</Package> became an accepted &GAP; package in May 2015. 
+<Package>Gpd</Package> became an accepted &GAP; package in May 2015. 
 <P/>
 In April 2017 the package was renamed again, as <Package>groupoids</Package>. 
 <P/>
@@ -70,6 +70,11 @@ This is in order to avoid conflicts with the
 <Package>Digraphs</Package> package.
 The intention is that these functions can revert to the original names 
 in due course.
+<P/>
+In version 1.62 of October 2018 there were significant changes to the 
+operations constructing free products with amalgamation and HNN extensions. 
+It is planned to move this material to a new package 
+<Package>Rewriting</Package> in time for &GAP; 4.11. 
 </Section>
 
 
@@ -96,10 +101,6 @@ for the cases of groupoid morphisms not yet covered;
 </Item>
 <Item>
 free groupoid on a graph;
-</Item>
-<Item>
-methods for <C>FreeProductWithAmalgamation</C> and <C>HnnEntension</C> 
-for pc-groups; 
 </Item>
 <Item>
 convert <C>GraphOfGroupsRewritingSystem</C> to the category 

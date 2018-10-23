@@ -117,12 +117,13 @@ gap> ga4 := GeneratorsOfGroup(a4);;
 gap> SetName(a4,"a4");
 gap> b1 := ga4[1];;  b2:=ga4[2];;
 gap> H2 := Subgroup(a4,[b1]);;
+gap> ## form the isomorphism and the fpa group
 gap> iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;
 gap> inv := InverseGeneralMapping(iso);;
-gap> fpa := FreeProductWithAmalgamationGGRWS( s3, a4, iso );
-<fp group on the generators [ fa1, fa2, fa3, fa4 ]>
+gap> fpa := FreeProductWithAmalgamation( s3, a4, iso );
+<fp group on the generators [ f1, f2, f3, f4 ]>
 gap> RelatorsOfFpGroup( fpa );
-[ fa1^3, fa2^2, (fa1*fa2)^2, fa3^3, fa4^3, (fa3*fa4)^2, fa1*fa3^-1 ]
+[ f1^2, f2^3, (f2*f1)^2, f3^3, f4^3, (f4*f3)^2, f2*f3^-1 ]
 gap> gg1 := GraphOfGroupsRewritingSystem( fpa );;
 gap> Display( gg1 );
 Graph of Groups with :- 
@@ -135,15 +136,27 @@ gap> LeftTransversalsOfGraphOfGroups( gg1 );
  ]
 gap> gfpa := GeneratorsOfGroup( fpa );;
 gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
-(fa1*fa2*fa4^-1*fa3*fa4)^3
+(f1*f2*f4^-1*f3*f4)^3
 gap> n2 := NormalFormGGRWS( fpa, w2 );
-fa2*fa3*(fa4^-1*fa2)^2*fa4^-1*fa3
+f2*f3*(f4^-1*f2)^2*f4^-1*f3
+gap> ##
+gap> fpainfo := FreeProductWithAmalgamationInfo( fpa );
+rec( embeddings := [ [ a2, a1 ] -> [ f1, f2 ], [ b1, b2 ] -> [ f3, f4 ] ], 
+  groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
+  positions := [ [ 1, 2 ], [ 3, 4 ] ], 
+  subgroups := [ Group([ a1 ]), Group([ b1 ]) ] )
+gap> emb2 := Embedding( fpa, 2 );
+[ b1, b2 ] -> [ f3, f4 ]
+gap> ImageElm( emb2, b1^b2 );       
+f4^-1*f3*f4
+gap> ReducedImageElm( emb2, b1^b2 );
+f4*f3^-1
 
 ## Subsection 6.4.2
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
-gap> hnn := HnnExtensionGGRWS( a4, i23 );
-<fp group on the generators [ fe1, fe2, fe3 ]>
+gap> hnn := HnnExtension( a4, i23 );
+<fp group of size infinity on the generators [ fe1, fe2, fe3 ]>
 gap> phnn := PresentationFpGroup( hnn );;
 gap> TzPrint( phnn );
 #I  generators: [ fe1, fe2, fe3 ]
@@ -162,12 +175,17 @@ gap> w3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];
 fe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2
 gap> n3 := NormalFormGGRWS( hnn, w3 );
 (fe2*fe1*fe3)^2
-gap> fpainfo := FpaInfo( fpa );
-rec( embeddings := [ [ a1, a2 ] -> [ fa1, fa2 ], [ b1, b2 ] -> [ fa3, fa4 ] ],
-  groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
-  positions := [ [ 1, 2 ], [ 3, 4 ] ] )
-gap> hnninfo := HnnInfo( hnn );
-rec( group := a4, isomorphism := [ b1 ] -> [ b2 ] )
+gap> ##
+gap> hnninfo := HnnExtensionInfo( hnn );
+rec( embeddings := [ [ b1, b2 ] -> [ fe1, fe2 ] ], group := a4, 
+  isomorphism := [ b1 ] -> [ b2 ], 
+  subgroups := [ Group([ b1 ]), Group([ b2 ]) ] )
+gap> emb := Embedding( hnn, 1 );
+[ b1, b2 ] -> [ fe1, fe2 ]
+gap> ImageElm( emb, b1^b2 );       
+fe2^-1*fe1*fe2
+gap> ReducedImageElm( emb, b1^b2 );
+fe2*fe1^-1
 
 ### Section 6.5 : Graphs of groupoids and their words 
 
