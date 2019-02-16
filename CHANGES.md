@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.63dev for GAP 4.10.0 (16/02/19) 
+
+ * (16/02/19) added License field in PackageInfo.g 
+
 ## 1.61 -> 1.63  (23/10/18) 
 
  * (23/10/18) Added ReducedImageElm for IsMappingToFreeProductWithAmalgamation
