@@ -395,6 +395,66 @@ gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 gap> STOP_TEST( "gpd.tst", 10000 );
 
+## SubSection 4.6.1
+gap> d8 := Group( (1,2,3,4), (1,3) );; 
+gap> ed8 := Elements( d8 );; 
+gap> rd8 := SinglePieceGroupoidWithRays( d8, ed8, ed8 );
+single piece groupoid with rays: < Group( [ (1,2,3,4), (1,3) ] ), 
+[ (), (2,4), (1,2)(3,4), (1,2,3,4), (1,3), (1,3)(2,4), (1,4,3,2), (1,4)(2,3) 
+ ], [ (), (2,4), (1,2)(3,4), (1,2,3,4), (1,3), (1,3)(2,4), (1,4,3,2), 
+  (1,4)(2,3) ] >
+gap> Homset( rd8, (2,4), (1,3) );
+<homset (2,4) -> (1,3) with head group Group( [ (1,4,3,2), (1,3) ] )>
+gap> Display( last ); 
+<homset (2,4) -> (1,3) with elements:
+[(1,3)(2,4) : (2,4) -> (1,3)]
+[(1,3) : (2,4) -> (1,3)]
+[() : (2,4) -> (1,3)]
+[(2,4) : (2,4) -> (1,3)]
+[(1,4,3,2) : (2,4) -> (1,3)]
+[(1,4)(2,3) : (2,4) -> (1,3)]
+[(1,2,3,4) : (2,4) -> (1,3)]
+[(1,2)(3,4) : (2,4) -> (1,3)]
+
+## SubSection 4.6.2
+gap> t := Transformation( [1,1,2,3] );;
+gap> u := Transformation( [1,2,4,3] );;
+gap> M := Monoid( t, u );
+<transformation monoid of degree 4 with 2 generators>
+gap> rag := RightActionGroupoid( M );
+groupoid with 8 pieces:
+1:  single piece groupoid with rays: < Group( 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
+[ Transformation( [ 1, 1, 1, 1 ] ) ], [ IdentityTransformation ] >
+2:  single piece groupoid with rays: < Group( 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
+[ Transformation( [ 1, 1, 1, 2 ] ) ], [ IdentityTransformation ] >
+3:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
+[ Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ) ], 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+4:  single piece groupoid with rays: < Group( 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
+[ Transformation( [ 1, 1, 2, 1 ] ) ], [ IdentityTransformation ] >
+5:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
+[ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 1, 1, 2 ] ) ], 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+6:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
+[ Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ) ], 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+7:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
+[ Transformation( [ 1, 1, 3, 2 ] ), Transformation( [ 1, 1, 4, 2 ] ) ], 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+8:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ], 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+gap> orag := ObjectList( rag );;
+gap> hs := Homset( rag, orag[3], orag[4] );;  
+gap> Display( hs );                  
+<homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
+  with elements:
+[Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> 
+Transformation( [ 1, 1, 1 ] )]
+
 #############################################################################
 ##
 #E  gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

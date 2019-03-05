@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gi                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -964,14 +964,12 @@ end );
 #############################################################################
 ##
 #M  PrintObj 
+#M  Display
 ##
 InstallMethod( PrintObj, "for a subset of elements of a groupoid", true, 
     [ IsHomsetCosets ], 0,
 function ( hc )
-    
-    local iter, g; 
-
-    if ( hc!.type = "h" ) then 
+        if ( hc!.type = "h" ) then 
         Print( "<homset ", hc!.tobs[1], " -> ", hc!.hobs[1],
                " with head group ", hc!.hgroup, ">" );
     elif ( hc!.type = "s" ) then 
@@ -991,6 +989,29 @@ function ( hc )
     else
         Print( "<object>");
     fi; 
+end );
+
+InstallMethod( Display, "for a subset of elements of a groupoid", true, 
+    [ IsHomsetCosets ], 0,
+function ( hc )
+    
+    local g; 
+
+    if ( hc!.type = "h" ) then 
+        Print( "<homset ", hc!.tobs[1], " -> ", hc!.hobs[1], 
+               " with elements:\n" );
+    elif ( hc!.type = "s" ) then 
+        Print( "star at ", hc!.tobs[1], " with elements:\n" ); 
+    elif ( hc!.type = "c" ) then 
+        Print( "costar at ", hc!.hobs[1], " with elements:\n" );
+    elif ( hc!.type = "r" ) then 
+        Print( "<right coset of ", hc!.ActingDomain, " with elements:\n" );
+    elif ( hc!.type = "l" ) then 
+        Print( "<left coset of ", hc!.ActingDomain, " with elements:\n" );
+    fi; 
+    for g in hc do  
+        Print( g, "\n" ); 
+    od; 
 end );
 
 #############################################################################
@@ -2627,6 +2648,79 @@ function( D, i )
     # store information
     info.embeddings[i] := hom;
     return hom;
+end );
+
+############################################################################# 
+## 
+#M  RightActionGroupoid
+## 
+InstallMethod( RightActionGroupoid, "for a group", true, [ IsGroup ], 0,
+function( G ) 
+
+    local elG; 
+
+    elG := Elements( G ); 
+    return SinglePieceGroupoidWithRays( G, elG, elG ); 
+end ); 
+
+InstallMethod( RightActionGroupoid, "for a monoid", true, [ IsMonoid ], 0,
+function( M )
+
+    local elM, lenM, elG, lenG, m, e, gpd, L, x, i, K, pos, gp, comp, 
+          j, obs, rays; 
+
+    elM := Elements( M ); 
+    lenM := Length( elM );
+    elG := [ ]; 
+    for m in M do 
+        if ( m^(-1) <> fail ) then 
+            Add( elG, m ); 
+        fi; 
+    od; 
+    lenG := Length( elG );
+    e := Identity( M ); 
+    if ( lenG = 1 ) then 
+        ## the groupoid is discrete 
+        gpd := HomogeneousDiscreteGroupoid( Group(e), elM ); 
+    else 
+        Info( InfoGroupoids, 1, "the group of M has size ", Length( elG ) ); 
+        ## construct the group component 
+        gpd := SinglePieceGroupoidWithRays( Group(e), elG, elG );  
+        L := ListWithIdenticalEntries( lenM, true ); 
+        for x in elG do 
+            L[ Position( elM, x ) ] := false; 
+        od; 
+        for i in [1..lenM] do 
+            if L[i] then 
+                ## construct the component with root elM[i]  
+                x := elM[i]; 
+                K := List( elG, t -> x*t ); 
+                pos := Filtered( [1..lenG], j -> K[1] = K[j] ); 
+                gp := Group( List( pos, j -> elG[j] ) ); 
+                if ( Size( gp ) = 1 ) then 
+                    comp := SinglePieceGroupoidWithRays( gp, K, elG ); 
+                else 
+                    obs := [ ];
+                    rays := [ ];
+                    for j in [1..lenG] do 
+                        pos := Positions( K, K[j] ); 
+                        if ( pos[1] = j ) then 
+                            Add( obs, K[j] ); 
+                            Add( rays, elG[j] ); 
+                        fi; 
+                    od; 
+                    comp := SinglePieceGroupoidWithRays( gp, obs, rays ); 
+                fi; 
+                for j in [1..lenG] do 
+                    L[ Position( elM, K[j] ) ] := false; 
+                od; 
+            Info( InfoGroupoids, 1, comp );
+            gpd := UnionOfPieces( gpd, comp );
+            fi; 
+        od;
+    fi; 
+    SetIsGroupoidWithMonoidObjects( gpd, true );
+    return gpd;
 end );
 
 ##############################################################################

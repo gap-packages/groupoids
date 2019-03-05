@@ -1,7 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.63dev for GAP 4.10.0 (16/02/19) 
+## Version 1.63dev for GAP 4.10.0 (00/03/19) 
 
+ * (05/03/19) added attribute RightActionGroupoid 
  * (16/02/19) added License field in PackageInfo.g 
 
 ## 1.61 -> 1.63  (23/10/18) 

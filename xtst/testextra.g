@@ -2,7 +2,7 @@
 ##
 #W  testextra.g               groupoids Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -12,7 +12,7 @@ LoadPackage( "groupoids" );
 pkgname := "groupoids"; 
 pkgdir := DirectoriesPackageLibrary( pkgname, "xtst" );
 testfiles := [ "autos.tst", "autos2.tst",  "cosets.tst", "homs.tst", 
-               "isos.tst",  "nicemap.tst", "subgpds.tst" ];
+               "isos.tst",  "nicemap.tst", "rt-act.tst", "subgpds.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );
