@@ -447,6 +447,8 @@ groupoid with 8 pieces:
 8:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
 [ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ], 
 [ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
+gap> IsGroupoidWithMonoidObjects( rag );
+true
 gap> orag := ObjectList( rag );;
 gap> hs := Homset( rag, orag[3], orag[4] );;  
 gap> Display( hs );                  
