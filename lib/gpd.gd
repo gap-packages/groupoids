@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gd                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -279,6 +279,18 @@ DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
 ## 
 DeclareOperation( "NormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "IsNormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+
+############################################################################# 
+## 
+#P  IsGroupoidWithMonoidObjects( <gpd> ) 
+## 
+DeclareProperty( "IsGroupoidWithMonoidObjects", IsGroupoid );  
+
+############################################################################# 
+## 
+#A  RightActionGroupoid( <M> )              
+## 
+DeclareAttribute( "RightActionGroupoid", IsMonoid );
 
 ############################################################################## 
 ## 
