@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -42,7 +42,13 @@ DeclareAttribute( "ParentMappingGroupoids", IsGeneralMappingWithObjects );
 #O  IsomorphismStandardGroupoid( <gpd>, <obs> )
 ##  
 DeclareOperation( "IsomorphismStandardGroupoid", 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
+    [ IsGroupoid, IsHomogeneousList ] );
+
+############################################################################# 
+## 
+#O  IsomorphismGroupoids( <gpd1>, <gpd2> )
+##  
+DeclareOperation( "IsomorphismGroupoids", [ IsGroupoid, IsGroupoid ] );
 
 
 ####################### functions from the 08.05 paper ####################### 
@@ -147,8 +153,3 @@ DeclareProperty( "IsGeneralMappingFromHomogeneousDiscrete",
     IsGeneralMappingWithObjects );
 DeclareProperty( "IsGroupoidHomomorphismFromHomogeneousDiscrete", 
     IsGeneralMappingWithObjects );
-
-############################################################################## 
-## 
-#E  gpdhom.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

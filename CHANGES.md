@@ -1,5 +1,11 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.65dev for GAP 4.10.0 (00/03/19) 
+
+ * (24/03/19) extended IsomorphismStandardGroupoid to a union of pieces
+ * (21/03/19) added operation IsomorphismGroupoids for single piece groupoids 
+              made a start on IsomorphismClassPositionsOfGroupoid 
+
 ## Version 1.65 for GAP 4.10.0 (05/03/19) 
 
  * (05/03/19) added attribute RightActionGroupoid 

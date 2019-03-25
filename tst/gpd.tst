@@ -2,7 +2,7 @@
 ##
 #W  gpd.tst                 groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpd.tst" );
@@ -456,7 +456,3 @@ gap> Display( hs );
   with elements:
 [Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]
-
-#############################################################################
-##
-#E  gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -2,7 +2,7 @@
 ##
 #W  isos.tst                   Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -59,8 +59,6 @@ groupoid homomorphism :
       [(1,6,4)(2,5,3)(7,8) : -9 -> -6] ], 
   [ [(1,3,2) : -4 -> -4], [(1,4,2) : -4 -> -4], [(1,3,4) : -4 -> -2], 
       [(2,3) : -4 -> -5], [(2,4,3) : -4 -> -1] ] ]
-gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 
-#############################################################################
-##
-#E  isos.tst . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+gap> #
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

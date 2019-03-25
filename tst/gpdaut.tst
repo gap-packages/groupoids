@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdaut.tst" );
@@ -368,7 +368,3 @@ groupoid homomorphism :
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "gpdaut.tst", 10000 );
-
-#############################################################################
-##
-#E  gpdaut.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

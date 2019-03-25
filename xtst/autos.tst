@@ -2,7 +2,7 @@
 ##
 #W  autos.tst                   Groupoids Package                Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -351,7 +351,3 @@ gap>
 
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-
-#############################################################################
-##
-#E  autos.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

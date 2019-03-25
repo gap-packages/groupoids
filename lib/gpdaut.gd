@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -64,6 +64,14 @@ DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
 DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
 DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
 
+############################################################################# 
+## 
+#A  AutomorphismGroupoidOfGroupooid( <gpd> ) 
+#A  IsomorphismClassesOfGroupoid( <gpd > ) 
+##  
+DeclareAttribute( "AutomorphismGroupoidOfGroupoid", IsGroupoid );
+DeclareAttribute( "IsomorphismClassPositionsOfGroupoid", IsGroupoid );
+
 ## ======================================================================== ##
 ##                Homogeneous discrete groupoid automorphisms               ##
 ## ======================================================================== ##
@@ -92,17 +100,10 @@ BindGlobal( "GroupoidHomomorphismDiscreteType",
 
 ############################################################################# 
 ## 
-#A  AutomorphismGroupoidOfGroupooid( <gpd> ) 
 #O  GroupoidAutomorphismByPiecesPermNC( <gpd>, <perm> )
 #O  GroupoidAutomorphismByPiecesPerm( <gpd>, <perm> )
 ##  
-DeclareAttribute( "AutomorphismGroupoidOfGroupoid", IsGroupoid );
 DeclareOperation( "GroupoidAutomorphismByPiecesPermNC", 
     [ IsGroupoid, IsPerm ] );
 DeclareOperation( "GroupoidAutomorphismByPiecesPerm", 
     [ IsGroupoid, IsPerm ] );
-    
-##############################################################################
-##
-#E  gpdaut.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

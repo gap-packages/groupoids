@@ -2,7 +2,7 @@
 ##
 #W  homs.tst                   Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -356,9 +356,6 @@ gap> GHa4 := UnionOfPieces( [ Ga4, Ha4 ] );;
 gap> iso23 := HomomorphismByUnion( GHa4, Ja4, [iso3,iso2] );;
 gap> ImageElm( iso23, Arrow( Ga4, (1,2,3), -7, -8 ) ); 
 [(1,2,3) : -27 -> -28]
+
 gap> ##
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-
-#############################################################################
-##
-#E  homs.tst . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

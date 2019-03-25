@@ -268,8 +268,3 @@ DeclareOperation( "ReducedImageElm", [ IsMappingToGroupWithGGRWS,
 ## 
 ## DeclareProperty( "IsGraphOfGroupsGroupoid", IsGroupoid );
 ## DeclareOperation( "GraphOfGroupsGroupoid", [ IsGraphOfGroups ] );
- 
-############################################################################# 
-## 
-#E  grpgraph.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

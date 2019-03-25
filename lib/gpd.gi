@@ -397,6 +397,11 @@ end );
 ##
 #M  DomainWithSingleObject
 ##
+InstallOtherMethod( DomainWithSingleObject, "no object specified", true, 
+    [ IsGroup ], 0, 
+function( gp ) 
+    return DomainWithSingleObject( gp, 0 ); 
+end );
 
 InstallMethod( DomainWithSingleObject, "generic method for a group",
     true, [ IsGroup, IsObject ], 0,
@@ -833,6 +838,7 @@ function( gp, obs )
         IsHomogeneousDomainWithObjects, true, 
         IsAssociative, true, 
         IsCommutative, IsCommutative( gp ), 
+        IsDirectProductWithCompleteDigraphDomain, false, 
         IsSinglePieceDomain, false ); 
     return gpd; 
 end );
@@ -1226,6 +1232,9 @@ function( gpd, o1, o2 )
     obs := gpd!.objects; 
     rays := RaysOfGroupoid( gpd );
     gp := ObjectGroup( gpd, o2 ); 
+    if ( o1 = o2 ) then 
+        return gp; 
+    fi;
     p1 := Position( obs, o1 ); 
     p2 := Position( obs, o2 );
     ray := rays[p1]^(-1) * rays[p2]; 
@@ -1496,8 +1505,8 @@ function( G, sgp )
     if not IsSubgroup( gpG, sgp ) then 
         Error( "sgp is not a subgroup of RootGroup(G)" ); 
     fi; 
-    if ( HasIsDirectProductWithCompleteDigraphDomain( G ) 
-         and IsDirectProductWithCompleteDigraphDomain( G ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( G ) 
+         and IsDirectProductWithCompleteDigraph( G ) ) then 
         U := SinglePieceGroupoid( sgp, G!.objects );
     else
         U := SubgroupoidWithRays( G, sgp, RaysOfGroupoid( G ) ); 
@@ -1626,7 +1635,7 @@ end );
 #M  SubgroupoidByObjects
 ##
 InstallMethod( SubgroupoidByObjects, "for direct product groupoid + objects", 
-    true, [ IsGroupoid and IsDirectProductWithCompleteDigraphDomain, 
+    true, [ IsGroupoid and IsDirectProductWithCompleteDigraph, 
     IsHomogeneousList ], 10,
 function( G, obsU )
 
@@ -1718,8 +1727,8 @@ function( gpd )
 
     local obs, len, gps, i, piece, U;
 
-    if ( HasIsDirectProductWithCompleteDigraphDomain( gpd ) 
-         and IsDirectProductWithCompleteDigraphDomain( gpd ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         U := HomogeneousDiscreteGroupoid( gpd!.magma, gpd!.objects ); 
     else 
         obs := ObjectList( gpd );
@@ -2722,8 +2731,3 @@ function( M )
     SetIsGroupoidWithMonoidObjects( gpd, true );
     return gpd;
 end );
-
-##############################################################################
-##
-#E  gpd.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

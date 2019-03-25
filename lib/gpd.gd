@@ -291,8 +291,3 @@ DeclareProperty( "IsGroupoidWithMonoidObjects", IsGroupoid );
 #A  RightActionGroupoid( <M> )              
 ## 
 DeclareAttribute( "RightActionGroupoid", IsMonoid );
-
-############################################################################## 
-## 
-#E  gpd.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

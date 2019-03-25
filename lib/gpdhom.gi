@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -908,10 +908,15 @@ InstallMethod( IsomorphismStandardGroupoid, "for a single piece groupoid",
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, obs )
 
-    local obs1, obs2, gp, gpd2, gens1, gens2;
+    local isdp, obs1, obs2, gp, gpd2, gens1, gens2;
 
-    if IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
-        return IdentityMapping( gpd1 ); 
+    isdp := IsDirectProductWithCompleteDigraphDomain( gpd1 ); 
+    if isdp then 
+        if ( obs = gpd1!.objects ) then 
+            return IdentityMapping( gpd1 ); 
+        else 
+            return IsomorphismNewObjects( gpd1, obs ); 
+        fi; 
     fi;
     obs1 := gpd1!.objects; 
     obs2 := Set( obs ); 
@@ -925,6 +930,74 @@ function( gpd1, obs )
     return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
 end );
 
+InstallMethod( IsomorphismStandardGroupoid, "for a groupoid with pieces", 
+    true, [ IsGroupoid, IsHomogeneousList ], 0,
+function( gpd1, obs )
+
+    local obs1, len1, obs2, k, pieces, nump, maps, range, i, p, lenp, m;
+
+    obs1 := ObjectList( gpd1 ); 
+    len1 := Length( obs1 );
+    obs2 := Set( obs ); 
+    if not ( Length(obs1) = Length(obs2) ) then
+        Error( "object sets have different lengths" );
+    fi; 
+    k := 0; 
+    pieces := Pieces( gpd1 ); 
+    nump := Length( pieces ); 
+    maps := ListWithIdenticalEntries( nump, 0 ); 
+    range := ListWithIdenticalEntries( nump, 0 ); 
+    for i in [1..nump] do 
+        p := pieces[i]; 
+        lenp := Length( p!.objects ); 
+        m := IsomorphismStandardGroupoid( p, obs2{[k+1..k+lenp]} );
+        maps[i] := m; 
+        range[i] := Range( m );
+        k := k + lenp;
+    od;
+    range := UnionOfPieces( range ); 
+    return HomomorphismByUnion( gpd1, range, maps );
+end );
+
+#############################################################################
+##
+#M  IsomorphismGroupoids
+##
+InstallMethod( IsomorphismGroupoids, "for two groupoids", true, 
+    [ IsGroupoid, IsGroupoid ], 0,
+function( gpd1, gpd2 )
+    Print( "IsomorphismGroupoids only installed for single piece groupoids\n" ); 
+end );
+
+InstallMethod( IsomorphismGroupoids, "for two single piece groupoids", 
+    true, [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece ], 0,
+function( gpd1, gpd2 )
+
+    local obs1, obs2, gp1, gp2, iso, gen1, len1, im2, i, a, g, u, v; 
+
+    obs1 := ObjectList( gpd1 ); 
+    obs2 := ObjectList( gpd2 ); 
+    if not ( Length( obs1 ) = Length( obs2 ) ) then 
+        return fail; 
+    fi;
+    gp1 := gpd1!.magma; 
+    gp2 := gpd2!.magma; 
+    iso := IsomorphismGroups( gp1, gp2 ); 
+    if ( iso = fail ) then 
+        return fail; 
+    fi; 
+    gen1 := GeneratorsOfGroupoid( gpd1 ); 
+    len1 := Length( gen1 );
+    im2 := ListWithIdenticalEntries( len1, 0 ); 
+    for i in [1..len1] do 
+        a := gen1[i]; 
+        g := ImageElm( iso, a![1] ); 
+        u := obs2[ Position( obs1, a![2] ) ]; 
+        v := obs2[ Position( obs1, a![3] ) ]; 
+        im2[i] := Arrow( gpd2, g, u, v ); 
+    od;
+    return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gen1, im2 );
+end );
 
 ## ======================================================================== ##
 ##                     Homogeneous groupoid homomorphisms                   ##
@@ -1018,8 +1091,3 @@ function( src, rng, homs, oims )
     fi; 
     return GroupoidHomomorphismFromHomogeneousDiscreteNC( src,rng,homs,oims ); 
 end );
-
-##############################################################################
-##
-#E  gpdhom.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

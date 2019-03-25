@@ -1610,8 +1610,3 @@ function ( map )
     return ForAll( MappingToSinglePieceData( map ), 
         c -> ( IsEndoGeneralMapping( c[1] ) and IsSubset( obs, c[2] ) ) ); 
 end ); 
-
-##############################################################################
-##
-#E  mwohom.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

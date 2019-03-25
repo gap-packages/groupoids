@@ -2,7 +2,7 @@
 ##
 #W  subgpds.tst                Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -109,6 +109,4 @@ groupoid with 8 pieces:
 7:  single piece groupoid: < Group( [ (2,4,3) ] ), [ -2 ] >
 8:  single piece groupoid: < Group( [ (2,4,3) ] ), [ -1 ] >
 
-#############################################################################
-##
-#E  subgpds.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
