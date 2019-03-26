@@ -119,10 +119,14 @@ DeclareCategoryCollections(
 ############################################################################# 
 ## 
 #C  IsGroupoidElement( <elt> ) 
+#C  IsGroupoidByIsomorphismsElement( <elt> ) 
 ## 
 DeclareCategory( "IsGroupoidElement", 
     IsMultiplicativeElementWithObjectsAndInverses ); 
 DeclareCategoryCollections( "IsGroupoidElement" ); 
+DeclareCategory( "IsGroupoidByIsomorphismsElement", 
+    IsMultiplicativeElementWithObjectsAndInverses ); 
+DeclareCategoryCollections( "IsGroupoidByIsomorphismsElement" ); 
 
 ############################################################################# 
 ##  
@@ -132,6 +136,7 @@ DeclareCategoryCollections( "IsGroupoidElement" );
 #V  IsGroupoidElementFamily  . . . . . . . . family for elements of groupoids
 #T  IsMultiplicativeElementWithObjectsType  default type for elements of mwos 
 #T  IsGroupoidElementType  . . . . . . default type for elements of groupoids
+#T  IsGroupoidByIsomorphismsElementType  . special type for groupoid elements
 ##  
 BindGlobal( "IsMultiplicativeElementWithObjectsFamily", 
     NewFamily( "IsMultiplicativeElementWithObjectsFamily", 
@@ -148,12 +153,14 @@ BindGlobal( "IsMultiplicativeElementWithObjectsAndInversesFamily",
 BindGlobal( "IsGroupoidElementFamily", 
     NewFamily( "IsGroupoidElementFamily", IsGroupoidElement, 
                CanEasilySortElements, CanEasilySortElements ) ); 
-
 BindGlobal( "IsMultiplicativeElementWithObjectsType", 
             NewType( IsMultiplicativeElementWithObjectsFamily, 
                      IsMultiplicativeElementWithObjects ) );
 BindGlobal( "IsGroupoidElementType", 
             NewType( IsGroupoidElementFamily, IsGroupoidElement ) );
+BindGlobal( "IsGroupoidByIsomorphismsElementType", 
+            NewType( IsGroupoidElementFamily, 
+                     IsGroupoidByIsomorphismsElement ) );
 
 ############################################################################## 
 ## 

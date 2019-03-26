@@ -68,6 +68,43 @@ end );
 
 #############################################################################
 ##
+#M  GroupoidByIsomorphisms
+##
+InstallMethod( GroupoidByIsomorphisms, 
+    "generic method for a group, a set of objects, and a set of isos", true, 
+    [ IsGroup, IsHomogeneousList, IsList ], 0,
+function( rgp, obs, isos )
+
+    local fam, gpd, gps, i, iso, inv;
+
+    if not ( Length( obs ) = Length( isos ) ) then 
+        Error( "obs and isos should have the same length" ); 
+    fi; 
+    fam := IsGroupoidFamily;
+    gpd := rec( objects := obs, magma := rgp, isomorphisms := isos ); 
+    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
+        IsDirectProductWithCompleteDigraph, false, 
+        IsSinglePieceDomain, true, 
+        IsGroupoidByIsomorphisms, true ); 
+    gps := ShallowCopy( obs ); 
+    gps[1] := rgp; 
+    for i in [1..Length(obs)] do 
+        iso := isos[i]; 
+        if not ( IsGroupHomomorphism( iso ) and IsBijective( iso ) ) then 
+            Error( "expecting the isos to be group isomorphisms" ); 
+        fi; 
+        gps[i] := Image( iso );
+        inv := InverseGeneralMapping( iso ); 
+    od; 
+    SetObjectGroups( gpd, gps );
+    gpd!.rays := List( gps, g -> [ One(rgp), One(g) ] ); 
+    return gpd; 
+end );
+
+
+
+#############################################################################
+##
 #M  SubgroupoidWithRays
 #M  SubgroupoidWithRaysNC 
 ##
@@ -850,8 +887,22 @@ end );
 
 #############################################################################
 ##
+#M  ArrowNC
 #M  Arrow 
 ##
+InstallOtherMethod( ArrowNC, 
+    "for groupoid by isomorphisms, pair of elements, tail and head objects", 
+    true, [ IsGroupoid, IsList, IsObject, IsObject ], 0, 
+function( gpd, pair, t, h ) 
+
+    local obs, elt, fam;
+
+    fam := IsGroupoidElementFamily; 
+    elt := Objectify( IsGroupoidByIsomorphismsElementType, 
+                      [ pair, t, h, gpd ] ); 
+    return elt; 
+end ); 
+
 InstallMethod( Arrow, "generic method for a groupoid element",
     true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
 function( gpd, g, i, j ) 
@@ -878,6 +929,37 @@ function( gpd, g, i, j )
         return fail;
     else
         return ArrowNC( true, g, i, j ); 
+    fi;
+end );
+
+InstallOtherMethod( Arrow, "generic method for a groupoid by isomorphisms",
+    true, [ IsGroupoidByIsomorphisms, IsList, IsObject, IsObject ], 0,
+function( gpd, pair, o1, o2 ) 
+
+    local comp, obs, ok1, p1, p2, gps, g1, g2, isos, iso, rays;
+
+    if ( HasIsSinglePiece( gpd ) 
+         and IsSinglePiece( gpd ) ) then 
+        comp := gpd; 
+    else 
+        comp := PieceOfObject( gpd, o1 );
+    fi; 
+    obs := comp!.objects; 
+    ok1 := ( ( o1 in obs ) and ( o2 in obs ) ); 
+    if not ok1 then 
+        return fail; 
+    fi;
+    p1 := Position( obs, o1 ); 
+    p2 := Position( obs, o2 );
+    gps := ObjectGroups( gpd ); 
+    g1 := pair[1]; 
+    g2 := pair[2]; 
+    isos := gpd!.isomorphisms; 
+    iso := InverseGeneralMapping( isos[p1] ) * isos[p2]; 
+    if not ( ImageElm( iso, g1 ) = g2 ) then 
+        return fail; 
+    else 
+        return ArrowNC( gpd, pair, o1, o2 ); 
     fi;
 end );
 
@@ -1227,9 +1309,10 @@ InstallMethod( HomsetNC, "for a connected groupoid and two objects",
     true, [ IsGroupoid and IsSinglePiece, IsObject, IsObject ], 0,
 function( gpd, o1, o2 )
 
-    local gp, obs, rays, ray, hs, p1, p2;
+    local obs, rob, rays, gp, p1, p2, ray, hs;
     
     obs := gpd!.objects; 
+    rob := obs[1]; 
     rays := RaysOfGroupoid( gpd );
     gp := ObjectGroup( gpd, o2 ); 
     if ( o1 = o2 ) then 
@@ -1237,7 +1320,13 @@ function( gpd, o1, o2 )
     fi;
     p1 := Position( obs, o1 ); 
     p2 := Position( obs, o2 );
-    ray := rays[p1]^(-1) * rays[p2]; 
+    if ( o1 = rob ) then 
+        ray := rays[p2]; 
+    elif ( o2 = rob ) then 
+        ray := rays[p1]^(-1); 
+    else 
+        ray := rays[p1]^(-1) * rays[p2]; 
+    fi;
     hs := rec( hgroup := gp, tobs := [ o1 ], hobs := [ o2 ], 
                hrays := [ ray ], rep := (), type := "h" ); 
     ObjectifyWithAttributes( hs, IsHomsetCosetsType, 
@@ -2471,6 +2560,32 @@ function( e1, e2 )
     return ArrowNC( true, e1![1]*e2![1], e1![2], e2![3] );
 end );
 
+InstallMethod( \*, "for two groupoid by isomorphisms elements", IsIdenticalObj,
+    [ IsGroupoidByIsomorphismsElement, IsGroupoidByIsomorphismsElement ], 0,
+function( e1, e2 )
+
+    local u, v, w, gpd, obs, pu, pv, pw, isos, invuv, isovw, prod, g1, g2; 
+
+    u := e1![2]; 
+    v := e1![3]; 
+    w := e2![3]; 
+    gpd := e1![4]; 
+    if ( ( v <> e2![2] ) and ( gpd <> e2![4] ) ) then
+        return fail;
+    fi; 
+    isos := gpd!.isomorphisms; 
+    obs := gpd!.objects; 
+    pu := Position( obs, u ); 
+    pv := Position( obs, v ); 
+    pw := Position( obs, w ); 
+    invuv := InverseGeneralMapping( isos[pv] ) * isos[pu]; 
+    isovw := InverseGeneralMapping( isos[pv] ) * isos[pw];
+    prod := e1![1][2] * e2![1][1]; 
+    g1 := ImageElm( invuv, prod ); 
+    g2 := ImageElm( isovw, prod ); 
+    return Arrow( gpd, [ g1, g2 ], e1![2], e2![3] ); 
+end );
+
 InstallMethod( \^, "for a groupoid element and an integer", true,
     [ IsGroupoidElement, IsInt ], 0,
 function( e, n )
@@ -2488,6 +2603,27 @@ function( e, n )
     fi; 
     return fail; 
 end );
+
+InstallMethod( \^, "for a groupoid by isomorphisms element and an integer", 
+    true, [ IsGroupoidByIsomorphismsElement, IsInt ], 0,
+function( e, n )
+
+    local t, h, gpd, isos;
+
+    t := e![2];
+    h := e![3];
+    gpd := e![4]; 
+    isos := gpd!.isomorphisms; 
+    if ( n = 1 ) then
+        return e;
+    elif ( n = -1 ) then
+        return Arrow( gpd, [ e![1][2]^(-1), e![1][1]^(-1) ], h, t );
+    elif ( t = h ) then
+        return Arrow( gpd, [ e![1][1]^n, e![1][2]^n ], t, h );
+    fi; 
+    return fail; 
+end );
+
 
 ##  This operator follows the definitions in Alp/Wensley 2010
 
@@ -2539,21 +2675,25 @@ function( e1, e2 )
     fi; 
 end );
 
-#############################################################################
-##
-#M  \^( <gpd>, <elt> )
-##
-##  InstallOtherMethod( \^, "generic method for groupoid and element",
-##      IsCollsElms, [ IsGroupoid, IsGroupoidElement ], ConjugateGroupoid );
-
 ############################################################################# 
 ## 
 #M  IdentityArrow
 ## 
 InstallMethod( IdentityArrow, "for a connected groupoid and object",
     true, [ IsGroupoid and IsSinglePiece, IsObject ], 0,
-function( gpd, obj )
-    return ArrowNC( true, One(gpd!.magma), obj, obj );
+function( gpd, obj ) 
+
+    local pos, gps, id; 
+
+    if ( HasIsGroupoidByIsomorphisms( gpd ) 
+         and IsGroupoidByIsomorphisms( gpd ) ) then 
+        pos := Position( gpd!.objects, obj ); 
+        gps := ObjectGroups( gpd );
+        id := One( gps[pos] ); 
+        return Arrow( gpd, [ id, id ], obj, obj );
+    else 
+        return ArrowNC( true, One(gpd!.magma), obj, obj );
+    fi;
 end );
 
 InstallMethod( IdentityArrow, "generic method for groupoid and object",

@@ -1014,6 +1014,94 @@ single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ),
 </Example>
 </Section>
 
+<Section Label="sec-gpd-isos">
+<Heading>Groupoids formed using isomorphisms</Heading>
+
+Here we describe an alternative way of constructing a connected groupoid. 
+This section  has been introduced in version 1.66 of the package, 
+and so should be considered very experimental, and liable to change. 
+<P/> 
+Object groups in a connected groupoid are isomorphic, 
+so we may use a collection of isomorphisms to form a groupoid. 
+Let <M>G_1,G_2,\ldots,G_n</M> be isomorphic groups and, 
+for <M>2 \leqslant i \leqslant n</M>, 
+let <M>\mu_i : G_1 \to G_i</M> be isomorphisms. 
+Then <M>\mu_{ij} = \mu_i^{-1}*\mu_j</M> is an isomorphism 
+from <M>G_i</M> to <M>G_j</M>. 
+If we take <M>\{u_1,\ldots,u_n\}</M> to be our set of objects, 
+with <M>G_i</M> the object group at <M>u_i</M>, 
+we may consider the arrows in the groupoid to have the form 
+<M>[[g_i,g_j] : u_i \to u_j]</M> 
+where <M>g_i \in G_i</M> and <M>g_j = \mu_{ij}(g_i) \in G_j</M>.  
+<P/>
+<ManSection>
+   <Oper Name="GroupoidByIsomorphisms"
+         Arg="gp, obs, isos" />
+   <Prop Name="IsGroupoidByIsomorphisms"
+         Arg="gpd" />
+<Description>
+The operation <C>GroupoidByIsomorphisms</C> 
+takes a group <C>G1</C> as root group; a set of <M>n</M> objects; 
+and a set of <M>n</M> isomorphisms from the root group, 
+where the first isomorphism should be the identity mapping on <C>G1</C>. 
+The output is a single piece groupoid of type <C>IsGroupoidByIsomorphisms</C>. 
+Its rays have the form <C>[One(G1),One(Gi)]</C> 
+where <C>Gi</C> is the image of the <M>i</M>-th isomorphism. 
+<P/>
+In the example we first take three permutation groups isomorphic 
+to the symmetric group <M>S_3</M>. 
+There follows an isomorphic groupoid whose object groups are 
+a permutation group; a pc-group and an fp-group. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> s3a := Group( (1,2), (2,3) );; 
+gap> s3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;
+gap> s3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;
+gap> ida := IdentityMapping( s3a );; 
+gap> isoab := IsomorphismGroups( s3a, s3b );; 
+gap> isoac := IsomorphismGroups( s3a, s3c );;
+gap> isos1 := [ ida, isoab, isoac ];; 
+gap> G1 := GroupoidByIsomorphisms( s3a, [-3,-2,-1], isos1 );; 
+gap> x1 := ImageElm( isos1[2], (1,2) );;
+gap> a1 := Arrow( G1, [ (1,2), x1 ], -3, -2 );
+[[ (1,2), (4,5)(6,9)(7,8) ] : -3 -> -2]
+gap> a1^-1;
+[[ (4,5)(6,9)(7,8), (1,2) ] : -2 -> -3]
+gap> y1 := ImageElm( isos1[2], (2,3) );;
+gap> z1 := ImageElm( isos1[3], (2,3) );;
+gap> b1 := Arrow( G1, [ y1, z1 ], -2, -1 );
+[[ (4,9)(5,8)(6,7), (5,9)(6,8) ] : -2 -> -1]
+gap> c1 := a1*b1;
+[[ (1,3,2), (4,8,6)(5,9,7) ] : -3 -> -1]
+
+gap> isopc := IsomorphismPcGroup( s3a );; 
+gap> s3p := Image( isopc );;
+gap> isofp := IsomorphismFpGroup( s3a );; 
+gap> s3f := Image( isofp );; 
+gap> isos2 := [ ida, isopc, isofp ];;
+gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
+gap> x2 := ImageElm( isos2[2], (1,2) );;
+gap> a2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );
+[[ (1,2), f1*f2 ] : -7 -> -6]
+gap> a2^-1;
+[[ f1*f2, (1,2) ] : -6 -> -7]
+gap> y2 := ImageElm( isos2[2], (2,3) );;
+gap> z2 := ImageElm( isos2[3], (2,3) );;
+gap> b2 := Arrow( G2, [ y2, z2 ], -6, -5 );
+[[ f1, F1 ] : -6 -> -5]
+gap> c2 := a2*b2; 
+[[ (1,3,2), F2^2 ] : -7 -> -5]
+]]>
+</Example>
+
+
+
+
+</Section> 
+
 <Section Label="sec-mon-gpd">
 <Heading>Groupoids whose objects form a monoid</Heading>
 

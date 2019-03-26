@@ -934,7 +934,7 @@ function( gpd )
     pieces := Pieces( gpd ); 
     cpos := IsomorphismClassPositionsOfGroupoid( gpd ); 
     numc := Length( cpos );
-    obs := List( P, p -> p!.objects ); 
+    obs := List( pieces, p -> p!.objects ); 
     obs := List( cpos, K -> obs{K} ); 
     obs := List( obs, K -> Set( Flat( K ) ) ); 
 Print("obs = ",obs,"\n");

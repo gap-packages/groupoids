@@ -2,6 +2,7 @@
 
 ## Version 1.65dev for GAP 4.10.0 (00/03/19) 
 
+ * (26/03/19) added (Is)GroupoidByIsomorphisms with test and manual entry. 
  * (24/03/19) extended IsomorphismStandardGroupoid to a union of pieces
  * (21/03/19) added operation IsomorphismGroupoids for single piece groupoids 
               made a start on IsomorphismClassPositionsOfGroupoid 
