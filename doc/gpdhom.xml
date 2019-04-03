@@ -391,6 +391,25 @@ groupoid homomorphism :
 ]]>
 </Example>
 
+This operation may also be used to provide a standard form for groupoids 
+of type <C>IsGroupoidByIsomorphisms</C> as described in subsection 
+<Ref Oper="GroupoidByIsomorphisms"/>. 
+<P/> 
+<Example>
+<![CDATA[
+gap> G2;
+single piece groupoid with rays: < Group( [ (1,2), (2,3) ] ), [ -7, -6, -5 ], 
+[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
+gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
+groupoid homomorphism : 
+[ [ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+      [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> 
+        -5] ], 
+  [ [(1,2) : -17 -> -17], [(2,3) : -17 -> -17], [() : -17 -> -16], 
+      [() : -17 -> -15] ] ]
+]]>
+</Example>
+
 <ManSection>
    <Attr Name="IsomorphismPermGroupoid"
          Arg="gpd" />

@@ -13,8 +13,6 @@
 #O  RayArrowsOfGroupoid( <gpd> ) 
 #A  GeneratorsOfGroupoid( <gpd> )
 ## 
-##  (03/10/08)  changed these from Attributes to Operations which
-##              call the equivalent MagmaWithObjects attributes 
 DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] ); 
 DeclareAttribute( "RaysOfGroupoid", IsGroupoid ); 
 DeclareOperation( "RayArrowsOfGroupoid", [ IsGroupoid ] ); 
@@ -94,7 +92,8 @@ DeclareOperation( "SinglePieceGroupoidWithRays",
 ## 
 DeclareOperation( "GroupoidByIsomorphisms", 
     [ IsGroup, IsHomogeneousList, IsList ] );
-DeclareProperty( "IsGroupoidByIsomorphisms", IsGroupoid );
+DeclareProperty( "IsGroupoidByIsomorphisms", 
+                 IsSinglePieceDomain and IsGroupoid );
 
 ############################################################################# 
 ##                         

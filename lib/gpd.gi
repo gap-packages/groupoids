@@ -349,7 +349,12 @@ function( gpd )
     m := gpd!.magma; 
     mgens := GeneratorsOfGroup( m ); 
     id := One( m ); 
-    gens1 := List( mgens, g -> ArrowNC( true, g, o1, o1 ) ); 
+    if ( HasIsGroupoidByIsomorphisms( gpd ) 
+         and IsGroupoidByIsomorphisms( gpd ) ) then 
+        gens1 := List( mgens, g -> Arrow( gpd, [ g, g ], o1, o1 ) ); 
+    else 
+        gens1 := List( mgens, g -> ArrowNC( true, g, o1, o1 ) ); 
+    fi;
     if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
         gens2 := List( obs{[2..nobs]}, o -> GroupoidElement(gpd,id,o1,o) ); 
@@ -591,7 +596,24 @@ function( gpd )
                 Print( gp, " = <", GeneratorsOfGroup( gp ), ">\n" );
             else
                 Print( gp, "\n" );
+            fi; 
+        elif ( HasIsGroupoidByIsomorphisms( gpd ) 
+               and IsGroupoidByIsomorphisms( gpd ) ) then 
+            Print( "single piece groupoid by isomorphisms: " ); 
+            if HasName( gpd ) then
+                Print( gpd );
             fi;
+            Print( "\n" ); 
+            Print( "      objects: ", gpd!.objects, "\n" );
+            rgp := gpd!.magma;
+            Print( "   root group: " );
+            if HasName( rgp ) then
+                Print( rgp, " = <", GeneratorsOfGroup( rgp ), ">\n" );
+            else
+                Print( rgp, "\n" );
+            fi; 
+            Print( " isomorphisms: " ); 
+            Perform( gpd!.isomorphisms, Display );
         else
             Print( "single piece groupoid with rays having: " );
             if HasName( gpd ) then
@@ -658,46 +680,53 @@ end );
 
 #############################################################################
 ##
-#M  \=( <g1>, <g2> )  . . . . . . . . . . . . test if two groupoids are equal
+#M  \=( <G1>, <G2> )  . . . . . . . . . . . . test if two groupoids are equal
 ##
 InstallMethod( \=, "for a connected groupoid", true, ## IsIdenticalObj,
     [ IsGroupoid and IsSinglePiece, IsGroupoid ], 
-function ( g1, g2 )
+function ( G1, G2 )
 
     ## Print( "### method 1 for =\n" ); 
-    if not IsSinglePiece( g2 ) then
+    if not IsSinglePiece( G2 ) then
         return false;
     fi; 
-    if not ( IsDirectProductWithCompleteDigraph( g1 ) = 
-             IsDirectProductWithCompleteDigraph( g2 ) ) then
+    if not ( IsDirectProductWithCompleteDigraph( G1 ) = 
+             IsDirectProductWithCompleteDigraph( G2 ) ) then
         return false;
     fi;
-    if IsDirectProductWithCompleteDigraph( g1 ) then
-        return ( ( g1!.objects = g2!.objects ) and ( g1!.magma = g2!.magma ) ); 
-    elif ( IsSinglePieceRaysRep( g1 ) and IsSinglePieceRaysRep( g2 ) ) then 
-        return ( ( Parent( g1 ) = Parent( g2 ) ) and 
-                  ( g1!.magma = g2!.magma ) and 
-                  ForAll( [1..Length(g1!.rays)], 
-                      j -> g1!.rays[j] * g2!.rays[j]^-1 in g1!.magma ) ); 
+    if IsDirectProductWithCompleteDigraph( G1 ) then
+        return ( ( G1!.objects = G2!.objects ) and ( G1!.magma = G2!.magma ) ); 
+    elif ( HasIsGroupoidByIsomorphisms( G1 ) 
+           and IsGroupoidByIsomorphisms( G1 ) ) then 
+        return ( HasIsGroupoidByIsomorphisms( G2 ) 
+                 and IsGroupoidByIsomorphisms( G2 ) 
+                 and ( G1!.objects = G2!.objects ) 
+                 and ( ObjectGroups( G1 ) = ObjectGroups( G2 ) ) 
+                 and ( G1!.isomorphisms = G2!.isomorphisms ) ); 
+    elif ( IsSinglePieceRaysRep( G1 ) and IsSinglePieceRaysRep( G2 ) ) then 
+        return ( ( Parent( G1 ) = Parent( G2 ) ) and 
+                  ( G1!.magma = G2!.magma ) and 
+                  ForAll( [1..Length(G1!.rays)], 
+                      j -> G1!.rays[j] * G2!.rays[j]^-1 in G1!.magma ) ); 
     else 
-        Error( "method not found for g1=g2," ); 
+        Error( "method not found for G1=G2," ); 
     fi;
 end );
 
 InstallMethod( \=, "for a groupoid", true, [ IsGroupoid, IsGroupoid ], 
-function ( g1, g2 )
+function ( G1, G2 )
     local c1, c2, len, obj, i, j;
 
     ## Print( "### method 2 for =\n" ); 
-    c1 := Pieces( g1 );
-    c2 := Pieces( g2 );
+    c1 := Pieces( G1 );
+    c2 := Pieces( G2 );
     len := Length( c1 );
-    if ( ( len <> Length(c2) ) or ( ObjectList(g1) <> ObjectList(g2) ) ) then
+    if ( ( len <> Length(c2) ) or ( ObjectList(G1) <> ObjectList(G2) ) ) then
         return false;
     fi;
     for i in [1..len] do
         obj := c1[i]!.objects[1];
-        j := PieceNrOfObject( g2, obj );
+        j := PieceNrOfObject( G2, obj );
         if ( c1[i] <> c2[j] ) then
             return false;
         fi;
@@ -892,7 +921,7 @@ end );
 ##
 InstallOtherMethod( ArrowNC, 
     "for groupoid by isomorphisms, pair of elements, tail and head objects", 
-    true, [ IsGroupoid, IsList, IsObject, IsObject ], 0, 
+    true, [ IsGroupoid, IsList, IsObject, IsObject ], 10, 
 function( gpd, pair, t, h ) 
 
     local obs, elt, fam;
@@ -907,7 +936,7 @@ InstallMethod( Arrow, "generic method for a groupoid element",
     true, [ IsGroupoid, IsMultiplicativeElement, IsObject, IsObject ], 0,
 function( gpd, g, i, j ) 
 
-    local comp, obs, ok1, ok2, rays;
+    local comp, obs, ok1, ok2, rays, ri, rj;
 
     if ( HasIsSinglePiece( gpd ) 
          and IsSinglePiece( gpd ) ) then 
@@ -922,8 +951,9 @@ function( gpd, g, i, j )
         ok2 := ( g in comp!.magma ); 
     else 
         rays := comp!.rays; 
-        ok2 := rays[Position(obs,i)] * g * rays[Position(obs,j)]^(-1) 
-                in comp!.magma; 
+        ri := rays[ Position( obs, i ) ]; 
+        rj := rays[ Position( obs, j ) ];
+        ok2 := ri * g * rj^(-1) in comp!.magma; 
     fi; 
     if not ( ok1 and ok2 ) then 
         return fail;
@@ -936,17 +966,13 @@ InstallOtherMethod( Arrow, "generic method for a groupoid by isomorphisms",
     true, [ IsGroupoidByIsomorphisms, IsList, IsObject, IsObject ], 0,
 function( gpd, pair, o1, o2 ) 
 
-    local comp, obs, ok1, p1, p2, gps, g1, g2, isos, iso, rays;
+    local obs, ok1, p1, p2, gps, g1, g2, isos, iso, rays;
 
-    if ( HasIsSinglePiece( gpd ) 
-         and IsSinglePiece( gpd ) ) then 
-        comp := gpd; 
-    else 
-        comp := PieceOfObject( gpd, o1 );
-    fi; 
-    obs := comp!.objects; 
+    Info( InfoGroupoids, 3, "Arrow: method for groupoid by isomorphisms" ); 
+    obs := gpd!.objects; 
     ok1 := ( ( o1 in obs ) and ( o2 in obs ) ); 
     if not ok1 then 
+        Info( InfoGroupoids, 2, "o1, o2 not both in gpd" ); 
         return fail; 
     fi;
     p1 := Position( obs, o1 ); 
@@ -957,6 +983,7 @@ function( gpd, pair, o1, o2 )
     isos := gpd!.isomorphisms; 
     iso := InverseGeneralMapping( isos[p1] ) * isos[p2]; 
     if not ( ImageElm( iso, g1 ) = g2 ) then 
+        Info( InfoGroupoids, 2, "iso(g1) <> g2" );
         return fail; 
     else 
         return ArrowNC( gpd, pair, o1, o2 ); 
@@ -1033,6 +1060,29 @@ function( e, gpd )
         r2 := rays[ Position( obs, e![3] ) ]; 
         return ( r1 * e![1] * r2^(-1) in gpd!.magma ); 
     fi; 
+end );
+
+InstallMethod( \in, "for groupoid element and a groupoid by isomorphisms", 
+    true, [ IsGroupoidElement, IsGroupoidByIsomorphisms ], 0,
+function( e, gpd )
+
+    local obs, rays, gps, isos, iso12, p1, p2;
+
+    obs := gpd!.objects; 
+    if not ( (e![2] in obs) and (e![3] in obs) ) then 
+        return false; 
+    fi; 
+    if not ( e![4] = gpd ) then 
+        return false; 
+    fi; 
+    rays := gpd!.rays; 
+    isos := gpd!.isomorphisms; 
+    gps := ObjectGroups( gpd ); 
+    p1 := Position( obs, e![2] ); 
+    p2 := Position( obs, e![3] ); 
+    iso12 := InverseGeneralMapping( isos[p1] ) * isos[p2]; 
+    return ( ( e![1][1] in gps[p1] ) and ( e![1][2] in gps[p2] ) 
+             and ( ImageElm( iso12, e![1][1] ) = e![1][2] ) ); 
 end );
 
 InstallMethod( \in, "for groupoid element and a union of constituents", true, 

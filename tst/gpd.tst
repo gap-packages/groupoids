@@ -401,6 +401,9 @@ gap> isoab := IsomorphismGroups( s3a, s3b );;
 gap> isoac := IsomorphismGroups( s3a, s3c );;
 gap> isos1 := [ ida, isoab, isoac ];; 
 gap> G1 := GroupoidByIsomorphisms( s3a, [-3,-2,-1], isos1 );; 
+gap> gens1 := GeneratorsOfGroupoid( G1 );                    
+[ [[ (1,2), (1,2) ] : -3 -> -3], [[ (2,3), (2,3) ] : -3 -> -3], 
+  [[ (), () ] : -3 -> -2], [[ (), () ] : -3 -> -1] ]
 gap> x1 := ImageElm( isos1[2], (1,2) );;
 gap> a1 := Arrow( G1, [ (1,2), x1 ], -3, -2 );
 [[ (1,2), (4,5)(6,9)(7,8) ] : -3 -> -2]
@@ -419,6 +422,10 @@ gap> isofp := IsomorphismFpGroup( s3a );;
 gap> s3f := Image( isofp );; 
 gap> isos2 := [ ida, isopc, isofp ];;
 gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
+gap> gens2 := GeneratorsOfGroupoid( G2 );
+[ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+  [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> -5] 
+ ]
 gap> x2 := ImageElm( isos2[2], (1,2) );;
 gap> a2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );
 [[ (1,2), f1*f2 ] : -7 -> -6]

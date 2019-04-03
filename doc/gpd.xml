@@ -1032,7 +1032,10 @@ If we take <M>\{u_1,\ldots,u_n\}</M> to be our set of objects,
 with <M>G_i</M> the object group at <M>u_i</M>, 
 we may consider the arrows in the groupoid to have the form 
 <M>[[g_i,g_j] : u_i \to u_j]</M> 
-where <M>g_i \in G_i</M> and <M>g_j = \mu_{ij}(g_i) \in G_j</M>.  
+where <M>g_i \in G_i</M> and <M>g_j = \mu_{ij}(g_i) \in G_j</M>. 
+The product of <M>[[g_i,g_j] : u_i \to u_j]</M> 
+and <M>[[g'_j,g_k] : u_j \to u_k]</M> 
+is <M>[[\mu_{ij}^{-1}(g_jg'_j), \mu_{jk}(g_jg'_j)] : u_i \to u_k]</M>. 
 <P/>
 <ManSection>
    <Oper Name="GroupoidByIsomorphisms"
@@ -1065,6 +1068,9 @@ gap> isoab := IsomorphismGroups( s3a, s3b );;
 gap> isoac := IsomorphismGroups( s3a, s3c );;
 gap> isos1 := [ ida, isoab, isoac ];; 
 gap> G1 := GroupoidByIsomorphisms( s3a, [-3,-2,-1], isos1 );; 
+gap> gens1 := GeneratorsOfGroupoid( G1 );                    
+[ [[ (1,2), (1,2) ] : -3 -> -3], [[ (2,3), (2,3) ] : -3 -> -3], 
+  [[ (), () ] : -3 -> -2], [[ (), () ] : -3 -> -1] ]
 gap> x1 := ImageElm( isos1[2], (1,2) );;
 gap> a1 := Arrow( G1, [ (1,2), x1 ], -3, -2 );
 [[ (1,2), (4,5)(6,9)(7,8) ] : -3 -> -2]
@@ -1083,6 +1089,10 @@ gap> isofp := IsomorphismFpGroup( s3a );;
 gap> s3f := Image( isofp );; 
 gap> isos2 := [ ida, isopc, isofp ];;
 gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
+gap> gens2 := GeneratorsOfGroupoid( G2 );
+[ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+  [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> -5] 
+ ]
 gap> x2 := ImageElm( isos2[2], (1,2) );;
 gap> a2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );
 [[ (1,2), f1*f2 ] : -7 -> -6]
@@ -1097,10 +1107,8 @@ gap> c2 := a2*b2;
 ]]>
 </Example>
 
-
-
-
 </Section> 
+
 
 <Section Label="sec-mon-gpd">
 <Heading>Groupoids whose objects form a monoid</Heading>

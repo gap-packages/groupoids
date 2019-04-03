@@ -140,6 +140,7 @@ DeclareRepresentation( "IsGroupoidHomomorphismFromHomogeneousDiscreteRep",
 #A  ObjectHomomorphisms( <map> ) 
 #P  IsGeneralMappingFromHomogeneousDiscrete( <map> ) 
 #P  IsGroupoidHomomorphismFromHomogeneousDiscrete( <map> ) 
+#P  IsGroupoidHomomorphismWithGroupoidByIsomorphisms( <map> ) 
 ##  
 DeclareOperation( "GroupoidHomomorphismFromHomogeneousDiscrete", 
     [ IsHomogeneousDiscreteGroupoid, IsGroupoid, IsHomogeneousList, 
@@ -152,4 +153,6 @@ DeclareAttribute( "ObjectHomomorphisms",
 DeclareProperty( "IsGeneralMappingFromHomogeneousDiscrete", 
     IsGeneralMappingWithObjects );
 DeclareProperty( "IsGroupoidHomomorphismFromHomogeneousDiscrete", 
+    IsGeneralMappingWithObjects );
+DeclareProperty( "IsGroupoidHomomorphismWithGroupoidByIsomorphisms", 
     IsGeneralMappingWithObjects );

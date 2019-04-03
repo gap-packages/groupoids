@@ -1,7 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.65dev for GAP 4.10.0 (00/03/19) 
+## Version 1.65dev for GAP 4.10.1 (00/03/19) 
 
+ * (03/04/19) methods for homomorphisms with GroupoidByIsomorphisms 
  * (26/03/19) added (Is)GroupoidByIsomorphisms with test and manual entry. 
  * (24/03/19) extended IsomorphismStandardGroupoid to a union of pieces
  * (21/03/19) added operation IsomorphismGroupoids for single piece groupoids 
