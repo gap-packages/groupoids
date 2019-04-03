@@ -2,7 +2,7 @@
 ##
 #W  gpd.tst                 groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpd.tst" );
@@ -391,11 +391,54 @@ gap> u := Arrow( Gs4, (1,2,3), -15, -14 );
 gap> ConjugateGroupoid( Kd8, u );                                        
 single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2), (), (2,4,3), (1,4)(2,3) ] >
-gap> #
-gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
-gap> STOP_TEST( "gpd.tst", 10000 );
 
 ## SubSection 4.6.1
+gap> s3a := Group( (1,2), (2,3) );; 
+gap> s3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;
+gap> s3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;
+gap> ida := IdentityMapping( s3a );; 
+gap> isoab := IsomorphismGroups( s3a, s3b );; 
+gap> isoac := IsomorphismGroups( s3a, s3c );;
+gap> isos1 := [ ida, isoab, isoac ];; 
+gap> G1 := GroupoidByIsomorphisms( s3a, [-3,-2,-1], isos1 );; 
+gap> gens1 := GeneratorsOfGroupoid( G1 );                    
+[ [[ (1,2), (1,2) ] : -3 -> -3], [[ (2,3), (2,3) ] : -3 -> -3], 
+  [[ (), () ] : -3 -> -2], [[ (), () ] : -3 -> -1] ]
+gap> x1 := ImageElm( isos1[2], (1,2) );;
+gap> a1 := Arrow( G1, [ (1,2), x1 ], -3, -2 );
+[[ (1,2), (4,5)(6,9)(7,8) ] : -3 -> -2]
+gap> a1^-1;
+[[ (4,5)(6,9)(7,8), (1,2) ] : -2 -> -3]
+gap> y1 := ImageElm( isos1[2], (2,3) );;
+gap> z1 := ImageElm( isos1[3], (2,3) );;
+gap> b1 := Arrow( G1, [ y1, z1 ], -2, -1 );
+[[ (4,9)(5,8)(6,7), (5,9)(6,8) ] : -2 -> -1]
+gap> c1 := a1*b1;
+[[ (1,3,2), (4,8,6)(5,9,7) ] : -3 -> -1]
+
+gap> isopc := IsomorphismPcGroup( s3a );; 
+gap> s3p := Image( isopc );;
+gap> isofp := IsomorphismFpGroup( s3a );; 
+gap> s3f := Image( isofp );; 
+gap> isos2 := [ ida, isopc, isofp ];;
+gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
+gap> gens2 := GeneratorsOfGroupoid( G2 );
+[ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+  [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> -5] 
+ ]
+gap> x2 := ImageElm( isos2[2], (1,2) );;
+gap> a2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );
+[[ (1,2), f1*f2 ] : -7 -> -6]
+gap> a2^-1;
+[[ f1*f2, (1,2) ] : -6 -> -7]
+gap> y2 := ImageElm( isos2[2], (2,3) );;
+gap> z2 := ImageElm( isos2[3], (2,3) );;
+gap> b2 := Arrow( G2, [ y2, z2 ], -6, -5 );
+[[ f1, F1 ] : -6 -> -5]
+gap> c2 := a2*b2; 
+[[ (1,3,2), F2^2 ] : -7 -> -5]
+
+## SubSection 4.7.1
 gap> d8 := Group( (1,2,3,4), (1,3) );; 
 gap> ed8 := Elements( d8 );; 
 gap> rd8 := SinglePieceGroupoidWithRays( d8, ed8, ed8 );
@@ -416,7 +459,7 @@ gap> Display( last );
 [(1,2,3,4) : (2,4) -> (1,3)]
 [(1,2)(3,4) : (2,4) -> (1,3)]
 
-## SubSection 4.6.2
+## SubSection 4.7.2
 gap> t := Transformation( [1,1,2,3] );;
 gap> u := Transformation( [1,2,4,3] );;
 gap> M := Monoid( t, u );
@@ -457,6 +500,7 @@ gap> Display( hs );
 [Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]
 
-#############################################################################
-##
-#E  gpd.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+gap> #
+gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
+gap> STOP_TEST( "gpd.tst", 10000 );
+

@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -346,7 +346,7 @@ function( mor )
     gpd2 := Range( mor ); 
     ob2 := gpd2!.objects; 
     imobs := ImagesOfObjects( mor ); 
-    roh := RootGroupHomomorphism( mor ); 
+    roh := MappingToSinglePieceData( mor )[1][1]; 
     if ( imobs[1] = ob2[1] ) then  ## root maps to root 
         hom := roh; 
     elif ( HasIsDirectProductWithCompleteDigraph( gpd2 ) and 
@@ -546,9 +546,13 @@ InstallMethod( GroupoidHomomorphismFromSinglePieceNC,
       IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, gens, images )
 
-    local obs, nobs, ngens, nggens, posr, imr, map, 
-          gps, gpr, hgen, himg, hom, oims, rims, ok;
+    local isfrom, isto, obs, nobs, ngens, nggens, posr, imr, map, 
+          gps, gpr, hgen, himg, hom, oims, gprid, rims, ok;
 
+    isfrom := ( HasIsGroupoidByIsomorphisms( src ) 
+                and IsGroupoidByIsomorphisms( src ) ); 
+    isto := ( HasIsGroupoidByIsomorphisms( rng ) 
+              and IsGroupoidByIsomorphisms( rng ) ); 
     obs := src!.objects; 
     nobs := Length( obs ); 
     ngens := Length( gens ); 
@@ -559,9 +563,18 @@ function( src, rng, gens, images )
     hgen := List( [1..nggens], i -> gens[i]![1] ); 
     himg := List( [1..nggens], i -> images[i]![1] ); 
     gpr := ObjectGroup( rng, imr );
-    hom := GroupHomomorphismByImagesNC( gps, gpr, hgen, himg ); 
     oims := Concatenation( [imr], List( [posr..ngens], i -> images[i]![3] ) ); 
-    rims := Concatenation( [ One( gpr ) ], 
+    if isfrom then 
+        hgen := List( hgen, L -> L[1] ); 
+    fi;
+    if isto then 
+        gprid := [ One( gpr ), One( gpr ) ]; 
+        himg := List( himg, L -> L[1] ); 
+    else 
+        gprid := One( gpr ); 
+    fi;
+    hom := GroupHomomorphismByImagesNC( gps, gpr, hgen, himg ); 
+    rims := Concatenation( [ gprid ], 
                            List( [posr..ngens], i -> images[i]![1] ) );
     map := rec(); 
     ObjectifyWithAttributes( map, GroupoidHomomorphismType, 
@@ -584,6 +597,9 @@ function( src, rng, gens, images )
         ## ok := IsAutomorphismWithObjects( map ); 
     fi; 
     SetMappingGeneratorsImages( map, [ gens, images ] ); 
+    if ( isfrom or isto ) then 
+        SetIsGroupoidHomomorphismWithGroupoidByIsomorphisms( map, true ); 
+    fi; 
     return map; 
 end );
 
@@ -598,7 +614,7 @@ function( src, rng, gens, images )
     if not ( gens = GeneratorsOfGroupoid( src ) ) then 
         Error( "gens <> GeneratorsOfGroupoid(src)" ); 
     fi; 
-    if not ForAll( images, g -> ( g in rng ) ) then 
+    if not ForAll( images, g -> ( g in rng ) ) then
         Error( "images not all in rng" ); 
     fi; 
     if not ( Length( gens ) = Length( images ) ) then 
@@ -645,11 +661,74 @@ function ( map, e )
     pt1 := Position( obs1, e![2] ); 
     ph1 := Position( obs1, e![3] ); 
     ray1 := RaysOfGroupoid( m1 ); 
-    loop := ray1[pt1] * e![1] * ray1[ph1]^-1; 
+    loop := ray1[pt1] * e![1] * ray1[ph1]^(-1); 
     iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
     rims := ImageElementsOfRays( map ); 
     g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
     return ArrowNC( true, g2, imo[pt1], imo[ph1] );
+end ); 
+
+InstallOtherMethod( ImageElm, "for a mapping from/to groupoid by isomorphisms", 
+    true, [ IsGroupoidHomomorphismWithGroupoidByIsomorphisms,  
+    IsGroupoidElement ], 10,
+function ( map, e )
+
+    local m1, m2, isfrom, isto, isos1, isos2, obs1, obs2, rays1, rays2, 
+          pt1, ph1, it1, gt1, ih1, gh1, rh1, irh1, loop, iloop, isoth, 
+          rgh, imo, pr2, pt2, ph2, ir2, it2, ih2, rims, g2;
+
+    Info( InfoGroupoids, 3, 
+          "this is the second ImageElm method in gpdhom.gi" ); 
+    m1 := Source( map ); 
+    m2 := Range( map ); 
+    isfrom := ( HasIsGroupoidByIsomorphisms( m1 ) 
+                and IsGroupoidByIsomorphisms( m1 ) ); 
+    if isfrom then 
+        isos1 := m1!.isomorphisms; 
+    fi; 
+    isto := ( HasIsGroupoidByIsomorphisms( m2 ) 
+              and IsGroupoidByIsomorphisms( m2 ) ); 
+    if isto then 
+        isos2 := m2!.isomorphisms; 
+    fi; 
+    if not ( e in m1 ) then 
+        Error( "the element e is not in the source of mapping map" ); 
+    fi; 
+    obs1 := m1!.objects; 
+    obs2 := m2!.objects; 
+    rays1 := RaysOfGroupoid( m1 ); 
+    rays2 := RaysOfGroupoid( m2 ); 
+    pt1 := Position( obs1, e![2] ); 
+    ph1 := Position( obs1, e![3] ); 
+    rgh := RootGroupHomomorphism( map ); 
+    if isfrom then 
+        it1 := InverseGeneralMapping( isos1[pt1] ); 
+        gt1 := ImageElm( it1, e![1][1] ); 
+        ih1 := InverseGeneralMapping( isos1[ph1] ); 
+        gh1 := ImageElm( ih1, e![1][2] ); 
+        if not ( gt1 = gh1 ) then 
+            Error( "gt1 <> gh1" );
+        fi;
+        loop := gt1;  
+    else 
+        loop := rays1[pt1] * e![1] * rays1[ph1]^(-1); 
+    fi;
+    iloop := ImageElm( rgh, loop ); 
+    rims := ImageElementsOfRays( map ); 
+    imo := ImagesOfObjects( map ); 
+    pt2 := Position( obs2, imo[pt1] ); 
+    ph2 := Position( obs2, imo[ph1] ); 
+    pr2 := Position( obs2, imo[1] );
+    if isto then 
+        ir2 := InverseGeneralMapping( isos2[pr2] );
+        it2 := ir2 * isos2[pt2]; 
+        ih2 := ir2 * isos2[ph2]; 
+        g2 := [ ImageElm( it2, iloop ), ImageElm( ih2, iloop ) ]; 
+        return Arrow( m2, g2, imo[pt1], imo[ph1] ); 
+    else 
+        g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
+        return ArrowNC( true, g2, pt2, ph2 ); 
+    fi; 
 end ); 
 
 InstallOtherMethod( ImageElm, "for a map from homogeneous, discrete groupoid", 
@@ -660,7 +739,7 @@ function ( map, e )
     local p1, t2, g2, a;
 
     Info( InfoGroupoids, 3, 
-          "this is the second ImageElm method in gpdhom.gi" ); 
+          "this is the third ImageElm method in gpdhom.gi" ); 
     if not ( e in Source(map) ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
@@ -678,7 +757,7 @@ function ( map, e )
     local src, rng, pe, mape, part;
 
     Info( InfoGroupoids, 3, 
-          "this is the third ImageElm method in gpdhom.gi" ); 
+          "this is the fourth ImageElm method in gpdhom.gi" ); 
     if not ( e in Source(map) ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
@@ -908,10 +987,15 @@ InstallMethod( IsomorphismStandardGroupoid, "for a single piece groupoid",
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, obs )
 
-    local obs1, obs2, gp, gpd2, gens1, gens2;
+    local isdp, obs1, obs2, gp, gpd2, gens1, gens2;
 
-    if IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
-        return IdentityMapping( gpd1 ); 
+    isdp := IsDirectProductWithCompleteDigraphDomain( gpd1 ); 
+    if isdp then 
+        if ( obs = gpd1!.objects ) then 
+            return IdentityMapping( gpd1 ); 
+        else 
+            return IsomorphismNewObjects( gpd1, obs ); 
+        fi; 
     fi;
     obs1 := gpd1!.objects; 
     obs2 := Set( obs ); 
@@ -925,6 +1009,100 @@ function( gpd1, obs )
     return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
 end );
 
+InstallMethod( IsomorphismStandardGroupoid, "for a groupoid with pieces", 
+    true, [ IsGroupoid, IsHomogeneousList ], 0,
+function( gpd1, obs )
+
+    local obs1, len1, obs2, k, pieces, nump, maps, range, i, p, lenp, m;
+
+    obs1 := ObjectList( gpd1 ); 
+    len1 := Length( obs1 );
+    obs2 := Set( obs ); 
+    if not ( Length(obs1) = Length(obs2) ) then
+        Error( "object sets have different lengths" );
+    fi; 
+    k := 0; 
+    pieces := Pieces( gpd1 ); 
+    nump := Length( pieces ); 
+    maps := ListWithIdenticalEntries( nump, 0 ); 
+    range := ListWithIdenticalEntries( nump, 0 ); 
+    for i in [1..nump] do 
+        p := pieces[i]; 
+        lenp := Length( p!.objects ); 
+        m := IsomorphismStandardGroupoid( p, obs2{[k+1..k+lenp]} );
+        maps[i] := m; 
+        range[i] := Range( m );
+        k := k + lenp;
+    od;
+    range := UnionOfPieces( range ); 
+    return HomomorphismByUnion( gpd1, range, maps );
+end );
+
+InstallMethod( IsomorphismStandardGroupoid, "for a groupoid by isomorphisms", 
+    true, [ IsGroupoidByIsomorphisms, IsHomogeneousList ], 0,
+function( gpd1, obs )
+
+    local isdp, obs1, obs2, gp, gpd2, gens1, gens2;
+
+    isdp := IsDirectProductWithCompleteDigraphDomain( gpd1 ); 
+    if isdp then 
+        if ( obs = gpd1!.objects ) then 
+            return IdentityMapping( gpd1 ); 
+        else 
+            return IsomorphismNewObjects( gpd1, obs ); 
+        fi; 
+    fi;
+    obs1 := gpd1!.objects; 
+    obs2 := Set( obs ); 
+    if not ( Length(obs1) = Length(obs2) ) then
+        Error( "object sets have different lengths" );
+    fi;
+    gp := gpd1!.magma;
+    gpd2 := SinglePieceGroupoidNC( gp, obs2 );
+    gens1 := GeneratorsOfGroupoid( gpd1 ); 
+    gens2 := GeneratorsOfGroupoid( gpd2 );
+    return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
+end );
+
+#############################################################################
+##
+#M  IsomorphismGroupoids
+##
+InstallMethod( IsomorphismGroupoids, "for two groupoids", true, 
+    [ IsGroupoid, IsGroupoid ], 0,
+function( gpd1, gpd2 )
+    Print( "IsomorphismGroupoids only installed for single piece groupoids\n" ); 
+end );
+
+InstallMethod( IsomorphismGroupoids, "for two single piece groupoids", 
+    true, [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece ], 0,
+function( gpd1, gpd2 )
+
+    local obs1, obs2, gp1, gp2, iso, gen1, len1, im2, i, a, g, u, v; 
+
+    obs1 := ObjectList( gpd1 ); 
+    obs2 := ObjectList( gpd2 ); 
+    if not ( Length( obs1 ) = Length( obs2 ) ) then 
+        return fail; 
+    fi;
+    gp1 := gpd1!.magma; 
+    gp2 := gpd2!.magma; 
+    iso := IsomorphismGroups( gp1, gp2 ); 
+    if ( iso = fail ) then 
+        return fail; 
+    fi; 
+    gen1 := GeneratorsOfGroupoid( gpd1 ); 
+    len1 := Length( gen1 );
+    im2 := ListWithIdenticalEntries( len1, 0 ); 
+    for i in [1..len1] do 
+        a := gen1[i]; 
+        g := ImageElm( iso, a![1] ); 
+        u := obs2[ Position( obs1, a![2] ) ]; 
+        v := obs2[ Position( obs1, a![3] ) ]; 
+        im2[i] := Arrow( gpd2, g, u, v ); 
+    od;
+    return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gen1, im2 );
+end );
 
 ## ======================================================================== ##
 ##                     Homogeneous groupoid homomorphisms                   ##
@@ -1018,8 +1196,3 @@ function( src, rng, homs, oims )
     fi; 
     return GroupoidHomomorphismFromHomogeneousDiscreteNC( src,rng,homs,oims ); 
 end );
-
-##############################################################################
-##
-#E  gpdhom.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

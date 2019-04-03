@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gpdhom.xml       groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -339,17 +339,10 @@ groupoid homomorphism :
 <ManSection>
    <Oper Name="IsomorphismNewObjects"
          Arg="src,objlist" Label="for groupoids" />
-   <Oper Name="IsomorphismStandardGroupoid"
-         Arg="gpd,obs" />
 <Description>
 The operation <C>IsomorphismNewObjects(gpd,obs)</C> returns the isomorphism 
 from a groupoid <C>gpd</C> to a groupoid with the same object group and ray 
 elements but with a different set <C>obs</C> of objects. 
-<P/>
-The operation <C>IsomorphismStandardGroupoid(gpd,obs)</C> 
-returns the isomorphism from a groupoid with rays to the groupoid of type 
-<C>IsDirectProductWithCompleteDigraphDomain</C> 
-on the given set <C>obs</C> of objects.
 <P/>
 </Description>
 </ManSection>
@@ -367,6 +360,22 @@ groupoid homomorphism :
       [<identity> of ... : -28 -> -27] ], 
   [ [(1,3)(2,4) : -30 -> -30], [(1,2)(3,4) : -30 -> -30], [() : -30 -> -30], 
       [(1,2,4) : -30 -> -10] ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IsomorphismStandardGroupoid"
+         Arg="gpd,obs" />
+<Description>
+The operation <C>IsomorphismStandardGroupoid(gpd,obs)</C> 
+returns the isomorphism from a groupoid with rays to the groupoid of type 
+<C>IsDirectProductWithCompleteDigraphDomain</C> 
+on the given set <C>obs</C> of objects.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
 gap> iso2 := IsomorphismStandardGroupoid( Hd8b, [-23,-22,-21] );
 groupoid homomorphism : 
 [ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
@@ -379,6 +388,25 @@ groupoid homomorphism :
       [() : -23 -> -21] ], 
   [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
       [(1,2,4) : -14 -> -12] ] ]
+]]>
+</Example>
+
+This operation may also be used to provide a standard form for groupoids 
+of type <C>IsGroupoidByIsomorphisms</C> as described in subsection 
+<Ref Oper="GroupoidByIsomorphisms"/>. 
+<P/> 
+<Example>
+<![CDATA[
+gap> G2;
+single piece groupoid with rays: < Group( [ (1,2), (2,3) ] ), [ -7, -6, -5 ], 
+[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
+gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
+groupoid homomorphism : 
+[ [ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+      [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> 
+        -5] ], 
+  [ [(1,2) : -17 -> -17], [(2,3) : -17 -> -17], [() : -17 -> -16], 
+      [() : -17 -> -15] ] ]
 ]]>
 </Example>
 

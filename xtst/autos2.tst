@@ -2,7 +2,7 @@
 ##
 #W  autos2.tst                  Groupoids Package                Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -272,7 +272,3 @@ groupoid homomorphism : Fd8 -> Gd8
 
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-
-#############################################################################
-##
-#E  autos2.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

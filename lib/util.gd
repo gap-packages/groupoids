@@ -17,8 +17,3 @@
 DeclareOperation( "InclusionMappingGroups", [ IsGroup, IsGroup ] );
 DeclareOperation( "MappingToOne", [ IsGroup, IsGroup ] );
 DeclareOperation( "EndoMappingToOne", [ IsGroup ] );
-
-#############################################################################
-##
-#E  util.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##  

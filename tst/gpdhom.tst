@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdhom.tst" );
@@ -33,7 +33,13 @@ gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );;
 gap> SetName( Hs4, "Hs4" ); 
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
-
+gap> s3a := Group( (1,2), (2,3) );; 
+gap> isopc := IsomorphismPcGroup( s3a );; 
+gap> s3p := Image( isopc );;
+gap> isofp := IsomorphismFpGroup( s3a );; 
+gap> s3f := Image( isofp );; 
+gap> isos2 := [ ida, isopc, isofp ];;
+gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
 
 ###  Subsection 5.1.1
 gap> gen1 := GeneratorsOfGroupoid( Gq8 ); 
@@ -147,6 +153,16 @@ groupoid homomorphism :
       [() : -23 -> -21] ], 
   [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
       [(1,2,4) : -14 -> -12] ] ]
+gap> G2;
+single piece groupoid with rays: < Group( [ (1,2), (2,3) ] ), [ -7, -6, -5 ], 
+[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
+gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
+groupoid homomorphism : 
+[ [ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
+      [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> 
+        -5] ], 
+  [ [(1,2) : -17 -> -17], [(2,3) : -17 -> -17], [() : -17 -> -16], 
+      [() : -17 -> -15] ] ]
 
 ## SubSection 5.3.4
 gap> N2 := Subgroup( q8, [ q8.2] );; 
@@ -260,7 +276,3 @@ images of objects: [ -35 ]
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "gpdhom.tst", 10000 );
-
-#############################################################################
-##
-#E  gpdhom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

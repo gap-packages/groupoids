@@ -2,7 +2,7 @@
 ##
 #W  mwohom.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: mwohom.tst" );
@@ -163,7 +163,3 @@ gap> a78; ImageElm( swapmap, a78 );
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "mwohom.tst", 10000 );
-
-##############################################################################
-##
-#E  mwohom.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

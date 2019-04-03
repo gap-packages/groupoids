@@ -2,7 +2,7 @@
 ##
 #W  nicemap.tst                Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2000-2018, Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -249,9 +249,6 @@ gap> Autwz := List( Aut, k -> ImageElm( wz, k ) );
   [(1,3)(2,4) : -9 -> -7], [(1,4)(2,3) : -7 -> -7], [(1,2,4) : -7 -> -8] ]
 gap> Autwz = C; 
 false
+
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-
-#############################################################################
-##
-#E  nicemap.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

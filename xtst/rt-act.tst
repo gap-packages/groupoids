@@ -71,7 +71,3 @@ Transformation( [ 2, 2, 2 ] )]
 Transformation( [ 2, 2, 2 ] )]
 
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
-
-#############################################################################
-
-#E  rt-act.tst . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

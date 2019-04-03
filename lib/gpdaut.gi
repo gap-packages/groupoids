@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -848,6 +848,59 @@ function( gpd, p )
     return GroupoidAutomorphismByPiecesPermNC( gpd, p ); 
 end ); 
 
+#############################################################################
+##
+#M  IsomorphismClassPositionsOfGroupoid
+##
+InstallMethod( IsomorphismClassPositionsOfGroupoid, "for a gpd with pieces", 
+    true, [ IsGroupoid ], 0,
+function( gpd ) 
+
+    local P, lenP, found, i, classes, L, j, iso;  
+
+    P := Pieces( gpd );
+    lenP := Length( P );
+    found := ListWithIdenticalEntries( lenP, false ); 
+    i := 0; 
+    classes := [ ];
+    while ( i < lenP ) do 
+        i := i+1; 
+        while ( ( i <= lenP ) and found[i] ) do 
+            i := i + 1; 
+        od;
+        if ( i <= lenP ) then 
+            L := [ i ]; 
+            found[i] := true;
+            for j in [i+1..lenP] do 
+                if not found[j] then 
+                    iso := IsomorphismGroupoids( P[i], P[j] ); 
+                    if not ( iso = fail ) then 
+                        Add( L, j );
+                        found[j] := true;
+                        fi;
+                    fi;
+                od;
+            Add( classes, L );                     
+        fi;
+    od; 
+    return classes; 
+end );
+
+#############################################################################
+##
+#M  AutomorphismGroupoidOfGroupoid
+##
+InstallMethod( AutomorphismGroupoidOfGroupoid, "for a single piece groupoid", 
+    true, [ IsGroupoid and IsSinglePieceDomain ], 0,
+function( gpd ) 
+
+    local obs, A; 
+
+    A := AutomorphismGroupOfGroupoid( gpd ); 
+    obs := ObjectList( gpd );
+    return DomainWithSingleObject( A, obs ); 
+end );
+
 InstallMethod( AutomorphismGroupoidOfGroupoid, "for a homogeneous groupoid", 
     true, [ IsGroupoid and IsHomogeneousDomainWithObjects ], 0,
 function( gpd ) 
@@ -871,8 +924,35 @@ function( gpd )
     return aut; 
 end );
 
+InstallMethod( AutomorphismGroupoidOfGroupoid, "for a groupoid", true, 
+    [ IsGroupoid ], 0,
+function( gpd ) 
 
-##############################################################################
-##
-#E  gpdaut.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
+    local pieces, cpos, numc, obs, i, lenc, pos, p1, lenp, autp, idp, 
+          rays, j, pj; 
+
+    pieces := Pieces( gpd ); 
+    cpos := IsomorphismClassPositionsOfGroupoid( gpd ); 
+    numc := Length( cpos );
+    obs := List( pieces, p -> p!.objects ); 
+    obs := List( cpos, K -> obs{K} ); 
+    obs := List( obs, K -> Set( Flat( K ) ) ); 
+Print("obs = ",obs,"\n");
+    for i in [1..numc] do 
+        pos := cpos[i]; 
+        lenc := Length( pos ); 
+        p1 := pieces[ pos[1] ]; 
+        lenp := Length( p1!.objects ); 
+        autp := AutomorphismGroupOfGroupoid( p1 ); 
+        rays := ListWithIdenticalEntries( lenp, 0 ); 
+        rays[1] := One( autp ); 
+        for j in [2..lenc] do 
+            pj := pieces[ pos[j] ]; 
+            rays[j] := IsomorphismGroups( p1!.magma, pj!.magma ); 
+        od; 
+        
+    od; 
+
+    return 0;
+end );
+

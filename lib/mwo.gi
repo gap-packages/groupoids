@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -363,8 +363,8 @@ function( mwo )
 
     local p, s;
 
-    if ( HasIsDirectProductWithCompleteDigraphDomain( mwo ) and 
-            IsDirectProductWithCompleteDigraphDomain( mwo ) ) then 
+    if ( HasIsDirectProductWithCompleteDigraph( mwo ) and 
+            IsDirectProductWithCompleteDigraph( mwo ) ) then 
         return Size( mwo!.magma ) * Length( mwo!.objects )^2; 
     elif ( HasIsDiscreteDomainWithObjects( mwo ) and 
               IsDiscreteDomainWithObjects( mwo ) ) then 
@@ -590,8 +590,8 @@ function( mwo )
     if ( "IsGroupoid" in CategoriesOfObject( mwo ) ) then 
         return GeneratorsOfGroupoid( mwo ); 
     fi;
-    if not ( HasIsDirectProductWithCompleteDigraphDomain( mwo ) and 
-                IsDirectProductWithCompleteDigraphDomain( mwo ) ) then 
+    if not ( HasIsDirectProductWithCompleteDigraph( mwo ) and 
+                IsDirectProductWithCompleteDigraph( mwo ) ) then 
         Info( InfoGroupoids, 1, "expecting product with complete graph" ); 
         return fail; 
     fi;
@@ -772,6 +772,7 @@ function( comps, dom )
         Print( "kind not in {1,2,3,4} so TryNextMethod()\n" ); 
         TryNextMethod(); 
     fi;
+    Info( InfoGroupoids, 2, "kind = ", kind ); 
     ## order pieces by first object
     len := Length( comps ); 
     obs := List( comps, g -> g!.objects[1] );
@@ -808,6 +809,7 @@ function( comps, dom )
         Error( "union of unstructured domains not yet implemented," ); 
     fi; 
     SetIsSinglePieceDomain( mwo, false ); 
+    SetIsDirectProductWithCompleteDigraphDomain( mwo, false ); 
     SetPieces( mwo, pieces ); 
     if HasParent( pieces[1] ) then 
         par := Ancestor( pieces[1] ); 

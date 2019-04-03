@@ -137,8 +137,3 @@ DeclareOperation( "ReducedGraphOfGroupoidsWord",
 ## 
 DeclareOperation( "IsGraphOfGroupoidsGroupoid", [ IsGroupoid ] );
 DeclareOperation( "GraphOfGroupoidsGroupoid", [ IsGraphOfGroupoids ] );
- 
-############################################################################# 
-## 
-#E  gpdgraph.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

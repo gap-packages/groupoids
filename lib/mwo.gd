@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gd                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -119,10 +119,14 @@ DeclareCategoryCollections(
 ############################################################################# 
 ## 
 #C  IsGroupoidElement( <elt> ) 
+#C  IsGroupoidByIsomorphismsElement( <elt> ) 
 ## 
 DeclareCategory( "IsGroupoidElement", 
     IsMultiplicativeElementWithObjectsAndInverses ); 
 DeclareCategoryCollections( "IsGroupoidElement" ); 
+DeclareCategory( "IsGroupoidByIsomorphismsElement", 
+    IsMultiplicativeElementWithObjectsAndInverses ); 
+DeclareCategoryCollections( "IsGroupoidByIsomorphismsElement" ); 
 
 ############################################################################# 
 ##  
@@ -132,6 +136,7 @@ DeclareCategoryCollections( "IsGroupoidElement" );
 #V  IsGroupoidElementFamily  . . . . . . . . family for elements of groupoids
 #T  IsMultiplicativeElementWithObjectsType  default type for elements of mwos 
 #T  IsGroupoidElementType  . . . . . . default type for elements of groupoids
+#T  IsGroupoidByIsomorphismsElementType  . special type for groupoid elements
 ##  
 BindGlobal( "IsMultiplicativeElementWithObjectsFamily", 
     NewFamily( "IsMultiplicativeElementWithObjectsFamily", 
@@ -148,12 +153,14 @@ BindGlobal( "IsMultiplicativeElementWithObjectsAndInversesFamily",
 BindGlobal( "IsGroupoidElementFamily", 
     NewFamily( "IsGroupoidElementFamily", IsGroupoidElement, 
                CanEasilySortElements, CanEasilySortElements ) ); 
-
 BindGlobal( "IsMultiplicativeElementWithObjectsType", 
             NewType( IsMultiplicativeElementWithObjectsFamily, 
                      IsMultiplicativeElementWithObjects ) );
 BindGlobal( "IsGroupoidElementType", 
             NewType( IsGroupoidElementFamily, IsGroupoidElement ) );
+BindGlobal( "IsGroupoidByIsomorphismsElementType", 
+            NewType( IsGroupoidElementFamily, 
+                     IsGroupoidByIsomorphismsElement ) );
 
 ############################################################################## 
 ## 
@@ -423,8 +430,3 @@ DeclareOperation( "SubmagmaWithObjectsByElementsTable",
 #O  Ancestor( <dwo> ) 
 ## 
 DeclareOperation( "Ancestor", [ IsDomainWithObjects ] );    
-
-#############################################################################
-##
-#E  mwo.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##  

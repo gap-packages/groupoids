@@ -69,8 +69,3 @@ function( G )
     ones := List( genG, g -> oneG );
     return GroupHomomorphismByImages( G, G, genG, ones );
 end );
-
-#############################################################################
-##
-#E  util.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##  

@@ -223,8 +223,3 @@ DeclareProperty( "IsAutomorphismWithObjects", IsMagmaWithObjectsHomomorphism );
 DeclareAttribute( "InverseMapping",
     IsMagmaWithObjectsHomomorphism and IsInjectiveOnObjects 
                                    and IsSurjectiveOnObjects );  
-  
-############################################################################## 
-## 
-#E  mwohom.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 
