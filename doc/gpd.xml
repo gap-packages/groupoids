@@ -830,6 +830,7 @@ single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
 <Heading>Left, right and double cosets</Heading>
 
 <Index Key="Cosets (left,right,double)"></Index>
+<Index Key="double coset"></Index>
 <ManSection>
    <Oper Name="RightCoset"
          Arg="G, U, elt" />
@@ -849,8 +850,8 @@ where  <M>g1</M> is related to <M>g2</M> if and only if <M>g2 = u*g1</M>
 for some arrow <M>u</M> of <M>U</M>.
 The right coset containing <M>g</M> is written <M>Ug</M>.
 These right cosets partition the costars of <M>G</M> and, 
-in particular, the costar <M>U1\_{o}</M> of <M>U</M> at object <M>o</M>, 
-so that (unlike groups) <M>U</M> is itself a coset only when 
+in particular, the costar <M>U1\_{o}</M> of <M>U</M> at object <M>o</M>. 
+So (unlike groups) <M>U</M> is itself a coset only when 
 <M>G</M> has a single object. 
 <P/>
 The <E>right coset representatives</E> for <M>U</M> in <M>G</M> 
@@ -873,6 +874,8 @@ cosets may have differing lengths.
 In the example the representative for the right coset <C>re2</C> is the 
 tenth one in the printed list <C>rcrd8</C>, namely <C>[(2,4):-7->-7]</C>. 
 <P/>
+Note that no operation <C>DoubleCoset</C> has yet been implemented. 
+<P/> 
 </Description>
 </ManSection>
 <Example>

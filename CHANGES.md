@@ -1,12 +1,13 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.65dev for GAP 4.10.1 (00/03/19) 
+## Version 1.65dev for GAP 4.10.1 (00/04/19) 
 
- * (03/04/19) methods for homomorphisms with GroupoidByIsomorphisms 
+ * (08/04/19) AutomorphismGroupoidOfGroupoid for homogeneous union 
+ * (05/04/19) methods for IsInjective, IsSurjective for groupoid homs 
+ * (03/04/19) methods for homomorphisms of IsGroupoidByIsomorphisms 
  * (26/03/19) added (Is)GroupoidByIsomorphisms with test and manual entry. 
  * (24/03/19) extended IsomorphismStandardGroupoid to a union of pieces
- * (21/03/19) added operation IsomorphismGroupoids for single piece groupoids 
-              made a start on IsomorphismClassPositionsOfGroupoid 
+ * (21/03/19) added operation IsomorphismGroupoids  
 
 ## Version 1.65 for GAP 4.10.0 (05/03/19) 
 
@@ -54,8 +55,7 @@
               methods for \in for AutomorphismGroupOfGroupoid 
  * (15/12/17) removed examples/*.g; added expt/; .xtst files not in xtst/ 
               split off autogroup functions from gpdhom.g{d,i} to gpdaut.g{d,i} 
- * (14/12/17) added property IsAutomorphismGroupOfGroupoidAsGroupoid 
-              added method for \in for automorphisms of groupoids 
+ * (14/12/17) added method for \in for automorphisms of groupoids 
 
 ## 1.53 -> 1.54  (29/11/17) 
 

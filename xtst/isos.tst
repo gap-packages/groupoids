@@ -16,8 +16,8 @@ gap> a4a := Subgroup( s4a, [ (1,2,3), (2,3,4) ] );;
 gap> SetName( a4a, "a4a" );; 
 gap> Gs4a := Groupoid( s4a, [-5,-4,-3,-2,-1] );
 single piece groupoid: < s4a, [ -5, -4, -3, -2, -1 ] >
-gap> Hs4a := Subgroupoid( Gs4a, [ [ s4, [-5,-4,-2,-1] ] ] );
-single piece groupoid: < s4, [ -5, -4, -2, -1 ] >
+gap> Hs4a := Subgroupoid( Gs4a, [ [ s4a, [-5,-4,-2,-1] ] ] );
+single piece groupoid: < s4a, [ -5, -4, -2, -1 ] >
 gap> Ja4a := SubgroupoidWithRays( Hs4a, a4a, [ (), (1,2,3,4), (1,3), (2,4) ] ); 
 single piece groupoid with rays: < a4a, [ -5, -4, -2, -1 ], 
 [ (), (1,2,3,4), (1,3), (2,4) ] >
@@ -60,5 +60,4 @@ groupoid homomorphism :
   [ [(1,3,2) : -4 -> -4], [(1,4,2) : -4 -> -4], [(1,3,4) : -4 -> -2], 
       [(2,3) : -4 -> -5], [(2,4,3) : -4 -> -1] ] ]
 
-gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

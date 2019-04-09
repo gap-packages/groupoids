@@ -53,20 +53,20 @@ DeclareOperation( "GroupoidInnerAutomorphism",
 ############################################################################# 
 ## 
 #P  IsAutomorphismGroupOfGroupoid( <gp> ) 
-#O  AutomorphismGroupOfGroupoid( <gpd> ) 
+#P  IsGroupOfGroupoidAutomorphisms( <gp> ) 
+#A  AutomorphismGroupOfGroupoid( <gpd> ) 
 #O  NiceObjectAutoGroupGroupoid( <gpd>, <aut> )
 #A  EmbeddingsInNiceObject( <gp> ) 
-#P  IsAutomorphismGroupOfGroupoidAsGroupoid( <gpd> ) 
 ##  
 DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
-DeclareOperation( "AutomorphismGroupOfGroupoid", [ IsGroupoid ] ); 
+DeclareProperty( "IsGroupOfGroupoidAutomorphisms", IsGroup ); 
+DeclareAttribute( "AutomorphismGroupOfGroupoid", IsGroupoid ); 
 DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
 DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
-DeclareProperty( "IsAutomorphismGroupOfGroupoidAsGroupoid", IsGroupoid );
 
 ############################################################################# 
 ## 
-#A  AutomorphismGroupoidOfGroupooid( <gpd> ) 
+#A  AutomorphismGroupoidOfGroupoid( <gpd> ) 
 #A  IsomorphismClassesOfGroupoid( <gpd > ) 
 ##  
 DeclareAttribute( "AutomorphismGroupoidOfGroupoid", IsGroupoid );

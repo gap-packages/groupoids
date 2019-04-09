@@ -90,13 +90,14 @@ function( rgp, obs, isos )
     gps[1] := rgp; 
     for i in [1..Length(obs)] do 
         iso := isos[i]; 
-        if not ( IsGroupHomomorphism( iso ) and IsBijective( iso ) ) then 
-            Error( "expecting the isos to be group isomorphisms" ); 
+        if not ( IsGroupHomomorphism( iso ) and IsBijective( iso ) ) 
+           and not ( IsGroupoidHomomorphism(iso) and IsBijective(iso) ) then 
+            Error( "expecting the isos to be group or groupoid isomorphisms" ); 
         fi; 
         gps[i] := Image( iso );
         inv := InverseGeneralMapping( iso ); 
     od; 
-    SetObjectGroups( gpd, gps );
+    SetObjectGroups( gpd, gps ); 
     gpd!.rays := List( gps, g -> [ One(rgp), One(g) ] ); 
     return gpd; 
 end );
@@ -459,10 +460,10 @@ function( gp, obj )
         Error( "usage: DomainWithSingleObject( <group>, <object> );" ); 
     fi; 
     gpd := SinglePieceGroupoidNC( gp, [ o ] ); 
-    if ( HasIsAutomorphismGroupOfGroupoid( gp ) 
-         and IsAutomorphismGroupOfGroupoid( gp ) ) then 
-        SetIsAutomorphismGroupOfGroupoidAsGroupoid( gpd, true ); 
-    fi;
+##    if ( HasIsAutomorphismGroupOfGroupoid( gp ) 
+##         and IsAutomorphismGroupOfGroupoid( gp ) ) then 
+##        SetIsAutomorphismGroupOfGroupoidAsGroupoid( gpd, true ); 
+##    fi;
     return gpd; 
 end );
 

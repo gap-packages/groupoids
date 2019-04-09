@@ -740,13 +740,21 @@ function( gpd )
     return aut; 
 end ); 
 
+InstallMethod( AutomorphismGroupOfGroupoid, "for an arbitrary groupoid", 
+    true, [ IsGroupoid ], 0,
+function( gpd ) 
+    Info( InfoGroupoids, 1, 
+          "use AutomorphismGroupoidOfGroupoid for a union of pieces" ); 
+    return fail; 
+end ); 
+
 ## ========================================================================
 ##                     Homogeneous groupoid automorphisms                  
 ## ======================================================================== ##
 
 InstallMethod( \in,
     "method for an automorphism of a single object groupoid", true,
-    [ IsGroupWithObjectsHomomorphism, IsAutomorphismGroupOfGroupoidAsGroupoid ], 
+    [ IsGroupWithObjectsHomomorphism, IsGroupoidHomomorphismCollection ], 
     0,
 function( arr, aut0 )
 
@@ -928,8 +936,8 @@ InstallMethod( AutomorphismGroupoidOfGroupoid, "for a groupoid", true,
     [ IsGroupoid ], 0,
 function( gpd ) 
 
-    local pieces, cpos, numc, obs, i, lenc, pos, p1, lenp, autp, idp, 
-          rays, j, pj; 
+    local pieces, cpos, numc, obs, comp, i, lenc, pos, pi, auti, geni, 
+          lenpi, idp, isos, obsi, j, pj, isoj, invj, genj, autj, isosj; 
 
     pieces := Pieces( gpd ); 
     cpos := IsomorphismClassPositionsOfGroupoid( gpd ); 
@@ -937,22 +945,41 @@ function( gpd )
     obs := List( pieces, p -> p!.objects ); 
     obs := List( cpos, K -> obs{K} ); 
     obs := List( obs, K -> Set( Flat( K ) ) ); 
-Print("obs = ",obs,"\n");
+    comp := ListWithIdenticalEntries( numc, 0 );
     for i in [1..numc] do 
         pos := cpos[i]; 
         lenc := Length( pos ); 
-        p1 := pieces[ pos[1] ]; 
-        lenp := Length( p1!.objects ); 
-        autp := AutomorphismGroupOfGroupoid( p1 ); 
-        rays := ListWithIdenticalEntries( lenp, 0 ); 
-        rays[1] := One( autp ); 
-        for j in [2..lenc] do 
-            pj := pieces[ pos[j] ]; 
-            rays[j] := IsomorphismGroups( p1!.magma, pj!.magma ); 
-        od; 
-        
+        pi := pieces[ pos[1] ]; 
+        auti := AutomorphismGroupOfGroupoid( pi ); 
+        if HasName( pi ) then 
+            SetName( auti, Concatenation( "Aut(", Name(pi), ")" ) ); 
+        fi; 
+        geni := GeneratorsOfGroup( auti ); 
+        lenpi := Length( pi!.objects ); 
+        if ( lenc = 1 ) then 
+            comp[i] := DomainWithSingleObject( auti, pi!.objects ); 
+        else 
+            obsi := List( pos, k -> pieces[k]!.objects ); 
+            isos := ListWithIdenticalEntries( lenpi, 0 ); 
+            isos[1] := IdentityMapping( auti ); 
+            for j in [2..lenc] do 
+                pj := pieces[ pos[j] ]; 
+                isoj := IsomorphismGroupoids( pi, pj ); 
+                invj := InverseGeneralMapping( isoj ); 
+                genj := List( geni, g -> invj * g * isoj ); 
+                autj := Group( genj ); 
+                SetAutomorphismGroupOfGroupoid( pj, autj ); 
+                if HasName( pj ) then 
+                    SetName( autj, Concatenation( "Aut(", Name(pj), ")" ) ); 
+                fi; 
+                isosj := GroupHomomorphismByImagesNC(auti,autj,geni,genj); 
+                SetIsInjective( isosj, true );
+                SetIsSurjective( isosj, true ); 
+                isos[j] := isosj; 
+            od; 
+            comp[i] := GroupoidByIsomorphisms( auti, obsi, isos );
+        fi;
     od; 
-
-    return 0;
+    return UnionOfPieces( comp ); 
 end );
 

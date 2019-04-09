@@ -151,13 +151,22 @@ gap> ImageElm( mor2, e );
 <Heading>Properties of a groupoid homomorphism</Heading>
 The properties listed in subsection <Ref Sect="sec-hompieces"/> 
 for homomorphisms of magmas with objects also apply to groupoid homomorphisms.
+<Index Key="IsInjectiveOnObjects" Subkey="for groupoid homomorphisms"></Index> 
+<Index Key="IsSurjectiveOnObjects" Subkey="for groupoid homomorphisms"></Index> 
+<Index Key="IsBijectiveOnObjects" Subkey="for groupoid homomorphisms"></Index> 
+<Index Key="IsAutomorphismWithObjects" Subkey="for groupoid homomorphisms">
+</Index> 
+<Index Key="IsEndomorphismWithObjects" Subkey="for groupoid homomorphisms">
+</Index> 
+<Index Key="IsInjective" Subkey="for groupoid homomorphisms"></Index> 
+<Index Key="IsSurjective" Subkey="for groupoid homomorphisms"></Index> 
 <P/>
 <Example>
 <![CDATA[
-gap> IsInjectiveOnObjects( mor2 ); 
-true
-gap> IsSurjectiveOnObjects( mor2 );
-false
+gap> [ IsInjectiveOnObjects( mor2 ), IsSurjectiveOnObjects( mor2 ) ]; 
+[ true, false ]
+gap> [ IsInjective( mor2 ), IsSurjective( mor2 ) ];
+[ false, false ]
 gap> ad8 := GroupHomomorphismByImages( d8, d8, 
 >               [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );; 
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [-7,-9,-8], [(),(1,3),(2,4)] );
@@ -168,11 +177,10 @@ groupoid homomorphism : Gd8 -> Gd8
       [(2,4) : -7 -> -8] ] ]
 gap> IsBijectiveOnObjects( md8 );
 true
-gap> IsEndomorphismWithObjects( md8 );
-true
-gap> IsAutomorphismWithObjects( md8 );
-true
-]]>
+gap> [ IsInjective( md8 ), IsSurjective( md8 ) ];  
+[ true, true ]
+gap> [ IsEndomorphismWithObjects( md8 ), IsAutomorphismWithObjects( md8 ) ];
+[]]>
 </Example>
 
 </Subsection>
@@ -593,6 +601,60 @@ images of objects: [ -35 ]
 ]]>
 </Example>
 
+<ManSection>
+   <Oper Name="IsomorphismGroupoids"
+         Arg="A,B" />
+<Description>
+When <M>A,B</M> are two single piece groupoids, they are isomorphic provided 
+they have the same number of objects and the root groups are isomorphic. 
+<P/> 
+When <M>A=[A_1,\ldots,A_n],~ B=[B_1,\ldots,B_n]</M> 
+are both unions of connected groupoids, they are isomorphic if 
+there is a permutation <M>\pi</M> of <M>[1,\ldots,n]</M> 
+such that <M>A_i</M> is isomorphic to <M>B_{\pi(i)}</M> for all <M>i</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> s3a := Group( (1,2,3), (2,3) );; 
+gap> s3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;
+gap> s3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;
+gap> Ga := SinglePieceGroupoid( s3a, [-23,-22,-21] );; 
+gap> SetName( Ga, "Ga" ); 
+gap> Gb := SinglePieceGroupoid( s3b, [-6,-5,-4] );; 
+gap> SetName( Gb, "Gb" ); 
+gap> Gc := SinglePieceGroupoid( s3c, [-9,-8,-7] );; 
+gap> SetName( Gc, "Gc" ); 
+gap> c6a := Group( (1,2,3,4,5,6) );; 
+gap> c6b := Group( (7,8)(9,10,11) );;
+gap> c6c := Group( (12,13)(14,15)(16,17,18)(19,20,21)(22,23,24,25,26,27) );; 
+gap> Ha := SinglePieceGroupoid( c6a, [-3,-2,-1] );; 
+gap> SetName( Ha, "Ha" ); 
+gap> Hb := SinglePieceGroupoid( c6b, [-16,-15,-14] );; 
+gap> SetName( Hb, "Hb" ); 
+gap> Hc := SinglePieceGroupoid( c6c, [-19,-18,-17] );; 
+gap> SetName( Hc, "Hc" ); 
+gap> IsomorphismGroupoids( Ga, Gb ); 
+groupoid homomorphism : Ga -> Gb
+[ [ [(1,2,3) : -23 -> -23], [(2,3) : -23 -> -23], [() : -23 -> -22], 
+      [() : -23 -> -21] ], 
+  [ [(4,6,8)(5,7,9) : -6 -> -6], [(4,9)(5,8)(6,7) : -6 -> -6], 
+      [() : -6 -> -5], [() : -6 -> -4] ] ]
+gap> IsomorphismGroupoids( Ga, Ha );
+fail
+gap> A := UnionOfPieces( [ Ha, Gb, Gc, Hb ] ); 
+groupoid with 4 pieces:
+[ Hb, Gc, Gb, Ha ]
+gap> B := UnionOfPieces( [ Gc, Hb, Hc, Ga ] ); 
+groupoid with 4 pieces:
+[ Ga, Hc, Hb, Gc ]
+gap> iso := IsomorphismGroupoids( A, B );; 
+gap> Print( List( PiecesOfMapping(iso), p -> [Source(p),Range(p)] ) );
+[ [ Gc, Ga ], [ Hb, Hc ], [ Ha, Hb ], [ Gb, Gc ] ]
+]]>
+</Example>
+
 </Section>
 
 
@@ -775,12 +837,18 @@ groupoid homomorphism : Hs3c -> Hs3c
    <Oper Name="NiceObjectAutoGroupGroupoid"
          Arg="gpd, aut" />
 <Description>
+As above, let <M>G</M> be the direct product of a group <M>g</M> 
+and a complete digraph with <M>n</M> objects. 
 The <Index Key="AutomorphismGroup"> <C>AutomorphismGroup</C> </Index> 
-<C>AutomorphismGroup</C> of <M>G</M> is isomorphic to the quotient of 
-<M>S_n \times A \times g^n</M> by a subgroup isomorphic to <M>g</M>, 
+<C>AutomorphismGroup</C> <M>\mathrm{Aut}(G)</M> of <M>G</M> is isomorphic to 
+the quotient of <M>S_n \times A \times g^n</M> 
+by a subgroup isomorphic to <M>g</M>, 
 where <M>A</M> is the automorphism group of <M>g</M> 
 and <M>S_n</M> is the symmetric group on the <M>n</M> objects. 
 This is one of the main topics in <Cite Key="AlWe" />. 
+<P/> 
+If <M>H</M> is the union of <M>k</M> groupoids, all isomorphic to <M>G</M>, 
+then <M>\mathrm{Aut}(H)</M> is isomorphic to <M>S_k \ltimes \mathrm{Aut}(G)</M>. 
 <P/>
 The function <C>NiceObjectAutoGroupGroupoid</C> takes a groupoid 
 and a subgroup of its automorphism group and retuns a 
@@ -957,17 +1025,24 @@ true
    <Attr Name="AutomorphismGroupoidOfGroupoid"
          Arg="gpd" />
 <Description>
-If <M>G</M> is a single piece groupoid with automorphism group <M>A</M>, 
-and if <M>H</M> is a homogeneous groupoid consisting of 
-<M>n</M> copies of <M>G</M>, then the automorphism group of <M>H</M> 
-is the wreath product of <M>A</M> with the symmetric group <M>S_n</M>. 
+If <M>G</M> is a single piece groupoid with automorphism group 
+<M>\mathrm{Aut}(G)</M>, and if <M>H</M> is the union of <M>k</M> pieces, 
+all isomorphic to <M>G</M>, then the automorphism group of <M>H</M> 
+is the wreath product <M>S_k \ltimes \mathrm{Aut}(G)</M>. 
 However, we find it more convenient to construct 
 the <E>automorphism groupoid</E> of <M>H</M>. 
-This is a single piece groupoid <M>\mathrm{Aut}(H)</M> 
-with <M>n</M> objects -- the object lists of the pieces of <M>H</M> -- 
-and root object <M>A</M>. 
-The rays of <M>\mathrm{Aut}(H)</M> are given by <C>IsomorphismNewObjects</C> 
-applied to the first piece and the objects of the other pieces. 
+This is a single piece groupoid <M>\mathrm{AUT}(H)</M> 
+with <M>k</M> objects -- the object lists of the pieces of <M>H</M> -- 
+and root group <M>\mathrm{Aut}(G)</M>. 
+Isomorphisms between the root groups of the <M>k</M> pieces 
+may be applied to the generators of <M>\mathrm{Aut}(G)</M> 
+to construct automorphism groups of these pieces, 
+and then isomorphisms between these automorphism groups. 
+We then construct <M>\mathrm{AUT}(H)</M> using <C>GroupoidByIsomorphisms</C>. 
+<P/> 
+In the special case that <M>H</M> is homogeneous, there is no need to construct 
+a collection of automorphism groups. Rather, the rays of <M>\mathrm{AUT}(H)</M> 
+are given by <C>IsomorphismNewObjects</C>.  
 For the example we use <C>Hd8</C> 
 constructed in subsection <Ref Oper="HomogeneousGroupoid"/>. 
 <P/> 
