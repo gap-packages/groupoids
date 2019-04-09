@@ -13,7 +13,8 @@ pkgname := "groupoids";
 pkgdir := DirectoriesPackageLibrary( pkgname, "xtst" );
 testfiles := [ "autos.tst",  "autos2.tst",  "cosets.tst", 
                "homs.tst",   "isos.tst",    "nicemap.tst", 
-               "rt-act.tst", "subgpds.tst", "gpd-isos.tst" ];
+               "rt-act.tst", "subgpds.tst", "gpd-isos.tst", 
+               "auto-gpd.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );

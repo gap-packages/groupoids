@@ -40,7 +40,8 @@ end );
 InstallMethod( IsGeneratorsOfMagmaWithInverses, "for a list of groupoid maps", 
     true, [ IsGeneralMappingWithObjectsCollection ], 0,
 function( homlist ) 
-    Print( "#I  using IsGeneratorsOfMagmaWithInverses in gpdhom.gi\n" ); 
+    Info( InfoGroupoids, 1, 
+          "#I  using IsGeneratorsOfMagmaWithInverses in gpdhom.gi\n" ); 
     return ForAll( homlist, 
         m -> ( ( Source(m) = Range(m) ) 
                and IsEndomorphismWithObjects(m) 
@@ -458,6 +459,78 @@ function( map )
         return MappingTransObjectsImages( obs, ims ); 
     fi; 
 end ); 
+
+##############################################################################
+##
+#M  IsInjective( map ) . . . . . . . . . . . . . . for a groupoid homomorphism
+##
+InstallOtherMethod( IsInjective, "for a groupoid hom from a single piece", true,
+    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingFromSinglePiece ], 2,
+    map -> ( IsInjectiveOnObjects( map ) and 
+             IsInjective( RootGroupHomomorphism( map ) ) ) );
+
+InstallOtherMethod( IsInjective, "for a groupoid hom to a single piece", true, 
+    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingToSinglePiece ], 0,
+function( map ) 
+    Error( "no method yet implemented" ); 
+end );
+
+InstallOtherMethod( IsInjective, "for a groupoid homomorphism by union", true, 
+    [ IsGroupWithObjectsHomomorphism and HasPiecesOfMapping ], 0,
+    map -> ForAll( PiecesOfMapping, p -> IsInjective( p ) ) );
+
+InstallOtherMethod( IsInjective, "for a groupoid homomorphism", true, 
+    [ IsGroupWithObjectsHomomorphism ], 0,
+function( map ) 
+    Error( "no method yet implemented for this case" ); 
+end );
+
+##############################################################################
+##
+#M  IsSurjective( map ) . . . . . . . . . . . . .  for a groupoid homomorphism
+##
+InstallOtherMethod( IsSurjective, "for a mapping from a single piece", true, 
+    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingFromSinglePiece ], 2,
+    map -> ( IsSurjectiveOnObjects( map ) and 
+             IsSurjective( RootGroupHomomorphism( map ) ) ) );
+
+InstallOtherMethod( IsSurjective, "for a groupoid hom to a single piece", true, 
+    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingToSinglePiece ], 0,
+function( map ) 
+    Error( "no method yet implemented" ); 
+end );
+
+InstallOtherMethod( IsSurjective, "for a groupoid homomorphism by union", true, 
+    [ IsGroupWithObjectsHomomorphism and HasPiecesOfMapping ], 0,
+    map -> ForAll( PiecesOfMapping, p -> IsSurjective( p ) ) );
+
+InstallOtherMethod( IsSurjective, "for a groupoid homomorphism", true, 
+    [ IsGroupWithObjectsHomomorphism ], 0,
+function( map ) 
+    Error( "no method yet implemented for this case" ); 
+end );
+
+##############################################################################
+##
+#M  IsSingleValued( map ) . . . . . . . . . . . .  for a groupoid homomorphism
+##
+InstallOtherMethod( IsSingleValued, "method for a groupoid homomorphism", 
+    true, [ IsGroupoidHomomorphism ], 0, map -> true );
+
+##############################################################################
+##
+#M  IsTotal( map ) . . . . . . . . . . . . . . .   for a groupoid homomorphism
+##
+InstallOtherMethod( IsTotal, "method for a groupoid homomorphism", true, 
+    [ IsGroupoidHomomorphism ], 0, map -> true );
+
+##############################################################################
+##
+#M  IsBijective( map ) . . . . . . . . . . . . . .  for a 2Dimensional-mapping
+##
+InstallOtherMethod( IsBijective, "method for a groupoid homomorphism", true, 
+    [ IsGroupoidHomomorphism ], 0,
+    map -> ( IsInjective( map ) and IsSurjective( map ) ) );
 
 #############################################################################
 ##
@@ -1070,15 +1143,55 @@ end );
 ##
 InstallMethod( IsomorphismGroupoids, "for two groupoids", true, 
     [ IsGroupoid, IsGroupoid ], 0,
-function( gpd1, gpd2 )
-    Print( "IsomorphismGroupoids only installed for single piece groupoids\n" ); 
+function( A, B )
+
+    local PA, PB, n, try, used, isos, i, p, found, j, k, q, iso; 
+
+    if not ( HasPieces( A ) or HasPieces( B ) ) then 
+        Error( "unexpected case in IsomorphismGroupoids" ); 
+    fi; 
+    if not ( HasPieces( A ) and HasPieces( B ) ) then 
+        return fail; 
+    fi; 
+    PA := Pieces( A ); 
+    PB := Pieces( B ); 
+    n := Length( PA ); 
+    if not ( Length( PB ) = n ) then 
+        return fail; 
+    fi; 
+    try := [1..n]; 
+    used := [ ]; 
+    isos := [1..n]; 
+    for i in [1..n] do 
+        p := PA[i]; 
+        found := false; 
+        try := Difference( try, used ); 
+        j := 0; 
+        while ( ( not found ) and ( j < Length( try ) ) ) do 
+            j := j+1; 
+            k := try[j]; 
+            if ( i <> k ) then 
+                q := PB[k]; 
+                iso := IsomorphismGroupoids( p, q );
+                if not ( iso = fail ) then 
+                    found := true; 
+                    isos[i] := iso; 
+                    Add( used, k ); 
+                fi; 
+            fi;
+        od; 
+        if ( not found ) then 
+            return fail; 
+        fi; 
+    od; 
+    return HomomorphismByUnion( A, B, isos );
 end );
 
 InstallMethod( IsomorphismGroupoids, "for two single piece groupoids", 
     true, [ IsGroupoid and IsSinglePiece, IsGroupoid and IsSinglePiece ], 0,
 function( gpd1, gpd2 )
 
-    local obs1, obs2, gp1, gp2, iso, gen1, len1, im2, i, a, g, u, v; 
+    local obs1, obs2, gp1, gp2, giso, gen1, len1, im2, i, a, g, u, v, iso, inv; 
 
     obs1 := ObjectList( gpd1 ); 
     obs2 := ObjectList( gpd2 ); 
@@ -1087,8 +1200,8 @@ function( gpd1, gpd2 )
     fi;
     gp1 := gpd1!.magma; 
     gp2 := gpd2!.magma; 
-    iso := IsomorphismGroups( gp1, gp2 ); 
-    if ( iso = fail ) then 
+    giso := IsomorphismGroups( gp1, gp2 ); 
+    if ( giso = fail ) then 
         return fail; 
     fi; 
     gen1 := GeneratorsOfGroupoid( gpd1 ); 
@@ -1096,12 +1209,15 @@ function( gpd1, gpd2 )
     im2 := ListWithIdenticalEntries( len1, 0 ); 
     for i in [1..len1] do 
         a := gen1[i]; 
-        g := ImageElm( iso, a![1] ); 
+        g := ImageElm( giso, a![1] ); 
         u := obs2[ Position( obs1, a![2] ) ]; 
         v := obs2[ Position( obs1, a![3] ) ]; 
         im2[i] := Arrow( gpd2, g, u, v ); 
     od;
-    return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gen1, im2 );
+    iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gen1, im2 ); 
+    inv := GroupoidHomomorphismFromSinglePiece( gpd2, gpd1, im2, gen1 );
+    SetInverseGeneralMapping( iso, inv ); 
+    return iso; 
 end );
 
 ## ======================================================================== ##

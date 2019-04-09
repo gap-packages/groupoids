@@ -34,6 +34,7 @@ gap> SetName( Hs4, "Hs4" );
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
 gap> s3a := Group( (1,2), (2,3) );; 
+gap> ida := IdentityMapping( s3a );; 
 gap> isopc := IsomorphismPcGroup( s3a );; 
 gap> s3p := Image( isopc );;
 gap> isofp := IsomorphismFpGroup( s3a );; 
@@ -75,10 +76,10 @@ gap> ImageElm( mor2, e );
 [(2,4,3) : -12 -> -14]
 
 ## SubSection 5.2.1
-gap> IsInjectiveOnObjects( mor2 ); 
-true
-gap> IsSurjectiveOnObjects( mor2 );
-false
+gap> [ IsInjectiveOnObjects( mor2 ), IsSurjectiveOnObjects( mor2 ) ]; 
+[ true, false ]
+gap> [ IsInjective( mor2 ), IsSurjective( mor2 ) ];
+[ false, false ]
 gap> ad8 := GroupHomomorphismByImages( d8, d8, 
 >               [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );; 
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [-7,-9,-8], [(),(1,3),(2,4)] );
@@ -89,10 +90,10 @@ groupoid homomorphism : Gd8 -> Gd8
       [(2,4) : -7 -> -8] ] ]
 gap> IsBijectiveOnObjects( md8 );
 true
-gap> IsEndomorphismWithObjects( md8 );
-true
-gap> IsAutomorphismWithObjects( md8 );
-true
+gap> [ IsInjective( md8 ), IsSurjective( md8 ) ];  
+[ true, true ]
+gap> [ IsEndomorphismWithObjects( md8 ), IsAutomorphismWithObjects( md8 ) ];
+[ true, true ]
 
 ## SubSection 5.2.5
 gap> RootGroupHomomorphism( mor2 );
