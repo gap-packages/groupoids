@@ -840,7 +840,7 @@ groupoid homomorphism : Hs3c -> Hs3c
 As above, let <M>G</M> be the direct product of a group <M>g</M> 
 and a complete digraph with <M>n</M> objects. 
 The <Index Key="AutomorphismGroup"> <C>AutomorphismGroup</C> </Index> 
-<C>AutomorphismGroup</C> <M>\mathrm{Aut}(G)</M> of <M>G</M> is isomorphic to 
+<C>AutomorphismGroup</C> <M>\Aut(G)</M> of <M>G</M> is isomorphic to 
 the quotient of <M>S_n \times A \times g^n</M> 
 by a subgroup isomorphic to <M>g</M>, 
 where <M>A</M> is the automorphism group of <M>g</M> 
@@ -848,7 +848,7 @@ and <M>S_n</M> is the symmetric group on the <M>n</M> objects.
 This is one of the main topics in <Cite Key="AlWe" />. 
 <P/> 
 If <M>H</M> is the union of <M>k</M> groupoids, all isomorphic to <M>G</M>, 
-then <M>\mathrm{Aut}(H)</M> is isomorphic to <M>S_k \ltimes \mathrm{Aut}(G)</M>. 
+then <M>\Aut(H)</M> is isomorphic to <M>S_k \ltimes \Aut(G)</M>. 
 <P/>
 The function <C>NiceObjectAutoGroupGroupoid</C> takes a groupoid 
 and a subgroup of its automorphism group and retuns a 
@@ -1026,22 +1026,22 @@ true
          Arg="gpd" />
 <Description>
 If <M>G</M> is a single piece groupoid with automorphism group 
-<M>\mathrm{Aut}(G)</M>, and if <M>H</M> is the union of <M>k</M> pieces, 
+<M>\Aut(G)</M>, and if <M>H</M> is the union of <M>k</M> pieces, 
 all isomorphic to <M>G</M>, then the automorphism group of <M>H</M> 
-is the wreath product <M>S_k \ltimes \mathrm{Aut}(G)</M>. 
+is the wreath product <M>S_k \ltimes \Aut(G)</M>. 
 However, we find it more convenient to construct 
 the <E>automorphism groupoid</E> of <M>H</M>. 
-This is a single piece groupoid <M>\mathrm{AUT}(H)</M> 
+This is a single piece groupoid <M>\Aut(H)</M> 
 with <M>k</M> objects -- the object lists of the pieces of <M>H</M> -- 
-and root group <M>\mathrm{Aut}(G)</M>. 
+and root group <M>\Aut(G)</M>. 
 Isomorphisms between the root groups of the <M>k</M> pieces 
-may be applied to the generators of <M>\mathrm{Aut}(G)</M> 
+may be applied to the generators of <M>\Aut(G)</M> 
 to construct automorphism groups of these pieces, 
 and then isomorphisms between these automorphism groups. 
-We then construct <M>\mathrm{AUT}(H)</M> using <C>GroupoidByIsomorphisms</C>. 
+We then construct <M>\AUT(H)</M> using <C>GroupoidByIsomorphisms</C>. 
 <P/> 
 In the special case that <M>H</M> is homogeneous, there is no need to construct 
-a collection of automorphism groups. Rather, the rays of <M>\mathrm{AUT}(H)</M> 
+a collection of automorphism groups. Rather, the rays of <M>\AUT(H)</M> 
 are given by <C>IsomorphismNewObjects</C>.  
 For the example we use <C>Hd8</C> 
 constructed in subsection <Ref Oper="HomogeneousGroupoid"/>. 

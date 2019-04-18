@@ -15,6 +15,9 @@ AutoDoc(rec(
         bib := "bib.xml", 
         gapdoc_latex_options := rec( EarlyExtraPreamble := """
             \usepackage[all]{xy} 
+            \newcommand{\Aut} {\mathrm{Aut}}
+            \newcommand{\AUT} {\mathrm{AUT}}
+            \newcommand{\Inn} {\mathrm{Inn}}
         """ ),  
         entities := rec( 
             AutoDoc := "<Package>AutoDoc</Package>",
