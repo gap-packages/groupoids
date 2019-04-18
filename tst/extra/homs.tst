@@ -8,6 +8,14 @@
 
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
+gap> #
+gap> # add definitions from autos.tst 
+gap> a4gens := [ (1,2,3), (2,3,4) ];;
+gap> a4 := Group( a4gens );;
+gap> SetName( a4, "a4" );;
+gap> obs := [-9,-8,-7];;
+gap> Ga4 := SinglePieceGroupoid( a4, obs );;
+gap> #
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
 gap> SetName( s4, "s4" );;
 gap> a4gens := [ (1,2,3), (2,3,4) ];;
@@ -307,7 +315,7 @@ gap> ImageElm( isoUq8gl43, Arrow( Hgl43, gengl43[1], -31, -33 ) );
 [(28,37,46)(29,38,47)(30,39,48)(31,40,49)(32,41,50)(33,42,51)(34,43,52)
 (35,44,53)(36,45,54)(55,73,64)(56,74,65)(57,75,66)(58,76,67)(59,77,68)
 (60,78,69)(61,79,70)(62,80,71)(63,81,72) : -31 -> -33]
-gap> iso:=IsomorphismPcGroupoid(Ga4);         
+gap> iso := IsomorphismPcGroupoid( Ga4 );         
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
@@ -315,7 +323,7 @@ groupoid homomorphism :
       [<identity> of ... : -9 -> -7] ] ]
 gap> a5 := Group( (1,2,3,4,5), (1,2,3) );; 
 gap> Ga5 := Groupoid( a5, [-8..-6] );;
-gap> iso:=IsomorphismPcGroupoid(Ga5); 
+gap> iso := IsomorphismPcGroupoid( Ga5 ); 
 fail
 
 ## make this part of hom-test.tst independent of other tests 

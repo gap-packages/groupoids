@@ -2,6 +2,7 @@
 
 ## Version 1.65dev for GAP 4.10.1 (00/04/19) 
 
+ * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (08/04/19) AutomorphismGroupoidOfGroupoid for homogeneous union 
  * (05/04/19) methods for IsInjective, IsSurjective for groupoid homs 
  * (03/04/19) methods for homomorphisms of IsGroupoidByIsomorphisms 

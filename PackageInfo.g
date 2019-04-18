@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 Version := "1.65dev",
-Date := "00/04/2019", # dd/mm/yyyy format
+Date := "13/04/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -108,7 +108,7 @@ BannerString := Concatenation(
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2000-2018, Emma Moore and Chris Wensley.<P/>\n", 
+            "&copyright; 2000-2019, Emma Moore and Chris Wensley.<P/>\n", 
             "The &groupoids; package is free software; you can redistribute ", 
             "it and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
@@ -153,7 +153,7 @@ AutoDoc := rec(
             "<Email>c.d.wensley@bangor.ac.uk</Email>.\n <P/>" 
             ), 
         Acknowledgements := Concatenation( 
-            "This documentation was prepared with the ", 
+            "This documentation was prepared using the ", 
             "&GAPDoc; <Cite Key='GAPDoc'/> and ", 
             "&AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>\n", 
             "The procedure used to produce new releases uses the package ", 
