@@ -71,6 +71,10 @@ DeclareProperty( "IsMonoidWithObjectsHomomorphism",
 DeclareProperty( "IsGroupWithObjectsHomomorphism", 
     IsMagmaWithObjectsHomomorphism );
 
+InstallTrueMethod( IsMagmaWithObjectsHomomorphism, IsSemigroupWithObjectsHomomorphism );
+InstallTrueMethod( IsMagmaWithObjectsHomomorphism, IsMonoidWithObjectsHomomorphism );
+InstallTrueMethod( IsMagmaWithObjectsHomomorphism, IsGroupWithObjectsHomomorphism );
+
 ############################################################################## 
 ## 
 #C  IsGroupoidHomomorphism( <map> )
