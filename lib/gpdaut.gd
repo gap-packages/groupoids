@@ -20,6 +20,11 @@ DeclareProperty( "IsGroupoidAutomorphismByGroupAuto", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByObjectPerm", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByPiecesPerm", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByRayShifts", IsGroupoidAutomorphism );
+
+InstallTrueMethod(IsGroupoidAutomorphism, IsGroupoidAutomorphismByGroupAuto);
+InstallTrueMethod(IsGroupoidAutomorphism, IsGroupoidAutomorphismByObjectPerm);
+InstallTrueMethod(IsGroupoidAutomorphism, IsGroupoidAutomorphismByPiecesPerm);
+InstallTrueMethod(IsGroupoidAutomorphism, IsGroupoidAutomorphismByRayShifts);
  
 ############################################################################# 
 ## 
@@ -59,10 +64,13 @@ DeclareOperation( "GroupoidInnerAutomorphism",
 #A  EmbeddingsInNiceObject( <gp> ) 
 ##  
 DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
-DeclareProperty( "IsGroupOfGroupoidAutomorphisms", IsGroup ); 
+DeclareProperty( "IsGroupOfGroupoidAutomorphisms", IsGroup );
 DeclareAttribute( "AutomorphismGroupOfGroupoid", IsGroupoid ); 
 DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
 DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
+
+InstallTrueMethod( IsGroup, IsAutomorphismGroupOfGroupoid );
+InstallTrueMethod( IsGroup, IsGroupOfGroupoidAutomorphisms );
 
 ############################################################################# 
 ## 
@@ -85,6 +93,8 @@ DeclareAttribute( "IsomorphismClassPositionsOfGroupoid", IsGroupoid );
 ##  
 DeclareProperty( "IsAutomorphismOfHomogeneousDiscreteGroupoid", 
     IsGroupoidAutomorphism );
+InstallTrueMethod(IsGroupoidAutomorphism, IsAutomorphismOfHomogeneousDiscreteGroupoid);
+
 DeclareOperation( "GroupoidAutomorphismByGroupAutos", 
     [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByGroupAutosNC", 

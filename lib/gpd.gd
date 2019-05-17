@@ -195,6 +195,7 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 #A  ElementsOfGroupoid( <gpd> ) 
 ##
 DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
+InstallTrueMethod(IsListOrCollection, IsHomsetCosets);
 DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
     and IsAttributeStoringRep and IsComponentObjectRep, 
     [ "tgroup", "hgroup", "tobj", "hobj", "trays", "hrays", "rep", "type" ] ); 
