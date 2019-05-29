@@ -1,6 +1,6 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.65dev for GAP 4.10.1 (00/04/19) 
+## Version 1.66 for GAP 4.10.1 (29/05/19) 
 
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (08/04/19) AutomorphismGroupoidOfGroupoid for homogeneous union 

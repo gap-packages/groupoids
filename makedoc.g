@@ -7,23 +7,22 @@ LoadPackage( "groupoids" );
 LoadPackage( "AutoDoc" ); 
 
 AutoDoc(rec( 
+    gapdoc := rec( 
+        LaTeXOptions := rec( EarlyExtraPreamble := """
+            \usepackage[all]{xy} 
+            \newcommand{\Aut} {\mathrm{Aut}}
+            \newcommand{\AUT} {\mathrm{AUT}}
+            \newcommand{\Inn} {\mathrm{Inn}}
+        """ )),  
     scaffold := rec(
         includes := [ "intro.xml",    "mwo.xml",     "mwohom.xml", 
                       "gpd.xml",      "gpdhom.xml",  "ggraph.xml", 
                       "tecnotes.xml", "history.xml" 
                     ],
         bib := "bib.xml", 
-        gapdoc_latex_options := rec( EarlyExtraPreamble := """
-            \usepackage[all]{xy} 
-            \newcommand{\Aut} {\mathrm{Aut}}
-            \newcommand{\AUT} {\mathrm{AUT}}
-            \newcommand{\Inn} {\mathrm{Inn}}
-        """ ),  
         entities := rec( 
             AutoDoc := "<Package>AutoDoc</Package>",
             XMod := "<Package>XMod</Package>"
         )
     )
 ));
-
-QUIT;

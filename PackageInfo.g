@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.65dev",
-Date := "13/04/2019", # dd/mm/yyyy format
+Version := "1.66",
+Date := "29/05/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -32,15 +32,15 @@ Persons := [
     Email         := "c.d.wensley@bangor.ac.uk",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
     PostalAddress := Concatenation( [
-                       "Dr. C.D. Wensley\n",
-                       "School of Computer Science\n",
-                       "Bangor University\n",
-                       "Dean Street\n",
-                       "Bangor\n",
-                       "Gwynedd LL57 1UT\n",
-                       "UK"] ),
+                      "Dr. C.D. Wensley\n",
+                      "School of Computer Science and Electronic Engineering\n",
+                      "Bangor University\n",
+                      "Dean Street\n",
+                      "Bangor\n",
+                      "Gwynedd LL57 1UT\n",
+                      "UK"] ),
     Place         := "Llanfairfechan",
-    Institution   := "University of Wales, Bangor"
+    Institution   := "Bangor University"
   )
 ],
 
@@ -82,10 +82,11 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.10.0",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.6.2" ], 
+  GAP := ">=4.10.1",
+  NeededOtherPackages := [ [ "AutoDoc", ">= 2019.02.22" ], 
+                           [ "GAPDoc", ">= 1.6.2" ], 
                            [ "fga", ">= 1.4.0" ] ],
-  SuggestedOtherPackages := [ [ "semigroups", ">= 3.0.20" ] ],
+  SuggestedOtherPackages := [ [ "semigroups", ">= 3.1.1" ] ],
   ExternalConditions := [ ]
 ),
 
