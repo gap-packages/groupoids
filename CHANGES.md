@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.67 for GAP 4.10.1 (17/06/19) 
+
+ * (16/06/19) added Utils to the required packages 
+
 ## Version 1.66 for GAP 4.10.1 (29/05/19) 
 
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
