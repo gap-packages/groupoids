@@ -406,7 +406,7 @@ of type <C>IsGroupoidByIsomorphisms</C> as described in subsection
 <Example>
 <![CDATA[
 gap> G2;
-single piece groupoid with rays: < Group( [ (1,2), (2,3) ] ), [ -7, -6, -5 ], 
+single piece groupoid with rays: < s3a, [ -7, -6, -5 ], 
 [ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
 gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
 groupoid homomorphism : 

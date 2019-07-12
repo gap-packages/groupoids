@@ -26,9 +26,10 @@ gap> b1 := Arrow( G1, [ y1, z1 ], -2, -1 );;
 gap> c1 := a1*b1;;
 
 gap> isopc := IsomorphismPcGroup( s3a );; 
-gap> s3p := Image( isopc );;
-gap> isofp := IsomorphismFpGroup( s3a );; 
-gap> s3f := Image( isofp );; 
+gap> s3p := Image( isopc );; 
+gap> f2 := FreeGroup( 2 );; 
+gap> s3f := f2/[ f2.1^3, f2.2^2, (f2.1*f2.2)^2 ];; 
+gap> isofp := GroupHomomorphismByImages(s3a,s3f,[(1,2,3),(2,3)],[s3f.1,s3f.2]);;
 gap> isos2 := [ ida, isopc, isofp ];;
 gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
 gap> SetName( G2, "G2" );
@@ -40,11 +41,11 @@ gap> a2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );
 gap> y2 := ImageElm( isos2[2], (2,3) );
 f1
 gap> z2 := ImageElm( isos2[3], (2,3) );
-F1
+f2^-1
 gap> b2 := Arrow( G2, [ y2, z2 ], -6, -5 );
-[[ f1, F1 ] : -6 -> -5]
+[[ f1, f2^-1 ] : -6 -> -5]
 gap> c2 := a2*b2;
-[[ (1,3,2), F2^2 ] : -7 -> -5]
+[[ (1,3,2), f1^2 ] : -7 -> -5]
 
 gap> hom12 := GroupoidHomomorphismFromSinglePiece( G1, G2, gens1, gens2 );; 
 gap> rgh12 := RootGroupHomomorphism( hom12 );;
@@ -69,9 +70,9 @@ gap> gens22 := [ d12, d22, d32, d42 ];;
 gap> hom122 := GroupoidHomomorphismFromSinglePiece( G1, G2, gens1, gens22 );;
 gap> rgh122 := RootGroupHomomorphism( hom122 );;
 gap> ia12 := ImageElm( hom122, a1 ); 
-[[ f2, F2 ] : -6 -> -5]
+[[ f2, f1 ] : -6 -> -5]
 gap> ib12 := ImageElm( hom122, b1 ); 
-[[ F1*F2^2, (1,3) ] : -5 -> -7]
+[[ f2^-1*f1^2, (1,3) ] : -5 -> -7]
 gap> ic12 := ImageElm( hom122, c1 ); 
 [[ f1*f2, (1,2) ] : -6 -> -7]
 
@@ -94,9 +95,9 @@ gap> ic01 := ImageElm( hom01, c0 );
 gap> hom022 := GroupoidHomomorphismFromSinglePiece( G0, G2, gens0, gens22 );; 
 gap> rgh022 := RootGroupHomomorphism( hom022 );;
 gap> ia022 := ImageElm( hom022, a0 ); 
-[[ f2, F2 ] : -6 -> -5]
+[[ f2, f1 ] : -6 -> -5]
 gap> ib022 := ImageElm( hom022, b0 ); 
-[[ F1*F2^2, (1,3) ] : -5 -> -7]
+[[ f2^-1*f1^2, (1,3) ] : -5 -> -7]
 gap> ic022 := ImageElm( hom022, c0 ); 
 [[ f1*f2, (1,2) ] : -6 -> -7]
 
@@ -118,11 +119,11 @@ gap> rgh200 := RootGroupHomomorphism( hom200 );;
 gap> a22 := Arrow( G2, [ (1,2,3), s3p.2 ], -7, -6 );;
 gap> ia22 := ImageElm( hom200, a22 ); 
 [(11,22,33) : 2 -> 3]
-gap> b22 := Arrow( G2, [ s3p.1, s3f.1 ], -6, -5 );;
+gap> b22 := Arrow( G2, [ s3p.1, s3f.2 ], -6, -5 );;
 gap> ib22 := ImageElm( hom200, b22 ); 
 [(22,33) : 3 -> 1]
 gap> c22 := a22 * b22; 
-[[ (1,3), F1*F2^2 ] : -7 -> -5]
+[[ (1,3), f2^-1*f1^2 ] : -7 -> -5]
 gap> ic22 := ImageElm( hom200, c22 ); 
 [(11,33) : 2 -> 1]
 gap> ##

@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.67dev for GAP 4.10.2 (12/07/19) 
+
+ * (12/07/19) fixed errors in tests introduced in gapdev
+
 ## Version 1.67 for GAP 4.10.1 (17/06/19) 
 
  * (16/06/19) added Utils to the required packages 

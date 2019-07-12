@@ -396,6 +396,9 @@ single piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ),
 gap> s3a := Group( (1,2), (2,3) );; 
 gap> s3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;
 gap> s3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;
+gap> SetName( s3a, "s3a" );;
+gap> SetName( s3b, "s3b" );;
+gap> SetName( s3c, "s3c" );; 
 gap> ida := IdentityMapping( s3a );; 
 gap> isoab := IsomorphismGroups( s3a, s3b );; 
 gap> isoac := IsomorphismGroups( s3a, s3c );;
@@ -418,8 +421,9 @@ gap> c1 := a1*b1;
 
 gap> isopc := IsomorphismPcGroup( s3a );; 
 gap> s3p := Image( isopc );;
-gap> isofp := IsomorphismFpGroup( s3a );; 
-gap> s3f := Image( isofp );; 
+gap> f2 := FreeGroup( 2 );; 
+gap> s3f := f2/[ f2.1^3, f2.2^2, (f2.1*f2.2)^2 ];; 
+gap> isofp := GroupHomomorphismByImages(s3a,s3f,[(1,2,3),(2,3)],[s3f.1,s3f.2]);;
 gap> isos2 := [ ida, isopc, isofp ];;
 gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
 gap> gens2 := GeneratorsOfGroupoid( G2 );
@@ -434,9 +438,9 @@ gap> a2^-1;
 gap> y2 := ImageElm( isos2[2], (2,3) );;
 gap> z2 := ImageElm( isos2[3], (2,3) );;
 gap> b2 := Arrow( G2, [ y2, z2 ], -6, -5 );
-[[ f1, F1 ] : -6 -> -5]
+[[ f1, f2^-1 ] : -6 -> -5]
 gap> c2 := a2*b2; 
-[[ (1,3,2), F2^2 ] : -7 -> -5]
+[[ (1,3,2), f1^2 ] : -7 -> -5]
 
 ## SubSection 4.7.1
 gap> d8 := Group( (1,2,3,4), (1,3) );; 

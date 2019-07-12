@@ -34,11 +34,14 @@ gap> SetName( Hs4, "Hs4" );
 gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
 gap> SetName( Hd8b, "Hd8b" );
 gap> s3a := Group( (1,2), (2,3) );; 
+gap> SetName( s3a, "s3a" );
 gap> ida := IdentityMapping( s3a );; 
 gap> isopc := IsomorphismPcGroup( s3a );; 
 gap> s3p := Image( isopc );;
+gap> SetName( s3p, "s3p" );
 gap> isofp := IsomorphismFpGroup( s3a );; 
-gap> s3f := Image( isofp );; 
+gap> s3f := Image( isofp );;
+gap> SetName( s3f, "s3f" ); 
 gap> isos2 := [ ida, isopc, isofp ];;
 gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
 
@@ -155,7 +158,7 @@ groupoid homomorphism :
   [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
       [(1,2,4) : -14 -> -12] ] ]
 gap> G2;
-single piece groupoid with rays: < Group( [ (1,2), (2,3) ] ), [ -7, -6, -5 ], 
+single piece groupoid with rays: < s3a, [ -7, -6, -5 ], 
 [ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
 gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
 groupoid homomorphism : 
