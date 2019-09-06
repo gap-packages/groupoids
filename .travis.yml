@@ -1,7 +1,8 @@
 language: c
 
 addons:
-  apt_packages:
+  apt:
+    packages:
     - libgmp-dev
     - libreadline-dev
     - zlib1g-dev
