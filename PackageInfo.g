@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 Version := "1.68dev",
-Date := "04/09/2019", # dd/mm/yyyy format
+Date := "24/09/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -26,7 +26,7 @@ Persons := [
   ),
   rec(
     LastName      := "Wensley",
-    FirstNames    := "Christopher D.",
+    FirstNames    := "Chris",
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
