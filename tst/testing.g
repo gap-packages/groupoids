@@ -8,6 +8,7 @@
 
 LoadPackage( "groupoids" );
 
+pkgname := "groupoids"; 
 pkgdir := DirectoriesPackageLibrary( pkgname, "tst/manual" ); 
 ## testing manual examples 
 testmanual := 
