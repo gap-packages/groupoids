@@ -102,7 +102,7 @@ gap> y1 := ImageElm( nmon, y );;
 gap> if ( ver = "4.11" ) then y2 := ( y1 = g2 ); 
 >    elif ( ver = "4.12" ) then y2 := ( w1 = g5^2 ); 
 >    else y2 := true; fi; 
-gap> y2;
+gap> y1;
 f5^2
 gap> y2; 
 true
