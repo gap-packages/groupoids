@@ -25,75 +25,107 @@ gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 );;
 gap> Size( AGa4 ); 
 20736
 gap> nob := NiceObject( AGa4 );; 
+gap> gennob := GeneratorsOfGroup( nob );
+[ f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 ]
+gap> g1 := gennob[1];;  g2 := gennob[2];;  g3 := gennob[3];;
+gap> g4 := gennob[4];;  g5 := gennob[5];;  g6 := gennob[6];;
+gap> g7 := gennob[7];;  g8 := gennob[8];;  g9 := gennob[9];;
+gap> g10:= gennob[10];; g11:= gennob[11];; g12:= gennob[12];;
 gap> nmon := NiceMonomorphism( AGa4 );;
 gap> AGa4 := AutomorphismGroup( Ga4 );;
 gap> genaut := GeneratorsOfGroup( AGa4 );;
 gap> Length(genaut); 
 8
+gap> ## problem: Gap4.11 and GAPdev return different NiceMonomorphisms 
+gap> ver := GAPInfo.Version{[1..4]};; 
 gap> w := genaut[1]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,3,4) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ] ]
-gap> w1 := ImageElm( nmon, w ); 
-f4^2*f5^2*f6^2
 gap> x := genaut[2]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,4,3) : -9 -> -9], [(1,2,3) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ] ]
-gap> x1 := ImageElm( nmon, x ); 
-f3*f7*f8*f11*f12
 gap> y := genaut[3]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -8 -> -8], [(2,3,4) : -8 -> -8], [() : -8 -> -7], 
       [() : -8 -> -9] ] ]
-gap> y1 := ImageElm( nmon, y ); 
-f2
 gap> z := genaut[4]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -8 -> -8], [(2,3,4) : -8 -> -8], [() : -8 -> -9], 
       [() : -8 -> -7] ] ]
-gap> z1 := ImageElm( nmon, z ); 
-f1*f2
 gap> u := genaut[5]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [(1,2,3) : -9 -> -8], 
       [() : -9 -> -7] ] ]
-gap> u1 := ImageElm( nmon, u ); 
-f5*f11
 gap> v := genaut[6]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [(2,3,4) : -9 -> -8], 
       [() : -9 -> -7] ] ]
-gap> v1 := ImageElm( nmon, v ); 
-f5^2
 gap> s := genaut[7]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [(1,2,3) : -9 -> -7] ] ]
-gap> s1 := ImageElm( nmon, s ); 
-f4*f9
 gap> t := genaut[8]; 
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [() : -9 -> -7] ], 
   [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
       [(2,3,4) : -9 -> -7] ] ]
-gap> t1 := ImageElm( nmon, t ); 
-f4^2
+gap> w1 := ImageElm( nmon, w );;
+gap> if ( ver = "4.11" ) then w2 := ( w1 = g4^2*g5^2*g6^2 ); 
+>    else w2 := ( w1 = g6^2*g10 ); fi; 
+gap> w2; 
+true
+gap> x1 := ImageElm( nmon, x );; 
+gap> if ( ver = "4.11" ) then x2 := ( x1 = g3*g7*g8*g11*g12 ); 
+>    else x2 := ( x1 = g2*g3*g4^2*g6^2*g8*g11 ); fi; 
+gap> x2; 
+true
+gap> y1 := ImageElm( nmon, y );; 
+gap> if ( ver = "4.11" ) then y2 := ( y1 = g2 ); 
+>    else y2 := ( w1 = g5^2 ); fi; 
+gap> y2; 
+true
+gap> z1 := ImageElm( nmon, z );; 
+gap> if ( ver = "4.11" ) then z2 := ( z1 = g1*g2 ); 
+>    else z2 := ( z1 = g1*g3*g5*g8 ); fi; 
+gap> w2; 
+true
+gap> u1 := ImageElm( nmon, u );; 
+gap> if ( ver = "4.11" ) then u2 := ( u1 = g5*g11 ); 
+>    else u2 := ( u1 = g3^2*g4^2*g6*g9 ); fi; 
+gap> u2; 
+true
+gap> v1 := ImageElm( nmon, v );; 
+gap> if ( ver = "4.11" ) then v2 := ( v1 = g5^2 ); 
+>    else v2 := ( v1 = g3*g4*g6^2*g10 ); fi; 
+gap> v2; 
+true
+gap> s1 := ImageElm( nmon, s );; 
+gap> if ( ver = "4.11" ) then s2 := ( s1 = g4*g9 ); 
+>    else s2 := ( s1 = g3^2*g8 ); fi; 
+gap> s2; 
+true
+gap> t1 := ImageElm( nmon, t );; 
+gap> if ( ver = "4.11" ) then t2 := ( t1 = g4^2 ); 
+>    else t2 := ( t1 = g3 ); fi; 
+gap> t2; 
+true
 
 gap> aperm := GroupoidAutomorphismByObjectPerm( Ga4, [-8,-9,-7] ); 
 groupoid homomorphism : 

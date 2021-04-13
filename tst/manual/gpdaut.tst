@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
+#Y  Copyright (C) 2000-2021, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdaut.tst" );
@@ -322,14 +322,16 @@ gap> ObjectGroup( AHd8, [ -12, -11, -10 ] );
 <group with 8 generators>
 
 ## Section 5.7 
-gap> reps := IrreducibleRepresentations( s4 );;
-gap> rep4 := reps[4];; 
-gap> Rs4 := Groupoid( Image( rep4 ), Gs4!.objects ); 
-single piece groupoid: < Group([ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], 
+gap> reps := IrreducibleRepresentations( s4 );; 
+gap> rep4 := reps[4]; 
+Pcgs([ (3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ]) -> 
+[ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], 
   [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], 
   [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], 
-  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]), [ -15, -14, -13, -12, -11 
- ] >
+  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]
+gap> Rs4 := Groupoid( Image( rep4 ), Gs4!.objects );; 
+gap> ObjectList( Rs4 ) = [ -15 .. -11 ];
+true
 gap> gens := GeneratorsOfGroupoid( Gs4 );
 [ [(1,2,3,4) : -15 -> -15], [(3,4) : -15 -> -15], [() : -15 -> -14], 
   [() : -15 -> -13], [() : -15 -> -12], [() : -15 -> -11] ]
