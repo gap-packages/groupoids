@@ -1,7 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.68dev for GAP 4.11.1 (08/04/21) 
+## Version 1.68dev for GAP 4.11.1 (13/04/21) 
 
+ * (13/04/21) changed nicemap.tst to cope with alternative NiceMonomorphisms 
  * (08/04/21) Switch CI to use GitHub Actions 
 
 ## Version 1.68 for GAP 4.10.2 (04/09/19) 
