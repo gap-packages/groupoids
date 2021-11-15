@@ -1,0 +1,81 @@
+  
+  [1X8 [33X[0;0YDevelopment History[133X[101X
+  
+  
+  [1X8.1 [33X[0;0YVersions of the Package[133X[101X
+  
+  [33X[0;0YThe  first  version,  [5XGraphGpd[105X  1.001,  formed  part  of Emma Moore's thesis
+  [Moo01] in December 2000, but was not made generally available.[133X
+  
+  [33X[0;0YVersion 1.002 of [5XGraphGpd[105X was prepared to run under [5XGAP[105X 4.4 in January 2004;
+  was  submitted  to  the [5XGAP[105X council to be considered as an accepted package;
+  but suggestions from the referee were not followed up.[133X
+  
+  [33X[0;0YIn  April  2006  the  manual was converted to [5XGAPDoc[105X format. Variables [10XStar[110X,
+  [10XCostar[110X  and  [10XCoveringGroup[110X  were  found  to  conflict  with  usage  in other
+  packages,     and     were     renamed    [10XVertexStar[110X,    [10XVertexCostar[110X    and
+  [10XCoveringGroupOfGroupoid[110X respectively. Similarly, the [10XVertices[110X and [10XArcs[110X of an
+  [10XFpWeightedDigraph[110X were changed from attributes to record components.[133X
+  
+  [33X[0;0YIn the spring of 2006 the package was extensively rewritten and renamed [5XGpd[105X.
+  Version  1.01  was  submitted  as  a deposited package in June 2006. Version
+  1.03,  of October 2007, fixed some file protections, and introduced the test
+  file [11Xgpd_manual.tst[111X.[133X
+  
+  [33X[0;0YVersion  1.05,  of  November  2008,  was released when the website at Bangor
+  changed.[133X
+  
+  [33X[0;0YSince  then,  the  package has been rewritten again, introducing magmas with
+  objects  and  their mappings. Functions to implement constructions contained
+  in [AW10] have been added, but this is ongoing work.[133X
+  
+  [33X[0;0YVersions  1.09  to 1.15 were prepared for the anticipated release of [5XGAP[105X 4.5
+  in June 2012.[133X
+  
+  [33X[0;0Y[5XGpd[105X became an accepted [5XGAP[105X package in May 2015.[133X
+  
+  [33X[0;0YIn April 2017 the package was renamed again, as [5Xgroupoids[105X.[133X
+  
+  [33X[0;0YIn  August  2017 the implementation of groupoid homomorphisms was completely
+  revised  with  the emphasis now on a mapping from a set of generating arrows
+  to their images.[133X
+  
+  [33X[0;0YIn  September  2017  various  functions  were  revised so that, at last, the
+  operation   [10XDiscreteNormalPreXModWithObjects[110X   in  [5XXMod[105X  works  again.  This
+  constructs  a  crossed  module  of  groupoids  with  a connected range and a
+  homogeneous, discrete source.[133X
+  
+  [33X[0;0YIn  recent  versions  there  have been a number of changes of function name,
+  such  as  [10XIsDigraph[110X  becoming  [10XGroupoidIsDigraph[110X.  This is in order to avoid
+  conflicts  with  the [5XDigraphs[105X package. The intention is that these functions
+  can revert to the original names in due course.[133X
+  
+  [33X[0;0YIn  version  1.62  of  October  2018  there  were significant changes to the
+  operations  constructing free products with amalgamation and HNN extensions.
+  It  is  planned to move this material to a new package [5XRewriting[105X in time for
+  [5XGAP[105X 4.11.[133X
+  
+  
+  [1X8.2 [33X[0;0YWhat needs to be done next?[133X[101X
+  
+  [30X    [33X[0;6Ymore work on automorphism groups of groupoids;[133X
+  
+  [30X    [33X[0;6Ynormal subgroupoids and quotient groupoids;[133X
+  
+  [30X    [33X[0;6Ymore  methods  for morphisms of groupoids, particularly when the range
+        is not connected;[133X
+  
+  [30X    [33X[0;6Y[10XImageElm[110X  and [10XImagesSource[110X for the cases of groupoid morphisms not yet
+        covered;[133X
+  
+  [30X    [33X[0;6Y[10XEnumerator[110X for [10XIsHomsetCosetsRep[110X;[133X
+  
+  [30X    [33X[0;6Yfree groupoid on a graph;[133X
+  
+  [30X    [33X[0;6Yconvert      [10XGraphOfGroupsRewritingSystem[110X      to     the     category
+        [10XIsRewritingSystem[110X;[133X
+  
+  [30X    [33X[0;6Yin [5XXMod[105X, continue to work on crossed modules over groupoids.[133X
+  
+  [33X[0;0Y [133X
+  

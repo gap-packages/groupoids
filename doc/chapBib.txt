@@ -1,0 +1,45 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XAW10[120X] [16XAlp, M. and Wensley, C. D.[116X, [17XAutomorphisms and homotopies of groupoids
+  and crossed modules[117X, [18XApplied Categorical Structures[118X, [19X18[119X (2010), 473–495.
+  
+  [[20XBMPW02[120X]  [16XBrown,  R.,  Moore,  E. J., Porter, T. and Wensley, C. D.[116X, [17XCrossed
+  complexes,   and   free   crossed   resolutions  for  amalgamated  sums  and
+  HNN-extensions of groups[117X, [18XGeorgian Math. J.[118X, [19X9[119X (2002), 623–644.
+  
+  [[20XBro88[120X]  [16XBrown,  R.[116X,  [17XTopology:  a  geometric  account  of general topology,
+  homotopy  types,  and  the  fundamental  groupoid[117X, Ellis Horwood, Chichester
+  (1988).
+  
+  [[20XBro06[120X] [16XBrown, R.[116X, [17XTopology and groupoids[117X, Booksurge LLC, S.Carolina (2006).
+  
+  [[20XGH17[120X]  [16XGutsche,  S. and Horn, M.[116X, [17XAutoDoc - Generate documentation from GAP
+  source    code    (Version    2017.09.15)[117X    (2017),    ((    GAP   package,
+  https://github.com/gap-packages/AutoDoc )).
+  
+  [[20XHig76[120X]  [16XHiggins,  P.[116X,  [17XThe  fundamental  groupoid  of a graph of groups[117X, [18XJ.
+  London Math. Soc.[118X, [19X13[119X (1976), 145–149.
+  
+  [[20XHig05[120X]  [16XHiggins,  P.[116X,  [17XCategories  and  groupoids[117X,  Reprints  in Theory and
+  Applications      of      Categories     (2005),     1–195     pages,     ((
+  http://www.tac.mta.ca/tac/reprints/articles/7/tr7abs.html )).
+  
+  [[20XHor17[120X] [16XHorn, M.[116X, [17XGitHubPagesForGAP - Template for easily using GitHub Pages
+  within    GAP    packages    (Version   0.2)[117X   (2017),   ((   GAP   package,
+  https://gap-system.github.io/GitHubPagesForGAP/ )).
+  
+  [[20XLN17[120X]  [16XLübeck,  F.  and  Neunhöffer,  M.[116X, [17XGAPDoc (version 1.6)[117X, RWTH Aachen
+  (2017),                   ((                   GAP                  package,
+  http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html )).
+  
+  [[20XMoo01[120X]  [16XMoore,  E. J.[116X, [17XGraphs of Groups: Word Computations and Free Crossed
+  Resolutions[117X,   Ph.D.   thesis,   University  of  Wales,  Bangor  (2001),  ((
+  http://www.maths.bangor.ac.uk/research/ftp/theses/moore.ps.gz )).
+  
+  [[20XSer80[120X] [16XSerre, J.[116X, [17XTrees[117X, Springer-Verlag, Berlin (1980).
+  
+  
+  
+  [32X

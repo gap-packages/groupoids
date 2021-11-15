@@ -1,0 +1,1002 @@
+  
+  [1X4 [33X[0;0YGroupoids[133X[101X
+  
+  [33X[0;0YA   [13Xgroupoid[113X  is  a  (mathematical)  category  in  which  every  element  is
+  invertible.  It  consists  of  a set of [13Xpieces[113X, each of which is a connected
+  groupoid.  The  usual  terminology  is  `connected  component',  but  in [5XGAP[105X
+  `component' is used for `record component', so we use the term [13Xsingle piece[113X.[133X
+  
+  [33X[0;0YThe  simplest  form  for  a [13Xsingle piece groupoid[113X is the direct product of a
+  group and a complete digraph, and so is determined by a set of [13Xobjects[113X [10Xobs[110X [22X=
+  Ω[122X  (the  least  of which is the [13Xroot object[113X), and a [13Xroot group[113X [10Xgrp[110X [22X= G[122X. Then
+  the  elements  of  the groupoid are [13Xarrows[113X [22Xg : o_1 -> o_2[122X, stored as triples
+  [10X[g,o1,o2][110X, where [22Xg ∈ G[122X and [22Xo_1,o_2 ∈ Ω[122X. The objects will generally be chosen
+  to  be  consecutive  negative  integers,  but  any  suitable  ordered set is
+  acceptable,  and  `consecutive'  is  not  a requirement. The root group will
+  usually  be  taken  to  be a permutation group, but pc-groups, fp-groups and
+  matrix groups are also supported.[133X
+  
+  [33X[0;0YA [13Xgroup[113X may be considered as a single piece groupoid with one object.[133X
+  
+  [33X[0;0YA  [13Xgroupoid[113X  is a set of one or more single piece groupoids, its [13Xpieces[113X, and
+  is represented as [10XIsGroupoidRep[110X, with attribute [10XPiecesOfGroupoid[110X.[133X
+  
+  [33X[0;0YThe  underlying  digraph  of  a single piece groupoid is a regular, complete
+  digraph on the object set [22XΩ[122X with [22X|G|[122X arrows from any one object to any other
+  object.  It  will  be  convenient to specify a set of [13Xrays[113X consisting of [22X|Ω|[122X
+  arrows  [22Xr_i  :  o_1  ->  o_i[122X,  where  [22Xo_1[122X  is the root object and [22Xr_1[122X is the
+  identity  in  [22XG[122X.  In  the  simplest  examples  all  the [22Xr_i[122X will be identity
+  elements,   but   rays   are   useful   when   forming   subgroupoids   (see
+  [2XSubgroupoidWithRays[102X ([14X4.3-2[114X)).[133X
+  
+  [33X[0;0YA  groupoid  is  [13Xhomogeneous[113X  if  it has two of more isomorphic pieces, with
+  identical groups. The special case of [13Xhomogeneous, discrete[113X groupoids, where
+  each  piece  has a single object, is given its own representation. These are
+  used in the [5XXMod[105X package as the source of a crossed modules of groupoids.[133X
+  
+  [33X[0;0YFor  the  definitions of the standard properties of groupoids we refer to R.
+  Brown's   book  ``Topology''  [Bro88],  recently  revised  and  reissued  as
+  ``Topology and Groupoids'' [Bro06].[133X
+  
+  
+  [1X4.1 [33X[0;0YGroupoids: their properties and attributes[133X[101X
+  
+  [1X4.1-1 SinglePieceGroupoid[101X
+  
+  [33X[1;0Y[29X[2XSinglePieceGroupoid[102X( [3Xgrp[103X, [3Xobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupoid[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDomainWithSingleObject[102X( [3Xgp[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  simplest construction of a groupoid is as the direct product of a group
+  and  a complete digraph. Such a groupoid will be called a [13Xstandard groupoid[113X.
+  Many  subgroupoids of such a groupoid do not have this simple form, and will
+  be  considered  in  section  [14X4.3[114X. The global function [10XGroupoid[110X will normally
+  find the appropriate constructor to call, the options being:[133X
+  
+  [30X    [33X[0;6Ythe object group, a set of objects;[133X
+  
+  [30X    [33X[0;6Ya group being converted to a groupoid, a single object;[133X
+  
+  [30X    [33X[0;6Ya list of groupoids which have already been constructed (see [14X4.1-4[114X).[133X
+  
+  [33X[0;0YMethods for [10XViewObj[110X, [10XPrintObj[110X and [10XDisplay[110X are provided for groupoids and the
+  other types of object in this package. Users are advised to supply names for
+  all the groups and groupoids they construct.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( (1,2,3,4), (3,4) );; [127X[104X
+    [4X[25Xgap>[125X [27Xd8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s4, "s4" );  SetName( d8, "d8" ); [127X[104X
+    [4X[25Xgap>[125X [27XGs4 := SinglePieceGroupoid( s4, [-15 .. -11] ); [127X[104X
+    [4X[28Xsingle piece groupoid: < s4, [ -15 .. -11 ] >[128X[104X
+    [4X[25Xgap>[125X [27XGd8 := Groupoid( d8, [-9,-8,-7] );[127X[104X
+    [4X[28Xsingle piece groupoid: < d8, [ -9, -8, -7 ] >[128X[104X
+    [4X[25Xgap>[125X [27Xc6 := Group( (5,6,7)(8,9) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( c6, "c6" );[127X[104X
+    [4X[25Xgap>[125X [27XGc6 := DomainWithSingleObject( c6, -6 );[127X[104X
+    [4X[28Xsingle piece groupoid: < c6, [ -6 ] >[128X[104X
+    [4X[25Xgap>[125X [27XSetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  [127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-2 ObjectList[101X
+  
+  [33X[1;0Y[29X[2XObjectList[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRootObject[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRootGroup[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XObjectGroup[102X( [3Xgpd[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  [10XObjectList[110X  of  a  groupoid  is  the  sorted  list  of its objects. The
+  [10XRootObject[110X  in a single-piece groupoid is the object with the least label. A
+  [13Xloop[113X  is  an  arrow  of  the  form [22Xg : o -> o[122X, and the loops at a particular
+  object  [22Xo[122X  form  a  group,  the  [10XObjectGroup[110X  at  [22Xo[122X.  The  [10XRootGroup[110X  is the
+  [10XObjectGroup[110X at the [10XRootObject[110X.[133X
+  
+  [33X[0;0YIn  the  example,  the  groupoids [10XGf2c6[110X and [10XGabc[110X illustrate that the objects
+  need not be integers.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XObjectList( Gs4 );    [127X[104X
+    [4X[28X[ -15 .. -11 ][128X[104X
+    [4X[25Xgap>[125X [27X[ RootObject( Gd8 ), RootGroup( Gc6 ), ObjectGroup( Gs4, -11 ) ];[127X[104X
+    [4X[28X[ -9, c6, s4 ][128X[104X
+    [4X[25Xgap>[125X [27Xf2 := FreeGroup(2);;[127X[104X
+    [4X[25Xgap>[125X [27XGf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );[127X[104X
+    [4X[28Xsingle piece groupoid: < c6, [ f1, f2 ] >[128X[104X
+    [4X[25Xgap>[125X [27XArrow( Gf2c6, (5,7,6), f2.1, f2.2 );[127X[104X
+    [4X[28X[(5,7,6) : f1 -> f2][128X[104X
+    [4X[25Xgap>[125X [27XGabc := Groupoid( d8, [ "a", "b", "c" ] );[127X[104X
+    [4X[28Xsingle piece groupoid: < d8, [ "a", "b", "c" ] >[128X[104X
+    [4X[25Xgap>[125X [27XArrow( Gabc, (2,4), "c", "b" );[127X[104X
+    [4X[28X[(2,4) : c -> b][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-3 IsPermGroupoid[101X
+  
+  [33X[1;0Y[29X[2XIsPermGroupoid[102X( [3Xgpd[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPcGroupoid[102X( [3Xgpd[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFpGroupoid[102X( [3Xgpd[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsMatrixGroupoid[102X( [3Xgpd[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFreeGroupoid[102X( [3Xgpd[103X ) [32X property[133X
+  
+  [33X[0;0YA  groupoid  is  a  permutation  groupoid if all its pieces have permutation
+  groups.  Most of the examples in this chapter are permutation groupoids, but
+  in principle any type of group known to [5XGAP[105X may be used.[133X
+  
+  [33X[0;0YIn the following example [10XGf2[110X is an fp-groupoid and also a free groupoid, [10XGq8[110X
+  is a pc-groupoid, and [10XGgl43[110X is a matrix groupoid. See section [14X5.7[114X for matrix
+  representations of groupoids.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf2 := FreeGroup( 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XGf2 := Groupoid( f2, -22 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( f2, "f2" );  SetName( Gf2, "Gf2" ); [127X[104X
+    [4X[25Xgap>[125X [27Xq8 := QuaternionGroup( 8 );;[127X[104X
+    [4X[25Xgap>[125X [27XGq8 := Groupoid( q8, [ -28, -27 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( q8, "q8" );  SetName( Gq8, "Gq8" );[127X[104X
+    [4X[25Xgap>[125X [27Xgl43 := SpecialLinearGroup( 4, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XGgl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );[127X[104X
+    [4X[25Xgap>[125X [27X[ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ), [127X[104X
+    [4X[25X>[125X [27X     IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; [127X[104X
+    [4X[28X[ true, true, true, true, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-4 UnionOfPieces[101X
+  
+  [33X[1;0Y[29X[2XUnionOfPieces[102X( [3Xpieces[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPieces[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSize[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XReplaceOnePieceInUnion[102X( [3XU[103X, [3Xold_piece[103X, [3Xnew_piece[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  a  groupoid  consists  of  two or more pieces, we require their object
+  lists  to be disjoint. The operation [10XUnionOfPieces[110X and the attribute [10XPieces[110X,
+  introduced  in  section  [14X2.5[114X,  are  also  used for groupoids. The pieces are
+  sorted  by  the  least  object  in their object lists. The [10XObjectList[110X is the
+  sorted concatenation of the objects in the pieces.[133X
+  
+  [33X[0;0YThe  [10XSize[110X  of  a  groupoid  is  the number of its arrows. For a single piece
+  groupoid,  this  is  the product of the size of the group with the square of
+  the  number of objects. For a non-connected groupoid, the size is the sum of
+  the sizes of its pieces.[133X
+  
+  [33X[0;0YOne  of  the  pieces  in  a groupoid may be replaced by an alternative piece
+  using  the operation [10XReplaceOnePieceInUnion[110X. The [13Xold_piece[113X may be either the
+  [13Xposition[113X of the piece to be replaced, or one of the pieces in [10XU[110X. The objects
+  in  the  new  piece  may  or  may not overlap the objects in the piece being
+  removed  --  we  just  require  that  the  object lists in the new union are
+  disjoint.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( U3 );[127X[104X
+    [4X[28Xgroupoid with 3 pieces:[128X[104X
+    [4X[28X< objects: [ -15 .. -11 ][128X[104X
+    [4X[28X    group: s4 = <[ (1,2,3,4), (3,4) ]> >[128X[104X
+    [4X[28X< objects: [ -9, -8, -7 ][128X[104X
+    [4X[28X    group: d8 = <[ (1,2,3,4), (1,3) ]> >[128X[104X
+    [4X[28X< objects: [ -6 ][128X[104X
+    [4X[28X    group: c6 = <[ (5,6,7)(8,9) ]> >[128X[104X
+    [4X[25Xgap>[125X [27XPieces( U3 );[127X[104X
+    [4X[28X[ Gs4, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27XObjectList( U3 );[127X[104X
+    [4X[28X[ -15, -14, -13, -12, -11, -9, -8, -7, -6 ][128X[104X
+    [4X[25Xgap>[125X [27XU2 := Groupoid( [ Gf2, Gq8 ] );;[127X[104X
+    [4X[25Xgap>[125X [27X[ Size(Gs4), Size(Gd8), Size(Gc6), Size(U3) ];[127X[104X
+    [4X[28X[ 600, 72, 6, 678 ][128X[104X
+    [4X[25Xgap>[125X [27X[ Size(Gf2), Size(Gq8), Size(U2) ];           [127X[104X
+    [4X[28X[ infinity, 32, infinity ][128X[104X
+    [4X[25Xgap>[125X [27XU5 := UnionOfPieces( [ U3, U2 ] );[127X[104X
+    [4X[28Xgroupoid with 5 pieces:[128X[104X
+    [4X[28X[ Gq8, Gf2, Gs4, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( U5 );[127X[104X
+    [4X[28Xgroupoid with 5 pieces:[128X[104X
+    [4X[28X< objects: [ -28, -27 ][128X[104X
+    [4X[28X    group: q8 = <[ x, y, y2 ]> >[128X[104X
+    [4X[28X< objects: [ -22 ][128X[104X
+    [4X[28X    group: f2 = <[ f1, f2 ]> >[128X[104X
+    [4X[28X< objects: [ -15 .. -11 ][128X[104X
+    [4X[28X    group: s4 = <[ (1,2,3,4), (3,4) ]> >[128X[104X
+    [4X[28X< objects: [ -9, -8, -7 ][128X[104X
+    [4X[28X    group: d8 = <[ (1,2,3,4), (1,3) ]> >[128X[104X
+    [4X[28X< objects: [ -6 ][128X[104X
+    [4X[28X    group: c6 = <[ (5,6,7)(8,9) ]> >[128X[104X
+    [4X[25Xgap>[125X [27XV5 := ReplaceOnePieceInUnion( U5, 3, Ggl43 ); [127X[104X
+    [4X[28Xgroupoid with 5 pieces:[128X[104X
+    [4X[28X[ Ggl43, Gq8, Gf2, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27XObjectList( V5 );             [127X[104X
+    [4X[28X[ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ][128X[104X
+    [4X[25Xgap>[125X [27XU5 = V5;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XW5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); [127X[104X
+    [4X[28Xgroupoid with 5 pieces:[128X[104X
+    [4X[28X[ Ggl43, Gq8, Gf2, Gs4, Gd8 ][128X[104X
+    [4X[25Xgap>[125X [27XObjectList( W5 );[127X[104X
+    [4X[28X[ -35, -34, -33, -32, -31, -28, -27, -22, -15, -14, -13, -12, -11, -9, -8, -7 [128X[104X
+    [4X[28X ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-5 HomogeneousGroupoid[101X
+  
+  [33X[1;0Y[29X[2XHomogeneousGroupoid[102X( [3Xgpd[103X, [3Xoblist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomogeneousDiscreteGroupoid[102X( [3Xgp[103X, [3Xobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPieceIsomorphisms[102X( [3Xhgpd[103X ) [32X attribute[133X
+  
+  [33X[0;0YSpecial  functions  are provided for the case where a groupoid has more than
+  one  connected component, and when these components are identical except for
+  their object sets. Such groupoids are said to be [13Xhomogeneous[113X.[133X
+  
+  [33X[0;0YThe  operation  [10XHomogeneousGroupoid[110X is used when the components each contain
+  more  than  one object. The arguments consist of a single piece groupoid [10Xgpd[110X
+  and  a  list  of  lists  of objects [10Xoblist[110X, each of whose lists has the same
+  length  as  the object list [10Xobs[110X of [10Xgpd[110X. Note that [10Xgpd[110X is [13Xnot[113X included as one
+  of  the  pieces  in the output unless [10Xobs[110X is included as one of the lists in
+  [10Xoblist[110X.[133X
+  
+  [33X[0;0YThe  operation  [10XHomogeneousDiscreteGroupoid[110X is used when the components each
+  have a single object. In this case the first argument is just a group -- the
+  root  group for each component. These groupoids are used in the [5XXMod[105X package
+  as the source of many crossed modules of groupoids.[133X
+  
+  [33X[0;0YBoth  types of groupoid have the property [10XIsHomogeneousDomainWithObjects[110X. In
+  the  latter  case a separate representation [10XIsHomogeneousDiscreteGroupoidRep[110X
+  is used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHd8 := HomogeneousGroupoid( Gd8, [127X[104X
+    [4X[25X>[125X [27X              [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );[127X[104X
+    [4X[28Xhomogeneous groupoid with 3 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < d8, [ -20, -19, -18 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < d8, [ -16, -15, -14 ] >[128X[104X
+    [4X[28X3:  single piece groupoid: < d8, [ -12, -11, -10 ] >[128X[104X
+    [4X[25Xgap>[125X [27XSize(Hd8);   ## 8x3x3 + 8x3x3[127X[104X
+    [4X[28X216[128X[104X
+    [4X[25Xgap>[125X [27XIsHomogeneousDomainWithObjects( Hd8 );               [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPieceIsomorphisms( Hd8 );[127X[104X
+    [4X[28X[ groupoid homomorphism : [128X[104X
+    [4X[28X    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], [128X[104X
+    [4X[28X          [() : -20 -> -18] ], [128X[104X
+    [4X[28X      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], [128X[104X
+    [4X[28X          [() : -12 -> -10] ] ], groupoid homomorphism : [128X[104X
+    [4X[28X    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], [128X[104X
+    [4X[28X          [() : -20 -> -18] ], [128X[104X
+    [4X[28X      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], [128X[104X
+    [4X[28X          [() : -16 -> -14] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XHc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); [127X[104X
+    [4X[28Xhomogeneous, discrete groupoid: < c6, [ -7 .. -4 ] >[128X[104X
+    [4X[25Xgap>[125X [27XSize(Hc6);   ## 6x4[127X[104X
+    [4X[28X24[128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject(Gd8);[127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ][128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject(Hd8);[127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ][128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject(Hc6);[127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", [128X[104X
+    [4X[28X  "IsHomogeneousDiscreteGroupoidRep" ][128X[104X
+    [4X[25Xgap>[125X [27Xktpo := KnownTruePropertiesOfObject(Hc6);; [127X[104X
+    [4X[25Xgap>[125X [27Xans := [127X[104X
+    [4X[25X>[125X [27X[ "CanEasilyCompareElements", "CanEasilySortElements", [127X[104X
+    [4X[25X>[125X [27X  "IsDuplicateFree", "IsAssociative", "IsCommutative", [127X[104X
+    [4X[25X>[125X [27X  "IsDiscreteDomainWithObjects", "IsHomogeneousDomainWithObjects" ];;[127X[104X
+    [4X[25Xgap>[125X [27XForAll( ans, a -> ( a in ktpo ) ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-6 DirectProductOp[101X
+  
+  [33X[1;0Y[29X[2XDirectProductOp[102X( [3Xlist[103X, [3Xgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjection[102X( [3Xgpd[103X, [3Xpos[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEmbedding[102X( [3Xgpd[103X, [3Xpos[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  direct  product of groupoids [22XG,H[122X has as group the direct product of the
+  groups  in  [22XG[122X and [22XH[122X and as object list the cartesian product of their object
+  lists.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xprod := DirectProductOp( [Gd8,Gc6], Gd8 );[127X[104X
+    [4X[28Xsingle piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), [128X[104X
+    [4X[28X[ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ] >[128X[104X
+    [4X[25Xgap>[125X [27XProjection( prod, 1 );                    [127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : [ -9, -6 ] -> [ -9, -6 ]], [(1,3) : [ -9, -6 ] -> [ -9, -6 ]][128X[104X
+    [4X[28X        , [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]], [128X[104X
+    [4X[28X      [() : [ -9, -6 ] -> [ -8, -6 ]], [() : [ -9, -6 ] -> [ -7, -6 ]] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -9], [128X[104X
+    [4X[28X      [() : -9 -> -8], [() : -9 -> -7] ] ][128X[104X
+    [4X[25Xgap>[125X [27XEmbedding( prod, 2 );                        [127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(5,6,7)(8,9) : -6 -> -6] ], [128X[104X
+    [4X[28X  [ [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]] ] ][128X[104X
+    [4X[25Xgap>[125X [27XDirectProductInfo( prod );[127X[104X
+    [4X[28Xrec( embeddings := [ , groupoid homomorphism : [128X[104X
+    [4X[28X        [ [ [(5,6,7)(8,9) : -6 -> -6] ], [128X[104X
+    [4X[28X          [ [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]] ] ] ], first := Gd8, [128X[104X
+    [4X[28X  groupoids := [ Gd8, Gc6 ], groups := [ d8, c6 ], [128X[104X
+    [4X[28X  objectlists := [ [ -9, -8, -7 ], [ -6 ] ], [128X[104X
+    [4X[28X  projections := [ groupoid homomorphism : [128X[104X
+    [4X[28X        [ [ [(1,2,3,4) : [ -9, -6 ] -> [ -9, -6 ]], [128X[104X
+    [4X[28X              [(1,3) : [ -9, -6 ] -> [ -9, -6 ]], [128X[104X
+    [4X[28X              [(5,6,7)(8,9) : [ -9, -6 ] -> [ -9, -6 ]], [128X[104X
+    [4X[28X              [() : [ -9, -6 ] -> [ -8, -6 ]], [128X[104X
+    [4X[28X              [() : [ -9, -6 ] -> [ -7, -6 ]] ], [128X[104X
+    [4X[28X          [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -9], [128X[104X
+    [4X[28X              [() : -9 -> -8], [() : -9 -> -7] ] ] ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2 [33X[0;0YGroupoid elements; stars; costars; homsets[133X[101X
+  
+  [1X4.2-1 GroupoidElement[101X
+  
+  [33X[1;0Y[29X[2XGroupoidElement[102X( [3Xgpd[103X, [3Xelt[103X, [3Xtail[103X, [3Xhead[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementOfArrow[102X( [3Xelt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTailOfArrow[102X( [3Xelt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHeadOfArrow[102X( [3Xelt[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XGroupoidElement[110X  is  a  synonym  for the operation [10XArrow[110X, as
+  described  in  subsection  [14X2.1-3[114X.  To recapitulate, an arrow [10Xe[110X consists of a
+  group  element, [10XElementOfArrow(e)[110X; the tail (source) object, [10XTailOfArrow(e)[110X;
+  and  the  head  (target)  object,  [10XHeadOfArrow(e)[110X.  Arrows  have  a  [13Xpartial
+  composition[113X:  two  arrows  may  be  multiplied  when  the  head of the first
+  coincides  with  the  tail  of the second. If an attempt is made to multiply
+  arrows where this condition does not hold, then the value [10Xfail[110X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xe1 := GroupoidElement( Gd8, (1,2,3,4), -9, -8 );[127X[104X
+    [4X[28X[(1,2,3,4) : -9 -> -8][128X[104X
+    [4X[25Xgap>[125X [27Xe2 := Arrow( Gd8, (1,3), -8, -7 );[127X[104X
+    [4X[28X[(1,3) : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27XPrint( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );[127X[104X
+    [4X[28X[ (1,2,3,4), -9, -8 ][128X[104X
+    [4X[25Xgap>[125X [27Xe1e2 := e1*e2;[127X[104X
+    [4X[28X[(1,2)(3,4) : -9 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xe2*e1;[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xe3 := Arrow( Gd8, (2,4), -7, -9 );;[127X[104X
+    [4X[25Xgap>[125X [27Xloop := e1e2*e3;[127X[104X
+    [4X[28X[(1,4,3,2) : -9 -> -9][128X[104X
+    [4X[25Xgap>[125X [27Xloop^2;[127X[104X
+    [4X[28X[(1,3)(2,4) : -9 -> -9][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-2 IdentityArrow[101X
+  
+  [33X[1;0Y[29X[2XIdentityArrow[102X( [3Xgpd[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  identity  arrow  [22X1_o[122X  of  [22XG[122X  at  object  [22Xo[122X is [22X(e:o -> o)[122X where [22Xe[122X is the
+  identity  element  in the object group. The [13Xinverse arrow[113X [22Xe^-1[122X of [22Xe = (c : p
+  -> q)[122X is [22X(c^-1 : q -> p)[122X, so that [22Xe*e^-1=1_p[122X and [22Xe^-1*e = 1_q[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xi8 := IdentityArrow( Gd8, -8 );[127X[104X
+    [4X[28X[() : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27X[ e1*i8, i8*e1, e1^-1]; [127X[104X
+    [4X[28X[ [(1,2,3,4) : -9 -> -8], fail, [(1,4,3,2) : -8 -> -9] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-3 Order[101X
+  
+  [33X[1;0Y[29X[2XOrder[102X( [3Xarr[103X ) [32X attribute[133X
+  
+  [33X[0;0YA  groupoid  element is a [13Xloop[113X when the tail and head coincide. In this case
+  the order of the element is defined to be the order of its group element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xi8; Order(i8);[127X[104X
+    [4X[28X[() : -8 -> -8][128X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xloop; Order(loop);[127X[104X
+    [4X[28X[(1,4,3,2) : -9 -> -9][128X[104X
+    [4X[28X4[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-4 ObjectStar[101X
+  
+  [33X[1;0Y[29X[2XObjectStar[102X( [3Xgpd[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectCostar[102X( [3Xgpd[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomset[102X( [3Xgpd[103X, [3Xtail[103X, [3Xhead[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  [13Xstar[113X  at  [10Xobj[110X  is  the  set of arrows which have [10Xobj[110X as tail, while the
+  [13Xcostar[113X  is the set of arrows which have [10Xobj[110X as head. The [13Xhomset[113X from [10Xobj1[110X to
+  [10Xobj2[110X  is  the  set  of  arrows  with  the specified tail and head, and so is
+  bijective  with the elements of the object groups. Thus every star and every
+  costar  is  a  union  of  homsets. The identity arrow at an object is a left
+  identity for the star and a right identity for the costar at that object.[133X
+  
+  [33X[0;0YIn  order  not  to create unneccessarily long lists, these operations return
+  objects  of  type  [10XIsHomsetCosetsRep[110X  for which an [10XIterator[110X is provided. (An
+  [10XEnumerator[110X is not yet implemented.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xstar9 := ObjectStar( Gd8, -9 );[127X[104X
+    [4X[28X<star at -9 with group d8>[128X[104X
+    [4X[25Xgap>[125X [27XSize( star9 ); [127X[104X
+    [4X[28X24[128X[104X
+    [4X[25Xgap>[125X [27XPrintSelection( star9, 19, 1 );[127X[104X
+    [4X[28X19 : [(1,2,3,4) : -9 -> -9][128X[104X
+    [4X[28X20 : [(1,2,3,4) : -9 -> -8][128X[104X
+    [4X[28X21 : [(1,2,3,4) : -9 -> -7][128X[104X
+    [4X[28X22 : [(1,2)(3,4) : -9 -> -9][128X[104X
+    [4X[28X23 : [(1,2)(3,4) : -9 -> -8][128X[104X
+    [4X[28X24 : [(1,2)(3,4) : -9 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xcostar6 := ObjectCostar( Gc6, -6 );[127X[104X
+    [4X[28X<costar at -6 with group c6>[128X[104X
+    [4X[25Xgap>[125X [27Xhsetq8 := Homset( Gq8, -28, -27 );[127X[104X
+    [4X[28X<homset -28 -> -27 with group q8>[128X[104X
+    [4X[25Xgap>[125X [27XPerform( hsetq8, Display );[127X[104X
+    [4X[28X[<identity> of ... : -28 -> -27][128X[104X
+    [4X[28X[y2 : -28 -> -27][128X[104X
+    [4X[28X[y : -28 -> -27][128X[104X
+    [4X[28X[y*y2 : -28 -> -27][128X[104X
+    [4X[28X[x : -28 -> -27][128X[104X
+    [4X[28X[x*y2 : -28 -> -27][128X[104X
+    [4X[28X[x*y : -28 -> -27][128X[104X
+    [4X[28X[x*y*y2 : -28 -> -27][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.3 [33X[0;0YSubgroupoids[133X[101X
+  
+  [1X4.3-1 Subgroupoid[101X
+  
+  [33X[1;0Y[29X[2XSubgroupoid[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsSubgroupoid[102X( [3Xgpd[103X, [3Xsgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsWideSubgroupoid[102X( [3Xgpd[103X, [3Xsgpd[103X ) [32X operation[133X
+  
+  [33X[0;0YA [13Xsubgroupoid[113X [22XS[122X of a groupoid [22XG[122X has as objects some subset of the objects of
+  [22XG[122X.  It  is  [13Xwide[113X in [22XG[122X if both groupoids have the same object set. It is [13Xfull[113X
+  if,  for  any  two  objects  in  [22XS[122X, the [10XHomset[110X is the same as that in [22XG[122X. The
+  arrows of [22XS[122X are a subset of those of [22XG[122X, closed under multiplication and with
+  tail and head in the chosen object set.[133X
+  
+  [33X[0;0YThere  are  a  variety  of  constructors  for  a  subgroupoid  of a standard
+  groupoid,  as  described  in  for  following  sections.  The global function
+  [10XSubgroupoid[110X   should  call  the  operation  appropriate  to  the  parameters
+  provided.[133X
+  
+  [1X4.3-2 SubgroupoidWithRays[101X
+  
+  [33X[1;0Y[29X[2XSubgroupoidWithRays[102X( [3Xgpd[103X, [3Xsgp[103X, [3Xrays[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRaysOfGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRayArrowsOfGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  
+  [33X[0;0YIf groupoid [22XG[122X is of type [10XIsDirectProductWithCompleteDigraph[110X with group [22Xg[122X and
+  [22Xn[122X  objects,  then  a typical wide subgroupoid [22XH[122X of [22XG[122X is formed by choosing a
+  subgroup  [22Xh[122X of [22Xg[122X to be the object group at the root object [22Xq[122X, and an arrow [22Xr
+  :  q  -> p[122X for each of the objects [22Xp[122X. The chosen loop arrow at [22Xq[122X must be the
+  identity arrow. These [22Xn[122X arrows are called the [13Xray arrows[113X of the subgroupoid.
+  The  arrows  in the homset from [22Xp[122X to [22Xp'[122X have the form [22Xr^-1xr'[122X where [22Xr,r'[122X are
+  the rays from [22Xq[122X to [22Xp,p'[122X respectively, and [22Xx ∈ h[122X.[133X
+  
+  [33X[0;0YThe  operation  [10XRayArrowsOfGroupoid[110X  returns  a list of arrows, one for each
+  object,  while  the  operation  [10XRaysOfGroupoid[110X  returns  the  list  of group
+  elements in these arrows.[133X
+  
+  [33X[0;0YNote  that  it  is  also  possible to construct a subgroupoid with rays of a
+  subgroupoid with rays.[133X
+  
+  [33X[0;0YIn the following example we construct a subgroupoid [10XUa4[110X of the groupoid [10XGs4[110X,
+  and  then a second subgroupoid [10XUc3[110X. The initial standard groupoid [10XGs4[110X is set
+  as the parent for both [10XUa4[110X and [10XUc3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( a4, "a4" ); [127X[104X
+    [4X[25Xgap>[125X [27XUa4 := SubgroupoidWithRays( Gs4, a4, [(),(1,2),(2,3),(3,4),(1,4)] );      [127X[104X
+    [4X[28Xsingle piece groupoid with rays: < a4, [ -15 .. -11 ], [128X[104X
+    [4X[28X[ (), (1,2), (2,3), (3,4), (1,4) ] >[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroupoid( Gs4, Ua4 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsWideSubgroupoid( Gs4, Ua4 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRaysOfGroupoid( Ua4 );       [127X[104X
+    [4X[28X[ (), (1,2), (2,3), (3,4), (1,4) ][128X[104X
+    [4X[25Xgap>[125X [27XRayArrowsOfGroupoid( Ua4 );  [127X[104X
+    [4X[28X[ [() : -15 -> -15], [(1,2) : -15 -> -14], [(2,3) : -15 -> -13], [128X[104X
+    [4X[28X  [(3,4) : -15 -> -12], [(1,4) : -15 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Xc3 := Subgroup( a4, [ (1,2,3) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( c3, "c3" ); [127X[104X
+    [4X[25Xgap>[125X [27XUc3 := SubgroupoidWithRays( Ua4, c3, [127X[104X
+    [4X[25X>[125X [27X              [ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] );[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < c3, [ -15 .. -11 ], [128X[104X
+    [4X[28X[ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] >[128X[104X
+    [4X[25Xgap>[125X [27XObjectGroup( Uc3, -14 );[127X[104X
+    [4X[28XGroup([ (2,3,4) ])[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-3 SubgroupoidByObjects[101X
+  
+  [33X[1;0Y[29X[2XSubgroupoidByObjects[102X( [3Xgpd[103X, [3Xobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubgroupoidBySubgroup[102X( [3Xgpd[103X, [3Xsgp[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  [10XSubgroupoidByObjects[110X  of  a groupoid [10Xgpd[110X on a subset [10Xobs[110X of its objects
+  contains all the arrows of [10Xgpd[110X with tail and head in [10Xobs[110X.[133X
+  
+  [33X[0;0YThe  [10XSubgroupoidBySubgroup[110X  of  a  connected  groupoid  [10Xgpd[110X determinded by a
+  subgroup  [10Xsgp[110X  of the root group is the wide subgroupoid with root group [10Xsgp[110X
+  and containing the rays of [10Xgpd[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XVa4 := SubgroupoidByObjects( Ua4, [-14,-13,-12] );  [127X[104X
+    [4X[28Xsingle piece groupoid with rays: < Group( [ (1,3,2), (1,3,4) ] ), [128X[104X
+    [4X[28X[ -14, -13, -12 ], [ (), (1,3,2), (1,2)(3,4) ] >[128X[104X
+    [4X[25Xgap>[125X [27XVc3 := SubgroupoidBySubgroup( Va4, c3 );[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < c3, [ -14, -13, -12 ], [128X[104X
+    [4X[28X[ (), (1,3,2), (1,2)(3,4) ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-4 SubgroupoidByPieces[101X
+  
+  [33X[1;0Y[29X[2XSubgroupoidByPieces[102X( [3Xgpd[103X, [3Xpieces[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  most  general  way  to  construct a subgroupoid is to use the operation
+  [10XSubgroupoidByPieces[110X. Its two parameters are a groupoid and a list of [13Xpieces[113X,
+  each  piece  being  specified  either  as  a  list [10X[sgp,obs][110X, where [10Xsgp[110X is a
+  subgroup of the root group in that piece, and [10Xobs[110X is a subset of the objects
+  in that piece, or as a list [10X[sgp,obs,rays][110X when a set of rays is required.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(Gd8);[127X[104X
+    [4X[28Xsingle piece groupoid: Gd8[128X[104X
+    [4X[28X  objects: [ -9, -8, -7 ][128X[104X
+    [4X[28X    group: d8 = <[ (1,2,3,4), (1,3) ]>[128X[104X
+    [4X[25Xgap>[125X [27Xc4 := Subgroup( d8, [ (1,2,3,4) ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xk4 := Subgroup( d8, [ (1,3), (2,4) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( c4, "c4" );  SetName( k4, "k4" );[127X[104X
+    [4X[25Xgap>[125X [27XUd8 := Subgroupoid( Gd8, [ [ k4, [-9] ], [ c4, [-8,-7] ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Ud8, "Ud8" );[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( Ud8 );[127X[104X
+    [4X[28Xgroupoid with 2 pieces:[128X[104X
+    [4X[28X< objects: [ -9 ][128X[104X
+    [4X[28X    group: k4 = <[ (1,3), (2,4) ]> >[128X[104X
+    [4X[28X< objects: [ -8, -7 ][128X[104X
+    [4X[28X    group: c4 = <[ (1,2,3,4) ]> >[128X[104X
+    [4X[25Xgap>[125X [27X[ Parent( Ud8 ), IsWideSubgroupoid( Gd8, Ud8 ) ]; [127X[104X
+    [4X[28X[ Gd8, true ][128X[104X
+    [4X[25Xgap>[125X [27XU2;[127X[104X
+    [4X[28Xgroupoid with 2 pieces:[128X[104X
+    [4X[28X[ Gq8, Gf2 ][128X[104X
+    [4X[25Xgap>[125X [27Xgenf2b := List( GeneratorsOfGroup(f2), g -> g^2 );[127X[104X
+    [4X[28X[ f1^2, f2^2 ][128X[104X
+    [4X[25Xgap>[125X [27Xf2b := Subgroup( f2, genf2b );;[127X[104X
+    [4X[25Xgap>[125X [27XSU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );[127X[104X
+    [4X[28Xgroupoid with 2 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < q8, [ -27 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >[128X[104X
+    [4X[25Xgap>[125X [27XIsWideSubgroupoid( U2, SU2 );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-5 FullTrivialSubgroupoid[101X
+  
+  [33X[1;0Y[29X[2XFullTrivialSubgroupoid[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDiscreteTrivialSubgroupoid[102X( [3Xgpd[103X ) [32X attribute[133X
+  
+  [33X[0;0YA [13Xtrivial subgroupoid[113X has trivial object groups, but need not be discrete. A
+  single piece trivial groupoid is sometimes called a [13Xtree groupoid[113X. (The term
+  [13Xidentity subgroupoid[113X was used in versions up to 1.14.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFullTrivialSubgroupoid( Ud8 );[127X[104X
+    [4X[28Xgroupoid with 2 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < id(k4), [ -9 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < id(c4), [ -8, -7 ] >[128X[104X
+    [4X[25Xgap>[125X [27XDiscreteTrivialSubgroupoid( Ud8 );[127X[104X
+    [4X[28Xgroupoid with 3 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < id(k4), [ -9 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < id(c4), [ -8 ] >[128X[104X
+    [4X[28X3:  single piece groupoid: < id(c4), [ -7 ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-6 DiscreteSubgroupoid[101X
+  
+  [33X[1;0Y[29X[2XDiscreteSubgroupoid[102X( [3Xgpd[103X, [3Xsgps[103X, [3Xobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMaximalDiscreteSubgroupoid[102X( [3Xgpd[103X ) [32X attribute[133X
+  
+  [33X[0;0YA   subgroupoid   is   [13Xdiscrete[113X   if   it   is   a   union  of  groups.  The
+  [10XMaximalDiscreteSubgroupoid[110X of [10Xgpd[110X is the union of all the single-object full
+  subgroupoids of [10Xgpd[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU3;[127X[104X
+    [4X[28Xgroupoid with 3 pieces:[128X[104X
+    [4X[28X[ Gs4, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27XDiscreteSubgroupoid( U3, [ a4, a4, c4, k4 ], [-15,-11,-9,-7] );[127X[104X
+    [4X[28Xgroupoid with 4 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < a4, [ -15 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < a4, [ -11 ] >[128X[104X
+    [4X[28X3:  single piece groupoid: < c4, [ -9 ] >[128X[104X
+    [4X[28X4:  single piece groupoid: < k4, [ -7 ] >[128X[104X
+    [4X[25Xgap>[125X [27XMaximalDiscreteSubgroupoid( Vc3 );[127X[104X
+    [4X[28Xgroupoid with 3 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid: < c3, [ -14 ] >[128X[104X
+    [4X[28X2:  single piece groupoid: < Group( [ (1,2,3) ] ), [ -13 ] >[128X[104X
+    [4X[28X3:  single piece groupoid: < Group( [ (1,4,2) ] ), [ -12 ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-7 SinglePieceSubgroupoidByGenerators[101X
+  
+  [33X[1;0Y[29X[2XSinglePieceSubgroupoidByGenerators[102X( [3Xparent[103X, [3Xgens[103X ) [32X operation[133X
+  
+  [33X[0;0YA  set  of  arrows  generates a groupoid by taking all possible products and
+  inverses.  So  far,  the  only  implementation  is  for  the  case  of loops
+  generating  a group at an object [22Xo[122X together with a set of rays from [22Xo[122X, where
+  [22Xo[122X  is  [13Xnot[113X the least object. A suitably large supergroupoid, which must be a
+  direct product with a complete digraph, should be provided. This is the case
+  needed  for [10XConjugateGroupoid[110X in section [14X4.5-2[114X. Other cases will be added as
+  time permits.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow( Ua4, (2,3,4), -15, -15 );[127X[104X
+    [4X[25Xgap>[125X [27Xa2 := Arrow( Ua4, (1,2,3,4), -15, -13 );[127X[104X
+    [4X[25Xgap>[125X [27Xa3 := Arrow( Ua4, (2,3), -15, -11 );[127X[104X
+    [4X[25Xgap>[125X [27XSinglePieceSubgroupoidByGenerators( Ua4, [a1,a2,a3] );[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ], [128X[104X
+    [4X[28X[ (), (1,2,3,4), (2,3) ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.4 [33X[0;0YLeft, right and double cosets[133X[101X
+  
+  [1X4.4-1 RightCoset[101X
+  
+  [33X[1;0Y[29X[2XRightCoset[102X( [3XG[103X, [3XU[103X, [3Xelt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightCosetRepresentatives[102X( [3XG[103X, [3XU[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCoset[102X( [3XG[103X, [3XU[103X, [3Xelt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCosetRepresentatives[102X( [3XG[103X, [3XU[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCosetRepresentativesFromObject[102X( [3XG[103X, [3XU[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YIf  [10XU[110X  is  a  subgroupoid  of  [22XG[122X,  the  [13Xright  cosets[113X  [22XUg[122X  of [22XU[122X in [22XG[122X are the
+  equivalence  classes for the relation on the arrows of [22XG[122X where [22Xg1[122X is related
+  to  [22Xg2[122X  if  and  only  if  [22Xg2  = u*g1[122X for some arrow [22Xu[122X of [22XU[122X. The right coset
+  containing  [22Xg[122X  is  written [22XUg[122X. These right cosets partition the costars of [22XG[122X
+  and,  in  particular, the costar [22XU1_o[122X of [22XU[122X at object [22Xo[122X. So (unlike groups) [22XU[122X
+  is itself a coset only when [22XG[122X has a single object.[133X
+  
+  [33X[0;0YThe  [13Xright coset representatives[113X for [22XU[122X in [22XG[122X form a list containing one arrow
+  for  each  coset where, in a particular piece of [22XU[122X, the group element chosen
+  is the right coset representative of the group of [22XU[122X in the group of [22XG[122X.[133X
+  
+  [33X[0;0YSimilarly,  the [13Xleft cosets[113X [22XgU[122X refine the stars of [22XG[122X while [13Xdouble cosets[113X are
+  unions      of      left     and     right     cosets.     The     operation
+  [10XLeftCosetRepresentativesFromObject(  G,  U, obj )[110X is used in Chapter [14X6[114X , and
+  returns only those representatives which have tail at [10Xobj[110X.[133X
+  
+  [33X[0;0YAs  with stars and homsets, these cosets are implemented with representation
+  [10XIsHomsetCosetsRep[110X  and provided with an iterator. Note that, when [22XU[122X has more
+  than one piece, cosets may have differing lengths.[133X
+  
+  [33X[0;0YIn  the  example the representative for the right coset [10Xre2[110X is the tenth one
+  in the printed list [10Xrcrd8[110X, namely [10X[(2,4):-7->-7][110X.[133X
+  
+  [33X[0;0YNote that no operation [10XDoubleCoset[110X has yet been implemented.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xre2 := RightCoset( Gd8, Ud8, e2 );[127X[104X
+    [4X[28X<right coset of single piece groupoid: < c4, [128X[104X
+    [4X[28X[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>[128X[104X
+    [4X[25Xgap>[125X [27XPerform( re2, Display );[127X[104X
+    [4X[28X[(1,3) : -8 -> -7][128X[104X
+    [4X[28X[(1,3) : -7 -> -7][128X[104X
+    [4X[28X[(2,4) : -8 -> -7][128X[104X
+    [4X[28X[(2,4) : -7 -> -7][128X[104X
+    [4X[28X[(1,4)(2,3) : -8 -> -7][128X[104X
+    [4X[28X[(1,4)(2,3) : -7 -> -7][128X[104X
+    [4X[28X[(1,2)(3,4) : -8 -> -7][128X[104X
+    [4X[28X[(1,2)(3,4) : -7 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xrcrd8 := RightCosetRepresentatives( Gd8, Ud8 );[127X[104X
+    [4X[28X[ [() : -9 -> -9], [(1,4,3,2) : -9 -> -9], [() : -9 -> -8], [128X[104X
+    [4X[28X  [(1,4,3,2) : -9 -> -8], [() : -9 -> -7], [(1,4,3,2) : -9 -> -7], [128X[104X
+    [4X[28X  [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], [128X[104X
+    [4X[28X  [() : -8 -> -9], [(2,4) : -8 -> -9] ][128X[104X
+    [4X[25Xgap>[125X [27Xlcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );[127X[104X
+    [4X[28X[ [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], [() : -7 -> -7], [128X[104X
+    [4X[28X  [(2,4) : -7 -> -7] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.5 [33X[0;0YConjugation[133X[101X
+  
+  [1X4.5-1 \^[101X
+  
+  [33X[1;0Y[29X[2X\^[102X( [3Xe1[103X, [3Xe[103X ) [32X operation[133X
+  
+  [33X[0;0YConjugation  by an arrow [22Xe = (c : p -> q)[122X is the groupoid inner automorphism
+  (see  section  [14X5.6[114X)  defined as follows. There are two cases to consider. In
+  the case [22Xp ≠ q[122X,[133X
+  
+  [30X    [33X[0;6Yobjects [22Xp,q[122X are interchanged, and the remaining objects are fixed;[133X
+  
+  [30X    [33X[0;6Yloops  at [22Xp,q[122X: [22X(b: p -> p) ↦ (b^c : q -> q)[122X and [22X(b: q -> q) ↦ (b^c^-1}
+        : p -> p)[122X;[133X
+  
+  [30X    [33X[0;6Yarrows between [22Xp[122X and [22Xq[122X: [22X(b : p -> q) ↦ (c^-1bc^-1 : q -> p)[122X and [22X(b : q
+        -> p) ↦ (cbc : p -> q)[122X;[133X
+  
+  [30X    [33X[0;6Ycostars at [22Xp,q[122X: [22X(b : r -> p) ↦ (bc : r -> q)[122X and [22X(b : r -> q) ↦ (bc^-1
+        : r -> p)[122X;[133X
+  
+  [30X    [33X[0;6Ystars at [22Xp,q[122X: [22X(b : p -> r) ↦ (c^-1b : -> q)[122X and [22X(b : q -> r) ↦ (cb : p
+        -> r)[122X;[133X
+  
+  [30X    [33X[0;6Ythe remaining arrows are unchanged.[133X
+  
+  [33X[0;0YIn the case [22Xp=q[122X,[133X
+  
+  [30X    [33X[0;6Yall the objects are fixed;[133X
+  
+  [30X    [33X[0;6Yloops at [22Xp[122X are conjugated by [22Xc[122X, so [22X(b : p -> p) ↦ (b^c : p -> p)[122X;[133X
+  
+  [30X    [33X[0;6Ythe rest of the costar and star at [22Xp[122X are permuted,[133X
+  
+  
+  [24X      [33X[0;6Y(b  :  r \to p) \mapsto (bc : r \to p) \quad\mbox{and}\quad (b : p \to
+        r) \mapsto (c^{-1}b : p \to r);[133X
+  
+  [124X
+  
+  [30X    [33X[0;6Ythe remaining arrows are unchanged.[133X
+  
+  [33X[0;0YThe details of this construction may be found in section 3.2 of [AW10].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xx := Arrow( Gd8, (1,3), -9, -9 );; [127X[104X
+    [4X[25Xgap>[125X [27Xy := Arrow( Gd8, (1,2,3,4), -8, -9 );; [127X[104X
+    [4X[25Xgap>[125X [27Xz := Arrow( Gd8, (1,2)(3,4), -9, -7 );; [127X[104X
+    [4X[25Xgap>[125X [27Xw := Arrow( Gd8, (1,2,3,4), -7, -8 );; [127X[104X
+    [4X[25Xgap>[125X [27X##  conjugation with elements x, y, and z in Gd8: [127X[104X
+    [4X[25Xgap>[125X [27Xx^y;[127X[104X
+    [4X[28X[(2,4) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27Xx^z;[127X[104X
+    [4X[28X[(2,4) : -7 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xy^x;[127X[104X
+    [4X[28X[() : -8 -> -9][128X[104X
+    [4X[25Xgap>[125X [27Xy^z;[127X[104X
+    [4X[28X[(2,4) : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xz^x;[127X[104X
+    [4X[28X[(1,4,3,2) : -9 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xz^y;[127X[104X
+    [4X[28X[(2,4) : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xw^z[127X[104X
+    [4X[28X[(1,3) : -9 -> -8][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.5-2 ConjugateGroupoid[101X
+  
+  [33X[1;0Y[29X[2XConjugateGroupoid[102X( [3Xgpd[103X, [3Xe[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22XH[122X  is  a  subgroupoid of a groupoid [22XG[122X and [22Xa[122X is an arrow of [22XG[122X, then the
+  conjugate  of  [22XH[122X  by [22Xa[122X is the subgroupoid generated by the conjugates of the
+  generators of [22XH[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XKd8 := SubgroupoidWithRays( Gs4, d8, [(),(1,2),(2,3),(3,4),(1,4)] );[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < d8, [ -15 .. -11 ], [128X[104X
+    [4X[28X[ (), (1,2), (2,3), (3,4), (1,4) ] >[128X[104X
+    [4X[25Xgap>[125X [27Xu := Arrow( Gs4, (1,2,3), -15, -14 );[127X[104X
+    [4X[28X[(1,2,3) : -15 -> -14][128X[104X
+    [4X[25Xgap>[125X [27XConjugateGroupoid( Kd8, u );                                        [127X[104X
+    [4X[28Xsingle piece groupoid with rays: < Group( [ (1,3,2,4), (1,2) ] ), [128X[104X
+    [4X[28X[ -15, -14, -13, -12, -11 ], [ (), (1,2), (), (2,4,3), (1,4)(2,3) ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.6 [33X[0;0YGroupoids formed using isomorphisms[133X[101X
+  
+  [33X[0;0YHere  we  describe  an alternative way of constructing a connected groupoid.
+  This  section  has  been  introduced  in version 1.66 of the package, and so
+  should be considered very experimental, and liable to change.[133X
+  
+  [33X[0;0YObject  groups  in  a  connected  groupoid  are  isomorphic, so we may use a
+  collection  of  isomorphisms  to  form  a  groupoid.  Let [22XG_1,G_2,...,G_n[122X be
+  isomorphic  groups and, for [22X2 leqslant i leqslant n[122X, let [22Xμ_i : G_1 -> G_i[122X be
+  isomorphisms.  Then  [22Xμ_ij = μ_i^-1*μ_j[122X is an isomorphism from [22XG_i[122X to [22XG_j[122X. If
+  we take [22X{u_1,...,u_n}[122X to be our set of objects, with [22XG_i[122X the object group at
+  [22Xu_i[122X,  we may consider the arrows in the groupoid to have the form [22X[[g_i,g_j]
+  :  u_i  ->  u_j][122X  where  [22Xg_i ∈ G_i[122X and [22Xg_j = μ_ij(g_i) ∈ G_j[122X. The product of
+  [22X[[g_i,g_j]   :   u_i   ->   u_j][122X   and   [22X[[g'_j,g_k]   :   u_j  ->  u_k][122X  is
+  [22X[[μ_ij^-1(g_jg'_j), μ_jk(g_jg'_j)] : u_i -> u_k][122X.[133X
+  
+  [1X4.6-1 GroupoidByIsomorphisms[101X
+  
+  [33X[1;0Y[29X[2XGroupoidByIsomorphisms[102X( [3Xgp[103X, [3Xobs[103X, [3Xisos[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsGroupoidByIsomorphisms[102X( [3Xgpd[103X ) [32X property[133X
+  
+  [33X[0;0YThe  operation  [10XGroupoidByIsomorphisms[110X takes a group [10XG1[110X as root group; a set
+  of  [22Xn[122X  objects;  and  a set of [22Xn[122X isomorphisms from the root group, where the
+  first  isomorphism  should  be  the  identity mapping on [10XG1[110X. The output is a
+  single  piece  groupoid  of type [10XIsGroupoidByIsomorphisms[110X. Its rays have the
+  form [10X[One(G1),One(Gi)][110X where [10XGi[110X is the image of the [22Xi[122X-th isomorphism.[133X
+  
+  [33X[0;0YIn  the  example  we  first  take three permutation groups isomorphic to the
+  symmetric  group  [22XS_3[122X.  There  follows  an  isomorphic groupoid whose object
+  groups are a permutation group; a pc-group and an fp-group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs3a := Group( (1,2), (2,3) );; [127X[104X
+    [4X[25Xgap>[125X [27Xs3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;[127X[104X
+    [4X[25Xgap>[125X [27Xs3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3a, "s3a" );[127X[104X
+    [4X[25Xgap>[125X [27Xida := IdentityMapping( s3a );; [127X[104X
+    [4X[25Xgap>[125X [27Xisoab := IsomorphismGroups( s3a, s3b );; [127X[104X
+    [4X[25Xgap>[125X [27Xisoac := IsomorphismGroups( s3a, s3c );;[127X[104X
+    [4X[25Xgap>[125X [27Xisos1 := [ ida, isoab, isoac ];; [127X[104X
+    [4X[25Xgap>[125X [27XG1 := GroupoidByIsomorphisms( s3a, [-3,-2,-1], isos1 );; [127X[104X
+    [4X[25Xgap>[125X [27Xgens1 := GeneratorsOfGroupoid( G1 );                    [127X[104X
+    [4X[28X[ [[ (1,2), (1,2) ] : -3 -> -3], [[ (2,3), (2,3) ] : -3 -> -3], [128X[104X
+    [4X[28X  [[ (), () ] : -3 -> -2], [[ (), () ] : -3 -> -1] ][128X[104X
+    [4X[25Xgap>[125X [27Xx1 := ImageElm( isos1[2], (1,2) );;[127X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow( G1, [ (1,2), x1 ], -3, -2 );[127X[104X
+    [4X[28X[[ (1,2), (4,5)(6,9)(7,8) ] : -3 -> -2][128X[104X
+    [4X[25Xgap>[125X [27Xa1^-1;[127X[104X
+    [4X[28X[[ (4,5)(6,9)(7,8), (1,2) ] : -2 -> -3][128X[104X
+    [4X[25Xgap>[125X [27Xy1 := ImageElm( isos1[2], (2,3) );;[127X[104X
+    [4X[25Xgap>[125X [27Xz1 := ImageElm( isos1[3], (2,3) );;[127X[104X
+    [4X[25Xgap>[125X [27Xb1 := Arrow( G1, [ y1, z1 ], -2, -1 );[127X[104X
+    [4X[28X[[ (4,9)(5,8)(6,7), (5,9)(6,8) ] : -2 -> -1][128X[104X
+    [4X[25Xgap>[125X [27Xc1 := a1*b1;[127X[104X
+    [4X[28X[[ (1,3,2), (4,8,6)(5,9,7) ] : -3 -> -1][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xisopc := IsomorphismPcGroup( s3a );; [127X[104X
+    [4X[25Xgap>[125X [27Xs3p := Image( isopc );;[127X[104X
+    [4X[25Xgap>[125X [27Xf2 := FreeGroup( 2 );; [127X[104X
+    [4X[25Xgap>[125X [27Xs3f := f2/[ f2.1^3, f2.2^2, (f2.1*f2.2)^2 ];; [127X[104X
+    [4X[25Xgap>[125X [27Xisofp := GroupHomomorphismByImages(s3a,s3f,[(1,2,3),(2,3)],[s3f.1,s3f.2]);;[127X[104X
+    [4X[25Xgap>[125X [27Xisos2 := [ ida, isopc, isofp ];;[127X[104X
+    [4X[25Xgap>[125X [27XG2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; [127X[104X
+    [4X[25Xgap>[125X [27Xgens2 := GeneratorsOfGroupoid( G2 );[127X[104X
+    [4X[28X[ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], [128X[104X
+    [4X[28X  [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> -5] [128X[104X
+    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27Xx2 := ImageElm( isos2[2], (1,2) );;[127X[104X
+    [4X[25Xgap>[125X [27Xa2 := Arrow( G2, [ (1,2), x2 ], -7, -6 );[127X[104X
+    [4X[28X[[ (1,2), f1*f2 ] : -7 -> -6][128X[104X
+    [4X[25Xgap>[125X [27Xa2^-1;[127X[104X
+    [4X[28X[[ f1*f2, (1,2) ] : -6 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xy2 := ImageElm( isos2[2], (2,3) );;[127X[104X
+    [4X[25Xgap>[125X [27Xz2 := ImageElm( isos2[3], (2,3) );;[127X[104X
+    [4X[25Xgap>[125X [27Xb2 := Arrow( G2, [ y2, z2 ], -6, -5 );[127X[104X
+    [4X[28X[[ f1, f2^-1 ] : -6 -> -5][128X[104X
+    [4X[25Xgap>[125X [27Xc2 := a2*b2; [127X[104X
+    [4X[28X[[ (1,3,2), f1^2 ] : -7 -> -5][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.7 [33X[0;0YGroupoids whose objects form a monoid[133X[101X
+  
+  [33X[0;0YLet  [22XM[122X  be a monoid with [22XG[122X its maximal subgroup. We may form a groupoid with
+  the  elements of [22XM[122X as its objects and with arrows [22Xt -> t*g[122X for all [22Xt ∈ M[122X and
+  [22Xg ∈ G[122X.[133X
+  
+  [33X[0;0YThis   construction   is   used   in  the  [5XXMod[105X  package  to  construct  the
+  group-groupoid which corresponds to a crossed module or cat2-group.[133X
+  
+  [1X4.7-1 SinglePieceGroupoidWithRays[101X
+  
+  [33X[1;0Y[29X[2XSinglePieceGroupoidWithRays[102X( [3Xgp[103X, [3Xobs[103X, [3Xrays[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22XM[122X  is  a  group, [22XG=M[122X and the groupoid so constructed is a single piece
+  which  represents  the  regular  representation of [22XG[122X. The ray from [22X1[122X to [22Xg[122X is
+  just [22Xg[122X since [22X1*g=g[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xd8 := Group( (1,2,3,4), (1,3) );; [127X[104X
+    [4X[25Xgap>[125X [27Xed8 := Elements( d8 );; [127X[104X
+    [4X[25Xgap>[125X [27Xrd8 := SinglePieceGroupoidWithRays( d8, ed8, ed8 );[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < Group( [ (1,2,3,4), (1,3) ] ), [128X[104X
+    [4X[28X[ (), (2,4), (1,2)(3,4), (1,2,3,4), (1,3), (1,3)(2,4), (1,4,3,2), (1,4)(2,3) [128X[104X
+    [4X[28X ], [ (), (2,4), (1,2)(3,4), (1,2,3,4), (1,3), (1,3)(2,4), (1,4,3,2), [128X[104X
+    [4X[28X  (1,4)(2,3) ] >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Homset( rd8, (2,4), (1,3) ) );[127X[104X
+    [4X[28X[(1,3)(2,4) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(1,3) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[() : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(2,4) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(1,4,3,2) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(1,4)(2,3) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(1,2,3,4) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[(1,2)(3,4) : (2,4) -> (1,3)][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.7-2 RightActionGroupoid[101X
+  
+  [33X[1;0Y[29X[2XRightActionGroupoid[102X( [3Xmon[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsGroupoidWithMonoidObjects[102X( [3Xgpd[103X ) [32X property[133X
+  
+  [33X[0;0YWhen  [22XM[122X is a monoid, rather than a group, this construction produces several
+  components. One of these has as objects the elements of the group [22XG[122X.[133X
+  
+  [33X[0;0YWhen   [22XM[122X   [13Xis[113X   a   group,   this   operation   gives  the  same  result  as
+  [10XSinglePieceGroupoidWithRays[110X.[133X
+  
+  [33X[0;0YAs  a  simple example we take a monoid [22XM[122X generated by two transformations of
+  degree [22X4[122X. The groupoid has [22X8[122X components, of which [22X3[122X have a single object and
+  group [22XC_2[122X, while [22X5[122X have two objects and trivial group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xt := Transformation( [1,1,2,3] );;  u := Transformation( [1,2,4,3] );;[127X[104X
+    [4X[25Xgap>[125X [27XM := Monoid( t, u );;[127X[104X
+    [4X[25Xgap>[125X [27Xrag := RightActionGroupoid( M );[127X[104X
+    [4X[28Xgroupoid with 8 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid with rays: < Group( [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 1 ] ) ], [ IdentityTransformation ] >[128X[104X
+    [4X[28X2:  single piece groupoid with rays: < Group( [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 2 ] ) ], [ IdentityTransformation ] >[128X[104X
+    [4X[28X3:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ) ], [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >[128X[104X
+    [4X[28X4:  single piece groupoid with rays: < Group( [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 2, 1 ] ) ], [ IdentityTransformation ] >[128X[104X
+    [4X[28X5:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 1, 1, 2 ] ) ], [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >[128X[104X
+    [4X[28X6:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ) ], [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >[128X[104X
+    [4X[28X7:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 2 ] ), Transformation( [ 1, 1, 4, 2 ] ) ], [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >[128X[104X
+    [4X[28X8:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ], [128X[104X
+    [4X[28X[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >[128X[104X
+    [4X[25Xgap>[125X [27XIsGroupoidWithMonoidObjects( rag );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xorag := ObjectList( rag );;[127X[104X
+    [4X[25Xgap>[125X [27Xhs := Homset( rag, orag[3], orag[4] );;  [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( hs );                  [127X[104X
+    [4X[28X<homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )[128X[104X
+    [4X[28X  with elements:[128X[104X
+    [4X[28X[Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> [128X[104X
+    [4X[28XTransformation( [ 1, 1, 1 ] )][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

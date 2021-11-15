@@ -1,0 +1,981 @@
+  
+  [1X5 [33X[0;0YHomomorphisms of Groupoids[133X[101X
+  
+  [33X[0;0YA  [13Xhomomorphism[113X  [22Xm[122X  from a groupoid [22XG[122X to a groupoid [22XH[122X consists of a map from
+  the objects of [22XG[122X to those of [22XH[122X together with a map from the elements of [22XG[122X to
+  those  of  [22XH[122X  which  is  compatible  with  tail and head and which preserves
+  multiplication:[133X
+  
+  
+  [24X[33X[0;6Ym(g1 : o1 \to o2)*m(g2 : o2 \to o3) ~=~ m(g1*g2 : o1 \to o3).[133X
+  
+  [124X
+  
+  [33X[0;0YNote  that when a homomorphism is not injective on objects, the image of the
+  source  need  not be a subgroupoid of the range. A simple example of this is
+  given  by  a  homomorphism  from  the two-object, four-element groupoid with
+  trivial  group  to  the free group [22X⟨ a ⟩[122X on one generator, when the image is
+  [22X[1,a^n,a^-n][122X for some [22Xn>0[122X.[133X
+  
+  [33X[0;0YA variety of homomorphism operations are available.[133X
+  
+  [30X    [33X[0;6YThe  basic  construction is a homomorphism [22Xϕ : G -> H[122X [13Xfrom[113X a connected
+        groupoid   [22XG[122X   to   a   connected   groupoid   [22XH[122X,   constructed  using
+        [10XGroupoidHomomorphismFromSinglePiece[110X, (see [14X5.1[114X).[133X
+  
+  [30X    [33X[0;6YSince  more  than  one  connected  groupoid  may be mapped [13Xto[113X the same
+        range,  we  then have the operation [10XGroupoidHomomorphismToSinglePiece[110X,
+        (see [14X5.4[114X).[133X
+  
+  [30X    [33X[0;6YThe  third  case  arises  when  the  range  is  a  union  of connected
+        groupoids, in which case [10XHomomorphismByUnion[110X is called, (see [14X5.5[114X).[133X
+  
+  [30X    [33X[0;6YFourthly,  there are is an additional operation for the case where the
+        source          is          homogeneous          and         discrete,
+        [10XGroupoidHomomorphismFromHomogeneousDiscrete[110X, (see [14X5.4-2[114X).[133X
+  
+  [30X    [33X[0;6YFinally,   there   are  special  operations  for  inclusion  mappings,
+        restricted mappings, and groupoid automorphisms (see [14X5.6[114X).[133X
+  
+  
+  [1X5.1 [33X[0;0YHomomorphisms from a connected groupoid[133X[101X
+  
+  [1X5.1-1 GroupoidHomomorphismFromSinglePiece[101X
+  
+  [33X[1;0Y[29X[2XGroupoidHomomorphismFromSinglePiece[102X( [3Xsrc[103X, [3Xrng[103X, [3Xgens[103X, [3Ximages[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupoidHomomorphism[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMappingToSinglePieceData[102X( [3Xmap[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  simplest groupoid homomorphism is a mapping [22Xϕ : G -> H[122X from a connected
+  groupoid [22XG[122X to a connected groupoid [22XH[122X. There are two equivalent sets of input
+  data which may be used. Both require the [10XSource[110X [22XG[122X and the [10XRange[110X [22XH[122X. The first
+  then requires:[133X
+  
+  [30X    [33X[0;6Ythe set of generating arrows [10XGeneratorsOfGroupoid(G)[110X;[133X
+  
+  [30X    [33X[0;6Ya list of image arrows in [22XH[122X.[133X
+  
+  [33X[0;0YThis data is stored in the attribute [10XMappingGeneratorsImages[110X.[133X
+  
+  [33X[0;0YThe alternative input data consists of:[133X
+  
+  [30X    [33X[0;6Ya homomorphism [10Xrhom[110X from the root group of [22XG[122X to the group at the image
+        object in [22XH[122X;[133X
+  
+  [30X    [33X[0;6Ya list [10Ximobs[110X of the images of the objects of [22XG[122X;[133X
+  
+  [30X    [33X[0;6Ya  list [10Ximrays[110X of the elements in the images of the rays of [22XG[122X, so that
+        the   image   [22Xϕ(r_i   :   o_1   ->   o_i)[122X   of   the   [22Xi[122X-th   ray   is
+        [10X(imrays[i]:imobs[1][110X[22X->[122X[10Ximobs[i])[110X.[133X
+  
+  [33X[0;0YThis data is stored in the attribute [10XMappingToSinglePieceData[110X.[133X
+  
+  [33X[0;0YSo  an alternative way to construct a homomorphism of groupoids is to make a
+  call of the form [10XGroupoidHomomorphism(src,rng,rhom,imobs,imrays)[110X.[133X
+  
+  [33X[0;0YIn  the  following  example  the same homomorphism is constructed using both
+  methods.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgen1 := GeneratorsOfGroupoid( Gq8 ); [127X[104X
+    [4X[28X[ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], [128X[104X
+    [4X[28X  [<identity> of ... : -28 -> -27] ][128X[104X
+    [4X[25Xgap>[125X [27Xgen2 := GeneratorsOfGroupoid( Hd8b ); [127X[104X
+    [4X[28X[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X  [(1,2,4) : -14 -> -12] ][128X[104X
+    [4X[25Xgap>[125X [27Ximages := [ gen2[1]^2, gen2[1]*gen2[2], IdentityArrow(Hd8b,-14), gen2[4] ];[127X[104X
+    [4X[28X[ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], [128X[104X
+    [4X[28X  [(1,2,4) : -14 -> -12] ][128X[104X
+    [4X[25Xgap>[125X [27Xmor1 := GroupoidHomomorphism( Gq8, Hd8b, gen1, images );[127X[104X
+    [4X[28Xgroupoid homomorphism : Gq8 -> Hd8b[128X[104X
+    [4X[28X[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], [128X[104X
+    [4X[28X      [<identity> of ... : -28 -> -27] ], [128X[104X
+    [4X[28X  [ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgenq8 := GeneratorsOfGroup( q8 );;[127X[104X
+    [4X[25Xgap>[125X [27Ximh := [ (1,3)(2,4), (1,2)(3,4), () ];;[127X[104X
+    [4X[25Xgap>[125X [27Xh := GroupHomomorphismByImages( q8, d8, genq8, imh );                     [127X[104X
+    [4X[28X[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ][128X[104X
+    [4X[25Xgap>[125X [27Xmor2 := GroupoidHomomorphism( Gq8, Hd8b, h, [-14,-12], [(),(1,2,4)] );;[127X[104X
+    [4X[25Xgap>[125X [27Xmor1=mor2;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xe := Arrow( Gq8, Product(genq8), -27, -28 );[127X[104X
+    [4X[28X[x*y*y2 : -27 -> -28][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( mor2, e );[127X[104X
+    [4X[28X[(2,4,3) : -12 -> -14][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.2 [33X[0;0YProperties and attributes of groupoid homomorphisms[133X[101X
+  
+  
+  [1X5.2-1 [33X[0;0YProperties of a groupoid homomorphism[133X[101X
+  
+  [33X[0;0YThe  properties  listed  in  subsection [14X3.3[114X for homomorphisms of magmas with
+  objects also apply to groupoid homomorphisms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ IsInjectiveOnObjects( mor2 ), IsSurjectiveOnObjects( mor2 ) ]; [127X[104X
+    [4X[28X[ true, false ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsInjective( mor2 ), IsSurjective( mor2 ) ];[127X[104X
+    [4X[28X[ false, false ][128X[104X
+    [4X[25Xgap>[125X [27Xad8 := GroupHomomorphismByImages( d8, d8, [127X[104X
+    [4X[25X>[125X [27X              [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xmd8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [-7,-9,-8], [(),(1,3),(2,4)] );[127X[104X
+    [4X[28Xgroupoid homomorphism : Gd8 -> Gd8[128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -8], [128X[104X
+    [4X[28X      [() : -9 -> -7] ], [128X[104X
+    [4X[28X  [ [(1,4,3,2) : -7 -> -7], [(2,4) : -7 -> -7], [(1,3) : -7 -> -9], [128X[104X
+    [4X[28X      [(2,4) : -7 -> -8] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsBijectiveOnObjects( md8 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X[ IsInjective( md8 ), IsSurjective( md8 ) ];  [127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsEndomorphismWithObjects( md8 ), IsAutomorphismWithObjects( md8 ) ];[127X[104X
+    [4X[28X[[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.2-2 [33X[0;0YAttributes of a groupoid homomorphism[133X[101X
+  
+  [33X[0;0YThe  attributes  of a groupoid homomorphism [10Xmor[110X from a single piece groupoid
+  cover both forms of construction defined above.[133X
+  
+  [30X    [33X[0;6Y[10XS = Source(mor)[110X is the source groupoid of the homomorphism;[133X
+  
+  [30X    [33X[0;6Y[10XR = Range(mor)[110X is the range groupoid of the homomorphism;[133X
+  
+  [30X    [33X[0;6Y[10XRootGroupHomomorphism(mor)[110X  is  the  group  homomorphism from the root
+        group of [10XS[110X to the group at the image object in [10XR[110X of the root object in
+        [10XS[110X;[133X
+  
+  [30X    [33X[0;6Y[10XImagesOfObjects(mor)[110X  is the list of objects in [10XR[110X which are the images
+        of the objects in [10XS[110X;[133X
+  
+  [30X    [33X[0;6Y[10XImageElementsOfRays(mor)[110X is the list of group elements in those arrows
+        in [10XR[110X which are the images of the rays in [10XS[110X;[133X
+  
+  [30X    [33X[0;6Y[10XMappingGeneratorsImages(mor)[110X  is  the  two element list containing the
+        list of generators in [10XS[110X and the list of their images in [10XR[110X;[133X
+  
+  [30X    [33X[0;6Y[10XMappingToSinglePieceData(mor)[110X  is a list with three elements: the root
+        group  homomorphism;  the images of the objects; and the images of the
+        rays.[133X
+  
+  [33X[0;0YFor other types of homomorphism the attributes are very similar.[133X
+  
+  [33X[0;0YThe  operation  [10XObjectGroupHomomorphism[110X, though an operation, is included in
+  this section for convenience.[133X
+  
+  [1X5.2-3 RootGroupHomomorphism[101X
+  
+  [33X[1;0Y[29X[2XRootGroupHomomorphism[102X( [3Xhom[103X ) [32X attribute[133X
+  
+  [33X[0;0YThis is the group homomorphism from the root group of the source groupoid to
+  the  group  at  the image object in the range groupoid of the root object in
+  the source.[133X
+  
+  [1X5.2-4 ImagesOfObjects[101X
+  
+  [33X[1;0Y[29X[2XImagesOfObjects[102X( [3Xhom[103X ) [32X attribute[133X
+  
+  [33X[0;0YThis  is  the  list of objects in the range groupoid which are the images of
+  the objects in the source.[133X
+  
+  [1X5.2-5 ImageElementsOfRays[101X
+  
+  [33X[1;0Y[29X[2XImageElementsOfRays[102X( [3Xhom[103X ) [32X attribute[133X
+  
+  [33X[0;0YThis  is  the  list  of group elements in those arrows in the range groupoid
+  which are the images of the rays in the source.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRootGroupHomomorphism( mor2 );[127X[104X
+    [4X[28X[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ][128X[104X
+    [4X[25Xgap>[125X [27XImagesOfObjects( mor2 );      [127X[104X
+    [4X[28X[ -14, -12 ][128X[104X
+    [4X[25Xgap>[125X [27XImageElementsOfRays( mor2 );[127X[104X
+    [4X[28X[ (), (1,2,4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-6 ObjectGroupHomomorphism[101X
+  
+  [33X[1;0Y[29X[2XObjectGroupHomomorphism[102X( [3Xgpdhom[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operations  gives  the  group homomorphism from an object group of the
+  source to the object group at the image object in the range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XObjectGroupHomomorphism( mor1, -27 );[127X[104X
+    [4X[28X[ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.3 [33X[0;0YSpecial types of groupoid homomorphism[133X[101X
+  
+  [33X[0;0YIn  this section we mention inclusion mappings of subgroupoids; and mappings
+  restricted  to  a  source  subgroupoid.  We  also  discuss  various types of
+  isomorphism:  to a different set of objects; to a permutation groupoid; to a
+  pc-groupoid.[133X
+  
+  [1X5.3-1 InclusionMappingGroupoids[101X
+  
+  [33X[1;0Y[29X[2XInclusionMappingGroupoids[102X( [3Xgpd[103X, [3Xsgpd[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XInclusionMappingGroupoids(gpd,sgpd)[110X  returns  the  inclusion
+  homomorphism from the subgroupoid [10Xsgpd[110X to [10Xgpd[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xinc := InclusionMappingGroupoids( Hs4, Hd8b );[127X[104X
+    [4X[28Xgroupoid homomorphism : Hd8b -> Hs4[128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-2 RestrictedMappingGroupoids[101X
+  
+  [33X[1;0Y[29X[2XRestrictedMappingGroupoids[102X( [3Xmor[103X, [3Xsgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XParentMappingGroupoids[102X( [3Xmor[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  operation  [10XRestrictedMappingGroupoids(mor,sgpd)[110X returns the restriction
+  of  the homomorphism [10Xmor[110X to the subgroupoid [10Xsgpd[110X of its source. The range is
+  usually  set  to  the  [10XImagesSource[110X  of  the restriction. The restriction is
+  assigned the attribute [10XParentMappingGroupoids[110X with value [10Xmor[110X (or that of [10Xmor[110X
+  is one exists). For another example see section [14X5.7[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xmax := MaximalDiscreteSubgroupoid( Hd8b );;[127X[104X
+    [4X[25Xgap>[125X [27Xres := RestrictedMappingGroupoids( inc, max );[127X[104X
+    [4X[28Xgroupoid homomorphism from several pieces : [128X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ] ][128X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ], [128X[104X
+    [4X[28X  [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ] ][128X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ], [128X[104X
+    [4X[28X  [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-3 IsomorphismNewObjects[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismNewObjects[102X( [3Xsrc[103X, [3Xobjlist[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation [10XIsomorphismNewObjects(gpd,obs)[110X returns the isomorphism from a
+  groupoid  [10Xgpd[110X  to a groupoid with the same object group and ray elements but
+  with a different set [10Xobs[110X of objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xiso1 := IsomorphismNewObjects( Hs4, [-30,-20,-10] ); [127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -14 -> -14], [(3,4) : -14 -> -14], [() : -14 -> -13], [128X[104X
+    [4X[28X      [() : -14 -> -12] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -30 -> -30], [(3,4) : -30 -> -30], [() : -30 -> -20], [128X[104X
+    [4X[28X      [() : -30 -> -10] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xinc2 := mor2*inc*iso1;[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], [128X[104X
+    [4X[28X      [<identity> of ... : -28 -> -27] ], [128X[104X
+    [4X[28X  [ [(1,3)(2,4) : -30 -> -30], [(1,2)(3,4) : -30 -> -30], [() : -30 -> -30], [128X[104X
+    [4X[28X      [(1,2,4) : -30 -> -10] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-4 IsomorphismStandardGroupoid[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismStandardGroupoid[102X( [3Xgpd[103X, [3Xobs[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XIsomorphismStandardGroupoid(gpd,obs)[110X returns the isomorphism
+  from    a    groupoid    with    rays    to    the    groupoid    of    type
+  [10XIsDirectProductWithCompleteDigraphDomain[110X on the given set [10Xobs[110X of objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xiso2 := IsomorphismStandardGroupoid( Hd8b, [-23,-22,-21] );[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -23 -> -23], [(1,3) : -23 -> -23], [() : -23 -> -22], [128X[104X
+    [4X[28X      [() : -23 -> -21] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xinv2 := InverseGeneralMapping( iso2 );[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -23 -> -23], [(1,3) : -23 -> -23], [() : -23 -> -22], [128X[104X
+    [4X[28X      [() : -23 -> -21] ], [128X[104X
+    [4X[28X  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  operation may also be used to provide a standard form for groupoids of
+  type     [10XIsGroupoidByIsomorphisms[110X     as     described     in     subsection
+  [2XGroupoidByIsomorphisms[102X ([14X4.6-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG2;[127X[104X
+    [4X[28Xsingle piece groupoid with rays: < s3a, [ -7, -6, -5 ], [128X[104X
+    [4X[28X[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >[128X[104X
+    [4X[25Xgap>[125X [27XisoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); [127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], [128X[104X
+    [4X[28X      [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> [128X[104X
+    [4X[28X        -5] ], [128X[104X
+    [4X[28X  [ [(1,2) : -17 -> -17], [(2,3) : -17 -> -17], [() : -17 -> -16], [128X[104X
+    [4X[28X      [() : -17 -> -15] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-5 IsomorphismPermGroupoid[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismPermGroupoid[102X( [3Xgpd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismPcGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XIsomorphismPermGroupoid(gpd)[110X  returns  an isomorphism from a
+  groupoid  [10Xgpd[110X  to  a  groupoid  with the same objects but with an isomorphic
+  permutation  group.  Similarly, [10XIsomorphismPcGroupoid(gpd)[110X changes the group
+  into a pc-group (if appropriate).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN2 := NormalSubgroups( q8 )[2];; [127X[104X
+    [4X[25Xgap>[125X [27XHq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); [127X[104X
+    [4X[28Xsingle piece groupoid with rays: < N2, [ -28, -27 ], [ <identity> of ..., x [128X[104X
+    [4X[28X ] >[128X[104X
+    [4X[25Xgap>[125X [27XisoHq8 := IsomorphismPermGroupoid( Hq8 );[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ y : -28 -> -28], [y2 : -28 -> -28], [x : -28 -> -27] ], [128X[104X
+    [4X[28X  [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,4)(2,6)(3,7)(5,8) : -28 -> -28], [128X[104X
+    [4X[28X      [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.4 [33X[0;0YHomomorphisms to a connected groupoid[133X[101X
+  
+  [1X5.4-1 HomomorphismToSinglePiece[101X
+  
+  [33X[1;0Y[29X[2XHomomorphismToSinglePiece[102X( [3Xsrc[103X, [3Xrng[103X, [3Xpiecehoms[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22XG[122X  is  made  up  of  two  or more pieces, all of which get mapped to a
+  connected  groupoid,  we  have  a  [13Xhomomorphism to a single piece[113X. The third
+  input  parameter in this case is a list of the individual homomorphisms [13Xfrom[113X
+  the  single  pieces  (in  the  correct  order!).  See  section  [14X3.1[114X  for the
+  corresponding operation on homomorphisms of magmas with objects.[133X
+  
+  [33X[0;0YIn the following example the source [10XV3[110X of [10XhomV3[110X has three pieces, and one of
+  the component homomorphisms is an [10XIdentityMapping[110X .[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; [127X[104X
+    [4X[25Xgap>[125X [27Xd12 := Group( gend12 );; [127X[104X
+    [4X[25Xgap>[125X [27XGd12 := Groupoid( d12, [-37,-36,-35,-34] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d12, "d12" );  [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gd12, "Gd12" );[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Subgroup( d12, [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGs3 := SubgroupoidByPieces( Gd12, [ [ s3, [-36,-35,-34] ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3, "s3" );  [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gs3, "Gs3" );[127X[104X
+    [4X[25Xgap>[125X [27Xgend8 := GeneratorsOfGroup( d8 );;[127X[104X
+    [4X[25Xgap>[125X [27Ximhd8 := [ ( ), (15,20)(16,19)(17,18) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xhd8 := GroupHomomorphismByImages( d8, s3, gend8, imhd8 );;[127X[104X
+    [4X[25Xgap>[125X [27Xhomd8 := GroupoidHomomorphism( Gd8, Gs3, hd8 ); [127X[104X
+    [4X[28Xgroupoid homomorphism : Gd8 -> Gs3[128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -8], [128X[104X
+    [4X[28X      [() : -9 -> -7] ], [128X[104X
+    [4X[28X  [ [() : -36 -> -36], [(15,20)(16,19)(17,18) : -36 -> -36], [128X[104X
+    [4X[28X      [() : -36 -> -35], [() : -36 -> -34] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xhc6 := GroupHomomorphismByImages( c6, s3, [127X[104X
+    [4X[25X>[125X [27X           [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;[127X[104X
+    [4X[25Xgap>[125X [27XFs3 := SubgroupoidByObjects( Gs3, [ -35 ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Fs3, "Fs3" ); [127X[104X
+    [4X[25Xgap>[125X [27Xhomc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;[127X[104X
+    [4X[25Xgap>[125X [27XincFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; [127X[104X
+    [4X[25Xgap>[125X [27Xihomc6 := homc6 * incFs3; [127X[104X
+    [4X[28Xgroupoid homomorphism : Gc6 -> Gs3[128X[104X
+    [4X[28X[ [ [(5,6,7)(8,9) : -6 -> -6] ], [ [(15,16)(17,20)(18,19) : -35 -> -35] ] ][128X[104X
+    [4X[25Xgap>[125X [27XidGs3 := IdentityMapping( Gs3 );;[127X[104X
+    [4X[25Xgap>[125X [27XV3 := ReplaceOnePieceInUnion( U3, 1, Gs3 ); [127X[104X
+    [4X[28Xgroupoid with 3 pieces:[128X[104X
+    [4X[28X[ Gs3, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27Xhoms3 := [ idGs3, homd8, ihomc6 ];; [127X[104X
+    [4X[25Xgap>[125X [27XhomV3 := HomomorphismToSinglePiece( V3, Gs3, homs3 );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( homV3 );         [127X[104X
+    [4X[28Xhomomorphism to single piece groupoid with pieces:[128X[104X
+    [4X[28X(1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X  [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] ][128X[104X
+    [4X[28Ximages of objects: [ -36, -35, -34 ][128X[104X
+    [4X[28X   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ][128X[104X
+    [4X[28X(2) :  groupoid mapping: [ Gd8 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ][128X[104X
+    [4X[28Ximages of objects: [ -36, -35, -34 ][128X[104X
+    [4X[28X   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ][128X[104X
+    [4X[28X(3) :  groupoid mapping: [ Gc6 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ][128X[104X
+    [4X[28Ximages of objects: [ -35 ][128X[104X
+    [4X[28X   images of rays: [ [() : -35 -> -35] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-2 GroupoidHomomorphismFromHomogeneousDiscrete[101X
+  
+  [33X[1;0Y[29X[2XGroupoidHomomorphismFromHomogeneousDiscrete[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhoms[103X, [3Xoims[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operation  requires the source and range; a list of homomorphisms from
+  object group to object group; and a list of the image objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDd8 := MaximalDiscreteSubgroupoid( Gd8 );[127X[104X
+    [4X[28Xhomogeneous, discrete groupoid: < d8, [ -9, -8, -7 ] >[128X[104X
+    [4X[25Xgap>[125X [27Xid8 := IdentityMapping( d8 );; [127X[104X
+    [4X[25Xgap>[125X [27XGroupoidHomomorphismFromHomogeneousDiscrete( Dd8, Gd8, [id8,id8,id8], [127X[104X
+    [4X[25X>[125X [27X   [-8,-7,-9] );                                                        [127X[104X
+    [4X[28Xgroupoid homomorphism : morphism from a homogeneous discrete groupoid:[128X[104X
+    [4X[28X[ -9, -8, -7 ] -> [ -8, -7, -9 ][128X[104X
+    [4X[28Xobject homomorphisms:[128X[104X
+    [4X[28XIdentityMapping( d8 )[128X[104X
+    [4X[28XIdentityMapping( d8 )[128X[104X
+    [4X[28XIdentityMapping( d8 )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5 [33X[0;0YHomomorphisms to more than one piece[133X[101X
+  
+  [1X5.5-1 HomomorphismByUnion[101X
+  
+  [33X[1;0Y[29X[2XHomomorphismByUnion[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhoms[103X ) [32X operation[133X
+  
+  [33X[0;0YAs in section [14X3.3[114X, when the range [22XH[122X has more than one connected component, a
+  homomorphism is a union of homomorphisms, one for each piece in the range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xisoq8 := IsomorphismNewObjects( Gq8, [-38,-37] ); [127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], [128X[104X
+    [4X[28X      [<identity> of ... : -28 -> -27] ], [128X[104X
+    [4X[28X  [ [x : -38 -> -38], [y : -38 -> -38], [y2 : -38 -> -38], [128X[104X
+    [4X[28X      [<identity> of ... : -38 -> -37] ] ][128X[104X
+    [4X[25Xgap>[125X [27XGq8b := Range( isoq8 );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gq8b, "Gq8b" ); [127X[104X
+    [4X[25Xgap>[125X [27XV4 := UnionOfPieces( [ V3, Gq8 ] ); [127X[104X
+    [4X[28Xgroupoid with 4 pieces:[128X[104X
+    [4X[28X[ Gs3, Gq8, Gd8, Gc6 ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( V4, "V4" ); [127X[104X
+    [4X[25Xgap>[125X [27XVs3q8b := UnionOfPieces( [ Gs3, Gq8b ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Vs3q8b, "Vs3q8b" ); [127X[104X
+    [4X[25Xgap>[125X [27Xhom4 := HomomorphismByUnion( V4, Vs3q8b, [ homV3, isoq8 ] );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( hom4 );[127X[104X
+    [4X[28Xmagma homomorphism: V4 -> Vs3q8b with pieces :[128X[104X
+    [4X[28X[ Pcgs([ x, y, y2 ]) -> [ x, y, y2 ], [ -38, -37 ], [128X[104X
+    [4X[28X  [ <identity> of ..., <identity> of ... ] ][128X[104X
+    [4X[28X(1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X  [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] ][128X[104X
+    [4X[28Ximages of objects: [ -36, -35, -34 ][128X[104X
+    [4X[28X   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ][128X[104X
+    [4X[28X(2) :  groupoid mapping: [ Gd8 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ][128X[104X
+    [4X[28Ximages of objects: [ -36, -35, -34 ][128X[104X
+    [4X[28X   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ][128X[104X
+    [4X[28X(3) :  groupoid mapping: [ Gc6 ] -> [ Gs3 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ][128X[104X
+    [4X[28Ximages of objects: [ -35 ][128X[104X
+    [4X[28X   images of rays: [ [() : -35 -> -35] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-2 IsomorphismGroupoids[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismGroupoids[102X( [3XA[103X, [3XB[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22XA,B[122X  are two single piece groupoids, they are isomorphic provided they
+  have the same number of objects and the root groups are isomorphic.[133X
+  
+  [33X[0;0YWhen   [22XA=[A_1,...,A_n],~   B=[B_1,...,B_n][122X  are  both  unions  of  connected
+  groupoids, they are isomorphic if there is a permutation [22Xπ[122X of [22X[1,...,n][122X such
+  that [22XA_i[122X is isomorphic to [22XB_π(i)[122X for all [22Xi[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs3a := Group( (1,2,3), (2,3) );; [127X[104X
+    [4X[25Xgap>[125X [27Xs3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;[127X[104X
+    [4X[25Xgap>[125X [27Xs3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;[127X[104X
+    [4X[25Xgap>[125X [27XGa := SinglePieceGroupoid( s3a, [-23,-22,-21] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Ga, "Ga" ); [127X[104X
+    [4X[25Xgap>[125X [27XGb := SinglePieceGroupoid( s3b, [-6,-5,-4] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gb, "Gb" ); [127X[104X
+    [4X[25Xgap>[125X [27XGc := SinglePieceGroupoid( s3c, [-9,-8,-7] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gc, "Gc" ); [127X[104X
+    [4X[25Xgap>[125X [27Xc6a := Group( (1,2,3,4,5,6) );; [127X[104X
+    [4X[25Xgap>[125X [27Xc6b := Group( (7,8)(9,10,11) );;[127X[104X
+    [4X[25Xgap>[125X [27Xc6c := Group( (12,13)(14,15)(16,17,18)(19,20,21)(22,23,24,25,26,27) );; [127X[104X
+    [4X[25Xgap>[125X [27XHa := SinglePieceGroupoid( c6a, [-3,-2,-1] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Ha, "Ha" ); [127X[104X
+    [4X[25Xgap>[125X [27XHb := SinglePieceGroupoid( c6b, [-16,-15,-14] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Hb, "Hb" ); [127X[104X
+    [4X[25Xgap>[125X [27XHc := SinglePieceGroupoid( c6c, [-19,-18,-17] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Hc, "Hc" ); [127X[104X
+    [4X[25Xgap>[125X [27XIsomorphismGroupoids( Ga, Gb ); [127X[104X
+    [4X[28Xgroupoid homomorphism : Ga -> Gb[128X[104X
+    [4X[28X[ [ [(1,2,3) : -23 -> -23], [(2,3) : -23 -> -23], [() : -23 -> -22], [128X[104X
+    [4X[28X      [() : -23 -> -21] ], [128X[104X
+    [4X[28X  [ [(4,6,8)(5,7,9) : -6 -> -6], [(4,9)(5,8)(6,7) : -6 -> -6], [128X[104X
+    [4X[28X      [() : -6 -> -5], [() : -6 -> -4] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismGroupoids( Ga, Ha );[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XA := UnionOfPieces( [ Ha, Gb, Gc, Hb ] ); [127X[104X
+    [4X[28Xgroupoid with 4 pieces:[128X[104X
+    [4X[28X[ Hb, Gc, Gb, Ha ][128X[104X
+    [4X[25Xgap>[125X [27XB := UnionOfPieces( [ Gc, Hb, Hc, Ga ] ); [127X[104X
+    [4X[28Xgroupoid with 4 pieces:[128X[104X
+    [4X[28X[ Ga, Hc, Hb, Gc ][128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismGroupoids( A, B );; [127X[104X
+    [4X[25Xgap>[125X [27XPrint( List( PiecesOfMapping(iso), p -> [Source(p),Range(p)] ) );[127X[104X
+    [4X[28X[ [ Gc, Ga ], [ Hb, Hc ], [ Ha, Hb ], [ Gb, Gc ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.6 [33X[0;0YAutomorphisms of groupoids[133X[101X
+  
+  [33X[0;0YIn  this  sections we consider automorphisms of single piece groupoids, then
+  homogeneous discrete groupoids, and then homogeneous groupoids.[133X
+  
+  [1X5.6-1 GroupoidAutomorphismByObjectPerm[101X
+  
+  [33X[1;0Y[29X[2XGroupoidAutomorphismByObjectPerm[102X( [3Xgpd[103X, [3Ximobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupoidAutomorphismByGroupAuto[102X( [3Xgpd[103X, [3Xgpiso[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupoidAutomorphismByRayShifts[102X( [3Xgpd[103X, [3Ximrays[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupoidInnerAutomorphism[102X( [3Xgpd[103X, [3Xarrow[103X ) [32X operation[133X
+  
+  [33X[0;0YWe  first  describe  automorphisms  of  a  groupoid  [22XG[122X where [22XG[122X is the direct
+  product  of  a  group  [22Xg[122X  and  a complete digraph. The automorphism group is
+  generated by three types of automorphism:[133X
+  
+  [30X    [33X[0;6Ygiven  a  permutation  [22Xπ[122X  of  the  [22Xn[122X  objects,  we define [22Xπ : G -> G,~
+        (o_i,g,o_j) ↦ (o_π i,g,o_π j)[122X;[133X
+  
+  [30X    [33X[0;6Ygiven  an  automorphism  [22Xα[122X of the root group [22Xg[122X, we define [22Xα : G -> G,~
+        (o_i,g,o_j) ↦ (o_i,α g,o_j)[122X;[133X
+  
+  [30X    [33X[0;6Ygiven  [22XL  =  [1,g_2,g_3,...,g_n]  ∈  g^n[122X  we  define  [22Xθ_L  :  G -> G,~
+        (o_i,g,o_j)  ↦  (o_i,g_i^-1gg_j,o_j)[122X so that, in particular, for all [22Xj[122X
+        the  rays [22X(r_j : o_1 -> o_j)[122X are shifted by [22Xg_j[122X: they map to [22X(r_jg_j :
+        o_1 -> o_j)[122X;[133X
+  
+  [30X    [33X[0;6Ygiven  [22Xg  ∈ G[122X, the [13Xinner automorphism[113X of [22XG[122X by [22Xg[122X is the mapping [22Xh ↦ h^g[122X
+        wehere conjugation of arrows is defined in section [14X4.5[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa4 := Subgroup( s4, [(1,2,3),(2,3,4)] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( a4, "a4" ); [127X[104X
+    [4X[25Xgap>[125X [27Xgensa4 := GeneratorsOfGroup( a4 );; [127X[104X
+    [4X[25Xgap>[125X [27XGa4 := SubgroupoidByPieces( Gs4, [ [a4, [-15,-13,-11]] ] ); [127X[104X
+    [4X[28Xsingle piece groupoid: < a4, [ -15, -13, -11 ] >[128X[104X
+    [4X[25Xgap>[125X [27XSetName( Ga4, "Ga4" ); [127X[104X
+    [4X[25Xgap>[125X [27Xd := Arrow( Ga4, (1,3,4), -11, -13 ); [127X[104X
+    [4X[28X[(1,3,4) : -11 -> -13][128X[104X
+    [4X[25Xgap>[125X [27Xaut1 := GroupoidAutomorphismByObjectPerm( Ga4, [-13,-11,-15] );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( aut1 ); [127X[104X
+    [4X[28X groupoid mapping: [ Ga4 ] -> [ Ga4 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ][128X[104X
+    [4X[28Ximages of objects: [ -13, -11, -15 ][128X[104X
+    [4X[28X   images of rays: [ [() : -13 -> -13], [() : -13 -> -11], [() : -13 -> -15] ][128X[104X
+    [4X[25Xgap>[125X [27Xd1 := ImageElm( aut1, d ); [127X[104X
+    [4X[28X[(1,3,4) : -15 -> -11][128X[104X
+    [4X[25Xgap>[125X [27Xh2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xaut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( aut2 ); [127X[104X
+    [4X[28X groupoid mapping: [ Ga4 ] -> [ Ga4 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ][128X[104X
+    [4X[28Ximages of objects: [ -15, -13, -11 ][128X[104X
+    [4X[28X   images of rays: [ [() : -15 -> -15], [() : -15 -> -13], [() : -15 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Xd2 := ImageElm( aut2, d1 );[127X[104X
+    [4X[28X[(1,2,4) : -15 -> -11][128X[104X
+    [4X[25Xgap>[125X [27Xim3 := [(), (1,3,2), (2,4,3)];; [127X[104X
+    [4X[25Xgap>[125X [27Xaut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( aut3 ); [127X[104X
+    [4X[28X groupoid mapping: [ Ga4 ] -> [ Ga4 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ][128X[104X
+    [4X[28Ximages of objects: [ -15, -13, -11 ][128X[104X
+    [4X[28X   images of rays: [ [() : -15 -> -15], [(1,3,2) : -15 -> -13], [128X[104X
+    [4X[28X  [(2,4,3) : -15 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Xd3 := ImageElm( aut3, d2 );[127X[104X
+    [4X[28X[(1,4)(2,3) : -15 -> -11][128X[104X
+    [4X[25Xgap>[125X [27Xd0 := Arrow( Ga4, (2,3,4), -11, -13 );; [127X[104X
+    [4X[25Xgap>[125X [27Xaut4 := GroupoidInnerAutomorphism( Ga4, d0 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( aut4 );[127X[104X
+    [4X[28X groupoid mapping: [ Ga4 ] -> [ Ga4 ][128X[104X
+    [4X[28Xroot homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ][128X[104X
+    [4X[28Ximages of objects: [ -15, -11, -13 ][128X[104X
+    [4X[28X   images of rays: [ [() : -15 -> -15], [(2,4,3) : -15 -> -11], [128X[104X
+    [4X[28X  [(2,3,4) : -15 -> -13] ][128X[104X
+    [4X[25Xgap>[125X [27Xd4 := ImageElm( aut4, d3 );[127X[104X
+    [4X[28X[(1,2,4) : -15 -> -13][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.6-2 [33X[0;0YAutomorphisms of a groupoid with rays[133X[101X
+  
+  [33X[0;0YLet [22XS[122X be a wide subgroupoid with rays of a standard groupoid [22XG[122X.[133X
+  
+  [33X[0;0YAn  automorphism  of  the root group extends to the whole of [22XS[122X with the rays
+  fixed by the automorphism.[133X
+  
+  [33X[0;0YAn  automorphism  of  [22XG[122X  by  permuting  the objects may map [22XS[122X to a different
+  subgroupoid.  So we construct an isomorphism [22Xι[122X from [22XS[122X to a standard groupoid
+  [22XT[122X, constgruct [22Xα[122X permuting the objects of [22XT[122X, and return [22Xι*α*ι^-1[122X.[133X
+  
+  [33X[0;0YFor an automorphism by ray shifts we require that the shifts are elements of
+  the root group of [22XS[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs4c := Group( (1,2,3,4), (3,4) );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( s4c, "s4c" );[127X[104X
+    [4X[25Xgap>[125X [27Xs3c := Subgroup( s4c, [ (1,2), (2,3) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3c, "s3c" ); [127X[104X
+    [4X[25Xgap>[125X [27XGs4c := SinglePieceGroupoid( s4c, [-9,-8,-7,-6] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gs4c, "Gs4c" ); [127X[104X
+    [4X[25Xgap>[125X [27XHs3c := SubgroupoidWithRays( Gs4c, s3c, [ (), (1,4), (2,4), (3,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( Hs3c, "Hs3c" ); [127X[104X
+    [4X[25Xgap>[125X [27X## (1) automorphism by group auto [127X[104X
+    [4X[25Xgap>[125X [27Xa1 := GroupHomomorphismByImages( s3c, s3c, [(1,2),(2,3)], [(1,3),(2,3)] );;[127X[104X
+    [4X[25Xgap>[125X [27Xaut1 := GroupoidAutomorphismByGroupAuto( Hs3c, a1 );[127X[104X
+    [4X[28Xgroupoid homomorphism : Hs3c -> Hs3c[128X[104X
+    [4X[28X[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], [128X[104X
+    [4X[28X  [ [(1,3) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xa := Arrow( Hs3c, (2,3,4), -8, -8 );[127X[104X
+    [4X[28X[(2,3,4) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut1, a );[127X[104X
+    [4X[28X[(2,4,3) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27Xb := Arrow( Hs3c, (1,2,3,4), -7, -6 );[127X[104X
+    [4X[28X[(1,2,3,4) : -7 -> -6][128X[104X
+    [4X[25Xgap>[125X [27X##  b = (2,4)(1,2)(3,4) -> (2,4)(1,3)(3,4)[127X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut1, b );[127X[104X
+    [4X[28X[(1,4,2,3) : -7 -> -6][128X[104X
+    [4X[25Xgap>[125X [27X## (2) automorphism by object perm [127X[104X
+    [4X[25Xgap>[125X [27Xaut2 := GroupoidAutomorphismByObjectPerm( Hs3c, [-8,-7,-6,-9] );[127X[104X
+    [4X[28Xgroupoid homomorphism : Hs3c -> Hs3c[128X[104X
+    [4X[28X[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], [128X[104X
+    [4X[28X  [ [(2,4) : -8 -> -8], [(2,3) : -8 -> -8], [(1,2,4) : -8 -> -7], [128X[104X
+    [4X[28X      [(1,3,4) : -8 -> -6], [(1,4) : -8 -> -9] ] ] [128X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut2, a );                                           [127X[104X
+    [4X[28X[(1,4,3) : -7 -> -7][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut2, b );                                           [127X[104X
+    [4X[28X[(1,2)(3,4) : -6 -> -9][128X[104X
+    [4X[25Xgap>[125X [27X## (3) automorphism by ray shifts [127X[104X
+    [4X[25Xgap>[125X [27Xaut3 := GroupoidAutomorphismByRayShifts( Hs3c, [(),(2,3),(1,3),(1,2)] );   [127X[104X
+    [4X[28Xgroupoid homomorphism : Hs3c -> Hs3c[128X[104X
+    [4X[28X[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], [128X[104X
+    [4X[28X  [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4)(2,3) : -9 -> -8], [128X[104X
+    [4X[28X      [(1,3)(2,4) : -9 -> -7], [(1,2)(3,4) : -9 -> -6] ] ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut3, a );[127X[104X
+    [4X[28X[(2,4,3) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( aut3, b );[127X[104X
+    [4X[28X[(1,4,2,3) : -7 -> -6][128X[104X
+    [4X[25Xgap>[125X [27Xe86 := Arrow( Hs3c, (1,3,2,4), -8, -6 );;[127X[104X
+    [4X[25Xgap>[125X [27Xaut86 := GroupoidInnerAutomorphism( Hs3c, e86 );[127X[104X
+    [4X[28Xgroupoid homomorphism : Hs3c -> Hs3c[128X[104X
+    [4X[28X[ [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(1,4) : -9 -> -8], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(3,4) : -9 -> -6] ], [128X[104X
+    [4X[28X  [ [(1,2) : -9 -> -9], [(2,3) : -9 -> -9], [(2,4,3) : -9 -> -6], [128X[104X
+    [4X[28X      [(2,4) : -9 -> -7], [(1,4)(2,3) : -9 -> -8] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-3 AutomorphismGroupOfGroupoid[101X
+  
+  [33X[1;0Y[29X[2XAutomorphismGroupOfGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNiceObjectAutoGroupGroupoid[102X( [3Xgpd[103X, [3Xaut[103X ) [32X operation[133X
+  
+  [33X[0;0YAs  above,  let  [22XG[122X be the direct product of a group [22Xg[122X and a complete digraph
+  with  [22Xn[122X  objects.  The  [10XAutomorphismGroup[110X  [22XAut(G)[122X  of [22XG[122X is isomorphic to the
+  quotient  of  [22XS_n  ×  A  × g^n[122X by a subgroup isomorphic to [22Xg[122X, where [22XA[122X is the
+  automorphism  group  of  [22Xg[122X  and [22XS_n[122X is the symmetric group on the [22Xn[122X objects.
+  This is one of the main topics in [AW10].[133X
+  
+  [33X[0;0YIf  [22XH[122X  is  the  union  of  [22Xk[122X  groupoids, all isomorphic to [22XG[122X, then [22XAut(H)[122X is
+  isomorphic to [22XS_k ⋉ Aut(G)[122X.[133X
+  
+  [33X[0;0YThe  function [10XNiceObjectAutoGroupGroupoid[110X takes a groupoid and a subgroup of
+  its automorphism group and retuns a [13Xnice monomorphism[113X from this automorphism
+  group  to  a  pc-group,  if  one is available. The current implementation is
+  experimental.  Note  that  [10XImageElm[110X  at  present  only  works  on generating
+  elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAGa4 := AutomorphismGroupOfGroupoid( Ga4 ); [127X[104X
+    [4X[28XAut(Ga4)[128X[104X
+    [4X[25Xgap>[125X [27XLength( GeneratorsOfGroup( AGa4 ) );[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XAGgens := GeneratorsOfGroup( AGa4);; [127X[104X
+    [4X[25Xgap>[125X [27XNGa4 := NiceObject( AGa4 );; [127X[104X
+    [4X[25Xgap>[125X [27XMGa4 := NiceMonomorphism( AGa4 );; [127X[104X
+    [4X[25Xgap>[125X [27XSize( AGa4 ); [127X[104X
+    [4X[28X20736[128X[104X
+    [4X[25Xgap>[125X [27XSetName( AGa4, "AGa4" ); [127X[104X
+    [4X[25Xgap>[125X [27XSetName( NGa4, "NGa4" ); [127X[104X
+    [4X[25Xgap>[125X [27X##  cannot test images of AGgens because of random variations [127X[104X
+    [4X[25Xgap>[125X [27X##  Now do some tests![127X[104X
+    [4X[25Xgap>[125X [27Xmgi := MappingGeneratorsImages( MGa4 );; [127X[104X
+    [4X[25Xgap>[125X [27Xautgen := mgi[1];; [127X[104X
+    [4X[25Xgap>[125X [27Xpcgen := mgi[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xngen := Length( autgen );; [127X[104X
+    [4X[25Xgap>[125X [27XForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.6-4 [33X[0;0YInner automorphisms[133X[101X
+  
+  [33X[0;0YThe  inner automorphism subgroup [22XmathrmInn(G)[122X of the automorphism group of [22XG[122X
+  is  the  group of inner automorphisms [22X∧ a : b ↦ b^a[122X for [22Xa ∈ G[122X. It is [13Xnot[113X the
+  case  that  the  map  [22XG  ->  mathrmInn(G), a ↦ ∧ a[122X preserves multiplication.
+  Indeed, when [22Xa=(o,g,p), b=(p,h,r) ∈ G[122X with objects [22Xp,q,r[122X all distict, then[133X
+  
+  
+  [24X[33X[0;6Y\wedge(ab)   ~=~  (\wedge  a)(\wedge  b)(\wedge  a)  ~=~  (\wedge  b)(\wedge
+  a)(\wedge b).[133X
+  
+  [124X
+  
+  [33X[0;0Y(Compare   this   with  the  permutation  identity  [22X(pq)(qr)(pq)  =  (pr)  =
+  (qr)(pq)(qr)[122X.)    So    the    map    [22XG   ->   mathrmInn(G)[122X   is   of   type
+  [10XIsMappingWithObjectsByFunction[110X.[133X
+  
+  [33X[0;0YIn  the  example we convert the automorphism group [10XAGa4[110X into a single object
+  groupoid, and then define the inner automorphism map.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAGa40 := Groupoid( AGa4, [0] );[127X[104X
+    [4X[28Xsingle piece groupoid: < Aut(Ga4), [ 0 ] >[128X[104X
+    [4X[25Xgap>[125X [27Xconj := function(a) [127X[104X
+    [4X[25X>[125X [27X           return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); [127X[104X
+    [4X[25X>[125X [27X           end;; [127X[104X
+    [4X[25Xgap>[125X [27Xinner := MappingWithObjectsByFunction( Ga4, AGa40, conj, [0,0,0] );;[127X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow( Ga4, (1,2,3), -15, -13 );;[127X[104X
+    [4X[25Xgap>[125X [27Xinn1 := ImageElm( inner, a1 );;                        [127X[104X
+    [4X[25Xgap>[125X [27Xa2 := Arrow( Ga4, (2,3,4), -13, -11 );;[127X[104X
+    [4X[25Xgap>[125X [27Xinn2 := ImageElm( inner, a2 );;       [127X[104X
+    [4X[25Xgap>[125X [27Xa3 := a1*a2;                      [127X[104X
+    [4X[28X[(1,3)(2,4) : -15 -> -11][128X[104X
+    [4X[25Xgap>[125X [27Xinn3 := ImageElm( inner, a3 );  [127X[104X
+    [4X[28X[groupoid homomorphism : Ga4 -> Ga4[128X[104X
+    [4X[28X[ [ [(1,2,3) : -15 -> -15], [(2,3,4) : -15 -> -15], [() : -15 -> -13], [128X[104X
+    [4X[28X      [() : -15 -> -11] ], [128X[104X
+    [4X[28X  [ [(1,3,4) : -11 -> -11], [(1,2,4) : -11 -> -11], [(1,3)(2,4) : -11 -> -13],[128X[104X
+    [4X[28X      [() : -11 -> -15] ] ] : 0 -> 0][128X[104X
+    [4X[25Xgap>[125X [27X(inn3 = inn1*inn2*inn1) and (inn3 = inn2*inn1*inn2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-5 GroupoidAutomorphismByGroupAutos[101X
+  
+  [33X[1;0Y[29X[2XGroupoidAutomorphismByGroupAutos[102X( [3Xgpd[103X, [3Xauts[103X ) [32X operation[133X
+  
+  [33X[0;0YHomogeneous,  discrete groupoids are the second type of groupoid for which a
+  method is provided for [10XAutomorphismGroupOfGroupoid[110X. This is used in the [5XXMod[105X
+  package  for  constructing  crossed  modules  of groupoids. The two types of
+  generating automorphism are [10XGroupoidAutomorphismByGroupAutos[110X, which requires
+  a   list   of   group   automorphisms,   one  for  each  object  group,  and
+  [10XGroupoidAutomorphismByObjectPerm[110X, which permutes the objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHs3 := HomogeneousDiscreteGroupoid( s3, [ -13..-10] ); [127X[104X
+    [4X[28Xhomogeneous, discrete groupoid: < s3, [ -13 .. -10 ] >[128X[104X
+    [4X[25Xgap>[125X [27Xaut4 := GroupoidAutomorphismByObjectPerm( Hs3, [-12,-10,-11,-13] ); [127X[104X
+    [4X[28Xgroupoid homomorphism : morphism from a homogeneous discrete groupoid:[128X[104X
+    [4X[28X[ -13, -12, -11, -10 ] -> [ -12, -10, -11, -13 ][128X[104X
+    [4X[28Xobject homomorphisms:[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[25Xgap>[125X [27Xgens3 := GeneratorsOfGroup( s3 );; [127X[104X
+    [4X[25Xgap>[125X [27Xg1 := gens3[1];; [127X[104X
+    [4X[25Xgap>[125X [27Xg2 := gens3[2];; [127X[104X
+    [4X[25Xgap>[125X [27Xb1 := GroupHomomorphismByImages( s3, s3, gens3, [g1, g2^g1 ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xb2 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2 ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xb3 := GroupHomomorphismByImages( s3, s3, gens3, [g1^g2, g2^(g1*g2) ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xb4 := GroupHomomorphismByImages( s3, s3, gens3, [g1^(g2*g1), g2^g1 ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xaut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1,b2,b3,b4] ); [127X[104X
+    [4X[28Xgroupoid homomorphism : morphism from a homogeneous discrete groupoid:[128X[104X
+    [4X[28X[ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ][128X[104X
+    [4X[28Xobject homomorphisms:[128X[104X
+    [4X[28XGroupHomomorphismByImages( s3, s3, [128X[104X
+    [4X[28X[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X[ (15,17,19)(16,18,20), (15,18)(16,17)(19,20) ] )[128X[104X
+    [4X[28XGroupHomomorphismByImages( s3, s3, [128X[104X
+    [4X[28X[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X[ (15,19,17)(16,20,18), (15,20)(16,19)(17,18) ] )[128X[104X
+    [4X[28XGroupHomomorphismByImages( s3, s3, [128X[104X
+    [4X[28X[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X[ (15,19,17)(16,20,18), (15,16)(17,20)(18,19) ] )[128X[104X
+    [4X[28XGroupHomomorphismByImages( s3, s3, [128X[104X
+    [4X[28X[ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], [128X[104X
+    [4X[28X[ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )[128X[104X
+    [4X[25Xgap>[125X [27XAHs3 := AutomorphismGroupOfGroupoid( Hs3 ); [127X[104X
+    [4X[28X<group with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize( AHs3 );[127X[104X
+    [4X[28X31104[128X[104X
+    [4X[25Xgap>[125X [27XgenAHs3 := GeneratorsOfGroup( AHs3 );;[127X[104X
+    [4X[25Xgap>[125X [27XLength( genAHs3 ); [127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XnobAHs3 := NiceObject( AHs3 );; [127X[104X
+    [4X[25Xgap>[125X [27XnmonAHs3 := NiceMonomorphism( AHs3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xw := genAHs3[1];; [127X[104X
+    [4X[25Xgap>[125X [27Xw1 := ImageElm( nmonAHs3, w );; [127X[104X
+    [4X[25Xgap>[125X [27Xx := genAHs3[2];; [127X[104X
+    [4X[25Xgap>[125X [27Xx1 := ImageElm( nmonAHs3, x );; [127X[104X
+    [4X[25Xgap>[125X [27Xy := genAHs3[3];; [127X[104X
+    [4X[25Xgap>[125X [27Xy1 := ImageElm( nmonAHs3, y );; [127X[104X
+    [4X[25Xgap>[125X [27Xz := genAHs3[4];; [127X[104X
+    [4X[25Xgap>[125X [27Xz1 := ImageElm( nmonAHs3, z );; [127X[104X
+    [4X[25Xgap>[125X [27Xu := z*w*y*x*z; [127X[104X
+    [4X[28Xgroupoid homomorphism : morphism from a homogeneous discrete groupoid:[128X[104X
+    [4X[28X[ -13, -12, -11, -10 ] -> [ -11, -13, -10, -12 ][128X[104X
+    [4X[28Xobject homomorphisms:[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[28XConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )[128X[104X
+    [4X[28XIdentityMapping( s3 )[128X[104X
+    [4X[28XConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )[128X[104X
+    [4X[25Xgap>[125X [27Xu1 := z1*w1*y1*x1*z1; [127X[104X
+    [4X[28X(1,2,4,3)(5,17,23,16,8,20,26,13)(6,18,24,15,7,19,25,14)(9,21,27,12,10,22,28,[128X[104X
+    [4X[28X11)[128X[104X
+    [4X[25Xgap>[125X [27Ximu := ImageElm( nmonAHs3, u );; [127X[104X
+    [4X[25Xgap>[125X [27Xu1 = imu;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-6 AutomorphismGroupoidOfGroupoid[101X
+  
+  [33X[1;0Y[29X[2XAutomorphismGroupoidOfGroupoid[102X( [3Xgpd[103X ) [32X attribute[133X
+  
+  [33X[0;0YIf  [22XG[122X is a single piece groupoid with automorphism group [22XAut(G)[122X, and if [22XH[122X is
+  the union of [22Xk[122X pieces, all isomorphic to [22XG[122X, then the automorphism group of [22XH[122X
+  is  the  wreath product [22XS_k ⋉ Aut(G)[122X. However, we find it more convenient to
+  construct  the  [13Xautomorphism  groupoid[113X of [22XH[122X. This is a single piece groupoid
+  [22XAut(H)[122X  with  [22Xk[122X  objects  -- the object lists of the pieces of [22XH[122X -- and root
+  group  [22XAut(G)[122X.  Isomorphisms  between the root groups of the [22Xk[122X pieces may be
+  applied  to  the  generators  of  [22XAut(G)[122X to construct automorphism groups of
+  these  pieces,  and  then isomorphisms between these automorphism groups. We
+  then construct [22XAUT(H)[122X using [10XGroupoidByIsomorphisms[110X.[133X
+  
+  [33X[0;0YIn  the  special case that [22XH[122X is homogeneous, there is no need to construct a
+  collection  of  automorphism groups. Rather, the rays of [22XAUT(H)[122X are given by
+  [10XIsomorphismNewObjects[110X.  For the example we use [10XHd8[110X constructed in subsection
+  [2XHomogeneousGroupoid[102X ([14X4.1-5[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XHd8 := HomogeneousGroupoid( Gd8,[127X[104X
+    [4X[25X>[125X [27X          [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAHd8 := AutomorphismGroupoidOfGroupoid( Hd8 ); [127X[104X
+    [4X[25Xgap>[125X [27XObjectList( AHd8 );[127X[104X
+    [4X[28X[ [ -20, -19, -18 ], [ -16, -15, -14 ], [ -12, -11, -10 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRaysOfGroupoid( AHd8 ){[2..3]};[127X[104X
+    [4X[28X[ groupoid homomorphism : [128X[104X
+    [4X[28X    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], [128X[104X
+    [4X[28X          [() : -20 -> -18] ], [128X[104X
+    [4X[28X      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], [128X[104X
+    [4X[28X          [() : -16 -> -14] ] ], groupoid homomorphism : [128X[104X
+    [4X[28X    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], [128X[104X
+    [4X[28X          [() : -20 -> -18] ], [128X[104X
+    [4X[28X      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], [128X[104X
+    [4X[28X          [() : -12 -> -10] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XObjectGroup( AHd8, [ -12, -11, -10 ] );[127X[104X
+    [4X[28X<group with 8 generators>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7 [33X[0;0YMatrix representations of groupoids[133X[101X
+  
+  [33X[0;0YSuppose  that [10Xgpd[110X is the direct product of a group [22XG[122X and a complete digraph,
+  and  that  [22Xρ  : G -> M[122X is an isomorphism to a matrix group [22XM[122X. Then if [10Xrep[110X is
+  the  isomorphic  groupoid with the same objects and root group [22XM[122X there is an
+  isomorphism [22Xμ[122X from [10Xgpd[110X to [10Xrep[110X mapping [22X(g : i -> j)[122X to [22X(ρ g : i -> j)[122X.[133X
+  
+  [33X[0;0YWhen  [10Xgpd[110X  is  a  groupoid  with  rays,  a representation can be obtained by
+  restricting a representation of its parent.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xreps := IrreducibleRepresentations( s4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xrep4 := reps[4];; [127X[104X
+    [4X[25Xgap>[125X [27XRs4 := Groupoid( Image( rep4 ), ObjectList( Gs4 ) ); [127X[104X
+    [4X[28Xsingle piece groupoid: < Group([ [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], [128X[104X
+    [4X[28X  [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], [128X[104X
+    [4X[28X  [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], [128X[104X
+    [4X[28X  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]), [ -15, -14, -13, -12, -11 [128X[104X
+    [4X[28X ] >[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixGroupoid( Rs4 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroupoid( Gs4 );[127X[104X
+    [4X[28X[ [(1,2,3,4) : -15 -> -15], [(3,4) : -15 -> -15], [() : -15 -> -14], [128X[104X
+    [4X[28X  [() : -15 -> -13], [() : -15 -> -12], [() : -15 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Ximages := List( gens, [127X[104X
+    [4X[25X>[125X [27X       g -> Arrow( Rs4, ImageElm(rep4,g![1]), g![2], g![3] ) ); [127X[104X
+    [4X[28X[ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -15 -> -15], [128X[104X
+    [4X[28X  [[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ] : -15 -> -15], [128X[104X
+    [4X[28X  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -14], [128X[104X
+    [4X[28X  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -13], [128X[104X
+    [4X[28X  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -12], [128X[104X
+    [4X[28X  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Xmor := GroupoidHomomorphismFromSinglePiece( Gs4, Rs4, gens, images );[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -15 -> -15], [(3,4) : -15 -> -15], [() : -15 -> -14], [128X[104X
+    [4X[28X      [() : -15 -> -13], [() : -15 -> -12], [() : -15 -> -11] ], [128X[104X
+    [4X[28X  [ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -15 -> -15], [128X[104X
+    [4X[28X      [[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ] : -15 -> -15], [128X[104X
+    [4X[28X      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -14], [128X[104X
+    [4X[28X      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -13], [128X[104X
+    [4X[28X      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -12], [128X[104X
+    [4X[28X      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -11] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xa := Arrow( Hs4, (1,4,2), -12, -13 );[127X[104X
+    [4X[28X[(1,4,2) : -12 -> -13][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( mor, a );[127X[104X
+    [4X[28X[[ [ 0, 0, -1 ], [ -1, 0, 0 ], [ 0, 1, 0 ] ] : -12 -> -13][128X[104X
+    [4X[25Xgap>[125X [27Xrmor := RestrictedMappingGroupoids( mor, Hd8b );[127X[104X
+    [4X[28Xgroupoid homomorphism : [128X[104X
+    [4X[28X[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], [128X[104X
+    [4X[28X      [(1,2,4) : -14 -> -12] ], [128X[104X
+    [4X[28X  [ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -14 -> -14], [128X[104X
+    [4X[28X      [[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, -1, 0 ] ] : -14 -> -14], [128X[104X
+    [4X[28X      [[ [ 0, 0, 1 ], [ -1, 0, 0 ], [ 0, -1, 0 ] ] : -14 -> -13], [128X[104X
+    [4X[28X      [[ [ 0, -1, 0 ], [ 0, 0, 1 ], [ -1, 0, 0 ] ] : -14 -> -12] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

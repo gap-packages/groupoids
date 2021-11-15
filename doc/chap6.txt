@@ -1,0 +1,565 @@
+  
+  [1X6 [33X[0;0YGraphs of Groups and Groupoids[133X[101X
+  
+  [33X[0;0YThis package was originally designed to implement [13Xgraphs of groups[113X, a notion
+  introduced by Serre in [Ser80]. It was only when this was extended to [13Xgraphs
+  of  groupoids[113X  that  the  functions for groupoids, described in the previous
+  chapters,  were  required.  The  methods  described here are based on Philip
+  Higgins'  paper [Hig76]. For further details see Chapter 2 of [Moo01]. Since
+  a graph of groups involves a directed graph, with a group associated to each
+  vertex  and  arc,  we  first  define  digraphs  with  edges  weighted by the
+  generators of a free group.[133X
+  
+  
+  [1X6.1 [33X[0;0YDigraphs[133X[101X
+  
+  [1X6.1-1 FpWeightedDigraph[101X
+  
+  [33X[1;0Y[29X[2XFpWeightedDigraph[102X( [3Xverts[103X, [3Xarcs[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsFpWeightedDigraph[102X( [3Xdig[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInvolutoryArcs[102X( [3Xdig[103X ) [32X attribute[133X
+  
+  [33X[0;0YA  [13Xweighted  digraph[113X  is  a  record with two components: [13Xvertices[113X, which are
+  usually  taken to be positive integers (to distinguish them from the objects
+  in   a  groupoid);  and  [13Xarcs[113X,  which  take  the  form  of  3-element  lists
+  [10X[weight,tail,head][110X.  The  [13Xtail[113X and [13Xhead[113X are the two vertices of the arc. The
+  [13Xweight[113X  is  taken  to  be an element of a finitely presented group, so as to
+  produce digraphs of type [10XIsFpWeightedDigraph[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XV1 := [ 5, 6 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xfg1 := FreeGroup( "y" );;[127X[104X
+    [4X[25Xgap>[125X [27Xy := fg1.1;;[127X[104X
+    [4X[25Xgap>[125X [27XA1 := [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ];[127X[104X
+    [4X[25Xgap>[125X [27XD1 := FpWeightedDigraph( fg1, V1, A1 );[127X[104X
+    [4X[28Xweighted digraph with vertices: [ 5, 6 ][128X[104X
+    [4X[28Xand arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xinv1 := InvolutoryArcs( D1 );[127X[104X
+    [4X[28X[ 2, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  example  illustrates  the  fact  that  we require arcs to be defined in
+  involutory pairs, as though they were inverse elements in a groupoid. We may
+  in  future  decide  just to give [10X[y,5,6][110X as the data and get the function to
+  construct  the  reverse edge. The attribute [10XInvolutoryArcs[110X returns a list of
+  the positions of each inverse arc in the list of arcs. In the second example
+  the graph is a complete digraph on three vertices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfg3 := FreeGroup( 3, "z" );;[127X[104X
+    [4X[25Xgap>[125X [27Xz1 := fg3.1;;  z2 := fg3.2;;  z3 := fg3.3;;[127X[104X
+    [4X[25Xgap>[125X [27Xob3 := [ 7, 8, 9 ];;[127X[104X
+    [4X[25Xgap>[125X [27XA3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;[127X[104X
+    [4X[25Xgap>[125X [27XD3 := FpWeightedDigraph( fg3, ob3, A3 );[127X[104X
+    [4X[28Xweighted digraph with vertices: [ 7, 8, 9 ][128X[104X
+    [4X[28Xand arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],[128X[104X
+    [4X[28X  [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ][128X[104X
+    [4X[28X[gap> inob3 := InvolutoryArcs( D3 );[128X[104X
+    [4X[28X[ 4, 5, 6, 1, 2, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.2 [33X[0;0YGraphs of Groups[133X[101X
+  
+  [1X6.2-1 GraphOfGroups[101X
+  
+  [33X[1;0Y[29X[2XGraphOfGroups[102X( [3Xdig[103X, [3Xgps[103X, [3Xisos[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDigraphOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGroupsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  
+  [33X[0;0YA graph of groups is traditionally defined as consisting of:[133X
+  
+  [30X    [33X[0;6Ya digraph with involutory pairs of arcs;[133X
+  
+  [30X    [33X[0;6Ya [13Xvertex group[113X associated to each vertex;[133X
+  
+  [30X    [33X[0;6Ya group associated to each pair of arcs;[133X
+  
+  [30X    [33X[0;6Yan injective homomorphism from each arc group to the group at the head
+        of the arc.[133X
+  
+  [33X[0;0YWe have found it more convenient to associate to each arc:[133X
+  
+  [30X    [33X[0;6Ya subgroup of the vertex group at the tail;[133X
+  
+  [30X    [33X[0;6Ya subgroup of the vertex group at the head;[133X
+  
+  [30X    [33X[0;6Yan isomorphism between these subgroups, such that each involutory pair
+        of arcs determines inverse isomorphisms.[133X
+  
+  [33X[0;0YThese two viewpoints are clearly equivalent.[133X
+  
+  [33X[0;0YIn  this implementation we require that all subgroups are of finite index in
+  the vertex groups.[133X
+  
+  [33X[0;0YThe  three  attributes provide a means of calling the three items of data in
+  the construction of a graph of groups.[133X
+  
+  [33X[0;0YWe  shall  be representing free products with amalgamation of groups and HNN
+  extensions  of  groups  in  Section [14X6.4[114X. So we take as our first example the
+  trefoil  group  with  generators  [22Xa,b[122X and relation [22Xa^3=b^2[122X. For this we take
+  digraph  [10XD1[110X above with an infinite cyclic group at each vertex, generated by
+  [22Xa[122X  and  [22Xb[122X  respectively.  The two subgroups will be generated by [22Xa^3[122X and [22Xb^2[122X
+  with the obvious isomorphisms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X## free vertex group at 5[127X[104X
+    [4X[25Xgap>[125X [27Xfa := FreeGroup( "a" );;[127X[104X
+    [4X[25Xgap>[125X [27Xa := fa.1;;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( fa, "fa" );[127X[104X
+    [4X[25Xgap>[125X [27Xhy := Subgroup( fa, [a^3] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( hy, "hy" );[127X[104X
+    [4X[25Xgap>[125X [27X## free vertex group at 6[127X[104X
+    [4X[25Xgap>[125X [27Xfb := FreeGroup( "b" );;[127X[104X
+    [4X[25Xgap>[125X [27Xb := fb.1;;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( fb, "fb" );[127X[104X
+    [4X[25Xgap>[125X [27Xhybar := Subgroup( fb, [b^2] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( hybar, "hybar" );[127X[104X
+    [4X[25Xgap>[125X [27X## isomorphisms between subgroups[127X[104X
+    [4X[25Xgap>[125X [27Xhomy := GroupHomomorphismByImagesNC( hy, hybar, [a^3], [b^2] );;[127X[104X
+    [4X[25Xgap>[125X [27Xhomybar := GroupHomomorphismByImagesNC( hybar, hy, [b^2], [a^3] );;[127X[104X
+    [4X[25Xgap>[125X [27X## defining graph of groups G1[127X[104X
+    [4X[25Xgap>[125X [27XG1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );[127X[104X
+    [4X[28XGraph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( G1 );[127X[104X
+    [4X[28XGraph of Groups with :-[128X[104X
+    [4X[28X    vertices: [ 5, 6 ][128X[104X
+    [4X[28X        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ][128X[104X
+    [4X[28X      groups: [ fa, fb ][128X[104X
+    [4X[28Xisomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-2 IsGraphOfFpGroups[101X
+  
+  [33X[1;0Y[29X[2XIsGraphOfFpGroups[102X( [3Xgg[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsGraphOfPcGroups[102X( [3Xgg[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsGraphOfPermGroups[102X( [3Xgg[103X ) [32X property[133X
+  
+  [33X[0;0YThis  is  a  list  of  properties  to  be  expected of a graph of groups. In
+  principle  any  type  of  group  known  to [5XGAP[105X may be used as vertex groups,
+  though these types are not normally mixed in a single structure.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsGraphOfFpGroups( G1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismsOfGraphOfGroups( G1 );[127X[104X
+    [4X[28X[ [ a^3 ] -> [ b^2 ], [ b^2 ] -> [ a^3 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-3 RightTransversalsOfGraphOfGroups[101X
+  
+  [33X[1;0Y[29X[2XRightTransversalsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftTransversalsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  
+  [33X[0;0YComputation  with  graph of groups words will require, for each arc subgroup
+  [10Xha[110X,  a  set  of representatives for the left cosets of [10Xha[110X in the tail vertex
+  group.  As  already pointed out, we require subgroups of finite index. Since
+  [5XGAP[105X  prefers  to  provide  right cosets, we obtain the right representatives
+  first, and then invert them.[133X
+  
+  [33X[0;0YWhen the vertex groups are of type [10XFpGroup[110X we shall require normal forms for
+  these  groups,  so we assume that such vertex groups are provided with Knuth
+  Bendix  rewriting  systems  using functions from the main [5XGAP[105X library, (e.g.
+  [10XIsomorphismFpSemigroup[110X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRTG1 := RightTransversalsOfGraphOfGroups( G1 );[127X[104X
+    [4X[28X[ [ <identity ...>, a, a^2 ], [ <identity ...>, b ] ][128X[104X
+    [4X[25Xgap>[125X [27XLTG1 := LeftTransversalsOfGraphOfGroups( G1 );[127X[104X
+    [4X[28X[ [ <identity ...>, a^-1, a^-2 ], [ <identity ...>, b^-1 ] ] [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.3 [33X[0;0YWords in a Graph of Groups and their normal forms[133X[101X
+  
+  [1X6.3-1 GraphOfGroupsWord[101X
+  
+  [33X[1;0Y[29X[2XGraphOfGroupsWord[102X( [3Xgg[103X, [3Xtv[103X, [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsGraphOfGroupsWord[102X( [3Xw[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XGraphOfGroupsOfWord[102X( [3Xw[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWordOfGraphOfGroupsWord[102X( [3Xw[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTailOfGraphOfGroupsWord[102X( [3Xw[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XHeadOfGraphOfGroupsWord[102X( [3Xw[103X ) [32X attribute[133X
+  
+  [33X[0;0YIf [10XG[110X is a graph of groups with underlying digraph [10XD[110X, the following groupoids
+  may  be  considered. First there is the free groupoid or path groupoid on [10XD[110X.
+  Since  we want each involutory pair of arcs to represent inverse elements in
+  the  groupoid, we quotient out by the relations [10Xy^-1 = ybar[110X to obtain [10XPG(D)[110X.
+  Secondly,  there is the discrete groupoid [10XVG(D)[110X, namely the union of all the
+  vertex  groups.  Since  these  two  groupoids  have the same object set (the
+  vertices  of  [10XD[110X)  we  can  form  [10XA(G)[110X,  the  free product of [10XPG(D)[110X and [10XVG(D)[110X
+  amalgamated  over  the  vertices.  For  further  details  of  this universal
+  groupoid  construction  see  [Moo01].  (Note  that  these  groupoids are not
+  implemented in this package.)[133X
+  
+  [33X[0;0YAn  element  of [10XA(G)[110X is a graph of groups word which may be represented by a
+  list  of  the form [22Xw = [g_1,y_1,g_2,y_2,...,g_n,y_n,g_n+1][122X. Here each [22Xy_i[122X is
+  an  arc  of  [10XD[110X;  the head of [22Xy_i-1[122X is a vertex [22Xv_i[122X which is also the tail of
+  [22Xy_i[122X; and [22Xg_i[122X is an element of the vertex group at [22Xv_i[122X.[133X
+  
+  [33X[0;0YSo  a  graph  of  groups word requires as data the graph of groups; the tail
+  vertex  for  the word; and a list of arcs and group elements. We may specify
+  each arc by its position in the list of arcs.[133X
+  
+  [33X[0;0YIn  the  following  example,  where  [10Xgw1[110X  is  a word in the trefoil graph of
+  groups,  the  [22Xy_i[122X  are  specified  by  their  positions in [10XA1[110X. Both arcs are
+  traversed twice, so the resulting word is a loop at vertex [22X5[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xgw1 := GraphOfGroupsWord( G1, 5, L1 );[127X[104X
+    [4X[28X(5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)[128X[104X
+    [4X[25Xgap>[125X [27XIsGraphOfGroupsWord( gw1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X[ TailOfGraphOfGroupsWord(gw1), HeadOfGraphOfGroupsWord(gw1) ];[127X[104X
+    [4X[28X[ 5, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XGraphOfGroupsOfWord(gw1);[127X[104X
+    [4X[28XGraph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ][128X[104X
+    [4X[25Xgap>[125X [27XWordOfGraphOfGroupsWord( gw1 );[127X[104X
+    [4X[28X[ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.3-2 ReducedGraphOfGroupsWord[101X
+  
+  [33X[1;0Y[29X[2XReducedGraphOfGroupsWord[102X( [3Xw[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsReducedGraphOfGroupsWord[102X( [3Xw[103X ) [32X property[133X
+  
+  [33X[0;0YA  graph  of  groups word may be reduced in two ways, to give a normal form.
+  Firstly,  if  part  of the word has the form [10X[yi, identity, yibar][110X then this
+  subword  may be omitted. This is known as a length reduction. Secondly there
+  are  coset  reductions. Working from the left-hand end of the word, subwords
+  of  the  form [22X[g_i,y_i,g_i+1][122X are replaced by [22X[t_i,y_i,m_i(h_i)*g_i+1][122X where
+  [22Xg_i  =  t_i*h_i[122X  is  the  unique  factorisation  of  [22Xg_i[122X  as  a  left  coset
+  representative  times  an  element  of  the  arc  subgroup,  and  [22Xm_i[122X is the
+  isomorphism  associated  to  [22Xy_i[122X.  Thus we may consider a coset reduction as
+  passing  a  subgroup  element along an arc. The resulting normal form (if no
+  length  reductions have taken place) is then [22X[t_1,y_1,t_2,y_2,...,t_n,y_n,k][122X
+  for  some [22Xk[122X in the head group of [22Xy_n[122X. For further details see Section 2.2 of
+  [Moo01].[133X
+  
+  [33X[0;0YThe  reduction of the word [10Xgw1[110X in our example includes one length reduction.
+  The four stages of the reduction are as follows:[133X
+  
+  
+  [24X[33X[0;6Ya^7b^{-6}a^{-11}b^9a^7     ~\mapsto~     a^{-2}b^0a^{-11}b^9a^7    ~\mapsto~
+  a^{-13}b^9a^7 ~\mapsto~ a^{-1}b^{-8}b^9a^7 ~\mapsto~ a^{-1}b^{-1}a^{10}.[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xnw1 := ReducedGraphOfGroupsWord( gw1 );[127X[104X
+    [4X[28X(5)a^-1.y.b^-1.y^-1.a^10(5)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.4 [33X[0;0YFree products with amalgamation and HNN extensions[133X[101X
+  
+  [1X6.4-1 FreeProductWithAmalgamation[101X
+  
+  [33X[1;0Y[29X[2XFreeProductWithAmalgamation[102X( [3Xgp1[103X, [3Xgp2[103X, [3Xiso[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFreeProductWithAmalgamationInfo[102X( [3Xfpa[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsFreeProductWithAmalgamation[102X( [3Xfpa[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XGraphOfGroupsRewritingSystem[102X( [3Xfpa[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNormalFormGGRWS[102X( [3Xfpa[103X, [3Xword[103X ) [32X attribute[133X
+  
+  [33X[0;0YAs  we  have  seen  with the trefoil group example in Section [14X6.2[114X, graphs of
+  groups  can  be  used  to  obtain  a  normal  form  for  free  products with
+  amalgamation  [22XG_1  *_H G_2[122X when [22XG_1, G_2[122X both have rewrite systems, and [22XH[122X is
+  of finite index in both [22XG_1[122X and [22XG_2[122X.[133X
+  
+  [33X[0;0YWhen  [10Xgp1[110X  and  [10Xgp2[110X are fp-groups, the operation [10XFreeProductWithAmalgamation[110X
+  constructs  the  required  fp-group.  When  the  two  groups are permutation
+  groups,  the [10XIsomorphismFpGroup[110X operation is called on both [10Xgp1[110X and [10Xgp2[110X, and
+  the  resulting  isomorphism  is  transported  to  one  between  the  two new
+  subgroups.[133X
+  
+  [33X[0;0YThe  attribute  [10XGraphOfGroupsRewritingSystem[110X  of  [10Xfpa[110X is the graph of groups
+  which  has  underlying  digraph  [10XD1[110X, with two vertices and two arcs; the two
+  groups as vertex groups; and the specified isomorphisms on the arcs. Despite
+  the  name,  graphs  of  groups  constructed in this way [13Xdo not[113X belong to the
+  category  [10XIsRewritingSystem[110X.  This  anomaly  may  be  dealt  with  when time
+  permits.[133X
+  
+  [33X[0;0YThe  example  below  shows  a  computation  in  the  the free product of the
+  symmetric [10Xs3[110X and the alternating [10Xa4[110X, amalgamated over a cyclic subgroup [10Xc3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X## set up the first group s3 and a subgroup c3=<a1>[127X[104X
+    [4X[25Xgap>[125X [27Xfg2 := FreeGroup( 2, "a" );;[127X[104X
+    [4X[25Xgap>[125X [27Xrel1 := [ fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := fg2/rel1;;[127X[104X
+    [4X[25Xgap>[125X [27Xgs3 := GeneratorsOfGroup(s3);;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3, "s3" );[127X[104X
+    [4X[25Xgap>[125X [27Xa1 := gs3[1];;  a2 := gs3[2];;[127X[104X
+    [4X[25Xgap>[125X [27XH1 := Subgroup(s3,[a1]);;[127X[104X
+    [4X[25Xgap>[125X [27X## then the second group a4 and subgroup c3=<b1>[127X[104X
+    [4X[25Xgap>[125X [27Xf2 := FreeGroup( 2, "b" );;[127X[104X
+    [4X[25Xgap>[125X [27Xrel2 := [ f2.1^3, f2.2^3, (f2.1*f2.2)^2 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xa4 := f2/rel2;;[127X[104X
+    [4X[25Xgap>[125X [27Xga4 := GeneratorsOfGroup(a4);;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( a4, "a4" );[127X[104X
+    [4X[25Xgap>[125X [27Xb1 := ga4[1];  b2 := ga4[2];;[127X[104X
+    [4X[25Xgap>[125X [27XH2 := Subgroup(a4,[b1]);;[127X[104X
+    [4X[25Xgap>[125X [27X## form the isomorphism and the fpa group[127X[104X
+    [4X[25Xgap>[125X [27Xiso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;[127X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(iso);;[127X[104X
+    [4X[25Xgap>[125X [27Xfpa := FreeProductWithAmalgamation( s3, a4, iso );[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2, f3, f4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRelatorsOfFpGroup( fpa );[127X[104X
+    [4X[28X[ f1^2, f2^3, (f2*f1)^2, f3^3, f4^3, (f4*f3)^2, f2*f3^-1 ][128X[104X
+    [4X[25Xgap>[125X [27Xgg1 := GraphOfGroupsRewritingSystem( fpa );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( gg1 );[127X[104X
+    [4X[28XGraph of Groups with :- [128X[104X
+    [4X[28X    vertices: [ 5, 6 ][128X[104X
+    [4X[28X        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ][128X[104X
+    [4X[28X      groups: [ s3, a4 ][128X[104X
+    [4X[28Xisomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XLeftTransversalsOfGraphOfGroups( gg1 );[127X[104X
+    [4X[28X[ [ <identity ...>, a2^-1 ], [ <identity ...>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ] [128X[104X
+    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27Xgfpa := GeneratorsOfGroup( fpa );;[127X[104X
+    [4X[25Xgap>[125X [27Xw2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;[127X[104X
+    [4X[28X(f1*f2*f4^-1*f3*f4)^3[128X[104X
+    [4X[25Xgap>[125X [27Xn2 := NormalFormGGRWS( fpa, w2 );[127X[104X
+    [4X[28Xf2*f3*(f4^-1*f2)^2*f4^-1*f3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-2 ReducedImageElm[101X
+  
+  [33X[1;0Y[29X[2XReducedImageElm[102X( [3Xhom[103X, [3Xeml[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMappingToGroupWithGGRWS[102X( [3Xmap[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XEmbedding[102X( [3Xfpa[103X, [3Xnum[103X ) [32X method[133X
+  
+  [33X[0;0YAll     fpa-groups     are     provided    with    a    record    attribute,
+  [10XFreeProductWithAmalgamationInfo(fpa)[110X  which  is a record storing the groups,
+  subgroups  and  isomorphism involved in their construction. This information
+  record  also contains the embeddings of the two groups into the product. The
+  operation   [10XReducedImageElm[110X,   applied   to   a   homomorphism   [22Xh[122X  of  type
+  [10XIsMappingToGroupWithGGRWS[110X  and  an  element [22Xx[122X of the source, finds the usual
+  [10XImageElm(h,x)[110X  and  then  reduces this to its normal form using the graph of
+  groups rewriting system.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfpainfo;[127X[104X
+    [4X[28Xrec( embeddings := [ [ a2, a1 ] -> [ f1, f2 ], [ b1, b2 ] -> [ f3, f4 ] ], [128X[104X
+    [4X[28X  groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], [128X[104X
+    [4X[28X  positions := [ [ 1, 2 ], [ 3, 4 ] ], [128X[104X
+    [4X[28X  subgroups := [ Group([ a1 ]), Group([ b1 ]) ] )[128X[104X
+    [4X[25Xgap>[125X [27Xemb2 := Embedding( fpa, 2 );[127X[104X
+    [4X[28X[ b1, b2 ] -> [ f3, f4 ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( emb2, b1^b2 );       [127X[104X
+    [4X[28Xf4^-1*f3*f4[128X[104X
+    [4X[25Xgap>[125X [27XReducedImageElm( emb2, b1^b2 );[127X[104X
+    [4X[28Xf4*f3^-1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-3 HnnExtension[101X
+  
+  [33X[1;0Y[29X[2XHnnExtension[102X( [3Xgp[103X, [3Xiso[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHnnExtensionInfo[102X( [3Xgp[103X, [3Xiso[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsHnnExtension[102X( [3Xhnn[103X ) [32X property[133X
+  
+  [33X[0;0YFor  [13XHNN  extensions[113X, the appropriate graph of groups has underlying digraph
+  with just one vertex and one pair of loops, weighted with [10XFpGroup[110X generators
+  [22Xz,z^-1[122X.  There  is  one vertex group [10XG[110X, two isomorphic subgroups [10XH1,H2[110X of [10XG[110X,
+  with  the  isomorphism and its inverse on the loops. The presentation of the
+  extension  has  one  more  generator  than  that of [10XG[110X and corresponds to the
+  generator [22Xz[122X.[133X
+  
+  [33X[0;0YThe   functions  [10XGraphOfGroupsRewritingSystem[110X  and  [10XNormalFormGGRWS[110X  may  be
+  applied to hnn-groups as well as to fpa-groups.[133X
+  
+  [33X[0;0YIn the example we take [10XG=a4[110X and the two subgroups are cyclic groups of order
+  3.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XH3 := Subgroup(a4,[b2]);;[127X[104X
+    [4X[25Xgap>[125X [27Xi23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;[127X[104X
+    [4X[25Xgap>[125X [27Xhnn := HnnExtension( a4, i23 );[127X[104X
+    [4X[28X<fp group on the generators [ fe1, fe2, fe3 ]> [128X[104X
+    [4X[25Xgap>[125X [27Xphnn := PresentationFpGroup( hnn );;[127X[104X
+    [4X[25Xgap>[125X [27XTzPrint( phnn );[127X[104X
+    [4X[28X#I  generators: [ fe1, fe2, fe3 ][128X[104X
+    [4X[28X#I  relators:[128X[104X
+    [4X[28X#I  1.  3  [ 1, 1, 1 ][128X[104X
+    [4X[28X#I  2.  3  [ 2, 2, 2 ][128X[104X
+    [4X[28X#I  3.  4  [ 1, 2, 1, 2 ][128X[104X
+    [4X[28X#I  4.  4  [ -3, 1, 3, -2 ] [128X[104X
+    [4X[25Xgap>[125X [27Xgg2 := GraphOfGroupsRewritingSystem( hnn );[127X[104X
+    [4X[28XGraph of Groups: 1 vertices; 2 arcs; groups [ a4 ][128X[104X
+    [4X[25Xgap>[125X [27XLeftTransversalsOfGraphOfGroups( gg2 );[127X[104X
+    [4X[28X[ [ <identity ...>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ],[128X[104X
+    [4X[28X  [ <identity ...>, b1^-1, b1, b2^-1*b1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgh := GeneratorsOfGroup( hnn );;[127X[104X
+    [4X[25Xgap>[125X [27Xw3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];[127X[104X
+    [4X[28Xfe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2[128X[104X
+    [4X[25Xgap>[125X [27Xn3 := NormalFormGGRWS( hnn, w3 );[127X[104X
+    [4X[28X(fe2*fe1*fe3)^2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAs  with  fpa-groups,  hnn-groups  are  provided  with  a  record attribute,
+  [10XHnnExtensionInfo(hnn)[110X, storing the group, subgroups and isomorphism involved
+  in their construction.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xhnninfo := HnnExtensionInfo( hnn );[127X[104X
+    [4X[28Xrec( embeddings := [ [ b1, b2 ] -> [ fe1, fe2 ] ], group := a4, [128X[104X
+    [4X[28X  isomorphism := [ b1 ] -> [ b2 ], [128X[104X
+    [4X[28X  subgroups := [ Group([ b1 ]), Group([ b2 ]) ] )[128X[104X
+    [4X[25Xgap>[125X [27Xemb := Embedding( hnn, 1 );[127X[104X
+    [4X[28X[ b1, b2 ] -> [ fe1, fe2 ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( emb, b1^b2 );       [127X[104X
+    [4X[28Xfe2^-1*fe1*fe2[128X[104X
+    [4X[25Xgap>[125X [27XReducedImageElm( emb, b1^b2 );[127X[104X
+    [4X[28Xfe2*fe1^-1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.5 [33X[0;0YGraphsOfGroupoids and their Words[133X[101X
+  
+  [1X6.5-1 GraphOfGroupoids[101X
+  
+  [33X[1;0Y[29X[2XGraphOfGroupoids[102X( [3Xdig[103X, [3Xgpds[103X, [3Xsubgpds[103X, [3Xisos[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsGraphOfPermGroupoids[102X( [3Xgg[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsGraphOfFpGroupoids[102X( [3Xgg[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XGroupoidsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDigraphOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSubgroupoidsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightTransversalsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftTransversalsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  
+  [33X[0;0YGraphs  of  groups  generalise naturally to graphs of groupoids, forming the
+  class  [10XIsGraphOfGroupoids[110X.  There  is  now a groupoid at each vertex and the
+  isomorphism  on  an  arc identifies wide subgroupoids at the tail and at the
+  head.  Since  all  subgroupoids  are  wide,  every  groupoid  in a connected
+  constituent  of  the  graph  has the same number of objects, but there is no
+  requirement that the object sets are all the same.[133X
+  
+  [33X[0;0YThe example below generalises the trefoil group example in subsection 4.4.1,
+  taking  at  each vertex of [10XD1[110X a two-object groupoid with a free group on one
+  generator, and full subgroupoids with groups [22X⟨ a^3 ⟩[122X and [22X⟨ b^2 ⟩[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGfa := SinglePieceGroupoid( fa, [-2,-1] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gfa, "Gfa" );[127X[104X
+    [4X[25Xgap>[125X [27XUhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Uhy, "Uhy" );[127X[104X
+    [4X[25Xgap>[125X [27XGfb := SinglePieceGroupoid( fb, [-4,-3] );;[127X[104X
+    [4X[25Xgap>[125X [27Xofa := One( fa );;  ofb := One( fb );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gfb, "Gfb" );[127X[104X
+    [4X[25Xgap>[125X [27XUhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Uhybar, "Uhybar" );[127X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroupoid( Uhy );; [127X[104X
+    [4X[25Xgap>[125X [27Xgensbar := GeneratorsOfGroupoid( Uhybar );;[127X[104X
+    [4X[25Xgap>[125X [27Xmory := GroupoidHomomorphismFromSinglePiece( [127X[104X
+    [4X[25X>[125X [27X               Uhy, Uhybar, gens, gensbar );[127X[104X
+    [4X[28Xgroupoid homomorphism : Uhy -> Uhybar[128X[104X
+    [4X[28X[ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], [128X[104X
+    [4X[28X  [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmorybar := InverseGeneralMapping( mory );[127X[104X
+    [4X[28Xgroupoid homomorphism : Uhybar -> Uhy[128X[104X
+    [4X[28X[ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], [128X[104X
+    [4X[28X  [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( gg3 );[127X[104X
+    [4X[28XGraph of Groupoids with :- [128X[104X
+    [4X[28X    vertices: [ 5, 6 ][128X[104X
+    [4X[28X        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ][128X[104X
+    [4X[28X   groupoids: [128X[104X
+    [4X[28Xfp single piece groupoid: Gfa[128X[104X
+    [4X[28X  objects: [ -2, -1 ][128X[104X
+    [4X[28X    group: fa = <[ a ]>[128X[104X
+    [4X[28Xfp single piece groupoid: Gfb[128X[104X
+    [4X[28X  objects: [ -4, -3 ][128X[104X
+    [4X[28X    group: fb = <[ b ]>[128X[104X
+    [4X[28Xsubgroupoids: single piece groupoid: Uhy[128X[104X
+    [4X[28X  objects: [ -2, -1 ][128X[104X
+    [4X[28X    group: hy = <[ a^3 ]>[128X[104X
+    [4X[28Xsingle piece groupoid: Uhybar[128X[104X
+    [4X[28X  objects: [ -4, -3 ][128X[104X
+    [4X[28X    group: hybar = <[ b^2 ]>[128X[104X
+    [4X[28Xisomorphisms: [ groupoid homomorphism : Uhy -> Uhybar[128X[104X
+    [4X[28X    [ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], [128X[104X
+    [4X[28X      [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ], [128X[104X
+    [4X[28X  groupoid homomorphism : Uhybar -> Uhy[128X[104X
+    [4X[28X    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], [128X[104X
+    [4X[28X      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-2 GraphOfGroupoidsWord[101X
+  
+  [33X[1;0Y[29X[2XGraphOfGroupoidsWord[102X( [3Xgg[103X, [3Xtv[103X, [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsGraphOfGroupoidsWord[102X( [3Xw[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XGraphOfGroupoidsOfWord[102X( [3Xw[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWordOfGraphOfGroupoidsWord[102X( [3Xw[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XReducedGraphOfGroupoidsWord[102X( [3Xw[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsReducedGraphOfGroupoidsWord[102X( [3Xw[103X ) [32X property[133X
+  
+  [33X[0;0YHaving  produced  the  graph  of  groupoids [10Xgg3[110X, we may construct left coset
+  representatives; choose a graph of groupoids word; and reduce this to normal
+  form. Compare the [10Xnw3[110X below with the normal form [10Xnw1[110X in subsection 4.3.2.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xf1 := Arrow( Gfa, a^7, -1, -2);;[127X[104X
+    [4X[25Xgap>[125X [27Xf2 := Arrow( Gfb, b^-6, -4, -4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf3 := Arrow( Gfa, a^-11, -2, -1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf4 := Arrow( Gfb, b^9, -3, -4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf5 := Arrow( Gfa, a^7, -2, -1 );;[127X[104X
+    [4X[25Xgap>[125X [27XL3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];[127X[104X
+    [4X[28X[ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, [128X[104X
+    [4X[28X  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -1] ][128X[104X
+    [4X[25Xgap>[125X [27Xgw3 := GraphOfGroupoidsWord( gg3, 5, L3);[127X[104X
+    [4X[28X(5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : [128X[104X
+    [4X[28X-3 -> -4].y^-1.[a^7 : -2 -> -1](5)[128X[104X
+    [4X[25Xgap>[125X [27Xnw3 := ReducedGraphOfGroupoidsWord( gw3 );[127X[104X
+    [4X[28X(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -1](5)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe reduction proceeds as follows.[133X
+  
+  [30X    [33X[0;6Y[22X[a^7  :  -1  ->  -2]  = [a^-2 : -1 -> -1]*[a^9 : -1 -> -2] stackrely->
+        [a^-2 : -1 -> -1]*[b^6 : -3 -> -4][122X[133X
+  
+  [30X    [33X[0;6Y[22X[b^6  :  -3  ->  -4]*[b^-6  :  -4  ->  -4]  =  [mathrmid  :  -3 -> -4]
+        stackrelbary}-> [mathrmid : -1 -> -2][122X[133X
+  
+  [30X    [33X[0;6Y[22X[a^-2  : -1 -> -1]*[mathrmid : -1 -> -2]*[a^-11 : -2 -> -1] = [a^-13 :
+        -1 -> -1][122X[133X
+  
+  [30X    [33X[0;6Y[22X[a^-13  : -1 -> -1] = [a^-1 : -1 -> -1]*[a^-12 : -1 -> -1] stackrely->
+        [a^-1 : -1 -> -1]*[b^-8 : -3 -> -3][122X[133X
+  
+  [30X    [33X[0;6Y[22X[b^-8  :  -3  -> -3]*[b^9 : -3 -> -4] = [b^-1 : -3 -> -3]*[b^2 : -3 ->
+        -4] stackrelbary}-> [b^-1 : -3 -> -3]*[a^3 : -1 -> -2][122X[133X
+  
+  [30X    [33X[0;6Y[22X[a^3 := -1 -> -2]*[a^7 : -2 -> -1] = [a^10 : -1 -> -1][122X[133X
+  

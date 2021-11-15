@@ -1,0 +1,53 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YGroupoids  are  mathematical  categories in which every arrow is invertible.
+  The  [5Xgroupoids[105X package provides functions for the computation with groupoids
+  and  their  morphisms;  for  graphs  of  groups and graphs of groupoids. The
+  package is far from complete, and development continues.[133X
+  
+  [33X[0;0YIt  was  used  by Emma Moore in her thesis [Moo01] to calculate normal forms
+  for [13Xfree products with amalgamation[113X, and for [13XHNN-extensions[113X when the initial
+  groups have rewriting systems.[133X
+  
+  [33X[0;0YThe    package    may    be    obtained    as    a   compressed   tar   file
+  [11Xgroupoids-version.number.tar.gz[111X by ftp from one of the following sites:[133X
+  
+  [30X    [33X[0;6Ythe                [5Xgroupoids[105X                GitHub               site:
+        [7Xhttps://github.com/gap-packages.github.io/groupoids/[107X.[133X
+  
+  [30X    [33X[0;6Yany                  [5XGAP[105X                 archive,                 e.g.
+        [7Xhttps://www.gap-system.org/Packages/packages.html[107X;[133X
+  
+  [33X[0;0YThe      package      also      has      a     GitHub     repository     at:
+  [7Xhttps://github.com/gap-packages/groupoids/[107X.[133X
+  
+  [33X[0;0YThe information parameter [10XInfoGroupoids[110X takes default value [10X1[110X which, for the
+  benefit of new users, causes more messages to be printed out when operations
+  fail. When raised to a higher value, additional information is printed out.[133X
+  
+  [33X[0;0YHelp is available in the usual way.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "groupoids" );[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  version  1.05  the  package  was completely restructured, starting with
+  [13Xmagmas  with  objects[113X  and  their mappings, and building up to groupoids via
+  semigroups  with  objects  and  monoids  with objects. From version 1.07 the
+  package  includes  some  functions  to  implement constructions contained in
+  [AW10]. More functions will be released as soon as possible.[133X
+  
+  [33X[0;0YOnce the package is loaded, it is possible to check the correct installation
+  by   running   the   test   suite   of   the   package  with  the  command  [10X
+  ReadPackage("groupoids","tst/testing.g");  [110X.  Additional  tests  may  be run
+  using     [10X     ReadPackage("groupoids","tst/testextra.g");.[110X     (The    file
+  [10X"tst/testall.g"[110X is used for automated testing.)[133X
+  
+  [33X[0;0YYou may reference this package by mentioning [BMPW02], [Moo01] and [AW10].[133X
+  
+  [33X[0;0YAdditional  information can be found on the [13XComputational Higher Dimensional
+  Algebra[113X website at: [7Xhttps://github.com/cdwensley[107X.[133X
+  

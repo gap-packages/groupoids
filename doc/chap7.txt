@@ -1,0 +1,163 @@
+  
+  [1X7 [33X[0;0YTechnical Notes[133X[101X
+  
+  [33X[0;0YThis  short  chapter  is  included  for  the  benefit  of  anyone wishing to
+  implement   some  other  variety  of  many-object  structures,  for  example
+  [13Xringoids[113X,  which  are  rings with many objects; [13XLie groupoids[113X, which are Lie
+  groups with many objects; and so on.[133X
+  
+  
+  [1X7.1 [33X[0;0YMany object structures[133X[101X
+  
+  [33X[0;0YStructures  with  many  objects, and their elements, are defined in a manner
+  similar to the single object case. For elements we have:[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(                 "IsMultiplicativeElementWithObjects",
+        IsMultiplicativeElement ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(          "IsMultiplicativeElementWithObjectsAndOnes",
+        IsMultiplicativeElementWithObjects ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(      "IsMultiplicativeElementWithObjectsAndInverses",
+        IsMultiplicativeElementWithObjectsAndOnes ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory( "IsGroupoidElement", [110X[133X
+  
+        [33X[0;6Y[10XIsMultiplicativeElementWithObjectsAndInverses ); [110X[133X
+  
+  [33X[0;0Yas well as various category collections. For the various structures we have:[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory( "IsDomainWithObjects", IsDomain ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(    "IsMagmaWithObjects",    IsDomainWithObjects   and
+        IsMultiplicativeElementWithObjectsCollection );[110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(   "IsSemigroupWithObjects",   IsMagmaWithObjects  and
+        IsAssociative ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(   "IsMonoidWithObjects",  IsSemigroupWithObjects  and
+        IsMultiplicativeElementWithObjectsAndOnesCollection ); [110X[133X
+  
+        [33X[0;6Y[10XIsMultiplicativeElementWithObjectsAndInversesCollection ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory(       "IsGroupoid",      IsMonoidWithObjects      and
+        IsGroupoidElementCollection ); [110X[133X
+  
+  [33X[0;0YAmong  the  groupoids  constructed  earlier are the single piece [10XGd8[110X and the
+  five component union [10XU5[110X:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject( Gd8 );[127X[104X
+    [4X[28X[ "IsListOrCollection", "IsCollection", "IsExtLElement", [128X[104X
+    [4X[28X  "CategoryCollections(IsExtLElement)", "IsExtRElement", [128X[104X
+    [4X[28X  "CategoryCollections(IsExtRElement)", [128X[104X
+    [4X[28X  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", [128X[104X
+    [4X[28X  "IsMagma", "IsDomainWithObjects", [128X[104X
+    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjects)", [128X[104X
+    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", [128X[104X
+    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)\[128X[104X
+    [4X[28X", "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", [128X[104X
+    [4X[28X  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInverses", [128X[104X
+    [4X[28X  "IsGroupoid" ][128X[104X
+    [4X[25Xgap>[125X [27XFamilyObj( Gd8 );     ## these numbers vary from one run to another[127X[104X
+    [4X[28XNewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116, [128X[104X
+    [4X[28X  117, 119, 120, 123, 205, 501, 2690, 2703, 2707, 2711, 2715, 2718, 2720, [128X[104X
+    [4X[28X  2721, 2722 ] )[128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( Gd8 ); [127X[104X
+    [4X[28X[ "Name", "Size", "ObjectList", "GeneratorsOfMagmaWithObjects", [128X[104X
+    [4X[28X  "GeneratorsOfGroupoid" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject( Gd8 ); [127X[104X
+    [4X[28X[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", [128X[104X
+    [4X[28X  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ][128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject( Gd8 );[127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ][128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject( U5 ); [127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSimilarly, for arrows, we have:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ a78, e2 ];[127X[104X
+    [4X[28X[ [m2 : -7 -> -8], [(1,3) : -8 -> -7] ][128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject(a78);[127X[104X
+    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
+    [4X[28X  "IsMultiplicativeElementWithObjects" ][128X[104X
+    [4X[25Xgap>[125X [27XFamilyObj( a78 );     ## again these numbers vary[127X[104X
+    [4X[28XNewFamily( "MultiplicativeElementWithObjectsFamily", [ 2702 ], [128X[104X
+    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 2702 ] )[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject(e2); [127X[104X
+    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
+    [4X[28X  "IsMultiplicativeElementWithObjects", [128X[104X
+    [4X[28X  "IsMultiplicativeElementWithObjectsAndOnes", [128X[104X
+    [4X[28X  "IsMultiplicativeElementWithObjectsAndInverses", [128X[104X
+    [4X[28X  "IsGroupoidElement" ][128X[104X
+    [4X[25Xgap>[125X [27XFamilyObj( e2 );        [127X[104X
+    [4X[28XNewFamily( "GroupoidElementFamily", [ 2714 ], [128X[104X
+    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 2702, 2706, 2710, 2714 ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.2 [33X[0;0YMany object homomorphisms[133X[101X
+  
+  [33X[0;0YHomomorphisms  of  structures  with many objects have a similar heirarchy. A
+  few examples:[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareSynonymAttr(                "IsMagmaWithObjectsGeneralMapping",
+        IsGeneralMappingWithObjects and RespectsMultiplication ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareSynonymAttr(                  "IsMagmaWithObjectsHomomorphism",
+        IsMagmaWithObjectsGeneralMapping and IsMapping ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareCategory("IsGroupoidHomomorphism",IsMagmaWithObjectsHomomorphism);
+        [110X[133X
+  
+  [33X[0;0YTwo  forms  of  representation are used: for mappings to a single piece; and
+  for unions of such mappings:[133X
+  
+  [30X    [33X[0;6Y[10XDeclareRepresentation(                    "IsMappingToSinglePieceRep",
+        IsMagmaWithObjectsHomomorphism     and    IsAttributeStoringRep    and
+        IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); [110X[133X
+  
+  [30X    [33X[0;6Y[10XDeclareRepresentation(                      "IsMappingWithObjectsRep",
+        IsMagmaWithObjectsHomomorphism     and    IsAttributeStoringRep    and
+        IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); [110X[133X
+  
+  [33X[0;0YIn  previous  chapters,  [10Xhom1[110X  was  an  endofunction  on  [10XM78[110X;  [10Xhomd8[110X  was a
+  homomorphism  from  [10XGd8[110X  to  [10XGs3[110X;  and  [10Xaut3[110X was an automorphism of [10XGa4[110X. All
+  homomorphisms  have family [10XGeneralMappingWithObjectsFamily[110X. Perhaps it would
+  be better to have separate families for each structure?[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XFamilyObj(hom1);[127X[104X
+    [4X[28XNewFamily( "GeneralMappingWithObjectsFamily", [ 2726 ], [128X[104X
+    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 126, 130, 149, 412, 2726 ] )[128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( hom1 );[127X[104X
+    [4X[28X[ "Range", "Source", "SinglePieceMappingData" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject( hom1 );[127X[104X
+    [4X[28X[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", [128X[104X
+    [4X[28X  "IsSingleValued", "RespectsMultiplication", "IsGeneralMappingToSinglePiece",[128X[104X
+    [4X[28X  "IsGeneralMappingFromSinglePiece", "IsInjectiveOnObjects", [128X[104X
+    [4X[28X  "IsSurjectiveOnObjects" ][128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject( homd8 );[127X[104X
+    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
+    [4X[28X  "IsMultiplicativeElementWithOne", "IsMultiplicativeElementWithInverse", [128X[104X
+    [4X[28X  "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", [128X[104X
+    [4X[28X  "IsGroupoidHomomorphism" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( homd8 );[127X[104X
+    [4X[28X[ "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", "ImageElementsOfRays", [128X[104X
+    [4X[28X  "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( aut3 );[127X[104X
+    [4X[28X[ "Order", "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", [128X[104X
+    [4X[28X  "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", [128X[104X
+    [4X[28X  "RootGroupHomomorphism" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

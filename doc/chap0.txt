@@ -1,1 +1,203 @@
-Placeholder
+  
+  
+                                  [1X groupoids [101X
+  
+  
+          [1X Calculations with finite groupoids and their homomorphisms [101X
+  
+  
+                                      1.69
+  
+  
+                                15 November 2021
+  
+  
+                                 Emma J. Moore
+  
+                                 Chris Wensley
+  
+  
+  
+  Chris Wensley
+      Email:    [7Xmailto:c.d.wensley@bangor.ac.uk[107X
+      Homepage: [7Xhttps://github.com/cdwensley[107X
+      Address:  [33X[0;14YDr. C.D. Wensley[133X
+                [33X[0;14YSchool of Computer Science and Electronic Engineering[133X
+                [33X[0;14YBangor University[133X
+                [33X[0;14YDean Street[133X
+                [33X[0;14YBangor[133X
+                [33X[0;14YGwynedd LL57 1UT[133X
+                [33X[0;14YUK[133X
+  
+  
+  
+  -------------------------------------------------------
+  [1XAbstract[101X
+  [33X[0;0YThe  [5Xgroupoids[105X  package  provides  functions  for computation with groupoids
+  (categories  with every arrow invertible) and their morphisms; for graphs of
+  groups, and graphs of groupoids. The most basic structure introduced is that
+  of  [13Xmagma with objects[113X, followed by [13Xsemigroup with objects[113X, then [13Xmonoid with
+  objects[113X and finally [13Xgroupoid[113X which is a [13Xgroup with objects[113X.[133X
+  
+  [33X[0;0YIt  provides  normal  forms  for  Free  Products  with  Amalgamation and for
+  HNN-extensions  when  the  initial  groups  have  rewrite  systems  and  the
+  subgroups have finite index. This is described in Section [14X6.2[114X. It is planned
+  to  move this section to a new package [5XRewriting[105X in time for version 4.11 of
+  [5XGAP[105X.[133X
+  
+  [33X[0;0YThe  [5Xgroupoids[105X package was originally implemented in 2000 (as [5XGraphGpd[105X) when
+  the first author was studying for a Ph.D. in Bangor.[133X
+  
+  [33X[0;0YThe package was then renamed [5XGpd[105X and version 1.07 was released in July 2011,
+  ready for [5XGAP[105X 4.5.[133X
+  
+  [33X[0;0Y[5XGpd[105X became an accepted [5XGAP[105X package in May 2015.[133X
+  
+  [33X[0;0YIn April 2017 the package was renamed again, as [5Xgroupoids[105X.[133X
+  
+  [33X[0;0YRecent  versions  implement many of the constructions described in the paper
+  [AW10] for automorphisms of groupoids.[133X
+  
+  [33X[0;0YBug  reports,  comments,  suggestions for additional features, and offers to
+  implement some of these, will all be very welcome.[133X
+  
+  [33X[0;0YPlease              submit             any             issues             at
+  [7Xhttps://github.com/gap-packages/groupoids/issues/[107X  or  send  an email to the
+  second author at [7Xmailto:c.d.wensley@bangor.ac.uk[107X.[133X
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 2000-2019, Emma Moore and Chris Wensley.[133X
+  
+  [33X[0;0YThe  [5Xgroupoids[105X  package  is  free  software;  you can redistribute it and/or
+  modify  it under the terms of the GNU General Public License as published by
+  the  Free  Software Foundation; either version 2 of the License, or (at your
+  option) any later version.[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YThis  documentation  was prepared using the [5XGAPDoc[105X [LN17] and [5XAutoDoc[105X [GH17]
+  packages.[133X
+  
+  [33X[0;0YThe   procedure   used   to   produce   new   releases   uses   the  package
+  [5XGitHubPagesForGAP[105X [Hor17] and the package [5XReleaseTools[105X.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (groupoids)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+  2 [33X[0;0YMany-object structures[133X
+    2.1 [33X[0;0YMagmas with objects; arrows[133X
+      2.1-1 MagmaWithObjects
+      2.1-2 IsDomainWithObjects
+      2.1-3 Arrow
+      2.1-4 IsSinglePieceDomain
+    2.2 [33X[0;0YSemigroups with objects[133X
+      2.2-1 SemigroupWithObjects
+    2.3 [33X[0;0YMonoids with objects[133X
+      2.3-1 MonoidWithObjects
+    2.4 [33X[0;0YGenerators of magmas with objects[133X
+      2.4-1 GeneratorsOfMagmaWithObjects
+    2.5 [33X[0;0YStructures with more than one piece[133X
+      2.5-1 UnionOfPieces
+  3 [33X[0;0YMappings of many-object structures[133X
+    3.1 [33X[0;0YHomomorphisms of magmas with objects[133X
+      3.1-1 MagmaWithObjectsHomomorphism
+    3.2 [33X[0;0YHomomorphisms of semigroups and monoids with objects[133X
+    3.3 [33X[0;0YHomomorphisms to more than one piece[133X
+      3.3-1 HomomorphismByUnion
+      3.3-2 IsInjectiveOnObjects
+    3.4 [33X[0;0YMappings defined by a function[133X
+      3.4-1 MappingWithObjectsByFunction
+  4 [33X[0;0YGroupoids[133X
+    4.1 [33X[0;0YGroupoids: their properties and attributes[133X
+      4.1-1 SinglePieceGroupoid
+      4.1-2 ObjectList
+      4.1-3 IsPermGroupoid
+      4.1-4 UnionOfPieces
+      4.1-5 HomogeneousGroupoid
+      4.1-6 DirectProductOp
+    4.2 [33X[0;0YGroupoid elements; stars; costars; homsets[133X
+      4.2-1 GroupoidElement
+      4.2-2 IdentityArrow
+      4.2-3 Order
+      4.2-4 ObjectStar
+    4.3 [33X[0;0YSubgroupoids[133X
+      4.3-1 Subgroupoid
+      4.3-2 SubgroupoidWithRays
+      4.3-3 SubgroupoidByObjects
+      4.3-4 SubgroupoidByPieces
+      4.3-5 FullTrivialSubgroupoid
+      4.3-6 DiscreteSubgroupoid
+      4.3-7 SinglePieceSubgroupoidByGenerators
+    4.4 [33X[0;0YLeft, right and double cosets[133X
+      4.4-1 RightCoset
+    4.5 [33X[0;0YConjugation[133X
+      4.5-1 \^
+      4.5-2 ConjugateGroupoid
+    4.6 [33X[0;0YGroupoids formed using isomorphisms[133X
+      4.6-1 GroupoidByIsomorphisms
+    4.7 [33X[0;0YGroupoids whose objects form a monoid[133X
+      4.7-1 SinglePieceGroupoidWithRays
+      4.7-2 RightActionGroupoid
+  5 [33X[0;0YHomomorphisms of Groupoids[133X
+    5.1 [33X[0;0YHomomorphisms from a connected groupoid[133X
+      5.1-1 GroupoidHomomorphismFromSinglePiece
+    5.2 [33X[0;0YProperties and attributes of groupoid homomorphisms[133X
+      5.2-1 [33X[0;0YProperties of a groupoid homomorphism[133X
+      5.2-2 [33X[0;0YAttributes of a groupoid homomorphism[133X
+      5.2-3 RootGroupHomomorphism
+      5.2-4 ImagesOfObjects
+      5.2-5 ImageElementsOfRays
+      5.2-6 ObjectGroupHomomorphism
+    5.3 [33X[0;0YSpecial types of groupoid homomorphism[133X
+      5.3-1 InclusionMappingGroupoids
+      5.3-2 RestrictedMappingGroupoids
+      5.3-3 IsomorphismNewObjects
+      5.3-4 IsomorphismStandardGroupoid
+      5.3-5 IsomorphismPermGroupoid
+    5.4 [33X[0;0YHomomorphisms to a connected groupoid[133X
+      5.4-1 HomomorphismToSinglePiece
+      5.4-2 GroupoidHomomorphismFromHomogeneousDiscrete
+    5.5 [33X[0;0YHomomorphisms to more than one piece[133X
+      5.5-1 HomomorphismByUnion
+      5.5-2 IsomorphismGroupoids
+    5.6 [33X[0;0YAutomorphisms of groupoids[133X
+      5.6-1 GroupoidAutomorphismByObjectPerm
+      5.6-2 [33X[0;0YAutomorphisms of a groupoid with rays[133X
+      5.6-3 AutomorphismGroupOfGroupoid
+      5.6-4 [33X[0;0YInner automorphisms[133X
+      5.6-5 GroupoidAutomorphismByGroupAutos
+      5.6-6 AutomorphismGroupoidOfGroupoid
+    5.7 [33X[0;0YMatrix representations of groupoids[133X
+  6 [33X[0;0YGraphs of Groups and Groupoids[133X
+    6.1 [33X[0;0YDigraphs[133X
+      6.1-1 FpWeightedDigraph
+    6.2 [33X[0;0YGraphs of Groups[133X
+      6.2-1 GraphOfGroups
+      6.2-2 IsGraphOfFpGroups
+      6.2-3 RightTransversalsOfGraphOfGroups
+    6.3 [33X[0;0YWords in a Graph of Groups and their normal forms[133X
+      6.3-1 GraphOfGroupsWord
+      6.3-2 ReducedGraphOfGroupsWord
+    6.4 [33X[0;0YFree products with amalgamation and HNN extensions[133X
+      6.4-1 FreeProductWithAmalgamation
+      6.4-2 ReducedImageElm
+      6.4-3 HnnExtension
+    6.5 [33X[0;0YGraphsOfGroupoids and their Words[133X
+      6.5-1 GraphOfGroupoids
+      6.5-2 GraphOfGroupoidsWord
+  7 [33X[0;0YTechnical Notes[133X
+    7.1 [33X[0;0YMany object structures[133X
+    7.2 [33X[0;0YMany object homomorphisms[133X
+  8 [33X[0;0YDevelopment History[133X
+    8.1 [33X[0;0YVersions of the Package[133X
+    8.2 [33X[0;0YWhat needs to be done next?[133X
+  
+  
+  [32X

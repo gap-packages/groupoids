@@ -1,0 +1,240 @@
+  
+  [1X3 [33X[0;0YMappings of many-object structures[133X[101X
+  
+  [33X[0;0YA  [13Xhomomorphism[113X  [22Xf[122X  from  a  magma  with objects [22XM[122X to a magma with objects [22XN[122X
+  consists of[133X
+  
+  [30X    [33X[0;6Ya map [22Xf_O[122X from the objects of [22XM[122X to those of [22XN[122X,[133X
+  
+  [30X    [33X[0;6Ya map [22Xf_A[122X from the arrows of [22XM[122X to those of [22XN[122X.[133X
+  
+  [33X[0;0YThe  map [22Xf_A[122X is required to be compatible with the tail and head maps and to
+  preserve multiplication:[133X
+  
+  
+  [24X[33X[0;6Yf_A(a : u \to v) * f_A(b : v \to w) ~=~ f_A(a*b : u \to w)[133X
+  
+  [124X
+  
+  [33X[0;0Ywith tail [22Xf_O(u)[122X and head [22Xf_O(w)[122X.[133X
+  
+  [33X[0;0YWhen the underlying magma of [22XM[122X is a monoid or group, the map [22Xf_A[122X is required
+  to preserve identities and inverses.[133X
+  
+  
+  [1X3.1 [33X[0;0YHomomorphisms of magmas with objects[133X[101X
+  
+  [1X3.1-1 MagmaWithObjectsHomomorphism[101X
+  
+  [33X[1;0Y[29X[2XMagmaWithObjectsHomomorphism[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHomomorphismFromSinglePiece[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhom[103X, [3Ximobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomomorphismToSinglePiece[102X( [3Xsrc[103X, [3Xrng[103X, [3Ximages[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMappingToSinglePieceData[102X( [3Xmwohom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPiecesOfMapping[102X( [3Xmwohom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismNewObjects[102X( [3Xsrc[103X, [3Xobjlist[103X ) [32X operation[133X
+  
+  [33X[0;0YThere are a variety of homomorphism constructors.[133X
+  
+  [33X[0;0YThe  simplest  construction  gives  a  homomorphism [22XM -> N[122X with both [22XM[122X and [22XN[122X
+  connected.  It  is  implemented as [10XIsMappingToSinglePieceRep[110X with attributes
+  [10XSource[110X,  [10XRange[110X  and  [10XMappingToSinglePieceData[110X.  The  operation  requires the
+  following information:[133X
+  
+  [30X    [33X[0;6Ya  magma  homomorphism  [10Xhom[110X  from  the  underlying  magma  of [22XM[122X to the
+        underlying magma of [22XN[122X,[133X
+  
+  [30X    [33X[0;6Ya list [10Ximobs[110X of the images of the objects of [22XM[122X.[133X
+  
+  [33X[0;0YIn the first example we construct endomappings of [10Xm[110X and [10XM78[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtup1 := [ DirectProductElement([m1,m2]), DirectProductElement([m2,m1]), [127X[104X
+    [4X[25X>[125X [27X             DirectProductElement([m3,m4]), DirectProductElement([m4,m3]) ];; [127X[104X
+    [4X[25Xgap>[125X [27Xf1 := GeneralMappingByElements( m, m, tup1 ); [127X[104X
+    [4X[25Xgap>[125X [27XIsMagmaHomomorphism( f1 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xhom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-8,-7] );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( hom1 );[127X[104X
+    [4X[28Xhomomorphism to single piece magma: M78 -> M78[128X[104X
+    [4X[28X magma hom: <mapping: m -> m > [128X[104X
+    [4X[28Xobject map: [ -8, -7 ] -> [ -8, -7 ][128X[104X
+    [4X[25Xgap>[125X [27X[ Source( hom1 ), Range( hom1 ) ]; [127X[104X
+    [4X[28X[ M78, M78 ][128X[104X
+    [4X[25Xgap>[125X [27Xb87;[127X[104X
+    [4X[28X[m4 : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xim1 := ImageElm( hom1, b87 );[127X[104X
+    [4X[28X[m3 : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27Xi56 := IsomorphismNewObjects( M78, [-5,-6] ); [127X[104X
+    [4X[28Xmagma with objects homomorphism : [128X[104X
+    [4X[28X[ [ IdentityMapping( m ), [ -5, -6 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xib87 := ImageElm( i56, b87 );[127X[104X
+    [4X[28X[m4 : -5 -> -6][128X[104X
+    [4X[25Xgap>[125X [27XM65 := Range( i56);; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( M65, "M65" ); [127X[104X
+    [4X[25Xgap>[125X [27Xj56 := InverseGeneralMapping( i56 );; [127X[104X
+    [4X[25Xgap>[125X [27XImagesOfObjects( j56 ); [127X[104X
+    [4X[28X[ -7, -8 ][128X[104X
+    [4X[25Xgap>[125X [27Xcomp := j56 * hom1;[127X[104X
+    [4X[28Xmagma with objects homomorphism : M65 -> M78[128X[104X
+    [4X[28X[ [ <mapping: m -> m >, [ -7, -8 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( comp, ib87 );[127X[104X
+    [4X[28X[m3 : -8 -> -7][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  homomorphism  [13Xto[113X  a  connected  magma with objects may have a source with
+  several pieces, and so is a union of homomorphisms [13Xfrom[113X single pieces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XM4 := UnionOfPieces( [ M78, M65 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Ximages := [ MappingToSinglePieceData( hom1 )[1], [127X[104X
+    [4X[25X>[125X [27XMappingToSinglePieceData( j56 )[1] ]; [127X[104X
+    [4X[28X[ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmap4 := HomomorphismToSinglePiece( M4, M78, images ); [127X[104X
+    [4X[28Xmagma with objects homomorphism : [128X[104X
+    [4X[28X[ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( map4, b87 );[127X[104X
+    [4X[28X[m3 : -8 -> -7][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( map4, ib87 );[127X[104X
+    [4X[28X[m4 : -8 -> -7][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YHomomorphisms of semigroups and monoids with objects[133X[101X
+  
+  [33X[0;0YThe  next  example exhibits a homomorphism between transformation semigroups
+  with objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xt2 := Transformation( [2,2,4,1] );; [127X[104X
+    [4X[25Xgap>[125X [27Xs2 := Transformation( [1,1,4,4] );;[127X[104X
+    [4X[25Xgap>[125X [27Xr2 := Transformation( [4,1,3,3] );; [127X[104X
+    [4X[25Xgap>[125X [27Xsgp2 := Semigroup( [ t2, s2, r2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( sgp2, "sgp<t2,s2,r2>" );[127X[104X
+    [4X[25Xgap>[125X [27X##  apparently no method for transformation semigroups available for: [127X[104X
+    [4X[25Xgap>[125X [27X##  nat := NaturalHomomorphismByGenerators( sgp, sgp2 );  so we use: [127X[104X
+    [4X[25Xgap>[125X [27X##  in the function flip below t is a transformation on [1..n] [127X[104X
+    [4X[25Xgap>[125X [27Xflip := function( t ) [127X[104X
+    [4X[25X>[125X [27X    local i, j, k, L, L2, n; [127X[104X
+    [4X[25X>[125X [27X    n := DegreeOfTransformation( t );  [127X[104X
+    [4X[25X>[125X [27X    L := ImageListOfTransformation( t ); [127X[104X
+    [4X[25X>[125X [27X    if IsOddInt(n) then n:=n+1; L1:=Concatenation(L,[n]); [127X[104X
+    [4X[25X>[125X [27X                   else L1:=L; fi; [127X[104X
+    [4X[25X>[125X [27X    L2 := ShallowCopy( L1 );[127X[104X
+    [4X[25X>[125X [27X    for i in [1..n] do [127X[104X
+    [4X[25X>[125X [27X        if IsOddInt(i) then j:=i+1; else j:=i-1; fi; [127X[104X
+    [4X[25X>[125X [27X        k := L1[j]; [127X[104X
+    [4X[25X>[125X [27X        if IsOddInt(k) then L2[i]:=k+1; else L2[i]:=k-1; fi; [127X[104X
+    [4X[25X>[125X [27X    od; [127X[104X
+    [4X[25X>[125X [27X    return( Transformation( L2 ) ); [127X[104X
+    [4X[25X>[125X [27Xend;; [127X[104X
+    [4X[25Xgap>[125X [27Xsmap := MappingByFunction( sgp, sgp2, flip );; [127X[104X
+    [4X[25Xgap>[125X [27Xok := RespectsMultiplication( smap ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X[ t, ImageElm( smap, t ) ]; [127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 2, 2, 4, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27X[ s, ImageElm( smap, s ) ]; [127X[104X
+    [4X[28X[ Transformation( [ 2, 2, 3, 3 ] ), Transformation( [ 1, 1, 4, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27X[ r, ImageElm( smap, r ) ]; [127X[104X
+    [4X[28X[ Transformation( [ 2, 3, 4, 4 ] ), Transformation( [ 4, 1, 3, 3 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( smap, "smap" ); [127X[104X
+    [4X[25Xgap>[125X [27XT123 := SemigroupWithObjects( sgp2, [-13,-12,-11] );; [127X[104X
+    [4X[25Xgap>[125X [27Xshom := MagmaWithObjectsHomomorphism( S123, T123, smap, [-11,-12,-13] );; [127X[104X
+    [4X[25Xgap>[125X [27Xit12 := ImageElm( shom, t12 );;  [ t12, it12 ]; [127X[104X
+    [4X[28X[ [Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2], [128X[104X
+    [4X[28X  [Transformation( [ 2, 2, 4, 1 ] ) : -13 -> -12] ][128X[104X
+    [4X[25Xgap>[125X [27Xis23 := ImageElm( shom, s23 );;  [ s23, is23 ]; [127X[104X
+    [4X[28X[ [Transformation( [ 2, 2, 3, 3 ] ) : -2 -> -3], [128X[104X
+    [4X[28X  [Transformation( [ 1, 1, 4, 4 ] ) : -12 -> -11] ][128X[104X
+    [4X[25Xgap>[125X [27Xir31 := ImageElm( shom, r31 );;  [ r31, ir31 ]; [127X[104X
+    [4X[28X[ [Transformation( [ 2, 3, 4, 4 ] ) : -3 -> -1], [128X[104X
+    [4X[28X  [Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YHomomorphisms to more than one piece[133X[101X
+  
+  [1X3.3-1 HomomorphismByUnion[101X
+  
+  [33X[1;0Y[29X[2XHomomorphismByUnion[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhoms[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22Xf  :  M  -> N[122X and [22XN[122X has more than one connected component, then [22Xf[122X is a
+  union of homomorphisms, one for each piece in the range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XN4 := UnionOfPieces( [ M78, T123 ] );[127X[104X
+    [4X[28Xmagma with objects having 2 pieces :-[128X[104X
+    [4X[28X1: semigroup with objects :-[128X[104X
+    [4X[28X    magma = sgp<t2,s2,r2>[128X[104X
+    [4X[28X  objects = [ -13, -12, -11 ][128X[104X
+    [4X[28X2: M78[128X[104X
+    [4X[25Xgap>[125X [27Xh14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] );[127X[104X
+    [4X[28Xmagma with objects homomorphism : [128X[104X
+    [4X[28X[ magma with objects homomorphism : M78 -> M78[128X[104X
+    [4X[28X    [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : [128X[104X
+    [4X[28X    [ [ smap, [ -11, -12, -13 ] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( h14, a78 );[127X[104X
+    [4X[28X[m1 : -7 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( h14, r31 );[127X[104X
+    [4X[28X[Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.3-2 IsInjectiveOnObjects[101X
+  
+  [33X[1;0Y[29X[2XIsInjectiveOnObjects[102X( [3Xmwohom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSurjectiveOnObjects[102X( [3Xmwohom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBijectiveOnObjects[102X( [3Xmwohom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsEndomorphismWithObjects[102X( [3Xmwohom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAutomorphismWithObjects[102X( [3Xmwohom[103X ) [32X property[133X
+  
+  [33X[0;0YThe meaning of these five properties is obvious.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsInjectiveOnObjects( h14 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSurjectiveOnObjects( h14 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsBijectiveOnObjects( h14 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsEndomorphismWithObjects( h14 ); [127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsAutomorphismWithObjects( h14 ); [127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.4 [33X[0;0YMappings defined by a function[133X[101X
+  
+  [1X3.4-1 MappingWithObjectsByFunction[101X
+  
+  [33X[1;0Y[29X[2XMappingWithObjectsByFunction[102X( [3Xsrc[103X, [3Xrng[103X, [3Xfun[103X, [3Ximobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMappingWithObjectsByFunction[102X( [3Xmap[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XUnderlyingFunction[102X( [3Xmap[103X ) [32X attribute[133X
+  
+  [33X[0;0YMore general mappings, which need not preserve multiplication, are available
+  using this operation. See section [14X5.6[114X for an application.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xflip := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      [127X[104X
+    [4X[28Xfunction( a ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xflipmap := MappingWithObjectsByFunction( M78, M78, flip, [-8,-7] );[127X[104X
+    [4X[28Xmagma with objects mapping by function : M78 -> M78[128X[104X
+    [4X[28Xfunction: function ( a )[128X[104X
+    [4X[28X    return Arrow( M78, a![1], a![3], a![2] );[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27Xa78; ImageElm( flipmap, a78 );                                     [127X[104X
+    [4X[28X[m2 : -7 -> -8][128X[104X
+    [4X[28X[m2 : -8 -> -7][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
