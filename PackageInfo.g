@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.68dev",
-Date := "24/09/2019", # dd/mm/yyyy format
+Version := "1.69",
+Date := "15/11/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -30,7 +30,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
-    WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
+    WWWHome       := "https://github.com/cdwensley",
     PostalAddress := Concatenation( [
                       "Dr. C.D. Wensley\n",
                       "School of Computer Science and Electronic Engineering\n",

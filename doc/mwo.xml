@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  mwo.xml          groupoids documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2021, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -195,7 +195,7 @@ gap> [ a78*ba, ab*a78, a78*ba=ab*a78 ];
          Arg="mwo" />
    <Prop Name="IsDirectProductWithCompleteDigraph"
          Arg="mwo" />
-   <Prop Name="IsDiscrete"
+   <Prop Name="IsDiscreteMagmaWithObjects"
          Arg="mwo" />
 <Description>
 If the partial composition is forgotten, then what remains is a digraph 
@@ -221,7 +221,7 @@ gap> IsSinglePiece( M78 );
 true
 gap> IsDirectProductWithCompleteDigraph( M78 );
 true
-gap> IsDiscrete( M78 ); 
+gap> IsDiscreteMagmaWithObjects( M78 ); 
 false
 ]]>
 </Example>

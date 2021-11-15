@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  intro.xml        groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2021, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -75,6 +75,6 @@ You may reference this package by mentioning <Cite Key="BrMoPoWe" />,
 <P/>
 Additional information can be found on the 
 <E>Computational Higher Dimensional Algebra</E> website at: 
-<URL>http://pages.bangor.ac.uk/~mas023/chda/intro.html</URL>. 
+<URL>https://github.com/cdwensley</URL>. 
 
 </Chapter>

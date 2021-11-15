@@ -2,7 +2,7 @@
 ##
 #W  mwo.tst                 Groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
+#Y  Copyright (C) 2000-2021, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: mwo.tst" );
@@ -58,7 +58,7 @@ gap> IsSinglePiece( M78 );
 true
 gap> IsDirectProductWithCompleteDigraph( M78 );
 true
-gap> IsDiscrete( M78 );
+gap> IsDiscreteMagmaWithObjects( M78 );
 false
 
 ## Section 2.2, Semigroups with objects 

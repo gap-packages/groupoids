@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gd                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2021, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -215,12 +215,12 @@ IsGroupoidFamily := CollectionsFamily( IsGroupoidElementFamily );
 ############################################################################# 
 ## 
 #P  IsSinglePiece( <mwo> )
-#P  IsDiscrete( <mwo> ) 
+#P  IsDiscreteMagmaWithObjects( <mwo> ) 
 #P  IsDirectProductWithCompleteDigraph( <mwo> )
 ## 
 DeclareSynonymAttr( "IsSinglePiece", 
     IsMagmaWithObjects and IsSinglePieceDomain );
-DeclareSynonymAttr( "IsDiscrete", 
+DeclareSynonymAttr( "IsDiscreteMagmaWithObjects", 
     IsMagmaWithObjects and IsDiscreteDomainWithObjects );
 DeclareSynonymAttr( "IsDirectProductWithCompleteDigraph", 
     IsMagmaWithObjects and IsDirectProductWithCompleteDigraphDomain );
