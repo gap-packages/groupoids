@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/gap-packages/groupoids/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/groupoids/actions?query=workflow%3ACI+branch%3Amaster)
+(https://github.com/cdwensley)http[![Build Status](https://github.com/gap-packages/groupoids/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/groupoids/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/groupoids/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/groupoids)
 
 # The GAP 4 package 'groupoids' 
@@ -23,7 +23,7 @@ A more detailed history is included as Chapter 8 of the manual, and in the file 
 ## Distribution
 ------------
  * The 'groupoids' package is distributed with the accepted GAP packages: see
-     <http://www.gap-system.org/Packages/groupoids.html>
+     <https://www.gap-system.org/Packages/groupoids.html>
  * It may also be obtained from the GitHub repository at:  
   <https://gap-packages.github.io/groupoids/>
 
@@ -33,7 +33,7 @@ The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 20
 
 'groupoids' is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
 
-For details, see: <http://www.gnu.org/licenses/gpl.html>
+For details, see: <https://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 

@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.69",
-Date := "15/11/2021", # dd/mm/yyyy format
+Version := "1.69dev",
+Date := "08/04/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -104,8 +104,8 @@ Keywords := [ "magma with objects", "groupoid", "graph of groups",
 BannerString := Concatenation(
     "Loading groupoids ", String( ~.Version ), 
     " (algorithms for finite groupoids)\n", 
-    "by Emma Moore and Chris Wensley (http://pages.bangor.ac.uk/~mas023/)\n",
-    "--------------------------------------------------------------------\n" ),
+    "by Emma Moore and Chris Wensley (https://github.com/cdwensley)\n",
+    "--------------------------------------------------------------\n" ),
 
 AutoDoc := rec(
     TitlePage := rec(
