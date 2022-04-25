@@ -18,6 +18,10 @@
 /doc/*.pnr
 /doc/*.tex
 /doc/*.toc
+/doc/_*.xml
+/doc/bib.xml.bib
+/doc/groupoids.xml
+/doc/title.xml
 
 /expt 
 
