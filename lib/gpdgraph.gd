@@ -2,7 +2,7 @@
 ##
 #W  gpdgraph.gd             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -19,7 +19,7 @@
 ##  - subgroupoid associated to tail vertex of each edge, and 
 ##  - an isomorphism associated to each edge.  
 ## 
-DeclareCategory( "IsGraphOfGroupoids", GroupoidIsDigraph ); 
+DeclareCategory( "IsGraphOfGroupoids", IsGroupoidDigraph ); 
 DeclareRepresentation( "IsGraphOfGroupoidsRep",
     IsStructuredDigraph and IsAttributeStoringRep,
     [ "DigraphOfGraphOfGroupoids", "GroupoidsOfGraphOfGroupoids", 

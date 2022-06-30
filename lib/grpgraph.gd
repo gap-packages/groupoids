@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gd             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations for involutory FpWeightedDigraphs 
@@ -12,9 +12,9 @@
 
 ############################################################################## 
 ## 
-#C  GroupoidIsDigraph( <dig> )                
+#C  IsGroupoidDigraph( <dig> )                
 ## 
-DeclareCategory( "GroupoidIsDigraph", IsDomain );
+DeclareCategory( "IsGroupoidDigraph", IsDomain );
 
 ############################################################################# 
 ## 
@@ -24,8 +24,8 @@ DeclareCategory( "GroupoidIsDigraph", IsDomain );
 ##  Vertices must be declared as Operation, and not Attribute, 
 ##  so as not to conflict with Vertices in the Grape package. 
 ##   
-DeclareOperation( "GroupoidVertices", [ GroupoidIsDigraph ] );  
-DeclareOperation( "GroupoidArcs", [ GroupoidIsDigraph ] );  
+DeclareOperation( "GroupoidVertices", [ IsGroupoidDigraph ] );  
+DeclareOperation( "GroupoidArcs", [ IsGroupoidDigraph ] );  
 
 ############################################################################## 
 ## 
@@ -37,9 +37,9 @@ DeclareOperation( "GroupoidArcs", [ GroupoidIsDigraph ] );
 ##  A FpWeightedDigraph is a set of vertices and a set of directed arcs  
 ## 
 DeclareRepresentation( "IsFpWeightedDigraphRep",
-    GroupoidIsDigraph and IsComponentObjectRep, 
+    IsGroupoidDigraph and IsComponentObjectRep, 
     [ "group", "vertices", "arcs" ] ); 
-DeclareProperty( "IsFpWeightedDigraph", GroupoidIsDigraph ); 
+DeclareProperty( "IsFpWeightedDigraph", IsGroupoidDigraph ); 
 BindGlobal( "IsFpWeightedDigraphFamily", 
             NewFamily( "IsFpWeightedDigraphFamily", IsFpWeightedDigraphRep ) ); 
 BindGlobal( "IsFpWeightedDigraphType", 
@@ -68,7 +68,7 @@ DeclareAttribute( "InvolutoryArcs", IsFpWeightedDigraph );
 ## 
 #O  FpWeightedAdjacencyMatrix( <dig> ) 
 #O  ArcsIsosFromMatrices( <vertices>, <wt_adj_mx>, <isos_mx> ) 
-DeclareOperation( "FpWeightedAdjacencyMatrix", [ GroupoidIsDigraph ] ); 
+DeclareOperation( "FpWeightedAdjacencyMatrix", [ IsGroupoidDigraph ] ); 
 DeclareOperation( "ArcsIsosFromMatrices", 
     [ IsHomogeneousList, IsHomogeneousList, IsHomogeneousList ] ); 
 
@@ -81,7 +81,7 @@ DeclareOperation( "ArcsIsosFromMatrices",
 ## 
 #P  IsStructuredDigraph( <dig> )                
 ## 
-DeclareProperty( "IsStructuredDigraph", GroupoidIsDigraph ); 
+DeclareProperty( "IsStructuredDigraph", IsGroupoidDigraph ); 
  
 ############################################################################# 
 ## 
@@ -96,7 +96,7 @@ DeclareProperty( "IsStructuredDigraph", GroupoidIsDigraph );
 ##  - subgroup associated to tail vertex of each edge, and 
 ##  - an isomorphism associated to each edge.  
 ## 
-DeclareCategory( "IsGraphOfGroups", GroupoidIsDigraph ); 
+DeclareCategory( "IsGraphOfGroups", IsGroupoidDigraph ); 
 DeclareRepresentation( "IsGraphOfGroupsRep",
     IsStructuredDigraph and IsAttributeStoringRep, 
     [ "DigraphOfGraphOfGroups", "GroupsOfGraphOfGroups", 
