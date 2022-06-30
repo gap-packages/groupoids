@@ -1,8 +1,10 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.69 for GAP 4.11.1 (15/11/21) 
+## Version 1.69 for GAP 4.11.1 (01/07/22) 
 
- * (15/11/21) moved package homepage to https://github.com/cdwensley 
+ * (30/06/22) renamed GpdIsDigraph etc as IsGroupoidDigraph 
+ * (15/11/21) moved package homepage to 
+              https://github.com/gap-packages/groupoids 
  * (15/11/21) replaced IsDiscrete by IsDiscreteMagmaWithObjects 
  * (13/04/21) changed nicemap.tst to cope with alternative NiceMonomorphisms 
  * (08/04/21) Switch CI to use GitHub Actions 

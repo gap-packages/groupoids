@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml      groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -65,7 +65,7 @@ This constructs a crossed module of groupoids with a connected range
 and a homogeneous, discrete source. 
 <P/>
 In recent versions there have been a number of changes of function 
-name, such as <C>IsDigraph</C> becoming <C>GroupoidIsDigraph</C>. 
+name, such as <C>IsDigraph</C> becoming <C>IsGroupoidDigraph</C>. 
 This is in order to avoid conflicts with the 
 <Package>Digraphs</Package> package.
 The intention is that these functions can revert to the original names 
@@ -73,8 +73,8 @@ in due course.
 <P/>
 In version 1.62 of October 2018 there were significant changes to the 
 operations constructing free products with amalgamation and HNN extensions. 
-It is planned to move this material to a new package 
-<Package>Rewriting</Package> in time for &GAP; 4.11. 
+There was a plan to move this material to a new package 
+<Package>Rewriting</Package>, but that has not happened. 
 </Section>
 
 
