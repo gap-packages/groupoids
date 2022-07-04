@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.tst              groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2021, Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpdaut.tst" );
@@ -244,36 +244,16 @@ gap> AHs3 := AutomorphismGroupOfGroupoid( Hs3 );
 <group with 4 generators>
 gap> Size( AHs3 );
 31104
-gap> genAHs3 := GeneratorsOfGroup( AHs3 ); 
-[ groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-    [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
-    object homomorphisms:
-    ConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-    [ -13, -12, -11, -10 ] -> [ -13, -12, -11, -10 ]
-    object homomorphisms:
-    ConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-    [ -13, -12, -11, -10 ] -> [ -12, -11, -10, -13 ]
-    object homomorphisms:
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    , groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-    [ -13, -12, -11, -10 ] -> [ -12, -13, -11, -10 ]
-    object homomorphisms:
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-    IdentityMapping( s3 )
-     ]
+gap> genAHs3 := GeneratorsOfGroup( AHs3 );;
+gap> Length( genAHs3 ); 
+4  
+gap> ids3 := IdentityMapping( s3 );; 
+gap> aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1^2,ids3,ids3,ids3] );; 
+gap> aut6 := GroupoidAutomorphismByGroupAutos( Hs3, [b2,ids3,ids3,ids3] );; 
+gap> aut7 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -11, -10, -13 ] );; 
+gap> aut8 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -13, -11, -10 ] );; 
+gap> ok := ForAll( genAHs3, a -> a in[ aut5, aut6, aut7, aut8 ] ); 
+true
 gap> nobAHs3 := NiceObject( AHs3 );; 
 gap> nmonAHs3 := NiceMonomorphism( AHs3 );;
 gap> w := genAHs3[1];; 
