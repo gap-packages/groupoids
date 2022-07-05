@@ -74,7 +74,7 @@ Up until April 2017 this package was named Gpd.",
 PackageDoc := rec(
   BookName  := "groupoids",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Finite Groupoids and Graphs of Groups",
