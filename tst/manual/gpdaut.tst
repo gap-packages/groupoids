@@ -248,30 +248,26 @@ gap> genAHs3 := GeneratorsOfGroup( AHs3 );;
 gap> Length( genAHs3 ); 
 4  
 gap> ids3 := IdentityMapping( s3 );; 
-gap> aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1^2,ids3,ids3,ids3] );; 
-gap> aut6 := GroupoidAutomorphismByGroupAutos( Hs3, [b2,ids3,ids3,ids3] );; 
-gap> aut7 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -11, -10, -13 ] );; 
-gap> aut8 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -13, -11, -10 ] );; 
-gap> ok := ForAll( genAHs3, a -> a in[ aut5, aut6, aut7, aut8 ] ); 
+gap> w := GroupoidAutomorphismByGroupAutos( Hs3, [b1^2,ids3,ids3,ids3] );; 
+gap> x := GroupoidAutomorphismByGroupAutos( Hs3, [b2,ids3,ids3,ids3] );; 
+gap> y := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -11, -10, -13 ] );; 
+gap> z := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -13, -11, -10 ] );; 
+gap> ok := ForAll( genAHs3, a -> a in[ w, x, y, z ] ); 
 true
 gap> nobAHs3 := NiceObject( AHs3 );; 
 gap> nmonAHs3 := NiceMonomorphism( AHs3 );;
-gap> w := genAHs3[1];; 
 gap> w1 := ImageElm( nmonAHs3, w );; 
-gap> x := genAHs3[2];; 
 gap> x1 := ImageElm( nmonAHs3, x );; 
-gap> y := genAHs3[3];; 
 gap> y1 := ImageElm( nmonAHs3, y );; 
-gap> z := genAHs3[4];; 
 gap> z1 := ImageElm( nmonAHs3, z );; 
 gap> u := z*w*y*x*z; 
 groupoid homomorphism : morphism from a homogeneous discrete groupoid:
 [ -13, -12, -11, -10 ] -> [ -11, -13, -10, -12 ]
 object homomorphisms:
 IdentityMapping( s3 )
-ConjugatorAutomorphism( s3, (15,19,17)(16,20,18) )
+InnerAutomorphism( s3, (15,19,17)(16,20,18) )
 IdentityMapping( s3 )
-ConjugatorAutomorphism( s3, (15,20)(16,19)(17,18) )
+InnerAutomorphism( s3, (15,20)(16,19)(17,18) )
 
 gap> u1 := z1*w1*y1*x1*z1; 
 (1,2,4,3)(5,17,23,16,8,20,26,13)(6,18,24,15,7,19,25,14)(9,21,27,12,10,22,28,
@@ -298,8 +294,9 @@ gap> RaysOfGroupoid( AHd8 ){[2..3]};
           [() : -20 -> -18] ], 
       [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
           [() : -12 -> -10] ] ] ]
-gap> ObjectGroup( AHd8, [ -12, -11, -10 ] );
-<group with 8 generators>
+gap> obgp := ObjectGroup( AHd8, [ -12, -11, -10 ] );; 
+gap> Size( obgp ); 
+3072
 
 ## Section 5.7 
 gap> reps := IrreducibleRepresentations( s4 );; 

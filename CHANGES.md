@@ -1,6 +1,10 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.69 for GAP 4.11.1 (01/07/22) 
+## Version 1.71 for GAP 4.11.1 (05/07/22) 
+
+ * (05/07/22) 
+
+## Version 1.69 for GAP 4.11.1 (15/11/21) 
 
  * (30/06/22) renamed GpdIsDigraph etc as IsGroupoidDigraph 
  * (15/11/21) moved package homepage to 
