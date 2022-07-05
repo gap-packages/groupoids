@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -39,6 +39,7 @@ function( gpd, oims )
     SortParallel( ShallowCopy( oims ), L );  
     SetOrder( mor, Order( PermList( L ) ) ); 
     SetIsGroupoidAutomorphismByObjectPerm( mor, true ); 
+    SetAutomorphismDomain( mor, gpd ); 
     return mor; 
 end ); 
 
@@ -75,6 +76,7 @@ function( gpd, oims )
     SortParallel( ShallowCopy( oims ), L );  
     SetOrder( mor, Order( PermList( L ) ) );
     SetIsGroupoidAutomorphismByObjectPerm( mor, true ); 
+    SetAutomorphismDomain( mor, gpd ); 
     return mor; 
 end ); 
 
@@ -116,6 +118,7 @@ function( gpd, hom )
     SetIsSurjectiveOnObjects( mor, true ); 
     SetOrder( mor, Order( hom ) ); 
     SetIsGroupoidAutomorphismByGroupAuto( mor, true ); 
+    SetAutomorphismDomain( mor, gpd ); 
     return mor; 
 end ); 
 
@@ -155,6 +158,7 @@ function( gpd, homs )
     SetIsSurjectiveOnObjects( m, true ); 
     orders := List( homs, h -> Order( h ) ); 
     SetOrder( m, Lcm( orders ) ); 
+    SetAutomorphismDomain( m, gpd ); 
     return m; 
 end ); 
 
@@ -752,19 +756,35 @@ end );
 ##                     Homogeneous groupoid automorphisms                  
 ## ======================================================================== ##
 
+## ????? more work to be done here 
+
 InstallMethod( \in,
     "method for an automorphism of a single object groupoid", true,
-    [ IsGroupWithObjectsHomomorphism, IsGroupoidHomomorphismCollection ], 
+    [ IsGroupWithObjectsHomomorphism, IsGroup ], 
     0,
-function( arr, aut0 )
+function( a0, agp )
 
-    local o;
+    local gens, src, obs, rng, mgi, rgp, argp;
 
-    o := ObjectList( aut0 )[1]; 
-    if not ( ( o = arr![2] ) and ( o = arr![3] ) ) then 
+    gens := GeneratorsOfGroup( agp ); 
+    if not ForAll( gens, g -> IsGroupoidHomomorphism(g) 
+                              and IsAutomorphismWithObjects(g) ) then 
         return false; 
     fi; 
-    return ( arr![1] in aut0!.magma ); 
+    src := Source( a0 ); 
+    obs := ObjectList( src ); 
+    if ( Length( obs ) = 1 ) then 
+        rng := Range( a0 ); 
+        if not ( src = rng ) then 
+            return false; 
+        fi; 
+        mgi := MappingGeneratorsImages( a0 ); 
+        rgp := RootGroup( src ); 
+        argp := AutomorphismGroup( rgp ); 
+        return ForAll( mgi, g -> g in argp ); 
+    else 
+        Error( "method not yet implemented" ); 
+    fi;
 end ); 
 
 InstallMethod( \in,

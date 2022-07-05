@@ -2,7 +2,7 @@
 ##
 #W  gpd.tst                 groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: gpd.tst" );
@@ -41,10 +41,10 @@ gap> f2 := FreeGroup( 2 );;
 gap> Gf2 := Groupoid( f2, -22 );;
 gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
 gap> q8 := QuaternionGroup( 8 );;
-gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
+gap> Gq8 := Groupoid( q8, [ -18, -17 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> gl43 := SpecialLinearGroup( 4, 3 );;
-gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -25..-21 ] );;
 gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
 gap> [ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ),
 >      IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; 
@@ -71,32 +71,32 @@ gap> [ Size(Gf2), Size(Gq8), Size(U2) ];
 [ infinity, 32, infinity ]
 gap> U5 := UnionOfPieces( [ U3, U2 ] );
 groupoid with 5 pieces:
-[ Gq8, Gf2, Gs4, Gd8, Gc6 ]
+[ Gf2, Gq8, Gs4, Gd8, Gc6 ]
 gap> Display( U5 );
 groupoid with 5 pieces:
-< objects: [ -28, -27 ]
-    group: q8 = <[ x, y, y2 ]> >
 < objects: [ -22 ]
     group: f2 = <[ f1, f2 ]> >
+< objects: [ -18, -17 ]
+    group: q8 = <[ x, y, y2 ]> >
 < objects: [ -15 .. -11 ]
     group: s4 = <[ (1,2,3,4), (3,4) ]> >
 < objects: [ -9, -8, -7 ]
     group: d8 = <[ (1,2,3,4), (1,3) ]> >
 < objects: [ -6 ]
-    group: c6 = <[ (5,6,7)(8,9) ]> >
-gap> V5 := ReplaceOnePieceInUnion( U5, 3, Ggl43 ); 
-groupoid with 5 pieces:
-[ Ggl43, Gq8, Gf2, Gd8, Gc6 ]
-gap> ObjectList(V5);             
-[ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
-gap> U5 = V5;
+    group: c6 = <[ (5,6,7)(8,9) ]> > 
+gap> ## in the next example the object lists are not disjoint 
+gap> UnionOfPieces( [ Gf2, Ggl43 ] ); 
+fail
+gap> V3 := ReplaceOnePieceInUnion( U3, Gd8, Gq8 ); 
+groupoid with 3 pieces:
+[ Gq8, Gs4, Gc6 ]
+gap> ObjectList( V3 );             
+[ -18, -17, -15, -14, -13, -12, -11, -6 ]
+gap> U3 = V3;
 false
-gap> W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); 
-groupoid with 5 pieces:
-[ Ggl43, Gq8, Gf2, Gs4, Gd8 ]
-gap> ObjectList(W5);
-[ -35, -34, -33, -32, -31, -28, -27, -22, -15, -14, -13, -12, -11, -9, -8, -7 
- ]
+gap> V2 := ReplaceOnePieceInUnion( U2, 2, Gd8 ); 
+groupoid with 2 pieces:
+[ Gf2, Gd8 ]
 
 ## SubSection 4.1.5
 gap> Hd8 := HomogeneousGroupoid( Gd8, 
@@ -193,12 +193,10 @@ gap> [ e1*i8, i8*e1, e1^-1];
 [ [(1,2,3,4) : -9 -> -8], fail, [(1,4,3,2) : -8 -> -9] ]
 
 ## SubSection 4.2.3
-gap> i8; Order(i8);
-[() : -8 -> -8 ]
-1
-gap> loop; Order(loop);
-[(1,4,3,2) : -9 -> -9]
-4
+gap> [ i8, loop ]; 
+[ [() : -8 -> -8], [(1,4,3,2) : -9 -> -9] ]
+gap> [ Order( i8 ), Order(loop) ];
+[ 1, 4 ]
 
 ## SubSection 4.2.4
 gap> star9 := ObjectStar( Gd8, -9 );
@@ -219,17 +217,17 @@ gap> costar6 := ObjectCostar( Gc6, -6 );
 <costar at -6 with vertex group c6>
 gap> Size( costar6 ); 
 6
-gap> hsetq8 := Homset( Gq8, -28, -27 );
-<homset -28 -> -27 with head group q8>
+gap> hsetq8 := Homset( Gq8, -18, -17 );
+<homset -18 -> -17 with head group q8>
 gap> Perform( hsetq8, Display );
-[<identity> of ... : -28 -> -27]
-[y2 : -28 -> -27]
-[y : -28 -> -27]
-[y*y2 : -28 -> -27]
-[x : -28 -> -27]
-[x*y2 : -28 -> -27]
-[x*y : -28 -> -27]
-[x*y*y2 : -28 -> -27]
+[<identity> of ... : -18 -> -17]
+[y2 : -18 -> -17]
+[y : -18 -> -17]
+[y*y2 : -18 -> -17]
+[x : -18 -> -17]
+[x*y2 : -18 -> -17]
+[x*y : -18 -> -17]
+[x*y*y2 : -18 -> -17]
 
 ### Section 4.3 : Subgroupoids ###
 
@@ -256,6 +254,12 @@ single piece groupoid with rays: < c3, [ -15 .. -11 ],
 [ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] >
 gap> ObjectGroup( Uc3, -14 );
 Group([ (2,3,4) ])
+gap> Ha4 := HomogeneousGroupoid( Ua4, [ [-25..-21], [-35..-31] ] );
+homogeneous groupoid with 2 pieces:
+1:  single piece groupoid with rays: < a4, [ -35 .. -31 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
+2:  single piece groupoid with rays: < a4, [ -25 .. -21 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] >
 
 ## SubSection 4.3.3
 gap> Va4 := SubgroupoidByObjects( Ua4, [-14,-13,-12] );  
@@ -285,14 +289,14 @@ gap> [ Parent( Ud8 ), IsWideSubgroupoid( Gd8, Ud8 ) ];
 [ Gd8, true ]
 gap> U2;
 groupoid with 2 pieces:
-[ Gq8, Gf2 ]
+[ Gf2, Gq8 ]
 gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 [ f1^2, f2^2 ]
 gap> f2b := Subgroup( f2, genf2b );;
-gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );
+gap> SU2 := SubgroupoidByPieces( U2, [ [q8,[-17]], [f2b,[-22]] ] );
 groupoid with 2 pieces:
-1:  single piece groupoid: < q8, [ -27 ] >
-2:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
+1:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -22 ] >
+2:  single piece groupoid: < q8, [ -17 ] >
 gap> IsWideSubgroupoid( U2, SU2 );
 false
 gap> IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );

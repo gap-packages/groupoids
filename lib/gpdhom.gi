@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -1014,7 +1014,7 @@ InstallMethod( IsomorphismNewObjects, "for a single piece groupoid", true,
 function( gpd1, ob2 )
 
     local iso, ob1, nobs, gp, gpd2, gens1, gens2, ngens, i, g, pt, ph, 
-          gpgens, id, homs;
+          gpgens, id, homs, pgpd, rays, rgp, piso, pgpd2;
 
     ob1 := ObjectList( gpd1 ); 
     nobs := Length( ob1 );
@@ -1023,19 +1023,26 @@ function( gpd1, ob2 )
     fi;
     gp := gpd1!.magma;
     if IsSinglePiece( gpd1 ) then 
-        if not IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
-            Error( "make an isomorphism for the parent groupoid first" );
-        fi;
-        gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
         gens1 := GeneratorsOfGroupoid( gpd1 ); 
         ngens := Length( gens1 );
         gens2 := [1..ngens]; 
-        for i in [1..ngens] do 
-            g := gens1[i]; 
-            pt := Position( ob1, g![2] ); 
-            ph := Position( ob1, g![3] ); 
-            gens2[i] := Arrow( gpd2, g![1], ob2[pt], ob2[ph] );
-        od;
+        if IsDirectProductWithCompleteDigraphDomain( gpd1 ) then 
+            gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
+            for i in [1..ngens] do 
+                g := gens1[i]; 
+                pt := Position( ob1, g![2] ); 
+                ph := Position( ob1, g![3] ); 
+                gens2[i] := Arrow( gpd2, g![1], ob2[pt], ob2[ph] );
+            od; 
+        else 
+            pgpd := Parent( gpd1 ); 
+            rays := RaysOfGroupoid( gpd1 ); 
+            rgp := RootGroup( gpd1 ); 
+            piso := IsomorphismNewObjects( pgpd, ob2 ); 
+            pgpd2 := Range( piso );
+            gpd2 := SubgroupoidWithRays( pgpd2, rgp, rays ); 
+            gens2 := List( gens1, g -> ImageElm( piso, g ) ); 
+        fi;
         iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
     elif IsHomogeneousDiscreteGroupoid( gpd1 ) then 
         gpd2 := HomogeneousDiscreteGroupoid( gp, ob2 ); 
