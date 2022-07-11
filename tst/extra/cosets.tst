@@ -83,7 +83,7 @@ gap> a85 in Uc3c4;
 false
 gap> rc85 := RightCoset( Hs4, Uc3c4, a85 ); 
 <right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,4) : -8 -> -5]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,3,5) : -9 -> -5]>
 gap> Perform( rc85, Display );
 [(1,3,5) : -9 -> -5]
 [(1,4) : -8 -> -5]
@@ -99,7 +99,7 @@ gap> b85 in rc85;
 true
 gap> lc85 := LeftCoset( Hs4, Uc3c4, a85 ); 
 <left coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,4) : -8 -> -5]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2)(4,5) : -8 -> -9]>
 gap> Perform( lc85, Display );         
 [(1,2)(4,5) : -8 -> -9]
 [(1,2,3,5) : -8 -> -8]
@@ -121,7 +121,7 @@ gap> a56 in Hs4;
 true
 gap> rc56 := RightCoset( Hs4, Uc3c4, a56 ); 
 <right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2,3,4) : -5 -> -6]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,3,4,5,2) : -9 -> -6]>
 gap> Perform( rc56, Display );
 [(1,3,4,5,2) : -9 -> -6]
 [(1,5,4,2) : -8 -> -6]
@@ -134,7 +134,7 @@ gap> Perform( rc56, Display );
 [(1,2) : -5 -> -6]
 gap> lc56 := LeftCoset( Hs4, Uc3c4, a56 );
 <left coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [(1,2,3,4) : -5 -> -6]>
+[ (), (1,4,3,2,5) ] > with representative [(1,3)(2,4,5) : -5 -> -7]>
 gap> Perform( lc56, Display );         
 [(1,3)(2,4,5) : -5 -> -7]
 [(1,2,3,4) : -5 -> -6]
@@ -167,7 +167,7 @@ gap> Length( reps3r );
 40
 gap> rc56 := RightCoset( Hs4, Uc3, a56 );  
 <right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2,3,4) : -5 -> -6]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,3,4,5,2) : -9 -> -6]>
 gap> Perform( rc56, Display );
 [(1,3,4,5,2) : -9 -> -6]
 [(1,5,4,2) : -8 -> -6]
@@ -218,7 +218,7 @@ gap> a65 := a56^-1;
 [(1,4,3,2) : -6 -> -5]
 gap> lc65 := LeftCoset( Hs4, Uc3, a65 );
 <left coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,4,3,2) : -6 -> -5]>
+[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2,5,4,3) : -6 -> -9]>
 gap> Perform( lc65, Display );
 [(1,2,5,4,3) : -6 -> -9]
 [(1,2,4,5) : -6 -> -8]
@@ -265,7 +265,7 @@ gap> Length( reps4r );
 30
 gap> rc65 := RightCoset( Hs4, Uc4, a65 );  
 <right coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [(1,4,3,2) : -6 -> -5]>
+[ (), (1,4,3,2,5) ] > with representative [(1,3)(2,5,4) : -7 -> -5]>
 gap> Perform( rc65, Display );
 [(1,3)(2,5,4) : -7 -> -5]
 [(1,4,3,2) : -6 -> -5]
@@ -308,7 +308,7 @@ gap> Length(reps4l);
 30
 gap> lc56 := LeftCoset( Hs4, Uc4, a56 );
 <left coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [(1,2,3,4) : -5 -> -6]>
+[ (), (1,4,3,2,5) ] > with representative [(1,3)(2,4,5) : -5 -> -7]>
 gap> Perform( lc56, Display );
 [(1,3)(2,4,5) : -5 -> -7]
 [(1,2,3,4) : -5 -> -6]

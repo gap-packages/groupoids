@@ -1159,10 +1159,55 @@ end );
 ##
 InstallMethod( \=, "for groupoid cosets", [IsGroupoidCoset, IsGroupoidCoset], 
 function( c1, c2 ) 
-Print("??? Warning: sufficient checks made ???\n" );
-    return ( ( Representative(c1) = Representative(c2) ) 
-               and ( ActingDomain(c1) = ActingDomain(c2) ) 
-               and ( SuperDomain(c1) = SuperDomain(c2) ) );
+
+    local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, t1, t2, h1, h2, 
+           pt, ph, obs, rays, pos1, pos2, g1, g2, g, gp; 
+
+    act1 := ActingDomain( c1 ); 
+    act2 := ActingDomain( c2 ); 
+    sd1 := SuperDomain( c1 ); 
+    sd2 := SuperDomain( c2 ); 
+    if not ( ( act1 = act2 ) and ( SuperDomain(c1) = SuperDomain(c2) ) ) then 
+        Info( InfoGroupoids, 2, "different acting domain or super domain" ); 
+        return false; 
+    fi; 
+    type1 := c1!.type; 
+    type2 := c2!.type; 
+    if not ( type1 = type2 ) then 
+        Info( InfoGroupoids, 2, "different type" ); 
+        return fail; 
+    fi; 
+    rep1 := Representative( c1 ); 
+    rep2 := Representative( c2 ); 
+    t1 := rep1![2]; 
+    t2 := rep2![2]; 
+    h1 := rep1![3]; 
+    h2 := rep2![3]; 
+    pt := PieceOfObject( act1, t1 ); 
+    ph := PieceOfObject( sd1, h1 ); 
+    if not ( pt = PieceOfObject( act2, t2 ) ) 
+           and ( ph = PieceOfObject( sd2, h2 ) ) then 
+        Info( InfoGroupoids, 2, "different tail or head pieces" ); 
+        return false; 
+    fi; 
+    if ( type1 = "r" ) then 
+        obs := ObjectList( pt ); 
+        rays := RaysOfGroupoid( pt );
+        pos1 := Position( obs, t1 ); 
+        pos2 := Position( obs, t2 ); 
+        g1 := rep1![1]; 
+        g2 := rep2![1]; 
+        g := ( rays[pos1] * g1 )^-1 * rays[pos2] * g2; 
+        gp := ObjectGroup( act1, obs[1] ); 
+        return ( g in gp ); 
+    elif ( type1 = "l" ) then 
+        Print( "tests not yet implemented\n" ); 
+        return fail; 
+    else 
+        Print( "tests not yet implemented\n" ); 
+        return fail; 
+    fi; 
+    return true; 
 end );
 
 #############################################################################
@@ -1228,7 +1273,7 @@ function( hc )
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             elif ( hc!.type in [ "r" ] ) then 
                 return ArrowNC( true, 
-                           (hc!.trays[iter!.tpos])*(iter!.gpelt)*iter!.rep,  
+                           (hc!.trays[iter!.tpos]^-1)*(iter!.gpelt)*iter!.rep,  
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             elif ( hc!.type in [ "l" ] ) then 
                 return ArrowNC( true, 
@@ -2065,7 +2110,7 @@ InstallOtherMethod( RightCoset, "for groupoid, subgroupoid and element",
     true, [ IsGroupoid, IsGroupoid, IsMultiplicativeElementWithObjects ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, U, obsU, nobsU, rayU, rays, rt, gpt, rcos; 
+    local G, U, obsU, nobsU, root, rayU, arayU, r, gpt, rcos; 
 
     if not IsSubgroupoid( gpd, sgpd ) then
         Error( "sgpd not a subgroupoid of gpd," );
@@ -2075,6 +2120,9 @@ function( gpd, sgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: gpd is not a single piece!" ); 
         G := PieceOfObject( gpd, e![2] ); 
+        if ( G = fail ) then 
+            Error( "tail of e is not an object in gpd" ); 
+        fi; 
     fi; 
     if IsSinglePiece( sgpd ) then 
         U := sgpd; 
@@ -2084,24 +2132,29 @@ function( gpd, sgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: sgpd is not a single piece!" ); 
         U := PieceOfObject( sgpd, e![2] ); 
+        if ( U = fail ) then 
+            Error( "tail of e is not an object in sgpd" ); 
+        fi; 
     fi; 
     if not IsSubdomainWithObjects( G, U ) then 
         Error( "U not a subgroupoid of G," ); 
     fi; 
     obsU := ObjectList( U );
     nobsU := Length( obsU ); 
-    rayU := RaysOfGroupoid( U );
-    rt := rayU[ Position( obsU, e![2] ) ];  
-    gpt := ObjectGroup( U, e![2] );
-    rays := List( [1..nobsU], j -> rayU[j]^(-1) * rt ); 
+    root := obsU[1]; 
+    rayU := RaysOfGroupoid( U ); 
+    arayU := RayArrowsOfGroupoid( U ); 
+    ##  choose a representative arrow from the root object 
+    r := arayU[ Position( obsU, e![2] ) ] * e;  
+    gpt := ObjectGroup( U, root );
     rcos := rec( tgroup := gpt, tobs := obsU, hobs := [ e![3] ], 
-                 rep := e![1], trays := rays, type := "r" ); 
+                 rep := r![1], trays := rayU, type := "r" ); 
     ObjectifyWithAttributes( rcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, U,  
         Size, Size( gpt ) * nobsU, 
-        Representative, e ); 
+        Representative, r ); 
     return rcos; 
 end ); 
 
@@ -2109,7 +2162,7 @@ InstallMethod( LeftCoset, "for groupoid, subgroupoid and element",
     true, [ IsGroupoid, IsGroupoid, IsGroupoidElement ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, V, obsV, nobsV, rayV, rays, rh, gph, lcos; 
+    local G, V, obsV, nobsV, root, rayV, arayV, rays, r, gph, lcos; 
 
     if not IsSubgroupoid( gpd, sgpd ) then
         Error( "sgpd not a subgroupoid of gpd," );
@@ -2119,6 +2172,9 @@ function( gpd, sgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: gpd not a single piece!" ); 
         G := PieceOfObject( gpd, e![3] ); 
+        if ( G = fail ) then 
+            Error( "head of e is not an object in gpd" ); 
+        fi; 
     fi; 
     if IsSinglePiece( sgpd ) then 
         V := sgpd; 
@@ -2128,24 +2184,29 @@ function( gpd, sgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: sgpd is not a single piece!" ); 
         V := PieceOfObject( sgpd, e![3] ); 
+        if ( V = fail ) then 
+            Error( "head of e is not an object in sgpd" ); 
+        fi; 
     fi; 
     if not IsSubdomainWithObjects( G, V ) then 
         Error( "V not a subgroupoid of G," ); 
     fi; 
     obsV := ObjectList( V );
     nobsV := Length( obsV ); 
+    root := obsV[1]; 
     rayV := RaysOfGroupoid( V );
-    rh := rayV[ Position( obsV, e![3] ) ];
-    gph := ObjectGroup( V, e![3] ); 
-    rays := List( [1..nobsV], j -> rh^(-1)*rayV[j] ); 
+    arayV := RayArrowsOfGroupoid( V );
+    ##  choose a representative arrow from the root object 
+    r := e * arayV[ Position( obsV, e![3] ) ]^-1;  
+    gph := ObjectGroup( V, r![3] ); 
     lcos := rec( hgroup := gph, tobs := [ e![2] ], hobs := obsV, 
-                 rep := e![1], hrays := rays, type := "l" ); 
+                 rep := r![1], hrays := rayV, type := "l" ); 
     ObjectifyWithAttributes( lcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, V, 
         Size, Size( gph ) * nobsV, 
-        Representative, e ); 
+        Representative, r ); 
     return lcos;
 end ); 
 
@@ -2164,12 +2225,18 @@ function( gpd, lsgpd, rsgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: gpd not a single piece!" ); 
         G := PieceOfObject( gpd, e![2] ); 
+        if ( G = fail ) then 
+            Error( "tail of e is not an object in gpd" ); 
+        fi; 
     fi; 
     if IsSinglePiece( lsgpd ) then 
         U := lsgpd; 
     else
         Info( InfoGroupoids, 2, "comment: lsgpd not a single piece!" ); 
         U := PieceOfObject( lsgpd, e![2] ); 
+        if ( U = fail ) then 
+            Error( "tail of e is not an object in lsgpd" ); 
+        fi; 
     fi; 
     if not IsSubdomainWithObjects( G, U ) then 
         Error( "U not a subgroupoid of G," ); 
@@ -2179,6 +2246,9 @@ function( gpd, lsgpd, rsgpd, e )
     else
         Info( InfoGroupoids, 2, "comment: rsgpd not a single piece!" ); 
         V := PieceOfObject( rsgpd, e![3] ); 
+        if ( V = fail ) then 
+            Error( "head of e is not an object in rsgpd" ); 
+        fi; 
     fi; 
     if not IsSubdomainWithObjects( G, V ) then 
         Error( "UV not a subgroupoid of G," ); 
