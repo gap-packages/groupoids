@@ -1160,8 +1160,8 @@ end );
 InstallMethod( \=, "for groupoid cosets", [IsGroupoidCoset, IsGroupoidCoset], 
 function( c1, c2 ) 
 
-    local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, t1, t2, h1, h2, 
-           pt, ph, obs, rays, pos1, pos2, g1, g2, g, gp; 
+    local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, pt, obt, ph, obh, 
+           g1, g2, g, gp; 
 
     act1 := ActingDomain( c1 ); 
     act2 := ActingDomain( c2 ); 
@@ -1175,34 +1175,32 @@ function( c1, c2 )
     type2 := c2!.type; 
     if not ( type1 = type2 ) then 
         Info( InfoGroupoids, 2, "different type" ); 
-        return fail; 
+        return false; 
     fi; 
     rep1 := Representative( c1 ); 
     rep2 := Representative( c2 ); 
-    t1 := rep1![2]; 
-    t2 := rep2![2]; 
-    h1 := rep1![3]; 
-    h2 := rep2![3]; 
-    pt := PieceOfObject( act1, t1 ); 
-    ph := PieceOfObject( sd1, h1 ); 
-    if not ( pt = PieceOfObject( act2, t2 ) ) 
-           and ( ph = PieceOfObject( sd2, h2 ) ) then 
-        Info( InfoGroupoids, 2, "different tail or head pieces" ); 
+    if not ( rep1![2] = rep2![2] ) then 
+        Info( InfoGroupoids, 2, "different tail" ); 
         return false; 
     fi; 
+    if not ( rep1![3] = rep2![3] ) then 
+        Info( InfoGroupoids, 2, "different head" ); 
+        return false; 
+    fi; 
+    g1 := rep1![1]; 
+    g2 := rep2![1]; 
     if ( type1 = "r" ) then 
-        obs := ObjectList( pt ); 
-        rays := RaysOfGroupoid( pt );
-        pos1 := Position( obs, t1 ); 
-        pos2 := Position( obs, t2 ); 
-        g1 := rep1![1]; 
-        g2 := rep2![1]; 
-        g := ( rays[pos1] * g1 )^-1 * rays[pos2] * g2; 
-        gp := ObjectGroup( act1, obs[1] ); 
+        g := g1 * g2^-1; 
+        pt := PieceOfObject( act1, rep1![2] ); 
+        obt := ObjectList( pt ); 
+        gp := ObjectGroup( act1, obt[1] ); 
         return ( g in gp ); 
     elif ( type1 = "l" ) then 
-        Print( "tests not yet implemented\n" ); 
-        return fail; 
+        g := g1^-1 * g2; 
+        ph := PieceOfObject( act1, rep1![3] ); 
+        obh := ObjectList( ph ); 
+        gp := ObjectGroup( act1, obh[1] ); 
+        return ( g in gp ); 
     else 
         Print( "tests not yet implemented\n" ); 
         return fail; 
