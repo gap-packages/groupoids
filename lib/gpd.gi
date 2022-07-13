@@ -1110,13 +1110,13 @@ InstallMethod( PrintObj, "for a subset of elements of a groupoid", true,
 function ( hc )
         if ( hc!.type = "h" ) then 
         Print( "<homset ", hc!.tobs[1], " -> ", hc!.hobs[1],
-               " with head group ", hc!.hgroup, ">" );
+               " with head group ", hc!.elements, ">" );
     elif ( hc!.type = "s" ) then 
         Print( "<star at ", hc!.tobs[1], 
-               " with vertex group ", hc!.tgroup, ">" );
+               " with vertex group ", hc!.elements, ">" );
     elif ( hc!.type = "c" ) then 
         Print( "<costar at ", hc!.hobs[1], 
-               " with vertex group ", hc!.hgroup, ">" );
+               " with vertex group ", hc!.elements, ">" );
     elif ( hc!.type = "r" ) then 
         Print( "<right coset of ", hc!.ActingDomain, 
                " with representative ", Representative( hc ),">" );
@@ -1124,7 +1124,8 @@ function ( hc )
         Print( "<left coset of ", hc!.ActingDomain, 
                " with representative ", Representative( hc ),">" );
     elif ( hc!.type = "d" ) then 
-        Print( "double cosets not yet implemented" );
+        Print( "<double coset of ", hc!.ActingDomain, 
+               " with representative ", Representative( hc ),">" );
     else
         Print( "<object>");
     fi; 
@@ -1147,6 +1148,8 @@ function ( hc )
         Print( "<right coset of ", hc!.ActingDomain, " with elements:\n" );
     elif ( hc!.type = "l" ) then 
         Print( "<left coset of ", hc!.ActingDomain, " with elements:\n" );
+    elif ( hc!.type = "d" ) then 
+        Print( "<double coset of ", hc!.ActingDomain, " with elements:\n" );
     fi; 
     for g in hc do  
         Print( g, "\n" ); 
@@ -1160,8 +1163,7 @@ end );
 InstallMethod( \=, "for groupoid cosets", [IsGroupoidCoset, IsGroupoidCoset], 
 function( c1, c2 ) 
 
-    local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, pt, obt, ph, obh, 
-           g1, g2, g, gp; 
+    local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, elts1, elts2; 
 
     act1 := ActingDomain( c1 ); 
     act2 := ActingDomain( c2 ); 
@@ -1187,24 +1189,10 @@ function( c1, c2 )
         Info( InfoGroupoids, 2, "different head" ); 
         return false; 
     fi; 
-    g1 := rep1![1]; 
-    g2 := rep2![1]; 
-    if ( type1 = "r" ) then 
-        g := g1 * g2^-1; 
-        pt := PieceOfObject( act1, rep1![2] ); 
-        obt := ObjectList( pt ); 
-        gp := ObjectGroup( act1, obt[1] ); 
-        return ( g in gp ); 
-    elif ( type1 = "l" ) then 
-        g := g1^-1 * g2; 
-        ph := PieceOfObject( act1, rep1![3] ); 
-        obh := ObjectList( ph ); 
-        gp := ObjectGroup( act1, obh[1] ); 
-        return ( g in gp ); 
-    else 
-        Print( "tests not yet implemented\n" ); 
-        return fail; 
-    fi; 
+    if not ( c1!.elements = c2!.elements ) then 
+        Info( InfoGroupoids, 2, "different sets of elements" ); 
+        return false; 
+    fi;
     return true; 
 end );
 
@@ -1215,13 +1203,7 @@ end );
 InstallMethod( Size, "for a subset of a connected groupoid", 
     [ IsHomsetCosets ], 
 function( hc ) 
-    if ( hc!.type in [ "s", "r" ] ) then 
-        return Size( hc!.tgroup) * Length(hc!.tobs) * Length(hc!.hobs); 
-    elif ( hc!.type in [ "h", "c", "l" ] ) then 
-        return Size( hc!.hgroup) * Length(hc!.tobs) * Length(hc!.hobs); 
-    else 
-        Error( "Size not yet implemented for double cosets" ); 
-    fi;
+    return Length(hc!.tobs) * Size( hc!.elements) * Length(hc!.hobs); 
 end ); 
 
 #############################################################################
@@ -1232,26 +1214,22 @@ InstallMethod( Iterator, "for a subset of a connected groupoid",
     [ IsHomsetCosets ], 
 function( hc )
 
-    local group;
+    local elements, pro1, pro2;
 
-    if ( hc!.type in [ "h", "c", "l" ] ) then 
-        group := hc!.hgroup; 
-    else 
-        group := hc!.tgroup; 
-    fi; 
+    elements := hc!.elements; 
     return IteratorByFunctions( rec( 
         IsDoneIterator := function( iter )
-            return ( IsDoneIterator( iter!.groupIterator ) 
+            return ( IsDoneIterator( iter!.elementsIterator ) 
                      and ( iter!.tpos = iter!.tlen )
                      and ( iter!.hpos = iter!.hlen ) );
             end, 
         NextIterator := function( iter )
             if ( iter!.tpos = 0 ) then
-                iter!.gpelt := NextIterator( iter!.groupIterator );
+                iter!.gpelt := NextIterator( iter!.elementsIterator );
                 iter!.tpos := 1;
                 iter!.hpos := 1;
            elif ((iter!.tpos = iter!.tlen) and (iter!.hpos = iter!.hlen)) then 
-                iter!.gpelt := NextIterator( iter!.groupIterator );
+                iter!.gpelt := NextIterator( iter!.elementsIterator );
                 iter!.tpos := 1;
                 iter!.hpos := 1;
            elif ( iter!.hpos = iter!.hlen ) then
@@ -1260,29 +1238,33 @@ function( hc )
            else 
                 iter!.hpos := iter!.hpos + 1;
             fi; 
-            if ( hc!.type in [ "h" ] ) then 
+            if ( hc!.type = "h" ) then 
                 return ArrowNC( true, hc!.hrays[iter!.hpos]*(iter!.gpelt), 
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
-            elif ( hc!.type in [ "c" ] ) then 
+            elif ( hc!.type = "c" ) then 
                 return ArrowNC( true, (hc!.hrays[iter!.tpos])*(iter!.gpelt), 
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
-            elif ( hc!.type in [ "s" ] ) then 
+            elif ( hc!.type = "s" ) then 
                 return ArrowNC( true, (iter!.gpelt)*hc!.trays[iter!.hpos], 
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
-            elif ( hc!.type in [ "r" ] ) then 
+            elif ( hc!.type = "r" ) then 
                 return ArrowNC( true, 
-                           (hc!.trays[iter!.tpos]^-1)*(iter!.gpelt)*iter!.rep,  
+                           (hc!.trays[iter!.tpos]^-1)*(iter!.gpelt),  
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
-            elif ( hc!.type in [ "l" ] ) then 
+            elif ( hc!.type = "l" ) then 
                 return ArrowNC( true, 
-                           iter!.rep*(iter!.gpelt)*(hc!.hrays[iter!.hpos]), 
+                           (iter!.gpelt)*(hc!.hrays[iter!.hpos]), 
                            iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
-            elif ( hc!.type in [ "d" ] ) then 
-                Error( "double cosets not yet implemented," ); 
+            elif ( hc!.type = "d" ) then 
+                return ArrowNC( true, 
+                           hc!.trays[iter!.tpos]^-1
+                            * (iter!.gpelt) 
+                               * hc!.hrays[iter!.hpos],  
+                           iter!.tobs[iter!.tpos], iter!.hobs[iter!.hpos] );
             fi; 
-            end,
+        end,
         ShallowCopy := iter -> 
-            rec( groupIterator := ShallowCopy( iter!.groupIterator ), 
+            rec( elementsIterator := ShallowCopy( iter!.elementsIterator ), 
                  ## fgpd := iter!.fgpd, 
                  gpelt := iter!.gpelt,
                  tobs := iter!.tobs,
@@ -1292,7 +1274,7 @@ function( hc )
                  tpos := iter!.tpos,
                  hpos := iter!.hpos,
                   rep := iter!.rep ),
-        groupIterator := Iterator( group ), 
+        elementsIterator := Iterator( elements ), 
         ## fgpd := hc![1], 
         gpelt := 0,
         tobs := hc!.tobs,
@@ -1323,7 +1305,7 @@ function( gpd, obj )
         rpos := rays[pos]^(-1); 
         rays := List( [1..Length(obs)], j -> rpos*rays[j] ); 
     fi; 
-    st := rec( tgroup := gp, tobs := [ obj ], hobs := obs, 
+    st := rec( elements := gp, tobs := [ obj ], hobs := obs, 
                trays := rays, rep := (), type := "s" );
     ObjectifyWithAttributes( st, IsHomsetCosetsType, 
         IsHomsetCosets, true ); 
@@ -1368,7 +1350,7 @@ function( gpd, obj )
         rpos := rays[pos]; 
         rays := List( [1..Length(obs)], j -> rays[j]^(-1)*rpos ); 
     fi; 
-    cst := rec( hgroup := gp, tobs := obs, hobs := [ obj ], 
+    cst := rec( elements := gp, tobs := obs, hobs := [ obj ], 
                 hrays := rays, rep := (), type := "c" ); 
     ObjectifyWithAttributes( cst, IsHomsetCosetsType, 
         IsHomsetCosets, true ); 
@@ -1421,7 +1403,7 @@ function( gpd, o1, o2 )
     else 
         ray := rays[p1]^(-1) * rays[p2]; 
     fi;
-    hs := rec( hgroup := gp, tobs := [ o1 ], hobs := [ o2 ], 
+    hs := rec( elements := gp, tobs := [ o1 ], hobs := [ o2 ], 
                hrays := [ ray ], rep := (), type := "h" ); 
     ObjectifyWithAttributes( hs, IsHomsetCosetsType, 
         IsHomsetCosets, true,
@@ -2108,7 +2090,7 @@ InstallOtherMethod( RightCoset, "for groupoid, subgroupoid and element",
     true, [ IsGroupoid, IsGroupoid, IsMultiplicativeElementWithObjects ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, U, obsU, nobsU, root, rayU, arayU, r, gpt, rcos; 
+    local G, U, obsU, nobsU, root, rayU, arayU, r, gpt, rc, rcos; 
 
     if not IsSubgroupoid( gpd, sgpd ) then
         Error( "sgpd not a subgroupoid of gpd," );
@@ -2144,8 +2126,9 @@ function( gpd, sgpd, e )
     arayU := RayArrowsOfGroupoid( U ); 
     ##  choose a representative arrow from the root object 
     r := arayU[ Position( obsU, e![2] ) ] * e;  
-    gpt := ObjectGroup( U, root );
-    rcos := rec( tgroup := gpt, tobs := obsU, hobs := [ e![3] ], 
+    gpt := ObjectGroup( U, root ); 
+    rc := RightCoset( gpt, r![1] ); 
+    rcos := rec( elements := rc, tobs := obsU, hobs := [ e![3] ], 
                  rep := r![1], trays := rayU, type := "r" ); 
     ObjectifyWithAttributes( rcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
@@ -2160,7 +2143,7 @@ InstallMethod( LeftCoset, "for groupoid, subgroupoid and element",
     true, [ IsGroupoid, IsGroupoid, IsGroupoidElement ], 0, 
 function( gpd, sgpd, e ) 
 
-    local G, V, obsV, nobsV, root, rayV, arayV, rays, r, gph, lcos; 
+    local G, V, obsV, nobsV, root, rayV, arayV, rays, r, gph, lc, lcos; 
 
     if not IsSubgroupoid( gpd, sgpd ) then
         Error( "sgpd not a subgroupoid of gpd," );
@@ -2197,7 +2180,8 @@ function( gpd, sgpd, e )
     ##  choose a representative arrow from the root object 
     r := e * arayV[ Position( obsV, e![3] ) ]^-1;  
     gph := ObjectGroup( V, r![3] ); 
-    lcos := rec( hgroup := gph, tobs := [ e![2] ], hobs := obsV, 
+    lc := List( RightCoset( gph, r![1]^-1 ), g -> g^-1 ); 
+    lcos := rec( elements := lc, tobs := [ e![2] ], hobs := obsV, 
                  rep := r![1], hrays := rayV, type := "l" ); 
     ObjectifyWithAttributes( lcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
@@ -2212,12 +2196,15 @@ InstallOtherMethod( DoubleCoset, "for groupoid, two subgroupoids, and element",
     true, [ IsGroupoid, IsGroupoid, IsGroupoid, IsGroupoidElement ], 0, 
 function( gpd, lsgpd, rsgpd, e ) 
 
-    local G, U, V, obsU, nobsU, obsV, nobsV, gpU, gpV, gpUV, 
-          rayU, rayV, ray0, rays, j, k, rt, rh, dc; 
+    local G, U, V, obsU, nobsU, rootU, rayU, arayU, rt, gpt, 
+          obsV, nobsV, rootV, rayV, arayV, rh, gph, r, dc, dcos; 
 
     if not ( IsSubgroupoid( gpd, lsgpd ) and IsSubgroupoid( gpd, rsgpd ) ) then
-        Error( "one of lsgpd and rsgpd not a subgroupoid of gpd," );
-    fi;
+        Error( "one of lsgpd and rsgpd not a subgroupoid of gpd" );
+    fi; 
+    if not ( e in gpd ) then 
+        Error( "arrow e is not in gpd" ); 
+    fi; 
     if IsSinglePiece( gpd ) then 
         G := gpd; 
     else
@@ -2249,44 +2236,38 @@ function( gpd, lsgpd, rsgpd, e )
         fi; 
     fi; 
     if not IsSubdomainWithObjects( G, V ) then 
-        Error( "UV not a subgroupoid of G," ); 
+        Error( "V not a subgroupoid of G," ); 
     fi; 
+    ## end of checks 
+
     obsU := ObjectList( U );
     nobsU := Length( obsU ); 
-    if not ( e![2] in obsU ) then 
-        return fail; 
-    fi;
-    rayU := RaysOfGroupoid( U );
-    rt := rayU[ Position( obsU, e![2] ) ]; 
-    gpU := ObjectGroup( U, e![2] );
+    rootU := obsU[1]; 
+    rayU := RaysOfGroupoid( U ); 
+    arayU := RayArrowsOfGroupoid( U );
+    rt := arayU[ Position( obsU, e![2] ) ];  
+    gpt := ObjectGroup( U, rootU );
+
     obsV := ObjectList( V );
     nobsV := Length( obsV ); 
-    if not ( e![3] in obsV ) then 
-        return fail; 
-    fi;
+    rootV := obsV[1]; 
     rayV := RaysOfGroupoid( V );
-    rh := rayV[ Position( obsV, e![3] ) ]; 
-    gpV := ObjectGroup( V, e![3] ); 
-    ray0 := ListWithIdenticalEntries( nobsV, 0 );
-    rays := ListWithIdenticalEntries( nobsU, 0 );
-    for j in [1..nobsU] do 
-        rays[j] := ShallowCopy( ray0 );
-    od;
-    for j in [1..obsU] do 
-        for k in [1..nobsV] do 
-            rays[j][k] := rayU[j]^(-1)*rt*e![1]*rh^(-1)*rayV[k]; 
-        od;
-    od;
-    gpUV := DirectProduct( gpU, gpV ); 
-    dc := rec( group := gpUV, tobs := obsU, hobs := obsV, 
-               rays := rays, type := "d" ); 
+    arayV := RayArrowsOfGroupoid( V ); 
+    rh := arayV[ Position( obsV, e![3] ) ]^-1; 
+    gph := ObjectGroup( V, rootV ); 
+
+    r := rt * e * rh; 
+Print( "r = ", r, "\n" ); 
+    dc := DoubleCoset( gpt, r![1], gph ); 
+    dcos := rec( elements := dc, tobs := obsU, hobs := obsV, 
+                 rep := r![1], trays := rayU, hrays := rayV, type := "d" ); 
     ObjectifyWithAttributes( dc, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, [U,V], 
-        Size, Size( gpU ) * nobsU * nobsV, 
-        Representative, e ); 
-    return dc;
+        Size, nobsU * Size( dc ) * nobsV, 
+        Representative, r ); 
+    return dcos;
 end ); 
 
 InstallMethod( PrintObj, "RightCoset", true, 
@@ -2324,37 +2305,39 @@ function( e, hc )
     if ( hc!.type = "h" ) then ## homset 
         if ( e![2] <> hc!.tobs[1] ) then return false; fi; 
         if ( e![3] <> hc!.hobs[1] ) then return false; fi; 
-        if not ( hc!.hrays[1]^(-1)*e![1] in hc!.hgroup ) then return false; fi; 
+        if not ( hc!.hrays[1]^(-1)*e![1] in hc!.elements ) then 
+            return false; 
+        fi; 
         return true;
     elif ( hc!.type = "s" ) then ## star  
         if ( e![2] <> hc!.tobs[1] ) then return false; fi; 
         pos := Position( hc!.hobs, e![3] );
         if ( pos = fail ) then return false; fi; 
         r := hc!.trays[pos]^-1; 
-        if not ( e![1]*r in hc!.tgroup ) then return false; fi; 
+        if not ( e![1]*r in hc!.elements ) then return false; fi; 
         return true;
     elif ( hc!.type = "c" ) then ## costar  
         if ( e![3] <> hc!.hobs[1] ) then return false; fi; 
         pos := Position( hc!.tobs, e![2] );
         if ( pos = fail ) then return false; fi; 
         r := hc!.hrays[pos]^-1; 
-        if not ( r*e![1] in hc!.hgroup ) then return false; fi; 
+        if not ( r*e![1] in hc!.elements ) then return false; fi; 
         return true;
     elif ( hc!.type = "r" ) then ## right coset 
         rep := hc!.rep; 
         if ( e![3] <> hc!.hobs[1] ) then return false; fi; 
         pos := Position( hc!.tobs, e![2] ); 
         if ( pos = fail ) then return false; fi; 
-        r := hc!.trays[pos]^(-1) * e![1] * rep^(-1); 
-        if not ( r in hc!.tgroup ) then return false; fi; 
+        r := hc!.trays[pos] * e![1]; 
+        if not ( r in hc!.elements ) then return false; fi; 
         return true; 
     elif ( hc!.type = "l" ) then ## left coset 
         rep := hc!.rep; 
         if ( e![2] <> hc!.tobs[1] ) then return false; fi; 
         pos := Position( hc!.hobs, e![3] ); 
         if ( pos = fail ) then return false; fi; 
-        r := rep^(-1) * e![1] * hc!.hrays[pos]^(-1); 
-        if not ( r in hc!.hgroup ) then return false; fi; 
+        r := e![1] * hc!.hrays[pos]^-1; 
+        if not ( r in hc!.elements ) then return false; fi; 
         return true; 
     elif ( hc!.type = "d" ) then ## double coset   
         Error( "'in' not yet implemented for double cosets" );
