@@ -515,6 +515,8 @@ gap> [ Order( i8 ), Order(loop) ];
    <Oper Name="Homset"
          Arg="gpd, tail, head" />
 <Description>
+<Index Key="star"></Index>
+<Index Key="costar"></Index>
 The <E>star</E> at <C>obj</C> is the set of arrows 
 which have <C>obj</C> as tail,
 while the <E>costar</E> is the set of arrows which have <C>obj</C> as head.
