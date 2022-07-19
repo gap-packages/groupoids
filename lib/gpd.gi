@@ -2139,7 +2139,7 @@ function( gpd, sgpd, e )
     return rcos; 
 end ); 
 
-InstallMethod( LeftCoset, "for groupoid, subgroupoid and element", 
+InstallOtherMethod( LeftCoset, "for groupoid, subgroupoid and element", 
     true, [ IsGroupoid, IsGroupoid, IsGroupoidElement ], 0, 
 function( gpd, sgpd, e ) 
 
@@ -2615,7 +2615,7 @@ function( G, U )
     return cosets;
 end);
     
-InstallMethod( LeftCosetsNC, "for groupoids", true, 
+InstallOtherMethod( LeftCosetsNC, "for groupoids", true, 
     [ IsGroupoid, IsGroupoid ], 0,
 function( G, U )
 

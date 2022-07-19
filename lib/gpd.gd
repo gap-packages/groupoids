@@ -221,8 +221,6 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 #R  IsLeftCosetWithObjectsDefaultRep( <gp>, <obj> ) 
 #O  LeftCosetRepresentatives( <gpd>, <sgpd> )       #? should be Iterator ?? 
 #O  LeftCosetRepresentativesFromObject( <gpd>, <sgpd>, <obj> ) 
-#O  LeftCosetsNC( <gpd>, <sgpd> ) 
-#O  LeftCoset( <gpd>, <sgpd>, <elt> )
 #O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )          #? ditto ?? 
 ## 
 DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
@@ -235,8 +233,6 @@ DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
 DeclareOperation( "LeftCosetRepresentativesFromObject", 
     [ IsGroupoid, IsGroupoid, IsObject ] ); 
-DeclareOperation( "LeftCosetsNC", [ IsGroupoid, IsGroupoid ] ); 
-DeclareOperation( "LeftCoset", [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
 DeclareOperation( "DoubleCosetRepresentatives", 
     [ IsGroupoid, IsGroupoid, IsGroupoid ] ); 
 

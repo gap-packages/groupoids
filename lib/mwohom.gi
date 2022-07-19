@@ -2,7 +2,7 @@
 ##
 #W  mwohom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for mappings of magmas with objects
