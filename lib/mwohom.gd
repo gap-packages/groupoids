@@ -2,7 +2,7 @@
 ##
 #W  mwohom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  Declaration file for mappings of magmas with objects. 
@@ -108,11 +108,11 @@ DeclareCategoryCollections( "IsGroupoidHomomorphismCollColl" );
 ## 
 DeclareRepresentation( "IsMappingToSinglePieceRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping, 
+        and IsComponentObjectRep and IsGeneralMapping, 
     [ "Source", "Range", "MappingToSinglePieceData" ] ); 
 DeclareRepresentation( "IsMappingWithPiecesRep", 
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping, 
+        and IsComponentObjectRep and IsGeneralMapping, 
     [ "Source", "Range", "PiecesOfMapping" ] );
 BindGlobal( "IsMWOMappingToSinglePieceType", 
             NewType( GeneralMappingWithObjectsFamily, 

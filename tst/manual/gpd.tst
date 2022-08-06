@@ -341,8 +341,8 @@ single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
 
 ## SubSection 4.4.1
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
-<right coset of single piece groupoid: < c4, 
-[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
+<right coset of single piece groupoid: < c4, [ -8, -7 ] > 
+with representative [(1,3) : -8 -> -7]>
 gap> Perform( re2, Display );
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
@@ -357,9 +357,50 @@ gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
   [(1,4,3,2) : -9 -> -8], [() : -9 -> -7], [(1,4,3,2) : -9 -> -7], 
   [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
   [() : -8 -> -9], [(2,4) : -8 -> -9] ]
+gap> le2 := LeftCoset( Gd8, Ud8, e2 ); 
+<left coset of single piece groupoid: < c4, [ -8, -7 ] > with representative [
+(1,3) : -8 -> -8]>
+gap> Perform( le2, Display );
+[(1,3) : -8 -> -8]
+[(1,3) : -8 -> -7]
+[(2,4) : -8 -> -8]
+[(2,4) : -8 -> -7]
+[(1,4)(2,3) : -8 -> -8]
+[(1,4)(2,3) : -8 -> -7]
+[(1,2)(3,4) : -8 -> -8]
+[(1,2)(3,4) : -8 -> -7]
+gap> lcrd8 := LeftCosetRepresentatives( Gd8, Ud8 );
+[ [() : -9 -> -9], [(1,2,3,4) : -9 -> -9], [() : -8 -> -9], 
+  [(1,2,3,4) : -8 -> -9], [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
+  [() : -9 -> -8], [(2,4) : -9 -> -8] ]
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 [ [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], [() : -7 -> -7], 
   [(2,4) : -7 -> -7] ]
+gap> de2 := DoubleCoset( Gd8, Ud8, Ud8, e2 );
+<double coset of [ single piece groupoid: < c4, [ -8, -7 ] >, 
+  single piece groupoid: < c4, [ -8, -7 ] > ] with representative [(1,3) : 
+-8 -> -8]>
+gap> Perform( de2, Display );
+[(2,4) : -8 -> -8]
+[(2,4) : -8 -> -7]
+[(2,4) : -7 -> -8]
+[(2,4) : -7 -> -7]
+[(1,3) : -8 -> -8]
+[(1,3) : -8 -> -7]
+[(1,3) : -7 -> -8]
+[(1,3) : -7 -> -7]
+[(1,2)(3,4) : -8 -> -8]
+[(1,2)(3,4) : -8 -> -7]
+[(1,2)(3,4) : -7 -> -8]
+[(1,2)(3,4) : -7 -> -7]
+[(1,4)(2,3) : -8 -> -8]
+[(1,4)(2,3) : -8 -> -7]
+[(1,4)(2,3) : -7 -> -8]
+[(1,4)(2,3) : -7 -> -7]
+gap> dcrd8 := DoubleCosetRepresentatives( Gd8, Ud8, Ud8 );
+[ [() : -9 -> -9], [(1,4,3,2) : -9 -> -9], [() : -9 -> -8], [() : -8 -> -9], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8] ]
 
 ### Section 4.5 : conjugation ###
 

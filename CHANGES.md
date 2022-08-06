@@ -1,8 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.71 for GAP 4.11.1 (05/07/22) 
+## Version 1.71 for GAP 4.11.1 (06/08/22) 
 
- * (05/07/22) 
+ * (06/08/22) now requiring version 0.76 of Utils 
+              major revision of left, right and double cosets 
 
 ## Version 1.69 for GAP 4.11.1 (15/11/21) 
 

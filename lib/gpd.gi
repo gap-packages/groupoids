@@ -2257,11 +2257,10 @@ function( gpd, lsgpd, rsgpd, e )
     gph := ObjectGroup( V, rootV ); 
 
     r := rt * e * rh; 
-Print( "r = ", r, "\n" ); 
     dc := DoubleCoset( gpt, r![1], gph ); 
     dcos := rec( elements := dc, tobs := obsU, hobs := obsV, 
                  rep := r![1], trays := rayU, hrays := rayV, type := "d" ); 
-    ObjectifyWithAttributes( dc, IsHomsetCosetsType, 
+    ObjectifyWithAttributes( dcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
         SuperDomain, G,
         ActingDomain, [U,V], 
@@ -2587,6 +2586,29 @@ end );
 
 ##  still need to implement  DoubleCosetRepresentatives for G not connected
 
+InstallMethod( DoubleCosetRepresentatives, "generic method for 2 subgroupoids",
+    true, [ IsGroupoid, IsGroupoid, IsGroupoid ], 0,
+function( G, U, V )
+
+    local posU, posV, cG, cU, ncU, cV, ncV, reps, i, filt, piece, m, j, subU;
+
+    if not IsSubgroupoid( G, U ) then
+        Error( "U not a subgroupoid of G," );
+    fi;
+    posU := PiecePositions( G, U ); 
+    posV := PiecePositions( G, V ); 
+    reps := [ ];
+    cG := Pieces( G );
+    cU := Pieces( U );
+    ncU := Length( cU );
+    cV := Pieces( V );
+    ncV := Length( cV ); 
+    Print( "DoubleCosetReps not yet implemented when G not connected\n" );
+    return fail;
+end );
+
+
+
 #############################################################################
 ##
 #M  RightCosetsNC 
@@ -2642,7 +2664,7 @@ function( G, U, V )
     cosets := ListWithIdenticalEntries( nr, 0 );
     for i in [1..nr] do
         e := reps[i];
-        cosets[i] := DoubleCoset( U, e, V );
+        cosets[i] := DoubleCoset( G, U, V, e );
     od;
     return cosets;
 end);

@@ -21,7 +21,7 @@
 ## 
 DeclareCategory( "IsGraphOfGroupoids", IsGroupoidDigraph ); 
 DeclareRepresentation( "IsGraphOfGroupoidsRep",
-    IsStructuredDigraph and IsAttributeStoringRep,
+    IsStructuredDigraph and IsAttributeStoringRep and IsComponentObjectRep,
     [ "DigraphOfGraphOfGroupoids", "GroupoidsOfGraphOfGroupoids", 
       "SubgroupoidsOfGraphOfGroupoids", "IsomorphismsOfGraphOfGroupoids" ] ); 
 BindGlobal( "GraphOfGroupoidsFamily", 
@@ -90,7 +90,7 @@ DeclareAttribute( "LeftTransversalsOfGraphOfGroupoids", IsGraphOfGroupoids );
 ##  and edges in the digraph  
 ## 
 DeclareRepresentation( "IsGraphOfGroupoidsWordRep", 
-    IsObject and IsAttributeStoringRep, 
+    IsObject and IsAttributeStoringRep and IsComponentObjectRep, 
    [ "GraphOfGroupoidsOfWord", 
      "TailOfGraphOfGroupsWord", "WordOfGraphOfGroupoidsWord" ] ); 
 BindGlobal( "IsGraphOfGroupoidsWordFamily", 

@@ -845,12 +845,22 @@ single piece groupoid with rays: < Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
          Arg="G, U, elt" />
    <Oper Name="RightCosetRepresentatives"
          Arg="G, U" />
+   <Oper Name="RightCosets"
+         Arg="G, U" />
    <Oper Name="LeftCoset"
          Arg="G, U, elt" />
    <Oper Name="LeftCosetRepresentatives"
          Arg="G, U" />
    <Oper Name="LeftCosetRepresentativesFromObject"
          Arg="G, U, obj" />
+   <Oper Name="LeftCosets"
+         Arg="G, U" />
+   <Oper Name="DoubleCoset"
+         Arg="G, U, V, elt" />
+   <Oper Name="DoubleCosetRepresentatives"
+         Arg="G, U, V" />
+   <Oper Name="DoubleCosets"
+         Arg="G, U, V" />
 <Description>
 If <C>U</C> is a subgroupoid of <M>G</M>, 
 the <E>right cosets</E> <M>Ug</M> of <M>U</M> in <M>G</M>
@@ -883,15 +893,16 @@ cosets may have differing lengths.
 In the example the representative for the right coset <C>re2</C> is the 
 tenth one in the printed list <C>rcrd8</C>, namely <C>[(2,4):-7->-7]</C>. 
 <P/>
-Note that no operation <C>DoubleCoset</C> has yet been implemented. 
+Note that operations for double cosets are a recent addition, 
+and may need further work.  
 <P/> 
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
 gap> re2 := RightCoset( Gd8, Ud8, e2 );
-<right coset of single piece groupoid: < c4, 
-[ -8, -7 ] > with representative [(1,3) : -8 -> -7]>
+<right coset of single piece groupoid: < c4, [ -8, -7 ] > 
+with representative [(1,3) : -8 -> -7]>
 gap> Perform( re2, Display );
 [(1,3) : -8 -> -7]
 [(1,3) : -7 -> -7]
@@ -906,9 +917,50 @@ gap> rcrd8 := RightCosetRepresentatives( Gd8, Ud8 );
   [(1,4,3,2) : -9 -> -8], [() : -9 -> -7], [(1,4,3,2) : -9 -> -7], 
   [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
   [() : -8 -> -9], [(2,4) : -8 -> -9] ]
+gap> le2 := LeftCoset( Gd8, Ud8, e2 ); 
+<left coset of single piece groupoid: < c4, [ -8, -7 ] > with representative [
+(1,3) : -8 -> -8]>
+gap> Perform( le2, Display );
+[(1,3) : -8 -> -8]
+[(1,3) : -8 -> -7]
+[(2,4) : -8 -> -8]
+[(2,4) : -8 -> -7]
+[(1,4)(2,3) : -8 -> -8]
+[(1,4)(2,3) : -8 -> -7]
+[(1,2)(3,4) : -8 -> -8]
+[(1,2)(3,4) : -8 -> -7]
+gap> lcrd8 := LeftCosetRepresentatives( Gd8, Ud8 );
+[ [() : -9 -> -9], [(1,2,3,4) : -9 -> -9], [() : -8 -> -9], 
+  [(1,2,3,4) : -8 -> -9], [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8], [() : -7 -> -7], [(2,4) : -7 -> -7], 
+  [() : -9 -> -8], [(2,4) : -9 -> -8] ]
 gap> lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );
 [ [() : -7 -> -9], [(1,2,3,4) : -7 -> -9], [() : -7 -> -7], 
   [(2,4) : -7 -> -7] ]
+gap> de2 := DoubleCoset( Gd8, Ud8, Ud8, e2 );
+<double coset of [ single piece groupoid: < c4, [ -8, -7 ] >, 
+  single piece groupoid: < c4, [ -8, -7 ] > ] with representative [(1,3) : 
+-8 -> -8]>
+gap> Perform( de2, Display );
+[(2,4) : -8 -> -8]
+[(2,4) : -8 -> -7]
+[(2,4) : -7 -> -8]
+[(2,4) : -7 -> -7]
+[(1,3) : -8 -> -8]
+[(1,3) : -8 -> -7]
+[(1,3) : -7 -> -8]
+[(1,3) : -7 -> -7]
+[(1,2)(3,4) : -8 -> -8]
+[(1,2)(3,4) : -8 -> -7]
+[(1,2)(3,4) : -7 -> -8]
+[(1,2)(3,4) : -7 -> -7]
+[(1,4)(2,3) : -8 -> -8]
+[(1,4)(2,3) : -8 -> -7]
+[(1,4)(2,3) : -7 -> -8]
+[(1,4)(2,3) : -7 -> -7]
+gap> dcrd8 := DoubleCosetRepresentatives( Gd8, Ud8, Ud8 );
+[ [() : -9 -> -9], [(1,4,3,2) : -9 -> -9], [() : -9 -> -8], [() : -8 -> -9], 
+  [() : -8 -> -8], [(2,4) : -8 -> -8] ]
 ]]>
 </Example>
 </Section>

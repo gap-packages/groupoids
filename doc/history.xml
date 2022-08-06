@@ -75,6 +75,11 @@ In version 1.62 of October 2018 there were significant changes to the
 operations constructing free products with amalgamation and HNN extensions. 
 There was a plan to move this material to a new package 
 <Package>Rewriting</Package>, but that has not happened. 
+<P/> 
+Version 1.71 of August 2022 contains a complete revision of right, 
+left and double cosets of groupoids.  
+(The initial declaration of LeftCoset was moved to the 
+<Package>Utils</Package> package.) 
 </Section>
 
 

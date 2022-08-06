@@ -14,11 +14,13 @@ gap> s5 := Group( s5gens );;
 gap> SetName( s5, "s5" );;
 gap> obs := [-9,-8,-7,-6,-5];;
 gap> Gs5 := SinglePieceGroupoid( s5, obs );;
+gap> SetName( Gs5, "Gs5" ); 
 gap> s4 := Subgroup( s5, [ (1,2,3,4), (3,4) ] );;
 gap> SetName( s4, "s4" );
 gap> Hs4 := SubgroupoidWithRays( Gs5, s4, [ (), (4,5), (3,5), (2,5), (1,5) ] );
 single piece groupoid with rays: < s4, [ -9, -8, -7, -6, -5 ], 
 [ (), (4,5), (3,5), (2,5), (1,5) ] >
+gap> SetName( Hs4, "Hs4" ); 
 
 gap> star7 := ObjectStar( Hs4, -7 ); 
 <star at -7 with vertex group Group( [ (1,2,5,4), (4,5) ] )>
@@ -55,11 +57,13 @@ gap> a76 in hs85;
 false
 
 gap> c3 := Subgroup( s5, [ (1,2,3) ] );; 
-gap> c4 := Subgroup( s5, [ (1,2,5,4) ] );; 
-gap> SetName( c3, "c3" );  SetName( c4, "c4" ); 
+gap> SetName( c3, "c3" ); 
+gap> c4a := Subgroup( s5, [ (1,2,3,4) ] );; 
+gap> c4b := Subgroup( s5, [ (1,2,5,4) ] );; 
+gap> SetName( c4a, "c4a" );  SetName( c4b, "c4b" ); 
 gap> Uc3c4 := Subgroupoid( Hs4, 
 >                 [ [ c3, [-9,-8,-5], [ (), (1,3,5,4), (1,2,4,5) ] ], 
->                   [ c4, [-7,-6], [ (), (1,4,3,2,5) ] ] ] );; 
+>                   [ c4b, [-7,-6], [ (), (1,4,3,2,5) ] ] ] );; 
 gap> Display( Uc3c4 ); 
 groupoid with 2 pieces:
 <     objects: [ -9, -8, -5 ]
@@ -68,8 +72,9 @@ groupoid with 2 pieces:
   conjugators: [ (), (1,3,5,4), (1,2,4,5) ]
 <     objects: [ -7, -6 ]
    parent gpd: single piece groupoid: < s5, [ -7, -6 ] >
-   root group: c4 = <[ (1,2,5,4) ]>
+   root group: c4b = <[ (1,2,5,4) ]>
   conjugators: [ (), (1,4,3,2,5) ]
+gap> SetName( Uc3c4, "Uc3c4" ); 
 gap> IsWideSubgroupoid( Gs5, Uc3c4 );
 true
 
@@ -94,8 +99,8 @@ gap> Perform( rc85, Display );
 [(1,2,5) : -9 -> -5]
 [(1,4)(2,5,3) : -8 -> -5]
 [(4,5) : -5 -> -5]
-gap> b85 := Arrow( Hs4, (2,3,5,4), -5, -5 );;  
-gap> b85 in rc85; 
+gap> b55 := Arrow( Hs4, (2,3,5,4), -5, -5 );;  
+gap> b55 in rc85; 
 true
 gap> lc85 := LeftCoset( Hs4, Uc3c4, a85 ); 
 <left coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
@@ -112,7 +117,7 @@ gap> Perform( lc85, Display );
 [(1,2,3,4) : -8 -> -5]
 gap> a85 in lc85; 
 true
-gap> b85 in lc85; 
+gap> b55 in lc85; 
 false
 
 gap> a56 := ArrowNC( true, (1,2,3,4), -5, -6 );
@@ -133,7 +138,7 @@ gap> Perform( rc56, Display );
 [(1,5,3)(2,4) : -8 -> -6]
 [(1,2) : -5 -> -6]
 gap> lc56 := LeftCoset( Hs4, Uc3c4, a56 );
-<left coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
+<left coset of single piece groupoid with rays: < c4b, [ -7, -6 ], 
 [ (), (1,4,3,2,5) ] > with representative [(1,3)(2,4,5) : -5 -> -7]>
 gap> Perform( lc56, Display );         
 [(1,3)(2,4,5) : -5 -> -7]
@@ -150,6 +155,7 @@ true
 gap> Uc3 := Pieces( Uc3c4 )[1];
 single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
 [ (), (1,3,5,4), (1,2,4,5) ] >
+gap> SetName( Uc3, "Uc3" ); 
 gap> reps3r := RightCosetRepresentatives( Hs4, Uc3 );
 [ [() : -9 -> -9], [(2,3) : -9 -> -9], [(1,3)(2,4) : -9 -> -9], 
   [(1,3,4,2) : -9 -> -9], [(1,4)(2,3) : -9 -> -9], [(1,4) : -9 -> -9], 
@@ -168,8 +174,7 @@ gap> reps3r := RightCosetRepresentatives( Hs4, Uc3 );
 gap> Length( reps3r );
 40
 gap> rc56 := RightCoset( Hs4, Uc3, a56 );  
-<right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,3,4,5,2) : -9 -> -6]>
+<right coset of Uc3 with representative [(1,3,4,5,2) : -9 -> -6]>
 gap> Perform( rc56, Display );
 [(1,3,4,5,2) : -9 -> -6]
 [(1,5,4,2) : -8 -> -6]
@@ -219,8 +224,7 @@ gap> Length(reps3l);
 gap> a65 := a56^-1;
 [(1,4,3,2) : -6 -> -5]
 gap> lc65 := LeftCoset( Hs4, Uc3, a65 );
-<left coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
-[ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,2,5,4,3) : -6 -> -9]>
+<left coset of Uc3 with representative [(1,2,5,4,3) : -6 -> -9]>
 gap> Perform( lc65, Display );
 [(1,2,5,4,3) : -6 -> -9]
 [(1,2,4,5) : -6 -> -8]
@@ -250,9 +254,10 @@ gap> for r in reps3l do
 gap> Length( L3 );
 360
 
-gap> Uc4 := Pieces( Uc3c4 )[2];
-single piece groupoid with rays: < c4, [ -7, -6 ], [ (), (1,4,3,2,5) ] >
-gap> reps4r := RightCosetRepresentatives( Hs4, Uc4 );
+gap> Uc4b := Pieces( Uc3c4 )[2];
+single piece groupoid with rays: < c4b, [ -7, -6 ], [ (), (1,4,3,2,5) ] >
+gap> SetName( Uc4b, "Uc4b" ); 
+gap> reps4r := RightCosetRepresentatives( Hs4, Uc4b );
 [ [() : -7 -> -7], [(4,5) : -7 -> -7], [(2,4) : -7 -> -7], 
   [(2,4,5) : -7 -> -7], [(2,5,4) : -7 -> -7], [(2,5) : -7 -> -7], 
   [() : -6 -> -6], [(4,5) : -6 -> -6], [(3,4) : -6 -> -6], 
@@ -265,9 +270,8 @@ gap> reps4r := RightCosetRepresentatives( Hs4, Uc4 );
   [(2,4,5) : -7 -> -5], [(2,5,4) : -7 -> -5], [(2,5) : -7 -> -5] ]
 gap> Length( reps4r );
 30
-gap> rc65 := RightCoset( Hs4, Uc4, a65 );  
-<right coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [(1,3)(2,5,4) : -7 -> -5]>
+gap> rc65 := RightCoset( Hs4, Uc4b, a65 );  
+<right coset of Uc4b with representative [(1,3)(2,5,4) : -7 -> -5]>
 gap> Perform( rc65, Display );
 [(1,3)(2,5,4) : -7 -> -5]
 [(1,4,3,2) : -6 -> -5]
@@ -279,7 +283,7 @@ gap> Perform( rc65, Display );
 [(1,2)(4,5) : -6 -> -5]
 gap> L4 := [ ];; 
 gap> for r in reps4r do 
->        c := RightCoset( Hs4, Uc4, r ); 
+>        c := RightCoset( Hs4, Uc4b, r ); 
 >        j := 0;
 >        for a in c do 
 >            if ( a in L4 ) then 
@@ -295,7 +299,7 @@ gap> for r in reps4r do
 >    od;
 gap> Length( L4 );
 240
-gap> reps4l := LeftCosetRepresentatives( Hs4, Uc4 );
+gap> reps4l := LeftCosetRepresentatives( Hs4, Uc4b );
 [ [() : -7 -> -7], [(4,5) : -7 -> -7], [(2,4) : -7 -> -7], 
   [(2,5,4) : -7 -> -7], [(2,4,5) : -7 -> -7], [(2,5) : -7 -> -7], 
   [() : -6 -> -6], [(4,5) : -6 -> -6], [(3,4) : -6 -> -6], 
@@ -308,9 +312,8 @@ gap> reps4l := LeftCosetRepresentatives( Hs4, Uc4 );
   [(2,5,4) : -5 -> -7], [(2,4,5) : -5 -> -7], [(2,5) : -5 -> -7] ]
 gap> Length(reps4l);
 30
-gap> lc56 := LeftCoset( Hs4, Uc4, a56 );
-<left coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [(1,3)(2,4,5) : -5 -> -7]>
+gap> lc56 := LeftCoset( Hs4, Uc4b, a56 );
+<left coset of Uc4b with representative [(1,3)(2,4,5) : -5 -> -7]>
 gap> Perform( lc56, Display );
 [(1,3)(2,4,5) : -5 -> -7]
 [(1,2,3,4) : -5 -> -6]
@@ -322,7 +325,7 @@ gap> Perform( lc56, Display );
 [(1,2)(4,5) : -5 -> -6]
 gap> L4 := [ ];; 
 gap> for l in reps4l do 
->        c := LeftCoset( Hs4, Uc4, l ); 
+>        c := LeftCoset( Hs4, Uc4b, l ); 
 >        j := 0;
 >        for a in c do 
 >            if ( a in L4 ) then 
@@ -339,24 +342,36 @@ gap> for l in reps4l do
 gap> Length( L4 );
 240
 
-gap> Gs5b := Subgroupoid( Gs5, [ [s5,[-7,-6]] ] );
+gap> Gs5c := Subgroupoid( Gs5, [ [s5,[-7,-6]] ] );
 single piece groupoid: < s5, [ -7, -6 ] >
-gap> Hs4b := Subgroupoid( Gs5b, [ [s4^(3,5),[-7,-6],[(),(2,5,3)] ] ] );
+gap> Hs4c := Subgroupoid( Gs5c, [ [s4^(3,5),[-7,-6],[(),(2,5,3)] ] ] );
 single piece groupoid with rays: < Group( [ (1,2,5,4), (4,5) ] ), [ -7, -6 ], 
 [ (), (2,5,3) ] >
-gap> Uc4b := Subgroupoid( Hs4b, [ [c4,[-7,-6],[(),(1,4,3,2,5)] ] ] );
-single piece groupoid with rays: < c4, [ -7, -6 ], [ (), (1,4,3,2,5) ] >
-gap> IsSubgroupoid( Hs4b, Uc4b );
+gap> Uc4c := Subgroupoid( Hs4c, [ [c4b,[-7,-6],[(),(1,4,3,2,5)] ] ] );
+single piece groupoid with rays: < c4b, [ -7, -6 ], [ (), (1,4,3,2,5) ] >
+gap> IsSubgroupoid( Hs4c, Uc4c );
 true
-gap> c := LeftCoset( Hs4b, Uc4, reps4l[1] );
-<left coset of single piece groupoid with rays: < c4, [ -7, -6 ], 
-[ (), (1,4,3,2,5) ] > with representative [() : -7 -> -7]>
-gap> reps4l7 := LeftCosetRepresentativesFromObject( Hs4b, Uc4, -7 );
+gap> c := LeftCoset( Hs4c, Uc4b, reps4l[1] );
+<left coset of Uc4b with representative [() : -7 -> -7]>
+gap> reps4l7 := LeftCosetRepresentativesFromObject( Hs4c, Uc4b, -7 );
 [ [() : -7 -> -7], [(4,5) : -7 -> -7], [(2,4) : -7 -> -7], 
   [(2,5,4) : -7 -> -7], [(2,4,5) : -7 -> -7], [(2,5) : -7 -> -7] ]
-gap> reps4l6 := LeftCosetRepresentativesFromObject( Hs4b, Uc4, -6 );
+gap> reps4l6 := LeftCosetRepresentativesFromObject( Hs4c, Uc4b, -6 );
 [ [() : -6 -> -6], [(4,5) : -6 -> -6], [(3,4) : -6 -> -6], 
   [(3,5,4) : -6 -> -6], [(3,4,5) : -6 -> -6], [(3,5) : -6 -> -6] ]
 
-gap> #
+gap> dcos := DoubleCosets( s4, c3, c4a );
+[ DoubleCoset(c3,(),c4a), DoubleCoset(c3,(2,3),c4a) ]
+gap> List( dcos, Representative );
+[ (), (2,3) ]
+gap> List( dcos, Size );
+[ 12, 12 ]
+gap> a97 := Arrow( Hs4, (3,5), -9, -7 );;  
+gap> dc1 := DoubleCoset( Hs4, Uc3, Uc4b, a97 );
+<double coset of [ Uc3, Uc4b ] with representative [(3,5) : -9 -> -7]>
+gap> a56 := Arrow( Hs4, (1,2), -5, -6 );; 
+gap> dc2 := DoubleCoset( Hs4, Uc3, Uc4b, a56 );;
+gap> dc1 = dc2; 
+false
+
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
