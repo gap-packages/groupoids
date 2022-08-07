@@ -2,7 +2,7 @@
 ##
 #W  mwo.tst                 Groupoids Package                    Chris Wensley
 ##
-#Y  Copyright (C) 2000-2021, Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "groupoids package: mwo.tst" );
@@ -178,6 +178,8 @@ gap> Pieces(N1);
         magma = sgp<t,s,r>
       objects = [ -3, -2, -1 ]
      ]
+gap> PieceOfObject( N1, -7 ); 
+M78
 
 gap> N2 := UnionOfPieces( M49, S0 );  
 semigroup with objects having 2 pieces :-

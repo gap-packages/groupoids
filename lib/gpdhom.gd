@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -68,7 +68,7 @@ DeclareOperation( "IsomorphismGroupoids", [ IsGroupoid, IsGroupoid ] );
 ##  giving a root group hom; list of object images; list of ray images. 
 ##  
 DeclareRepresentation( "IsDefaultGroupoidHomomorphismRep",
-    IsGroupoidHomomorphism and IsAttributeStoringRep, 
+    IsGroupoidHomomorphism and IsAttributeStoringRep and IsComponentObjectRep, 
     [ "Source", "Range", "PiecesOfMapping" ] ); 
 
 ############################################################################# 
@@ -130,7 +130,7 @@ DeclareOperation( "TestAllProductsUnderGroupoidHomomorphism",
 ##   - images for the objects. 
 ##  
 DeclareRepresentation( "IsGroupoidHomomorphismFromHomogeneousDiscreteRep",
-    IsGroupoidHomomorphism and IsAttributeStoringRep, 
+    IsGroupoidHomomorphism and IsAttributeStoringRep and IsComponentObjectRep, 
     [ "Source", "Range", "ImagesOfObjects", "ObjectHomomorphisms" ] ); 
 
 ############################################################################# 

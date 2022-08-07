@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gd                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -173,13 +173,14 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 ##  Stars, Costars and Homsets are particular subsets of the elements
 ##  of a connected groupoid for which an iterator is required
 ##  
-##  Six items of data are required: 
-##  1.  the family of objects of the parent groupoid,    #? why? 
-##  2.  a set of group elements, e.g. an object group, 
-##  3.  a list of source objects, 
-##  4.  a list of target objects, 
-##  5.  a list of rays, 
-##  6.  a single character string 'c' in {s,c,h,u,r,l,d}, 
+##  Up to seven items of data are required: 
+##  1.  a list of source objects, 
+##  2.  a list of target objects, 
+##  3.  a list of source rays, 
+##  4.  a list of target rays, 
+##  5.  a representative arrow, 
+##  6.  a list of group elements, e.g. an object group of a coset, 
+##  7.  a single character string 'c' in {s,c,h,u,r,l,d}, 
 ##      specifying star; costar; homset; union; right/left/double coset.
 ##
 #P  IsHomsetCosets( <obj> )
@@ -198,7 +199,7 @@ DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 InstallTrueMethod(IsListOrCollection, IsHomsetCosets);
 DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
     and IsAttributeStoringRep and IsComponentObjectRep, 
-    [ "tgroup", "hgroup", "tobj", "hobj", "trays", "hrays", "rep", "type" ] ); 
+    [ "tobj", "hobj", "trays", "hrays", "rep", "elements", "type" ] ); 
 BindGlobal( "IsHomsetCosetsFamily", 
             NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
 BindGlobal( "IsHomsetCosetsType", 
@@ -220,8 +221,6 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 #R  IsLeftCosetWithObjectsDefaultRep( <gp>, <obj> ) 
 #O  LeftCosetRepresentatives( <gpd>, <sgpd> )       #? should be Iterator ?? 
 #O  LeftCosetRepresentativesFromObject( <gpd>, <sgpd>, <obj> ) 
-#O  LeftCosetsNC( <gpd>, <sgpd> ) 
-#O  LeftCoset( <gpd>, <sgpd>, <elt> )
 #O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )          #? ditto ?? 
 ## 
 DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
@@ -234,8 +233,6 @@ DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
 DeclareOperation( "LeftCosetRepresentativesFromObject", 
     [ IsGroupoid, IsGroupoid, IsObject ] ); 
-DeclareOperation( "LeftCosetsNC", [ IsGroupoid, IsGroupoid ] ); 
-DeclareOperation( "LeftCoset", [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
 DeclareOperation( "DoubleCosetRepresentatives", 
     [ IsGroupoid, IsGroupoid, IsGroupoid ] ); 
 

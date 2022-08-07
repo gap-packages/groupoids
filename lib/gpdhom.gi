@@ -1042,7 +1042,7 @@ function( gpd1, ob2 )
             pgpd2 := Range( piso );
             gpd2 := SubgroupoidWithRays( pgpd2, rgp, rays ); 
             gens2 := List( gens1, g -> ImageElm( piso, g ) ); 
-        fi;
+        fi; 
         iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 ); 
     elif IsHomogeneousDiscreteGroupoid( gpd1 ) then 
         gpd2 := HomogeneousDiscreteGroupoid( gp, ob2 ); 
