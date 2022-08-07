@@ -329,6 +329,7 @@ monoid with objects :-
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnionOfPieces</code>( <var class="Arg">pieces</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pieces</code>( <var class="Arg">mwo</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PieceOfObject</code>( <var class="Arg">mwo</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>A magma with objects whose underlying digraph has two or more connected components can be constructed by taking the union of two or more connected structures. These, in turn, can be combined together. The only requirement is that all the object lists should be disjoint. The pieces are ordered by the order of their root objects.</p>
 
 
@@ -347,6 +348,8 @@ magma with objects having 2 pieces :-
         magma = sgp&lt;t,s,r&gt;
       objects = [ -3, -2, -1 ]
      ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PieceOfObject( N1, -7 ); </span>
+M78
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N2 := UnionOfPieces( [ M49, S0 ] );  </span>
 semigroup with objects having 2 pieces :-
 1: monoid with objects :-

@@ -23,17 +23,17 @@ A more detailed history is included as Chapter 8 of the manual, and in the file 
 ## Distribution
 ------------
  * The 'groupoids' package is distributed with the accepted GAP packages: see
-     <http://www.gap-system.org/Packages/groupoids.html>
+     <https://www.gap-system.org/Packages/groupoids.html>
  * It may also be obtained from the GitHub repository at:  
   <https://gap-packages.github.io/groupoids/>
 
 ## Copyright
 
-The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 2000-2017. 
+The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 2000-2022. 
 
 'groupoids' is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
 
-For details, see: <http://www.gnu.org/licenses/gpl.html>
+For details, see: <https://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 

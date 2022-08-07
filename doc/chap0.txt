@@ -6,10 +6,10 @@
           [1X Calculations with finite groupoids and their homomorphisms [101X
   
   
-                                      1.69
+                                      1.71
   
   
-                                15 November 2021
+                                 7 August 2022
   
   
                                  Emma J. Moore

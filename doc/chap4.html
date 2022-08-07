@@ -151,10 +151,8 @@ single piece groupoid: &lt; c6, [ -6 ] &gt;
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( Gs4 );    </span>
-[ -15 .. -11 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ RootObject( Gd8 ), RootGroup( Gc6 ), ObjectGroup( Gs4, -11 ) ];</span>
-[ -9, c6, s4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( Gs4 );</span>
+[ -15 .. -11 ] 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := FreeGroup(2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gf2c6 := Groupoid( c6, GeneratorsOfGroup(f2) );</span>
 single piece groupoid: &lt; c6, [ f1, f2 ] &gt;
@@ -187,12 +185,12 @@ single piece groupoid: &lt; d8, [ "a", "b", "c" ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gf2 := Groupoid( f2, -22 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q8 := QuaternionGroup( 8 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gq8 := Groupoid( q8, [ -28, -27 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gq8 := Groupoid( q8, [ -18, -17 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( q8, "q8" );  SetName( Gq8, "Gq8" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gl43 := SpecialLinearGroup( 4, 3 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ggl43 := SinglePieceGroupoid( gl43, [ -25..-21 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsMatrixGroupoid( Ggl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     IsPcGroupoid( Gq8 ), IsPermGroupoid( Gs4 ) ]; </span>
 [ true, true, true, true, true ]
 
@@ -235,32 +233,32 @@ groupoid with 3 pieces:
 [ infinity, 32, infinity ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U5 := UnionOfPieces( [ U3, U2 ] );</span>
 groupoid with 5 pieces:
-[ Gq8, Gf2, Gs4, Gd8, Gc6 ]
+[ Gf2, Gq8, Gs4, Gd8, Gc6 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( U5 );</span>
 groupoid with 5 pieces:
-&lt; objects: [ -28, -27 ]
-    group: q8 = &lt;[ x, y, y2 ]&gt; &gt;
 &lt; objects: [ -22 ]
     group: f2 = &lt;[ f1, f2 ]&gt; &gt;
+&lt; objects: [ -18, -17 ]
+    group: q8 = &lt;[ x, y, y2 ]&gt; &gt;
 &lt; objects: [ -15 .. -11 ]
     group: s4 = &lt;[ (1,2,3,4), (3,4) ]&gt; &gt;
 &lt; objects: [ -9, -8, -7 ]
     group: d8 = &lt;[ (1,2,3,4), (1,3) ]&gt; &gt;
 &lt; objects: [ -6 ]
     group: c6 = &lt;[ (5,6,7)(8,9) ]&gt; &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V5 := ReplaceOnePieceInUnion( U5, 3, Ggl43 ); </span>
-groupoid with 5 pieces:
-[ Ggl43, Gq8, Gf2, Gd8, Gc6 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( V5 );             </span>
-[ -35, -34, -33, -32, -31, -28, -27, -22, -9, -8, -7, -6 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U5 = V5;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## in the next example the object lists are not disjoint </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnionOfPieces( [ Gf2, Ggl43 ] ); </span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V3 := ReplaceOnePieceInUnion( U3, Gd8, Gq8 ); </span>
+groupoid with 3 pieces:
+[ Gq8, Gs4, Gc6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( V3 );             </span>
+[ -18, -17, -15, -14, -13, -12, -11, -6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U3 = V3;</span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W5 := ReplaceOnePieceInUnion( V5, Gc6, Gs4 ); </span>
-groupoid with 5 pieces:
-[ Ggl43, Gq8, Gf2, Gs4, Gd8 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( W5 );</span>
-[ -35, -34, -33, -32, -31, -28, -27, -22, -15, -14, -13, -12, -11, -9, -8, -7 
- ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V2 := ReplaceOnePieceInUnion( U2, 2, Gd8 ); </span>
+groupoid with 2 pieces:
+[ Gf2, Gd8 ]
 
 </pre></div>
 
@@ -296,27 +294,26 @@ true
 [ groupoid homomorphism : 
     [ [ [(1,2,3,4) : -20 -&gt; -20], [(1,3) : -20 -&gt; -20], [() : -20 -&gt; -19], 
           [() : -20 -&gt; -18] ], 
-      [ [(1,2,3,4) : -12 -&gt; -12], [(1,3) : -12 -&gt; -12], [() : -12 -&gt; -11], 
-          [() : -12 -&gt; -10] ] ], groupoid homomorphism : 
+      [ [(1,2,3,4) : -16 -&gt; -16], [(1,3) : -16 -&gt; -16], [() : -16 -&gt; -15], 
+          [() : -16 -&gt; -14] ] ], groupoid homomorphism : 
     [ [ [(1,2,3,4) : -20 -&gt; -20], [(1,3) : -20 -&gt; -20], [() : -20 -&gt; -19], 
           [() : -20 -&gt; -18] ], 
-      [ [(1,2,3,4) : -16 -&gt; -16], [(1,3) : -16 -&gt; -16], [() : -16 -&gt; -15], 
-          [() : -16 -&gt; -14] ] ] ]
+      [ [(1,2,3,4) : -12 -&gt; -12], [(1,3) : -12 -&gt; -12], [() : -12 -&gt; -11], 
+          [() : -12 -&gt; -10] ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hc6 := HomogeneousDiscreteGroupoid( c6, [-7..-4] ); </span>
 homogeneous, discrete groupoid: &lt; c6, [ -7 .. -4 ] &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Hc6);   ## 6x4</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Hc6 );   ## 6x4</span>
 24
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(Gd8);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( Gd8 );</span>
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(Hd8);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( Hd8 );</span>
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(Hc6);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( Hc6 );</span>
 [ "IsComponentObjectRep", "IsAttributeStoringRep", 
   "IsHomogeneousDiscreteGroupoidRep" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ktpo := KnownTruePropertiesOfObject(Hc6);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ktpo := KnownTruePropertiesOfObject( Hc6 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ans := </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ "CanEasilyCompareElements", "CanEasilySortElements", </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  "IsDuplicateFree", "IsAssociative", "IsCommutative", </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ "IsDuplicateFree", "IsAssociative", "IsCommutative", </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  "IsDiscreteDomainWithObjects", "IsHomogeneousDomainWithObjects" ];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( ans, a -&gt; ( a in ktpo ) ); </span>
 true
@@ -330,7 +327,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductOp</code>( <var class="Arg">list</var>, <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">gpd</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">gpd</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The direct product of groupoids <span class="SimpleMath">G,H</span> has as group the direct product of the groups in <span class="SimpleMath">G</span> and <span class="SimpleMath">H</span> and as object list the cartesian product of their object lists.</p>
+<p>The direct product of groupoids <span class="SimpleMath">G,H</span> has as group the direct product of the groups in <span class="SimpleMath">G</span> and <span class="SimpleMath">H</span> and as object list the cartesian product of their object lists. As usual with <code class="code">DirectProductOp</code> the two parameters are a list of groupoids followed by the first entry in the list.</p>
 
 
 <div class="example"><pre>
@@ -428,12 +425,10 @@ fail
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i8; Order(i8);</span>
-[() : -8 -&gt; -8]
-1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">loop; Order(loop);</span>
-[(1,4,3,2) : -9 -&gt; -9]
-4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ i8, loop ]; </span>
+[ [() : -8 -&gt; -8], [(1,4,3,2) : -9 -&gt; -9] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Order( i8 ), Order(loop) ];</span>
+[ 1, 4 ]
 
 </pre></div>
 
@@ -452,10 +447,13 @@ fail
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">star9 := ObjectStar( Gd8, -9 );</span>
-&lt;star at -9 with group d8&gt;
+&lt;star at -9 with vertex group d8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( star9 ); </span>
 24
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrintSelection( star9, 19, 1 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## PrintSelection( star9, 19, 1 ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := Iterator( star9 );;              </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [1..18] do a := NextIterator( iter ); od; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [19..24] do Print( i, " : ", NextIterator( iter ), "\n" ); od; </span>
 19 : [(1,2,3,4) : -9 -&gt; -9]
 20 : [(1,2,3,4) : -9 -&gt; -8]
 21 : [(1,2,3,4) : -9 -&gt; -7]
@@ -463,18 +461,20 @@ fail
 23 : [(1,2)(3,4) : -9 -&gt; -8]
 24 : [(1,2)(3,4) : -9 -&gt; -7]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">costar6 := ObjectCostar( Gc6, -6 );</span>
-&lt;costar at -6 with group c6&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hsetq8 := Homset( Gq8, -28, -27 );</span>
-&lt;homset -28 -&gt; -27 with group q8&gt;
+&lt;costar at -6 with vertex group c6&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( costar6 ); </span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hsetq8 := Homset( Gq8, -18, -17 );</span>
+&lt;homset -18 -&gt; -17 with head group q8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( hsetq8, Display );</span>
-[&lt;identity&gt; of ... : -28 -&gt; -27]
-[y2 : -28 -&gt; -27]
-[y : -28 -&gt; -27]
-[y*y2 : -28 -&gt; -27]
-[x : -28 -&gt; -27]
-[x*y2 : -28 -&gt; -27]
-[x*y : -28 -&gt; -27]
-[x*y*y2 : -28 -&gt; -27]
+[&lt;identity&gt; of ... : -18 -&gt; -17]
+[y2 : -18 -&gt; -17]
+[y : -18 -&gt; -17]
+[y*y2 : -18 -&gt; -17]
+[x : -18 -&gt; -17]
+[x*y2 : -18 -&gt; -17]
+[x*y : -18 -&gt; -17]
+[x*y*y2 : -18 -&gt; -17]
 
 </pre></div>
 
@@ -533,7 +533,12 @@ single piece groupoid with rays: &lt; c3, [ -15 .. -11 ],
 [ (), (1,2,3,4), (1,3), (2,4), (1,4,3,2) ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectGroup( Uc3, -14 );</span>
 Group([ (2,3,4) ])
-
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ha4 := HomogeneousGroupoid( Ua4, [ [-25..-21], [-35..-31] ] );</span>
+homogeneous groupoid with 2 pieces:
+1:  single piece groupoid with rays: &lt; a4, [ -35 .. -31 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] &gt;
+2:  single piece groupoid with rays: &lt; a4, [ -25 .. -21 ], 
+[ (), (1,2), (2,3), (3,4), (1,4) ] &gt;
 
 </pre></div>
 
@@ -588,14 +593,14 @@ groupoid with 2 pieces:
 [ Gd8, true ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U2;</span>
 groupoid with 2 pieces:
-[ Gq8, Gf2 ]
+[ Gf2, Gq8 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genf2b := List( GeneratorsOfGroup(f2), g -&gt; g^2 );</span>
 [ f1^2, f2^2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2b := Subgroup( f2, genf2b );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SU2 := SubgroupoidByPieces( U2, [ [q8,[-27]], [f2b,[-22]] ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SU2 := SubgroupoidByPieces( U2, [ [q8,[-17]], [f2b,[-22]] ] );</span>
 groupoid with 2 pieces:
-1:  single piece groupoid: &lt; q8, [ -27 ] &gt;
-2:  single piece groupoid: &lt; Group( [ f1^2, f2^2 ] ), [ -22 ] &gt;
+1:  single piece groupoid: &lt; Group( [ f1^2, f2^2 ] ), [ -22 ] &gt;
+2:  single piece groupoid: &lt; q8, [ -17 ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWideSubgroupoid( U2, SU2 );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubgroupoid( Gf2, Groupoid( f2b, [-22] ) );</span>
@@ -683,9 +688,14 @@ single piece groupoid with rays: &lt; Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCoset</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCosetRepresentatives</code>( <var class="Arg">G</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCosets</code>( <var class="Arg">G</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCoset</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCosetRepresentatives</code>( <var class="Arg">G</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCosetRepresentativesFromObject</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCosets</code>( <var class="Arg">G</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCoset</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">V</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCosetRepresentatives</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCosets</code>( <var class="Arg">G</var>, <var class="Arg">U</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <code class="code">U</code> is a subgroupoid of <span class="SimpleMath">G</span>, the <em>right cosets</em> <span class="SimpleMath">Ug</span> of <span class="SimpleMath">U</span> in <span class="SimpleMath">G</span> are the equivalence classes for the relation on the arrows of <span class="SimpleMath">G</span> where <span class="SimpleMath">g1</span> is related to <span class="SimpleMath">g2</span> if and only if <span class="SimpleMath">g2 = u*g1</span> for some arrow <span class="SimpleMath">u</span> of <span class="SimpleMath">U</span>. The right coset containing <span class="SimpleMath">g</span> is written <span class="SimpleMath">Ug</span>. These right cosets partition the costars of <span class="SimpleMath">G</span> and, in particular, the costar <span class="SimpleMath">U1_o</span> of <span class="SimpleMath">U</span> at object <span class="SimpleMath">o</span>. So (unlike groups) <span class="SimpleMath">U</span> is itself a coset only when <span class="SimpleMath">G</span> has a single object.</p>
 
 <p>The <em>right coset representatives</em> for <span class="SimpleMath">U</span> in <span class="SimpleMath">G</span> form a list containing one arrow for each coset where, in a particular piece of <span class="SimpleMath">U</span>, the group element chosen is the right coset representative of the group of <span class="SimpleMath">U</span> in the group of <span class="SimpleMath">G</span>.</p>
@@ -696,14 +706,14 @@ single piece groupoid with rays: &lt; Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
 
 <p>In the example the representative for the right coset <code class="code">re2</code> is the tenth one in the printed list <code class="code">rcrd8</code>, namely <code class="code">[(2,4):-7-&gt;-7]</code>.</p>
 
-<p>Note that no operation <code class="code">DoubleCoset</code> has yet been implemented.</p>
+<p>Note that operations for double cosets are a recent addition, and may need further work.</p>
 
 
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">re2 := RightCoset( Gd8, Ud8, e2 );</span>
-&lt;right coset of single piece groupoid: &lt; c4, 
-[ -8, -7 ] &gt; with representative [(1,3) : -8 -&gt; -7]&gt;
+&lt;right coset of single piece groupoid: &lt; c4, [ -8, -7 ] &gt; 
+with representative [(1,3) : -8 -&gt; -7]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( re2, Display );</span>
 [(1,3) : -8 -&gt; -7]
 [(1,3) : -7 -&gt; -7]
@@ -718,9 +728,50 @@ single piece groupoid with rays: &lt; Group( [ (2,3,4) ] ), [ -15, -13, -11 ],
   [(1,4,3,2) : -9 -&gt; -8], [() : -9 -&gt; -7], [(1,4,3,2) : -9 -&gt; -7], 
   [() : -8 -&gt; -8], [(2,4) : -8 -&gt; -8], [() : -7 -&gt; -7], [(2,4) : -7 -&gt; -7], 
   [() : -8 -&gt; -9], [(2,4) : -8 -&gt; -9] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">le2 := LeftCoset( Gd8, Ud8, e2 ); </span>
+&lt;left coset of single piece groupoid: &lt; c4, [ -8, -7 ] &gt; with representative [
+(1,3) : -8 -&gt; -8]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( le2, Display );</span>
+[(1,3) : -8 -&gt; -8]
+[(1,3) : -8 -&gt; -7]
+[(2,4) : -8 -&gt; -8]
+[(2,4) : -8 -&gt; -7]
+[(1,4)(2,3) : -8 -&gt; -8]
+[(1,4)(2,3) : -8 -&gt; -7]
+[(1,2)(3,4) : -8 -&gt; -8]
+[(1,2)(3,4) : -8 -&gt; -7]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lcrd8 := LeftCosetRepresentatives( Gd8, Ud8 );</span>
+[ [() : -9 -&gt; -9], [(1,2,3,4) : -9 -&gt; -9], [() : -8 -&gt; -9], 
+  [(1,2,3,4) : -8 -&gt; -9], [() : -7 -&gt; -9], [(1,2,3,4) : -7 -&gt; -9], 
+  [() : -8 -&gt; -8], [(2,4) : -8 -&gt; -8], [() : -7 -&gt; -7], [(2,4) : -7 -&gt; -7], 
+  [() : -9 -&gt; -8], [(2,4) : -9 -&gt; -8] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lcr7 := LeftCosetRepresentativesFromObject( Gd8, Ud8, -7 );</span>
 [ [() : -7 -&gt; -9], [(1,2,3,4) : -7 -&gt; -9], [() : -7 -&gt; -7], 
   [(2,4) : -7 -&gt; -7] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">de2 := DoubleCoset( Gd8, Ud8, Ud8, e2 );</span>
+&lt;double coset of [ single piece groupoid: &lt; c4, [ -8, -7 ] &gt;, 
+  single piece groupoid: &lt; c4, [ -8, -7 ] &gt; ] with representative [(1,3) : 
+-8 -&gt; -8]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( de2, Display );</span>
+[(2,4) : -8 -&gt; -8]
+[(2,4) : -8 -&gt; -7]
+[(2,4) : -7 -&gt; -8]
+[(2,4) : -7 -&gt; -7]
+[(1,3) : -8 -&gt; -8]
+[(1,3) : -8 -&gt; -7]
+[(1,3) : -7 -&gt; -8]
+[(1,3) : -7 -&gt; -7]
+[(1,2)(3,4) : -8 -&gt; -8]
+[(1,2)(3,4) : -8 -&gt; -7]
+[(1,2)(3,4) : -7 -&gt; -8]
+[(1,2)(3,4) : -7 -&gt; -7]
+[(1,4)(2,3) : -8 -&gt; -8]
+[(1,4)(2,3) : -8 -&gt; -7]
+[(1,4)(2,3) : -7 -&gt; -8]
+[(1,4)(2,3) : -7 -&gt; -7]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dcrd8 := DoubleCosetRepresentatives( Gd8, Ud8, Ud8 );</span>
+[ [() : -9 -&gt; -9], [(1,4,3,2) : -9 -&gt; -9], [() : -9 -&gt; -8], [() : -8 -&gt; -9], 
+  [() : -8 -&gt; -8], [(2,4) : -8 -&gt; -8] ]
 
 </pre></div>
 

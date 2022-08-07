@@ -905,13 +905,16 @@ GroupHomomorphismByImages( s3, s3,
 GroupHomomorphismByImages( s3, s3, 
 [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
 [ (15,19,17)(16,20,18), (15,18)(16,17)(19,20) ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AHs3 := AutomorphismGroupOfGroupoid( Hs3 ); </span>
-&lt;group with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( AHs3 );</span>
-31104
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genAHs3 := GeneratorsOfGroup( AHs3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( genAHs3 ); </span>
-4
+4  
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ids3 := IdentityMapping( s3 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut5 := GroupoidAutomorphismByGroupAutos( Hs3, [b1^2,ids3,ids3,ids3] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut6 := GroupoidAutomorphismByGroupAutos( Hs3, [b2,ids3,ids3,ids3] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut7 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -11, -10, -13 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut8 := GroupoidAutomorphismByObjectPerm( Hs3, [ -12, -13, -11, -10 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ok := ForAll( genAHs3, a -&gt; a in[ aut5, aut6, aut7, aut8 ] ); </span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nobAHs3 := NiceObject( AHs3 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nmonAHs3 := NiceMonomorphism( AHs3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := genAHs3[1];; </span>

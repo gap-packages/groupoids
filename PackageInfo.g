@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.69",
-Date := "15/11/2021", # dd/mm/yyyy format
+Version := "1.71",
+Date := "07/08/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -74,7 +74,7 @@ Up until April 2017 this package was named Gpd.",
 PackageDoc := rec(
   BookName  := "groupoids",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Finite Groupoids and Graphs of Groups",
@@ -86,7 +86,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "AutoDoc", ">= 2019.02.22" ], 
                            [ "GAPDoc", ">= 1.6.2" ], 
                            [ "fga", ">= 1.4.0" ],
-                           [ "utils", ">= 0.63" ] ],
+                           [ "utils", ">= 0.76" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 3.1.1" ] ],
   ExternalConditions := [ ]
 ),
@@ -104,8 +104,8 @@ Keywords := [ "magma with objects", "groupoid", "graph of groups",
 BannerString := Concatenation(
     "Loading groupoids ", String( ~.Version ), 
     " (algorithms for finite groupoids)\n", 
-    "by Emma Moore and Chris Wensley (http://pages.bangor.ac.uk/~mas023/)\n",
-    "--------------------------------------------------------------------\n" ),
+    "by Emma Moore and Chris Wensley (https://github.com/cdwensley)\n",
+    "--------------------------------------------------------------\n" ),
 
 AutoDoc := rec(
     TitlePage := rec(

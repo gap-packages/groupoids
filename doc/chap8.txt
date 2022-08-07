@@ -46,14 +46,18 @@
   homogeneous, discrete source.[133X
   
   [33X[0;0YIn  recent  versions  there  have been a number of changes of function name,
-  such  as  [10XIsDigraph[110X  becoming  [10XGroupoidIsDigraph[110X.  This is in order to avoid
+  such  as  [10XIsDigraph[110X  becoming  [10XIsGroupoidDigraph[110X.  This is in order to avoid
   conflicts  with  the [5XDigraphs[105X package. The intention is that these functions
   can revert to the original names in due course.[133X
   
   [33X[0;0YIn  version  1.62  of  October  2018  there  were significant changes to the
   operations  constructing free products with amalgamation and HNN extensions.
-  It  is  planned to move this material to a new package [5XRewriting[105X in time for
-  [5XGAP[105X 4.11.[133X
+  There  was a plan to move this material to a new package [5XRewriting[105X, but that
+  has not happened.[133X
+  
+  [33X[0;0YVersion  1.71 of August 2022 contains a complete revision of right, left and
+  double  cosets of groupoids. (The initial declaration of LeftCoset was moved
+  to the [5XUtils[105X package.)[133X
   
   
   [1X8.2 [33X[0;0YWhat needs to be done next?[133X[101X
