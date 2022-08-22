@@ -5,7 +5,7 @@
 
 ## Introduction
 
-This package allows for the computation of finite groupoids: both connected, and with several components.  Graphs of groups and graphs of groupoids are also constructed, allowing the calculation of normal forms for Free Products with Amalgamation and for HNN extensions when the initial groups have rewriting systems.  This package was, until very recently, named Gpd. 
+This package allows for the computation of finite groupoids: both connected, and with several components.  Graphs of groups and graphs of groupoids are also constructed, allowing the calculation of normal forms for Free Products with Amalgamation and for HNN extensions when the initial groups have rewriting systems.  This package was, until 2017, named Gpd. 
 
 ## History
 
@@ -37,18 +37,30 @@ For details, see: <https://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 
- * unpack `groupoids-<version_number>.tar.gz' in the `pkg` subdirectory of the GAP root directory.
+It is assumed that you have a recent working copy of GAP, and that this contains a full set of packages in the `pkg` directory, compiled as appropriate. 
+
+groupoids specifies two needed packages, FGA and utils, and some suggested packages, such as Semigroups and GAPDoc.  These in turn need or suggest other packages.  Some of these are loaded automatically when GAP starts. 
+
+The full list of packages which are loaded (in addition to those loaded automatically by GAP) when groupoids is loaded is as follows: 
+ * datastructures; Digraphs; ferret; GRAPE; images; nq; polymaking and Semigroups. 
+
+groupoids does not require any compilation, but those in the list above which require compilation are as follows: 
+ * datastructures; Digraphs; GRAPE and Semigroups. 
+
+Once these prerequisites are in place, proceed as follows: 
+
+ * Unpack `groupoids-<version_number>.tar.gz' in the `pkg` subdirectory of the GAP root directory.
  * From within GAP load the package with:
 
     gap> LoadPackage("groupoids");
 
     true
 
- * The documentation is in the `doc` subdirectory.
- * To run the test file read `testall.g` from the `groupoids/tst/` directory. 
+ * The file manual.pdf is in the `doc` subdirectory.
+ * To run the test file read `testall.g` from the `tst` subdirectory. 
 
-Contact
--------
+## Contact
+
 If you have a question relating to groupoids, encounter any problems, or have a suggestion for extending the package in any way, please 
  * email c.d.wensley@bangor.ac.uk 
  * or report an issue at https://github.com/gap-packages/groupoids/issues/new 
