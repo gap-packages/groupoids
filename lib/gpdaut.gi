@@ -647,6 +647,7 @@ function( gpd )
             return q;             
         end); 
 
+    SetIsInjective( nicemap, true );
     SetNiceMonomorphism( aut, nicemap ); 
     ## SetIsHandledByNiceMonomorphism( aut, true ); 
     SetIsCommutative( aut, IsCommutative( niceob[1] ) );
@@ -734,6 +735,7 @@ function( gpd )
             return q;             
         end); 
 
+    SetIsInjective( nicemap, true );
     SetNiceMonomorphism( aut, nicemap ); 
     ## SetIsHandledByNiceMonomorphism( aut, true ); 
     #?  SetInnerAutomorphismsAutomorphismGroup( aut, ?? );  
