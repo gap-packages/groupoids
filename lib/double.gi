@@ -51,18 +51,17 @@ function( dmwo, e, d, l, u, r )
 
     local gpd, gp, piece, obs, fam, pwo, pos, homset, pose; 
 
-    gpd := dmwo.groupoid; 
-    gp := dmwo.group; 
+    gpd := dmwo!.groupoid; 
+    gp := dmwo!.group; 
     if IsSinglePiece( gpd ) then 
         piece := dmwo; 
     else 
         piece := PieceOfObject( gpd, TailOfArrow( d ) ); ### ??? 
-    fi;
-    gp := piece!.magma; 
+    fi; 
     if not ( e in gp ) then 
         Error( "<e> not in group <gp>," ); 
     fi;
-    obs := piece!.objects; 
+    obs := gpd!.objects; 
     return MultiplicativeSquareWithObjectsNC( false, e, d, l, u, r ); 
 end );
 
@@ -135,7 +134,8 @@ function( dmwo, s1, s2 )
     if ( ( s1![2] = s2![4] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
         return MultiplicativeSquareWithObjectsNC( false, 
-          s2![1]*s1![1]^s2![5], s2![2], s1![3]*s2![3], s1![4], s1![5]*s2![5] ); 
+            s2![1]*s1![1]^s2![5]![1], 
+            s2![2], s1![3]*s2![3], s1![4], s1![5]*s2![5] ); 
     else 
         return fail; 
     fi;  
@@ -157,7 +157,8 @@ function( dmwo, s1, s2 )
     if ( ( s1![5] = s2![3] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
         return MultiplicativeSquareWithObjectsNC( false, 
-          s1![1]^s2![2]*s2![1], s1![2]*s2![2], s1![3], s1![4]*s2![4], s2![5] ); 
+            s1![1]^s2![2]![1]*s2![1], 
+            s1![2]*s2![2], s1![3], s1![4]*s2![4], s2![5] ); 
     else 
         return fail; 
     fi;  

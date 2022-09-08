@@ -16,11 +16,73 @@ gap> SetName( s4, "s4" );  SetName( d8, "d8" );
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
 
 ## SubSection 7.1.1 
-gap> Dd8 := SinglePieceDoubleGroupoid( Gd8, d8 );; 
+gap> Dd8 := SinglePieceDoubleGroupoid( Gd8, s4 );; 
 gap> Dd8!.groupoid;
 single piece groupoid: < d8, [ -9, -8, -7 ] >
 gap> Dd8!.group;
-d8
+s4
+gap> a := Arrow( Gd8, (2,4), -9, -8 );; 
+gap> b := Arrow( Gd8, (1,3), -8, -7 );;
+gap> c := Arrow( Gd8, (1,2,3,4), -9, -8 );; 
+gap> d := Arrow( Gd8, (1,4,3,2), -8, -7 );; 
+gap> e1 := (1,2,3);; 
+gap> s1 := MultiplicativeSquareWithObjects( Dd8, e1, b, c, a, d );; 
+gap> ElementOfSquare( s1 ); 
+(1,2,3)
+gap> UpArrow( s1 );
+[(2,4) : -9 -> -8]
+gap> LeftArrow( s1 );
+[(1,2,3,4) : -9 -> -8]
+gap> RightArrow( s1 );
+[(1,4,3,2) : -8 -> -7]
+gap> DownArrow( s1 );
+[(1,3) : -8 -> -7]
+gap> ad := a*d;
+[(1,4)(2,3) : -9 -> -7]
+gap> cb := c*b;
+[(1,2)(3,4) : -9 -> -7]
+gap> e2 := (2,3,4);; 
+gap> s2 := MultiplicativeSquareWithObjects( Dd8, e2, ad^-1, d, b, cb^-1 );;
+gap> RightArrow( s2 ); 
+[(1,2)(3,4) : -7 -> -9]
+gap> DownArrow( s2 ); 
+[(1,4)(2,3) : -7 -> -9]
+gap> e3 := (1,3,4);; 
+gap> s3 := MultiplicativeSquareWithObjects( Dd8, e3, cb^-1, d, b, ad^-1 );;
+gap> RightArrow( s3 ); 
+[(1,4)(2,3) : -7 -> -9]
+gap> DownArrow( s3 );
+[(1,2)(3,4) : -7 -> -9]
+
+
+
+
+
+gap> s12 := LeftRightProduct( Dd8, s1, s2 );
+<object>
+gap> ElementOfSquare( s12 );
+()
+gap> UpArrow( s12 );
+[(1,3)(2,4) : -9 -> -7]
+gap> LeftArrow( s12 );
+[(1,2,3,4) : -9 -> -8]
+gap> DownArrow( s12 );
+[(1,2,3,4) : -8 -> -9]
+gap> RightArrow( s12 );
+[(1,2)(3,4) : -7 -> -9]
+gap> s13 := UpDownProduct( Dd8, s1, s3 );;
+gap> ElementOfSquare( s13 );              
+(1,2,4)
+gap> UpArrow( s13 );                      
+[(2,4) : -9 -> -8]
+gap> LeftArrow( s13 );                    
+[() : -9 -> -7]
+gap> DownArrow( s13 );                    
+[(1,2)(3,4) : -7 -> -9]
+gap> RightArrow( s13 );                   
+[(2,4) : -8 -> -9]
+
+
 
 
 
