@@ -124,8 +124,8 @@ DeclareCategoryCollections( "IsDoubleGroupoid" );
 #O  SinglePieceDoubleGroupoid( <gpd>, <gp> ) 
 #O  DoubleGroupoid( <gpd>, <gps> ) 
 ## 
-DeclareOperation( "DoubleGroupoid", [ IsGroupoid, IsGroup ] ); 
-DeclareOperation( "DoubleGroupoid", [ IsGroupoid, IsGroup ] ); 
+DeclareOperation( "SinglePieceDoubleGroupoid", [ IsGroupoid, IsGroup ] ); 
+DeclareOperation( "DoubleGroupoid", [ IsGroupoid, IsList ] ); 
 
 ############################################################################# 
 ##  
