@@ -2,7 +2,7 @@
 ##
 #W  read.g                 GAP package `groupoids'              Chris Wensley
 ##                                                               & Emma Moore
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 
@@ -17,3 +17,4 @@ ReadPackage( "groupoids", "lib/gpdaut.gi" );
 ##  ReadPackage( "groupoids", "lib/morgraph.gi" ); 
 ReadPackage( "groupoids", "lib/grpgraph.gi" ); 
 ReadPackage( "groupoids", "lib/gpdgraph.gi" );
+ReadPackage( "groupoids", "lib/double.gi" );
