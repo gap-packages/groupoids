@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gd                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2021, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -19,14 +19,18 @@
 ############################################################################# 
 ## 
 #C  IsDomainWithObjects( <obj> ) . . test if object is a domain with objects 
+#C  IsDoubleDomainWithObjects( <obj> ) . . . is a double domain with objects 
 ## 
 DeclareCategory( "IsDomainWithObjects", IsDomain ); 
+DeclareCategory( "IsDoubleDomainWithObjects", IsDomainWithObjects ); 
 
 ############################################################################ 
 ## 
 #F  DomainWithObjects( <dom>, <obs> ) 
+#F  DoubleDomainWithObjects( <dom>, <obs> ) 
 ##
 DeclareGlobalFunction( "DomainWithObjects" ); 
+DeclareGlobalFunction( "DoubleDomainWithObjects" ); 
 
 ############################################################################# 
 ## 
@@ -120,6 +124,7 @@ DeclareCategoryCollections(
 ## 
 #C  IsGroupoidElement( <elt> ) 
 #C  IsGroupoidByIsomorphismsElement( <elt> ) 
+#C  IsDoubleGroupoidElement( <elt> ) 
 ## 
 DeclareCategory( "IsGroupoidElement", 
     IsMultiplicativeElementWithObjectsAndInverses ); 
@@ -127,6 +132,9 @@ DeclareCategoryCollections( "IsGroupoidElement" );
 DeclareCategory( "IsGroupoidByIsomorphismsElement", 
     IsMultiplicativeElementWithObjectsAndInverses ); 
 DeclareCategoryCollections( "IsGroupoidByIsomorphismsElement" ); 
+DeclareCategory( "IsDoubleGroupoidElement", 
+    IsMultiplicativeElementWithObjectsAndInverses ); 
+DeclareCategoryCollections( "IsDoubleGroupoidElement" ); 
 
 ############################################################################# 
 ##  
@@ -161,17 +169,11 @@ BindGlobal( "IsGroupoidElementType",
 BindGlobal( "IsGroupoidByIsomorphismsElementType", 
             NewType( IsGroupoidElementFamily, 
                      IsGroupoidByIsomorphismsElement ) );
-
-############################################################################## 
-## 
-#O  ElementOfArrow( <ewo> ) 
-#O  TailOfArrow( <ewo> ) 
-#O  HeadOfArrow( <ewo> ) 
-##  
-DeclareOperation( "ElementOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
-DeclareOperation( "TailOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
-DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
-
+BindGlobal( "IsDoubleGroupoidElementFamily", 
+    NewFamily( "IsDoubleGroupoidElementFamily", IsDoubleGroupoidElement, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "IsDoubleGroupoidElementType", 
+            NewType( IsDoubleGroupoidElementFamily, IsDoubleGroupoidElement ) );
 
 ###########################  MAGMA WITH OBJECTS  ############################ 
 
@@ -179,8 +181,9 @@ DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] );
 ## 
 #C  IsMagmaWithObjects( <dwo> ) . . . . . . . category of magmas with objects 
 #C  IsMagmaWithObjectsAndOnes( <dwo> ) . . . . . . . . . . . . . . . and ones
-#C  IsMagmaWithObjectsAndInverses( <dwo> ) . . . . . . . . . . .  and inverses
+#C  IsMagmaWithObjectsAndInverses( <dwo> ) . . . . . . . . . . . and inverses
 #C  IsGroupoid( <dwo> )  . . . . . . . . . . . . . . . . . . and all inverses
+#C  IsDoubleGroupoid( <ddwo> ) . . . . . . . . . . . . . . . and all inverses
 ##
 ##  A *magma with objects* in {\GAP} is a domain $M$ with (not necessarily 
 ##  associative) partial mutliplication. 
@@ -196,6 +199,9 @@ DeclareCategory( "IsMonoidWithObjects",
 DeclareCategory( "IsGroupoid", IsMonoidWithObjects and 
     IsGroupoidElementCollection ); 
 DeclareCategoryCollections( "IsGroupoid" ); 
+DeclareCategory( "IsDoubleGroupoid", IsMonoidWithObjects and 
+    IsDoubleGroupoidElementCollection ); 
+DeclareCategoryCollections( "IsDoubleGroupoid" ); 
 
 ############################################################################# 
 ##  
@@ -203,6 +209,7 @@ DeclareCategoryCollections( "IsGroupoid" );
 #V  IsSemigroupWithObjectsFamily . . . . . family for semigroups with objects 
 #V  IsMonoidWithObjectsFamily . . . . . . . . family for monoids with objects 
 #V  IsGroupoidFamily . . . . . . . . . . . . . . . . . . family for groupoids
+#V  IsDoubleGroupoidFamily . . . . . . . . . . .  family for double groupoids 
 ##  
 IsMagmaWithObjectsFamily := CollectionsFamily( 
     IsMultiplicativeElementWithObjectsFamily ); 
@@ -211,6 +218,7 @@ IsSemigroupWithObjectsFamily := CollectionsFamily(
 IsMonoidWithObjectsFamily := CollectionsFamily( 
     IsMultiplicativeElementWithObjectsAndInversesFamily );  
 IsGroupoidFamily := CollectionsFamily( IsGroupoidElementFamily ); 
+IsDoubleGroupoidFamily := CollectionsFamily( IsDoubleGroupoidElementFamily ); 
 
 ############################################################################# 
 ## 
@@ -255,6 +263,7 @@ DeclareAttribute( "GeneratorsOfMonoidWithObjects", IsMonoidWithObjects );
 #T  IsSemigroupWithObjectsType( <swo> )
 #T  IsMonoidWithObjectsType( <mwo> )
 #T  IsGroupoidType( <gpd> )
+#T  IsDoubleGroupoidType( <gpd> )
 ## 
 DeclareRepresentation( "IsMWOSinglePieceRep", 
     IsComponentObjectRep and IsAttributeStoringRep and IsMagmaWithObjects, 
@@ -271,6 +280,9 @@ BindGlobal( "IsMonoidWithObjectsType",
 BindGlobal( "IsGroupoidType", 
             NewType( IsGroupoidFamily, 
                      IsMWOSinglePieceRep and IsGroupoid ) );
+BindGlobal( "IsDoubleGroupoidType", 
+            NewType( IsDoubleGroupoidFamily, 
+                     IsMWOSinglePieceRep and IsDoubleGroupoid ) );
 
 ############################################################################# 
 ##  
@@ -280,10 +292,7 @@ BindGlobal( "IsGroupoidType",
 #T  IsSemigroupWOPiecesType( <dwo> )
 #T  IsMonoidWOPiecesType( <dwo> )
 #T  IsGroupoidPiecesType( <dwo> )
-#P  IsMagmaWithObjectsInPieces( <mwo> )
-#P  IsSemigroupWithObjectsInPieces( <swo> )
-#P  IsMonoidWithObjectsInPieces( <mwo> ) 
-#P  IsGroupoidInPieces( <gpd> )
+#T  IsDoubleGroupoidPiecesType( <dwo> )
 ## 
 BindGlobal( "IsMagmaWOPiecesType", 
             NewType( IsMagmaWithObjectsFamily, 
@@ -297,11 +306,9 @@ BindGlobal( "IsMonoidWOPiecesType",
 BindGlobal( "IsGroupoidPiecesType", 
             NewType( IsGroupoidFamily, 
                      IsPiecesRep and IsGroupoid and IsAssociative ) );
-#? maybe these will be useful one day? 
-#? DeclareProperty( "IsMagmaWithObjectsInPieces", IsMagmaWithObjects ); 
-#? DeclareProperty( "IsSemigroupWithObjectsInPieces", IsSemigroupWithObjects ); 
-#? DeclareProperty( "IsMonoidWithObjectsInPieces", IsMonoidWithObjects ); 
-#? DeclareProperty( "IsGroupoidInPieces", IsGroupoid ); 
+BindGlobal( "IsDoubleGroupoidPiecesType", 
+            NewType( IsDoubleGroupoidFamily, 
+                     IsPiecesRep and IsDoubleGroupoid and IsAssociative ) );
 
 ############################################################################# 
 ## 
@@ -323,6 +330,16 @@ DeclareSynonym( "MultiplicativeElementWithObjects", Arrow );
 DeclareOperation( "ArrowNC", 
     [ IsBool, IsMultiplicativeElement, IsObject, IsObject ] ); 
     
+############################################################################## 
+## 
+#O  ElementOfArrow( <ewo> ) 
+#O  TailOfArrow( <ewo> ) 
+#O  HeadOfArrow( <ewo> ) 
+##  
+DeclareOperation( "ElementOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
+DeclareOperation( "TailOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
+DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
+
 
 ################################  SEMIGROUPS  ###############################
 

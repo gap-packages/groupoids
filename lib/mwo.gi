@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -404,6 +404,8 @@ function( mwo )
         return( STRINGIFY( "semigroup with objects" ) ); 
     elif ( kind = 4 ) then 
         return( STRINGIFY( "magma with objects" ) ); 
+    elif ( kind = 5 ) then 
+        return( STRINGIFY( "double groupoid" ) ); 
     else 
         return( STRINGIFY( "domain with objects" ) ); 
     fi; 
@@ -433,6 +435,8 @@ function( mwo )
         Print( "semigroup with objects :-\n" ); 
     elif ( kind = 4 ) then 
         Print( "magma with objects :-\n" ); 
+    elif ( kind = 5 ) then 
+        Print( "double groupoid :-\n" ); 
     else 
         Print( "not yet implemented for general domains with objects\n" ); 
     fi; 
@@ -455,6 +459,8 @@ function( mwo )
         Print( "semigroup with objects :-\n" ); 
     elif ( kind = 4 ) then 
         Print( "magma with objects :-\n" ); 
+    elif ( kind = 5 ) then 
+        Print( "double groupoid :-\n" ); 
     else 
         Print( "not yet implemented for general domains with objects\n" ); 
     fi; 
@@ -756,7 +762,7 @@ function( comps, dom )
 
     local kind, len, pieces, L, fam, filter, mwo, i, obs, par;
 
-    ## determine which kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
+    ## determine which kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dgpd, 6=dom 
     if ForAll( comps, c -> "IsGroupoid" in CategoriesOfObject( c ) ) then 
         kind := 1; 
     elif ForAll( comps, 
@@ -768,8 +774,11 @@ function( comps, dom )
     elif ForAll( comps, 
                  c -> "IsMagmaWithObjects" in CategoriesOfObject( c ) ) then 
         kind := 4; 
+    elif ForAll( comps, 
+                 c -> "IsDoubleGroupoid" in CategoriesOfObject( c ) ) then 
+        kind := 5; 
     else 
-        Print( "kind not in {1,2,3,4} so TryNextMethod()\n" ); 
+        Print( "kind not in {1,2,3,4,5} so TryNextMethod()\n" ); 
         TryNextMethod(); 
     fi;
     Info( InfoGroupoids, 2, "kind = ", kind ); 
@@ -787,23 +796,27 @@ function( comps, dom )
     if ( kind = 1 ) then 
         fam := IsGroupoidFamily; 
         filter := IsPiecesRep and IsGroupoid and IsAssociative; 
-        mwo := Objectify( IsGroupoidPiecesType, rec () );
+        mwo := Objectify( IsGroupoidPiecesType, rec() );
 #?      SetIsGroupoidInPieces( mwo, true ); 
     elif ( kind = 2 ) then 
         fam := IsMonoidWithObjectsFamily; 
         filter := IsPiecesRep and IsMonoidWithObjects; 
-        mwo := Objectify( IsMonoidWOPiecesType, rec () );
+        mwo := Objectify( IsMonoidWOPiecesType, rec() );
 #?      SetIsMonoidWithObjectsInPieces( mwo, true ); 
     elif ( kind = 3 ) then 
         fam := IsSemigroupWithObjectsFamily; 
         filter := IsPiecesRep and IsSemigroupWithObjects; 
-        mwo := Objectify( IsSemigroupWOPiecesType, rec () );
+        mwo := Objectify( IsSemigroupWOPiecesType, rec() );
 #?      SetIsSemigroupWithObjectsInPieces( mwo, true ); 
     elif ( kind = 4 ) then 
         fam := IsMagmaWithObjectsFamily; 
         filter := IsPiecesRep and IsMagmaWithObjects; 
-        mwo := Objectify( IsMagmaWOPiecesType, rec () );
+        mwo := Objectify( IsMagmaWOPiecesType, rec() ); 
 #?      SetIsMagmaWithObjectsInPieces( mwo, true ); 
+    elif ( kind = 5 ) then 
+        fam := IsDoubleGroupoidFamily; 
+        filter := IsPiecesRep and IsDoubleGroupoid; 
+        mwo := Objectify( IsDoubleGroupoidPiecesType, rec() );
     else 
         ## ?? (23/04/10) fam := FamilyObj( [ pieces ] ); 
         Error( "union of unstructured domains not yet implemented," ); 

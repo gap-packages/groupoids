@@ -11,14 +11,23 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## make independant of gpd.tst 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> SetName( s4, "s4" ); 
+gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );;  
 gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
-gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 
+gap> SetName( d8, "d8" ); 
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
+gap> c6 := Group( (5,6,7)(8,9) );;
+gap> SetName( c6, "c6" );
+gap> Gc6 := DomainWithSingleObject( c6, -6 );;
+gap> SetName( Gs4, "Gs4" ); 
+gap> SetName( Gd8, "Gd8" ); 
+gap> SetName( Gc6, "Gc6" );  
+gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
 
 ## SubSection 7.1.1 
 gap> Dd8 := SinglePieceDoubleGroupoid( Gd8, s4 );; 
 gap> Dd8!.groupoid;
-single piece groupoid: < d8, [ -9, -8, -7 ] >
+Gd8
 gap> Dd8!.group;
 s4
 gap> a := Arrow( Gd8, (2,4), -9, -8 );; 
@@ -54,12 +63,8 @@ gap> RightArrow( s3 );
 gap> DownArrow( s3 );
 [(1,2)(3,4) : -7 -> -9]
 
-
-
-
-
 gap> s12 := LeftRightProduct( Dd8, s1, s2 );
-<object>
+[() : [(1,2,3,4) : -8 -> -9] -> [(1,2,3,4) : -9 -> -8]]
 gap> ElementOfSquare( s12 );
 ()
 gap> UpArrow( s12 );
@@ -82,9 +87,22 @@ gap> DownArrow( s13 );
 gap> RightArrow( s13 );                   
 [(2,4) : -8 -> -9]
 
-
-
-
+gap> U3;
+groupoid with 3 pieces:
+[ Gs4, Gd8, Gc6 ]
+gap> Ds4 := SinglePieceDoubleGroupoid( Gs4, s4 );; 
+gap> Dc6 := SinglePieceDoubleGroupoid( Gc6, s4 );; 
+gap> DU3 := UnionOfPieces( [ Ds4, Dd8, Dc6 ] ); 
+magma with objects having 3 pieces :-
+1:  groupoid = Gs4
+    group = s4
+  objects = [ -15 .. -11 ]
+2:  groupoid = Gd8
+    group = s4
+  objects = [ -9, -8, -7 ]
+3:  groupoid = Gc6
+    group = s4
+  objects = [ -6 ]
 
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
