@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-##  This file contains the declarations for doiuble groupoids 
+##  This file contains the declarations for double groupoids 
 ##  
 
 ##################### DOUBLE DOMAIN WITH OBJECTS  ########################### 
@@ -16,8 +16,10 @@ function( gpd, G )
 
     local dgpd; 
 
-    dgpd := rec( groupoid := gpd, group := G ); 
+    dgpd := rec( groupoid := gpd, group := G, objects := ObjectList( gpd ) ); 
     ObjectifyWithAttributes( dgpd, IsDoubleGroupoidType, 
+        IsSinglePiece, true, 
+        IsAssociative, true, 
         IsCommutative, IsCommutative( gpd!.magma ) and IsCommutative( G ) ); 
     return dgpd; 
 end ); 
@@ -27,10 +29,10 @@ end );
 
 ############################################################################# 
 ## 
-#M  MultiplicativeSquareWithObjects(<dmwo>,<elt>,<down>,<left>,<up>,<right>) 
-#M  MultiplicativeSquareWithObjectsNC(<isge>,<elt>,<down>,<left>,<up>,<right>) 
+#M  SquareOfArrows(<dmwo>,<elt>,<down>,<left>,<up>,<right>) 
+#M  SquareOfArrowsNC(<isge>,<elt>,<down>,<left>,<up>,<right>) 
 ##
-InstallMethod( MultiplicativeSquareWithObjectsNC, 
+InstallMethod( SquareOfArrowsNC, 
     "for boolean, element, down, left, up and right", true,  
     [ IsBool, IsMultiplicativeElement, IsObject, IsObject, IsObject, IsObject ], 
     0, 
@@ -43,27 +45,26 @@ function( b, e, d, l, u, r )
     return elt; 
 end ); 
 
-InstallMethod( MultiplicativeSquareWithObjects, 
+InstallMethod( SquareOfArrows, 
     "for double groupoid with objects, element, down, left, up and right", 
-    true, [ IsDoubleMagmaWithObjects, IsMultiplicativeElement, 
+    true, [ IsDoubleGroupoid, IsMultiplicativeElement, 
             IsObject, IsObject, IsObject, IsObject ], 0, 
 function( dmwo, e, d, l, u, r ) 
 
     local gpd, gp, piece, obs, fam, pwo, pos, homset, pose; 
 
-    gpd := dmwo.groupoid; 
-    gp := dmwo.group; 
+    gpd := dmwo!.groupoid; 
+    gp := dmwo!.group; 
     if IsSinglePiece( gpd ) then 
         piece := dmwo; 
     else 
         piece := PieceOfObject( gpd, TailOfArrow( d ) ); ### ??? 
-    fi;
-    gp := piece!.magma; 
+    fi; 
     if not ( e in gp ) then 
         Error( "<e> not in group <gp>," ); 
     fi;
-    obs := piece!.objects; 
-    return MultiplicativeSquareWithObjectsNC( false, e, d, l, u, r ); 
+    obs := gpd!.objects; 
+    return SquareOfArrowsNC( false, e, d, l, u, r ); 
 end );
 
 #############################################################################
@@ -75,19 +76,19 @@ end );
 #M  DownArrow
 ##
 InstallMethod( ElementOfSquare, "generic method for double groupoid element", 
-    true, [ IsMultiplicativeSquareWithObjects ], 0, e -> e![1] ); 
+    true, [ IsDoubleGroupoidElement ], 0, e -> e![1] ); 
 
 InstallMethod( DownArrow, "generic method for double groupoid element", 
-    true, [ IsMultiplicativeSquareWithObjects ], 0, e -> e![2] ); 
+    true, [ IsDoubleGroupoidElement ], 0, e -> e![2] ); 
 
 InstallMethod( LeftArrow, "generic method for double groupoid element", 
-    true, [ IsMultiplicativeSquareWithObjects ], 0, e -> e![3] ); 
+    true, [ IsDoubleGroupoidElement ], 0, e -> e![3] ); 
 
 InstallMethod( UpArrow, "generic method for double groupoid element", 
-    true, [ IsMultiplicativeSquareWithObjects ], 0, e -> e![4] ); 
+    true, [ IsDoubleGroupoidElement ], 0, e -> e![4] ); 
 
 InstallMethod( RightArrow, "generic method for double groupoid element", 
-    true, [ IsMultiplicativeSquareWithObjects ], 0, e -> e![5] ); 
+    true, [ IsDoubleGroupoidElement ], 0, e -> e![5] ); 
 
 #############################################################################
 ##
@@ -125,8 +126,8 @@ InstallMethod( ViewObj, "for an element in a magma with objects",
 ##      . . . . . . . . vertical composition of squares in a double groupoid 
 ## 
 InstallMethod( UpDownProduct, "for two squares in a double groupoid", true, 
-    [ IsDoubleMagmaWithObjects, IsMultiplicativeSquareWithObjects, 
-      IsMultiplicativeSquareWithObjects], 0, 
+    [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
+      IsDoubleGroupoidElement], 0, 
 function( dmwo, s1, s2 ) 
 
     local prod; 
@@ -134,8 +135,9 @@ function( dmwo, s1, s2 )
     ## elements are composable? 
     if ( ( s1![2] = s2![4] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        return MultiplicativeSquareWithObjectsNC( false, 
-          s2![1]*s1![1]^s2![5], s2![2], s1![3]*s2![3], s1![4], s1![5]*s2![5] ); 
+        return SquareOfArrowsNC( false, 
+            s2![1]*s1![1]^s2![5]![1], 
+            s2![2], s1![3]*s2![3], s1![4], s1![5]*s2![5] ); 
     else 
         return fail; 
     fi;  
@@ -147,8 +149,8 @@ end );
 ##      . . . . . . horizantalal composition of squares in a double groupoid 
 ## 
 InstallMethod( LeftRightProduct, "for two squares in a double groupouid", true, 
-    [ IsDoubleMagmaWithObjects, IsMultiplicativeSquareWithObjects, 
-      IsMultiplicativeSquareWithObjects], 0, 
+    [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
+      IsDoubleGroupoidElement], 0, 
 function( dmwo, s1, s2 ) 
 
     local prod; 
@@ -156,8 +158,9 @@ function( dmwo, s1, s2 )
     ## elements are composable? 
     if ( ( s1![5] = s2![3] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        return MultiplicativeSquareWithObjectsNC( false, 
-          s1![1]^s2![2]*s2![1], s1![2]*s2![2], s1![3], s1![4]*s2![4], s2![5] ); 
+        return SquareOfArrowsNC( false, 
+            s1![1]^s2![2]![1]*s2![1], 
+            s1![2]*s2![2], s1![3], s1![4]*s2![4], s2![5] ); 
     else 
         return fail; 
     fi;  
@@ -261,18 +264,18 @@ InstallMethod( ViewObj, "for an element in a magma with objects", true,
 
 InstallMethod( ViewObj, "for a double groupoid", true, 
     [ IsDoubleGroupoid and IsSinglePiece ], 0,   
-function( dmwo )
-    Print( "#I  should be using special groupoid method!\n" ); 
-    Print( "    group = ", dmwo!.group, "\n" ); 
-    Print( "  objects = ", dmwo!.objects, "\n" ); 
+function( dgpd )
+    Print( " groupoid = ", dgpd!.groupoid, "\n" ); 
+    Print( "    group = ", dgpd!.group, "\n" ); 
+    Print( "  objects = ", dgpd!.objects, "\n" ); 
 end );
 
 InstallMethod( PrintObj, "for a double groupoid", true, 
     [ IsDoubleGroupoid and IsSinglePiece ], 0, 
-function( dmwo )
-    Print( "#I  should be using special groupoid method!\n" ); 
-    Print( "    group = ", dmwo!.group, "\n" ); 
-    Print( "  objects = ", dmwo!.objects, "\n" ); 
+function( dgpd )
+    Print( " groupoid = ", dgpd!.groupoid, "\n" ); 
+    Print( "    group = ", dgpd!.group, "\n" ); 
+    Print( "  objects = ", dgpd!.objects, "\n" ); 
 end );
 
 InstallMethod( ViewObj, "for more than one piece", true, 
