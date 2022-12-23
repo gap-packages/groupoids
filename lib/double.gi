@@ -33,23 +33,23 @@ end );
 #M  SquareOfArrowsNC(<isge>,<elt>,<down>,<left>,<up>,<right>) 
 ##
 InstallMethod( SquareOfArrowsNC, 
-    "for boolean, element, down, left, up and right", true,  
+    "for boolean, element, up, left, right and down", true,  
     [ IsBool, IsMultiplicativeElement, IsObject, IsObject, IsObject, IsObject ], 
     0, 
-function( b, e, d, l, u, r ) 
+function( b, e, u, l, r, d ) 
 
     local elt, fam;
 
     fam := IsGroupoidElementFamily; 
-    elt := Objectify( IsDoubleGroupoidElementType, [ e, d, l, u, r ] );
+    elt := Objectify( IsDoubleGroupoidElementType, [ e, u, l, r, d ] );
     return elt; 
 end ); 
 
 InstallMethod( SquareOfArrows, 
-    "for double groupoid with objects, element, down, left, up and right", 
+    "for double groupoid with objects, element, up, left, right and down", 
     true, [ IsDoubleGroupoid, IsMultiplicativeElement, 
             IsObject, IsObject, IsObject, IsObject ], 0, 
-function( dmwo, e, d, l, u, r ) 
+function( dmwo, e, u, l, r, d ) 
 
     local gpd, gp, piece, obs, fam, pwo, pos, homset, pose; 
 
@@ -64,7 +64,7 @@ function( dmwo, e, d, l, u, r )
         Error( "<e> not in group <gp>," ); 
     fi;
     obs := gpd!.objects; 
-    return SquareOfArrowsNC( false, e, d, l, u, r ); 
+    return SquareOfArrowsNC( false, e, u, l, r, d ); 
 end );
 
 #############################################################################
@@ -78,43 +78,52 @@ end );
 InstallMethod( ElementOfSquare, "generic method for double groupoid element", 
     true, [ IsDoubleGroupoidElement ], 0, e -> e![1] ); 
 
-InstallMethod( DownArrow, "generic method for double groupoid element", 
+InstallMethod( UpArrow, "generic method for double groupoid element", 
     true, [ IsDoubleGroupoidElement ], 0, e -> e![2] ); 
 
 InstallMethod( LeftArrow, "generic method for double groupoid element", 
     true, [ IsDoubleGroupoidElement ], 0, e -> e![3] ); 
 
-InstallMethod( UpArrow, "generic method for double groupoid element", 
+InstallMethod( RightArrow, "generic method for double groupoid element", 
     true, [ IsDoubleGroupoidElement ], 0, e -> e![4] ); 
 
-InstallMethod( RightArrow, "generic method for double groupoid element", 
+InstallMethod( DownArrow, "generic method for double groupoid element", 
     true, [ IsDoubleGroupoidElement ], 0, e -> e![5] ); 
 
 #############################################################################
 ##
 #M  String, ViewString, PrintString, ViewObj, PrintObj 
-##  . . . . . . . . . . . . . . . . . . for elements in a magma with objects 
+##  . . . . . . . . . . . . . . . . . . for elements in a double groupoid  
 ##
-InstallMethod( String, "for an element in a magma with objects", true, 
+InstallMethod( String, "for a square in a double groupoid", true, 
     [ IsMultiplicativeElementWithObjects ], 0, 
 function( e ) 
     return( STRINGIFY( "[", String( e![1] ), " : ", String( e![2] ), 
                        " -> ", String( e![3] ), "]" ) ); 
 end );
 
-InstallMethod( ViewString, "for an element in a magma with objects", true, 
-    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+InstallMethod( ViewString, "for a square in a double groupoid", true, 
+    [ IsDoubleGroupoidElement ], 0, String ); 
 
-InstallMethod( PrintString, "for an element in a magma with objects", true, 
-    [ IsMultiplicativeElementWithObjects ], 0, String ); 
+InstallMethod( PrintString, "for a square in a double groupoid", true, 
+    [ IsDoubleGroupoidElement ], 0, String ); 
 
-InstallMethod( ViewObj, "for an element in a magma with objects", true, 
-    [ IsMultiplicativeElementWithObjects ], 0, PrintObj ); 
+InstallMethod( ViewObj, "for a square in a double groupoid", true, 
+    [ IsDoubleGroupoidElement ], 0, PrintObj ); 
 
-InstallMethod( PrintObj, "for an element in a magma with objects",
-    [ IsMultiplicativeElementWithObjects ],
-function ( e )
-    Print( "[", e![1], " : ", e![2], " -> ", e![3], "]" );
+InstallMethod( PrintObj, "for a square in a double groupoid",
+    [ IsDoubleGroupoidElement ],
+function ( e ) 
+    local up, lt, rt, dn; 
+    up := UpArrow( e ); 
+    lt := LeftArrow( e ); 
+    rt := RightArrow( e ); 
+    dn := DownArrow( e ); 
+    Print( "[", up![2], "] ---- ", up![1], " ---> [", up![3], "]\n" );
+    Print( "  |                         |\n" );
+    Print( lt![1], "    ", e![1], "    ", rt![1], "\n" ); 
+    Print( "  V                         V\n" ); 
+    Print( "[", dn![2], "] ---- ", dn![1], " ---> [", dn![3], "]" );
 end );
 
 InstallMethod( ViewObj, "for an element in a magma with objects",
@@ -133,11 +142,11 @@ function( dmwo, s1, s2 )
     local prod; 
 
     ## elements are composable? 
-    if ( ( s1![2] = s2![4] ) and 
+    if ( ( s1![5] = s2![2] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
         return SquareOfArrowsNC( false, 
-            s2![1]*s1![1]^s2![5]![1], 
-            s2![2], s1![3]*s2![3], s1![4], s1![5]*s2![5] ); 
+            s2![1]*s1![1]^s2![4]![1], 
+            s1![2], s1![3]*s2![3], s1![4]*s2![4], s2![5] ); 
     else 
         return fail; 
     fi;  
@@ -146,7 +155,7 @@ end );
 ############################################################################# 
 ## 
 #M  LeftRightProduct( dmwo, s1, s2 ) 
-##      . . . . . . horizantalal composition of squares in a double groupoid 
+##      . . . . . . horizantal composition of squares in a double groupoid 
 ## 
 InstallMethod( LeftRightProduct, "for two squares in a double groupouid", true, 
     [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
@@ -156,11 +165,11 @@ function( dmwo, s1, s2 )
     local prod; 
 
     ## elements are composable? 
-    if ( ( s1![5] = s2![3] ) and 
+    if ( ( s1![4] = s2![3] ) and 
          ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
         return SquareOfArrowsNC( false, 
-            s1![1]^s2![2]![1]*s2![1], 
-            s1![2]*s2![2], s1![3], s1![4]*s2![4], s2![5] ); 
+            s1![1]^s2![5]![1]*s2![1], 
+            s1![2]*s2![2], s1![3], s2![4], s1![5]*s2![5] ); 
     else 
         return fail; 
     fi;  

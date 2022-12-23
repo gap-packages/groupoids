@@ -472,7 +472,7 @@ end );
 #F  Groupoid( <pieces> )                groupoid as list of pieces 
 #F  Groupoid( <gp>, <obj> )             group as groupoid 
 #F  Groupoid( <gp>, <obs> )             single piece groupoid 
-#F  Groupoid( <gpd>, <rgp>, <rays> )    subgroupoid by root groups, rays 
+#F  Groupoid( <gpd>, <rgp>, <rays> )    subgroupoid by root group and rays 
 ##
 InstallGlobalFunction( Groupoid, function( arg )
 
