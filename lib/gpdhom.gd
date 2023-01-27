@@ -16,9 +16,11 @@ DeclareGlobalFunction( "GroupoidHomomorphism" );
 ## 
 #A  IsomorphismPermGroupoid( <gpd> )
 #A  IsomorphismPcGroupoid( <gpd> )
+#A  RegularActionHomomorphismGroupoid( <gpd> )
 ## 
 DeclareAttribute( "IsomorphismPermGroupoid", IsGroupoid );
 DeclareAttribute( "IsomorphismPcGroupoid", IsGroupoid );
+DeclareAttribute( "RegularActionHomomorphismGroupoid", IsGroupoid );
 
 ############################################################################# 
 ## 

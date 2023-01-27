@@ -174,10 +174,11 @@ gap> SetName( N2, "N2" );
 gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); 
 single piece groupoid with rays: < N2, [ -28, -27 ], [ <identity> of ..., x ] >
 gap> SetName( Hq8, "Hq8" );
-gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );;
-gap> MappingToSinglePieceData( isoHq8 );       
-[ [ [ y ] -> [ (1,3,4,7)(2,5,6,8) ], [ -28, -27 ], 
-      [ (), (1,2,4,6)(3,8,7,5) ] ] ]
+gap> ## isoHq8 := IsomorphismPermGroupoid( Hq8 );;
+gap> regHq8 := RegularActionHomomorphismGroupoid( Hq8 );
+groupoid homomorphism : 
+[ [ [y : -28 -> -28], [x : -28 -> -27] ], 
+  [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ]
 
 ## SubSection 5.4.1
 gap> gend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; 
