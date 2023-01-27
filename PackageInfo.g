@@ -2,7 +2,7 @@
 ##
 ##  PackageInfo.g  file for the package groupoids 
 ##  Emma Moore and Chris Wensley 
-##
+## 
 
 SetPackageInfo( rec(
 
