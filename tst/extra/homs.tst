@@ -2,7 +2,7 @@
 ##
 #W  homs.tst                   Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
+#Y  Copyright (C) 2000-2023, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -309,12 +309,12 @@ gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] );;
 gap> SetName( Hq8, "Hq8" );
 gap> Uq8gl43 := UnionOfPieces( [ Hq8, Hgl43 ] );;
 gap> isoUq8gl43 := IsomorphismPermGroupoid( Uq8gl43 );; 
-gap> ImageElm( isoUq8gl43, Arrow( Hq8, q8.1^3, -28, -27 ) );
-[(1,6,4,2)(3,5,7,8) : -28 -> -27]
-gap> ImageElm( isoUq8gl43, Arrow( Hgl43, gengl43[1], -31, -33 ) );
-[(28,37,46)(29,38,47)(30,39,48)(31,40,49)(32,41,50)(33,42,51)(34,43,52)
-(35,44,53)(36,45,54)(55,73,64)(56,74,65)(57,75,66)(58,76,67)(59,77,68)
-(60,78,69)(61,79,70)(62,80,71)(63,81,72) : -31 -> -33]
+gap> g := GeneratorsOfGroupoid( Uq8gl43 )[3];; 
+gap> ImageElm( isoUq8gl43, g );
+[( 2, 7,10,55, 3, 4,19,28)( 5,25,37,56, 9,13,73,30)( 6,22,46,29, 8,16,64,57)
+(11,61,12,58,21,31,20,34)(14,79,39,59,27,40,74,36)(15,76,48,32,26,43,65,63)
+(17,70,66,60,24,49,47,35)(18,67,75,33,23,52,38,62)(41,80,45,68,81,42,77,54)
+(44,71,72,69,78,51,50,53) : -35 -> -34]
 gap> iso := IsomorphismPcGroupoid( Ga4 );         
 groupoid homomorphism : 
 [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 

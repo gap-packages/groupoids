@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -899,6 +899,7 @@ end );
 ##
 #M  IsomorphismPermGroupoid
 #M  IsomorphismPcGroupoid
+#M  RegularActionHomomorphismGroupoids
 ##
 InstallMethod( IsomorphismPermGroupoid, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece ], 0,
@@ -999,6 +1000,53 @@ function( g1 )
     isos := ListWithIdenticalEntries( nc1, 0 );
     for i in [1..nc1] do 
         isos[i] := IsomorphismPcGroupoid( comp1[i] );
+    od;
+    g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
+    iso := HomomorphismByUnion( g1, g2, isos );
+    return iso;
+end );
+
+InstallMethod( RegularActionHomomorphismGroupoid, "for a connected groupoid", 
+    true, [ IsGroupoid and IsSinglePiece ], 0,
+function( g1 )
+
+    local obs, gp1, iso, gp2, g2, par1, isopar, par2, ray1, ray2, 
+          gen1, gen2, isog;
+
+    obs := g1!.objects;
+    gp1 := g1!.magma;
+    if ( HasIsDirectProductWithCompleteDigraphDomain( g1 ) 
+         and IsDirectProductWithCompleteDigraphDomain( g1 ) ) then 
+        iso := RegularActionHomomorphism( gp1 );
+        gp2 := Image( iso ); 
+        g2 := Groupoid( gp2, obs ); 
+    else 
+        par1 := LargerDirectProductGroupoid( g1 ); 
+        isopar := RegularActionHomomorphismGroupoid( par1 ); 
+        iso := RootGroupHomomorphism( isopar ); 
+        par2 := Image( isopar ); 
+        gp2 := Image( iso, gp1 ); 
+        ray1 := RayArrowsOfGroupoid( g1 );  
+        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
+    fi; 
+    gen1 := GeneratorsOfGroupoid( g1 ); 
+    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    isog := GroupoidHomomorphismFromSinglePieceNC( g1, g2, gen1, gen2 );
+    return isog;
+end );
+
+InstallMethod( RegularActionHomomorphismGroupoid, 
+    "generic method for a groupoid", true, [ IsGroupoid ], 0,
+function( g1 )
+
+    local isos, comp1, nc1, i, g2, iso;
+
+    comp1 := Pieces( g1 );
+    nc1 := Length( comp1 );
+    isos := ListWithIdenticalEntries( nc1, 0 );
+    for i in [1..nc1] do 
+        isos[i] := RegularActionHomomorphismGroupoid( comp1[i] );
     od;
     g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
     iso := HomomorphismByUnion( g1, g2, isos );

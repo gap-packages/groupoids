@@ -2,14 +2,14 @@
 ##
 ##  PackageInfo.g  file for the package groupoids 
 ##  Emma Moore and Chris Wensley 
-##
+## 
 
 SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 Version := "1.71dev",
-Date := "23/01/2023", # dd/mm/yyyy format
+Date := "27/01/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [

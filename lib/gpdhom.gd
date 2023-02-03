@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gd             GAP4 package `groupoids'               Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -16,9 +16,11 @@ DeclareGlobalFunction( "GroupoidHomomorphism" );
 ## 
 #A  IsomorphismPermGroupoid( <gpd> )
 #A  IsomorphismPcGroupoid( <gpd> )
+#A  RegularActionHomomorphismGroupoid( <gpd> )
 ## 
 DeclareAttribute( "IsomorphismPermGroupoid", IsGroupoid );
 DeclareAttribute( "IsomorphismPcGroupoid", IsGroupoid );
+DeclareAttribute( "RegularActionHomomorphismGroupoid", IsGroupoid );
 
 ############################################################################# 
 ## 
