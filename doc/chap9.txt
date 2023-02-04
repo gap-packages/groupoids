@@ -1,8 +1,8 @@
   
-  [1X8 [33X[0;0YDevelopment History[133X[101X
+  [1X9 [33X[0;0YDevelopment History[133X[101X
   
   
-  [1X8.1 [33X[0;0YVersions of the Package[133X[101X
+  [1X9.1 [33X[0;0YVersions of the Package[133X[101X
   
   [33X[0;0YThe  first  version,  [5XGraphGpd[105X  1.001,  formed  part  of Emma Moore's thesis
   [Moo01] in December 2000, but was not made generally available.[133X
@@ -60,7 +60,7 @@
   to the [5XUtils[105X package.)[133X
   
   
-  [1X8.2 [33X[0;0YWhat needs to be done next?[133X[101X
+  [1X9.2 [33X[0;0YWhat needs to be done next?[133X[101X
   
   [30X    [33X[0;6Ymore work on automorphism groups of groupoids;[133X
   

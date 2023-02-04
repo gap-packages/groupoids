@@ -2,14 +2,14 @@
 ##
 ##  PackageInfo.g  file for the package groupoids 
 ##  Emma Moore and Chris Wensley 
-##
+## 
 
 SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.71",
-Date := "07/08/2022", # dd/mm/yyyy format
+Version := "1.72",
+Date := "04/02/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -17,30 +17,16 @@ Persons := [
     LastName      := "Moore",
     FirstNames    := "Emma J.",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    ## Email         := "",
-    ## WWWHome       := "",
-    ## PostalAddress := Concatenation( ["\n", "UK"] ),
-    ## Place         := "",
-    ## Institution   := ""
+    IsMaintainer  := false
   ),
   rec(
     LastName      := "Wensley",
     FirstNames    := "Chris",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "c.d.wensley@bangor.ac.uk",
+    Email         := "cdwensley.maths@btinternet.com",
     WWWHome       := "https://github.com/cdwensley",
-    PostalAddress := Concatenation( [
-                      "Dr. C.D. Wensley\n",
-                      "School of Computer Science and Electronic Engineering\n",
-                      "Bangor University\n",
-                      "Dean Street\n",
-                      "Bangor\n",
-                      "Gwynedd LL57 1UT\n",
-                      "UK"] ),
-    Place         := "Llanfairfechan",
-    Institution   := "Bangor University"
+    Place         := "Llanfairfechan" 
   )
 ],
 
@@ -83,9 +69,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.10.1",
-  NeededOtherPackages := [ [ "AutoDoc", ">= 2019.02.22" ], 
-                           [ "GAPDoc", ">= 1.6.2" ], 
-                           [ "fga", ">= 1.4.0" ],
+  NeededOtherPackages := [ [ "fga", ">= 1.4.0" ],
                            [ "utils", ">= 0.76" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 3.1.1" ] ],
   ExternalConditions := [ ]
@@ -110,7 +94,7 @@ BannerString := Concatenation(
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2000-2019, Emma Moore and Chris Wensley.<P/>\n", 
+            "&copyright; 2000-2023, Emma Moore and Chris Wensley.<P/>\n", 
             "The &groupoids; package is free software; you can redistribute ", 
             "it and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
