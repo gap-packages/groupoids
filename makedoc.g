@@ -17,7 +17,7 @@ AutoDoc(rec(
     scaffold := rec(
         includes := [ "intro.xml",   "mwo.xml",       "mwohom.xml", 
                       "gpd.xml",     "gpdhom.xml",    "ggraph.xml", 
-                      "double.xml",  "tecnotes.xml",  "history.xml" 
+                      "tecnotes.xml",  "history.xml" 
                     ],
         bib := "bib.xml", 
         entities := rec( 

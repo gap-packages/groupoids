@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gd                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -142,9 +142,11 @@ DeclareCategoryCollections( "IsDoubleGroupoidElement" );
 #V  IsMultiplicativeElementWithObjectsAndOnesFamily . . . . . . and with ones
 #V  IsMultiplicativeElementWithObjectsAndInversesFamily  . . . . and inverses
 #V  IsGroupoidElementFamily  . . . . . . . . family for elements of groupoids
+#V  IsDoubleGroupoidElementFamily  . . . .  family for elements of double groupoids
 #T  IsMultiplicativeElementWithObjectsType  default type for elements of mwos 
 #T  IsGroupoidElementType  . . . . . . default type for elements of groupoids
 #T  IsGroupoidByIsomorphismsElementType  . special type for groupoid elements
+#T  IdDoubleGroupoidElementType  . . . . default type for elements of double groupoids 
 ##  
 BindGlobal( "IsMultiplicativeElementWithObjectsFamily", 
     NewFamily( "IsMultiplicativeElementWithObjectsFamily", 
