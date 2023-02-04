@@ -1,6 +1,7 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.71dev for GAP 4.12.2 (27/01/23)
+## Version 1.72 for GAP 4.12.2 (04/02/23) 
+ * (04/02/23) moved attempts at double groupoids to XMod 
  * (27/01/23) added RegularActionHomomorphismGroupoid and used in gpdhom.tst 
  * (23/12/22) changed email address and other personal details
 
