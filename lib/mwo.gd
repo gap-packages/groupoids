@@ -53,7 +53,7 @@ DeclareAttribute( "Pieces", IsDomainWithObjects );
 DeclareAttribute( "PieceIsomorphisms", IsHomogeneousDomainWithObjects );  
 DeclareAttribute( "RootObject", IsSinglePieceDomain ); 
   
-############################################################################## 
+############################################################################# 
 ## 
 #R  IsPiecesRep( <dwo> ) 
 ## 
@@ -412,11 +412,31 @@ DeclareOperation( "SubmagmaWithObjectsByElementsTable",
     [ IsMagmaWithObjects, IsList ] );
 
 
-
-################################ UTILITIES ################################### 
+################################ UTILITIES ################################## 
 
 ############################################################################# 
 ##                         
 #O  Ancestor( <dwo> ) 
 ## 
-DeclareOperation( "Ancestor", [ IsDomainWithObjects ] );    
+DeclareOperation( "Ancestor", [ IsDomainWithObjects ] ); 
+
+####################  DOUBLE DOMAIN WITH OBJECTS  ########################### 
+
+#C  IsDoubleDomainWithObjects( <obj> ) . . . is a double domain with objects 
+#F  DoubleDomainWithObjects( <dom>, <obs> ) 
+#C  IsDoubleGroupoidElement( <elt> ) 
+#V  IsDoubleGroupoidElementFamily  . . . .  family for elements of double groupoids
+#T  IdDoubleGroupoidElementType  . . . . default type for elements of double groupoids 
+## 
+DeclareCategory( "IsDoubleDomainWithObjects", IsDomainWithObjects ); 
+DeclareGlobalFunction( "DoubleDomainWithObjects" ); 
+DeclareCategory( "IsDoubleGroupoidElement", 
+    IsMultiplicativeElementWithObjectsAndInverses ); 
+DeclareCategoryCollections( "IsDoubleGroupoidElement" ); 
+BindGlobal( "IsDoubleGroupoidElementFamily", 
+    NewFamily( "IsDoubleGroupoidElementFamily", IsDoubleGroupoidElement, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "IsDoubleGroupoidElementType", 
+    NewType( IsDoubleGroupoidElementFamily, IsDoubleGroupoidElement ) );
+
+

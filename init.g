@@ -16,3 +16,4 @@ ReadPackage( "groupoids", "lib/gpdaut.gd" );
 ##  ReadPackage( "groupoids", "lib/morgraph.gd" ); 
 ReadPackage( "groupoids", "lib/grpgraph.gd" ); 
 ReadPackage( "groupoids", "lib/gpdgraph.gd" );
+ReadPackage( "groupoids", "lib/double.gd" ); 

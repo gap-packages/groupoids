@@ -1,0 +1,363 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  double.xml       groupoids documentation            Chris Wensley  -->
+<!--                                                                     -->
+<!--  Copyright (C) 2023, Chris Wensley,             --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-double">
+<Heading>Double Groupoids</Heading>
+
+A <E>double groupoid</E> is a <E>double category</E> 
+in which all the category structures are groupoids.
+For the most general type of double groupoid there is also an 
+associated pre-crossed module. 
+In this package we consider only <E>basic double groupoids</E>, 
+which do not involve pre-crossed modules. 
+The more general case will be discussed in the 
+<Package>XMod</Package> package. 
+<P/> 
+In a double groupoid, as well as objects and arrows, we need a set of <E>squares</E>.  
+A square is bounded by four arrows, two horizantal and two vertical, 
+and there is a <E>horizantal</E> groupoid structure  
+and a <E>vertical</E> groupoid structure on these squares. 
+<P/> 
+Double groupoids can be considered where the vertical arrows come from 
+one groupoid, and the horizantal arrows from another.
+The double groupoids constructed here are special 
+in that all four arrows come from the same groupoid.
+We call these <E>edge-symmetric</E> double groupoids.
+<P/> 
+This addition to the package is very experimental, and will be extended soon. 
+
+
+<Section Label="sec-square">
+<Heading>Double groupoid squares</Heading>
+
+Let <M>G</M> be a connected groupoid with object set <M>\Omega</M>. 
+Let <M>\Box(G)</M> be the set of squares with objects from <M>\Omega</M> 
+at each corner; plus two vertical arrows and two horizantal arrows from Arr<M>(G)</M>. 
+The following picture illustrates the situation: 
+<Display> 
+<!--  \label{square1} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
+     & u_2 \ar[d]^{e_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     & v_2 
+}} 
+]]>
+</Display> 
+
+We think of the square <M>s_1</M> being <E>based</E> at the bottom, 
+right-hand corner, <M>v_2</M>. 
+The <E>boundary</E> of the square is the loop 
+<M>(v_2, b_1^{-1}d_1^{-1}a_1e_1,v_2) = (v_2,\delta(s_1),v_2)</M>. 
+
+The <E>horizantal composition</E> is illustrated by 
+<Display> 
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1} \ar[d]_{d_1}  
+     & u_2 \ar[r]^{a_2} \ar[d]^{e_1} 
+       & u_3 \ar[d]^{f_1} \ar@{}[dr]|= 
+         & u_1 \ar[r]^{a_1a_2} \ar[d]_{d_1}  
+           & u_3 \ar[d]^{f_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     & v_2 \ar[r]_{b_2} 
+       & v_3 
+         & v_1 \ar[r]_{b_1b_2}
+           & v_3 
+}} 
+]]>
+</Display> 
+Notice that the boundary of the composite satisfies the identity: 
+<Display>
+\delta(s_1s_2) ~=~ (b_1b_2)^{-1}d_1^{-1}(a_1a_2)f_1 
+  ~=~ b_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)b_2(b_2^{-1}e_1^{-1}a_2f_1)
+  ~=~ (\delta s_1)^{b_2} (\delta s_2).
+</Display> 
+
+
+The <E>horizantal groupoid</E> on <M>\Box(G)</M> has the vertical 
+arrows as objects and pairs of horizantal arrows as arrows. 
+Similarly, the <E>vertical groupoid</E> on <M>\Box(G)</M> has the 
+horizantal arrows of as objects and pairs of vertical arrows as arrows. 
+
+Vertical composition is illustrated by 
+<Display> 
+<![CDATA[
+\vcenter{\xymatrix @=2pc{  
+   u_1 \ar[rr]^{a_1}  \ar[dd]_{d_1}  
+     && u_2 \ar[dd]^{e_1} 
+         & &  &&  \\ 
+     &&  & &  u_1 \ar[rr]^{a_1} \ar[dd]_{d_1d_2}  
+              && u_2 \ar[dd]^{e_1e_2} \\ 
+   v_1 \ar[rr]_{b_1}  \ar[dd]_{d_2}   
+     && v_2 \ar[dd]^{e_2} 
+         &=&  &&  \\ 
+     &&  & &  w_1 \ar[rr]_{c_1} 
+              &&  w_2 \\ 
+   w_1 \ar[rr]_{c_1} 
+     && w_2 
+}} 
+]]>
+</Display> 
+
+This time the boundary condition satisfies the identity: 
+<Display> 
+\delta(s_1s_3) ~=~ c_1^{-1}(d_1d_2)^{-1}a_1(e_1e_2) 
+  ~=~ (c_1^{-1}d_2^{-1}b_1e_2)e_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)e_2 
+  ~=~ (\delta s_3)(\delta s_1)^{e_2}. 
+</Display> 
+
+Vertical and horizantal compositions commute, 
+so we may construct products such as: 
+<Display> 
+<![CDATA[
+\vcenter{\xymatrix @=2pc{  
+   u_1 \ar[rr]^{a_1} \ar[dd]_{d_1}  
+     && u_2 \ar[rr]^{a_2} \ar[dd]|{e_1}   
+         && u_3 \ar[dd]^{f_1} 
+             & &  &&&  \\ 
+     &&  &&  & &  u_1 \ar[rrr]^{a_1a_2} \ar[dd]_{d_1d_2}  
+                  &&& u_3 \ar[dd]^{f_1f_2} \\ 
+   v_1 \ar[rr]|{b_1} \ar[dd]_{d_2}   
+     && v_2 \ar[rr]|{b_2} \ar[dd]|{e_2}  
+         &&  v_3 \ar[dd]^{f_2} 
+             &=&  &&&  \\ 
+     &&  &&  & &  w_1 \ar[rrr]_{b_3b_6} 
+                  &&& w_3 \\ 
+   w_1 \ar[rr]_{c_1} 
+     && w_2 \ar[rr]_{c_2} 
+         &&  w_3 
+}} 
+]]>
+</Display> 
+
+Now <M>Box(G)</M> is the maximal double groupoid determined by <M>G</M>, 
+but in general many substructures may be formed. 
+Since the horizantal and vertical groupoid structures must contain the 
+identity at each object, a double groupoid on <M>G</M> contains 
+all squares of the form: 
+<Display> 
+<!--  \label{id-squares} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{a}  \ar[d]_{1}  
+     & v \ar[d]^{1} 
+       && u \ar[r]^{1}  \ar[d]_{b} 
+          & u \ar[d]^{b} \\ 
+   u \ar[r]_{a} 
+     & v 
+       && v \ar[r]^{1} 
+          & v 
+}} 
+]]>
+</Display> 
+
+
+
+For an example we take for our groupoid <C>Gd8</C>  
+with group <M>D_8 = \langle g = (1,2,3,4), h = (1,3) \rangle</M>, 
+with the complete graph on <M>\{-9,-8,-7\}</M>. 
+It is then routine to check that the two ways of computing the product 
+of four squares below agree.
+
+<Display> 
+<![CDATA[
+\vcenter{\xymatrix @=2pc{  
+   -9 \ar[rr]^{()} \ar[dd]_{(1,2,3,4)} 
+     && -7 \ar[rr]^{(2,4)} \ar[dd]|{(1,3)}   
+         && -7 \ar[dd]^{(1,4,3,2)} 
+             & &  &&&  \\ 
+     &&  &&  & &  -9 \ar[rrr]^{(2,4)} \ar[dd]^{(1,2)(3,4)} 
+                  &&& -7 \ar[dd]_{(1,4)(2,3))} \\ 
+   -9 \ar[rr]|{(2,4)} \ar[dd]_{(1,3)}   
+     && -8 \ar[rr]|{()} \ar[dd]|{(1,2,3,4)}  
+         &&  -9 \ar[dd]^{(1,3)} 
+             &=&  &&&  \\ 
+     &&  &&  & &  -8 \ar[rrr]_{(1,3)(2,4))} 
+                  &&& -7 \\ 
+   -8 \ar[rr]_{(1,2)(3,4)} 
+     && -8 \ar[rr]_{(1,4)(2,3)} 
+         &&  -7 
+}} 
+]]>
+</Display> 
+
+<Example>
+<![CDATA[
+gap> g := (1,2,3,4);;  h := (1,3);;
+gap> gend8 := [ g, h ];;
+gap> d8 := Group( gend8 );;
+gap> SetName( d8, "d8" ); 
+gap> Gd8 := Groupoid( d8, [-9..-7] );;
+gap> SetName( Gd8, "Gd8" ); 
+gap> D1 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
+gap> D1!.groupoid;
+Gd8
+gap> D1!.objects;
+[ -9 .. -7 ]
+gap> a1 := Arrow(Gd8,(),-9,-7);;         a2 := Arrow(Gd8,(2,4),-7,-7);;
+gap> b1 := Arrow(Gd8,(2,4),-9,-8);;      b2 := Arrow(Gd8,(),-8,-9);; 
+gap> c1 := Arrow(Gd8,(1,2)(3,4),-8,-8);; c2 := Arrow(Gd8,(1,4)(2,3),-8,-7);; 
+gap> d1 := Arrow(Gd8,g,-9,-9);;          d2 := Arrow(Gd8,(1,3),-9,-8);; 
+gap> e1 := Arrow(Gd8,(1,3),-7,-8);;      e2 := Arrow(Gd8,g,-8,-8);; 
+gap> f1 := Arrow(Gd8,g^-1,-7,-9);;       f2 := Arrow(Gd8,(1,3),-9,-7);; 
+
+gap> bdy1 := b1![1]^-1 * d1![1]^-1 * a1![1] * e1![1];; 
+gap> sq1 := SquareOfArrows( D1, bdy1, a1, d1, e1, b1 ); 
+[-9] ---- () ---> [-7]
+  |                         |
+(1,2,3,4)    (1,4,3,2)    (1,3)
+  V                         V
+[-9] ---- (2,4) ---> [-8]
+gap> UpArrow( sq1 );
+[() : -9 -> -7]
+gap> LeftArrow( sq1 );
+[(1,2,3,4) : -9 -> -9]
+gap> RightArrow( sq1 );
+[(1,3) : -7 -> -8]
+gap> DownArrow( sq1 );
+[(2,4) : -9 -> -8]
+
+gap> bdy2 := b2![1]^-1 * e1![1]^-1 * a2![1] * f1![1];; 
+gap> sq2 := SquareOfArrows( D1, bdy2, a2, e1, f1, b2 );;  
+gap> LeftArrow( sq2 ) = RightArrow( sq1 ); 
+true
+gap> bdy3 := c1![1]^-1 * d2![1]^-1 * b1![1] * e2![1];; 
+gap> sq3 := SquareOfArrows( D1, bdy3, b1, d2, e2, c1 );;
+gap> UpArrow( sq3 ) = DownArrow( sq1 ); 
+true
+gap> bdy4 := c2![1]^-1 * e2![1]^-1 * b2![1] * f2![1];; 
+gap> sq4 := SquareOfArrows( D1, bdy4, b2, e2, f2, c2 );;
+gap> UpArrow(sq4)=DownArrow(sq2) and LeftArrow(sq4)=RightArrow(sq3); 
+true
+
+gap> sq12 := LeftRightProduct( D1, sq1, sq2 );
+[-9] ---- (2,4) ---> [-7]
+  |                         |
+(1,2,3,4)    (1,3)(2,4)    (1,4,3,2)
+  V                         V
+[-9] ---- (2,4) ---> [-9]
+
+gap> sq34 := LeftRightProduct( D1, sq3, sq4 );
+[-9] ---- (2,4) ---> [-9]
+  |                         |
+(1,3)    (1,3)(2,4)    (1,3)
+  V                         V
+[-8] ---- (1,3)(2,4) ---> [-7]
+
+gap> sq13 := UpDownProduct( D1, sq1, sq3 ); 
+[-9] ---- () ---> [-7]
+  |                         |
+(1,2)(3,4)    (1,4)(2,3)    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,2)(3,4) ---> [-8]
+
+gap> sq24 := UpDownProduct( D1, sq2, sq4 ); 
+[-7] ---- (2,4) ---> [-7]
+  |                         |
+(1,4)(2,3)    (1,4,3,2)    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,4)(2,3) ---> [-7]
+
+gap> sq1324 := LeftRightProduct( D1, sq13, sq24 );
+[-9] ---- (2,4) ---> [-7]
+  |                         |
+(1,2)(3,4)    ()    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,3)(2,4) ---> [-7]
+
+gap> sq1234 := UpDownProduct( D1, sq12, sq34 );;
+gap> sq1324 = sq1234;
+true
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sec-double-todo">
+<Heading>Further developments</Heading>
+
+This part of the package is at a very early stage. 
+The following are now urgently needed:  
+<List>
+<Item>
+generators of a double groupoid on <M>G</M>; 
+</Item>
+<Item>
+the double groupoid generated by a set of squares; 
+</Item>
+<Item>
+a method for <C>Size</C>; 
+</Item>
+<Item>
+and lots more.
+</Item>
+</List>
+ 
+</Section>
+
+
+
+<Section Label="sec-double-product">
+<Heading>Starting with two groupoids</Heading>
+
+In the literature on double groupoids the construction often starts 
+with two groupoids <M>G_1, G_2</M>, 
+and squares have horizantal arrows chosen from <M>G_1</M> 
+and vertical arrows chosen from <M>G_2</M>. 
+When that is the case, the boundary of a square is not defined, 
+since arrows from <M>G_1</M> do not compose with those from <M>G_2</M>. 
+
+Thids situation is modelled here by constructing the direct product 
+groupoid <M>G = G_1 \times G_2</M> 
+and forming a double groupoid on <M>G</M> in which squares have the form 
+<Display> 
+<!--  \label{product-square} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   [u_1,v_1] \ar[r]^{[a,1]}  \ar[d]_{[1,b]}  
+     & [u_2,v_2] \ar[d]^{[1,b']} \\ 
+   [u_3,v_3] \ar[r]_{[a',1]} 
+     & [u_4,v_4] 
+}} 
+]]>
+</Display> 
+
+</Section>
+
+
+
+<Section Label="sec-comm-squares">
+<Heading>Commutative squares</Heading>
+
+The square 
+<Display> 
+<!--  \label{square1again} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
+     & u_2 \ar[d]^{e_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     & v_2 
+}} 
+]]>
+</Display> 
+is <E>commutative</E> if <M>a_1*e_1 = d_1*b_1</M>, 
+so that its boundary is the identity. 
+The set of commutative squares in <M>\Box(G)</M> 
+forms  the <E>commutative sub-double groupoid</E> of <M>\Box(G)</M>. 
+
+</Section>
+
+
+</Chapter>
