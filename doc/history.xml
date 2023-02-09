@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml      groupoids documentation            Chris Wensley  -->
 <!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,             --> 
+<!--  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,             --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -80,6 +80,14 @@ Version 1.71 of August 2022 contains a complete revision of right,
 left and double cosets of groupoids.  
 (The initial declaration of LeftCoset was moved to the 
 <Package>Utils</Package> package.) 
+<P/> 
+Version 1.73 of February 2023 contains a first attempt at an 
+implementation of double groupoids: 
+see Chapter <Ref Chap='chap-double' />. 
+This is very experimental material, and will soon be changed or extended. 
+A more general version of double groupoids will be introduced in the 
+<Package>XMod</Package> package. 
+
 </Section>
 
 
@@ -112,7 +120,10 @@ convert <C>GraphOfGroupsRewritingSystem</C> to the category
 <C>IsRewritingSystem</C>;
 </Item>
 <Item>
-in <Package>XMod</Package>, continue to work on crossed modules over groupoids.
+in <Package>XMod</Package>, continue to work on crossed modules over groupoids;
+</Item>
+<Item>
+extend the material on double groupoids.
 </Item>
 </List>
 
