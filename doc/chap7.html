@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (groupoids) - Chapter 7: Technical Notes</title>
+<title>GAP (groupoids) - Chapter 7: Double Groupoids</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,196 +15,332 @@
 <body class="chap7"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
-<p><a id="X7F2BA6DC7AD84FBC" name="X7F2BA6DC7AD84FBC"></a></p>
-<div class="ChapSects"><a href="chap7.html#X7F2BA6DC7AD84FBC">7 <span class="Heading">Technical Notes</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7C5B725A7AED3C8D">7.1 <span class="Heading">Many object structures</span></a>
+<p><a id="X83B7E8A287C9284A" name="X83B7E8A287C9284A"></a></p>
+<div class="ChapSects"><a href="chap7.html#X83B7E8A287C9284A">7 <span class="Heading">Double Groupoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X780820667A09FF65">7.1 <span class="Heading">Double groupoid squares</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7A4760E887C9C968">7.2 <span class="Heading">Many object homomorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X824F8FF387CF4A27">7.2 <span class="Heading">Further developments</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X80E0318F78D2AD28">7.3 <span class="Heading">Starting with two groupoids</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86CA60238532FBAF">7.4 <span class="Heading">Commutative squares</span></a>
 </span>
 </div>
 </div>
 
-<h3>7 <span class="Heading">Technical Notes</span></h3>
+<h3>7 <span class="Heading">Double Groupoids</span></h3>
 
-<p>This short chapter is included for the benefit of anyone wishing to implement some other variety of many-object structures, for example <em>ringoids</em>, which are rings with many objects; <em>Lie groupoids</em>, which are Lie groups with many objects; and so on.</p>
+<p>A <em>double groupoid</em> is a <em>double category</em> in which all the category structures are groupoids. For the most general type of double groupoid there is also an associated pre-crossed module. In this package we consider only <em>basic double groupoids</em>, which do not involve pre-crossed modules. The more general case will be discussed in the <strong class="pkg">XMod</strong> package.</p>
 
-<p><a id="X7C5B725A7AED3C8D" name="X7C5B725A7AED3C8D"></a></p>
+<p>In a double groupoid, as well as objects and arrows, we need a set of <em>squares</em>. A square is bounded by four arrows, two horizantal and two vertical, and there is a <em>horizantal</em> groupoid structure and a <em>vertical</em> groupoid structure on these squares.</p>
 
-<h4>7.1 <span class="Heading">Many object structures</span></h4>
+<p>Double groupoids can be considered where the vertical arrows come from one groupoid, and the horizantal arrows from another. The double groupoids constructed here are special in that all four arrows come from the same groupoid. We call these <em>edge-symmetric</em> double groupoids.</p>
 
-<p>Structures with many objects, and their elements, are defined in a manner similar to the single object case. For elements we have:</p>
+<p>This addition to the package is very experimental, and will be extended soon.</p>
 
+<p><a id="X780820667A09FF65" name="X780820667A09FF65"></a></p>
 
-<ul>
-<li><p><code class="code">DeclareCategory( "IsMultiplicativeElementWithObjects", IsMultiplicativeElement ); </code></p>
+<h4>7.1 <span class="Heading">Double groupoid squares</span></h4>
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsMultiplicativeElementWithObjectsAndOnes", IsMultiplicativeElementWithObjects ); </code></p>
+<p>Let <span class="SimpleMath">G</span> be a connected groupoid with object set <span class="SimpleMath">Ω</span>. Let <span class="SimpleMath">□(G)</span> be the set of squares with objects from <span class="SimpleMath">Ω</span> at each corner; plus two vertical arrows and two horizantal arrows from Arr<span class="SimpleMath">(G)</span>. The following picture illustrates the situation:</p>
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsMultiplicativeElementWithObjectsAndInverses", IsMultiplicativeElementWithObjectsAndOnes ); </code></p>
-
-</li>
-<li><p><code class="code">DeclareCategory( "IsGroupoidElement", </code></p>
-
-<p><code class="code">IsMultiplicativeElementWithObjectsAndInverses ); </code></p>
-
-</li>
-</ul>
-<p>as well as various category collections. For the various structures we have:</p>
+<p class="pcenter"> 
 
 
-<ul>
-<li><p><code class="code">DeclareCategory( "IsDomainWithObjects", IsDomain ); </code></p>
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
+     &amp; u_2 \ar[d]^{e_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     &amp; v_2 
+}} 
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsMagmaWithObjects", IsDomainWithObjects and IsMultiplicativeElementWithObjectsCollection );</code></p>
+</p>
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsSemigroupWithObjects", IsMagmaWithObjects and IsAssociative ); </code></p>
+<p>We think of the square <span class="SimpleMath">s_1</span> being <em>based</em> at the bottom, right-hand corner, <span class="SimpleMath">v_2</span>. The <em>boundary</em> of the square is the loop <span class="SimpleMath">(v_2, b_1^-1d_1^-1a_1e_1,v_2) = (v_2,δ(s_1),v_2)</span>. The <em>horizantal composition</em> is illustrated by</p>
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsMonoidWithObjects", IsSemigroupWithObjects and IsMultiplicativeElementWithObjectsAndOnesCollection ); </code></p>
+<p class="pcenter"> 
 
-<p><code class="code">IsMultiplicativeElementWithObjectsAndInversesCollection ); </code></p>
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1} \ar[d]_{d_1}  
+     &amp; u_2 \ar[r]^{a_2} \ar[d]^{e_1} 
+       &amp; u_3 \ar[d]^{f_1} \ar@{}[dr]|= 
+         &amp; u_1 \ar[r]^{a_1a_2} \ar[d]_{d_1}  
+           &amp; u_3 \ar[d]^{f_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     &amp; v_2 \ar[r]_{b_2} 
+       &amp; v_3 
+         &amp; v_1 \ar[r]_{b_1b_2}
+           &amp; v_3 
+}} 
 
-</li>
-<li><p><code class="code">DeclareCategory( "IsGroupoid", IsMonoidWithObjects and IsGroupoidElementCollection ); </code></p>
+</p>
 
-</li>
-</ul>
-<p>Among the groupoids constructed earlier are the single piece <code class="code">Gd8</code> and the five component union <code class="code">U5</code>:</p>
+<p>Notice that the boundary of the composite satisfies the identity:</p>
+
+<p class="pcenter">
+\delta(s_1s_2) ~=~ (b_1b_2)^{-1}d_1^{-1}(a_1a_2)f_1 
+  ~=~ b_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)b_2(b_2^{-1}e_1^{-1}a_2f_1)
+  ~=~ (\delta s_1)^{b_2} (\delta s_2).
+</p>
+
+<p>The <em>horizantal groupoid</em> on <span class="SimpleMath">□(G)</span> has the vertical arrows as objects and pairs of horizantal arrows as arrows. Similarly, the <em>vertical groupoid</em> on <span class="SimpleMath">□(G)</span> has the horizantal arrows of as objects and pairs of vertical arrows as arrows. Vertical composition is illustrated by</p>
+
+<p class="pcenter"> 
+
+\vcenter{\xymatrix @=2pc{  
+   u_1 \ar[rr]^{a_1}  \ar[dd]_{d_1}  
+     &amp;&amp; u_2 \ar[dd]^{e_1} 
+         &amp; &amp;  &amp;&amp;  \\ 
+     &amp;&amp;  &amp; &amp;  u_1 \ar[rr]^{a_1} \ar[dd]_{d_1d_2}  
+              &amp;&amp; u_2 \ar[dd]^{e_1e_2} \\ 
+   v_1 \ar[rr]_{b_1}  \ar[dd]_{d_2}   
+     &amp;&amp; v_2 \ar[dd]^{e_2} 
+         &amp;=&amp;  &amp;&amp;  \\ 
+     &amp;&amp;  &amp; &amp;  w_1 \ar[rr]_{c_1} 
+              &amp;&amp;  w_2 \\ 
+   w_1 \ar[rr]_{c_1} 
+     &amp;&amp; w_2 
+}} 
+
+</p>
+
+<p>This time the boundary condition satisfies the identity:</p>
+
+<p class="pcenter"> 
+\delta(s_1s_3) ~=~ c_1^{-1}(d_1d_2)^{-1}a_1(e_1e_2) 
+  ~=~ (c_1^{-1}d_2^{-1}b_1e_2)e_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)e_2 
+  ~=~ (\delta s_3)(\delta s_1)^{e_2}. 
+</p>
+
+<p>Vertical and horizantal compositions commute, so we may construct products such as:</p>
+
+<p class="pcenter"> 
+
+\vcenter{\xymatrix @=2pc{  
+   u_1 \ar[rr]^{a_1} \ar[dd]_{d_1}  
+     &amp;&amp; u_2 \ar[rr]^{a_2} \ar[dd]|{e_1}   
+         &amp;&amp; u_3 \ar[dd]^{f_1} 
+             &amp; &amp;  &amp;&amp;&amp;  \\ 
+     &amp;&amp;  &amp;&amp;  &amp; &amp;  u_1 \ar[rrr]^{a_1a_2} \ar[dd]_{d_1d_2}  
+                  &amp;&amp;&amp; u_3 \ar[dd]^{f_1f_2} \\ 
+   v_1 \ar[rr]|{b_1} \ar[dd]_{d_2}   
+     &amp;&amp; v_2 \ar[rr]|{b_2} \ar[dd]|{e_2}  
+         &amp;&amp;  v_3 \ar[dd]^{f_2} 
+             &amp;=&amp;  &amp;&amp;&amp;  \\ 
+     &amp;&amp;  &amp;&amp;  &amp; &amp;  w_1 \ar[rrr]_{b_3b_6} 
+                  &amp;&amp;&amp; w_3 \\ 
+   w_1 \ar[rr]_{c_1} 
+     &amp;&amp; w_2 \ar[rr]_{c_2} 
+         &amp;&amp;  w_3 
+}} 
+
+</p>
+
+<p>Now <span class="SimpleMath">Box(G)</span> is the maximal double groupoid determined by <span class="SimpleMath">G</span>, but in general many substructures may be formed. Since the horizantal and vertical groupoid structures must contain the identity at each object, a double groupoid on <span class="SimpleMath">G</span> contains all squares of the form:</p>
+
+<p class="pcenter"> 
+
+
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{a}  \ar[d]_{1}  
+     &amp; v \ar[d]^{1} 
+       &amp;&amp; u \ar[r]^{1}  \ar[d]_{b} 
+          &amp; u \ar[d]^{b} \\ 
+   u \ar[r]_{a} 
+     &amp; v 
+       &amp;&amp; v \ar[r]^{1} 
+          &amp; v 
+}} 
+
+</p>
+
+<p>For an example we take for our groupoid <code class="code">Gd8</code> with group <span class="SimpleMath">D_8 = ⟨ g = (1,2,3,4), h = (1,3) ⟩</span>, with the complete graph on <span class="SimpleMath">{-9,-8,-7}</span>. It is then routine to check that the two ways of computing the product of four squares below agree.</p>
+
+<p class="pcenter"> 
+
+\vcenter{\xymatrix @=2pc{  
+   -9 \ar[rr]^{()} \ar[dd]_{(1,2,3,4)} 
+     &amp;&amp; -7 \ar[rr]^{(2,4)} \ar[dd]|{(1,3)}   
+         &amp;&amp; -7 \ar[dd]^{(1,4,3,2)} 
+             &amp; &amp;  &amp;&amp;&amp;  \\ 
+     &amp;&amp;  &amp;&amp;  &amp; &amp;  -9 \ar[rrr]^{(2,4)} \ar[dd]^{(1,2)(3,4)} 
+                  &amp;&amp;&amp; -7 \ar[dd]_{(1,4)(2,3))} \\ 
+   -9 \ar[rr]|{(2,4)} \ar[dd]_{(1,3)}   
+     &amp;&amp; -8 \ar[rr]|{()} \ar[dd]|{(1,2,3,4)}  
+         &amp;&amp;  -9 \ar[dd]^{(1,3)} 
+             &amp;=&amp;  &amp;&amp;&amp;  \\ 
+     &amp;&amp;  &amp;&amp;  &amp; &amp;  -8 \ar[rrr]_{(1,3)(2,4))} 
+                  &amp;&amp;&amp; -7 \\ 
+   -8 \ar[rr]_{(1,2)(3,4)} 
+     &amp;&amp; -8 \ar[rr]_{(1,4)(2,3)} 
+         &amp;&amp;  -7 
+}} 
+
+</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( Gd8 );</span>
-[ "IsListOrCollection", "IsCollection", "IsExtLElement", 
-  "CategoryCollections(IsExtLElement)", "IsExtRElement", 
-  "CategoryCollections(IsExtRElement)", 
-  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
-  "IsMagma", "IsDomainWithObjects", 
-  "CategoryCollections(IsMultiplicativeElementWithObjects)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)\
-", "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", 
-  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInverses", 
-  "IsGroupoid" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( Gd8 );     ## these numbers vary from one run to another</span>
-NewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116, 
-  117, 119, 120, 123, 205, 501, 2690, 2703, 2707, 2711, 2715, 2718, 2720, 
-  2721, 2722 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( Gd8 ); </span>
-[ "Name", "Size", "ObjectList", "GeneratorsOfMagmaWithObjects", 
-  "GeneratorsOfGroupoid" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( Gd8 ); </span>
-[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", 
-  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( Gd8 );</span>
-[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( U5 ); </span>
-[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := (1,2,3,4);;  h := (1,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gend8 := [ g, h ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d8 := Group( gend8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( d8, "d8" ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gd8 := Groupoid( d8, [-9..-7] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gd8, "Gd8" ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1 := SinglePieceBasicDoubleGroupoid( Gd8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1!.groupoid;</span>
+Gd8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1!.objects;</span>
+[ -9 .. -7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a1 := Arrow(Gd8,(),-9,-7);;         a2 := Arrow(Gd8,(2,4),-7,-7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b1 := Arrow(Gd8,(2,4),-9,-8);;      b2 := Arrow(Gd8,(),-8,-9);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c1 := Arrow(Gd8,(1,2)(3,4),-8,-8);; c2 := Arrow(Gd8,(1,4)(2,3),-8,-7);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d1 := Arrow(Gd8,g,-9,-9);;          d2 := Arrow(Gd8,(1,3),-9,-8);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 := Arrow(Gd8,(1,3),-7,-8);;      e2 := Arrow(Gd8,g,-8,-8);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := Arrow(Gd8,g^-1,-7,-9);;       f2 := Arrow(Gd8,(1,3),-9,-7);; </span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bdy1 := b1![1]^-1 * d1![1]^-1 * a1![1] * e1![1];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq1 := SquareOfArrows( D1, bdy1, a1, d1, e1, b1 ); </span>
+[-9] ---- () ---&gt; [-7]
+  |                         |
+(1,2,3,4)    (1,4,3,2)    (1,3)
+  V                         V
+[-9] ---- (2,4) ---&gt; [-8]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpArrow( sq1 );</span>
+[() : -9 -&gt; -7]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftArrow( sq1 );</span>
+[(1,2,3,4) : -9 -&gt; -9]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightArrow( sq1 );</span>
+[(1,3) : -7 -&gt; -8]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DownArrow( sq1 );</span>
+[(2,4) : -9 -&gt; -8]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bdy2 := b2![1]^-1 * e1![1]^-1 * a2![1] * f1![1];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq2 := SquareOfArrows( D1, bdy2, a2, e1, f1, b2 );;  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftArrow( sq2 ) = RightArrow( sq1 ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bdy3 := c1![1]^-1 * d2![1]^-1 * b1![1] * e2![1];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq3 := SquareOfArrows( D1, bdy3, b1, d2, e2, c1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpArrow( sq3 ) = DownArrow( sq1 ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bdy4 := c2![1]^-1 * e2![1]^-1 * b2![1] * f2![1];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq4 := SquareOfArrows( D1, bdy4, b2, e2, f2, c2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpArrow(sq4)=DownArrow(sq2) and LeftArrow(sq4)=RightArrow(sq3); </span>
+true
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq12 := LeftRightProduct( D1, sq1, sq2 );</span>
+[-9] ---- (2,4) ---&gt; [-7]
+  |                         |
+(1,2,3,4)    (1,3)(2,4)    (1,4,3,2)
+  V                         V
+[-9] ---- (2,4) ---&gt; [-9]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq34 := LeftRightProduct( D1, sq3, sq4 );</span>
+[-9] ---- (2,4) ---&gt; [-9]
+  |                         |
+(1,3)    (1,3)(2,4)    (1,3)
+  V                         V
+[-8] ---- (1,3)(2,4) ---&gt; [-7]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq13 := UpDownProduct( D1, sq1, sq3 ); </span>
+[-9] ---- () ---&gt; [-7]
+  |                         |
+(1,2)(3,4)    (1,4)(2,3)    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,2)(3,4) ---&gt; [-8]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq24 := UpDownProduct( D1, sq2, sq4 ); </span>
+[-7] ---- (2,4) ---&gt; [-7]
+  |                         |
+(1,4)(2,3)    (1,4,3,2)    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,4)(2,3) ---&gt; [-7]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq1324 := LeftRightProduct( D1, sq13, sq24 );</span>
+[-9] ---- (2,4) ---&gt; [-7]
+  |                         |
+(1,2)(3,4)    ()    (1,4)(2,3)
+  V                         V
+[-8] ---- (1,3)(2,4) ---&gt; [-7]
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq1234 := UpDownProduct( D1, sq12, sq34 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sq1324 = sq1234;</span>
+true
 
 </pre></div>
 
-<p>Similarly, for arrows, we have:</p>
+<p><a id="X824F8FF387CF4A27" name="X824F8FF387CF4A27"></a></p>
 
+<h4>7.2 <span class="Heading">Further developments</span></h4>
 
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ a78, e2 ];</span>
-[ [m2 : -7 -&gt; -8], [(1,3) : -8 -&gt; -7] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject(a78);</span>
-[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
-  "IsMultiplicativeElementWithObjects" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( a78 );     ## again these numbers vary</span>
-NewFamily( "MultiplicativeElementWithObjectsFamily", [ 2702 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 2702 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject(e2); </span>
-[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
-  "IsMultiplicativeElementWithObjects", 
-  "IsMultiplicativeElementWithObjectsAndOnes", 
-  "IsMultiplicativeElementWithObjectsAndInverses", 
-  "IsGroupoidElement" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( e2 );        </span>
-NewFamily( "GroupoidElementFamily", [ 2714 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 2702, 2706, 2710, 2714 ] )
-
-</pre></div>
-
-<p><a id="X7A4760E887C9C968" name="X7A4760E887C9C968"></a></p>
-
-<h4>7.2 <span class="Heading">Many object homomorphisms</span></h4>
-
-<p>Homomorphisms of structures with many objects have a similar heirarchy. A few examples:</p>
+<p>This part of the package is at a very early stage. The following are now urgently needed:</p>
 
 
 <ul>
-<li><p><code class="code">DeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); </code></p>
+<li><p>generators of a double groupoid on <span class="SimpleMath">G</span>;</p>
 
 </li>
-<li><p><code class="code">DeclareSynonymAttr( "IsMagmaWithObjectsGeneralMapping", IsGeneralMappingWithObjects and RespectsMultiplication ); </code></p>
+<li><p>the double groupoid generated by a set of squares;</p>
 
 </li>
-<li><p><code class="code">DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", IsMagmaWithObjectsGeneralMapping and IsMapping ); </code></p>
+<li><p>a method for <code class="code">Size</code>;</p>
 
 </li>
-<li><p><code class="code">DeclareCategory("IsGroupoidHomomorphism",IsMagmaWithObjectsHomomorphism); </code></p>
-
-</li>
-</ul>
-<p>Two forms of representation are used: for mappings to a single piece; and for unions of such mappings:</p>
-
-
-<ul>
-<li><p><code class="code">DeclareRepresentation( "IsMappingToSinglePieceRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); </code></p>
-
-</li>
-<li><p><code class="code">DeclareRepresentation( "IsMappingWithObjectsRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); </code></p>
+<li><p>and lots more.</p>
 
 </li>
 </ul>
-<p>In previous chapters, <code class="code">hom1</code> was an endofunction on <code class="code">M78</code>; <code class="code">homd8</code> was a homomorphism from <code class="code">Gd8</code> to <code class="code">Gs3</code>; and <code class="code">aut3</code> was an automorphism of <code class="code">Ga4</code>. All homomorphisms have family <code class="code">GeneralMappingWithObjectsFamily</code>. Perhaps it would be better to have separate families for each structure?</p>
+<p><a id="X80E0318F78D2AD28" name="X80E0318F78D2AD28"></a></p>
+
+<h4>7.3 <span class="Heading">Starting with two groupoids</span></h4>
+
+<p>In the literature on double groupoids the construction often starts with two groupoids <span class="SimpleMath">G_1, G_2</span>, and squares have horizantal arrows chosen from <span class="SimpleMath">G_1</span> and vertical arrows chosen from <span class="SimpleMath">G_2</span>. When that is the case, the boundary of a square is not defined, since arrows from <span class="SimpleMath">G_1</span> do not compose with those from <span class="SimpleMath">G_2</span>. Thids situation is modelled here by constructing the direct product groupoid <span class="SimpleMath">G = G_1 × G_2</span> and forming a double groupoid on <span class="SimpleMath">G</span> in which squares have the form</p>
+
+<p class="pcenter"> 
 
 
-<div class="example"><pre>
+\vcenter{\xymatrix @=4pc{  
+   [u_1,v_1] \ar[r]^{[a,1]}  \ar[d]_{[1,b]}  
+     &amp; [u_2,v_2] \ar[d]^{[1,b']} \\ 
+   [u_3,v_3] \ar[r]_{[a',1]} 
+     &amp; [u_4,v_4] 
+}} 
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj(hom1);</span>
-NewFamily( "GeneralMappingWithObjectsFamily", [ 2726 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 126, 130, 149, 412, 2726 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( hom1 );</span>
-[ "Range", "Source", "SinglePieceMappingData" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( hom1 );</span>
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "RespectsMultiplication", "IsGeneralMappingToSinglePiece",
-  "IsGeneralMappingFromSinglePiece", "IsInjectiveOnObjects", 
-  "IsSurjectiveOnObjects" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( homd8 );</span>
-[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
-  "IsMultiplicativeElementWithOne", "IsMultiplicativeElementWithInverse", 
-  "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", 
-  "IsGroupoidHomomorphism" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( homd8 );</span>
-[ "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", "ImageElementsOfRays", 
-  "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( aut3 );</span>
-[ "Order", "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", 
-  "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
-  "RootGroupHomomorphism" ]
+</p>
 
-</pre></div>
+<p><a id="X86CA60238532FBAF" name="X86CA60238532FBAF"></a></p>
+
+<h4>7.4 <span class="Heading">Commutative squares</span></h4>
+
+<p>The square</p>
+
+<p class="pcenter"> 
+
+
+\vcenter{\xymatrix @=4pc{  
+   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
+     &amp; u_2 \ar[d]^{e_1} \\ 
+   v_1 \ar[r]_{b_1} 
+     &amp; v_2 
+}} 
+
+</p>
+
+<p>is <em>commutative</em> if <span class="SimpleMath">a_1*e_1 = d_1*b_1</span>, so that its boundary is the identity. The set of commutative squares in <span class="SimpleMath">□(G)</span> forms the <em>commutative sub-double groupoid</em> of <span class="SimpleMath">□(G)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

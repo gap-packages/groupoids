@@ -1,163 +1,255 @@
   
-  [1X7 [33X[0;0YTechnical Notes[133X[101X
+  [1X7 [33X[0;0YDouble Groupoids[133X[101X
   
-  [33X[0;0YThis  short  chapter  is  included  for  the  benefit  of  anyone wishing to
-  implement   some  other  variety  of  many-object  structures,  for  example
-  [13Xringoids[113X,  which  are  rings with many objects; [13XLie groupoids[113X, which are Lie
-  groups with many objects; and so on.[133X
+  [33X[0;0YA  [13Xdouble groupoid[113X is a [13Xdouble category[113X in which all the category structures
+  are groupoids. For the most general type of double groupoid there is also an
+  associated pre-crossed module. In this package we consider only [13Xbasic double
+  groupoids[113X,  which  do not involve pre-crossed modules. The more general case
+  will be discussed in the [5XXMod[105X package.[133X
   
+  [33X[0;0YIn  a  double  groupoid,  as  well  as  objects and arrows, we need a set of
+  [13Xsquares[113X.  A  square  is  bounded  by  four  arrows,  two  horizantal and two
+  vertical,  and  there  is  a  [13Xhorizantal[113X  groupoid  structure and a [13Xvertical[113X
+  groupoid structure on these squares.[133X
   
-  [1X7.1 [33X[0;0YMany object structures[133X[101X
+  [33X[0;0YDouble  groupoids  can be considered where the vertical arrows come from one
+  groupoid,  and  the  horizantal  arrows  from  another. The double groupoids
+  constructed  here  are  special  in  that all four arrows come from the same
+  groupoid. We call these [13Xedge-symmetric[113X double groupoids.[133X
   
-  [33X[0;0YStructures  with  many  objects, and their elements, are defined in a manner
-  similar to the single object case. For elements we have:[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(                 "IsMultiplicativeElementWithObjects",
-        IsMultiplicativeElement ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(          "IsMultiplicativeElementWithObjectsAndOnes",
-        IsMultiplicativeElementWithObjects ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(      "IsMultiplicativeElementWithObjectsAndInverses",
-        IsMultiplicativeElementWithObjectsAndOnes ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory( "IsGroupoidElement", [110X[133X
-  
-        [33X[0;6Y[10XIsMultiplicativeElementWithObjectsAndInverses ); [110X[133X
-  
-  [33X[0;0Yas well as various category collections. For the various structures we have:[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory( "IsDomainWithObjects", IsDomain ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(    "IsMagmaWithObjects",    IsDomainWithObjects   and
-        IsMultiplicativeElementWithObjectsCollection );[110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(   "IsSemigroupWithObjects",   IsMagmaWithObjects  and
-        IsAssociative ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(   "IsMonoidWithObjects",  IsSemigroupWithObjects  and
-        IsMultiplicativeElementWithObjectsAndOnesCollection ); [110X[133X
-  
-        [33X[0;6Y[10XIsMultiplicativeElementWithObjectsAndInversesCollection ); [110X[133X
-  
-  [30X    [33X[0;6Y[10XDeclareCategory(       "IsGroupoid",      IsMonoidWithObjects      and
-        IsGroupoidElementCollection ); [110X[133X
-  
-  [33X[0;0YAmong  the  groupoids  constructed  earlier are the single piece [10XGd8[110X and the
-  five component union [10XU5[110X:[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XCategoriesOfObject( Gd8 );[127X[104X
-    [4X[28X[ "IsListOrCollection", "IsCollection", "IsExtLElement", [128X[104X
-    [4X[28X  "CategoryCollections(IsExtLElement)", "IsExtRElement", [128X[104X
-    [4X[28X  "CategoryCollections(IsExtRElement)", [128X[104X
-    [4X[28X  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", [128X[104X
-    [4X[28X  "IsMagma", "IsDomainWithObjects", [128X[104X
-    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjects)", [128X[104X
-    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", [128X[104X
-    [4X[28X  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)\[128X[104X
-    [4X[28X", "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", [128X[104X
-    [4X[28X  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInverses", [128X[104X
-    [4X[28X  "IsGroupoid" ][128X[104X
-    [4X[25Xgap>[125X [27XFamilyObj( Gd8 );     ## these numbers vary from one run to another[127X[104X
-    [4X[28XNewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116, [128X[104X
-    [4X[28X  117, 119, 120, 123, 205, 501, 2690, 2703, 2707, 2711, 2715, 2718, 2720, [128X[104X
-    [4X[28X  2721, 2722 ] )[128X[104X
-    [4X[25Xgap>[125X [27XKnownAttributesOfObject( Gd8 ); [127X[104X
-    [4X[28X[ "Name", "Size", "ObjectList", "GeneratorsOfMagmaWithObjects", [128X[104X
-    [4X[28X  "GeneratorsOfGroupoid" ][128X[104X
-    [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject( Gd8 ); [127X[104X
-    [4X[28X[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", [128X[104X
-    [4X[28X  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ][128X[104X
-    [4X[25Xgap>[125X [27XRepresentationsOfObject( Gd8 );[127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ][128X[104X
-    [4X[25Xgap>[125X [27XRepresentationsOfObject( U5 ); [127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YSimilarly, for arrows, we have:[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27X[ a78, e2 ];[127X[104X
-    [4X[28X[ [m2 : -7 -> -8], [(1,3) : -8 -> -7] ][128X[104X
-    [4X[25Xgap>[125X [27XCategoriesOfObject(a78);[127X[104X
-    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
-    [4X[28X  "IsMultiplicativeElementWithObjects" ][128X[104X
-    [4X[25Xgap>[125X [27XFamilyObj( a78 );     ## again these numbers vary[127X[104X
-    [4X[28XNewFamily( "MultiplicativeElementWithObjectsFamily", [ 2702 ], [128X[104X
-    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 2702 ] )[128X[104X
-    [4X[25Xgap>[125X [27XCategoriesOfObject(e2); [127X[104X
-    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
-    [4X[28X  "IsMultiplicativeElementWithObjects", [128X[104X
-    [4X[28X  "IsMultiplicativeElementWithObjectsAndOnes", [128X[104X
-    [4X[28X  "IsMultiplicativeElementWithObjectsAndInverses", [128X[104X
-    [4X[28X  "IsGroupoidElement" ][128X[104X
-    [4X[25Xgap>[125X [27XFamilyObj( e2 );        [127X[104X
-    [4X[28XNewFamily( "GroupoidElementFamily", [ 2714 ], [128X[104X
-    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 2702, 2706, 2710, 2714 ] )[128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
+  [33X[0;0YThis  addition  to  the  package  is very experimental, and will be extended
+  soon.[133X
   
   
-  [1X7.2 [33X[0;0YMany object homomorphisms[133X[101X
+  [1X7.1 [33X[0;0YDouble groupoid squares[133X[101X
   
-  [33X[0;0YHomomorphisms  of  structures  with many objects have a similar heirarchy. A
-  few examples:[133X
+  [33X[0;0YLet  [22XG[122X  be  a  connected  groupoid with object set [22XΩ[122X. Let [22X□(G)[122X be the set of
+  squares with objects from [22XΩ[122X at each corner; plus two vertical arrows and two
+  horizantal  arrows  from  Arr[22X(G)[122X.  The  following  picture  illustrates  the
+  situation:[133X
   
-  [30X    [33X[0;6Y[10XDeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); [110X[133X
   
-  [30X    [33X[0;6Y[10XDeclareSynonymAttr(                "IsMagmaWithObjectsGeneralMapping",
-        IsGeneralMappingWithObjects and RespectsMultiplication ); [110X[133X
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{d_1} & u_2 \ar[d]^{e_1}
+  \\ v_1 \ar[r]_{b_1} & v_2 }}[133X
   
-  [30X    [33X[0;6Y[10XDeclareSynonymAttr(                  "IsMagmaWithObjectsHomomorphism",
-        IsMagmaWithObjectsGeneralMapping and IsMapping ); [110X[133X
+  [124X
   
-  [30X    [33X[0;6Y[10XDeclareCategory("IsGroupoidHomomorphism",IsMagmaWithObjectsHomomorphism);
-        [110X[133X
+  [33X[0;0YWe  think  of  the  square [22Xs_1[122X being [13Xbased[113X at the bottom, right-hand corner,
+  [22Xv_2[122X.  The [13Xboundary[113X of the square is the loop [22X(v_2, b_1^-1d_1^-1a_1e_1,v_2) =
+  (v_2,δ(s_1),v_2)[122X. The [13Xhorizantal composition[113X is illustrated by[133X
   
-  [33X[0;0YTwo  forms  of  representation are used: for mappings to a single piece; and
-  for unions of such mappings:[133X
   
-  [30X    [33X[0;6Y[10XDeclareRepresentation(                    "IsMappingToSinglePieceRep",
-        IsMagmaWithObjectsHomomorphism     and    IsAttributeStoringRep    and
-        IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); [110X[133X
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{d_1} & u_2 \ar[r]^{a_2}
+  \ar[d]^{e_1}   &   u_3   \ar[d]^{f_1}  \ar@{}[dr]|=  &  u_1  \ar[r]^{a_1a_2}
+  \ar[d]_{d_1} & u_3 \ar[d]^{f_1} \\ v_1 \ar[r]_{b_1} & v_2 \ar[r]_{b_2} & v_3
+  & v_1 \ar[r]_{b_1b_2} & v_3 }}[133X
   
-  [30X    [33X[0;6Y[10XDeclareRepresentation(                      "IsMappingWithObjectsRep",
-        IsMagmaWithObjectsHomomorphism     and    IsAttributeStoringRep    and
-        IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); [110X[133X
+  [124X
   
-  [33X[0;0YIn  previous  chapters,  [10Xhom1[110X  was  an  endofunction  on  [10XM78[110X;  [10Xhomd8[110X  was a
-  homomorphism  from  [10XGd8[110X  to  [10XGs3[110X;  and  [10Xaut3[110X was an automorphism of [10XGa4[110X. All
-  homomorphisms  have family [10XGeneralMappingWithObjectsFamily[110X. Perhaps it would
-  be better to have separate families for each structure?[133X
+  [33X[0;0YNotice that the boundary of the composite satisfies the identity:[133X
+  
+  
+  [24X[33X[0;6Y\delta(s_1s_2)        ~=~        (b_1b_2)^{-1}d_1^{-1}(a_1a_2)f_1        ~=~
+  b_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)b_2(b_2^{-1}e_1^{-1}a_2f_1)    ~=~   (\delta
+  s_1)^{b_2} (\delta s_2).[133X
+  
+  [124X
+  
+  [33X[0;0YThe [13Xhorizantal groupoid[113X on [22X□(G)[122X has the vertical arrows as objects and pairs
+  of horizantal arrows as arrows. Similarly, the [13Xvertical groupoid[113X on [22X□(G)[122X has
+  the  horizantal arrows of as objects and pairs of vertical arrows as arrows.
+  Vertical composition is illustrated by[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   u_1   \ar[rr]^{a_1}   \ar[dd]_{d_1}   &&   u_2
+  \ar[dd]^{e_1}  &  &  &&  \\ && & & u_1 \ar[rr]^{a_1} \ar[dd]_{d_1d_2} && u_2
+  \ar[dd]^{e_1e_2} \\ v_1 \ar[rr]_{b_1} \ar[dd]_{d_2} && v_2 \ar[dd]^{e_2} &=&
+  && \\ && & & w_1 \ar[rr]_{c_1} && w_2 \\ w_1 \ar[rr]_{c_1} && w_2 }}[133X
+  
+  [124X
+  
+  [33X[0;0YThis time the boundary condition satisfies the identity:[133X
+  
+  
+  [24X[33X[0;6Y\delta(s_1s_3)        ~=~        c_1^{-1}(d_1d_2)^{-1}a_1(e_1e_2)        ~=~
+  (c_1^{-1}d_2^{-1}b_1e_2)e_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)e_2    ~=~   (\delta
+  s_3)(\delta s_1)^{e_2}.[133X
+  
+  [124X
+  
+  [33X[0;0YVertical  and  horizantal compositions commute, so we may construct products
+  such as:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   u_1   \ar[rr]^{a_1}   \ar[dd]_{d_1}   &&   u_2
+  \ar[rr]^{a_2}  \ar[dd]|{e_1}  &&  u_3 \ar[dd]^{f_1} & & &&& \\ && && & & u_1
+  \ar[rrr]^{a_1a_2}   \ar[dd]_{d_1d_2}   &&&   u_3   \ar[dd]^{f_1f_2}  \\  v_1
+  \ar[rr]|{b_1}  \ar[dd]_{d_2}  &&  v_2  \ar[rr]|{b_2}  \ar[dd]|{e_2}  &&  v_3
+  \ar[dd]^{f_2}  &=&  &&&  \\  &&  && & & w_1 \ar[rrr]_{b_3b_6} &&& w_3 \\ w_1
+  \ar[rr]_{c_1} && w_2 \ar[rr]_{c_2} && w_3 }}[133X
+  
+  [124X
+  
+  [33X[0;0YNow  [22XBox(G)[122X  is  the maximal double groupoid determined by [22XG[122X, but in general
+  many substructures may be formed. Since the horizantal and vertical groupoid
+  structures  must contain the identity at each object, a double groupoid on [22XG[122X
+  contains all squares of the form:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{1}  &  v  \ar[d]^{1} && u
+  \ar[r]^{1} \ar[d]_{b} & u \ar[d]^{b} \\ u \ar[r]_{a} & v && v \ar[r]^{1} & v
+  }}[133X
+  
+  [124X
+  
+  [33X[0;0YFor  an  example  we  take  for  our  groupoid  [10XGd8[110X  with  group [22XD_8 = ⟨ g =
+  (1,2,3,4),  h  =  (1,3) ⟩[122X, with the complete graph on [22X{-9,-8,-7}[122X. It is then
+  routine  to check that the two ways of computing the product of four squares
+  below agree.[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   -9   \ar[rr]^{()}  \ar[dd]_{(1,2,3,4)}  &&  -7
+  \ar[rr]^{(2,4)} \ar[dd]|{(1,3)} && -7 \ar[dd]^{(1,4,3,2)} & & &&& \\ && && &
+  &  -9  \ar[rrr]^{(2,4)} \ar[dd]^{(1,2)(3,4)} &&& -7 \ar[dd]_{(1,4)(2,3))} \\
+  -9 \ar[rr]|{(2,4)} \ar[dd]_{(1,3)} && -8 \ar[rr]|{()} \ar[dd]|{(1,2,3,4)} &&
+  -9  \ar[dd]^{(1,3)} &=& &&& \\ && && & & -8 \ar[rrr]_{(1,3)(2,4))} &&& -7 \\
+  -8 \ar[rr]_{(1,2)(3,4)} && -8 \ar[rr]_{(1,4)(2,3)} && -7 }}[133X
+  
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XFamilyObj(hom1);[127X[104X
-    [4X[28XNewFamily( "GeneralMappingWithObjectsFamily", [ 2726 ], [128X[104X
-    [4X[28X[ 79, 80, 81, 82, 116, 119, 122, 126, 130, 149, 412, 2726 ] )[128X[104X
-    [4X[25Xgap>[125X [27XKnownAttributesOfObject( hom1 );[127X[104X
-    [4X[28X[ "Range", "Source", "SinglePieceMappingData" ][128X[104X
-    [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject( hom1 );[127X[104X
-    [4X[28X[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", [128X[104X
-    [4X[28X  "IsSingleValued", "RespectsMultiplication", "IsGeneralMappingToSinglePiece",[128X[104X
-    [4X[28X  "IsGeneralMappingFromSinglePiece", "IsInjectiveOnObjects", [128X[104X
-    [4X[28X  "IsSurjectiveOnObjects" ][128X[104X
-    [4X[25Xgap>[125X [27XCategoriesOfObject( homd8 );[127X[104X
-    [4X[28X[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", [128X[104X
-    [4X[28X  "IsMultiplicativeElementWithOne", "IsMultiplicativeElementWithInverse", [128X[104X
-    [4X[28X  "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", [128X[104X
-    [4X[28X  "IsGroupoidHomomorphism" ][128X[104X
-    [4X[25Xgap>[125X [27XKnownAttributesOfObject( homd8 );[127X[104X
-    [4X[28X[ "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", "ImageElementsOfRays", [128X[104X
-    [4X[28X  "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ][128X[104X
-    [4X[25Xgap>[125X [27XKnownAttributesOfObject( aut3 );[127X[104X
-    [4X[28X[ "Order", "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", [128X[104X
-    [4X[28X  "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", [128X[104X
-    [4X[28X  "RootGroupHomomorphism" ][128X[104X
+    [4X[25Xgap>[125X [27Xg := (1,2,3,4);;  h := (1,3);;[127X[104X
+    [4X[25Xgap>[125X [27Xgend8 := [ g, h ];;[127X[104X
+    [4X[25Xgap>[125X [27Xd8 := Group( gend8 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d8, "d8" ); [127X[104X
+    [4X[25Xgap>[125X [27XGd8 := Groupoid( d8, [-9..-7] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gd8, "Gd8" ); [127X[104X
+    [4X[25Xgap>[125X [27XD1 := SinglePieceBasicDoubleGroupoid( Gd8 );; [127X[104X
+    [4X[25Xgap>[125X [27XD1!.groupoid;[127X[104X
+    [4X[28XGd8[128X[104X
+    [4X[25Xgap>[125X [27XD1!.objects;[127X[104X
+    [4X[28X[ -9 .. -7 ][128X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow(Gd8,(),-9,-7);;         a2 := Arrow(Gd8,(2,4),-7,-7);;[127X[104X
+    [4X[25Xgap>[125X [27Xb1 := Arrow(Gd8,(2,4),-9,-8);;      b2 := Arrow(Gd8,(),-8,-9);; [127X[104X
+    [4X[25Xgap>[125X [27Xc1 := Arrow(Gd8,(1,2)(3,4),-8,-8);; c2 := Arrow(Gd8,(1,4)(2,3),-8,-7);; [127X[104X
+    [4X[25Xgap>[125X [27Xd1 := Arrow(Gd8,g,-9,-9);;          d2 := Arrow(Gd8,(1,3),-9,-8);; [127X[104X
+    [4X[25Xgap>[125X [27Xe1 := Arrow(Gd8,(1,3),-7,-8);;      e2 := Arrow(Gd8,g,-8,-8);; [127X[104X
+    [4X[25Xgap>[125X [27Xf1 := Arrow(Gd8,g^-1,-7,-9);;       f2 := Arrow(Gd8,(1,3),-9,-7);; [127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xbdy1 := b1![1]^-1 * d1![1]^-1 * a1![1] * e1![1];; [127X[104X
+    [4X[25Xgap>[125X [27Xsq1 := SquareOfArrows( D1, bdy1, a1, d1, e1, b1 ); [127X[104X
+    [4X[28X[-9] ---- () ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,2,3,4)    (1,4,3,2)    (1,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-8][128X[104X
+    [4X[25Xgap>[125X [27XUpArrow( sq1 );[127X[104X
+    [4X[28X[() : -9 -> -7][128X[104X
+    [4X[25Xgap>[125X [27XLeftArrow( sq1 );[127X[104X
+    [4X[28X[(1,2,3,4) : -9 -> -9][128X[104X
+    [4X[25Xgap>[125X [27XRightArrow( sq1 );[127X[104X
+    [4X[28X[(1,3) : -7 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XDownArrow( sq1 );[127X[104X
+    [4X[28X[(2,4) : -9 -> -8][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xbdy2 := b2![1]^-1 * e1![1]^-1 * a2![1] * f1![1];; [127X[104X
+    [4X[25Xgap>[125X [27Xsq2 := SquareOfArrows( D1, bdy2, a2, e1, f1, b2 );;  [127X[104X
+    [4X[25Xgap>[125X [27XLeftArrow( sq2 ) = RightArrow( sq1 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xbdy3 := c1![1]^-1 * d2![1]^-1 * b1![1] * e2![1];; [127X[104X
+    [4X[25Xgap>[125X [27Xsq3 := SquareOfArrows( D1, bdy3, b1, d2, e2, c1 );;[127X[104X
+    [4X[25Xgap>[125X [27XUpArrow( sq3 ) = DownArrow( sq1 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xbdy4 := c2![1]^-1 * e2![1]^-1 * b2![1] * f2![1];; [127X[104X
+    [4X[25Xgap>[125X [27Xsq4 := SquareOfArrows( D1, bdy4, b2, e2, f2, c2 );;[127X[104X
+    [4X[25Xgap>[125X [27XUpArrow(sq4)=DownArrow(sq2) and LeftArrow(sq4)=RightArrow(sq3); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq12 := LeftRightProduct( D1, sq1, sq2 );[127X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,2,3,4)    (1,3)(2,4)    (1,4,3,2)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-9][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq34 := LeftRightProduct( D1, sq3, sq4 );[127X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-9][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,3)    (1,3)(2,4)    (1,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (1,3)(2,4) ---> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq13 := UpDownProduct( D1, sq1, sq3 ); [127X[104X
+    [4X[28X[-9] ---- () ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,2)(3,4)    (1,4)(2,3)    (1,4)(2,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (1,2)(3,4) ---> [-8][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq24 := UpDownProduct( D1, sq2, sq4 ); [127X[104X
+    [4X[28X[-7] ---- (2,4) ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,4)(2,3)    (1,4,3,2)    (1,4)(2,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (1,4)(2,3) ---> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq1324 := LeftRightProduct( D1, sq13, sq24 );[127X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,2)(3,4)    ()    (1,4)(2,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (1,3)(2,4) ---> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq1234 := UpDownProduct( D1, sq12, sq34 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq1324 = sq1234;[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
+  
+  
+  [1X7.2 [33X[0;0YFurther developments[133X[101X
+  
+  [33X[0;0YThis  part  of  the  package is at a very early stage. The following are now
+  urgently needed:[133X
+  
+  [30X    [33X[0;6Ygenerators of a double groupoid on [22XG[122X;[133X
+  
+  [30X    [33X[0;6Ythe double groupoid generated by a set of squares;[133X
+  
+  [30X    [33X[0;6Ya method for [10XSize[110X;[133X
+  
+  [30X    [33X[0;6Yand lots more.[133X
+  
+  
+  [1X7.3 [33X[0;0YStarting with two groupoids[133X[101X
+  
+  [33X[0;0YIn the literature on double groupoids the construction often starts with two
+  groupoids  [22XG_1,  G_2[122X, and squares have horizantal arrows chosen from [22XG_1[122X and
+  vertical  arrows  chosen  from [22XG_2[122X. When that is the case, the boundary of a
+  square  is not defined, since arrows from [22XG_1[122X do not compose with those from
+  [22XG_2[122X.  Thids  situation  is  modelled here by constructing the direct product
+  groupoid  [22XG  = G_1 × G_2[122X and forming a double groupoid on [22XG[122X in which squares
+  have the form[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=4pc{   [u_1,v_1]   \ar[r]^{[a,1]}   \ar[d]_{[1,b]}  &
+  [u_2,v_2] \ar[d]^{[1,b']} \\ [u_3,v_3] \ar[r]_{[a',1]} & [u_4,v_4] }}[133X
+  
+  [124X
+  
+  
+  [1X7.4 [33X[0;0YCommutative squares[133X[101X
+  
+  [33X[0;0YThe square[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{d_1} & u_2 \ar[d]^{e_1}
+  \\ v_1 \ar[r]_{b_1} & v_2 }}[133X
+  
+  [124X
+  
+  [33X[0;0Yis  [13Xcommutative[113X  if [22Xa_1*e_1 = d_1*b_1[122X, so that its boundary is the identity.
+  The  set  of  commutative  squares  in [22X□(G)[122X forms the [13Xcommutative sub-double
+  groupoid[113X of [22X□(G)[122X.[133X
   
