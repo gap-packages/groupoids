@@ -2,7 +2,7 @@
 ## 
 #W  gpd.gi                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -305,7 +305,7 @@ end );
 
 InstallMethod( RaysOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( G ) 
-    return List( Pieces( G ), p -> RaysOfGroupoid( p ) ); 
+    return List( Pieces( G ), RaysOfGroupoid ); 
 end ); 
 
 InstallMethod( RayArrowsOfGroupoid, "for a connected groupoid",
@@ -321,7 +321,7 @@ end );
 
 InstallMethod( RayArrowsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( G ) 
-    return List( Pieces( G ), p -> RayArrowsOfGroupoid( p ) ); 
+    return List( Pieces( G ), RayArrowsOfGroupoid ); 
 end ); 
 
 #############################################################################
@@ -331,7 +331,8 @@ end );
 InstallMethod( Pieces, "for a homogeneous, discrete groupoid",
     true, [ IsHomogeneousDiscreteGroupoid ], 0,
 function( gpd ) 
-    return List( gpd!.objects, o -> DomainWithSingleObject( gpd!.magma, o ) );
+    return List( gpd!.objects, 
+                 o -> DomainWithSingleObject( gpd!.magma, o ) );
 end );
 
 #############################################################################
@@ -361,7 +362,8 @@ function( gpd )
         gens2 := List( obs{[2..nobs]}, o -> GroupoidElement(gpd,id,o1,o) ); 
     elif IsSinglePieceRaysRep( gpd ) then 
         rays := gpd!.rays; 
-        gens2 := List( [2..nobs], i -> GroupoidElement(gpd,rays[i],o1,obs[i]) ); 
+        gens2 := List( [2..nobs], 
+                       i -> GroupoidElement( gpd, rays[i], o1, obs[i] ) ); 
     fi; 
     gens := Immutable( Concatenation( gens1, gens2 ) ); 
     SetGeneratorsOfGroupoid( gpd, gens ); 
@@ -370,7 +372,7 @@ end );
 
 InstallMethod( GeneratorsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
 function( gpd ) 
-    return Flat( List( Pieces( gpd ), p -> GeneratorsOfGroupoid( p ) ) ); 
+    return Flat( List( Pieces( gpd ), GeneratorsOfGroupoid ) ); 
 end );
 
 #############################################################################
@@ -793,7 +795,7 @@ function( G, obj )
     if HasAutomorphismDomain( G ) then 
         H := AutomorphismDomain( G ); 
         pieceH := Pieces( H ); 
-        obs := List( pieceH, p -> ObjectList( p ) ); 
+        obs := List( pieceH, ObjectList ); 
         if not ( obj in obs ) then
             Error( "obj not an object of G," );
         fi;
@@ -821,7 +823,7 @@ end );
 InstallMethod( ObjectGroups, "generic method for groupoid", true,
     [ IsGroupoid ], 0,
 function( gpd )
-    return List( Pieces( gpd ), C -> ObjectGroups( C ) );
+    return List( Pieces( gpd ), ObjectGroups );
 end );
 
 
@@ -846,7 +848,7 @@ function( gpd, oblist )
     len := Length( oblist );
     isos := List( oblist, L -> IsomorphismNewObjects( gpd, L ) ); 
     inv1 := InverseGeneralMapping( isos[1] ); 
-    pieces := List( isos, f -> ImagesSource( f ) ); 
+    pieces := List( isos, ImagesSource ); 
     hgpd := UnionOfPiecesOp( pieces, pieces[1] ); 
     pisos := List( [2..len], i -> inv1 * isos[i] );
     SetIsHomogeneousDomainWithObjects( hgpd, true ); 
@@ -1931,7 +1933,7 @@ function( gpd )
     local pieces, subs;
 
     pieces := Pieces( gpd );
-    subs := List( pieces, c -> FullTrivialSubgroupoid(c) );
+    subs := List( pieces, FullTrivialSubgroupoid );
     return UnionOfPieces( subs );
 end );
 
@@ -1963,7 +1965,7 @@ function( gpd )
     local pieces, subs;
 
     pieces := Pieces( gpd );
-    subs := List( pieces, c -> DiscreteTrivialSubgroupoid(c) );
+    subs := List( pieces, DiscreteTrivialSubgroupoid );
     return UnionOfPieces( subs );
 end );
 

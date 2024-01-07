@@ -2,7 +2,7 @@
 ##
 #W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -543,7 +543,7 @@ function ( hom )
     local maps; 
 
     maps := MappingToSinglePieceMaps( hom ); 
-    return List( maps, m -> MappingGeneratorsImages(m) ); 
+    return List( maps, MappingGeneratorsImages ); 
 end );
 
 InstallMethod( MappingGeneratorsImages, "for mapping from hom discrete", true,
@@ -943,7 +943,7 @@ function( g1 )
     for i in [1..nc1] do 
         isos[i] := IsomorphismPermGroupoid( comp1[i] );
     od;
-    g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
+    g2 := UnionOfPieces( List( isos, Image ) );
     iso := HomomorphismByUnion( g1, g2, isos );
     return iso;
 end );
@@ -1001,7 +1001,7 @@ function( g1 )
     for i in [1..nc1] do 
         isos[i] := IsomorphismPcGroupoid( comp1[i] );
     od;
-    g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
+    g2 := UnionOfPieces( List( isos, Image ) );
     iso := HomomorphismByUnion( g1, g2, isos );
     return iso;
 end );
@@ -1048,7 +1048,7 @@ function( g1 )
     for i in [1..nc1] do 
         isos[i] := RegularActionHomomorphismGroupoid( comp1[i] );
     od;
-    g2 := UnionOfPieces( List( isos, m -> Image(m) ) );
+    g2 := UnionOfPieces( List( isos, Image ) );
     iso := HomomorphismByUnion( g1, g2, isos );
     return iso;
 end );

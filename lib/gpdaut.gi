@@ -2,7 +2,7 @@
 ##
 #W  gpdaut.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 
@@ -156,7 +156,7 @@ function( gpd, homs )
     SetIsEndoGeneralMapping( m, true ); 
     SetIsInjectiveOnObjects( m, true ); 
     SetIsSurjectiveOnObjects( m, true ); 
-    orders := List( homs, h -> Order( h ) ); 
+    orders := List( homs, Order ); 
     SetOrder( m, Lcm( orders ) ); 
     SetAutomorphismDomain( m, gpd ); 
     return m; 
@@ -210,7 +210,7 @@ function( gpd, shifts )
         images[i+k] := Arrow( gpd, a![1]*shifts[i], a![2], a![3] ); 
     od; 
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
-    SetOrder( mor, Lcm( List( shifts, i -> Order(i) ) ) ); 
+    SetOrder( mor, Lcm( List( shifts, Order ) ) ); 
     SetIsInjectiveOnObjects( mor, true ); 
     SetIsSurjectiveOnObjects( mor, true ); 
     SetIsGroupoidAutomorphismByRayShifts( mor, true ); 
@@ -421,7 +421,8 @@ function( gpd, aut )
     gennorm := [1..nrgp ]; 
     for i in [1..nrgp] do 
         c := genrgp[i]; 
-        a := GroupHomomorphismByImages( rgp, rgp, genrgp, List(genrgp,x->x^c) );
+        a := GroupHomomorphismByImages( rgp, rgp, genrgp, 
+                                        List( genrgp, x->x^c ) );
         c1 := ImageElm( epasy, ImageElm( epagp, ImageElm( iso, a ) ) );
         c := c^-1; 
         c2 := ImageElm( engp, 
@@ -856,7 +857,7 @@ function( gpd, p )
     pieces := Pieces( gpd ); 
     n := Length( pieces ); 
     isos := List( [1..n], 
-                i -> IsomorphismNewObjects( pieces[i], pieces[i^p]!.objects ) );
+              i -> IsomorphismNewObjects( pieces[i], pieces[i^p]!.objects ) );
     mor := HomomorphismByUnion( gpd, gpd, isos );
     SetOrder( mor, Order( p ) );
     SetIsGroupoidAutomorphismByPiecesPerm( mor, true ); 
