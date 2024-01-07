@@ -2,7 +2,7 @@
 ## 
 #W  mwo.gi                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
@@ -637,7 +637,7 @@ InstallMethod( GeneratorsOfMagmaWithObjects, "for mwo with >1 piece",
     true, [ IsMagmaWithObjects ], 0,
 function( mwo ) 
     return Concatenation( List( Pieces( mwo ), 
-               p -> GeneratorsOfMagmaWithObjects( p ) ) ); 
+               GeneratorsOfMagmaWithObjects ) ); 
 end );
 
 InstallMethod( GeneratorsOfSemigroupWithObjects, "for a semigroup with objects", 
@@ -963,7 +963,7 @@ function( dwo )
     local pieces, sizes, g, j, iso; 
 
     pieces := Pieces( dwo ); 
-    sizes := Set( List( pieces, p -> Size( p ) ) ); 
+    sizes := Set( List( pieces, Size ) ); 
     if not ( Length( sizes ) = 1 ) then 
         return false; 
     fi;

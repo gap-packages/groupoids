@@ -327,7 +327,7 @@ function( gg )
     Print( "        arcs: ", dig!.arcs, "\n" );
     Print( "      groups: ", GroupsOfGraphOfGroups( gg ), "\n" );
     Print( "isomorphisms: ", List( IsomorphismsOfGraphOfGroups( gg ), 
-                                   m -> MappingGeneratorsImages(m) ), "\n" );
+                                   MappingGeneratorsImages ), "\n" );
 end );
 
 ##############################################################################
@@ -371,7 +371,7 @@ function( gg )
     for i in [1..len] do
         g := gps[ Position( vdig, adig[i][2] ) ];
         rc := RightCosets( g, Source( isos[i] ) );
-        rep := List( rc, r -> Representative( r ) );
+        rep := List( rc, Representative );
         if IsGraphOfFpGroups( gg ) then
             trans[i] := List( rep, r -> NormalFormKBRWS( g, r ) ); 
         elif IsGraphOfPermGroups( gg ) then
@@ -1139,7 +1139,7 @@ function( fpa, w )
     gff := GeneratorsOfGroup( ff );
     gff12 := [ gff{pos[1]}, gff{pos[2]} ];
     gps := info!.groups;
-    gen12 := List( gps, g -> GeneratorsOfGroup( g ) );
+    gen12 := List( gps, GeneratorsOfGroup );
     ## (08/06/15) make the word start at the first vertex 
     tv := verts[1]; 
     if ( ew[1] in pos[1] ) then

@@ -2,7 +2,7 @@
 ##
 #W  mwohom.gi              GAP4 package `groupoids'              Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for mappings of magmas with objects
@@ -338,7 +338,7 @@ function( mag1, mag2, maps )
     od;
     Info( InfoGroupoids, 3, "expanded maps:", expand );
     pos1 := ListWithIdenticalEntries( lenmaps, 0 );
-    src1 := List( expand, m -> Source( m ) );
+    src1 := List( expand, Source );
     for j in [1..lenmaps] do
         g := src1[j];
         if IsSinglePiece( g ) then
@@ -428,7 +428,7 @@ function( m1, ob2 )
     for i in [1..nc1] do 
         isos[i] := IsomorphismNewObjects( pieces1[i], ob2[i] );
     od;
-    m2 := UnionOfPieces( List( isos, m -> Range(m) ) );
+    m2 := UnionOfPieces( List( isos, Range ) );
     iso := HomomorphismByUnion( m1, m2, isos );
     return iso;
 end );
@@ -453,7 +453,7 @@ function( mwo )
         homs := ListWithIdenticalEntries( len, id ); 
         iso := GroupoidAutomorphismByGroupAutos( mwo, homs ); 
     else
-        pieces := List( Pieces( mwo ), p -> IdentityMapping( p ) );
+        pieces := List( Pieces( mwo ), IdentityMapping );
         iso := MagmaWithObjectsHomomorphism( mwo, mwo, pieces );
     fi;
     SetIsInjectiveOnObjects( iso, true );
@@ -687,7 +687,7 @@ function( map )
 
     Info( InfoGroupoids, 3, "InverseGeneralMapping for magma mappings" );
     pieces := PiecesOfMapping( map );
-    isos := List( pieces, m -> InverseGeneralMapping( m ) );
+    isos := List( pieces, InverseGeneralMapping );
     inv := HomomorphismByUnion( Range(map), Source(map), isos );
     SetIsInjectiveOnObjects( inv, true );
     SetIsSurjectiveOnObjects( inv, true );
@@ -899,7 +899,7 @@ function( map )
     homs := ShallowCopy( ObjectHomomorphisms( map ) ); 
     SortParallel( oims1, obs ); 
     SortParallel( oims2, homs ); 
-    ihoms := List( homs, h -> InverseGeneralMapping(h) ); 
+    ihoms := List( homs, InverseGeneralMapping ); 
     inv := GroupoidHomomorphismFromHomogeneousDiscrete( src,rng,ihoms,obs ); 
     SetInverseGeneralMapping( map, inv );
     SetInverseGeneralMapping( inv, map );
@@ -934,10 +934,10 @@ function( m1, m2 )
     if ( nc <> Length( c2 ) ) then
         return false;
     fi;
-    src1 := List( c1, m -> Source( m ) );
-    src2 := List( c2, m -> Source( m ) );
-    rng1 := List( c1, m -> Range( m ) );
-    rng2 := List( c2, m -> Range( m ) );
+    src1 := List( c1, Source );
+    src2 := List( c2, Source );
+    rng1 := List( c1, Range );
+    rng2 := List( c2, Range );
     L := ListWithIdenticalEntries( nc, 0 );
     for j in [1..nc] do
         s := src1[j];
