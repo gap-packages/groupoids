@@ -28,9 +28,9 @@ function( dig, gpds, subgpds, isos )
         GroupoidsOfGraphOfGroupoids, gpds, 
         SubgroupoidsOfGraphOfGroupoids, subgpds, 
         IsomorphismsOfGraphOfGroupoids, isos );
-    if ForAll( gpds, g -> IsPermGroupoid( g ) ) then
+    if ForAll( gpds, IsPermGroupoid ) then
         SetIsGraphOfPermGroupoids( gg, true );
-    elif ForAll( gpds, g -> IsFpGroupoid( g ) ) then
+    elif ForAll( gpds, IsFpGroupoid ) then
         SetIsGraphOfFpGroupoids( gg, true );
     fi;
     return gg; 
@@ -176,17 +176,17 @@ end );
 ##
 InstallMethod( IsGraphOfPermGroupoids, "generic method", [ IsGraphOfGroupoids ],
 function( gg )
-    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsPermGroupoid(g) );
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), IsPermGroupoid );
 end );
 
 InstallMethod( IsGraphOfFpGroupoids, "generic method", [ IsGraphOfGroupoids ],
 function( gg )
-    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsFpGroupoid( g ) );
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), IsFpGroupoid );
 end );
 
 InstallMethod( IsGraphOfPcGroupoids, "generic method", [ IsGraphOfGroupoids ],
 function( gg )
-    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), g -> IsPcGroupoid( g ) );
+    return ForAll( GroupoidsOfGraphOfGroupoids( gg ), IsPcGroupoid );
 end );
 
 #############################################################################

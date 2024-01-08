@@ -2,7 +2,7 @@
 ##
 #W  grpgraph.gi             GAP4 package `groupoids'             Chris Wensley
 #W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
+#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains generic methods for FpWeightedDigraphs and 
@@ -206,9 +206,9 @@ function( dig, gps, isos )
         DigraphOfGraphOfGroups, dig, 
         GroupsOfGraphOfGroups, gps, 
         IsomorphismsOfGraphOfGroups, isos );
-    if ForAll( gps, g -> IsPermGroup( g ) ) then
+    if ForAll( gps, IsPermGroup ) then
         SetIsGraphOfPermGroups( gg, true );
-    elif ForAll( gps, g -> IsFpGroup( g ) ) then
+    elif ForAll( gps, IsFpGroup ) then
         SetIsGraphOfFpGroups( gg, true );
     fi;
     return gg; 
@@ -338,17 +338,17 @@ end );
 ##
 InstallMethod( IsGraphOfPermGroups, "generic method", [ IsGraphOfGroups ],
 function( gg )
-    return ForAll( GroupsOfGraphOfGroups( gg ), g -> IsPermGroup( g ) );
+    return ForAll( GroupsOfGraphOfGroups( gg ), IsPermGroup );
 end );
 
 InstallMethod( IsGraphOfFpGroups, "generic method", [ IsGraphOfGroups ],
 function( gg )
-    return ForAll( GroupsOfGraphOfGroups( gg ), g -> IsFpGroup( g ) );
+    return ForAll( GroupsOfGraphOfGroups( gg ), IsFpGroup );
 end );
 
 InstallMethod( IsGraphOfPcGroups, "generic method", [ IsGraphOfGroups ],
 function( gg )
-    return ForAll( GroupsOfGraphOfGroups( gg ), g -> IsPcGroup( g ) );
+    return ForAll( GroupsOfGraphOfGroups( gg ), IsPcGroup );
 end );
 
 #############################################################################

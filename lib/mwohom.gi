@@ -299,7 +299,7 @@ function( mag1, mag2, maps )
           src1, g, flat1, pos1, pos2, piecesmap, L, i, j, k, m, filt, 
           mapj, src;
 
-    if not ForAll( maps, m -> IsGeneralMappingWithObjects(m) ) then 
+    if not ForAll( maps, IsGeneralMappingWithObjects ) then 
         Error( "all maps should have IsGeneralMappingWithObjects" ); 
     fi; 
     if IsSinglePiece( mag2 ) then 
@@ -595,7 +595,7 @@ end );
 InstallMethod( IsInjectiveOnObjects, "for a mapping with objects", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map )
-    return ForAll( PiecesOfMapping( map ), m -> IsInjectiveOnObjects( m ) ); 
+    return ForAll( PiecesOfMapping( map ), IsInjectiveOnObjects ); 
 end );
 
 InstallMethod( IsInjectiveOnObjects, 
@@ -627,7 +627,7 @@ end );
 InstallMethod( IsSurjectiveOnObjects, "for a mapping with objects", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function( map )
-    return ForAll( PiecesOfMapping( map ), m -> IsSurjectiveOnObjects( m ) ); 
+    return ForAll( PiecesOfMapping( map ), IsSurjectiveOnObjects ); 
 end );
 
 InstallMethod( IsSurjectiveOnObjects, 

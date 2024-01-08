@@ -388,7 +388,7 @@ function( gpd )
     if IsSinglePiece( gpd ) then 
         return ( IsPermCollection(gpd!.magma) and IsPermGroup(gpd!.magma) ); 
     else 
-        return ForAll( Pieces(gpd), c -> IsPermGroupoid(c) ); 
+        return ForAll( Pieces(gpd), IsPermGroupoid ); 
     fi; 
 end );
 
@@ -398,7 +398,7 @@ function( gpd )
     if IsSinglePiece( gpd ) then 
         return ( IsGroupOfFamily(gpd!.magma) and IsFpGroup(gpd!.magma) ); 
     else 
-        return ForAll( Pieces(gpd), c -> IsFpGroupoid(c) );   
+        return ForAll( Pieces(gpd), IsFpGroupoid );   
     fi; 
 end );
 
@@ -409,7 +409,7 @@ function( gpd )
         return ( HasIsPolycyclicGroup( gpd!.magma )
                  and IsPolycyclicGroup( gpd!.magma ) ); 
     else 
-        return ForAll( Pieces(gpd), c -> IsPcGroupoid(c) );   
+        return ForAll( Pieces(gpd), IsPcGroupoid );   
     fi; 
 end ); 
 
@@ -424,7 +424,7 @@ function( gpd )
         return ForAll( gens, g ->  HasIsRectangularTable( g )
                                   and IsRectangularTable( g ) ); 
     else 
-        return ForAll( Pieces(gpd), c -> IsMatrixGroupoid(c) );   
+        return ForAll( Pieces(gpd), IsMatrixGroupoid );   
     fi; 
 end ); 
 
@@ -434,7 +434,7 @@ function( gpd )
     if IsSinglePiece( gpd ) then 
         return IsFreeGroup( gpd!.magma ); 
     else 
-        return ForAll( Pieces(gpd), c -> IsFreeGroupoid(c) );   
+        return ForAll( Pieces(gpd), IsFreeGroupoid );   
     fi; 
 end ); 
 
@@ -483,7 +483,7 @@ InstallGlobalFunction( Groupoid, function( arg )
     nargs := Length( arg ); 
     # list of pieces
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
-         and  ForAll( arg[1], G -> IsGroupoid(G) ) ) then
+         and  ForAll( arg[1], IsGroupoid ) ) then
         Info( InfoGroupoids, 2, "ByUnion" );
         return UnionOfPieces( arg[1] );
     # group * tree groupoid
@@ -557,7 +557,7 @@ function ( gpd )
             Print( "homogeneous " ); 
         fi; 
         Print( "groupoid with ", len, " pieces:\n" ); 
-        if ForAll( comp, c -> HasName(c) ) then 
+        if ForAll( comp, HasName ) then 
             Print( comp ); 
         else 
             for i in [1..len-1] do
@@ -865,7 +865,7 @@ function( gpd, oblist )
 
     local len, obs, ob1, j, L; 
 
-    if not ForAll( oblist, L -> IsHomogeneousList(L) ) then 
+    if not ForAll( oblist, IsHomogeneousList ) then 
         Error( "oblist must be a list of lists," ); 
     fi; 
     obs := gpd!.objects; 
