@@ -477,7 +477,7 @@ end );
 
 InstallOtherMethod( IsInjective, "for a groupoid homomorphism by union", true, 
     [ IsGroupWithObjectsHomomorphism and HasPiecesOfMapping ], 0,
-    map -> ForAll( PiecesOfMapping, p -> IsInjective( p ) ) );
+    map -> ForAll( PiecesOfMapping, IsInjective ) );
 
 InstallOtherMethod( IsInjective, "for a groupoid homomorphism", true, 
     [ IsGroupWithObjectsHomomorphism ], 0,
@@ -502,7 +502,7 @@ end );
 
 InstallOtherMethod( IsSurjective, "for a groupoid homomorphism by union", true, 
     [ IsGroupWithObjectsHomomorphism and HasPiecesOfMapping ], 0,
-    map -> ForAll( PiecesOfMapping, p -> IsSurjective( p ) ) );
+    map -> ForAll( PiecesOfMapping, IsSurjective ) );
 
 InstallOtherMethod( IsSurjective, "for a groupoid homomorphism", true, 
     [ IsGroupWithObjectsHomomorphism ], 0,
