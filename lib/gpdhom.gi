@@ -515,14 +515,14 @@ end );
 #M  IsSingleValued( map ) . . . . . . . . . . . .  for a groupoid homomorphism
 ##
 InstallOtherMethod( IsSingleValued, "method for a groupoid homomorphism", 
-    true, [ IsGroupoidHomomorphism ], 0, map -> true );
+    true, [ IsGroupoidHomomorphism ], 0, ReturnTrue );
 
 ##############################################################################
 ##
 #M  IsTotal( map ) . . . . . . . . . . . . . . .   for a groupoid homomorphism
 ##
 InstallOtherMethod( IsTotal, "method for a groupoid homomorphism", true, 
-    [ IsGroupoidHomomorphism ], 0, map -> true );
+    [ IsGroupoidHomomorphism ], 0, ReturnTrue );
 
 ##############################################################################
 ##
