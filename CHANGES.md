@@ -1,5 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.74 for GAP 4.12.2 (09/02/23) 
+ * (23/01/24) avoid trivial function wrappers; correct email address 
+
 ## Version 1.73 for GAP 4.12.2 (09/02/23) 
  * (09/02/23) first attempt at basic double groupoids 
  * (27/01/23) added RegularActionHomomorphismGroupoid and used in gpdhom.tst 

@@ -29,7 +29,7 @@ A more detailed history is included as Chapter 8 of the manual, and in the file 
 
 ## Copyright
 
-The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 2000-2022. 
+The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 2000-2024. 
 
 'groupoids' is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
 
@@ -62,6 +62,6 @@ Once these prerequisites are in place, proceed as follows:
 ## Contact
 
 If you have a question relating to groupoids, encounter any problems, or have a suggestion for extending the package in any way, please 
- * email c.d.wensley@bangor.ac.uk 
+ * email cdwensley.maths@btinternet.com 
  * or report an issue at https://github.com/gap-packages/groupoids/issues/new 
 
