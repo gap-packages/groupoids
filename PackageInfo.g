@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.73",
-Date := "09/02/2023", # dd/mm/yyyy format
+Version := "1.74",
+Date := "23/01/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -94,7 +94,7 @@ BannerString := Concatenation(
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2000-2023, Emma Moore and Chris Wensley.<P/>\n", 
+            "&copyright; 2000-2024, Emma Moore and Chris Wensley.<P/>\n", 
             "The &groupoids; package is free software; you can redistribute ", 
             "it and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
@@ -136,7 +136,7 @@ AutoDoc := rec(
             "Please submit any issues at ", 
             "<URL>https://github.com/gap-packages/groupoids/issues/</URL> ", 
             "or send an email to the second author at ", 
-            "<Email>c.d.wensley@bangor.ac.uk</Email>.\n <P/>" 
+            "<Email>cdwensley.maths@btinternet.com</Email>.\n <P/>" 
             ), 
         Acknowledgements := Concatenation( 
             "This documentation was prepared using the ", 
