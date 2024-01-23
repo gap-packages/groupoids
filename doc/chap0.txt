@@ -6,10 +6,10 @@
           [1X Calculations with finite groupoids and their homomorphisms [101X
   
   
-                                      1.73
+                                      1.74
   
   
-                                9 February 2023
+                                23 January 2024
   
   
                                  Emma J. Moore
@@ -54,12 +54,12 @@
   
   [33X[0;0YPlease              submit             any             issues             at
   [7Xhttps://github.com/gap-packages/groupoids/issues/[107X  or  send  an email to the
-  second author at [7Xmailto:c.d.wensley@bangor.ac.uk[107X.[133X
+  second author at [7Xmailto:cdwensley.maths@btinternet.com[107X.[133X
   
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2000-2023, Emma Moore and Chris Wensley.[133X
+  [33X[0;0Y© 2000-2024, Emma Moore and Chris Wensley.[133X
   
   [33X[0;0YThe  [5Xgroupoids[105X  package  is  free  software;  you can redistribute it and/or
   modify  it under the terms of the GNU General Public License as published by
