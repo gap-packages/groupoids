@@ -4,7 +4,8 @@
 ##  call this with GAP from within the package root directory 
 
 LoadPackage( "groupoids" );
-LoadPackage( "AutoDoc" ); 
+LoadPackage( "GAPDoc" );
+LoadPackage( "AutoDoc" );
 
 AutoDoc(rec( 
     gapdoc := rec( 
