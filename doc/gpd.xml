@@ -25,7 +25,7 @@ is the direct product of a group and a complete digraph,
 and so is determined by a set of <E>objects</E> <C>obs</C> <M>= \Omega</M> 
 (the least of which is the <E>root object</E>), 
 and a <E>root group</E> <C>grp</C> <M>= G</M>. 
-Then the elements of the groupoid are <E>arrows</E> <M>g :return; o_1 \to o_2</M>, 
+Then the elements of the groupoid are <E>arrows</E> <M>g : o_1 \to o_2</M>, 
 stored as triples <C>[g,o1,o2]</C>, where <M>g \in G</M> 
 and <M>o_1,o_2 \in \Omega</M>.  
 The objects will generally be chosen to be consecutive negative integers, 
