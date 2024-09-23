@@ -1,5 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.75 for GAP 4.13.1 (23/09/24) 
+ * (23/09/24) fix error caused re immutable ExtRepOfObj by GAP pull #5808
+
 ## Version 1.74 for GAP 4.12.2 (09/02/23) 
  * (23/01/24) avoid trivial function wrappers; correct email address 
 

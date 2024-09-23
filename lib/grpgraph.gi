@@ -1124,7 +1124,7 @@ function( fpa, w )
     gg := GraphOfGroupsRewritingSystem( fpa );
     dig := DigraphOfGraphOfGroups( gg );
     verts := dig!.vertices;
-    ew := ExtRepOfObj( w );
+    ew := ShallowCopy( ExtRepOfObj( w ) );
     Info( InfoGroupoids, 2, "ew = ", ew ); 
     if ( ew = [ ] ) then
         return One( fpa );
@@ -1190,7 +1190,7 @@ function( fpa, w )
     rw := idff;
     for j in [1..len] do
         k := j+j-1;
-        e := ExtRepOfObj( wrgw[k] );
+        e := ShallowCopy( ExtRepOfObj( wrgw[k] ) );
         if ( p=2 ) then
             for i in [1..(Length(e)/2)] do
                 e[i+i-1] := e[i+i-1]+ng1;
@@ -1291,7 +1291,7 @@ function( hnn, w )
     Info( InfoGroupoids, 2, "graph of groups has left transversals" );
     Info( InfoGroupoids, 2, LeftTransversalsOfGraphOfGroups( gg ) );
     v := dig!.vertices[1];
-    ew := ExtRepOfObj( w );
+    ew := ShallowCopy( ExtRepOfObj( w ) );
     if ( ew = [ ] ) then
         return One( hnn );
     fi;
@@ -1354,7 +1354,7 @@ function( hnn, w )
     rw := idff;
     for j in [1..len] do
         k := j+j-1;
-        e := ExtRepOfObj( wrgw[k] );
+        e := ShallowCopy( ExtRepOfObj( wrgw[k] ) );
         rw := rw*ObjByExtRep( famff, e );
         if ( j < len ) then
             if ( wrgw[k+1] = 1 ) then
