@@ -164,7 +164,7 @@
   [2XProjection[102X 4.1-6 
   [10XRange[110X 3.1-1 
   [2XRayArrowsOfGroupoid[102X 4.3-2 
-   4. 
+   4.0 
   [2XRaysOfGroupoid[102X 4.3-2 
   [2XReducedGraphOfGroupoidsWord[102X 6.5-2 
   [2XReducedGraphOfGroupsWord[102X 6.3-2 

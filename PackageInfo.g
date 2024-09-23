@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.74",
-Date := "23/01/2024", # dd/mm/yyyy format
+Version := "1.76",
+Date := "23/09/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -113,9 +113,7 @@ AutoDoc := rec(
             "It provides normal forms for Free Products with Amalgamation ", 
             "and for HNN-extensions when the initial groups have ", 
             "rewrite systems and the subgroups have finite index. ", 
-            "This is described in Section <Ref Sect=\"sec-gphgps\"/>. ",
-            "It is planned to move this section to a new package ", 
-            "<Package>Rewriting</Package> in time for version 4.11 of &GAP;.\n",
+            "This is described in Section <Ref Sect=\"sec-gphgps\"/>.",
             "<P/>", 
             "The &groupoids; package was originally implemented in 2000 ", 
             "(as <Package>GraphGpd</Package>) ", 

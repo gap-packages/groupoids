@@ -1,7 +1,7 @@
 name: groupoids
-version: "1.74"
+version: "1.76"
 license: "GPL-2.0-or-later"
-date: 2024-01-23
+date: 2024-09-23
 description: |
     Calculations with finite groupoids and their homomorphisms
 
@@ -35,7 +35,7 @@ packageinfo: https://gap-packages.github.io/groupoids/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/groupoids/releases/download/v1.74/groupoids-1.74.tar.gz
+      url: https://github.com/gap-packages/groupoids/releases/download/v1.76/groupoids-1.76.tar.gz
 
 abstract: |
     The groupoids package provides a collection of functions for computing with finite groupoids, graph of groups, and graphs of groupoids. These are based on the more basic structures of magmas with objects and their mappings. It provides functions for normal forms of elements in Free Products with Amalgamation and in HNN extensions. Up until April 2017 this package was named Gpd.
@@ -49,23 +49,23 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>MW24</span>]   <b class='BibAuthor'>Moore, E. J. and Wensley, C.</b>,
      <i class='BibTitle'>groupoids, Calculations with finite groupoids and their homomorphisms,
-             Version 1.74</i>
+             Version 1.76</i>
      (<span class='BibYear'>2024</span>)<br />
-    (<span class='BibNote'>Refereed GAP package</span>),
+    (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/groupoids/">https://gap-packages.github.io/groupoids/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ groupoids1.74,
+    @misc{ groupoids,
       author =           {Moore, E. J. and Wensley, C.},
       title =            {{groupoids},  Calculations  with  finite groupoids and
-                          their homomorphisms, {V}ersion 1.74},
-      month =            {Jan},
+                          their homomorphisms, {V}ersion 1.76},
+      month =            {Sep},
       year =             {2024},
-      note =             {Refereed GAP package},
+      note =             {GAP package},
       howpublished =     {\href      {https://gap-packages.github.io/groupoids/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {\texttt{https://gap\texttt{\symbol{45}}packages.github.io/}\discretionary
                           {}{}{}\texttt{groupoids/}}},
       keywords =         {magma  with  objects;  groupoid; graph of groups; free
                           product     with    amalgamation;    HNN    extension;
