@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
 Version := "1.76",
-Date := "23/09/2024", # dd/mm/yyyy format
+Date := "06/12/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -63,8 +63,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Finite Groupoids and Graphs of Groups",
-  Autoload  := true
+  LongTitle := "Finite Groupoids and Graphs of Groups"
 ),
 
 Dependencies := rec(
@@ -76,8 +75,6 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := ReturnTrue,
-
-Autoload := false, 
 
 TestFile := "tst/testall.g", 
 
