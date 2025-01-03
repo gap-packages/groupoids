@@ -1,5 +1,7 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.76dev for GAP 4.14.0 (03/01/25) 
+
 ## Version 1.76 for GAP 4.13.1 (23/09/24) 
  * (23/09/24) fix error caused re immutable ExtRepOfObj by GAP pull #5808
 

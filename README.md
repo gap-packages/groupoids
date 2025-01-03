@@ -29,7 +29,7 @@ A more detailed history is included as Chapter 8 of the manual, and in the file 
 
 ## Copyright
 
-The groupoids package is Copyright {\copyright} Chris Wensley and Emma Moore, 2000-2024. 
+The groupoids package is Copyright © Chris Wensley and Emma Moore, 2000-2025. 
 
 'groupoids' is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
 
@@ -39,29 +39,32 @@ For details, see: <https://www.gnu.org/licenses/gpl.html>
 
 It is assumed that you have a recent working copy of GAP, and that this contains a full set of packages in the `pkg` directory, compiled as appropriate. 
 
-groupoids specifies two needed packages, FGA and utils, and some suggested packages, such as Semigroups and GAPDoc.  These in turn need or suggest other packages.  Some of these are loaded automatically when GAP starts. 
+'groupoids' specifies two needed packages, 'FGA' and 'utils', 
+and some suggested packages, such as 'Semigroups' and 'GAPDoc'.
+These in turn need or suggest other packages.
+Some of these are loaded automatically when GAP starts. 
 
-The full list of packages which are loaded (in addition to those loaded automatically by GAP) when groupoids is loaded is as follows: 
- * datastructures; Digraphs; ferret; GRAPE; images; nq; polymaking and Semigroups. 
+The full list of packages which are loaded (in addition to those loaded automatically by GAP) when 'groupoids' is loaded is as follows: 
+ * 'datastructures'; 'Digraphs'; 'ferret'; 'GRAPE'; 'images'; 'nq';
+'polymaking' and 'Semigroups'. 
 
-groupoids does not require any compilation, but those in the list above which require compilation are as follows: 
- * datastructures; Digraphs; GRAPE and Semigroups. 
+'groupoids' does not require any compilation, but those in the list above which require compilation are as follows: 
+ * 'datastructures'; 'Digraphs'; 'GRAPE'; 'nq' and 'Semigroups'. 
 
 Once these prerequisites are in place, proceed as follows: 
 
- * Unpack `groupoids-<version_number>.tar.gz' in the `pkg` subdirectory of the GAP root directory.
+ * Unpack `groupoids-<version_number>.tar.gz` in the `pkg` subdirectory of the GAP root directory.
  * From within GAP load the package with:
-
+    ```
     gap> LoadPackage("groupoids");
-
     true
-
+    ```
  * The file manual.pdf is in the `doc` subdirectory.
  * To run the test file read `testall.g` from the `tst` subdirectory. 
 
 ## Contact
 
 If you have a question relating to groupoids, encounter any problems, or have a suggestion for extending the package in any way, please 
- * email cdwensley.maths@btinternet.com 
- * or report an issue at https://github.com/gap-packages/groupoids/issues/new 
+ * email: <mailto:cdwensley.maths@btinternet.com> 
+ * or report an issue at: <https://github.com/gap-packages/groupoids/issues/new>
 
