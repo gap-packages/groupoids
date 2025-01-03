@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.76",
-Date := "06/12/2024", # dd/mm/yyyy format
+Version := "1.76dev",
+Date := "03/01/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -36,16 +36,16 @@ AcceptDate := "05/2015",
 
 SourceRepository := rec( 
   Type := "git", 
-  URL := "https://github.com/gap-packages/groupoids"
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://gap-packages.github.io/groupoids/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
+  URL := "https://github.com/gap-packages/groupoids" ),
+  IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+  PackageWWWHome  := "https://gap-packages.github.io/groupoids/",
+  README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+  PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+  ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
                                   "/releases/download/v", ~.Version, 
                                   "/", ~.PackageName, "-", ~.Version ), 
-SupportEmail := "c.d.wensley@bangor.ac.uk",
+
+SupportEmail := "cdwensley1234@btinternet.com",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
@@ -91,7 +91,7 @@ BannerString := Concatenation(
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2000-2024, Emma Moore and Chris Wensley.<P/>\n", 
+            "© 2000-2025, Emma Moore and Chris Wensley.<P/>\n", 
             "The &groupoids; package is free software; you can redistribute ", 
             "it and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
