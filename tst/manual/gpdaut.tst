@@ -1,10 +1,8 @@
-##############################################################################
+############################################################################
 ##
-#W  gpdaut.tst              groupoids Package                    Chris Wensley
+#W  gpdaut.tst              groupoids Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2000-2022, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+
 gap> START_TEST( "groupoids package: gpdaut.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
@@ -37,19 +35,20 @@ gap> SetName( a4, "a4" );
 gap> gensa4 := GeneratorsOfGroup( a4 );; 
 gap> Ga4 := SubgroupoidByPieces( Gs4, [ [a4, [-15,-13,-11]] ] ); 
 single piece groupoid: < a4, [ -15, -13, -11 ] >
-gap> SetName( Ga4, "Ga4" ); 
-gap> d := Arrow( Ga4, (1,3,4), -11, -13 ); 
-[(1,3,4) : -11 -> -13]
-gap> aut1 := GroupoidAutomorphismByObjectPerm( Ga4, [-13,-11,-15] );; 
+gap> SetName( Ga4, "Ga4" );
+gap> perm1 := [-13,-11,-15];;
+gap> aut1 := GroupoidAutomorphismByObjectPerm( Ga4, perm1 );; 
 gap> Display( aut1 ); 
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
 images of objects: [ -13, -11, -15 ]
    images of rays: [ [() : -13 -> -13], [() : -13 -> -11], [() : -13 -> -15] ]
+gap> d := Arrow( Ga4, (1,3,4), -11, -13 ); 
+[(1,3,4) : -11 -> -13]
 gap> d1 := ImageElm( aut1, d ); 
 [(1,3,4) : -15 -> -11]
-gap> h2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
-gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, h2 );; 
+gap> alpha2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; 
+gap> aut2 := GroupoidAutomorphismByGroupAuto( Ga4, alpha2 );; 
 gap> Display( aut2 ); 
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
@@ -57,8 +56,8 @@ images of objects: [ -15, -13, -11 ]
    images of rays: [ [() : -15 -> -15], [() : -15 -> -13], [() : -15 -> -11] ]
 gap> d2 := ImageElm( aut2, d1 );
 [(1,2,4) : -15 -> -11]
-gap> im3 := [(), (1,3,2), (2,4,3)];; 
-gap> aut3 := GroupoidAutomorphismByRayShifts( Ga4, im3 );; 
+gap> L3 := [(), (1,3,2), (2,4,3)];; 
+gap> aut3 := GroupoidAutomorphismByRayShifts( Ga4, L3 );; 
 gap> Display( aut3 ); 
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
@@ -67,8 +66,8 @@ images of objects: [ -15, -13, -11 ]
   [(2,4,3) : -15 -> -11] ]
 gap> d3 := ImageElm( aut3, d2 );
 [(1,4)(2,3) : -15 -> -11]
-gap> d0 := Arrow( Ga4, (2,3,4), -11, -13 );; 
-gap> aut4 := GroupoidInnerAutomorphism( Ga4, d0 );;
+gap> h4 := Arrow( Ga4, (2,3,4), -11, -13 );; 
+gap> aut4 := GroupoidInnerAutomorphism( Ga4, h4 );;
 gap> Display( aut4 );
  groupoid mapping: [ Ga4 ] -> [ Ga4 ]
 root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
@@ -153,6 +152,7 @@ gap> ImageElm( aut, a );
 [(1,4,3) : -7 -> -7]
 gap> ImageElm( aut, b );
 [(1,2,3,4) : -6 -> -9]
+gap> ## (5) conjgation by an arrow
 gap> e86 := Arrow( Hs3c, (1,3,2,4), -8, -6 );;
 gap> aut86 := GroupoidInnerAutomorphism( Hs3c, e86 );
 groupoid homomorphism : Hs3c -> Hs3c
@@ -164,15 +164,20 @@ groupoid homomorphism : Hs3c -> Hs3c
 # Subsection 5.6.3 
 gap> AGa4 := AutomorphismGroupOfGroupoid( Ga4 ); 
 Aut(Ga4)
-gap> Length( GeneratorsOfGroup( AGa4 ) );
-8
 gap> AGgens := GeneratorsOfGroup( AGa4);; 
+gap> Length( AGgens );
+8
 gap> NGa4 := NiceObject( AGa4 );; 
 gap> MGa4 := NiceMonomorphism( AGa4 );; 
-gap> Size( AGa4 ); 
+gap> Size( AGa4 );    ## (3!)x24x(12^2)
 20736
 gap> SetName( AGa4, "AGa4" ); 
-gap> SetName( NGa4, "NGa4" ); 
+gap> SetName( NGa4, "NGa4" );
+gap> ## from 04/25 the second of these equivalent(?) names has been returned
+gap> names := [ "(((A4 x A4 x A4) : C2) : C3) : C2",
+>    "(C2 x C2 x C2 x C2 x C2 x C2) : (((C3 x C3 x C3) : C3) : (C2 x C2))" ];;
+gap> StructureDescription( NGa4 ) in names;
+true
 gap> ##  cannot test images of AGgens because of random variations 
 gap> ##  Now do some tests!
 gap> mgi := MappingGeneratorsImages( MGa4 );; 
@@ -242,7 +247,7 @@ GroupHomomorphismByImages( s3, s3,
 
 gap> AHs3 := AutomorphismGroupOfGroupoid( Hs3 ); 
 <group with 4 generators>
-gap> Size( AHs3 );
+gap> Size( AHs3 );    ## 4!*6^4
 31104
 gap> genAHs3 := GeneratorsOfGroup( AHs3 );;
 gap> Length( genAHs3 ); 
@@ -295,7 +300,7 @@ gap> RaysOfGroupoid( AHd8 ){[2..3]};
       [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
           [() : -12 -> -10] ] ] ]
 gap> obgp := ObjectGroup( AHd8, [ -12, -11, -10 ] );; 
-gap> Size( obgp ); 
+gap> Size( obgp );    ## 3!*8^3
 3072
 
 ## Section 5.7 
@@ -344,6 +349,8 @@ groupoid homomorphism :
       [[ [ 1, 0, 0 ], [ 0, 0, -1 ], [ 0, -1, 0 ] ] : -14 -> -14], 
       [[ [ 0, 0, 1 ], [ -1, 0, 0 ], [ 0, -1, 0 ] ] : -14 -> -13], 
       [[ [ 0, -1, 0 ], [ 0, 0, 1 ], [ -1, 0, 0 ] ] : -14 -> -12] ] ]
+gap> ParentMappingGroupoids( rmor ) = mor;
+true
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "gpdaut.tst", 10000 );

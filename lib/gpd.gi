@@ -2,9 +2,6 @@
 ## 
 #W  gpd.gi                 GAP4 package `groupoids'             Chris Wensley 
 #W                                                               & Emma Moore
-#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
 
 #############################################################################
 ##  Standard error messages
@@ -116,6 +113,7 @@ function( pgpd, rgp, rays )
 
     local obs, rob, fam, filter, gpd, id;
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidWithRaysNC" );
     fam := IsGroupoidFamily;
     ## filter := IsSinglePieceRaysRep; 
     gpd := rec( objects := pgpd!.objects, magma := rgp, rays := rays ); 
@@ -137,9 +135,10 @@ function( gpd, rgp, rays )
 
     local obs, gp, par, grays;
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidWithRays" );
     obs := gpd!.objects; 
     if not ( Length( obs ) = Length( rays ) ) then 
-        Error( "should be one ray element for each object in the groupoid," ); 
+        Error( "should be 1 ray element for each object in the groupoid," ); 
     fi; 
     if not IsSubgroup( gpd!.magma, rgp ) then
         Error( "subgroupoid root group not a subgroup of the root group," );
@@ -172,6 +171,7 @@ function( anc, gens )
     local ok, ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
           g, c, p, q, r, rays, par; 
 
+    Info( InfoGroupoids, 2, "calling SinglePieceSubgroupoidByGenerators" );
     ok := ForAll( gens, g -> ( FamilyObj(g) = IsGroupoidElementFamily ) ); 
     if not ok then 
         Error( "list supplied is not a list of groupoid elements," ); 
@@ -246,12 +246,14 @@ end );
 #M  SinglePieceGroupoidWithRaysNC                                            
 #M  SinglePieceGroupoidWithRays                                            
 ##
-InstallMethod( SinglePieceGroupoidWithRaysNC, "method for a connected groupoid",
-    true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+InstallMethod( SinglePieceGroupoidWithRaysNC, 
+    "method for a connected groupoid", true,
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
 function( gp, obs, rays ) 
 
     local gpd, gens1, gens;
 
+    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRaysNC" );
     gpd := rec( objects := obs, magma := gp, rays := rays ); 
     ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
         IsSinglePieceDomain, true,
@@ -263,9 +265,11 @@ function( gp, obs, rays )
     return gpd; 
 end );
 
-InstallMethod( SinglePieceGroupoidWithRays, "method for a connected groupoid",
-    true, [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+InstallMethod( SinglePieceGroupoidWithRays, 
+    "method for a connected groupoid", true,
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
 function( gp, obs, rays ) 
+    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRays" );
     if not IsSet( obs ) then 
         Sort( obs ); 
     fi; 
@@ -319,7 +323,8 @@ function( gpd )
                  i -> ArrowNC( true, elts[i], root, obs[i] ) );
 end );
 
-InstallMethod( RayArrowsOfGroupoid, "for a groupoid", true, [ IsGroupoid ], 0,
+InstallMethod( RayArrowsOfGroupoid, "for a groupoid", true, 
+    [ IsGroupoid ], 0,
 function( G ) 
     return List( Pieces( G ), RayArrowsOfGroupoid ); 
 end ); 
@@ -547,8 +552,8 @@ function ( gpd )
         fi; 
     elif ( HasIsHomogeneousDiscreteGroupoid( gpd ) 
            and IsHomogeneousDiscreteGroupoid( gpd ) ) then 
-            Print( "homogeneous, discrete groupoid: < " ); 
-            Print( gpd!.magma, ", ", gpd!.objects, " >" ); 
+            Print( "homogeneous, discrete groupoid: < ",
+                   gpd!.magma, ", ", gpd!.objects, " >" ); 
     else 
         comp := Pieces( gpd ); 
         len := Length( comp ); 
@@ -851,7 +856,7 @@ function( gpd, oblist )
     pieces := List( isos, ImagesSource ); 
     hgpd := UnionOfPiecesOp( pieces, pieces[1] ); 
     pisos := List( [2..len], i -> inv1 * isos[i] );
-    SetIsHomogeneousDomainWithObjects( hgpd, true ); 
+    SetIsHomogeneousDomainWithObjects( hgpd, true );
     SetIsSinglePieceDomain( hgpd, false ); 
     SetPieceIsomorphisms( hgpd, pisos );
     SetObjectList( hgpd, Set( Flat( oblist ) ) ); 
@@ -877,7 +882,7 @@ function( gpd, oblist )
     for j in [2..Length(oblist)] do 
         if ( Intersection( ob1, oblist[j] ) <> [ ] ) then
             Info( InfoGroupoids, 1, 
-                  "constituents must have disjoint object sets," );
+                  "pieces must have disjoint object sets," );
             return fail;
         fi; 
     od; 
@@ -900,15 +905,15 @@ function( gp, obs )
     fi;
     fam := IsGroupoidFamily; 
     filter := IsHomogeneousDiscreteGroupoidRep; 
-    gpd := rec( objects := obs, magma := gp); 
-    ObjectifyWithAttributes( gpd, IsHomogeneousDiscreteGroupoidType, 
+    gpd := rec( objects := obs, magma := gp );
+    ObjectifyWithAttributes( gpd, IsHomogeneousDiscreteGroupoidType,
         IsAssociative, true, 
         IsDiscreteDomainWithObjects, true, 
         IsHomogeneousDomainWithObjects, true, 
         IsAssociative, true, 
         IsCommutative, IsCommutative( gp ), 
         IsDirectProductWithCompleteDigraphDomain, false, 
-        IsSinglePieceDomain, false ); 
+        IsSinglePieceDomain, false );
     return gpd; 
 end );
 
@@ -1006,9 +1011,6 @@ function( gpd, elt )
     gens := GeneratorsOfGroupoid( gpd ); 
     ims := List( gens, g -> g^elt ); 
     conj := SinglePieceSubgroupoidByGenerators( Ancestor( gpd ), ims );
-    #? leftovers from the version for groups: 
-    #? OnTuples( GeneratorsOfGroupoid( gpd ), elt ), One( gpd ) );
-    #? UseIsomorphismRelation( gpd, conj );
     return conj;
 end );
 
@@ -1088,7 +1090,7 @@ function( e, gpd )
              and ( ImageElm( iso12, e![1][1] ) = e![1][2] ) ); 
 end );
 
-InstallMethod( \in, "for groupoid element and a union of constituents", true, 
+InstallMethod( \in, "for groupoid element and a union of pieces", true, 
     [ IsGroupoidElement, IsGroupoid and HasPieces ], 0,
 function( e, gpd )
 
@@ -1532,16 +1534,16 @@ function( gpd )
             if IsDoneIterator( iter!.groupoidIterator ) then 
                 iter!.cpos := iter!.cpos + 1;
                 iter!.groupoidIterator := 
-                    Iterator( iter!.constituents[iter!.cpos] );
+                    Iterator( iter!.pieces[iter!.cpos] );
             fi;
             return NextIterator( iter!.groupoidIterator );
             end,
         ShallowCopy := iter -> 
-            rec( constituents := iter!.constituents,
+            rec( pieces := iter!.pieces,
                  len := iter!.len,
                  groupoidIterator := ShallowCopy( iter!.groupoidIterator ),
                  cpos := iter!.cpos ),
-        constituents := Pieces( gpd ),
+        pieces := Pieces( gpd ),
         len := Length( Pieces( gpd ) ),
         groupoidIterator := Iterator( Pieces( gpd )[1] ),
         cpos := 1 ) );
@@ -1555,7 +1557,7 @@ end );
 ##
 #F  Subgroupoid( <gpd>, <subgp> )        connected groupoids
 #F  Subgroupoid( <gpd>, <gps>, <obs> )   discrete subgroupoid 
-#F  Subgroupoid( <gpd>, <comp> )         subgroupoid as list of constituents
+#F  Subgroupoid( <gpd>, <comp> )         subgroupoid as list of pieces
 ##
 InstallGlobalFunction( Subgroupoid, function( arg )
 
@@ -1582,9 +1584,9 @@ InstallGlobalFunction( Subgroupoid, function( arg )
         Info( InfoGroupoids, 2, "discrete subgroupoid" );
         return DiscreteSubgroupoid( arg[1], arg[2], arg[3] );
     fi;
-    # list of constituents
+    # list of pieces
     if ( ( nargs = 2 ) and IsHomogeneousList( arg[2] ) ) then
-        Info( InfoGroupoids, 3, "subgroupoid by constituents" );
+        Info( InfoGroupoids, 2, "subgroupoid by pieces" );
         return SubgroupoidByPieces( arg[1], arg[2] );
     fi;
     Info( InfoGroupoids, 1, SUB_CONSTRUCTORS );
@@ -1668,6 +1670,7 @@ function( G, sgp )
 
     local gpG, U;     
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidBySubgroup" );
     gpG := G!.magma; 
     if not IsSubgroup( gpG, sgp ) then 
         Error( "sgp is not a subgroup of RootGroup(G)" ); 
@@ -1689,20 +1692,21 @@ end );
 InstallMethod( SubgroupoidByPieces,
     "generic method for a groupoid and a list of pieces", true,
     [ IsGroupoid, IsList ], 0, 
-function( gpd, pieces )
+function( gpd, piecedata )
 
     local p1, withrays, pieceU, len, i, pi, par, sub, U, c, piece, 
           gobs, grays, nobspi, j, ob, rays, rootpi, rootpos, obpos;
 
-    p1 := pieces[1]; 
-    withrays := ( ( "IsSinglePieceRaysRep" in RepresentationsOfObject(gpd) ) 
-                  or ( Length( p1 ) = 3 ) )  
-                and not ( ForAll( pieces, p -> Length( p[2] ) = 1 ) );  
+    Info( InfoGroupoids, 2, "calling SubgroupoidByPieces" );
+    p1 := piecedata[1]; 
     if IsList( p1 ) then 
-        len := Length( pieces ); 
+        withrays := (("IsSinglePieceRaysRep" in RepresentationsOfObject(gpd)) 
+                     or ( Length( p1 ) = 3))
+                    and not ( ForAll( piecedata, p -> Length(p[2])=1 ) );
+        len := Length( piecedata );
         pieceU := ListWithIdenticalEntries( len, 0 ); 
         for i in [1..len] do 
-            pi := pieces[i]; 
+            pi := piecedata[i]; 
             if withrays then 
                 if not ( Length( pi ) = 3 ) then 
                     ## keep the rays of the larger gpd 
@@ -1726,10 +1730,10 @@ function( gpd, pieces )
             else 
                 sub := SinglePieceGroupoid( pi[1], pi[2] ); 
             fi; 
-            pieceU[i] := sub; 
+            pieceU[i] := sub;
         od;
     else 
-        pieceU := pieces; 
+        pieceU := piecedata; 
     fi;
     if ( Length( pieceU ) > 1 ) then
         U := UnionOfPieces( pieceU );
@@ -1737,7 +1741,8 @@ function( gpd, pieces )
         U := pieceU[1];
     fi;
     if not IsSubgroupoid( gpd, U ) then 
-        Info( InfoGroupoids, 1, "union of pieces is not a subgroupoid of gpd" );
+        Info( InfoGroupoids, 1, 
+                  "union of pieces is not a subgroupoid of gpd" );
         return fail;
     fi;
     if ForAll( pieceU, p -> ( Length(p!.objects) = 1 ) ) then
@@ -1763,6 +1768,7 @@ function( G, gps, obs )
 
     local pieceU, U, len, o, pieceG, obsg, C, i, gpo, ishomo;
 
+    Info( InfoGroupoids, 2, "calling DiscreteSubgroupoid" );
     obsg := ObjectList( G );
     len := Length( obs ); 
     if ( len = 1 ) then 
@@ -1808,6 +1814,7 @@ function( G, obsU )
 
     local obsG, nobs, U; 
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidByObjects, method 1" );
     obsG := ObjectList( G ); 
     if not ForAll( obsU, o -> o in obsG ) then 
         Error( "<obsU> not a subset of the objects in G" ); 
@@ -1827,6 +1834,7 @@ function( G, obsU )
 
     local obsG, nobs, ro, gpU, pos, rayG, rayU, ray1, j, anc; 
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidByObjects, method 2" );
     obsG := ObjectList( G ); 
     if not ForAll( obsU, o -> o in obsG ) then 
         Error( "<obsU> not a subset of the objects in G" ); 
@@ -1854,6 +1862,7 @@ function( G, sobs )
 
     local pieceG, pieceU, j, P, obsP, sobsP;
 
+    Info( InfoGroupoids, 2, "calling SubgroupoidByObjects, method 3" );
     pieceG := Pieces( G );
     pieceU := [ ];
     for j in [1..Length(pieceG)] do
@@ -1870,7 +1879,10 @@ end );
 InstallMethod( SubgroupoidByObjects, "for a homogeneous discrete groupoid", 
     true, [ IsHomogeneousDiscreteGroupoid, IsHomogeneousList ], 0,
 function( gpd, sobs )
+
     local obs;
+
+    Info( InfoGroupoids, 2, "calling SubgroupoidByObjects, method 4" );
     obs := gpd!.objects; 
     if not ForAll( sobs, o -> o in obs ) then 
         Error( "<sobs> not a subset of <gpd>!.objects," ); 
@@ -1892,12 +1904,12 @@ InstallMethod( MaximalDiscreteSubgroupoid,
     "generic method for a groupoid", true, [ IsGroupoid ], 0,
 function( gpd )
 
-    local obs, len, gps, i, piece, U;
+    local obs, len, gps, i, piece, U, ok;
 
     if ( HasIsDirectProductWithCompleteDigraph( gpd ) 
-         and IsDirectProductWithCompleteDigraph( gpd ) ) then 
+         and IsDirectProductWithCompleteDigraph( gpd ) ) then
         U := HomogeneousDiscreteGroupoid( gpd!.magma, gpd!.objects ); 
-    else 
+    else
         obs := ObjectList( gpd );
         len := Length( obs );
         gps := ListWithIdenticalEntries( len, 0 );
@@ -1907,7 +1919,8 @@ function( gpd )
         od;
         U := DiscreteSubgroupoid( gpd, gps, obs ); 
     fi;
-    SetParentAttr( U, gpd ); 
+    SetParentAttr( U, gpd );
+    ok := IsHomogeneousDomainWithObjects( U );
     return U;
 end );
 

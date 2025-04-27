@@ -1,9 +1,6 @@
 ############################################################################# 
 ## 
 #W  mwo.gd                 GAP4 package `groupoids'             Chris Wensley 
-##
-#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations of elements, magma, etc., and their 
 ##  families in the case of many objects.  So each algebraic structure comes 

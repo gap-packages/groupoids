@@ -1,12 +1,8 @@
-##############################################################################
+############################################################################
 ##
-#W  util.gd                 GAP4 package `groupoids'             Chris Wensley
-##
-#Y  Copyright (C) 2000-2017, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#W  util.gd                 GAP4 package `groupoids'           Chris Wensley
 ##  
 ##  Declaration file for utility functions in the groupoids package.
-##
 
 #############################################################################
 ##

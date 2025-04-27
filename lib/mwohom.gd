@@ -1,12 +1,9 @@
-##############################################################################
+############################################################################
 ##
-#W  mwohom.gd             GAP4 package `groupoids'               Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#W  mwohom.gd             GAP4 package `groupoids'             Chris Wensley
+#W                                                              & Emma Moore
 ##  
 ##  Declaration file for mappings of magmas with objects. 
-##
 
 ############################################################################## 
 ## 
@@ -136,7 +133,7 @@ BindGlobal( "IsGroupoidMappingWithPiecesType",
 #P  IsHomomorphismFromSinglePiece( <map> ) 
 ## 
 ##  A mapping to a connected magma is: 
-##    - a list of mappings from the constituents of the source, 
+##    - a list of mappings from the pieces of the source, 
 ##    - a list of lists of images of objects
 ## 
 DeclareProperty("IsConstantOnObjects", IsGeneralMappingWithObjects); 

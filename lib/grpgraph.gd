@@ -1,14 +1,11 @@
-##############################################################################
+############################################################################
 ##
-#W  grpgraph.gd             GAP4 package `groupoids'             Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#W  grpgraph.gd             GAP4 package `groupoids'           Chris Wensley
+#W                                                              & Emma Moore
 ##  
 ##  This file contains the declarations for involutory FpWeightedDigraphs 
 ##  and FpWeightedDigraphs of groups, 
 ##  and normal forms for FpWeightedDigraph of groups. 
-## 
 
 ############################################################################## 
 ## 

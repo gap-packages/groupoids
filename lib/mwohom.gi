@@ -1,12 +1,9 @@
-##############################################################################
+############################################################################
 ##
-#W  mwohom.gi              GAP4 package `groupoids'              Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#W  mwohom.gi              GAP4 package `groupoids'            Chris Wensley
+#W                                                              & Emma Moore
 ##  
 ##  This file contains generic methods for mappings of magmas with objects
-##
 
 #############################################################################
 ##  Standard error messages
@@ -355,7 +352,7 @@ function( mag1, mag2, maps )
         Error( "not all m have source in mag1" );
     fi;
     if not ( Set( flat1 ) = [1..Length(pieces1)] ) then
-        Error( "constituents of mag1 <> union of sources in maps" );
+        Error( "pieces of mag1 <> union of sources in maps" );
     fi;
     ##  more efficient to use PieceNrOfObject here ??
     pos2 := List( maps, m -> Position( pieces2, 
@@ -585,7 +582,7 @@ function( map )
     elif ( HasIsGeneralMappingFromHomogeneousDiscrete( map ) 
            and IsGeneralMappingFromHomogeneousDiscrete( map ) ) then 
         return IsDuplicateFree( map!.oims ); 
-    else  ## mapping has constituents
+    else  ## mapping has pieces
         imo := List( PiecesOfMapping( map ), 
                      m -> MappingToSinglePieceData(m)[2] );
         return IsDuplicateFree( Flat( imo ) );
@@ -617,7 +614,7 @@ function( map )
     elif IsHomomorphismToSinglePiece( map ) then
         images := MappingToSinglePieceData( map );
         imo := Flat( List( images, L -> L[2] ) );
-    else  ## mapping has constituents
+    else  ## mapping has pieces
         imo := Flat( List( PiecesOfMapping( map ), 
                      m -> MappingToSinglePieceData(m)[1][2] ) );
     fi;

@@ -1,10 +1,8 @@
-##############################################################################
+############################################################################
 ##
-#W  ggraph.tst              groupoids Package                    Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2019, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+#W  ggraph.tst              groupoids Package                  Chris Wensley
+#W                                                              & Emma Moore
+
 gap> START_TEST( "groupoids package: ggraph.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 

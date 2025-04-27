@@ -1,10 +1,8 @@
-##############################################################################
+############################################################################
 ##
-#W  mwohom.tst              groupoids Package                    Chris Wensley
+#W  mwohom.tst              groupoids Package                   Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+
 gap> START_TEST( "groupoids package: mwohom.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
@@ -37,39 +35,39 @@ gap> f1 := GeneralMappingByElements( m, m, tup1 );
 <general mapping: m -> m >
 gap> IsMagmaHomomorphism( f1 ); 
 true
-gap> hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-8,-7] ); 
+gap> hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-7,-8] ); 
 magma with objects homomorphism : M78 -> M78
-[ [ <mapping: m -> m >, [ -8, -7 ] ] ]
+[ [ <mapping: m -> m >, [ -7, -8 ] ] ]
 gap> [ Source( hom1 ), Range( hom1 ) ]; 
 [ M78, M78 ]
 gap> b87;
 [m4 : -8 -> -7]
 gap> im1 := ImageElm( hom1, b87 );
-[m3 : -8 -> -7]
-gap> i56 := IsomorphismNewObjects( M78, [-5,-6] ); 
-magma with objects homomorphism : [ [ IdentityMapping( m ), [ -5, -6 ] ] ]
-gap> ib87 := ImageElm( i56, b87 );
-[m4 : -5 -> -6]
-gap> M65 := Range( i56);; 
+[m3 : -7 -> -8]
+gap> i65 := IsomorphismNewObjects( M78, [-6,-5] ); 
+magma with objects homomorphism : [ [ IdentityMapping( m ), [ -6, -5 ] ] ]
+gap> ib87 := ImageElm( i65, b87 );
+[m4 : -6 -> -5]
+gap> M65 := Range( i65);; 
 gap> SetName( M65, "M65" ); 
-gap> j56 := InverseGeneralMapping( i56 );; 
-gap> ImagesOfObjects( j56 ); 
-[ -7, -8 ]
-gap> comp := j56 * hom1;
+gap> j65 := InverseGeneralMapping( i65 );; 
+gap> ImagesOfObjects( j65 ); 
+[ -8, -7 ]
+gap> comp := j65 * hom1;
 magma with objects homomorphism : M65 -> M78
 [ [ <mapping: m -> m >, [ -7, -8 ] ] ]
 gap> ImageElm( comp, ib87 );
-[m3 : -8 -> -7]
+[m3 : -7 -> -8]
 
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
 gap> images := [ MappingToSinglePieceData( hom1 )[1], 
-> MappingToSinglePieceData( j56 )[1] ]; 
-[ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
+> MappingToSinglePieceData( j65 )[1] ]; 
+[ [ <mapping: m -> m >, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
-magma with objects homomorphism : [ [ <mapping: m -> m >, [ -8, -7 ] ], 
-  [ IdentityMapping( m ), [ -7, -8 ] ] ]
+magma with objects homomorphism : 
+[ [ <mapping: m -> m >, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
 gap> ImageElm( map4, b87 ); 
-[m3 : -8 -> -7]
+[m3 : -7 -> -8]
 gap> ImageElm( map4, ib87 );
 [m4 : -8 -> -7]
 
@@ -129,10 +127,10 @@ gap> N4 := UnionOfPieces( [ M78, T123 ] );;
 gap> h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] ); 
 magma with objects homomorphism : 
 [ magma with objects homomorphism : M78 -> M78
-    [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
+    [ [ <mapping: m -> m >, [ -7, -8 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
 gap> ImageElm( h14, a78 );
-[m1 : -7 -> -8]
+[m1 : -8 -> -7]
 gap> ImageElm( h14, r31 );
 [Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13]
 

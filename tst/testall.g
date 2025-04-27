@@ -1,10 +1,7 @@
-##############################################################################
+############################################################################
 ##
-#W  testall.g               groupoids Package                    Chris Wensley
+#W  testall.g               groupoids Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
 
 LoadPackage( "groupoids" ); 
 TestDirectory( 

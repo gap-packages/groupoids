@@ -2,8 +2,6 @@
 ## 
 #W  double.gd               GAP4 package `Groupoids'            Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the declarations for basic double groupoids
 ##  

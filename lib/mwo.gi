@@ -2,9 +2,6 @@
 ## 
 #W  mwo.gi                 GAP4 package `groupoids'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
 ##  This file contains the declarations of elements, magma, etc., and their 
 ##  families in the case of many objects.  So each algebraic structure comes 
 ##  with a set of objects, and each element $e$ has a tail object $te$ and a 
@@ -347,7 +344,7 @@ function( e, mwo )
     fi; 
 end ); 
 
-InstallMethod( \in, "for mwo element and a union of constituents", true, 
+InstallMethod( \in, "for mwo element and a union of pieces", true, 
     [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects and HasPieces ], 0,
 function( e, mwo )
     return e in PieceOfObject( mwo, e![2] ); 
@@ -533,7 +530,7 @@ function( mwo )
     else
         comp := Pieces( mwo );
         len := Length( comp );
-        Print( "Magma with objects with ", len, " constituents:\n" );
+        Print( "Magma with objects with ", len, " pieces:\n" );
         for i in [1..len] do
             c := comp[i];
             if IsDirectProductWithCompleteDigraph( c ) then 
@@ -741,7 +738,7 @@ function( arg )
         obp := ObjectList( p );
         if ( Intersection( obs, obp ) <> [ ] ) then
             Info( InfoGroupoids, 1, 
-                  "constituents must have disjoint object sets" );
+                  "pieces must have disjoint object sets" );
             return fail;
         fi;
         obs := Union( obs, obp ); 
@@ -934,7 +931,6 @@ function( dwo )
     return true;
 end );
 
-
 #############################################################################
 ##
 #M  IsHomogeneousDomainWithObjects 
@@ -947,13 +943,7 @@ function( dwo )
 
     pieces := Pieces( dwo ); 
     g := pieces[1]!.magma; 
-    for j in [2..Length(pieces)] do 
-        iso := IsomorphismGroups( g, pieces[j]!.magma ); 
-        if ( iso = fail ) then
-            return false;
-        fi;
-    od;
-    return true;
+    return ForAll( [2..Length(pieces)], j -> ( g = pieces[j]!.magma ) ); 
 end );
 
 InstallMethod( IsHomogeneousDomainWithObjects, "for a magma with objects", 
@@ -968,13 +958,7 @@ function( dwo )
         return false; 
     fi;
     g := pieces[1]!.magma; 
-    for j in [2..Length(pieces)] do 
-        iso := IsomorphismGroups( g, pieces[j]!.magma ); 
-        if ( iso = fail ) then
-            return false;
-        fi;
-    od;
-    return true;
+    return ForAll( [2..Length(pieces)], j -> ( g = pieces[j]!.magma ) ); 
 end );
 
 

@@ -1,12 +1,9 @@
-############################################################################## 
+############################################################################
 ##
-#W  gpdhom.gi              GAP4 package `groupoids'              Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2024, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+#W  gpdhom.gi              GAP4 package `groupoids'            Chris Wensley
+#W                                                              & Emma Moore
 
-#############################################################################
+############################################################################
 ##  Standard error messages
 
 GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
@@ -22,7 +19,7 @@ GROUPOID_MAPPING_CONSTRUCTORS := Concatenation(
     "8.  GroupoidAutomorphismByObjectPerm( gpd, oims );\n", 
     "9.  GroupoidAutomorphismByRayShifts( gpd, rims );\n" ); 
 
-#############################################################################
+############################################################################
 ##
 #M  IsGroupoidHomomorphismFromHomogeneousDiscrete( <hom> )
 ##
@@ -33,7 +30,7 @@ function( map )
     return true; 
 end ); 
 
-#############################################################################
+############################################################################
 ##
 #M  IsGeneratorsOfMagmaWithInverses( <homlist> )
 ##
@@ -49,7 +46,7 @@ function( homlist )
                and IsSurjectiveOnObjects(m) ) ); 
 end );
  
-#############################################################################
+############################################################################
 ##
 #M  IdentityMapping
 ##
@@ -67,7 +64,7 @@ function( gpd )
     return iso;
 end );
 
-#############################################################################
+############################################################################
 ##
 ##  GroupoidHomomorphism( <gpd>,<hom>|<oims>|<rays>             automorphisms 
 #F  GroupoidHomomorphism( <g1>,<g2>,<hom> )                 from single piece 
@@ -166,7 +163,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     fi;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  InclusionMappingGroupoids
 ##
@@ -233,106 +230,98 @@ function( gpd, sgpd )
                sgpd, gpd, homs, obs ); 
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  RestrictedMappingGroupoids
 ##
 InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGeneralMappingWithObjects, IsGroupoid and IsSinglePiece ], 0,
+    [ IsGeneralMappingWithObjects, IsGroupoid ], 0,
 function( mor, U )
 
-    local smor, rmor, genU, imres, V, res, par;
+    local smor, rmor, pieces, nobs, imobs, autos, genU, imres, V, res, par,
+          i, P, genP, imP, obi, imobi, ogi, imgpi, impieces, imU,
+          mrng, psrc, lsrc, rcomp, rrng, j, imgenP, pos, hom, rng;
 
-    Info( InfoGroupoids, 3, "RestrictedMapping from a single piece" ); 
-    smor := Source( mor );
-    rmor := Range( mor );
-    if not ( IsSubdomainWithObjects( smor, U ) ) then
-        Error( "U not a submagma of Source(mor)" );
-    fi; 
-    genU := GeneratorsOfGroupoid( U ); 
-    imres := List( genU, g -> ImageElm( mor, g ) ); 
-    V := SinglePieceSubgroupoidByGenerators( Range(mor), imres );
-    res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres ); 
-    SetIsSurjective( mor, true ); 
+    if HasIsHomogeneousDiscreteGroupoid( U )
+       and IsHomogeneousDiscreteGroupoid( U )
+       and HasIsGroupWithObjectsHomomorphism( mor )
+       and IsGroupWithObjectsHomomorphism( mor ) then
+        Info( InfoGroupoids, 1, "RestrictedMapping from hom discrete" ); 
+        smor := Source( mor );
+        rmor := Range( mor );
+        if not ( IsSubdomainWithObjects( smor, U ) ) then
+            Error( "U not a submagma of Source(mor)" );
+        fi; 
+        pieces := Pieces( U );
+        nobs := Length( pieces );
+        imobs := ListWithIdenticalEntries( nobs, 0 ); 
+        autos := ListWithIdenticalEntries( nobs, 0 ); 
+        impieces := [ ]; 
+        for i in [1..nobs] do 
+            P := pieces[i];
+            genP := GeneratorsOfGroupoid( P ); 
+            obi := genP[1]![2]; 
+            imP := List( genP, a -> ImageElm( mor, a ) ); 
+            imobi := imP[1]![2];
+            imobs[i] := imobi; 
+            ogi := ObjectGroup( rmor, imobi ); 
+            imgpi := Subgroup( ogi, List( imP, a -> a![1] ) ); 
+            autos[i] := GroupHomomorphismByImages( 
+                            ObjectGroup( P, obi ), imgpi, 
+                            List( genP, g->g![1] ), List( imP, g->g![1] ) ); 
+            Add( impieces, SubgroupoidByPieces( rmor, [[imgpi,[imobi]]] ) );
+        od; 
+        imU := SubgroupoidByPieces( rmor, impieces );
+        res := GroupoidHomomorphismFromHomogeneousDiscrete(
+                   U, imU, autos, imobs ); 
+    elif HasIsSinglePiece( U ) and IsSinglePiece( U ) then
+        Info( InfoGroupoids, 1, "RestrictedMapping from a single piece" ); 
+        smor := Source( mor );
+        rmor := Range( mor );
+        if not ( IsSubdomainWithObjects( smor, U ) ) then
+            Error( "U not a submagma of Source(mor)" );
+        fi; 
+        genU := GeneratorsOfGroupoid( U ); 
+        imres := List( genU, g -> ImageElm( mor, g ) ); 
+        V := SinglePieceSubgroupoidByGenerators( Range(mor), imres );
+        res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres ); 
+        SetIsSurjective( mor, true ); 
+        if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
+            SetIsInjective( res, true );
+        fi;
+    else
+        Info( InfoGroupoids, 1, "RestrictedMapping from a union" ); 
+        mrng := Range( mor );
+        psrc := Pieces( U ); 
+        lsrc := Length( psrc );
+        rcomp := ListWithIdenticalEntries( lsrc, 0 ); 
+        rrng := ListWithIdenticalEntries( lsrc, 0 );
+        for j in [1..lsrc] do 
+            P := psrc[j]; 
+            genP := GeneratorsOfGroupoid( P ); 
+            imgenP := List( genP, g -> ImageElm( mor, g ) ); 
+            pos := PieceNrOfObject( mrng, imgenP[1]![2] ); 
+            imP := SinglePieceSubgroupoidByGenerators( 
+                       Pieces(mrng)[pos], imgenP );
+            hom := GroupoidHomomorphism( P, imP, genP, imgenP ); 
+            rcomp[j] := hom; 
+            rrng[j] := Range( hom );
+        od; 
+        rng := Groupoid( rrng );
+        res := HomomorphismByUnionNC( U, rng, rcomp );
+    fi;
     if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
         SetIsInjective( res, true );
     fi;
-    par := mor; 
+    par := mor;
     if HasParentMappingGroupoids( mor ) then 
         par := ParentMappingGroupoids( mor ); 
     fi; 
-    SetParentMappingGroupoids( res, mor );
-    return res; 
-end );
-
-InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGroupWithObjectsHomomorphism, 
-      IsGroupoid and IsHomogeneousDiscreteGroupoid ], 0,
-function( mor, U )
-
-    local smor, rmor, pieces, nobs, imobs, autos, 
-          i, P, genP, imP, obi, imobi, ogi, imgpi, impieces, imU;
-
-    Info( InfoGroupoids, 3, "RestrictedMapping from hom discrete" ); 
-    smor := Source( mor );
-    rmor := Range( mor );
-    if not ( IsSubdomainWithObjects( smor, U ) ) then
-        Error( "U not a submagma of Source(mor)" );
-    fi; 
-    pieces := Pieces( U );
-    nobs := Length( pieces );
-    imobs := ListWithIdenticalEntries( nobs, 0 ); 
-    autos := ListWithIdenticalEntries( nobs, 0 ); 
-    impieces := [ ]; 
-    for i in [1..nobs] do 
-        P := pieces[i];
-        genP := GeneratorsOfGroupoid( P ); 
-        obi := genP[1]![2]; 
-        imP := List( genP, a -> ImageElm( mor, a ) ); 
-        imobi := imP[1]![2];
-        imobs[i] := imobi; 
-        ogi := ObjectGroup( rmor, imobi ); 
-        imgpi := Subgroup( ogi, List( imP, a -> a![1] ) ); 
-        autos[i] := GroupHomomorphismByImages( ObjectGroup( P, obi ), imgpi, 
-                        List( genP, g->g![1] ), List( imP, g->g![1] ) ); 
-        Add( impieces, SubgroupoidByPieces( rmor, [ [imgpi,[imobi]] ] ) );
-    od; 
-    imU := SubgroupoidByPieces( rmor, impieces );
-    return GroupoidHomomorphismFromHomogeneousDiscrete(U,imU,autos,imobs); 
-end );
-
-InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
-    [ IsGeneralMappingWithObjects, IsGroupoid ], 0,
-function( mor, src )
-
-    local mrng, psrc, lsrc, rcomp, rrng, j, P, genP, imgenP, imP, 
-          pos, hom, rng, res;
-
-    Info( InfoGroupoids, 3, "RestrictedMapping from a union" ); 
-    mrng := Range( mor );
-    psrc := Pieces( src ); 
-    lsrc := Length( psrc );
-    rcomp := ListWithIdenticalEntries( lsrc, 0 ); 
-    rrng := ListWithIdenticalEntries( lsrc, 0 );
-    for j in [1..lsrc] do 
-        P := psrc[j]; 
-        genP := GeneratorsOfGroupoid( P ); 
-        imgenP := List( genP, g -> ImageElm( mor, g ) ); 
-        pos := PieceNrOfObject( mrng, imgenP[1]![2] ); 
-        imP := SinglePieceSubgroupoidByGenerators( Pieces(mrng)[pos], imgenP );
-        hom := GroupoidHomomorphism( P, imP, genP, imgenP ); 
-        rcomp[j] := hom; 
-        rrng[j] := Range( hom );
-    od; 
-    rng := Groupoid( rrng );
-    res := HomomorphismByUnionNC( src, rng, rcomp ); 
-    if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
-        SetIsInjective( res, true );
-    fi;
+    SetParentMappingGroupoids( res, par );
     return res;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  RootGroupHomomorphism . . . . . . . for a groupoid hom from single piece 
 ##
@@ -363,7 +352,7 @@ function( mor )
     return hom; 
 end ); 
 
-#############################################################################
+############################################################################
 ##
 #M  ObjectGroupHomomorphism . . . . .  . . . . . . . . . . for a groupoid hom 
 ##
@@ -397,10 +386,10 @@ function( mor, obj )
     return hom; 
 end ); 
 
-#############################################################################
+############################################################################
 ##
-#M  MappingPermObjectsImages . . . . . . for list of objects and their images 
-#M  MappingTransObjectsImages . . . . .  for list of objects and their images 
+#M  MappingPermObjectsImages . . . . . for list of objects and their images 
+#M  MappingTransObjectsImages . . . .  for list of objects and their images 
 ##
 InstallMethod( MappingPermObjectsImages, "for objects and their images", true, 
     [ IsList, IsList ], 0,
@@ -435,9 +424,9 @@ function( obs, ims )
     return Transformation( L ); 
 end );
 
-#############################################################################
+############################################################################
 ##
-#M  ObjectTransformationOfGroupoidHomomorphism . . . . for a groupoid mapping 
+#M  ObjectTransformationOfGroupoidHomomorphism . . . for a groupoid mapping 
 ##
 InstallMethod( ObjectTransformationOfGroupoidHomomorphism, 
     "for objects and images", true, 
@@ -460,12 +449,14 @@ function( map )
     fi; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  IsInjective( map ) . . . . . . . . . . . . . . for a groupoid homomorphism
+#M  IsInjective( map ) . . . . . . . . . . . . . for a groupoid homomorphism
 ##
-InstallOtherMethod( IsInjective, "for a groupoid hom from a single piece", true,
-    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingFromSinglePiece ], 2,
+InstallOtherMethod( IsInjective, "for a groupoid hom from a single piece",
+    true,
+    [ IsGroupWithObjectsHomomorphism and IsGeneralMappingFromSinglePiece ],
+    2,
     map -> ( IsInjectiveOnObjects( map ) and 
              IsInjective( RootGroupHomomorphism( map ) ) ) );
 
@@ -485,9 +476,9 @@ function( map )
     Error( "no method yet implemented for this case" ); 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSurjective( map ) . . . . . . . . . . . . .  for a groupoid homomorphism
+#M  IsSurjective( map ) . . . . . . . . . . . .  for a groupoid homomorphism
 ##
 InstallOtherMethod( IsSurjective, "for a mapping from a single piece", true, 
     [ IsGroupWithObjectsHomomorphism and IsGeneralMappingFromSinglePiece ], 2,
@@ -510,29 +501,29 @@ function( map )
     Error( "no method yet implemented for this case" ); 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSingleValued( map ) . . . . . . . . . . . .  for a groupoid homomorphism
+#M  IsSingleValued( map ) . . . . . . . . . . .  for a groupoid homomorphism
 ##
 InstallOtherMethod( IsSingleValued, "method for a groupoid homomorphism", 
     true, [ IsGroupoidHomomorphism ], 0, map -> true );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsTotal( map ) . . . . . . . . . . . . . . .   for a groupoid homomorphism
+#M  IsTotal( map ) . . . . . . . . . . . . . .   for a groupoid homomorphism
 ##
 InstallOtherMethod( IsTotal, "method for a groupoid homomorphism", true, 
     [ IsGroupoidHomomorphism ], 0, map -> true );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsBijective( map ) . . . . . . . . . . . . . .  for a 2Dimensional-mapping
+#M  IsBijective( map ) . . . . . . . . . . . . .  for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsBijective, "method for a groupoid homomorphism", true, 
     [ IsGroupoidHomomorphism ], 0,
     map -> ( IsInjective( map ) and IsSurjective( map ) ) );
 
-#############################################################################
+############################################################################
 ##
 #M  MappingGeneratorsImages 
 ##
@@ -575,7 +566,7 @@ function ( hom )
     return [ gens, imgs ]; 
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  Display
 ##
@@ -608,7 +599,7 @@ function ( map )
     od; 
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  GroupoidHomomorphismFromSinglePieceNC 
 #M  GroupoidHomomorphismFromSinglePiece 
@@ -636,7 +627,8 @@ function( src, rng, gens, images )
     hgen := List( [1..nggens], i -> gens[i]![1] ); 
     himg := List( [1..nggens], i -> images[i]![1] ); 
     gpr := ObjectGroup( rng, imr );
-    oims := Concatenation( [imr], List( [posr..ngens], i -> images[i]![3] ) ); 
+    oims := Concatenation( [imr], 
+                           List( [posr..ngens], i -> images[i]![3] ) ); 
     if isfrom then 
         hgen := List( hgen, L -> L[1] ); 
     fi;
@@ -692,7 +684,7 @@ function( src, rng, gens, images )
     fi; 
     if not ( Length( gens ) = Length( images ) ) then 
         Error( "gens and images should have the same length" ); 
-    fi; 
+    fi;
     obs := ObjectList( src ); 
     nobs := Length( obs ); 
     ngens := Length( gens ); 
@@ -712,7 +704,7 @@ function( src, rng, gens, images )
     return GroupoidHomomorphismFromSinglePieceNC( src, rng, gens, images ); 
 end ); 
 
-#############################################################################
+############################################################################
 ##
 #M  ImageElm( <map>, <e> )
 ##
@@ -857,7 +849,7 @@ function( map, e )
     return ImageElm( map, e ); 
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  TestAllProductsUnderGroupoidHomomorphism( <hom> )
 ##
@@ -895,7 +887,7 @@ function( hom )
     return true; 
 end ); 
 
-#############################################################################
+############################################################################
 ##
 #M  IsomorphismPermGroupoid
 #M  IsomorphismPcGroupoid
@@ -1107,7 +1099,7 @@ function( gpd1, ob2 )
     return iso;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  IsomorphismStandardGroupoid
 ##
@@ -1279,7 +1271,7 @@ end );
 ##                     Homogeneous groupoid homomorphisms                   ##
 ## ======================================================================== ##
 
-#############################################################################
+############################################################################
 ##
 #M  GroupoidHomomorphismFromHomogeneousDiscreteNC 
 #M  GroupoidHomomorphismFromHomogeneousDiscrete 
@@ -1338,7 +1330,7 @@ function( src, rng, homs, oims )
     if not ForAll( oims, o -> o in obr ) then 
         Error( "object images not all objects in <rng>" ); 
     fi; 
-    return GroupoidHomomorphismFromHomogeneousDiscreteNC( src,rng,homs,oims ); 
+    return GroupoidHomomorphismFromHomogeneousDiscreteNC(src,rng,homs,oims); 
 end );
 
 InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
@@ -1363,7 +1355,7 @@ function( src, rng, homs, oims )
     if not ForAll( [1..lens], 
         j -> ( Source( homs[j] ) = gps ) 
                and ( Range( homs[j] ) = ObjectGroup( rng, oims[j] ) ) ) then 
-        Error("homs not a list of maps ObjectGroup(src) -> ObjectGroup(rng),"); 
+        Error( "homs <> list of maps ObjectGroup(src) -> ObjectGroup(rng),"); 
     fi; 
-    return GroupoidHomomorphismFromHomogeneousDiscreteNC( src,rng,homs,oims ); 
+    return GroupoidHomomorphismFromHomogeneousDiscreteNC(src,rng,homs,oims); 
 end );
