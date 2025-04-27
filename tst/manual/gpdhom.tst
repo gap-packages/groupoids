@@ -1,10 +1,8 @@
-##############################################################################
+############################################################################
 ##
-#W  gpdhom.tst              groupoids Package                    Chris Wensley
+#W  gpdhom.tst              groupoids Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2000-2023, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+
 gap> START_TEST( "groupoids package: gpdhom.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
@@ -119,7 +117,11 @@ groupoid homomorphism : Hd8b -> Hs4
       [(1,2,4) : -14 -> -12] ] ]
 
 ## SubSection 5.3.2
-gap> max := MaximalDiscreteSubgroupoid( Hd8b );;
+gap> max := MaximalDiscreteSubgroupoid( Hd8b );
+groupoid with 3 pieces:
+1:  single piece groupoid: < d8, [ -14 ] >
+2:  single piece groupoid: < Group( [ (1,4,2,3), (1,2) ] ), [ -13 ] >
+3:  single piece groupoid: < Group( [ (1,2,4,3), (2,3) ] ), [ -12 ] >
 gap> res := RestrictedMappingGroupoids( inc, max );
 groupoid homomorphism from several pieces : 
 groupoid homomorphism : 
@@ -131,6 +133,8 @@ groupoid homomorphism :
 groupoid homomorphism : 
 [ [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ], 
   [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ] ]
+gap> ParentMappingGroupoids( res ) = inc; 
+true
 
 ## SubSection 5.3.3
 gap> iso1 := IsomorphismNewObjects( Hs4, [-30,-20,-10] ); 
@@ -139,6 +143,8 @@ groupoid homomorphism :
       [() : -14 -> -12] ], 
   [ [(1,2,3,4) : -30 -> -30], [(3,4) : -30 -> -30], [() : -30 -> -20], 
       [() : -30 -> -10] ] ]
+gap> Ks4 := Range( iso1 );
+single piece groupoid: < s4, [ -30, -20, -10 ] >
 gap> inc2 := mor2*inc*iso1;
 groupoid homomorphism : 
 [ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 

@@ -1,10 +1,7 @@
-##############################################################################
+############################################################################
 ##
-#W  rt-act.tst                   Groupoids Package               Chris Wensley
+#W  rt-act.tst                   Groupoids Package             Chris Wensley
 ##
-#Y  Copyright (C) 2000-2019, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
 
 ## Section 4.6 
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 

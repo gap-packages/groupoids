@@ -1,12 +1,3 @@
-<!-- ------------------------------------------------------------------- -->
-<!--                                                                     -->
-<!--  mwohom.xml       groupoids documentation            Chris Wensley  -->
-<!--                                                                     -->
-<!--  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,             --> 
-<!--  School of Computer Science, Bangor University, U.K.                --> 
-<!--                                                                     -->
-<!-- ------------------------------------------------------------------- -->
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-homwo">
@@ -81,34 +72,32 @@ In the first example we construct endomappings of <C>m</C> and <C>M78</C>.
 gap> tup1 := [ DirectProductElement([m1,m2]), DirectProductElement([m2,m1]), 
 >              DirectProductElement([m3,m4]), DirectProductElement([m4,m3]) ];; 
 gap> f1 := GeneralMappingByElements( m, m, tup1 ); 
+<general mapping: m -> m >
 gap> IsMagmaHomomorphism( f1 ); 
 true
-gap> hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-8,-7] );; 
-gap> Display( hom1 );
-homomorphism to single piece magma: M78 -> M78
- magma hom: <mapping: m -> m > 
-object map: [ -8, -7 ] -> [ -8, -7 ]
+gap> hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-7,-8] ); 
+magma with objects homomorphism : M78 -> M78
+[ [ <mapping: m -> m >, [ -7, -8 ] ] ]
 gap> [ Source( hom1 ), Range( hom1 ) ]; 
 [ M78, M78 ]
 gap> b87;
 [m4 : -8 -> -7]
 gap> im1 := ImageElm( hom1, b87 );
-[m3 : -8 -> -7]
-gap> i56 := IsomorphismNewObjects( M78, [-5,-6] ); 
-magma with objects homomorphism : 
-[ [ IdentityMapping( m ), [ -5, -6 ] ] ]
-gap> ib87 := ImageElm( i56, b87 );
-[m4 : -5 -> -6]
-gap> M65 := Range( i56);; 
+[m3 : -7 -> -8]
+gap> i65 := IsomorphismNewObjects( M78, [-6,-5] ); 
+magma with objects homomorphism : [ [ IdentityMapping( m ), [ -6, -5 ] ] ]
+gap> ib87 := ImageElm( i65, b87 );
+[m4 : -6 -> -5]
+gap> M65 := Range( i65);; 
 gap> SetName( M65, "M65" ); 
-gap> j56 := InverseGeneralMapping( i56 );; 
-gap> ImagesOfObjects( j56 ); 
-[ -7, -8 ]
-gap> comp := j56 * hom1;
+gap> j65 := InverseGeneralMapping( i65 );; 
+gap> ImagesOfObjects( j65 ); 
+[ -8, -7 ]
+gap> comp := j65 * hom1;
 magma with objects homomorphism : M65 -> M78
 [ [ <mapping: m -> m >, [ -7, -8 ] ] ]
 gap> ImageElm( comp, ib87 );
-[m3 : -8 -> -7]
+[m3 : -7 -> -8]
 ]]>
 </Example>
 
@@ -120,13 +109,13 @@ and so is a union of homomorphisms <E>from</E> single pieces.
 <![CDATA[
 gap> M4 := UnionOfPieces( [ M78, M65 ] );;
 gap> images := [ MappingToSinglePieceData( hom1 )[1], 
-> MappingToSinglePieceData( j56 )[1] ]; 
-[ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
+> MappingToSinglePieceData( j65 )[1] ]; 
+[ [ <mapping: m -> m >, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
 gap> map4 := HomomorphismToSinglePiece( M4, M78, images ); 
 magma with objects homomorphism : 
-[ [ <mapping: m -> m >, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
-gap> ImageElm( map4, b87 );
-[m3 : -8 -> -7]
+[ [ <mapping: m -> m >, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
+gap> ImageElm( map4, b87 ); 
+[m3 : -7 -> -8]
 gap> ImageElm( map4, ib87 );
 [m4 : -8 -> -7]
 ]]>
@@ -200,24 +189,24 @@ gap> ir31 := ImageElm( shom, r31 );;  [ r31, ir31 ];
          Arg="src,rng,homs" Label="for magmas with objects" />
 <Description>
 When <M>f : M \to N</M> and <M>N</M> has more than one connected component, 
-then <M>f</M> is a union of homomorphisms, one for each piece in the range. 
+then <M>M</M> also has more than one component and
+<M>f</M> is a union of homomorphisms, one for each piece in the range. 
+<P/>
+See section <Ref Sect="sec-genhoms"/> 
+for the equivalent operation with groupoids.
+<P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> N4 := UnionOfPieces( [ M78, T123 ] );
-magma with objects having 2 pieces :-
-1: semigroup with objects :-
-    magma = sgp<t2,s2,r2>
-  objects = [ -13, -12, -11 ]
-2: M78
-gap> h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] );
+gap> N4 := UnionOfPieces( [ M78, T123 ] );; 
+gap> h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] ); 
 magma with objects homomorphism : 
 [ magma with objects homomorphism : M78 -> M78
-    [ [ <mapping: m -> m >, [ -8, -7 ] ] ], magma with objects homomorphism : 
+    [ [ <mapping: m -> m >, [ -7, -8 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
 gap> ImageElm( h14, a78 );
-[m1 : -7 -> -8]
+[m1 : -8 -> -7]
 gap> ImageElm( h14, r31 );
 [Transformation( [ 4, 1, 3, 3 ] ) : -11 -> -13]
 ]]>
@@ -275,14 +264,15 @@ See section <Ref Sect="sec-autos"/> for an application.
 
 <Example>
 <![CDATA[
-gap> flip := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
+gap> swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
 function( a ) ... end
-gap> flipmap := MappingWithObjectsByFunction( M78, M78, flip, [-8,-7] );
+gap> swapmap := MappingWithObjectsByFunction( M78, M78, swap, [-7,-8] );
 magma with objects mapping by function : M78 -> M78
 function: function ( a )
     return Arrow( M78, a![1], a![3], a![2] );
 end
-gap> a78; ImageElm( flipmap, a78 );                                     
+
+gap> a78; ImageElm( swapmap, a78 );              
 [m2 : -7 -> -8]
 [m2 : -8 -> -7]
 ]]>

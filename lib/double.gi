@@ -1,16 +1,13 @@
 ############################################################################# 
 ## 
 #W  double.gi                 GAP4 package `groupoids'          Chris Wensley 
-##
-#Y  Copyright (C) 2000-2023, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file contains the implementations for basic double groupoids 
 ##  
 
 #####################  MULT SQUARE WITH OBJECTS  ########################### 
 
-############################################################################# 
+############################################################################ 
 ## 
 #M  SquareOfArrows( <dmwo>, <elt>, <down>, <left>, <up>, <right> ) 
 #M  SquareOfArrowsNC( <elt>, <down>, <left>, <up>, <right> ) 
@@ -217,7 +214,7 @@ function( e, dmwo )
     fi; 
 end ); 
 
-InstallMethod( \in, "for mwo element and a union of constituents", true, 
+InstallMethod( \in, "for mwo element and a union of pieces", true, 
     [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects and HasPieces ], 0,
 function( e, mwo )
     return e in PieceOfObject( mwo, e![2] ); 
@@ -353,7 +350,7 @@ function( dmwo )
     else
         comp := Pieces( dmwo );
         len := Length( comp );
-        Print( "Magma with objects with ", len, " constituents:\n" );
+        Print( "Magma with objects with ", len, " pieces:\n" );
         for i in [1..len] do
             c := comp[i];
             if IsDirectProductWithCompleteDigraph( c ) then 

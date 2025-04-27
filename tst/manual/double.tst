@@ -1,10 +1,8 @@
-##############################################################################
+############################################################################
 ##
 #W  double.tst               Groupoids Package                 Chris Wensley
 ##
-#Y  Copyright (C) 2023, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
+
 gap> START_TEST( "groupoids package: double.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 

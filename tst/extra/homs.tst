@@ -1,10 +1,7 @@
-##############################################################################
+############################################################################
 ##
-#W  homs.tst                   Groupoids Package                 Chris Wensley
+#W  homs.tst                   Groupoids Package               Chris Wensley
 ##
-#Y  Copyright (C) 2000-2023, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
-##  
 
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
@@ -326,7 +323,7 @@ gap> Ga5 := Groupoid( a5, [-8..-6] );;
 gap> iso := IsomorphismPcGroupoid( Ga5 ); 
 fail
 
-## make this part of hom-test.tst independent of other tests 
+## make this part of homs.tst independent of other tests 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
 gap> d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );;
 gap> SetName( s4, "s4" );  SetName( d8, "d8" ); 

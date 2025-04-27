@@ -1,12 +1,3 @@
-<!-- ------------------------------------------------------------------- -->
-<!--                                                                     -->
-<!--  intro.xml        groupoids documentation            Chris Wensley  -->
-<!--                                                       & Emma Moore  -->
-<!--  Copyright (C) 2000-2022, Emma Moore and Chris Wensley,             --> 
-<!--  School of Computer Science, Bangor University, U.K.                --> 
-<!--                                                                     -->
-<!-- ------------------------------------------------------------------- -->
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-intro">
@@ -59,12 +50,13 @@ starting with <E>magmas with objects</E> and their mappings,
 and building up to groupoids via semigroups with objects 
 and monoids with objects. 
 From version 1.07 the package includes some functions to implement 
-constructions contained in <Cite Key="AlWe" />. 
-More functions will be released as soon as possible.  
+constructions for automorphisms and homotopies, as described in 
+<Cite Key="AlWe" />. 
+More functions will be released when time permits.
 <P/>
-Once the package is loaded, it is possible to check the correct 
-installation by running the test suite of the package with the command  
-<C> ReadPackage("groupoids","tst/testing.g"); </C>. 
+Once the package is loaded, it is possible to check the installation
+has proceeded correctly by running the test suite of the package with 
+the command  <C> ReadPackage("groupoids","tst/testing.g"); </C>. 
 Additional tests may be run using 
 <C> ReadPackage("groupoids","tst/testextra.g");.</C> 
 (The file <C>"tst/testall.g"</C> is used for automated testing.)  
@@ -73,8 +65,8 @@ You may reference this package by mentioning <Cite Key="BrMoPoWe" />,
 <Cite Key="emma-thesis" /> and <Cite Key="AlWe" />. 
 
 <P/>
-Additional information can be found on the 
-<E>Computational Higher Dimensional Algebra</E> website at: 
-<URL>https://github.com/cdwensley</URL>. 
+Additional information on <E>Computational Higher Dimensional Algebra</E> 
+can be found in the notes on crossed modules at: 
+<URL>https://github.com/cdwensley/xmod-notes</URL>. 
 
 </Chapter>

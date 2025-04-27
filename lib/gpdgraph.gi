@@ -1,13 +1,10 @@
-##############################################################################
+############################################################################
 ##
-#W  gpdgraph.gi             GAP4 package `groupoids'             Chris Wensley
-#W                                                                & Emma Moore
-#Y  Copyright (C) 2000-2018, Emma Moore and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#W  gpdgraph.gi             GAP4 package `groupoids'           Chris Wensley
+#W                                                              & Emma Moore
 ##
 ##  This file contains methods for FpWeightedDigraphs of groupoids, 
-##  and normal forms for GraphOfGroupoidWords. 
-##  
+##  and normal forms for GraphOfGroupoidWords.
 
 #############################################################################
 ##
