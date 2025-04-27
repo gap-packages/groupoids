@@ -172,9 +172,12 @@ gap> MGa4 := NiceMonomorphism( AGa4 );;
 gap> Size( AGa4 );    ## (3!)x24x(12^2)
 20736
 gap> SetName( AGa4, "AGa4" ); 
-gap> SetName( NGa4, "NGa4" ); 
-gap> StructureDescription( NGa4 );
-"(((A4 x A4 x A4) : C2) : C3) : C2"
+gap> SetName( NGa4, "NGa4" );
+gap> ## from 04/25 the second of these equivalent(?) names has been returned
+gap> names := [ "(((A4 x A4 x A4) : C2) : C3) : C2",
+>    "(C2 x C2 x C2 x C2 x C2 x C2) : (((C3 x C3 x C3) : C3) : (C2 x C2))" ];;
+gap> StructureDescription( NGa4 ) in names;
+true
 gap> ##  cannot test images of AGgens because of random variations 
 gap> ##  Now do some tests!
 gap> mgi := MappingGeneratorsImages( MGa4 );; 
