@@ -74,8 +74,6 @@ function( m1, m2, fun, imo )
         RespectsMultiplication, true, 
         IsGeneralMappingToSinglePiece, true, 
         IsMappingWithObjectsByFunction, true );
-    ## ok := IsInjectiveOnObjects( map ); 
-    ## ok := IsSurjectiveOnObjects( map ); 
     return map; 
 end );
 
@@ -775,18 +773,18 @@ function( iso )
     else 
         rayrq := genss[ nggenss + pq - 1 ]; 
     fi; 
-    j := rayrq![1]; 
+    j := rayrq![2];
     rayuv := ImageElm( iso, rayrq );
-    g := rayuv![1]; 
+    g := rayuv![2]; 
     for i in [1..nggensr] do 
-        y := gensr[i]![1]; 
+        y := gensr[i]![2]; 
         invy := ImageElm( irhom, y^(g^-1) )^j; 
         images[i] := Arrow( src, invy, q, q ); 
     od; 
     for i in [2..nobs] do 
         w := obsr[i];
         rayvw := gensr[nggensr+i-1]; 
-        f := rayvw![1]; 
+        f := rayvw![2]; 
         p := invobs[i]; 
         pp := Position( obss, p );
         if ( pp = 1 ) then 
@@ -794,9 +792,9 @@ function( iso )
         else 
             rayrp := genss[ nggenss + pp - 1 ];
         fi; 
-        k := rayrp![1]; 
+        k := rayrp![2]; 
         rayuw := ImageElm( iso, rayrp ); 
-        h := rayuw![1]; 
+        h := rayuw![2]; 
         invf := (j^-1) * ImageElm( irhom, g*f*h^-1 ) * k;
         images[ nggensr + i -1 ] := Arrow( src, invf, q, p ); 
     od; 
@@ -1455,7 +1453,7 @@ function ( map, e )
     Info( InfoGroupoids, 3, 
           "this is the first ImageElm function in mwohom.gi" ); 
     G1 := Source( map );
-    ce := PieceOfObject( G1, e![2] );
+    ce := PieceOfObject( G1, e![3] );
     C1 := Pieces( G1 );
     pe := Position( C1, ce );
     Ge := C1[pe];
@@ -1464,9 +1462,9 @@ function ( map, e )
     obs2 := MappingToSinglePieceData( map )[pe][2]; 
     #?  this is not the correct range magma ??
     mag2 := Range( map ); 
-    t2 := obs2[ Position( obs1, e![2] ) ];
-    h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := ImageElm( hom, e![1] );
+    t2 := obs2[ Position( obs1, e![3] ) ];
+    h2 := obs2[ Position( obs1, e![4] ) ]; 
+    g2 := ImageElm( hom, e![2] );
     return MultiplicativeElementWithObjects( mag2, g2, t2, h2 );
 end );
 
@@ -1480,14 +1478,14 @@ function ( map, e )
           "this is the second ImageElm function in mwohom.gi" ); 
     M1 := Source( map ); 
     C1 := Pieces( M1 );
-    pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
+    pe := Position( C1, PieceOfObject( M1, e![3] ) ); 
     obs1 := C1[pe]!.objects; 
     pom := PiecesOfMapping( map )[pe]; 
     pim := MappingToSinglePieceData( pom )[1];
     obs2 := pim[2]; 
-    t2 := obs2[ Position( obs1, e![2] ) ];
-    h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := ImageElm( pim[1], e![1] );
+    t2 := obs2[ Position( obs1, e![3] ) ];
+    h2 := obs2[ Position( obs1, e![4] ) ]; 
+    g2 := ImageElm( pim[1], e![2] );
     return MultiplicativeElementWithObjects( Range( map ), g2, t2, h2 );
 end ); 
 
@@ -1509,22 +1507,22 @@ function ( map, elt )
     ims := gensims[2];
     #? (13/09/17) was: rhom := HomsOfMapping( map )[1]; 
     rhom := MappingToSinglePieceData( map )[1][1]; 
-    e := ImageElm( rhom, elt![1] ); 
+    e := ImageElm( rhom, elt![2] ); 
     j := elt![2];
-    pj := Position( obs, elt![2] );
+    pj := Position( obs, elt![3] );
     k := elt![3];
-    pk := Position( obs, elt![3] );
+    pk := Position( obs, elt![4] );
     r := Length( GeneratorsOfMagma( Source( rhom ) ) ); 
     ## n := Length( m!.objects ); 
     if ( pj = 1 ) then 
         ej := one;
     else
-        ej := ims[r+pj-1]![1]; 
+        ej := ims[r+pj-1]![2]; 
     fi;
     if ( pk = 1 ) then
         ek := one;
     else
-        ek := ims[r+pk-1]![1]; 
+        ek := ims[r+pk-1]![2]; 
     fi; 
     #?  MagmaElement only requires two parameters ??
     im := MagmaElement( mag, ej^(-1)*e*ek, j, k );
@@ -1543,9 +1541,9 @@ function ( map, e )
     fe := fun( e ); 
     obs := Source( map )!.objects; 
     imo := ImagesOfObjects( map );
-    pt := Position( obs, e![2] ); 
-    ph := Position( obs, e![3] ); 
-    if not ( ( fe![2] = imo[pt] ) and ( fe![3] = imo[ph] ) ) then 
+    pt := Position( obs, e![3] ); 
+    ph := Position( obs, e![4] ); 
+    if not ( ( fe![3] = imo[pt] ) and ( fe![4] = imo[ph] ) ) then 
         Error( "wrong objects in ImageElm" );
     else 
         return fe; 

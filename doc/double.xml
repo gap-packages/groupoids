@@ -13,288 +13,762 @@ The more general case will be discussed in the
 <Package>XMod</Package> package. 
 <P/> 
 In a double groupoid, as well as objects and arrows, we need a set of <E>squares</E>.  
-A square is bounded by four arrows, two horizantal and two vertical, 
-and there is a <E>horizantal</E> groupoid structure  
+A square is bounded by four arrows, two horizontal and two vertical, 
+and there is a <E>horizontal</E> groupoid structure  
 and a <E>vertical</E> groupoid structure on these squares. 
 <P/> 
 Double groupoids can be considered where the vertical arrows come from 
-one groupoid, and the horizantal arrows from another.
+one groupoid, and the horizontal arrows from another.
 The double groupoids constructed here are special 
 in that all four arrows come from the same groupoid.
 We call these <E>edge-symmetric</E> double groupoids.
 <P/> 
-This addition to the package is very experimental, and will be extended soon. 
+This addition to the package is very experimental,
+and will be extended as time permits.
 
 
 <Section Label="sec-square">
 <Heading>Double groupoid squares</Heading>
 
 Let <M>G</M> be a connected groupoid with object set <M>\Omega</M>. 
-Let <M>\Box(G)</M> be the set of squares with objects from <M>\Omega</M> 
-at each corner; plus two vertical arrows and two horizantal arrows from Arr<M>(G)</M>. 
-The following picture illustrates the situation: 
+Let <M>\Box(G)</M> be the set of <E>squares</E>
+with objects from <M>\Omega</M> at each corner;
+plus two vertical arrows and two horizontal arrows from Arr<M>(G)</M>. 
+The following picture illustrates a square <M>s</M>: 
 <Display> 
 <!--  \label{square1} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=4pc{  
-   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
-     & u_2 \ar[d]^{e_1} \\ 
-   v_1 \ar[r]_{b_1} 
-     & v_2 
+   u_1 \ar[r]^{a_1}  \ar[d]_{b_1}  
+     & v_1 \ar[d]^{c_1} \\ 
+   w_1 \ar[r]_{d_1} 
+     & x_1 
 }} 
 ]]>
 </Display> 
 
+We name the four arrows <C>UpArrow(s)</C>, <C>LeftArrow(s)</C>,
+<C>RightArrow(s)</C> and <C>DownArrow(s)</C>.
+<P/>
 We think of the square <M>s_1</M> being <E>based</E> at the bottom, 
-right-hand corner, <M>v_2</M>. 
+right-hand corner, <M>x_1</M>. 
+<P/>
 The <E>boundary</E> of the square is the loop 
-<M>(v_2, b_1^{-1}d_1^{-1}a_1e_1,v_2) = (v_2,\delta(s_1),v_2)</M>. 
+<M>(x_1, d_1^{-1}b_1^{-1}a_1c_1, x_1) = (x_1,\delta(s_1),x_1)</M>. 
 
-The <E>horizantal composition</E> is illustrated by 
+<ManSection>
+   <Oper Name="SinglePieceBasicDoubleGroupoid"
+         Arg="gpd" />
+   <Oper Name="SquareOfArrows"
+         Arg="gpd, up, lt, rt, dn" />
+   <Attr Name="UpArrow"
+         Arg="sq" />
+   <Attr Name="LeftArrow"
+         Arg="sq" />
+   <Attr Name="RightArrow"
+         Arg="sq" />
+   <Attr Name="DownArrow"
+         Arg="sq" />
+   <Oper Name="BoundaryOfSquare"
+         Arg="sq" />
+   <Oper Name="DoubleGroupoidOfSquare"
+         Arg="sq" />
+<Description>
+The operation <C>SinglePieceBasicDoubleGroupoid</C>
+constructs the double groupoid <M>\Box(G)</M> on a groupoid <M>G</M>.
+The number of squares in this double groupoid is the product of the number
+of objects with the size of the group all raised to the fourth power.
+When viewing or printing a square, the boundary element is shown in the centre.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Dd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
+gap> Dd8!.groupoid;
+Gd8
+gap> Dd8!.objects;
+[ -9 .. -7 ]
+gap> [ Size(Dd8), (3*8)^4 ]; 
+[ 331776, 331776 ]
+gap> SetName( Dd8, "Dd8" );
+gap> a1 := Arrow( Gd8, (1,3), -7, -8 );;
+gap> b1 := Arrow( Gd8, (2,4), -7, -7 );;
+gap> c1 := Arrow( Gd8, (1,2)(3,4), -8, -9 );;
+gap> d1 := Arrow( Gd8, g, -7, -9 );;
+gap> bdy1 := d1^-1 * b1^-1 * a1 * c1;
+[(2,4) : -9 -> -9]
+gap> sq1 := SquareOfArrows( Dd8, a1, b1, c1, d1 ); 
+[-7] ------- (1,3) ------> [-8]
+  |                          |
+(2,4)        (2,4)        (1,2)(3,4)
+  V                          V
+[-7] ----- (1,2,3,4) ----> [-9]
+gap> sq1 in Dd8;
+true
+gap> UpArrow( sq1 );
+[(1,3) : -7 -> -8]
+gap> LeftArrow( sq1 );
+[(2,4) : -7 -> -7]
+gap> RightArrow( sq1 );
+[(1,2)(3,4) : -8 -> -9]
+gap> DownArrow( sq1 );
+[(1,2,3,4) : -7 -> -9]
+gap> BoundaryOfSquare( sq1 );
+[(2,4) : -9 -> -9]
+gap> DoubleGroupoidOfSquare( sq1 );
+Dd8
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsCommutingSquare"
+         Arg="sq" />
+<Description>
+The square <M>s</M> is <E>commuting</E> if <M>a_1*c_1 = b_1*d_1</M>, 
+so that its boundary is the identity. 
+The set of commutative squares in <M>\Box(G)</M> 
+forms the <E>commutative sub-double groupoid</E> of <M>\Box(G)</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> a2 := Arrow( Gd8, (2,4), -8, -9 );;
+gap> c2 := Arrow( Gd8, (1,3)(2,4), -9, -8);;
+gap> d2 := Arrow( Gd8, g, -9, -8 );; 
+gap> sq2 := SquareOfArrows( Dd8, a2, c1, c2, d2 );
+[-8] -------- (2,4) -------> [-9]
+  |                            |
+(1,2)(3,4)        ()        (1,3)(2,4)
+  V                            V
+[-9] ------ (1,2,3,4) -----> [-8]
+gap> bdy2 := BoundaryOfSquare( sq2 );
+[() : -8 -> -8]
+gap> [ IsCommutingSquare(sq1), IsCommutingSquare(sq2) ]; 
+[ false, true ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="TransposedSquare"
+         Arg="sq" />
+   <Prop Name="IsClosedUnderTransposition"
+         Arg="sq" />
+<Description>
+The transpose of the square <M>s</M>, as with matrix transposition, 
+is obtained by interchanging <M>a</M> with <M>b</M> and <M>c</M> with <M>d</M>.
+Its boundary is the inverse of the boundary of <M>s</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> tsq1 := TransposedSquare( sq1 );
+[-7] ------- (2,4) ------> [-7]
+  |                         |
+(1,3)        (2,4)        (1,2,3,4)
+  V                         V
+[-8] ---- (1,2)(3,4) ---> [-9]
+gap> IsClosedUnderTransposition( sq1 );  
+false
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="HorizontalProduct"
+         Arg="sq1, sq2" />
+<Description>
+When <C>RightArrow</C><M>(s_1)</M> = <C>LeftArrow</C><M>(s_2)</M>
+we may compose <M>s_1</M> and <M>s_2</M> <E>horizontally</E>
+to form the square
+<M>s_1 (\rightarrow) s_2</M> = <C>HorizontalProduct</C><M>(s_1,s_2)</M>
+as illustrated here: 
 <Display> 
+<!--  \label{Horizontalproduct} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=4pc{  
-   u_1 \ar[r]^{a_1} \ar[d]_{d_1}  
-     & u_2 \ar[r]^{a_2} \ar[d]^{e_1} 
-       & u_3 \ar[d]^{f_1} \ar@{}[dr]|= 
-         & u_1 \ar[r]^{a_1a_2} \ar[d]_{d_1}  
-           & u_3 \ar[d]^{f_1} \\ 
-   v_1 \ar[r]_{b_1} 
-     & v_2 \ar[r]_{b_2} 
-       & v_3 
-         & v_1 \ar[r]_{b_1b_2}
-           & v_3 
+   u_1 \ar[r]^{a_1} \ar[d]_{b_1}  
+     & v_1 \ar[r]^{a_2} \ar[d]^{c_1} 
+       & v_2 \ar[d]^{c_2} \ar@{}[dr]|= 
+         & u_1 \ar[r]^{a_1a_2} \ar[d]_{b_1}  
+           & v_2 \ar[d]^{c_2} \\ 
+   w_1 \ar[r]_{d_1} 
+     & x_1 \ar[r]_{d_2} 
+       & x_2 
+         & w_1 \ar[r]_{d_1d_2}
+           & x_2 
 }} 
 ]]>
 </Display> 
 Notice that the boundary of the composite satisfies the identity: 
 <Display>
-\delta(s_1s_2) ~=~ (b_1b_2)^{-1}d_1^{-1}(a_1a_2)f_1 
-  ~=~ b_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)b_2(b_2^{-1}e_1^{-1}a_2f_1)
-  ~=~ (\delta s_1)^{b_2} (\delta s_2).
+\delta(s_1 (\rightarrow) s_2) ~=~ (d_1d_2)^{-1}b_1^{-1}(a_1a_2)c_2 
+  ~=~ d_2^{-1}(d_1^{-1}b_1^{-1}a_1c_1)d_2(d_2^{-1}c_1^{-1}a_2c_2)
+  ~=~ (\delta s_1)^{d_2} (\delta s_2).
 </Display> 
+<P/>
+(This operation was called <C>LeftRightProduct</C> in versions up to 1.76.)
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> LeftArrow( sq2 ) = RightArrow( sq1 ); 
+true
+gap> sq12 := HorizontalProduct( sq1, sq2 );
+[-7] ----- (1,3)(2,4) ----> [-9]
+  |                          |
+(2,4)        (1,3)        (1,3)(2,4)
+  V                          V
+[-7] ----- (1,3)(2,4) ----> [-8]
+gap> bdy12 := BoundaryOfSquare( sq12 );
+[(1,3) : -8 -> -8]
+gap> (bdy1^d2) * bdy2 = bdy12;
+true
+]]>
+</Example>
 
-
-The <E>horizantal groupoid</E> on <M>\Box(G)</M> has the vertical 
-arrows as objects and pairs of horizantal arrows as arrows. 
-Similarly, the <E>vertical groupoid</E> on <M>\Box(G)</M> has the 
-horizantal arrows of as objects and pairs of vertical arrows as arrows. 
-
-Vertical composition is illustrated by 
+<ManSection>
+   <Oper Name="VerticalProduct"
+         Arg="sq1, sq3" />
+<Description>
+When <C>DownArrow</C><M>(s_1)</M> = <C>UpArrow</C><M>(s_3)</M>
+we may compose <M>s_1</M> and <M>s_3</M> <E>vertically</E>
+to form <M>s_1 (\downarrow) s_3</M> = <C>VerticalProduct</C><M>(s_1,s_3)</M>
+illustrated by:
 <Display> 
+<!--  \label{Verticalproduct} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=2pc{  
-   u_1 \ar[rr]^{a_1}  \ar[dd]_{d_1}  
-     && u_2 \ar[dd]^{e_1} 
+   u_1 \ar[rr]^{a_1}  \ar[dd]_{b_1}  
+     && v_1 \ar[dd]^{c_1} 
          & &  &&  \\ 
-     &&  & &  u_1 \ar[rr]^{a_1} \ar[dd]_{d_1d_2}  
-              && u_2 \ar[dd]^{e_1e_2} \\ 
-   v_1 \ar[rr]_{b_1}  \ar[dd]_{d_2}   
-     && v_2 \ar[dd]^{e_2} 
+     &&  & &  u_1 \ar[rr]^{a_1} \ar[dd]_{b_1b_3}  
+              && v_1 \ar[dd]^{c_1c_3} \\ 
+   w_1 \ar[rr]_{d_1}  \ar[dd]_{b_3}   
+     && x_1 \ar[dd]^{c_3} 
          &=&  &&  \\ 
-     &&  & &  w_1 \ar[rr]_{c_1} 
-              &&  w_2 \\ 
-   w_1 \ar[rr]_{c_1} 
-     && w_2 
+     &&  & &  w_3 \ar[rr]_{d_3} 
+              &&  x_3 \\ 
+   w_3 \ar[rr]_{d_3} 
+     && x_3
 }} 
 ]]>
 </Display> 
 
 This time the boundary condition satisfies the identity: 
 <Display> 
-\delta(s_1s_3) ~=~ c_1^{-1}(d_1d_2)^{-1}a_1(e_1e_2) 
-  ~=~ (c_1^{-1}d_2^{-1}b_1e_2)e_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)e_2 
-  ~=~ (\delta s_3)(\delta s_1)^{e_2}. 
+\delta(s_1 (\downarrow) s_3) ~=~ d_3^{-1}(b_1b_3)^{-1}a_1(c_1c_3) 
+  ~=~ (d_3^{-1}b_3^{-1}d_1c_3)c_3^{-1}(d_1^{-1}b_1^{-1}a_1c_1)c_3
+  ~=~ (\delta s_3)(\delta s_1)^{c_3}. 
 </Display> 
+<P/>
+(This operation was called <C>UpDownProduct</C> in versions up to 1.76.)
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> b3 := Arrow( Gd8, (1,3), -7, -9 );;
+gap> c3 := Arrow( Gd8, (2,4), -9, -8);;
+gap> d3 := Arrow( Gd8, (1,4)(2,3), -9, -8 );; 
+gap> sq3 := SquareOfArrows( Dd8, d1, b3, c3, d3 );
+[-7] ---- (1,2,3,4) ---> [-9]
+  |                         |
+(1,3)      (2,4)      (2,4)
+  V                         V
+[-9] ---- (1,4)(2,3) ---> [-8]
+gap> bdy3 := BoundaryOfSquare( sq3 );
+[(2,4) : -8 -> -8]
+gap> UpArrow( sq3 ) = DownArrow( sq1 ); 
+true
+gap> sq13 := VerticalProduct( sq1, sq3 );
+[-7] -------- (1,3) -------> [-8]
+  |                           |
+(1,3)(2,4)        ()        (1,4,3,2)
+  V                           V
+[-9] ----- (1,4)(2,3) ----> [-8]
 
-Vertical and horizantal compositions commute, 
+]]>
+</Example>
+
+<P/>
+Vertical and horizontal compositions commute, 
 so we may construct products such as: 
 <Display> 
+<!--  \label{composite4theory} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=2pc{  
-   u_1 \ar[rr]^{a_1} \ar[dd]_{d_1}  
-     && u_2 \ar[rr]^{a_2} \ar[dd]|{e_1}   
-         && u_3 \ar[dd]^{f_1} 
+   u_1 \ar[rr]^{a_1} \ar[dd]_{b_1}  
+     && v_1 \ar[rr]^{a_2} \ar[dd]|{c_1}   
+         && v_2 \ar[dd]^{c_2} 
              & &  &&&  \\ 
-     &&  &&  & &  u_1 \ar[rrr]^{a_1a_2} \ar[dd]_{d_1d_2}  
-                  &&& u_3 \ar[dd]^{f_1f_2} \\ 
-   v_1 \ar[rr]|{b_1} \ar[dd]_{d_2}   
-     && v_2 \ar[rr]|{b_2} \ar[dd]|{e_2}  
-         &&  v_3 \ar[dd]^{f_2} 
+     &&  &&  & &  u_1 \ar[rrr]^{a_1a_2} \ar[dd]_{b_1b_3}  
+                  &&& v_2 \ar[dd]^{c_2c_4} \\ 
+   w_1 \ar[rr]|{d_1} \ar[dd]_{b_3}   
+     && x_1 \ar[rr]|{d_2} \ar[dd]|{c_3}  
+         &&  x_2 \ar[dd]^{c_4} 
              &=&  &&&  \\ 
-     &&  &&  & &  w_1 \ar[rrr]_{b_3b_6} 
-                  &&& w_3 \\ 
-   w_1 \ar[rr]_{c_1} 
-     && w_2 \ar[rr]_{c_2} 
-         &&  w_3 
+     &&  &&  & &  w_3 \ar[rrr]_{d_3d_4} 
+                  &&& x_4 \\ 
+   w_3 \ar[rr]_{d_3} 
+     && x_3 \ar[rr]_{d_4} 
+         &&  x_4 
 }} 
 ]]>
 </Display> 
 
-Now <M>Box(G)</M> is the maximal double groupoid determined by <M>G</M>, 
+Now <M>\Box(G)</M> is the maximal double groupoid determined by <M>G</M>, 
 but in general many substructures may be formed. 
-Since the horizantal and vertical groupoid structures must contain the 
-identity at each object, a double groupoid on <M>G</M> contains 
-all squares of the form: 
-<Display> 
-<!--  \label{id-squares} \def\labelstyle{\textstyle} -->
-<![CDATA[
-\vcenter{\xymatrix @=4pc{  
-   u \ar[r]^{a}  \ar[d]_{1}  
-     & v \ar[d]^{1} 
-       && u \ar[r]^{1}  \ar[d]_{b} 
-          & u \ar[d]^{b} \\ 
-   u \ar[r]_{a} 
-     & v 
-       && v \ar[r]^{1} 
-          & v 
-}} 
-]]>
-</Display> 
-
-
-
-For an example we take for our groupoid <C>Gd8</C>  
-with group <M>D_8 = \langle g = (1,2,3,4), h = (1,3) \rangle</M>, 
-with the complete graph on <M>\{-9,-8,-7\}</M>. 
-It is then routine to check that the two ways of computing the product 
-of four squares below agree.
+<P/>
+In our example, after adding <M>c_4</M> and <M>d_4</M>,
+it is routine to check that the two ways of 
+computing the product of four squares give the same answer.
 
 <Display> 
+<!--  \label{composite4example} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=2pc{  
-   -9 \ar[rr]^{()} \ar[dd]_{(1,2,3,4)} 
-     && -7 \ar[rr]^{(2,4)} \ar[dd]|{(1,3)}   
-         && -7 \ar[dd]^{(1,4,3,2)} 
+   -7 \ar[rr]^{(1,3)} \ar[dd]_{(2,4)} 
+     && -8 \ar[rr]^{(2,4)} \ar[dd]|{(1,2)(3,4)}   
+         && -9 \ar[dd]^{(1,4)(2,3)} 
              & &  &&&  \\ 
-     &&  &&  & &  -9 \ar[rrr]^{(2,4)} \ar[dd]^{(1,2)(3,4)} 
-                  &&& -7 \ar[dd]_{(1,4)(2,3))} \\ 
-   -9 \ar[rr]|{(2,4)} \ar[dd]_{(1,3)}   
-     && -8 \ar[rr]|{()} \ar[dd]|{(1,2,3,4)}  
-         &&  -9 \ar[dd]^{(1,3)} 
+     &&  &&  & &  -7 \ar[rrr]^{(1,3)(2,4)} \ar[dd]^{(1,3)(2,4)} 
+                  &&& -9 \ar[dd]_{(2,4))} \\ 
+   -7 \ar[rr]|{(1,2,3,4)} \ar[dd]_{(1,3)}   
+     && -9 \ar[rr]|{(1,2,3,4)} \ar[dd]|{(2,4)}  
+         &&  -8 \ar[dd]^{(1,2,3,4)} 
              &=&  &&&  \\ 
-     &&  &&  & &  -8 \ar[rrr]_{(1,3)(2,4))} 
+     &&  &&  & &  -9 \ar[rrr]_{(1,3)(2,4))} 
                   &&& -7 \\ 
-   -8 \ar[rr]_{(1,2)(3,4)} 
-     && -8 \ar[rr]_{(1,4)(2,3)} 
-         &&  -7 
+   -9 \ar[rr]_{(1,4)(2,3)} 
+     && -8 \ar[rr]_{(1,2)(3,4)} 
+         &&  -7
 }} 
 ]]>
 </Display> 
 
 <Example>
 <![CDATA[
-gap> g := (1,2,3,4);;  h := (1,3);;
-gap> gend8 := [ g, h ];;
-gap> d8 := Group( gend8 );;
-gap> SetName( d8, "d8" ); 
-gap> Gd8 := Groupoid( d8, [-9..-7] );;
-gap> SetName( Gd8, "Gd8" ); 
-gap> D1 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
-gap> D1!.groupoid;
-Gd8
-gap> D1!.objects;
-[ -9 .. -7 ]
-gap> a1 := Arrow(Gd8,(),-9,-7);;         a2 := Arrow(Gd8,(2,4),-7,-7);;
-gap> b1 := Arrow(Gd8,(2,4),-9,-8);;      b2 := Arrow(Gd8,(),-8,-9);; 
-gap> c1 := Arrow(Gd8,(1,2)(3,4),-8,-8);; c2 := Arrow(Gd8,(1,4)(2,3),-8,-7);; 
-gap> d1 := Arrow(Gd8,g,-9,-9);;          d2 := Arrow(Gd8,(1,3),-9,-8);; 
-gap> e1 := Arrow(Gd8,(1,3),-7,-8);;      e2 := Arrow(Gd8,g,-8,-8);; 
-gap> f1 := Arrow(Gd8,g^-1,-7,-9);;       f2 := Arrow(Gd8,(1,3),-9,-7);; 
-
-gap> bdy1 := b1![1]^-1 * d1![1]^-1 * a1![1] * e1![1];; 
-gap> sq1 := SquareOfArrows( D1, bdy1, a1, d1, e1, b1 ); 
-[-9] ---- () ---> [-7]
-  |                         |
-(1,2,3,4)    (1,4,3,2)    (1,3)
-  V                         V
-[-9] ---- (2,4) ---> [-8]
-gap> UpArrow( sq1 );
-[() : -9 -> -7]
-gap> LeftArrow( sq1 );
-[(1,2,3,4) : -9 -> -9]
-gap> RightArrow( sq1 );
-[(1,3) : -7 -> -8]
-gap> DownArrow( sq1 );
-[(2,4) : -9 -> -8]
-
-gap> bdy2 := b2![1]^-1 * e1![1]^-1 * a2![1] * f1![1];; 
-gap> sq2 := SquareOfArrows( D1, bdy2, a2, e1, f1, b2 );;  
-gap> LeftArrow( sq2 ) = RightArrow( sq1 ); 
+gap> c4 := Arrow( Gd8, (1,2,3,4), -8, -7);;
+gap> d4 := Arrow( Gd8, (1,2)(3,4), -8, -7 );; 
+gap> sq4 := SquareOfArrows( Dd8, d2, c3, c4, d4 );
+[-9] ------- (1,2,3,4) ------> [-8]
+  |                             |
+(2,4)        (1,2,3,4)        (1,2,3,4)
+  V                             V
+[-8] ------ (1,2)(3,4) -----> [-7]
+gap> UpArrow( sq4 ) = DownArrow( sq2 );
 true
-gap> bdy3 := c1![1]^-1 * d2![1]^-1 * b1![1] * e2![1];; 
-gap> sq3 := SquareOfArrows( D1, bdy3, b1, d2, e2, c1 );;
-gap> UpArrow( sq3 ) = DownArrow( sq1 ); 
-true
-gap> bdy4 := c2![1]^-1 * e2![1]^-1 * b2![1] * f2![1];; 
-gap> sq4 := SquareOfArrows( D1, bdy4, b2, e2, f2, c2 );;
-gap> UpArrow(sq4)=DownArrow(sq2) and LeftArrow(sq4)=RightArrow(sq3); 
+gap> LeftArrow( sq4 ) = RightArrow( sq3 ); 
 true
 
-gap> sq12 := LeftRightProduct( D1, sq1, sq2 );
-[-9] ---- (2,4) ---> [-7]
-  |                         |
-(1,2,3,4)    (1,3)(2,4)    (1,4,3,2)
-  V                         V
-[-9] ---- (2,4) ---> [-9]
+gap> sq34 := HorizontalProduct( sq3, sq4 );
+[-7] ------- (1,3)(2,4) ------> [-8]
+  |                              |
+(1,3)        (1,4)(2,3)        (1,2,3,4)
+  V                              V
+[-9] ------- (1,3)(2,4) ------> [-7]
 
-gap> sq34 := LeftRightProduct( D1, sq3, sq4 );
-[-9] ---- (2,4) ---> [-9]
-  |                         |
-(1,3)    (1,3)(2,4)    (1,3)
-  V                         V
-[-8] ---- (1,3)(2,4) ---> [-7]
+gap> sq1234 := VerticalProduct( sq12, sq34 );
+[-7] --------- (1,3)(2,4) --------> [-9]
+  |                                  |
+(1,3)(2,4)        (1,2,3,4)        (1,4,3,2)
+  V                                  V
+[-9] --------- (1,3)(2,4) --------> [-7]
 
-gap> sq13 := UpDownProduct( D1, sq1, sq3 ); 
-[-9] ---- () ---> [-7]
-  |                         |
-(1,2)(3,4)    (1,4)(2,3)    (1,4)(2,3)
-  V                         V
-[-8] ---- (1,2)(3,4) ---> [-8]
+gap> sq24 := VerticalProduct( sq2, sq4 ); 
+[-8] ----------- (2,4) ----------> [-9]
+  |                                 |
+(1,4,3,2)        (1,2,3,4)        (1,4,3,2)
+  V                                 V
+[-8] -------- (1,2)(3,4) -------> [-7]
 
-gap> sq24 := UpDownProduct( D1, sq2, sq4 ); 
-[-7] ---- (2,4) ---> [-7]
-  |                         |
-(1,4)(2,3)    (1,4,3,2)    (1,4)(2,3)
-  V                         V
-[-8] ---- (1,4)(2,3) ---> [-7]
-
-gap> sq1324 := LeftRightProduct( D1, sq13, sq24 );
-[-9] ---- (2,4) ---> [-7]
-  |                         |
-(1,2)(3,4)    ()    (1,4)(2,3)
-  V                         V
-[-8] ---- (1,3)(2,4) ---> [-7]
-
-gap> sq1234 := UpDownProduct( D1, sq12, sq34 );;
+gap> sq1324 := HorizontalProduct( sq13, sq24 );;
 gap> sq1324 = sq1234;
 true
 ]]>
 </Example>
 
+<ManSection>
+   <Oper Name="HorizontalIdentities"
+         Arg="sq" />
+   <Oper Name="VerticalIdentities"
+         Arg="sq" />
+   <Oper Name="HorizontalInverses"
+         Arg="sq" />
+   <Oper Name="VerticalInverses"
+         Arg="sq" />
+<Description>
+There is no single identity for the operations <C>HorizontalProduct</C>
+and <C>VerticalProduct</C> but there are, for each square, 
+a <E>left identity</E>, a <E>right identity</E>, an <E>up identity</E> 
+and a <E>down identity</E>.
+The composite of the three squares shown below 
+is equal to the central square <M>s</M>, and the other two squares
+are the left identity <M>1_L(s)</M> and the right identity <M>1_R(s)</M>
+for <M>s</M>.
+<Display> 
+<!--  \label{Horizontalidentities} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{1}  \ar[d]_{b}  
+     & u \ar[r]^{a}  \ar[d]^{b} 
+       & v \ar[r]^{1}  \ar[d]_{c} 
+         & v \ar[d]^{c} \\ 
+   w \ar[r]_{1} 
+     & w \ar[r]_{d}
+       & x \ar[r]_{1} 
+         & x
+}} 
+]]>
+</Display> 
+
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> hid := HorizontalIdentities( sq24 );;
+gap> hid[1]; Print("\n"); hid[2];                    
+[-8] --------- () --------> [-8]
+  |                          |
+(1,4,3,2)        ()        (1,4,3,2)
+  V                          V
+[-8] --------- () --------> [-8]
+
+[-9] --------- () --------> [-9]
+  |                          |
+(1,4,3,2)        ()        (1,4,3,2)
+  V                          V
+[-7] --------- () --------> [-7]
+gap> HorizontalProduct( hid[1], sq24 ) = sq24;
+true
+gap> HorizontalProduct( sq24, hid[2] ) = sq24;      
+true
+]]>
+</Example>
+
+Similarly, here are the up identity <M>1_U(s)</M>
+and the down identity <M>1_D(s)</M> of <M>s</M>:
+<Display> 
+<!--  \label{Verticalidentities} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{a}  \ar[d]_{1}  
+     & v \ar[d]^{1} 
+       & w \ar[r]^{d}  \ar[d]_{1} 
+         & x \ar[d]^{1} \\ 
+   u \ar[r]_{a} 
+     & v 
+       & w \ar[r]_{d} 
+         & x
+}} 
+]]>
+</Display> 
+
+<Example>
+<![CDATA[
+gap> vid := VerticalIdentities( sq24 );;  
+gap> vid[1]; Print("\n"); vid[2];                    
+[-8] ---- (2,4) ---> [-9]
+  |                   |
+()         ()         ()
+  V                   V
+[-8] ---- (2,4) ---> [-9]
+
+[-8] ---- (1,2)(3,4) ---> [-7]
+  |                        |
+()            ()            ()
+  V                        V
+[-8] ---- (1,2)(3,4) ---> [-7]
+gap> VerticalProduct( vid[1], sq24 ) = sq24;
+true
+gap> VerticalProduct( sq24, vid[2] ) = sq24;
+true
+]]>
+</Example>
+
+Confusingly, <M>s</M> has a <E>horizontal inverse</E> <M>s^{-1}_{H}</M>
+whose product with <M>s</M> is the left identity or right identity:
+<Display>
+s (\rightarrow) s^{-1}_{H} ~=~  1_L(s),  \qquad  
+s^{-1}_{H} (\rightarrow) s ~=~ 1_R(s). 
+</Display>
+The boundary of <M>s^{-1}_{H}</M> is 
+<M>dc^{-1}a^{-1}b = (\delta(s)^{-1})^{d^{-1}}</M>.
+Here are the two products:
+<Display> 
+<!--  \label{Horizontalinverse} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{a}  \ar[d]_{b}  
+     & v \ar[r]^{a^{-1}} \ar[d]^{c}
+       & u \ar[d]^{b}
+         & v \ar[r]^{a^{-1}} \ar[d]_{c} 
+           & u \ar[r]^{a} \ar[d]^{b} 
+             & v \ar[d]^{c}  \\ 
+   w \ar[r]_{d} 
+     & x \ar[r]_{d^{-1}}
+       & w 
+         & x \ar[r]_{d^{-1}}
+           & w \ar[r]_{d}
+             & x
+}} 
+]]>
+</Display> 
+
+<Example>
+<![CDATA[
+gap> hinv := HorizontalInverse( sq24 ); 
+[-9] ----------- (2,4) ----------> [-8]
+  |                                 |
+(1,4,3,2)        (1,2,3,4)        (1,4,3,2)
+  V                                 V
+[-7] -------- (1,2)(3,4) -------> [-8]
+gap> HorizontalProduct( hinv, sq24 ) = hid[2];
+true
+gap> HorizontalProduct( sq24, hinv ) = hid[1];      
+true
+]]>
+</Example>
+
+Similarly, <M>s</M> has a <E>vertical inverse</E> <M>s^{-1}_{V}</M>
+whose product with <M>s</M> is an up or down identity:
+<M>s (\downarrow) s^{-1}_{V} = 1_U(s)</M>  
+and <M>s^{-1}_{V} (\downarrow) s = 1_D(s)</M>. 
+The boundary is <M>a^{-1}bdc^{-1} = (\delta(s)^{-1})^{c^{-1}}</M>.
+<Display> 
+<!--  \label{Verticalinverse} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   w \ar[r]^{d}  \ar[d]_{b^{-1}}  
+     & x \ar[d]^{c^{-1}} \\ 
+   u \ar[r]_{a} 
+     & v 
+}} 
+]]>
+</Display> 
+
+<Example>
+<![CDATA[
+gap> vinv := VerticalInverse( sq24 );
+[-8] -------- (1,2)(3,4) -------> [-7]
+  |                                 |
+(1,2,3,4)        (1,4,3,2)        (1,2,3,4)
+  V                                 V
+[-8] ----------- (2,4) ----------> [-9]
+gap> VerticalProduct( vinv, sq24 ) = vid[2];
+true
+gap> VerticalProduct( sq24, vinv ) = vid[1];   
+true
+]]>
+</Example>
+
+<Subsection Label="sec-horiz-vert">
+<Heading>Horizontal and vertical groupoids in <M>\Box(G)</M></Heading>
+The <E>horizontal groupoid</E> <Index Key="horizontal groupoid"></Index>
+structure <M>\Box_{H}(G)</M> on <M>\Box(G)</M> has the vertical arrows
+as objects, and considers the usual square <M>s</M>
+<Display> 
+<!--  \label{horizontal-gpd} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{a}  \ar[d]_{b}  
+     & v \ar[d]^{c} \\ 
+   w \ar[r]_{d} 
+     & x 
+}} 
+]]>
+</Display> 
+as an arrow from <M>b</M> to <M>c</M>.
+So the arrows in <M>\Box_{H}(G)</M> are effectively pairs of
+horizontal arrows <M>[a,d]</M>.
+The vertex groups are isomorphic to <M>G \times G</M>;
+the identity arrow at <M>b</M> is <M>1_L(s)</M>;
+and the inverse arrow of <M>s</M> is <M>s^{-1}_{H}</M>.
+<P/>
+Similarly the <E>vertical groupoid</E> <Index Key="vertical groupoid"></Index>
+structure <M>\Box_{V}(G)</M> on <M>\Box(G)</M> has the horizontal arrows 
+as objects and pairs of vertical arrows as arrows.
+The identity arrow at <M>a</M> is <M>1_U(s)</M>,
+and the inverse arrow of <M>s</M> is <M>s^{-1}_{V}</M>.
+</Subsection>
+
 </Section>
 
 
-<Section Label="sec-double-todo">
-<Heading>Further developments</Heading>
+<Section Label="sec-double-pieces">
+<Heading>Double groupoids with more than one piece</Heading>
 
-This part of the package is at a very early stage. 
-The following are now urgently needed:  
+As with groupoids, double groupoids may comprise a union of single piece
+double groupoids with disjoint object sets.
+
+<ManSection Label="sec-union-dgpds">
+   <Oper Name="UnionOfPieces" 
+         Arg="pieces" Label="for double groupoids" />
+   <Attr Name="Pieces"
+         Arg="dgpd" Label="for double groupoids" />
+<Description>
+The operation <C>UnionOfPieces</C> and the attribute <C>Pieces</C>,  
+introduced in section <Ref Sect="sec-pieces"/>,
+are also used for double groupoids. 
+The pieces are sorted by the least object in their object lists. 
+The <C>ObjectList</C> is the sorted concatenation of the objects in the pieces.
+<P/>
+The example shows that, as well as taking the union of two double groupoids,
+the same object may be constructed directly from the underlying groupoids.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Dc6 := SinglePieceBasicDoubleGroupoid( Gc6 );; 
+gap> Ds4 := SinglePieceBasicDoubleGroupoid( Gs4 );; 
+gap> Dc6s4 := DoubleGroupoid( [ Dc6, Ds4 ] );
+double groupoid having 2 pieces :-
+1: single piece double groupoid with:
+ groupoid = single piece groupoid: < s4, [ -15 .. -11 ] >
+    group = s4
+  objects = [ -15 .. -11 ]
+2: single piece double groupoid with:
+ groupoid = single piece groupoid: < c6, [ -6 ] >
+    group = c6
+  objects = [ -6 ]
+
+gap> Ds4c6 := DoubleGroupoid( [ Gs4, Gc6 ] );;
+gap> Pieces( Ds4c6 );
+[ single piece double groupoid with:
+     groupoid = single piece groupoid: < s4, [ -15 .. -11 ] >
+        group = s4
+      objects = [ -15 .. -11 ]
+    , single piece double groupoid with:
+     groupoid = single piece groupoid: < c6, [ -6 ] >
+        group = c6
+      objects = [ -6 ]
+     ]
+gap> Dc6s4 = Ds4c6;
+true
+]]>
+</Example>
+
+
+
+</Section>
+
+
+<Section Label="sec-double-gens">
+<Heading>Generators of a double groupoid</Heading>
+
+Before considering the general case we investigate two special cases:
 <List>
 <Item>
-generators of a double groupoid on <M>G</M>; 
+a basic double groupoid with identity group;
 </Item>
 <Item>
-the double groupoid generated by a set of squares; 
-</Item>
-<Item>
-a method for <C>Size</C>; 
-</Item>
-<Item>
-and lots more.
+a basic double groupoid with a single object.
 </Item>
 </List>
- 
+
+<ManSection>
+   <Oper Name="DoubleGroupoidWithTrivialGroup"
+         Arg="obs" />
+<Description>
+When <M>|\Omega|=n</M> the double groupoid with trivial permutation group 
+on these <M>n</M> objects contains <M>n^4</M> squares of the form:
+<Display> 
+<!--  \label{trivial-squares} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+   u \ar[r]^{()}  \ar[d]_{()}  
+     & v \ar[d]^{()} \\ 
+   w \ar[r]_{()} 
+     & x
+}} 
+]]>
+</Display> 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Dtriv := DoubleGroupoidWithTrivialGroup( [-19..-17] );
+single piece double groupoid with:
+ groupoid = single piece groupoid: < Group( [ () ] ), [ -19 .. -17 ] >
+    group = Group( [ () ] )
+  objects = [ -19 .. -17 ]
+
+gap> Size(Dtriv);                                          
+81
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="DoubleGroupoidWithSingleObject"
+         Arg="gp, obj" />
+<Description>
+Given a group <M>G</M> we can form the corresponding groupoid with
+a single object, and from that a double groupoid on that object.
+The number of squares is <M>|G|^4</M>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Dc4 := DoubleGroupoidWithSingleObject( Group((1,2,3,4)), 0 );
+single piece double groupoid with:
+ groupoid = single piece groupoid: < Group( [ (1,2,3,4) ] ), [ 0 ] >
+    group = Group( [ (1,2,3,4) ] )
+  objects = [ 0 ]
+
+gap> Size( Dc4 );                                                 
+256
+]]>
+</Example>
+
+<Subsection Label="sec-generating">
+<Heading>What is the double groupoid generated by a set of squares?</Heading>
+This is a very experimental section.
+Let us consider the following list of three squares 
+<M>[s_U(a,u,v),~ 1_U(v,u),~ s_U(a,u,u)]</M>.
+What is generated by the single square <M>s_U(a,u,v)</M>?
+<Display> 
+<!--  \label{square-a111} \def\labelstyle{\textstyle} -->
+<![CDATA[
+\vcenter{\xymatrix @=4pc{  
+    u \ar[r]^{a}  \ar[d]_{1}  
+      & v \ar[d]^{1} 
+        & v \ar[r]^{1} \ar[d]_{1}
+          & u \ar[d]_{1}
+            & u \ar[r]^{a} \ar[d]_{1}
+              & u \ar[d]_{1}  \\
+    u \ar[r]_{1} 
+      & v
+        & v \ar[r]_{1}
+          & u
+            & u \ar[r]_{1}
+              & u
+}} 
+]]>
+</Display> 
+The first square does not compose with itself, so cannot generate anything.
+When constructing a group from generators there is never any need to 
+include an identity - that is always assumed to be included.
+Perhaps, when constructing a double groupoid, it should be assumed
+that the <C>DoubleGroupoidWithTrivialGroup</C> on the given objects
+should be automatically included?
+In that case the square <M>1_U(v,u)</M> is available and can compose
+on the right to give <M>s_U(a,u,u)</M>.
+This then composes with itself to produce squares <M>s_U(a^i,u,u)</M>.
+Then, composing with identities, we obtain 
+<C>SinglePieceBasicDoubleGroupoid(G)</C> where <M>G</M> is the groupoid
+with group <M>\langle a \rangle</M> and objects <M>[u,v]</M>.
+More work on this area is required!
+
+</Subsection>
+
+
 </Section>
 
 
@@ -304,51 +778,119 @@ and lots more.
 
 In the literature on double groupoids the construction often starts 
 with two groupoids <M>G_1, G_2</M>, 
-and squares have horizantal arrows chosen from <M>G_1</M> 
+and squares have horizontal arrows chosen from <M>G_1</M> 
 and vertical arrows chosen from <M>G_2</M>. 
 When that is the case, the boundary of a square is not defined, 
 since arrows from <M>G_1</M> do not compose with those from <M>G_2</M>. 
 
-Thids situation is modelled here by constructing the direct product 
+This situation may be modelled here by constructing the direct product 
 groupoid <M>G = G_1 \times G_2</M> 
-and forming a double groupoid on <M>G</M> in which squares have the form 
+and forming a double groupoid on <M>G</M> in which squares have the form: 
 <Display> 
 <!--  \label{product-square} \def\labelstyle{\textstyle} -->
 <![CDATA[
 \vcenter{\xymatrix @=4pc{  
-   [u_1,v_1] \ar[r]^{[a,1]}  \ar[d]_{[1,b]}  
-     & [u_2,v_2] \ar[d]^{[1,b']} \\ 
-   [u_3,v_3] \ar[r]_{[a',1]} 
-     & [u_4,v_4] 
+   [u_1,u_2] \ar[r]^{[a,1]}  \ar[d]_{[1,b]}  
+     & [v_1,v_2] \ar[d]^{[1,c]} \\ 
+   [w_1,w_2] \ar[r]_{[d,1]} 
+     & [x_1,x_2] 
 }} 
 ]]>
 </Display> 
+<P/>
 
-</Section>
-
-
-
-<Section Label="sec-comm-squares">
-<Heading>Commutative squares</Heading>
-
-The square 
-<Display> 
-<!--  \label{square1again} \def\labelstyle{\textstyle} -->
+<Example>
 <![CDATA[
-\vcenter{\xymatrix @=4pc{  
-   u_1 \ar[r]^{a_1}  \ar[d]_{d_1}  
-     & u_2 \ar[d]^{e_1} \\ 
-   v_1 \ar[r]_{b_1} 
-     & v_2 
-}} 
+gap> Gd8c6 := DirectProduct( Gd8, Gc6 );
+single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ),
+[ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ] >
+gap> SetName( Gd8c6, "Gd8c6" );
+gap> Dd8c6 := SinglePieceBasicDoubleGroupoid( Gd8c6 );
+single piece double groupoid with:
+ groupoid = Gd8c6
+    group = Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] )
+  objects = [ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ]
+
+gap> Gd8c6 := DirectProduct( Gd8, Gc6 );
+single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ),
+[ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ] >
+gap> SetName( Gd8c6, "Gd8c6" );
+gap> Dd8c6 := SinglePieceBasicDoubleGroupoid( Gd8c6 );
+single piece double groupoid with:
+ groupoid = Gd8c6
+    group = Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] )
+  objects = [ [ -9, -6 ], [ -8, -6 ], [ -7, -6 ] ]
+
+gap> emb1 := Embedding( Gd8c6, 1 );;
+gap> emb2 := Embedding( Gd8c6, 2 );;
+gap> a5 := Arrow( Gd8, (1,3), -9, -7 );;
+gap> a6 := ImageElm( emb1, a5 );
+[(1,3) : [ -9, -6 ] -> [ -7, -6 ]]
+gap> d5 := Arrow( Gd8, (2,4), -9, -8 );;
+gap> d6 := ImageElm( emb1, d5 );
+[(2,4) : [ -9, -6 ] -> [ -8, -6 ]]
+gap> b5 := Arrow( Gc6, (5,6,7), -6, -6 );;
+gap> b6 := ImageElm( emb2, b5 );
+[(5,6,7) : [ -9, -6 ] -> [ -9, -6 ]]
+gap> c6 := Arrow( Gd8c6, (8,9), [-7,-6], [-8,-6] );;
+gap> sq := SquareOfArrows( Dd8c6, a6, b6, c6, d6 );
+[[ -9, -6 ]] ------ (1,3) -----> [[ -7, -6 ]]
+  |                                        |
+(5,6,7)        (1,3)(2,4)(5,7,6)(8,9)        (8,9)
+  V                                        V
+[[ -9, -6 ]] ------ (2,4) -----> [[ -8, -6 ]]
 ]]>
-</Display> 
-is <E>commutative</E> if <M>a_1*e_1 = d_1*b_1</M>, 
-so that its boundary is the identity. 
-The set of commutative squares in <M>\Box(G)</M> 
-forms  the <E>commutative sub-double groupoid</E> of <M>\Box(G)</M>. 
+</Example>
 
 </Section>
 
+
+<Section Label="sec-dgpd-hom">
+<Heading>Double groupoid homomorphisms</Heading>
+
+<ManSection>
+   <Oper Name="DoubleGroupoidHomomorphism"
+         Arg="src rng hom" />
+<Description>
+A homomorphism of double groupoids is determined by a homomorphism <C>mor</C>
+between the underlying groupoids since <C>mor</C> determines the images of
+the four arrows in every square.
+<P/>
+In the example we take the endomorphism <C>md8</C> of <C>Gd8</C>,
+constructed in section <Ref Sect="subsec-prop-homs"/>,
+to produce an endomorphism of <C>Dd8</C>.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> ad8 := GroupHomomorphismByImages( d8, d8,
+>               [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );;
+gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, 
+>               [-7,-9,-8], [(),(1,3),(2,4)] );;
+gap> endDd8 := DoubleGroupoidHomomorphism( Dd8, Dd8, md8 );
+double groupoid homomorphism : Dd8 -> Dd8
+gap> Display( endDd8 );
+double groupoid homomorphism: [ Dd8 ] -> [ Dd8 ]
+with underlying groupoid homomorphism:
+ groupoid mapping: [ Gd8 ] -> [ Gd8 ]
+root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] ]
+images of objects: [ -7, -9, -8 ]
+   images of rays: [ [() : -7 -> -7], [(1,3) : -7 -> -9], [(2,4) : -7 -> -8] ]
+gap> sq1;
+[-7] ------- (1,3) ------> [-8]
+  |                          |
+(2,4)        (2,4)        (1,2)(3,4)
+  V                          V
+[-7] ----- (1,2,3,4) ----> [-9]
+gap> ImageElm( endDd8, sq1 );
+[-8] ------- (1,3) ------> [-9]
+  |                         |
+(1,3)        (1,3)        (1,4,3,2)
+  V                         V
+[-8] ---- (1,4)(2,3) ---> [-7]
+]]>
+</Example>
+
+</Section>
 
 </Chapter>

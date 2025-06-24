@@ -117,10 +117,8 @@ true
 gap> b55 in lc85; 
 false
 
-gap> a56 := ArrowNC( true, (1,2,3,4), -5, -6 );
+gap> a56 := ArrowNC( Hs4, true, (1,2,3,4), -5, -6 );
 [(1,2,3,4) : -5 -> -6]
-gap> a56 in Hs4;                               
-true
 gap> rc56 := RightCoset( Hs4, Uc3c4, a56 ); 
 <right coset of single piece groupoid with rays: < c3, [ -9, -8, -5 ], 
 [ (), (1,3,5,4), (1,2,4,5) ] > with representative [(1,3,4,5,2) : -9 -> -6]>

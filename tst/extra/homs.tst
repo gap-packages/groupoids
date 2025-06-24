@@ -331,7 +331,7 @@ gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );;
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
 gap> c6 := Group( (5,6,7)(8,9) );;
 gap> SetName( c6, "c6" );
-gap> Gc6 := DomainWithSingleObject( c6, -6 );;
+gap> Gc6 := MagmaWithSingleObject( c6, -6 );;
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
 gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
 gap> isoU3 := IsomorphismPcGroupoid( U3 ); 

@@ -57,7 +57,7 @@ DeclareGlobalFunction( "Groupoid" );
 ############################################################################# 
 ##           
 #O  SinglePieceGroupoidNC( <group>, <objects> )              
-#O  SinglePieceGroupoid( <group>, <objects> )              
+#O  SinglePieceGroupoid( <group>, <objects> )        
 #O  GroupoidWithRays( <rootgp>, <objects>, <rays> )
 #O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
 #O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )

@@ -283,32 +283,34 @@ BindGlobal( "IsGroupoidPiecesType",
 ############################################################################# 
 ## 
 #O  SinglePieceMagmaWithObjects( <mag>, <obs> ) 
-#O  DomainWithSingleObject( <mag>, <obj> )
+#O  MagmaWithSingleObject( <mag>, <obj> )
 ## 
 DeclareOperation( "SinglePieceMagmaWithObjects", [ IsMagma, IsCollection ] ); 
-DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );    
+DeclareOperation( "MagmaWithSingleObject", [ IsMagma, IsObject ] );    
 
 ############################################################################# 
 ## 
 #O  Arrow( <mwo>, <elt>, <tail>, <head> ) 
 #O  MultiplicativeElementWithObjects( <mwo>, <elt>, <tail>, <head> ) 
-#O  ArrowNC( <isgpdelt>, <elt>, <tail>, <head> ) 
+#O  ArrowNC( <mwo> <isgpdelt>, <elt>, <tail>, <head> ) 
 ## 
 DeclareOperation( "Arrow", 
-    [ IsMagmaWithObjects, IsMultiplicativeElement, IsObject, IsObject ] ); 
+  [ IsMagmaWithObjects, IsMultiplicativeElement, IsObject, IsObject ] ); 
 DeclareSynonym( "MultiplicativeElementWithObjects", Arrow ); 
 DeclareOperation( "ArrowNC", 
-    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ] ); 
+  [ IsMagmaWithObjects, IsBool, IsMultiplicativeElement, IsObject, IsObject ] ); 
     
 ############################################################################## 
 ## 
 #O  ElementOfArrow( <ewo> ) 
 #O  TailOfArrow( <ewo> ) 
 #O  HeadOfArrow( <ewo> ) 
+#O  GroupoidOfArrow( <ewo> ) 
 ##  
 DeclareOperation( "ElementOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 DeclareOperation( "TailOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
+DeclareOperation( "GroupoidOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 
 
 ################################  SEMIGROUPS  ###############################
@@ -417,16 +419,12 @@ DeclareOperation( "SubmagmaWithObjectsByElementsTable",
 ## 
 DeclareOperation( "Ancestor", [ IsDomainWithObjects ] ); 
 
-####################  DOUBLE DOMAIN WITH OBJECTS  ########################### 
+##############################  DOUBLE GROUPOIDS  ########################### 
 
-#C  IsDoubleDomainWithObjects( <obj> ) . . . is a double domain with objects 
-#F  DoubleDomainWithObjects( <dom>, <obs> ) 
 #C  IsDoubleGroupoidElement( <elt> ) 
-#V  IsDoubleGroupoidElementFamily  . . . .  family for elements of double groupoids
-#T  IdDoubleGroupoidElementType  . . . . default type for elements of double groupoids 
+#V  IsDoubleGroupoidElementFamily . . family for elements of double groupoids
+#T  IdDoubleGroupoidElementType default type for elements of double groupoids 
 ## 
-DeclareCategory( "IsDoubleDomainWithObjects", IsDomainWithObjects ); 
-DeclareGlobalFunction( "DoubleDomainWithObjects" ); 
 DeclareCategory( "IsDoubleGroupoidElement", 
     IsMultiplicativeElementWithObjectsAndInverses ); 
 DeclareCategoryCollections( "IsDoubleGroupoidElement" ); 

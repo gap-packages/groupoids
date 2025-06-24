@@ -191,7 +191,7 @@ true
 gap> AGa40 := Groupoid( AGa4, [0] );
 single piece groupoid: < Aut(Ga4), [ 0 ] >
 gap> conj := function(a) 
->            return ArrowNC( true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
+>            return ArrowNC( Ga4, true, GroupoidInnerAutomorphism(Ga4,a), 0, 0 ); 
 >            end;; 
 gap> inner := MappingWithObjectsByFunction( Ga4, AGa40, conj, [0,0,0] );;
 gap> a1 := Arrow( Ga4, (1,2,3), -15, -13 );;
@@ -282,24 +282,24 @@ gap> u1 = imu;
 true
 
 ## SubSection 5.6.5
-gap> Hd8 := HomogeneousGroupoid( Gd8,
->           [ [-20,-19,-18], [-12,-11,-10], [-16,-15,-14] ] );;
-gap> SetName( Hd8, "Hd8" );
-gap> AHd8 := AutomorphismGroupoidOfGroupoid( Hd8 ); 
-Aut(Hd8)
-gap> ObjectList( AHd8 );
-[ [ -20, -19, -18 ], [ -16, -15, -14 ], [ -12, -11, -10 ] ]
-gap> RaysOfGroupoid( AHd8 ){[2..3]};
+gap> HGd8 := HomogeneousGroupoid( Gd8, 
+>                [ [-39,-38,-37], [-36,-35,-34], [-33,-32,-31] ] );;
+gap> SetName( HGd8, "HGd8" );
+gap> AHGd8 := AutomorphismGroupoidOfGroupoid( HGd8 ); 
+Aut(HGd8)
+gap> ObjectList( AHGd8 );
+[ [ -39, -38, -37 ], [ -36, -35, -34 ], [ -33, -32, -31 ] ]
+gap> RaysOfGroupoid( AHGd8 ){[2..3]};
 [ groupoid homomorphism : 
-    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
-          [() : -20 -> -18] ], 
-      [ [(1,2,3,4) : -16 -> -16], [(1,3) : -16 -> -16], [() : -16 -> -15], 
-          [() : -16 -> -14] ] ], groupoid homomorphism : 
-    [ [ [(1,2,3,4) : -20 -> -20], [(1,3) : -20 -> -20], [() : -20 -> -19], 
-          [() : -20 -> -18] ], 
-      [ [(1,2,3,4) : -12 -> -12], [(1,3) : -12 -> -12], [() : -12 -> -11], 
-          [() : -12 -> -10] ] ] ]
-gap> obgp := ObjectGroup( AHd8, [ -12, -11, -10 ] );; 
+    [ [ [(1,2,3,4) : -39 -> -39], [(1,3) : -39 -> -39], [() : -39 -> -38], 
+          [() : -39 -> -37] ], 
+      [ [(1,2,3,4) : -36 -> -36], [(1,3) : -36 -> -36], [() : -36 -> -35], 
+          [() : -36 -> -34] ] ], groupoid homomorphism : 
+    [ [ [(1,2,3,4) : -39 -> -39], [(1,3) : -39 -> -39], [() : -39 -> -38], 
+          [() : -39 -> -37] ], 
+      [ [(1,2,3,4) : -33 -> -33], [(1,3) : -33 -> -33], [() : -33 -> -32], 
+          [() : -33 -> -31] ] ] ]
+gap> obgp := ObjectGroup( AHGd8, [ -36, -35, -34 ] );; 
 gap> Size( obgp );    ## 3!*8^3
 3072
 
@@ -318,7 +318,7 @@ gap> gens := GeneratorsOfGroupoid( Gs4 );
 [ [(1,2,3,4) : -15 -> -15], [(3,4) : -15 -> -15], [() : -15 -> -14], 
   [() : -15 -> -13], [() : -15 -> -12], [() : -15 -> -11] ]
 gap> images := List( gens, 
->        g -> Arrow( Rs4, ImageElm(rep4,g![1]), g![2], g![3] ) ); 
+>        g -> Arrow( Rs4, ImageElm(rep4,g![2]), g![3], g![4] ) ); 
 [ [[ [ -1, 0, 0 ], [ 0, 0, 1 ], [ 0, -1, 0 ] ] : -15 -> -15], 
   [[ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ] : -15 -> -15], 
   [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -> -14], 

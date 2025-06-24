@@ -239,15 +239,15 @@ gap> f1 := Arrow( Gfa, a^7, -1, -2);;
 gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
 gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;
 gap> f4 := Arrow( Gfb, b^9, -3, -4 );;
-gap> f5 := Arrow( Gfa, a^7, -2, -1 );;
+gap> f5 := Arrow( Gfa, a^7, -2, -2 );;
 gap> L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];
 [ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, 
-  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -1] ]
+  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -2] ]
 gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
 (5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : 
--3 -> -4].y^-1.[a^7 : -2 -> -1](5)
+-3 -> -4].y^-1.[a^7 : -2 -> -2](5)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
-(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -1](5)
+(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -2](5)
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 gap> STOP_TEST( "ggraph.tst", 10000 );

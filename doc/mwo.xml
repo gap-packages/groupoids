@@ -227,7 +227,7 @@ false
          Arg="args" />
    <Oper Name="SinglePieceSemigroupWithObjects"
          Arg="sgp, obs" />
-   <Oper Name="DomainWithSingleObject"
+   <Oper Name="MagmaWithSingleObject"
          Arg="dom,obj" Label="for semigroups" />
    <Filt Name="IsSemigroupWithObjects"
          Arg="obj" />
@@ -280,7 +280,7 @@ at the object <M>0</M>.
 <P/>
 <Example>
 <![CDATA[
-gap> S0 := DomainWithSingleObject( sgp, 0 );
+gap> S0 := MagmaWithSingleObject( sgp, 0 );
 semigroup with objects :-
     magma = sgp<t,s,r>
   objects = [ 0 ]
@@ -458,7 +458,7 @@ gap> ObjectList( N3 );
 gap> Length( GeneratorsOfMagmaWithObjects( N3 ) ); 
 50
 gap> ## the next command returns fail since the object sets are not disjoint: 
-gap> N4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );  
+gap> N4 := UnionOfPieces( [ S123, MagmaWithSingleObject( sgp, -2 ) ] );  
 fail
 ]]>
 </Example>

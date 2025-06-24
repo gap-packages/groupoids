@@ -15,22 +15,27 @@ gap> Gs4 := SinglePieceGroupoid( s4, [-15 .. -11] );;
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
 gap> c6 := Group( (5,6,7)(8,9) );;
 gap> SetName( c6, "c6" );
-gap> Gc6 := DomainWithSingleObject( c6, -6 );;
+gap> Gc6 := MagmaWithSingleObject( c6, -10 );;
 gap> SetName( Gs4, "Gs4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
+gap> HDc6 := HomogeneousDiscreteGroupoid( c6, [-27..-24] );;
+gap> SetName( HDc6, "HDc6" );
 gap> f2 := FreeGroup( 2 );;
 gap> Gf2 := Groupoid( f2, -22 );;
 gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
 gap> q8 := QuaternionGroup( 8 );;
-gap> Gq8 := Groupoid( q8, [ -28, -27 ] );;
+gap> genq8 := GeneratorsOfGroup( q8 );;
+gap> x := genq8[1];;  y := genq8[2];;
+gap> Gq8 := Groupoid( q8, [ -18, -17 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> gl43 := SpecialLinearGroup( 4, 3 );;
-gap> Ggl43 := SinglePieceGroupoid( gl43, [ -35..-31 ] );;
+gap> Ggl43 := SinglePieceGroupoid( gl43, [ -23..-21 ] );;
 gap> SetName( gl43, "gl43" );  SetName( Ggl43, "Ggl43" );
-gap> U3 := UnionOfPieces( [ Gc6, Gd8, Gs4 ] );;
+gap> U3 := UnionOfPieces( [ Gs4, Gc6, Gd8 ] );;
+gap> Kd8 := SubgroupoidWithRays( Gs4, d8, 
+>               [ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ] );;
+gap> SetName( Kd8, "Kd8" );
 gap> Hs4 := SubgroupoidByObjects( Gs4, [-14,-13,-12] );; 
 gap> SetName( Hs4, "Hs4" ); 
-gap> Hd8b := SubgroupoidWithRays( Hs4, d8, [(),(1,2,3),(1,2,4)] );;
-gap> SetName( Hd8b, "Hd8b" );
 gap> s3a := Group( (1,2), (2,3) );; 
 gap> SetName( s3a, "s3a" );
 gap> ida := IdentityMapping( s3a );; 
@@ -41,45 +46,50 @@ gap> isofp := IsomorphismFpGroup( s3a );;
 gap> s3f := Image( isofp );;
 gap> SetName( s3f, "s3f" ); 
 gap> isos2 := [ ida, isopc, isofp ];;
-gap> G2 := GroupoidByIsomorphisms( s3a, [-7,-6,-5], isos2 );; 
+gap> G2 := GroupoidByIsomorphisms( s3a, [-6,-5,-4], isos2 );; 
 
 ###  Subsection 5.1.1
+gap> (1,2,4)^-1 * (1,3,4);
+(2,3,4)
+gap> Hd8 := SubgroupoidByObjects( Kd8, [ -13, -12 ] );
+single piece groupoid with rays: < Group( [ (1,2,4,3), (2,3) ] ), 
+[ -13, -12 ], [ (), (2,3,4) ] >
+gap> SetName( Hd8, "Hd8" );
 gap> gen1 := GeneratorsOfGroupoid( Gq8 ); 
-[ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
-  [<identity> of ... : -28 -> -27] ]
-gap> gen2 := GeneratorsOfGroupoid( Hd8b ); 
-[ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
-  [(1,2,4) : -14 -> -12] ]
-gap> images := [ gen2[1]^2, gen2[1]*gen2[2], IdentityArrow(Hd8b,-14), gen2[4] ];
-[ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], 
-  [(1,2,4) : -14 -> -12] ]
-gap> mor1 := GroupoidHomomorphism( Gq8, Hd8b, gen1, images );
-groupoid homomorphism : Gq8 -> Hd8b
-[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
-      [<identity> of ... : -28 -> -27] ], 
-  [ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], 
-      [(1,2,4) : -14 -> -12] ] ]
+[ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+  [<identity> of ... : -18 -> -17] ]
+gap> gen2 := GeneratorsOfGroupoid( Hd8 ); 
+[ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], [(2,3,4) : -13 -> -12] ]
+gap> images := [ gen2[1]^2, gen2[1]*gen2[2], gen2[2]^2, gen2[3] ];
+[ [(1,4)(2,3) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], [() : -13 -> -13], 
+  [(2,3,4) : -13 -> -12] ]
+gap> hom8 := GroupoidHomomorphismFromSinglePiece( Gq8, Hd8, gen1, images );
+groupoid homomorphism : Gq8 -> Hd8
+[ [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+      [<identity> of ... : -18 -> -17] ], 
+  [ [(1,4)(2,3) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], [() : -13 -> -13], 
+      [(2,3,4) : -13 -> -12] ] ]
 gap> genq8 := GeneratorsOfGroup( q8 );;
-gap> imh := [ (1,3)(2,4), (1,2)(3,4), () ];;
+gap> imh := [ (1,4)(2,3), (1,3)(2,4), () ];;
 gap> h := GroupHomomorphismByImages( q8, d8, genq8, imh );                     
-[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
-gap> mor2 := GroupoidHomomorphism( Gq8, Hd8b, h, [-14,-12], [(),(1,2,4)] );
-groupoid homomorphism : Gq8 -> Hd8b
-[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
-      [<identity> of ... : -28 -> -27] ], 
-  [ [(1,3)(2,4) : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -14], 
-      [(1,2,4) : -14 -> -12] ] ]
-gap> mor1=mor2;
+[ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
+gap> hom9 := GroupoidHomomorphism( Gq8, Hd8, h, [-13,-12], [(),(2,3,4)] );
+groupoid homomorphism : Gq8 -> Hd8
+[ [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+      [<identity> of ... : -18 -> -17] ], 
+  [ [(1,4)(2,3) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], [() : -13 -> -13], 
+      [(2,3,4) : -13 -> -12] ] ]
+gap> hom8 = hom9;
 true
-gap> e := Arrow( Gq8, Product(genq8), -27, -28 );
-[x*y*y2 : -27 -> -28]
-gap> ImageElm( mor2, e );
-[(2,4,3) : -12 -> -14]
+gap> e1 := Arrow( Gq8, Product(genq8), -17, -18 );
+[x*y*y2 : -17 -> -18]
+gap> e2 := ImageElm( hom8, e1 );
+[(1,2,3) : -12 -> -13]
 
 ## SubSection 5.2.1
-gap> [ IsInjectiveOnObjects( mor2 ), IsSurjectiveOnObjects( mor2 ) ]; 
-[ true, false ]
-gap> [ IsInjective( mor2 ), IsSurjective( mor2 ) ];
+gap> [ IsInjectiveOnObjects( hom8 ), IsSurjectiveOnObjects( hom8 ) ]; 
+[ true, true ]
+gap> [ IsInjective( hom8 ), IsSurjective( hom8 ) ];
 [ false, false ]
 gap> ad8 := GroupHomomorphismByImages( d8, d8, 
 >               [ (1,2,3,4), (1,3) ], [ (1,4,3,2), (2,4) ] );; 
@@ -96,166 +106,145 @@ gap> [ IsInjective( md8 ), IsSurjective( md8 ) ];
 gap> [ IsEndomorphismWithObjects( md8 ), IsAutomorphismWithObjects( md8 ) ];
 [ true, true ]
 
-## SubSection 5.2.5
-gap> RootGroupHomomorphism( mor2 );
-[ x, y, y2 ] -> [ (1,3)(2,4), (1,2)(3,4), () ]
-gap> ImagesOfObjects( mor2 );      
-[ -14, -12 ]
-gap> ImageElementsOfRays( mor2 );
-[ (), (1,2,4) ]
+## SubSection 5.2.3
+gap> RootGroupHomomorphism( hom8 );
+[ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
+gap> ImagesOfObjects( hom8 );   
+[ -13, -12 ]
+gap> ImageElementsOfRays( hom8 );
+[ (), (2,3,4) ]
 
 ## SubSection 5.2.6
-gap> ObjectGroupHomomorphism( mor1, -27 );
-[ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ]
+gap> MappingGeneratorsImages( hom8 );
+[ [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+      [<identity> of ... : -18 -> -17] ], 
+  [ [(1,4)(2,3) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], [() : -13 -> -13], 
+      [(2,3,4) : -13 -> -12] ] ]
+gap> MappingToSinglePieceData( hom8 );
+[ [ [ x, y, y2 ] -> [ (1,4)(2,3), (1,3)(2,4), () ], [ -13, -12 ], 
+      [ (), (2,3,4) ] ] ]
+
+## SubSection 5.2.7
+gap> ObjectGroupHomomorphism( hom8, -17 );
+[ x, y, y2 ] -> [ (1,2)(3,4), (1,4)(2,3), () ]
 
 ## SubSection 5.3.1
-gap> inc := InclusionMappingGroupoids( Hs4, Hd8b );
-groupoid homomorphism : Hd8b -> Hs4
-[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
-      [(1,2,4) : -14 -> -12] ], 
-  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
-      [(1,2,4) : -14 -> -12] ] ]
+gap> inc8 := InclusionMappingGroupoids( Kd8, Hd8 );
+groupoid homomorphism : Hd8 -> Kd8
+[ [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], [(2,3,4) : -13 -> -12] ], 
+  [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], [(2,3,4) : -13 -> -12] ] ]
 
 ## SubSection 5.3.2
-gap> max := MaximalDiscreteSubgroupoid( Hd8b );
-groupoid with 3 pieces:
-1:  single piece groupoid: < d8, [ -14 ] >
-2:  single piece groupoid: < Group( [ (1,4,2,3), (1,2) ] ), [ -13 ] >
-3:  single piece groupoid: < Group( [ (1,2,4,3), (2,3) ] ), [ -12 ] >
-gap> res := RestrictedMappingGroupoids( inc, max );
+gap> Md8 := MaximalDiscreteSubgroupoid( Hd8 ); 
+groupoid with 2 pieces:
+1:  single piece groupoid: < Group( [ (1,2,4,3), (2,3) ] ), [ -13 ] >
+2:  single piece groupoid: < Group( [ (1,3,2,4), (3,4) ] ), [ -12 ] >
+gap> res8 := RestrictedMappingGroupoids( inc8, Md8 );
 groupoid homomorphism from several pieces : 
 groupoid homomorphism : 
-[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ], 
-  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14] ] ]
+[ [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13] ], 
+  [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13] ] ]
 groupoid homomorphism : 
-[ [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ], 
-  [ [(1,4,2,3) : -13 -> -13], [(1,2) : -13 -> -13] ] ]
-groupoid homomorphism : 
-[ [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ], 
-  [ [(1,2,4,3) : -12 -> -12], [(2,3) : -12 -> -12] ] ]
-gap> ParentMappingGroupoids( res ) = inc; 
+[ [ [(1,3,2,4) : -12 -> -12], [(3,4) : -12 -> -12] ], 
+  [ [(1,3,2,4) : -12 -> -12], [(3,4) : -12 -> -12] ] ]
+gap> ParentMappingGroupoids( res8 ) = inc8; 
 true
 
 ## SubSection 5.3.3
-gap> iso1 := IsomorphismNewObjects( Hs4, [-30,-20,-10] ); 
+gap> iso4 := IsomorphismNewObjects( Hs4, [-30..-28] );
 groupoid homomorphism : 
 [ [ [(1,2,3,4) : -14 -> -14], [(3,4) : -14 -> -14], [() : -14 -> -13], 
       [() : -14 -> -12] ], 
-  [ [(1,2,3,4) : -30 -> -30], [(3,4) : -30 -> -30], [() : -30 -> -20], 
-      [() : -30 -> -10] ] ]
-gap> Ks4 := Range( iso1 );
-single piece groupoid: < s4, [ -30, -20, -10 ] >
-gap> inc2 := mor2*inc*iso1;
+  [ [(1,2,3,4) : -30 -> -30], [(3,4) : -30 -> -30], [() : -30 -> -29], 
+      [() : -30 -> -28] ] ]
+gap> Ks4 := Range( iso4 );
+single piece groupoid: < s4, [ -30 .. -28 ] >
+gap> IsSubgroupoid( Hs4, Hd8 );                                       
+true
+gap> inc2 := InclusionMappingGroupoids( Hs4, Hd8 );; 
+gap> mor8 := hom8 * inc2 * iso4;
 groupoid homomorphism : 
-[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
-      [<identity> of ... : -28 -> -27] ], 
-  [ [(1,3)(2,4) : -30 -> -30], [(1,2)(3,4) : -30 -> -30], [() : -30 -> -30], 
-      [(1,2,4) : -30 -> -10] ] ]
-gap> iso2 := IsomorphismStandardGroupoid( Hd8b, [-23,-22,-21] );
-groupoid homomorphism : 
-[ [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
-      [(1,2,4) : -14 -> -12] ], 
-  [ [(1,2,3,4) : -23 -> -23], [(1,3) : -23 -> -23], [() : -23 -> -22], 
-      [() : -23 -> -21] ] ]
-gap> inv2 := InverseGeneralMapping( iso2 );
-groupoid homomorphism : 
-[ [ [(1,2,3,4) : -23 -> -23], [(1,3) : -23 -> -23], [() : -23 -> -22], 
-      [() : -23 -> -21] ], 
-  [ [(1,2,3,4) : -14 -> -14], [(1,3) : -14 -> -14], [(1,2,3) : -14 -> -13], 
-      [(1,2,4) : -14 -> -12] ] ]
-gap> G2;
-single piece groupoid with rays: < s3a, [ -7, -6, -5 ], 
-[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
-gap> isoG2 := IsomorphismStandardGroupoid( G2, [-17,-16,-15] ); 
-groupoid homomorphism : 
-[ [ [[ (1,2), (1,2) ] : -7 -> -7], [[ (2,3), (2,3) ] : -7 -> -7], 
-      [[ (), <identity> of ... ] : -7 -> -6], [[ (), <identity ...> ] : -7 -> 
-        -5] ], 
-  [ [(1,2) : -17 -> -17], [(2,3) : -17 -> -17], [() : -17 -> -16], 
-      [() : -17 -> -15] ] ]
+[ [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+      [<identity> of ... : -18 -> -17] ], 
+  [ [(1,4)(2,3) : -29 -> -29], [(1,3)(2,4) : -29 -> -29], [() : -29 -> -29], 
+      [(2,3,4) : -29 -> -28] ] ]
+gap> ImageElm( mor8, e1 );
+[(1,2,3) : -28 -> -29]
 
 ## SubSection 5.3.4
-gap> N2 := Subgroup( q8, [ q8.2] );; 
-gap> SetName( N2, "N2" );
-gap> Hq8 := SubgroupoidWithRays( Gq8, N2, [ One(q8), q8.1 ] ); 
-single piece groupoid with rays: < N2, [ -28, -27 ], [ <identity> of ..., x ] >
+gap> iso8 := IsomorphismStandardGroupoid( Hd8, [-41,-40] ); 
+groupoid homomorphism : 
+[ [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], [(2,3,4) : -13 -> -12] ], 
+  [ [(1,2,4,3) : -41 -> -41], [(2,3) : -41 -> -41], [() : -41 -> -40] ] ]
+gap> e3 := ImageElm( iso8, e2 );
+[(1,2)(3,4) : -40 -> -41]
+gap> inv8 := InverseGeneralMapping( iso8 ); 
+groupoid homomorphism : 
+[ [ [(1,2,4,3) : -41 -> -41], [(2,3) : -41 -> -41], [() : -41 -> -40] ], 
+  [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], [(2,3,4) : -13 -> -12] ] ]
+gap> Ld8 := Image( iso8 );   SetName( Ld8, "Ld8" );
+single piece groupoid: < Group( [ (1,2,4,3), (2,3) ] ), [ -41, -40 ] >
+
+gap> G2;
+single piece groupoid with rays: < s3a, [ -6, -5, -4 ], 
+[ [ (), () ], [ (), <identity> of ... ], [ (), <identity ...> ] ] >
+gap> isoG2 := IsomorphismStandardGroupoid( G2, [-44,-43,-42] ); 
+groupoid homomorphism : 
+[ [ [[ (1,2), (1,2) ] : -6 -> -6], [[ (2,3), (2,3) ] : -6 -> -6], 
+      [[ (), <identity> of ... ] : -6 -> -5], [[ (), <identity ...> ] : -6 -> 
+        -4] ], 
+  [ [(1,2) : -44 -> -44], [(2,3) : -44 -> -44], [() : -44 -> -43], 
+      [() : -44 -> -42] ] ]
+
+## SubSection 5.3.5
+gap> C4 := Subgroup( q8, [ q8.2] );; 
+gap> SetName( C4, "C4" );
+gap> Hq8 := SubgroupoidWithRays( Gq8, C4, [ One(q8), q8.1 ] ); 
+single piece groupoid with rays: < C4, [ -18, -17 ], [ <identity> of ..., x ] >
 gap> SetName( Hq8, "Hq8" );
-gap> ## isoHq8 := IsomorphismPermGroupoid( Hq8 );;
+gap> isoHq8 := IsomorphismPermGroupoid( Hq8 );;
 gap> regHq8 := RegularActionHomomorphismGroupoid( Hq8 );
 groupoid homomorphism : 
-[ [ [y : -28 -> -28], [x : -28 -> -27] ], 
-  [ [(1,3,4,7)(2,5,6,8) : -28 -> -28], [(1,2,4,6)(3,8,7,5) : -28 -> -27] ] ]
+[ [ [y : -18 -> -18], [x : -18 -> -17] ], 
+  [ [(1,3,4,7)(2,5,6,8) : -18 -> -18], [(1,2,4,6)(3,8,7,5) : -18 -> -17] ] ]
 
 ## SubSection 5.4.1
-gap> gend12 := [ (15,16,17,18,19,20), (15,20)(16,19)(17,18) ];; 
-gap> d12 := Group( gend12 );; 
-gap> Gd12 := Groupoid( d12, [-37,-36,-35,-34] );;
-gap> SetName( d12, "d12" );  
-gap> SetName( Gd12, "Gd12" );
-gap> s3 := Subgroup( d12, [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] );;
-gap> Gs3 := SubgroupoidByPieces( Gd12, [ [ s3, [-36,-35,-34] ] ] );;
-gap> SetName( s3, "s3" );  
-gap> SetName( Gs3, "Gs3" );
-gap> gend8 := GeneratorsOfGroup( d8 );;
-gap> imhd8 := [ ( ), (15,20)(16,19)(17,18) ];;
-gap> hd8 := GroupHomomorphismByImages( d8, s3, gend8, imhd8 );;
-gap> homd8 := GroupoidHomomorphism( Gd8, Gs3, hd8 ); 
-groupoid homomorphism : Gd8 -> Gs3
-[ [ [(1,2,3,4) : -9 -> -9], [(1,3) : -9 -> -9], [() : -9 -> -8], 
-      [() : -9 -> -7] ], 
-  [ [() : -36 -> -36], [(15,20)(16,19)(17,18) : -36 -> -36], 
-      [() : -36 -> -35], [() : -36 -> -34] ] ]
-gap> hc6 := GroupHomomorphismByImages( c6, s3, 
->            [(5,6,7)(8,9)], [(15,16)(17,20)(18,19)] );;
-gap> Fs3 := SubgroupoidByObjects( Gs3, [ -35 ] );; 
-gap> SetName( Fs3, "Fs3" ); 
-gap> homc6 := GroupoidHomomorphism( Gc6, Fs3, hc6 );;
-gap> incFs3 := InclusionMappingGroupoids( Gs3, Fs3 );; 
-gap> ihomc6 := homc6 * incFs3; 
-groupoid homomorphism : Gc6 -> Gs3
-[ [ [(5,6,7)(8,9) : -6 -> -6] ], [ [(15,16)(17,20)(18,19) : -35 -> -35] ] ]
-gap> idGs3 := IdentityMapping( Gs3 );;
-gap> V3 := ReplaceOnePieceInUnion( U3, 1, Gs3 ); 
-groupoid with 3 pieces:
-[ Gs3, Gd8, Gc6 ]
-gap> homs3 := [ idGs3, homd8, ihomc6 ];; 
-gap> homV3 := HomomorphismToSinglePiece( V3, Gs3, homs3 );; 
-gap> Display( homV3 );         
-homomorphism to single piece groupoid with mappings:
-(1) :  groupoid mapping: [ Gs3 ] -> [ Gs3 ]
-root homomorphism: [ [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ], 
-  [ (15,17,19)(16,18,20), (15,20)(16,19)(17,18) ] ]
-images of objects: [ -36, -35, -34 ]
-   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ]
-(2) :  groupoid mapping: [ Gd8 ] -> [ Gs3 ]
-root homomorphism: [ [ (1,2,3,4), (1,3) ], [ (), (15,20)(16,19)(17,18) ] ]
-images of objects: [ -36, -35, -34 ]
-   images of rays: [ [() : -36 -> -36], [() : -36 -> -35], [() : -36 -> -34] ]
-(3) :  groupoid mapping: [ Gc6 ] -> [ Gs3 ]
-root homomorphism: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ]
-images of objects: [ -35 ]
-   images of rays: [ [() : -35 -> -35] ]
+
+gap> U8 := UnionOfPieces( Gq8, Ld8 );;
+gap> mU8 := HomomorphismToSinglePiece( U8, Hd8, [ inv8, hom8 ] );      
+groupoid homomorphism : 
+[ [ [ [(1,2,4,3) : -41 -> -41], [(2,3) : -41 -> -41], [() : -41 -> -40] ], 
+      [ [(1,2,4,3) : -13 -> -13], [(2,3) : -13 -> -13], 
+          [(2,3,4) : -13 -> -12] ] ], 
+  [ 
+      [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+          [<identity> of ... : -18 -> -17] ], 
+      [ [(1,4)(2,3) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], 
+          [() : -13 -> -13], [(2,3,4) : -13 -> -12] ] ] ]
+gap> e2 = ImageElm( mU8, e3 );
+true
 
 ## SubSection 5.4.2, Homomorphisms from homogeneous discrete 
-gap> Dd8 := MaximalDiscreteSubgroupoid( Gd8 );
-homogeneous, discrete groupoid: < d8, [ -9, -8, -7 ] >
-gap> id8 := IdentityMapping( d8 );; 
-gap> GroupoidHomomorphismFromHomogeneousDiscrete( Dd8, Gd8, [id8,id8,id8], 
->    [-8,-7,-9] );                                                        
-groupoid homomorphism : morphism from a homogeneous discrete groupoid:
-[ -9, -8, -7 ] -> [ -8, -7, -9 ]
-object homomorphisms:
-IdentityMapping( d8 )
-IdentityMapping( d8 )
-IdentityMapping( d8 )
+gap> c3a := Subgroup( s4, [(1,2,3)] );; c3b := Subgroup( s4, [(1,2,4)] );;
+gap> c3c := Subgroup( s4, [(1,3,4)] );; c3d := Subgroup( s4, [(2,3,4)] );;
+gap> hc6a := GroupHomomorphismByImages( c6, c3a, [(5,6,7)(8,9)], [(1,2,3)] );;
+gap> hc6b := GroupHomomorphismByImages( c6, c3b, [(5,6,7)(8,9)], [(1,2,4)] );;
+gap> hc6c := GroupHomomorphismByImages( c6, c3c, [(5,6,7)(8,9)], [(1,3,4)] );;
+gap> hc6d := GroupHomomorphismByImages( c6, c3d, [(5,6,7)(8,9)], [(2,3,4)] );;
+gap> mor6 := GroupoidHomomorphismFromHomogeneousDiscrete( HDc6, Gs4,
+>              [ hc6a, hc6b, hc6c, hc6d ], [-15,-14,-12,-11] );
+groupoid homomorphism : HDc6 -> Gs4
+gap> e6 := Arrow( HDc6, (5,6,7), -25, -25 );;
+gap> ImageElm( mor6, e6 );
+[(1,3,4) : -12 -> -12]
 
 ## Section 5.5, Homomorphisms with more than one piece 
 
 ## SubSection 5.5.1
 gap> isoq8 := IsomorphismNewObjects( Gq8, [-38,-37] ); 
 groupoid homomorphism : 
-[ [ [x : -28 -> -28], [y : -28 -> -28], [y2 : -28 -> -28], 
-      [<identity> of ... : -28 -> -27] ], 
+[ [ [x : -18 -> -18], [y : -18 -> -18], [y2 : -18 -> -18], 
+      [<identity> of ... : -18 -> -17] ], 
   [ [x : -38 -> -38], [y : -38 -> -38], [y2 : -38 -> -38], 
       [<identity> of ... : -38 -> -37] ] ]
 gap> Gq8b := Range( isoq8 );; 
@@ -284,6 +273,9 @@ images of objects: [ -36, -35, -34 ]
 root homomorphism: [ [ (5,6,7)(8,9) ], [ (15,16)(17,20)(18,19) ] ]
 images of objects: [ -35 ]
    images of rays: [ [() : -35 -> -35] ]
+gap> z := Arrow( Gq8, x*y, -17, -18 );;
+gap> ImageElm( hom4, z );
+[x*y : -37 -> -38]
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 
 gap> STOP_TEST( "gpdhom.tst", 10000 );

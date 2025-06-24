@@ -22,9 +22,9 @@ function( gpd, oims )
     images := [1..ngens]; 
     for i in [1..ngens] do 
         a := gens[i]; 
-        pt := Position( obs, a![2] ); 
-        ph := Position( obs, a![3] );
-        images[i] := Arrow( gpd, a![1], oims[pt], oims[ph] ); 
+        pt := Position( obs, a![3] ); 
+        ph := Position( obs, a![4] );
+        images[i] := Arrow( gpd, a![2], oims[pt], oims[ph] ); 
     od; 
     if ( fail in images ) then 
         Error( "the set of images contains 'fail'" ); 
@@ -108,7 +108,7 @@ function( gpd, hom )
     images := ShallowCopy( gens );
     for i in [1..Length(gens) - Length(ObjectList(gpd)) + 1] do 
         a := gens[i];
-        images[i] := Arrow( gpd, ImageElm(hom,a![1]), a![2], a![3] ); 
+        images[i] := Arrow( gpd, ImageElm(hom,a![2]), a![3], a![4] ); 
     od;
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
     SetIsInjectiveOnObjects( mor, true ); 
@@ -204,7 +204,7 @@ function( gpd, shifts )
     k := ngens - nobs;
     for i in [2..nobs] do 
         a := gens[i+k]; 
-        images[i+k] := Arrow( gpd, a![1]*shifts[i], a![2], a![3] ); 
+        images[i+k] := Arrow( gpd, a![2]*shifts[i], a![3], a![4] ); 
     od; 
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
     SetOrder( mor, Lcm( List( shifts, Order ) ) ); 
@@ -267,10 +267,10 @@ function( gpd, e )
     Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism from discrete domain" );  
     obs := gpd!.objects; 
     nobs := Length( obs );
-    pos := Position( obs, e![2] ); 
+    pos := Position( obs, e![3] ); 
     id := IdentityMapping( gpd!.magma );
     auts := List( [1..nobs], i -> id ); 
-    auts[pos] := InnerAutomorphism( gpd!.magma, e![1] ); 
+    auts[pos] := InnerAutomorphism( gpd!.magma, e![2] ); 
     return GroupoidAutomorphismByGroupAutosNC( gpd, auts ); 
 end );
 
@@ -926,7 +926,7 @@ function( gpd )
 
     A := AutomorphismGroupOfGroupoid( gpd ); 
     obs := ObjectList( gpd );
-    return DomainWithSingleObject( A, obs ); 
+    return MagmaWithSingleObject( A, obs ); 
 end );
 
 InstallMethod( AutomorphismGroupoidOfGroupoid, "for a homogeneous groupoid", 
@@ -977,7 +977,7 @@ function( gpd )
         geni := GeneratorsOfGroup( auti ); 
         lenpi := Length( pi!.objects ); 
         if ( lenc = 1 ) then 
-            comp[i] := DomainWithSingleObject( auti, pi!.objects ); 
+            comp[i] := MagmaWithSingleObject( auti, pi!.objects ); 
         else 
             obsi := List( pos, k -> pieces[k]!.objects ); 
             isos := ListWithIdenticalEntries( lenpi, 0 ); 

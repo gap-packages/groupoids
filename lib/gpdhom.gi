@@ -76,8 +76,8 @@ end );
 ##
 InstallGlobalFunction( GroupoidHomomorphism, function( arg )
 
-    local nargs, id, rays, ob1, ob2, i, g, pt, ph, gens1, gens2, ngens, nobs, 
-          images, e, a; 
+    local nargs, src, rng, id, rays, ob1, ob2, i, g, pt, ph, 
+          gens1, gens2, ngens, nobs, images, e, a; 
 
     nargs := Length( arg );
     if ( ( nargs < 2 ) 
@@ -86,7 +86,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
          or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) ) then 
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
-    fi; 
+    fi;
     # various types of automorphism 
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] ) ) then 
         Info( InfoGroupoids, 3, "gpd hom with 2 arguments" ); 
@@ -112,9 +112,9 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         gens2 := [1..ngens]; 
         for i in [1..ngens] do 
             g := gens1[i]; 
-            pt := Position( ob1, g![2] ); 
-            ph := Position( ob1, g![3] ); 
-            gens2[i] := Arrow( arg[2], Image(arg[3],g![1]), ob2[pt], ob2[ph] );
+            pt := Position( ob1, g![3] ); 
+            ph := Position( ob1, g![4] ); 
+            gens2[i] := Arrow( arg[2], Image(arg[3],g![2]), ob2[pt], ob2[ph] );
         od;
         return GroupoidHomomorphismFromSinglePieceNC( 
                    arg[1], arg[2], gens1, gens2 ); 
@@ -142,15 +142,15 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         nobs := Length( ob1 );
         for i in [1..ngens] do 
             g := gens1[i]; 
-            pt := arg[4][ Position( ob1, g![2] ) ]; 
-            ph := arg[4][ Position( ob1, g![3] ) ]; 
+            pt := arg[4][ Position( ob1, g![3] ) ]; 
+            ph := arg[4][ Position( ob1, g![4] ) ]; 
             if ( pt = ph ) then 
-                e := ImageElm( arg[3], g![1] ); 
+                e := ImageElm( arg[3], g![2] ); 
                 a := Arrow( arg[2], e, pt, ph ); 
             else 
                 a := Arrow( arg[2], arg[5][i-ngens+nobs], pt, ph ); 
                 if ( a = fail ) then 
-                    Error( "image arrow = fail" ); 
+                    Error( "image arrow = fail" );
                 fi;
             fi;
             images[i] := a; 
@@ -260,15 +260,15 @@ function( mor, U )
         for i in [1..nobs] do 
             P := pieces[i];
             genP := GeneratorsOfGroupoid( P ); 
-            obi := genP[1]![2]; 
+            obi := genP[1]![3]; 
             imP := List( genP, a -> ImageElm( mor, a ) ); 
             imobi := imP[1]![2];
             imobs[i] := imobi; 
             ogi := ObjectGroup( rmor, imobi ); 
-            imgpi := Subgroup( ogi, List( imP, a -> a![1] ) ); 
+            imgpi := Subgroup( ogi, List( imP, a -> a![2] ) ); 
             autos[i] := GroupHomomorphismByImages( 
                             ObjectGroup( P, obi ), imgpi, 
-                            List( genP, g->g![1] ), List( imP, g->g![1] ) ); 
+                            List( genP, g->g![2] ), List( imP, g->g![2] ) ); 
             Add( impieces, SubgroupoidByPieces( rmor, [[imgpi,[imobi]]] ) );
         od; 
         imU := SubgroupoidByPieces( rmor, impieces );
@@ -300,7 +300,7 @@ function( mor, U )
             P := psrc[j]; 
             genP := GeneratorsOfGroupoid( P ); 
             imgenP := List( genP, g -> ImageElm( mor, g ) ); 
-            pos := PieceNrOfObject( mrng, imgenP[1]![2] ); 
+            pos := PieceNrOfObject( mrng, imgenP[1]![3] ); 
             imP := SinglePieceSubgroupoidByGenerators( 
                        Pieces(mrng)[pos], imgenP );
             hom := GroupoidHomomorphism( P, imP, genP, imgenP ); 
@@ -360,9 +360,10 @@ InstallMethod( ObjectGroupHomomorphism, "for a groupoid hom and an object",
     true, [ IsGroupoidHomomorphism, IsObject ], 0,
 function( mor, obj ) 
 
-    local src, imobs, pos, obg, gens, loops, imloops, imgens, img, hom; 
+    local src, rng, imobs, pos, obg, gens, loops, imloops, imgens, img, hom; 
 
-    src := Source( mor ); 
+    src := Source( mor );
+    rng := Range( mor );
     if ( HasIsGeneralMappingFromSinglePiece( mor ) 
          and IsGeneralMappingFromSinglePiece( mor ) ) then 
         imobs := ImagesOfObjects( mor ); 
@@ -371,7 +372,7 @@ function( mor, obj )
         gens := GeneratorsOfGroup( obg ); 
         loops := List( gens, g -> Arrow( src, g, obj, obj ) ); 
         imloops := List( loops, a -> ImageElm( mor, a ) ); 
-        imgens := List( imloops, a -> a![1] ); 
+        imgens := List( imloops, a -> a![2] ); 
         img := Group( imgens ); 
         hom := GroupHomomorphismByImages( obg, img, gens, imgens ); 
     elif IsGeneralMappingFromHomogeneousDiscrete( mor ) then 
@@ -556,12 +557,12 @@ function ( hom )
     imgs := ListWithIdenticalEntries( ngens, 0 ); 
     for i in [1..ngens] do 
         a := gens[i]; 
-        g := a![1]; 
-        o := a![2]; 
+        g := a![2]; 
+        o := a![3]; 
         pos := Position( obs, o ); 
         imo := oims[pos];         
         img := ImageElm( obhoms[pos], g ); 
-        imgs[i] := ArrowNC( true, img, imo, imo ); 
+        imgs[i] := ArrowNC( a![1], true, img, imo, imo ); 
     od;
     return [ gens, imgs ]; 
 end );
@@ -622,13 +623,13 @@ function( src, rng, gens, images )
     ngens := Length( gens ); 
     nggens := ngens-nobs+1; 
     posr := nggens+1; 
-    imr := images[1]![2];
+    imr := images[1]![3];
     gps := src!.magma; 
-    hgen := List( [1..nggens], i -> gens[i]![1] ); 
-    himg := List( [1..nggens], i -> images[i]![1] ); 
+    hgen := List( [1..nggens], i -> gens[i]![2] ); 
+    himg := List( [1..nggens], i -> images[i]![2] ); 
     gpr := ObjectGroup( rng, imr );
     oims := Concatenation( [imr], 
-                           List( [posr..ngens], i -> images[i]![3] ) ); 
+                           List( [posr..ngens], i -> images[i]![4] ) ); 
     if isfrom then 
         hgen := List( hgen, L -> L[1] ); 
     fi;
@@ -640,7 +641,7 @@ function( src, rng, gens, images )
     fi;
     hom := GroupHomomorphismByImagesNC( gps, gpr, hgen, himg ); 
     rims := Concatenation( [ gprid ], 
-                           List( [posr..ngens], i -> images[i]![1] ) );
+                           List( [posr..ngens], i -> images[i]![2] ) );
     map := rec(); 
     ObjectifyWithAttributes( map, GroupoidHomomorphismType, 
         Source, src, 
@@ -664,7 +665,7 @@ function( src, rng, gens, images )
     SetMappingGeneratorsImages( map, [ gens, images ] ); 
     if ( isfrom or isto ) then 
         SetIsGroupoidHomomorphismWithGroupoidByIsomorphisms( map, true ); 
-    fi; 
+    fi;
     return map; 
 end );
 
@@ -690,14 +691,14 @@ function( src, rng, gens, images )
     ngens := Length( gens ); 
     nggens := ngens-nobs+1;
     posr := nggens+1; 
-    imr := images[1]![2]; 
+    imr := images[1]![3]; 
     for i in [1..nggens] do 
-        if not ( ( images[i]![2] = imr ) and ( images[i]![3] = imr ) ) then 
+        if not ( ( images[i]![3] = imr ) and ( images[i]![4] = imr ) ) then 
             Error( "images[i] not a loop at the root vertex" ); 
         fi; 
     od;
     for i in [posr+1..ngens] do 
-        if not ( images[i]![2] = imr ) then 
+        if not ( images[i]![3] = imr ) then 
             Error( "all ray images should have the same source" ); 
         fi; 
     od; 
@@ -713,24 +714,25 @@ InstallOtherMethod( ImageElm, "for a groupoid mapping between single pieces",
     IsGroupoidElement ], 0,
 function ( map, e )
 
-    local m1, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
+    local src, rng, imo, obs1, pt1, ph1, ray1, rims, loop, iloop, g2;
 
     Info( InfoGroupoids, 3, 
           "this is the first ImageElm method in gpdhom.gi" ); 
-    m1 := Source( map ); 
-    if not ( e in m1 ) then 
+    src := Source( map ); 
+    rng := Range( map );
+    if not ( e in src ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
     imo := ImagesOfObjects( map ); 
-    obs1 := m1!.objects; 
-    pt1 := Position( obs1, e![2] ); 
-    ph1 := Position( obs1, e![3] ); 
-    ray1 := RaysOfGroupoid( m1 ); 
-    loop := ray1[pt1] * e![1] * ray1[ph1]^(-1); 
+    obs1 := src!.objects; 
+    pt1 := Position( obs1, e![3] ); 
+    ph1 := Position( obs1, e![4] ); 
+    ray1 := RaysOfGroupoid( src ); 
+    loop := ray1[pt1] * e![2] * ray1[ph1]^(-1); 
     iloop := ImageElm( RootGroupHomomorphism( map ), loop ); 
     rims := ImageElementsOfRays( map ); 
     g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
-    return ArrowNC( true, g2, imo[pt1], imo[ph1] );
+    return ArrowNC( rng, true, g2, imo[pt1], imo[ph1] );
 end ); 
 
 InstallOtherMethod( ImageElm, "for a mapping from/to groupoid by isomorphisms", 
@@ -738,45 +740,45 @@ InstallOtherMethod( ImageElm, "for a mapping from/to groupoid by isomorphisms",
     IsGroupoidElement ], 10,
 function ( map, e )
 
-    local m1, m2, isfrom, isto, isos1, isos2, obs1, obs2, rays1, rays2, 
+    local src, rng, isfrom, isto, isos1, isos2, obs1, obs2, rays1, rays2, 
           pt1, ph1, it1, gt1, ih1, gh1, rh1, irh1, loop, iloop, isoth, 
           rgh, imo, pr2, pt2, ph2, ir2, it2, ih2, rims, g2;
 
     Info( InfoGroupoids, 3, 
           "this is the second ImageElm method in gpdhom.gi" ); 
-    m1 := Source( map ); 
-    m2 := Range( map ); 
-    isfrom := ( HasIsGroupoidByIsomorphisms( m1 ) 
-                and IsGroupoidByIsomorphisms( m1 ) ); 
+    src := Source( map ); 
+    rng := Range( map ); 
+    isfrom := ( HasIsGroupoidByIsomorphisms( src ) 
+                and IsGroupoidByIsomorphisms( src ) ); 
     if isfrom then 
-        isos1 := m1!.isomorphisms; 
+        isos1 := src!.isomorphisms; 
     fi; 
-    isto := ( HasIsGroupoidByIsomorphisms( m2 ) 
-              and IsGroupoidByIsomorphisms( m2 ) ); 
+    isto := ( HasIsGroupoidByIsomorphisms( rng ) 
+              and IsGroupoidByIsomorphisms( rng ) ); 
     if isto then 
-        isos2 := m2!.isomorphisms; 
+        isos2 := rng!.isomorphisms; 
     fi; 
-    if not ( e in m1 ) then 
+    if not ( e in src ) then 
         Error( "the element e is not in the source of mapping map" ); 
-    fi; 
-    obs1 := m1!.objects; 
-    obs2 := m2!.objects; 
-    rays1 := RaysOfGroupoid( m1 ); 
-    rays2 := RaysOfGroupoid( m2 ); 
-    pt1 := Position( obs1, e![2] ); 
-    ph1 := Position( obs1, e![3] ); 
+    fi;
+    obs1 := src!.objects; 
+    obs2 := rng!.objects; 
+    rays1 := RaysOfGroupoid( src ); 
+    rays2 := RaysOfGroupoid( rng ); 
+    pt1 := Position( obs1, e![3] ); 
+    ph1 := Position( obs1, e![4] ); 
     rgh := RootGroupHomomorphism( map ); 
     if isfrom then 
         it1 := InverseGeneralMapping( isos1[pt1] ); 
-        gt1 := ImageElm( it1, e![1][1] ); 
+        gt1 := ImageElm( it1, e![2][1] ); 
         ih1 := InverseGeneralMapping( isos1[ph1] ); 
-        gh1 := ImageElm( ih1, e![1][2] ); 
+        gh1 := ImageElm( ih1, e![2][2] ); 
         if not ( gt1 = gh1 ) then 
             Error( "gt1 <> gh1" );
         fi;
         loop := gt1;  
     else 
-        loop := rays1[pt1] * e![1] * rays1[ph1]^(-1); 
+        loop := rays1[pt1] * e![2] * rays1[ph1]^(-1); 
     fi;
     iloop := ImageElm( rgh, loop ); 
     rims := ImageElementsOfRays( map ); 
@@ -789,10 +791,10 @@ function ( map, e )
         it2 := ir2 * isos2[pt2]; 
         ih2 := ir2 * isos2[ph2]; 
         g2 := [ ImageElm( it2, iloop ), ImageElm( ih2, iloop ) ]; 
-        return Arrow( m2, g2, imo[pt1], imo[ph1] ); 
+        return Arrow( rng, g2, imo[pt1], imo[ph1] ); 
     else 
         g2 := rims[pt1]^-1 * iloop * rims[ph1]; 
-        return ArrowNC( true, g2, pt2, ph2 ); 
+        return Arrow( rng, g2, imo[pt1], imo[ph1] ); 
     fi; 
 end ); 
 
@@ -808,10 +810,10 @@ function ( map, e )
     if not ( e in Source(map) ) then 
         Error( "the element e is not in the source of mapping map" ); 
     fi; 
-    p1 := Position( Source( map )!.objects, e![2] ); 
+    p1 := Position( Source( map )!.objects, e![3] ); 
     t2 := ImagesOfObjects( map )[ p1 ]; 
-    g2 := ImageElm( ObjectHomomorphisms( map )[ p1 ], e![1] ); 
-    a := ArrowNC( true, g2, t2, t2 );
+    g2 := ImageElm( ObjectHomomorphisms( map )[ p1 ], e![2] ); 
+    a := ArrowNC( e![1], true, g2, t2, t2 );
     return a;
 end ); 
 
@@ -828,7 +830,7 @@ function ( map, e )
     fi; 
     src := Source( map ); 
     rng := Range( map ); 
-    pe := Position( Pieces(src), PieceOfObject( src, e![2] ) ); 
+    pe := Position( Pieces(src), PieceOfObject( src, e![3] ) ); 
     if ( HasIsSinglePiece( rng ) and IsSinglePiece( rng ) ) then 
         mape := MappingToSinglePieceMaps( map )[pe]; 
     else 
@@ -914,11 +916,12 @@ function( g1 )
         par2 := Image( isopar ); 
         gp2 := Image( iso, gp1 ); 
         ray1 := RayArrowsOfGroupoid( g1 );  
-        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        ray2 := List( ray1, g -> ImageElm( iso, g![2] ) ); 
         g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
     fi; 
     gen1 := GeneratorsOfGroupoid( g1 ); 
-    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    gen2 := List( gen1, 
+                g -> Arrow( g2, ImageElm(iso,g![2]), g![3], g![4] ) ); 
     isog := GroupoidHomomorphismFromSinglePieceNC( g1, g2, gen1, gen2 );
     return isog;
 end );
@@ -969,11 +972,12 @@ function( g1 )
         par2 := Image( isopar ); 
         gp2 := Image( iso, gp1 ); 
         ray1 := RayArrowsOfGroupoid( g1 );  
-        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        ray2 := List( ray1, g -> ImageElm( iso, g![2] ) ); 
         g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
     fi; 
     gen1 := GeneratorsOfGroupoid( g1 ); 
-    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    gen2 := List( gen1, 
+                g -> Arrow( g2, ImageElm(iso,g![2]), g![3], g![4] ) ); 
     if not ( Length( gen1 ) = Length( gen2 ) ) then 
         Error("generating sets have different lengths");
     fi;
@@ -1019,11 +1023,12 @@ function( g1 )
         par2 := Image( isopar ); 
         gp2 := Image( iso, gp1 ); 
         ray1 := RayArrowsOfGroupoid( g1 );  
-        ray2 := List( ray1, g -> ImageElm( iso, g![1] ) ); 
+        ray2 := List( ray1, g -> ImageElm( iso, g![2] ) ); 
         g2 := SubgroupoidWithRays( par2, gp2, ray2 ); 
     fi; 
     gen1 := GeneratorsOfGroupoid( g1 ); 
-    gen2 := List( gen1, g -> Arrow( g2, ImageElm(iso,g![1]), g![2], g![3] ) ); 
+    gen2 := List( gen1, 
+                g -> Arrow( g2, ImageElm(iso,g![2]), g![3], g![4] ) ); 
     isog := GroupoidHomomorphismFromSinglePieceNC( g1, g2, gen1, gen2 );
     return isog;
 end );
@@ -1070,9 +1075,9 @@ function( gpd1, ob2 )
             gpd2 := SinglePieceGroupoidNC( gp, ShallowCopy( Set( ob2 ) ) );
             for i in [1..ngens] do 
                 g := gens1[i]; 
-                pt := Position( ob1, g![2] ); 
-                ph := Position( ob1, g![3] ); 
-                gens2[i] := Arrow( gpd2, g![1], ob2[pt], ob2[ph] );
+                pt := Position( ob1, g![3] ); 
+                ph := Position( ob1, g![4] ); 
+                gens2[i] := Arrow( gpd2, g![2], ob2[pt], ob2[ph] );
             od; 
         else 
             pgpd := Parent( gpd1 ); 
@@ -1256,10 +1261,10 @@ function( gpd1, gpd2 )
     im2 := ListWithIdenticalEntries( len1, 0 ); 
     for i in [1..len1] do 
         a := gen1[i]; 
-        g := ImageElm( giso, a![1] ); 
-        u := obs2[ Position( obs1, a![2] ) ]; 
-        v := obs2[ Position( obs1, a![3] ) ]; 
-        im2[i] := Arrow( gpd2, g, u, v ); 
+        g := ImageElm( giso, a![2] ); 
+        u := obs2[ Position( obs1, a![3] ) ]; 
+        v := obs2[ Position( obs1, a![4] ) ]; 
+        im2[i] := ArrowNC( gpd2, true, g, u, v ); 
     od;
     iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gen1, im2 ); 
     inv := GroupoidHomomorphismFromSinglePiece( gpd2, gpd1, im2, gen1 );
@@ -1309,7 +1314,7 @@ end );
 
 InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
     "method for a mapping from a homogeneous, discrete groupoid", true,
-    [ IsHomogeneousDiscreteGroupoid, IsHomogeneousDiscreteGroupoid, 
+    [ IsHomogeneousDiscreteGroupoid, IsGroupoid and IsSinglePieceDomain, 
       IsHomogeneousList, IsHomogeneousList ], 0,
 function( src, rng, homs, oims ) 
 
@@ -1319,7 +1324,7 @@ function( src, rng, homs, oims )
     gps := src!.magma; 
     gpr := rng!.magma; 
     if not ForAll( homs, 
-        h -> ( Source(h) = gps ) and ( Range(h) = gpr ) ) then 
+        h -> ( Source(h) = gps ) and IsSubgroup( gpr, Range(h) ) ) then 
         Error( "homs not a list of maps RootGroup(src) -> RootGroup(rng) " ); 
     fi; 
     obs := src!.objects; 
@@ -1329,33 +1334,6 @@ function( src, rng, homs, oims )
     fi; 
     if not ForAll( oims, o -> o in obr ) then 
         Error( "object images not all objects in <rng>" ); 
-    fi; 
-    return GroupoidHomomorphismFromHomogeneousDiscreteNC(src,rng,homs,oims); 
-end );
-
-InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
-    "method for a mapping from a homogeneous, discrete groupoid", true,
-    [ IsHomogeneousDiscreteGroupoid, IsGroupoid, IsHomogeneousList, 
-      IsHomogeneousList ], 0,
-function( src, rng, homs, oims ) 
-
-    local gps, obs, obr, lens; 
-
-    Info( InfoGroupoids,3, "method for GpdHomFromHomDiscNC to general gpd" );
-    obs := ObjectList( src ); 
-    obr := ObjectList( rng); 
-    lens := Length( obs ); 
-    if not ( Length(oims) = lens ) then 
-        Error( "<oims> has incorrect length" ); 
-    fi; 
-    if not ForAll( oims, o -> o in obr ) then 
-        Error( "object images not all objects in <rng>" ); 
-    fi; 
-    gps := src!.magma; 
-    if not ForAll( [1..lens], 
-        j -> ( Source( homs[j] ) = gps ) 
-               and ( Range( homs[j] ) = ObjectGroup( rng, oims[j] ) ) ) then 
-        Error( "homs <> list of maps ObjectGroup(src) -> ObjectGroup(rng),"); 
     fi; 
     return GroupoidHomomorphismFromHomogeneousDiscreteNC(src,rng,homs,oims); 
 end );
