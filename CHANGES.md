@@ -1,8 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
 ## Version 1.77 for GAP 4.14.0 (03/07/25)
- * (03/07/25) made extensive changes to the examples in the tests/manual 
-              added IsFullSubgroupoid
+ * (03/07/25) made extensive changes to the examples in folder tst/manual 
+              added operation IsFullSubgroupoid(gpd,subgpd)
               Subgroupoid now checks for SubgroupoidWithRays
               SubgroupoidByPieces now copes with mixed piece data
               added method for \= for two groupoid homomorphisms
