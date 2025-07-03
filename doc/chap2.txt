@@ -8,12 +8,12 @@
   [13Xsemigroup  with objects[113X and [13Xmonoid with objects[113X. The next chapter introduces
   morphisms  of  these structures. At a first reading of this manual, the user
   is  advised  to skip quickly through these first two chapters, and then move
-  on to groupoids in Chapter 3.[133X
+  on to groupoids in Chapter [14X4[114X.[133X
   
-  [33X[0;0YFor  the  definitions of the standard properties of groupoids we refer to P.
-  Higgins'  book ``Categories and Groupoids'' [Hig05] (originally published in
-  1971,  reprinted  by  TAC  in  2005),  and  to  R. Brown's book ``Topology''
-  [Bro88],  recently  revised  and  reissued  as  ``Topology  and  Groupoids''
+  [33X[0;0YThe  definitions  of  the  standard  properties of groupoids can be found in
+  Philip  Higgins'  book  ``Categories  and  Groupoids''  [Hig05]  (originally
+  published  in  1971,  reprinted  by TAC in 2005), and in Ronnie Brown's book
+  ``Topology''  [Bro88],  revised  and  reissued as ``Topology and Groupoids''
   [Bro06].[133X
   
   
@@ -130,7 +130,7 @@
     [4X[28X[ [m4 : -8 -> -8], [m3 : -7 -> -7] ][128X[104X
     [4X[25Xgap>[125X [27X[ a78^2, ba^2, ba^3 ]; [127X[104X
     [4X[28X[ fail, [m1 : -8 -> -8], [m3 : -8 -> -8] ][128X[104X
-    [4X[25Xgap>[125X [27X## this demonstrates non-associativity:  [127X[104X
+    [4X[25Xgap>[125X [27X## this demonstrates non-associativity with a78*b87*a78:[127X[104X
     [4X[25Xgap>[125X [27X[ a78*ba, ab*a78, a78*ba=ab*a78 ]; [127X[104X
     [4X[28X[ [m3 : -7 -> -8], [m4 : -7 -> -8], false ][128X[104X
     [4X[28X[128X[104X
@@ -172,11 +172,12 @@
   
   [33X[1;0Y[29X[2XSemigroupWithObjects[102X( [3Xargs[103X ) [32X function[133X
   [33X[1;0Y[29X[2XSinglePieceSemigroupWithObjects[102X( [3Xsgp[103X, [3Xobs[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XDomainWithSingleObject[102X( [3Xdom[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMagmaWithSingleObject[102X( [3Xdom[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSemigroupWithObjects[102X( [3Xobj[103X ) [32X filter[133X
   
   [33X[0;0YThe constructions in section [14X2.1[114X give a [10XSinglePieceSemigroupWithObjects[110X when
-  the  magma  is a semigroup. In the example we use a transformation semigroup
-  and [22X3[122X objects.[133X
+  the  magma  is a semigroup. In the following example we use a transformation
+  semigroup and [22X3[122X objects.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -208,14 +209,14 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YA  magma,  semigroup, monoid, or group can be made into a magma with objects
+  [33X[0;0YA magma, semigroup, monoid, or group [22XM[122X can be made into a magma with objects
   by  the  addition  of a single object. The two are algebraically isomorphic,
-  and  there  is one arrow (a loop) for each element in [22Xdom[122X. In the example we
-  take the semigroup [10Xsgp[110X of size [22X17[122X at the object [22X0[122X.[133X
+  and  there  is  one  arrow (a loop) for each element in [22XM[122X. In the example we
+  take the transformation semigroup above, which has size [22X17[122X at the object [22X0[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XS0 := DomainWithSingleObject( sgp, 0 );[127X[104X
+    [4X[25Xgap>[125X [27XS0 := MagmaWithSingleObject( sgp, 0 );[127X[104X
     [4X[28Xsemigroup with objects :-[128X[104X
     [4X[28X    magma = sgp<t,s,r>[128X[104X
     [4X[28X  objects = [ 0 ][128X[104X
@@ -233,6 +234,7 @@
   
   [33X[1;0Y[29X[2XMonoidWithObjects[102X( [3Xargs[103X ) [32X function[133X
   [33X[1;0Y[29X[2XSinglePieceMonoidWithObjects[102X( [3Xmon[103X, [3Xobs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsMonoidWithObjects[102X( [3Xobj[103X ) [32X filter[133X
   
   [33X[0;0YThe  constructions  in  section [14X2.1[114X give a [10XSinglePieceMonoidWithObjects[110X when
   the  magma  is a monoid. The example uses a finitely presented monoid with [22X2[122X
@@ -368,7 +370,7 @@
     [4X[25Xgap>[125X [27XLength( GeneratorsOfMagmaWithObjects( N3 ) ); [127X[104X
     [4X[28X50[128X[104X
     [4X[25Xgap>[125X [27X## the next command returns fail since the object sets are not disjoint: [127X[104X
-    [4X[25Xgap>[125X [27XN4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );  [127X[104X
+    [4X[25Xgap>[125X [27XN4 := UnionOfPieces( [ S123, MagmaWithSingleObject( sgp, -2 ) ] );  [127X[104X
     [4X[28Xfail[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X

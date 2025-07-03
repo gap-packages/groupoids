@@ -54,9 +54,9 @@
 
 <h3>2 <span class="Heading">Many-object structures</span></h3>
 
-<p>The aim of this package is to provide operations for finite groupoids. A <em>groupoid</em> is constructed from a group and a set of objects. In order to provide a sequence of categories, with increasing structure, mimicing those for groups, we introduce in this chapter the notions of <em>magma with objects</em>; <em>semigroup with objects</em> and <em>monoid with objects</em>. The next chapter introduces morphisms of these structures. At a first reading of this manual, the user is advised to skip quickly through these first two chapters, and then move on to groupoids in Chapter 3.</p>
+<p>The aim of this package is to provide operations for finite groupoids. A <em>groupoid</em> is constructed from a group and a set of objects. In order to provide a sequence of categories, with increasing structure, mimicing those for groups, we introduce in this chapter the notions of <em>magma with objects</em>; <em>semigroup with objects</em> and <em>monoid with objects</em>. The next chapter introduces morphisms of these structures. At a first reading of this manual, the user is advised to skip quickly through these first two chapters, and then move on to groupoids in Chapter <a href="chap4.html#X82F6A1AB798648F4"><span class="RefLink">4</span></a>.</p>
 
-<p>For the definitions of the standard properties of groupoids we refer to P. Higgins' book ``Categories and Groupoids'' <a href="chapBib.html#biBHiGpd">[Hig05]</a> (originally published in 1971, reprinted by TAC in 2005), and to R. Brown's book ``Topology'' <a href="chapBib.html#biBBrTop">[Bro88]</a>, recently revised and reissued as ``Topology and Groupoids'' <a href="chapBib.html#biBBrTopGpd">[Bro06]</a>.</p>
+<p>The definitions of the standard properties of groupoids can be found in Philip Higgins' book ``Categories and Groupoids'' <a href="chapBib.html#biBHiGpd">[Hig05]</a> (originally published in 1971, reprinted by TAC in 2005), and in Ronnie Brown's book ``Topology'' <a href="chapBib.html#biBBrTop">[Bro88]</a>, revised and reissued as ``Topology and Groupoids'' <a href="chapBib.html#biBBrTopGpd">[Bro06]</a>.</p>
 
 <p><a id="X7920BF45828AE5DE" name="X7920BF45828AE5DE"></a></p>
 
@@ -150,7 +150,7 @@ true
 [ [m4 : -8 -&gt; -8], [m3 : -7 -&gt; -7] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ a78^2, ba^2, ba^3 ]; </span>
 [ fail, [m1 : -8 -&gt; -8], [m3 : -8 -&gt; -8] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## this demonstrates non-associativity:  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## this demonstrates non-associativity with a78*b87*a78:</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ a78*ba, ab*a78, a78*ba=ab*a78 ]; </span>
 [ [m3 : -7 -&gt; -8], [m4 : -7 -&gt; -8], false ]
 
@@ -188,8 +188,9 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupWithObjects</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceSemigroupWithObjects</code>( <var class="Arg">sgp</var>, <var class="Arg">obs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainWithSingleObject</code>( <var class="Arg">dom</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The constructions in section <a href="chap2.html#X7920BF45828AE5DE"><span class="RefLink">2.1</span></a> give a <code class="code">SinglePieceSemigroupWithObjects</code> when the magma is a semigroup. In the example we use a transformation semigroup and <span class="SimpleMath">3</span> objects.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaWithSingleObject</code>( <var class="Arg">dom</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupWithObjects</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>The constructions in section <a href="chap2.html#X7920BF45828AE5DE"><span class="RefLink">2.1</span></a> give a <code class="code">SinglePieceSemigroupWithObjects</code> when the magma is a semigroup. In the following example we use a transformation semigroup and <span class="SimpleMath">3</span> objects.</p>
 
 
 <div class="example"><pre>
@@ -222,12 +223,12 @@ semigroup with objects :-
 
 </pre></div>
 
-<p>A magma, semigroup, monoid, or group can be made into a magma with objects by the addition of a single object. The two are algebraically isomorphic, and there is one arrow (a loop) for each element in <span class="SimpleMath">dom</span>. In the example we take the semigroup <code class="code">sgp</code> of size <span class="SimpleMath">17</span> at the object <span class="SimpleMath">0</span>.</p>
+<p>A magma, semigroup, monoid, or group <span class="SimpleMath">M</span> can be made into a magma with objects by the addition of a single object. The two are algebraically isomorphic, and there is one arrow (a loop) for each element in <span class="SimpleMath">M</span>. In the example we take the transformation semigroup above, which has size <span class="SimpleMath">17</span> at the object <span class="SimpleMath">0</span>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S0 := DomainWithSingleObject( sgp, 0 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S0 := MagmaWithSingleObject( sgp, 0 );</span>
 semigroup with objects :-
     magma = sgp&lt;t,s,r&gt;
   objects = [ 0 ]
@@ -248,6 +249,7 @@ semigroup with objects :-
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonoidWithObjects</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceMonoidWithObjects</code>( <var class="Arg">mon</var>, <var class="Arg">obs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoidWithObjects</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>The constructions in section <a href="chap2.html#X7920BF45828AE5DE"><span class="RefLink">2.1</span></a> give a <code class="code">SinglePieceMonoidWithObjects</code> when the magma is a monoid. The example uses a finitely presented monoid with <span class="SimpleMath">2</span> generators and <span class="SimpleMath">2</span> objects.</p>
 
 
@@ -377,7 +379,7 @@ magma with objects having 4 pieces :-
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( GeneratorsOfMagmaWithObjects( N3 ) ); </span>
 50
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## the next command returns fail since the object sets are not disjoint: </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N4 := UnionOfPieces( [ S123, DomainWithSingleObject( sgp, -2 ) ] );  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N4 := UnionOfPieces( [ S123, MagmaWithSingleObject( sgp, -2 ) ] );  </span>
 fail
 
 </pre></div>

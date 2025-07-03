@@ -11,26 +11,32 @@
   [10XAutomorphismGroup[110X 5.6-3 
   [2XAutomorphismGroupOfGroupoid[102X 5.6-3 
   [2XAutomorphismGroupoidOfGroupoid[102X 5.6-6 
+  [2XBoundaryOfSquare[102X 7.1-1 
   [2XConjugateGroupoid[102X 4.5-2 
    4.4  4.2-4 
   [2XDigraphOfGraphOfGroupoids[102X 6.5-1 
   [2XDigraphOfGraphOfGroups[102X 6.2-1 
   [2XDirectProductOp[102X 4.1-6 
-  [2XDiscreteSubgroupoid[102X 4.3-6 
-  [2XDiscreteTrivialSubgroupoid[102X 4.3-5 
-  [2XDomainWithSingleObject[102X, for groups 4.1-1 
-      for semigroups 2.2-1 
+  [2XDiscreteSubgroupoid[102X 4.3-7 
+  [2XDiscreteTrivialSubgroupoid[102X 4.3-6 
    4.4 
   [2XDoubleCoset[102X 4.4-1 
   [2XDoubleCosetRepresentatives[102X 4.4-1 
   [2XDoubleCosets[102X 4.4-1 
+  [2XDoubleGroupoid[102X 7.1-1 
+  [2XDoubleGroupoidHomomorphism[102X 7.5-1 
+  [2XDoubleGroupoidOfSquare[102X 7.1-1 
+  [2XDoubleGroupoidWithSingleObject[102X 7.3-2 
+  [2XDoubleGroupoidWithTrivialGroup[102X 7.3-1 
+  [2XDownArrow[102X 7.1-1 
   [2XElementOfArrow[102X, for groupoids 4.2-1 
       for magmas with objects 2.1-3 
-  [2XEmbedding[102X 4.1-6  6.4-2 
+  [2XEmbedding[102X, for fpa-groups 6.4-2 
+      for groupoids 4.1-6 
   [2XFpWeightedDigraph[102X 6.1-1 
   [2XFreeProductWithAmalgamation[102X 6.4-1 
   [2XFreeProductWithAmalgamationInfo[102X 6.4-1 
-  [2XFullTrivialSubgroupoid[102X 4.3-5 
+  [2XFullTrivialSubgroupoid[102X 4.3-6 
   [2XGeneratorsOfMagmaWithObjects[102X 2.4-1 
   [2XGeneratorsOfMonoidWithObjects[102X 2.4-1 
   [2XGeneratorsOfSemigroupWithObjects[102X 2.4-1 
@@ -67,9 +73,12 @@
   [2XHomomorphismToSinglePiece[102X, for groupoids 5.4-1 
       for magmas with objects 3.1-1 
   [2XHomset[102X 4.2-4 
-  identity subgroupoid 4.3-5 
+   7.1-7 
+  [2XHorizontalIdentities[102X 7.1-6 
+  [2XHorizontalInverses[102X 7.1-6 
+  [2XHorizontalProduct[102X 7.1-4 
+  identity subgroupoid 4.3-6 
   [2XIdentityArrow[102X 4.2-2 
-  [10XIdentityMapping[110X 5.4-1 
   [2XImageElementsOfRays[102X 5.2-5 
   [2XImagesOfObjects[102X 5.2-4 
   [2XInclusionMappingGroupoids[102X 5.3-1 
@@ -81,6 +90,8 @@
   , for groupoid homomorphisms 5.2-1 
   [2XIsBijectiveOnObjects[102X 3.3-2 
   , for groupoid homomorphisms 5.2-1 
+  [2XIsClosedUnderTransposition[102X 7.1-3 
+  [2XIsCommutingSquare[102X 7.1-2 
   [2XIsDirectProductWithCompleteDigraph[102X 2.1-4 
   [2XIsDiscreteMagmaWithObjects[102X 2.1-4 
   [2XIsDomainWithObjects[102X 2.1-2 
@@ -90,6 +101,7 @@
   [2XIsFpWeightedDigraph[102X 6.1-1 
   [2XIsFreeGroupoid[102X 4.1-3 
   [2XIsFreeProductWithAmalgamation[102X 6.4-1 
+  [2XIsFullSubgroupoid[102X 4.3-1 
   [2XIsGraphOfFpGroupoids[102X 6.5-1 
   [2XIsGraphOfFpGroups[102X 6.2-2 
   [2XIsGraphOfGroupoidsWord[102X 6.5-2 
@@ -110,6 +122,7 @@
   [10XIsMappingToSinglePieceRep[110X 3.1-1 
   [2XIsMappingWithObjectsByFunction[102X 3.4-1 
   [2XIsMatrixGroupoid[102X 4.1-3 
+  [2XIsMonoidWithObjects[102X 2.3-1 
   [10XIsMultiplicativeElementWithObjects[110X 2.1-3 
   [2XIsomorphismGroupoids[102X 5.5-2 
   [2XIsomorphismNewObjects[102X, for groupoids 5.3-3 
@@ -123,6 +136,7 @@
   [2XIsPermGroupoid[102X 4.1-3 
   [2XIsReducedGraphOfGroupoidsWord[102X 6.5-2 
   [2XIsReducedGraphOfGroupsWord[102X 6.3-2 
+  [2XIsSemigroupWithObjects[102X 2.2-1 
   [2XIsSinglePiece[102X 2.1-4 
   [2XIsSinglePieceDomain[102X 2.1-4 
   [2XIsSubgroupoid[102X 4.3-1 
@@ -130,6 +144,7 @@
   [2XIsSurjectiveOnObjects[102X 3.3-2 
   , for groupoid homomorphisms 5.2-1 
   [2XIsWideSubgroupoid[102X 4.3-1 
+  [2XLeftArrow[102X 7.1-1 
   [2XLeftCoset[102X 4.4-1 
   [2XLeftCosetRepresentatives[102X 4.4-1 
   [2XLeftCosetRepresentativesFromObject[102X 4.4-1 
@@ -139,17 +154,19 @@
   loop 4.2-3 
   [2XMagmaWithObjects[102X 2.1-1 
   [2XMagmaWithObjectsHomomorphism[102X 3.1-1 
-  [2XMappingToSinglePieceData[102X, for groupoids 5.1-1 
+  [2XMagmaWithSingleObject[102X, for groups 4.1-1 
+      for semigroups 2.2-1 
+  [2XMappingToSinglePieceData[102X, for groupoids 5.2-6 
       for magmas with objects 3.1-1 
   [2XMappingWithObjectsByFunction[102X 3.4-1 
   matrix representation 5.7 
-  [2XMaximalDiscreteSubgroupoid[102X 4.3-6 
+  [2XMaximalDiscreteSubgroupoid[102X 4.3-7 
   [2XMonoidWithObjects[102X 2.3-1 
   [2XNiceObjectAutoGroupGroupoid[102X 5.6-3 
   [2XNormalFormGGRWS[102X 6.4-1 
   [2XObjectCostar[102X 4.2-4 
   [2XObjectGroup[102X 4.1-2 
-  [2XObjectGroupHomomorphism[102X 5.2-6 
+  [2XObjectGroupHomomorphism[102X 5.2-7 
   [2XObjectList[102X, for groupoids 4.1-2 
   [10XObjectList[110X, for groupoids 4.1-4 
   [2XObjectList[102X, for magmas with objects 2.1-1 
@@ -158,14 +175,16 @@
   [2XParentMappingGroupoids[102X 5.3-2 
   [2XPieceIsomorphisms[102X 4.1-5 
   [2XPieceOfObject[102X 2.5-1 
-  [2XPieces[102X, for groupoids 4.1-4 
+  [2XPiecePositions[102X 4.3-5 
+  [2XPieces[102X, for double groupoids 7.2-1 
+      for groupoids 4.1-4 
       for magmas with objects 2.5-1 
   [2XPiecesOfMapping[102X 3.1-1 
-  [2XProjection[102X 4.1-6 
+  [2XProjection[102X, for groupoids 4.1-6 
   [10XRange[110X 3.1-1 
-  [2XRayArrowsOfGroupoid[102X 4.3-2 
+  [2XRayArrowsOfGroupoid[102X 4.3-3 
    4.0 
-  [2XRaysOfGroupoid[102X 4.3-2 
+  [2XRaysOfGroupoid[102X 4.3-3 
   [2XReducedGraphOfGroupoidsWord[102X 6.5-2 
   [2XReducedGraphOfGroupsWord[102X 6.3-2 
   [2XReducedImageElm[102X 6.4-2 
@@ -174,6 +193,7 @@
   representation by matrices 5.7 
   [2XRestrictedMappingGroupoids[102X 5.3-2 
   [2XRightActionGroupoid[102X 4.7-2 
+  [2XRightArrow[102X 7.1-1 
   [2XRightCoset[102X 4.4-1 
   [2XRightCosetRepresentatives[102X 4.4-1 
   [2XRightCosets[102X 4.4-1 
@@ -184,30 +204,39 @@
   [2XRootObject[102X, for groupoids 4.1-2 
       for magmas with objects 2.1-1 
   [2XSemigroupWithObjects[102X 2.2-1 
+  [2XSinglePieceBasicDoubleGroupoid[102X 7.1-1 
   [2XSinglePieceGroupoid[102X 4.1-1 
   [2XSinglePieceGroupoidWithRays[102X 4.7-1 
   [2XSinglePieceMagmaWithObjects[102X 2.1-1 
   [2XSinglePieceMonoidWithObjects[102X 2.3-1 
   [2XSinglePieceSemigroupWithObjects[102X 2.2-1 
-  [2XSinglePieceSubgroupoidByGenerators[102X 4.3-7 
+  [2XSinglePieceSubgroupoidByGenerators[102X 4.3-8 
   [2XSize[102X 4.1-4 
   [10XSource[110X 3.1-1 
+  [2XSquareOfArrows[102X 7.1-1 
   standard groupoid 4.1-1 
    4.2-4 
   [2XSubgroupoid[102X 4.3-1 
-  [2XSubgroupoidByObjects[102X 4.3-3 
+  [2XSubgroupoidByObjects[102X 4.3-2 
   [2XSubgroupoidByPieces[102X 4.3-4 
-  [2XSubgroupoidBySubgroup[102X 4.3-3 
+  [2XSubgroupoidBySubgroup[102X 4.3-2 
   [2XSubgroupoidsOfGraphOfGroupoids[102X 6.5-1 
-  [2XSubgroupoidWithRays[102X 4.3-2 
+  [2XSubgroupoidWithRays[102X 4.3-3 
   [2XTailOfArrow[102X, for groupoids 4.2-1 
       for magmas with objects 2.1-3 
   [2XTailOfGraphOfGroupsWord[102X 6.3-1 
-  tree groupoid 4.3-5 
-  trivial subgroupoid 4.3-5 
+  [2XTransposedSquare[102X 7.1-3 
+  tree groupoid 4.3-6 
+  trivial subgroupoid 4.3-6 
   [2XUnderlyingFunction[102X 3.4-1 
-  [2XUnionOfPieces[102X, for groupoids 4.1-4 
+  [2XUnionOfPieces[102X, for double groupoids 7.2-1 
+      for groupoids 4.1-4 
       for magmas with objects 2.5-1 
+  [2XUpArrow[102X 7.1-1 
+   7.1-7 
+  [2XVerticalIdentities[102X 7.1-6 
+  [2XVerticalInverses[102X 7.1-6 
+  [2XVerticalProduct[102X 7.1-5 
   [2XWordOfGraphOfGroupoidsWord[102X 6.5-2 
   [2XWordOfGraphOfGroupsWord[102X 6.3-1 
   

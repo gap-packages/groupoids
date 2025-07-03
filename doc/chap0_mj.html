@@ -32,10 +32,10 @@
 <h2>Calculations with finite groupoids and their homomorphisms</h2>
 
 <p>
-    1.76</p>
+    1.77</p>
 
 <p>
-    23 September 2024
+    3 July 2025
   </p>
 
 </div>
@@ -55,9 +55,9 @@
 
 <p><a id="X7AA6C5737B711C89" name="X7AA6C5737B711C89"></a></p>
 <h3>Abstract</h3>
-<p>The <strong class="pkg">groupoids</strong> package provides functions for computation with groupoids (categories with every arrow invertible) and their morphisms; for graphs of groups, and graphs of groupoids. The most basic structure introduced is that of <em>magma with objects</em>, followed by <em>semigroup with objects</em>, then <em>monoid with objects</em> and finally <em>groupoid</em> which is a <em>group with objects</em>.</p>
+<p>The <strong class="pkg">groupoids</strong> package provides functions for computation with groupoids (categories with every arrow invertible) and their morphisms; for graphs of groups, and graphs of groupoids. The most basic structure introduced is that of <em>magma with objects</em>; followed by <em>semigroup with objects</em>; then <em>monoid with objects</em>; and finally <em>groupoid</em>, which is a <em>group with objects</em>.</p>
 
-<p>It provides normal forms for Free Products with Amalgamation and for HNN-extensions when the initial groups have rewrite systems and the subgroups have finite index. This is described in Section <a href="chap6_mj.html#X7BAFCA3680E478AE"><span class="RefLink">6.2</span></a>.</p>
+<p>It provides normal forms for Free Products with Amalgamation and for HNN-extensions when the initial groups have rewrite systems and the subgroups have finite index.</p>
 
 <p>The <strong class="pkg">groupoids</strong> package was originally implemented in 2000 (as <strong class="pkg">GraphGpd</strong>) when the first author was studying for a Ph.D. in Bangor.</p>
 
@@ -67,7 +67,7 @@
 
 <p>In April 2017 the package was renamed again, as <strong class="pkg">groupoids</strong>.</p>
 
-<p>Recent versions implement many of the constructions described in the paper <a href="chapBib_mj.html#biBAlWe">[AW10]</a> for automorphisms of groupoids.</p>
+<p>Later versions implement many of the constructions described in the paper <a href="chapBib_mj.html#biBAlWe">[AW10]</a> for automorphisms of groupoids.</p>
 
 <p>Bug reports, comments, suggestions for additional features, and offers to implement some of these, will all be very welcome.</p>
 
@@ -75,7 +75,7 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2000-2024, Emma Moore and Chris Wensley.</p>
+<p>© 2000-2025, Emma Moore and Chris Wensley.</p>
 
 <p>The <strong class="pkg">groupoids</strong> package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</p>
 
@@ -166,12 +166,13 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X80780D287EDDB7BB">4.3-1 Subgroupoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X873E0914871858E8">4.3-2 SubgroupoidWithRays</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8600FA7B8051C9AC">4.3-3 SubgroupoidByObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8600FA7B8051C9AC">4.3-2 SubgroupoidByObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X873E0914871858E8">4.3-3 SubgroupoidWithRays</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7AEA9BF780CD6957">4.3-4 SubgroupoidByPieces</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7FE8F09A7C8CEC5B">4.3-5 FullTrivialSubgroupoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7ACFBE7D855A82A3">4.3-6 DiscreteSubgroupoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A9F29BD7D64DCC1">4.3-7 SinglePieceSubgroupoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X78C7A83980BAE937">4.3-5 PiecePositions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7FE8F09A7C8CEC5B">4.3-6 FullTrivialSubgroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7ACFBE7D855A82A3">4.3-7 DiscreteSubgroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A9F29BD7D64DCC1">4.3-8 SinglePieceSubgroupoidByGenerators</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X831AA9E8780235F2">4.4 <span class="Heading">Left, right and double cosets</span></a>
 </span>
@@ -212,7 +213,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X85A99D8A83511DDE">5.2-3 RootGroupHomomorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X837EEB9578EA1A78">5.2-4 ImagesOfObjects</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X791DC3F3852A6422">5.2-5 ImageElementsOfRays</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7C6775A178DB9D39">5.2-6 ObjectGroupHomomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8391526C7A02FF19">5.2-6 MappingToSinglePieceData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7C6775A178DB9D39">5.2-7 ObjectGroupHomomorphism</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7DBC80D8817CDA04">5.3 <span class="Heading">Special types of groupoid homomorphism</span></a>
 </span>
@@ -287,16 +289,37 @@
 <div class="ContChap"><a href="chap7_mj.html#X83B7E8A287C9284A">7 <span class="Heading">Double Groupoids</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X780820667A09FF65">7.1 <span class="Heading">Double groupoid squares</span></a>
 </span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X824F8FF387CF4A27">7.2 <span class="Heading">Further developments</span></a>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7F5D722C83CB9139">7.1-1 SinglePieceBasicDoubleGroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X83DF8EEE7BA72AA3">7.1-2 IsCommutingSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7F99A468819D7759">7.1-3 TransposedSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7D3737FA7E9E3ECA">7.1-4 HorizontalProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X873F01287A2DC41F">7.1-5 VerticalProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X79E6E4E97A23C257">7.1-6 HorizontalIdentities</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B8DEF5A7B5AEC46">7.1-7 <span class="Heading">Horizontal and vertical groupoids in <span class="SimpleMath">\(\Box(G)\)</span></span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7F319AA17ED13024">7.2 <span class="Heading">Double groupoids with more than one piece</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8589EFAE7935BEA6">7.2-1 UnionOfPieces</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X78E24657817C4D30">7.3 <span class="Heading">Generators of a double groupoid</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X80009143808725D5">7.3-1 DoubleGroupoidWithTrivialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7D135AFB83995A32">7.3-2 DoubleGroupoidWithSingleObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X85A6C1A685357E66">7.3-3 <span class="Heading">What is the double groupoid generated by a set of squares?</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X80E0318F78D2AD28">7.4 <span class="Heading">Starting with two groupoids</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X80E0318F78D2AD28">7.3 <span class="Heading">Starting with two groupoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X83F6AFC185148621">7.5 <span class="Heading">Double groupoid homomorphisms</span></a>
 </span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X86CA60238532FBAF">7.4 <span class="Heading">Commutative squares</span></a>
-</span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X87752436787B199D">7.5-1 DoubleGroupoidHomomorphism</a></span>
+</div></div>
 </div>
 <div class="ContChap"><a href="chap8_mj.html#X7F2BA6DC7AD84FBC">8 <span class="Heading">Technical Notes</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X7C5B725A7AED3C8D">8.1 <span class="Heading">Many object structures</span></a>

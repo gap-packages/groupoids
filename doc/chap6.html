@@ -466,11 +466,12 @@ fe2*fe1^-1
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfa := SinglePieceGroupoid( fa, [-2,-1] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ofa := One( fa );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gfa, "Gfa" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Uhy, "Uhy" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfb := SinglePieceGroupoid( fb, [-4,-3] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ofa := One( fa );;  ofb := One( fb );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ofb := One( fb );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gfb, "Gfb" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Uhybar, "Uhybar" );</span>
@@ -522,7 +523,14 @@ isomorphisms: [ groupoid homomorphism : Uhy -&gt; Uhybar
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WordOfGraphOfGroupoidsWord</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedGraphOfGroupoidsWord</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReducedGraphOfGroupoidsWord</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Having produced the graph of groupoids <code class="code">gg3</code>, we may construct left coset representatives; choose a graph of groupoids word; and reduce this to normal form. Compare the <code class="code">nw3</code> below with the normal form <code class="code">nw1</code> in subsection 4.3.2.</p>
+<p>Having produced the graph of groupoids <code class="code">gg3</code>, we may construct left coset representatives; choose a graph of groupoids word; and reduce this to normal form. Analogous to the word <span class="SimpleMath">a^7b^-6a^-11b^9a^7</span> in subsection <code class="func">ReducedGraphOfGroupsWord</code> (<a href="chap6.html#X78FA7C3F831AA6E4"><span class="RefLink">6.3-2</span></a>) we shall consider</p>
+
+<p class="pcenter">
+(a^7 : -1 \to -2)~(b^{-6} : -4 \to -4 )~(a^{-11} : -2 \to -1)~
+(b^9 : -3 \to -4)~(a^7 : -2 \to -1).
+</p>
+
+<p>Compare the normal form <code class="code">nw3</code> below with the normal form <code class="code">nw1</code> above.</p>
 
 
 <div class="example"><pre>
@@ -531,15 +539,15 @@ isomorphisms: [ groupoid homomorphism : Uhy -&gt; Uhybar
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := Arrow( Gfb, b^-6, -4, -4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f3 := Arrow( Gfa, a^-11, -2, -1 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f4 := Arrow( Gfb, b^9, -3, -4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f5 := Arrow( Gfa, a^7, -2, -1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f5 := Arrow( Gfa, a^7, -2, -2 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];</span>
 [ [a^7 : -1 -&gt; -2], 1, [b^-6 : -4 -&gt; -4], 2, [a^-11 : -2 -&gt; -1], 1, 
-  [b^9 : -3 -&gt; -4], 2, [a^7 : -2 -&gt; -1] ]
+  [b^9 : -3 -&gt; -4], 2, [a^7 : -2 -&gt; -2] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gw3 := GraphOfGroupoidsWord( gg3, 5, L3);</span>
 (5)[a^7 : -1 -&gt; -2].y.[b^-6 : -4 -&gt; -4].y^-1.[a^-11 : -2 -&gt; -1].y.[b^9 : 
--3 -&gt; -4].y^-1.[a^7 : -2 -&gt; -1](5)
+-3 -&gt; -4].y^-1.[a^7 : -2 -&gt; -2](5)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nw3 := ReducedGraphOfGroupoidsWord( gw3 );</span>
-(5)[a^-1 : -1 -&gt; -1].y.[b^-1 : -3 -&gt; -3].y^-1.[a^10 : -1 -&gt; -1](5)
+(5)[a^-1 : -1 -&gt; -1].y.[b^-1 : -3 -&gt; -3].y^-1.[a^10 : -1 -&gt; -2](5)
 
 </pre></div>
 
@@ -562,10 +570,12 @@ isomorphisms: [ groupoid homomorphism : Uhy -&gt; Uhybar
 <li><p><span class="SimpleMath">[b^-8 : -3 -&gt; -3]*[b^9 : -3 -&gt; -4] = [b^-1 : -3 -&gt; -3]*[b^2 : -3 -&gt; -4] stackrelbary}-&gt; [b^-1 : -3 -&gt; -3]*[a^3 : -1 -&gt; -2]</span></p>
 
 </li>
-<li><p><span class="SimpleMath">[a^3 := -1 -&gt; -2]*[a^7 : -2 -&gt; -1] = [a^10 : -1 -&gt; -1]</span></p>
+<li><p><span class="SimpleMath">[a^3 := -1 -&gt; -2]*[a^7 : -2 -&gt; -2] = [a^10 : -1 -&gt; -2]</span></p>
 
 </li>
 </ul>
+<p>So the resulting word is <span class="SimpleMath">~(a^-1 : -1, -1)(b^-1 : -3, -3)(a^10 : -1, -2)</span>. Notice that all the arrows except the final one are loops.</p>
+
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 

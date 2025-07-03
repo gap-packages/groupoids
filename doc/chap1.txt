@@ -37,17 +37,19 @@
   [33X[0;0YFor  version  1.05  the  package  was completely restructured, starting with
   [13Xmagmas  with  objects[113X  and  their mappings, and building up to groupoids via
   semigroups  with  objects  and  monoids  with objects. From version 1.07 the
-  package  includes  some  functions  to  implement constructions contained in
-  [AW10]. More functions will be released as soon as possible.[133X
+  package includes some functions to implement constructions for automorphisms
+  and homotopies, as described in [AW10]. More functions will be released when
+  time permits.[133X
   
-  [33X[0;0YOnce the package is loaded, it is possible to check the correct installation
-  by   running   the   test   suite   of   the   package  with  the  command  [10X
-  ReadPackage("groupoids","tst/testing.g");  [110X.  Additional  tests  may  be run
-  using     [10X     ReadPackage("groupoids","tst/testextra.g");.[110X     (The    file
+  [33X[0;0YOnce  the  package  is  loaded, it is possible to check the installation has
+  proceeded  correctly  by  running  the  test  suite  of the package with the
+  command [10X ReadPackage("groupoids","tst/testing.g"); [110X. Additional tests may be
+  run    using   [10X   ReadPackage("groupoids","tst/testextra.g");.[110X   (The   file
   [10X"tst/testall.g"[110X is used for automated testing.)[133X
   
   [33X[0;0YYou may reference this package by mentioning [BMPW02], [Moo01] and [AW10].[133X
   
-  [33X[0;0YAdditional  information can be found on the [13XComputational Higher Dimensional
-  Algebra[113X website at: [7Xhttps://github.com/cdwensley[107X.[133X
+  [33X[0;0YAdditional  information  on  [13XComputational Higher Dimensional Algebra[113X can be
+  found      in      the      notes      on      crossed      modules      at:
+  [7Xhttps://github.com/cdwensley/xmod-notes[107X.[133X
   

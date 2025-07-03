@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "groupoids",
 Subtitle := "Calculations with finite groupoids and their homomorphisms",
-Version := "1.76",
-Date := "23/09/2024", # dd/mm/yyyy format
+Version := "1.77",
+Date := "03/07/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -36,21 +36,21 @@ AcceptDate := "05/2015",
 
 SourceRepository := rec( 
   Type := "git", 
-  URL := "https://github.com/gap-packages/groupoids"
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://gap-packages.github.io/groupoids/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
+  URL := "https://github.com/gap-packages/groupoids" ),
+  IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+  PackageWWWHome  := "https://gap-packages.github.io/groupoids/",
+  README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+  PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+  ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
                                   "/releases/download/v", ~.Version, 
                                   "/", ~.PackageName, "-", ~.Version ), 
-SupportEmail := "c.d.wensley@bangor.ac.uk",
+
+SupportEmail := "cdwensley1234@btinternet.com",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
-"The groupoids package provides a collection of functions for computing with \
-finite groupoids, graph of groups, and graphs of groupoids. \
+"The groupoids package provides a collection of functions for computing \
+with finite groupoids, graph of groups, and graphs of groupoids. \
 These are based on the more basic structures of magmas with objects \
 and their mappings. \
 It provides functions for normal forms of elements in Free Products with \
@@ -63,8 +63,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Finite Groupoids and Graphs of Groups",
-  Autoload  := true
+  LongTitle := "Finite Groupoids and Graphs of Groups"
 ),
 
 Dependencies := rec(
@@ -76,8 +75,6 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := ReturnTrue,
-
-Autoload := false, 
 
 TestFile := "tst/testall.g", 
 
@@ -94,7 +91,7 @@ BannerString := Concatenation(
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 2000-2024, Emma Moore and Chris Wensley.<P/>\n", 
+            "© 2000-2025, Emma Moore and Chris Wensley.<P/>\n", 
             "The &groupoids; package is free software; you can redistribute ", 
             "it and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
@@ -102,18 +99,19 @@ AutoDoc := rec(
             "any later version.\n"
             ),
         Abstract := Concatenation( 
-            "The &groupoids; package provides functions for computation with\n",
-            "groupoids (categories with every arrow invertible) and their ", 
-            "morphisms; for graphs of groups, and graphs of groupoids.\n", 
+            "The &groupoids; package provides functions for computation ",
+            "with groupoids (categories with every arrow invertible) and ",
+            "their morphisms; for graphs of groups, ",
+            "and graphs of groupoids.\n", 
             "The most basic structure introduced is that of ", 
-            "<E>magma with objects</E>, followed by ", 
-            "<E>semigroup with objects</E>, then <E>monoid with objects</E> ", 
-            "and finally <E>groupoid</E> which is a ", 
+            "<E>magma with objects</E>; followed by ", 
+            "<E>semigroup with objects</E>; ",
+            "then <E>monoid with objects</E>; ", 
+            "and finally <E>groupoid</E>, which is a ", 
             "<E>group with objects</E>.\n <P/>", 
             "It provides normal forms for Free Products with Amalgamation ", 
             "and for HNN-extensions when the initial groups have ", 
             "rewrite systems and the subgroups have finite index. ", 
-            "This is described in Section <Ref Sect=\"sec-gphgps\"/>.",
             "<P/>", 
             "The &groupoids; package was originally implemented in 2000 ", 
             "(as <Package>GraphGpd</Package>) ", 
@@ -125,7 +123,7 @@ AutoDoc := rec(
             "in May 2015.\n <P/>", 
             "In April 2017 the package was renamed again, as ", 
             "<Package>groupoids</Package>.\n <P/>",  
-            "Recent versions implement many of the constructions ", 
+            "Later versions implement many of the constructions ", 
             "described in the paper <Cite Key='AlWe' /> ", 
             "for automorphisms of groupoids.\n <P/>", 
             "Bug reports, comments, suggestions for additional features, ", 

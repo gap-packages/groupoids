@@ -101,34 +101,32 @@ f_A(a : u \to v) * f_A(b : v \to w) ~=~ f_A(a*b : u \to w)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tup1 := [ DirectProductElement([m1,m2]), DirectProductElement([m2,m1]), </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             DirectProductElement([m3,m4]), DirectProductElement([m4,m3]) ];; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := GeneralMappingByElements( m, m, tup1 ); </span>
+&lt;general mapping: m -&gt; m &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMagmaHomomorphism( f1 ); </span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-8,-7] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( hom1 );</span>
-homomorphism to single piece magma: M78 -&gt; M78
- magma hom: &lt;mapping: m -&gt; m &gt; 
-object map: [ -8, -7 ] -&gt; [ -8, -7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom1 := MagmaWithObjectsHomomorphism( M78, M78, f1, [-7,-8] ); </span>
+magma with objects homomorphism : M78 -&gt; M78
+[ [ &lt;mapping: m -&gt; m &gt;, [ -7, -8 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Source( hom1 ), Range( hom1 ) ]; </span>
 [ M78, M78 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b87;</span>
 [m4 : -8 -&gt; -7]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">im1 := ImageElm( hom1, b87 );</span>
-[m3 : -8 -&gt; -7]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i56 := IsomorphismNewObjects( M78, [-5,-6] ); </span>
-magma with objects homomorphism : 
-[ [ IdentityMapping( m ), [ -5, -6 ] ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ib87 := ImageElm( i56, b87 );</span>
-[m4 : -5 -&gt; -6]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M65 := Range( i56);; </span>
+[m3 : -7 -&gt; -8]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i65 := IsomorphismNewObjects( M78, [-6,-5] ); </span>
+magma with objects homomorphism : [ [ IdentityMapping( m ), [ -6, -5 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ib87 := ImageElm( i65, b87 );</span>
+[m4 : -6 -&gt; -5]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M65 := Range( i65);; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( M65, "M65" ); </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">j56 := InverseGeneralMapping( i56 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImagesOfObjects( j56 ); </span>
-[ -7, -8 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">comp := j56 * hom1;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">j65 := InverseGeneralMapping( i65 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImagesOfObjects( j65 ); </span>
+[ -8, -7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">comp := j65 * hom1;</span>
 magma with objects homomorphism : M65 -&gt; M78
 [ [ &lt;mapping: m -&gt; m &gt;, [ -7, -8 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( comp, ib87 );</span>
-[m3 : -8 -&gt; -7]
+[m3 : -7 -&gt; -8]
 
 </pre></div>
 
@@ -139,13 +137,13 @@ magma with objects homomorphism : M65 -&gt; M78
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M4 := UnionOfPieces( [ M78, M65 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">images := [ MappingToSinglePieceData( hom1 )[1], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">MappingToSinglePieceData( j56 )[1] ]; </span>
-[ [ &lt;mapping: m -&gt; m &gt;, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">MappingToSinglePieceData( j65 )[1] ]; </span>
+[ [ &lt;mapping: m -&gt; m &gt;, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map4 := HomomorphismToSinglePiece( M4, M78, images ); </span>
 magma with objects homomorphism : 
-[ [ &lt;mapping: m -&gt; m &gt;, [ -8, -7 ] ], [ IdentityMapping( m ), [ -7, -8 ] ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( map4, b87 );</span>
-[m3 : -8 -&gt; -7]
+[ [ &lt;mapping: m -&gt; m &gt;, [ -7, -8 ] ], [ IdentityMapping( m ), [ -8, -7 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( map4, b87 ); </span>
+[m3 : -7 -&gt; -8]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( map4, ib87 );</span>
 [m4 : -8 -&gt; -7]
 
@@ -215,24 +213,21 @@ true
 <h5>3.3-1 HomomorphismByUnion</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomomorphismByUnion</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">homs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>When <span class="SimpleMath">f : M -&gt; N</span> and <span class="SimpleMath">N</span> has more than one connected component, then <span class="SimpleMath">f</span> is a union of homomorphisms, one for each piece in the range.</p>
+<p>When <span class="SimpleMath">f : M -&gt; N</span> and <span class="SimpleMath">N</span> has more than one connected component, then <span class="SimpleMath">M</span> also has more than one component and <span class="SimpleMath">f</span> is a union of homomorphisms, one for each piece in the range.</p>
+
+<p>See section <a href="chap5.html#X795C8DE37AED7B44"><span class="RefLink">5.5</span></a> for the equivalent operation with groupoids.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N4 := UnionOfPieces( [ M78, T123 ] );</span>
-magma with objects having 2 pieces :-
-1: semigroup with objects :-
-    magma = sgp&lt;t2,s2,r2&gt;
-  objects = [ -13, -12, -11 ]
-2: M78
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N4 := UnionOfPieces( [ M78, T123 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h14 := HomomorphismByUnionNC( N1, N4, [ hom1, shom ] ); </span>
 magma with objects homomorphism : 
 [ magma with objects homomorphism : M78 -&gt; M78
-    [ [ &lt;mapping: m -&gt; m &gt;, [ -8, -7 ] ] ], magma with objects homomorphism : 
+    [ [ &lt;mapping: m -&gt; m &gt;, [ -7, -8 ] ] ], magma with objects homomorphism : 
     [ [ smap, [ -11, -12, -13 ] ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( h14, a78 );</span>
-[m1 : -7 -&gt; -8]
+[m1 : -8 -&gt; -7]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( h14, r31 );</span>
 [Transformation( [ 4, 1, 3, 3 ] ) : -11 -&gt; -13]
 
@@ -281,14 +276,15 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">flip := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      </span>
 function( a ) ... end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">flipmap := MappingWithObjectsByFunction( M78, M78, flip, [-8,-7] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">swapmap := MappingWithObjectsByFunction( M78, M78, swap, [-7,-8] );</span>
 magma with objects mapping by function : M78 -&gt; M78
 function: function ( a )
     return Arrow( M78, a![1], a![3], a![2] );
 end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a78; ImageElm( flipmap, a78 );                                     </span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a78; ImageElm( swapmap, a78 );              </span>
 [m2 : -7 -&gt; -8]
 [m2 : -8 -&gt; -7]
 

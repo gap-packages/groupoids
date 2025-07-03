@@ -47,8 +47,7 @@
   
   [33X[0;0YIn  recent  versions  there  have been a number of changes of function name,
   such  as  [10XIsDigraph[110X  becoming  [10XIsGroupoidDigraph[110X.  This is in order to avoid
-  conflicts  with  the [5XDigraphs[105X package. The intention is that these functions
-  can revert to the original names in due course.[133X
+  conflicts with the [5XDigraphs[105X package.[133X
   
   [33X[0;0YIn  version  1.62  of  October  2018  there  were significant changes to the
   operations  constructing free products with amalgamation and HNN extensions.
@@ -59,10 +58,11 @@
   double  cosets of groupoids. (The initial declaration of LeftCoset was moved
   to the [5XUtils[105X package.)[133X
   
-  [33X[0;0YVersion  1.73 of February 2023 contains a first attempt at an implementation
-  of  double groupoids: see Chapter [14X7[114X. This is very experimental material, and
-  will soon be changed or extended. A more general version of double groupoids
-  will be introduced in the [5XXMod[105X package.[133X
+  [33X[0;0YVersion 1.73 of February 2023 contained a first attempt at an implementation
+  of  double  groupoids,  as described in Chapter [14X7[114X. This was then extensively
+  revised  in  version 1.77 of July 2025. This experimental material is liable
+  to  be  changed and extended. A more general version of double groupoids has
+  been introduced in the [5XXMod[105X package.[133X
   
   
   [1X9.2 [33X[0;0YWhat needs to be done next?[133X[101X
@@ -85,6 +85,4 @@
         [10XIsRewritingSystem[110X;[133X
   
   [30X    [33X[0;6Yin [5XXMod[105X, continue to work on crossed modules over groupoids;[133X
-  
-  [30X    [33X[0;6Yextend the material on double groupoids.[133X
   

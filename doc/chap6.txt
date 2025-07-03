@@ -467,11 +467,12 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XGfa := SinglePieceGroupoid( fa, [-2,-1] );;[127X[104X
+    [4X[25Xgap>[125X [27Xofa := One( fa );;[127X[104X
     [4X[25Xgap>[125X [27XSetName( Gfa, "Gfa" );[127X[104X
     [4X[25Xgap>[125X [27XUhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;[127X[104X
     [4X[25Xgap>[125X [27XSetName( Uhy, "Uhy" );[127X[104X
     [4X[25Xgap>[125X [27XGfb := SinglePieceGroupoid( fb, [-4,-3] );;[127X[104X
-    [4X[25Xgap>[125X [27Xofa := One( fa );;  ofb := One( fb );;[127X[104X
+    [4X[25Xgap>[125X [27Xofb := One( fb );;[127X[104X
     [4X[25Xgap>[125X [27XSetName( Gfb, "Gfb" );[127X[104X
     [4X[25Xgap>[125X [27XUhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;[127X[104X
     [4X[25Xgap>[125X [27XSetName( Uhybar, "Uhybar" );[127X[104X
@@ -524,7 +525,16 @@
   
   [33X[0;0YHaving  produced  the  graph  of  groupoids [10Xgg3[110X, we may construct left coset
   representatives; choose a graph of groupoids word; and reduce this to normal
-  form. Compare the [10Xnw3[110X below with the normal form [10Xnw1[110X in subsection 4.3.2.[133X
+  form.    Analogous    to   the   word   [22Xa^7b^-6a^-11b^9a^7[122X   in   subsection
+  [2XReducedGraphOfGroupsWord[102X ([14X6.3-2[114X) we shall consider[133X
+  
+  
+  [24X[33X[0;6Y(a^7 : -1 \to -2)~(b^{-6} : -4 \to -4 )~(a^{-11} : -2 \to -1)~ (b^9 : -3 \to
+  -4)~(a^7 : -2 \to -1).[133X
+  
+  [124X
+  
+  [33X[0;0YCompare the normal form [10Xnw3[110X below with the normal form [10Xnw1[110X above.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -532,15 +542,15 @@
     [4X[25Xgap>[125X [27Xf2 := Arrow( Gfb, b^-6, -4, -4 );;[127X[104X
     [4X[25Xgap>[125X [27Xf3 := Arrow( Gfa, a^-11, -2, -1 );;[127X[104X
     [4X[25Xgap>[125X [27Xf4 := Arrow( Gfb, b^9, -3, -4 );;[127X[104X
-    [4X[25Xgap>[125X [27Xf5 := Arrow( Gfa, a^7, -2, -1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xf5 := Arrow( Gfa, a^7, -2, -2 );;[127X[104X
     [4X[25Xgap>[125X [27XL3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];[127X[104X
     [4X[28X[ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, [128X[104X
-    [4X[28X  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -1] ][128X[104X
+    [4X[28X  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -2] ][128X[104X
     [4X[25Xgap>[125X [27Xgw3 := GraphOfGroupoidsWord( gg3, 5, L3);[127X[104X
     [4X[28X(5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : [128X[104X
-    [4X[28X-3 -> -4].y^-1.[a^7 : -2 -> -1](5)[128X[104X
+    [4X[28X-3 -> -4].y^-1.[a^7 : -2 -> -2](5)[128X[104X
     [4X[25Xgap>[125X [27Xnw3 := ReducedGraphOfGroupoidsWord( gw3 );[127X[104X
-    [4X[28X(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -1](5)[128X[104X
+    [4X[28X(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -2](5)[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -561,5 +571,8 @@
   [30X    [33X[0;6Y[22X[b^-8  :  -3  -> -3]*[b^9 : -3 -> -4] = [b^-1 : -3 -> -3]*[b^2 : -3 ->
         -4] stackrelbary}-> [b^-1 : -3 -> -3]*[a^3 : -1 -> -2][122X[133X
   
-  [30X    [33X[0;6Y[22X[a^3 := -1 -> -2]*[a^7 : -2 -> -1] = [a^10 : -1 -> -1][122X[133X
+  [30X    [33X[0;6Y[22X[a^3 := -1 -> -2]*[a^7 : -2 -> -2] = [a^10 : -1 -> -2][122X[133X
+  
+  [33X[0;0YSo  the  resulting  word  is [22X~(a^-1 : -1, -1)(b^-1 : -3, -3)(a^10 : -1, -2)[122X.
+  Notice that all the arrows except the final one are loops.[133X
   
