@@ -66,11 +66,11 @@ groupoid with 2 pieces:
 <     objects: [ -9, -8, -5 ]
    parent gpd: single piece groupoid: < s5, [ -9, -8, -5 ] >
    root group: c3 = <[ (1,2,3) ]>
-  conjugators: [ (), (1,3,5,4), (1,2,4,5) ]
+         rays: [ (), (1,3,5,4), (1,2,4,5) ]
 <     objects: [ -7, -6 ]
    parent gpd: single piece groupoid: < s5, [ -7, -6 ] >
    root group: c4b = <[ (1,2,5,4) ]>
-  conjugators: [ (), (1,4,3,2,5) ]
+         rays: [ (), (1,4,3,2,5) ]
 gap> SetName( Uc3c4, "Uc3c4" ); 
 gap> IsWideSubgroupoid( Gs5, Uc3c4 );
 true

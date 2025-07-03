@@ -72,7 +72,7 @@ left and double cosets of groupoids.
 <P/> 
 Version 1.73 of February 2023 contained a first attempt at an implementation
 of double groupoids, as described in Chapter <Ref Chap='chap-double' />.
-This was then extensively revised in version 1.77 of May 2025.
+This was then extensively revised in version 1.77 of July 2025.
 This experimental material is liable to be changed and extended. 
 A more general version of double groupoids has been introduced in the 
 <Package>XMod</Package> package. 

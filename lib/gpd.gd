@@ -243,10 +243,12 @@ DeclareOperation( "DoubleCosetRepresentatives",
 #F  Subgroupoid( <args> )              
 #O  IsSubgroupoid( <G>, <S> )
 #O  IsWideSubgroupoid( <G>, <S> )                            
+#O  IsFullSubgroupoid( <G>, <S> )                            
 ## 
 DeclareGlobalFunction( "Subgroupoid" );
 DeclareOperation( "IsSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
+DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
 
 ############################################################################# 
 ## 

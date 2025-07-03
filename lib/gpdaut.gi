@@ -306,7 +306,7 @@ function( agpd )
     gp := gpd!.magma; 
     if IsSinglePieceDomain( gpd ) then  
         n := Length( ObjectList( gpd ) ); 
-        aut := AutomorphismGroup( gpd!.magma ); 
+        aut := AutomorphismGroup( gpd!.magma );
         return Factorial( n ) * Size( aut ) * Size( gp )^(n-1); 
     elif IsDiscreteDomainWithObjects( gpd ) 
              and IsHomogeneousDomainWithObjects( gpd ) then 

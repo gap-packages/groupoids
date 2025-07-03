@@ -1031,7 +1031,7 @@ InstallGlobalFunction( SubdomainWithObjects, function( arg )
     if isgpd then 
         if ( nargs = 2 ) then 
             return Subgroupoid( arg[1], arg[2] ); 
-        elif ( nargs = 2 ) then 
+        elif ( nargs = 3 ) then 
             return Subgroupoid( arg[1], arg[2], arg[3] ); 
         elif ( nargs = 4 ) then 
             return Subgroupoid( arg[1], arg[2], arg[3], arg[4] ); 

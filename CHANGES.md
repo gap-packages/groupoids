@@ -1,7 +1,13 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.76dev for GAP 4.14.0 (27/04/25)
- * (10/02/25) made various changes to the manual 
+## Version 1.77 for GAP 4.14.0 (03/07/25)
+ * (03/07/25) made extensive changes to the examples in the tests/manual 
+              added IsFullSubgroupoid
+              Subgroupoid now checks for SubgroupoidWithRays
+              SubgroupoidByPieces now copes with mixed piece data
+              added method for \= for two groupoid homomorphisms
+              documented the operation PiecePositions
+              revised HomomorphismByUnion - deals with many pieces
 
 ## Version 1.76 for GAP 4.13.1 (23/09/24) 
  * (23/09/24) fix error caused re immutable ExtRepOfObj by GAP pull #5808

@@ -38,7 +38,7 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses, "for a list of groupoid maps",
     true, [ IsGeneralMappingWithObjectsCollection ], 0,
 function( homlist ) 
     Info( InfoGroupoids, 1, 
-          "#I  using IsGeneratorsOfMagmaWithInverses in gpdhom.gi\n" ); 
+          "#I  using IsGeneratorsOfMagmaWithInverses in gpdhom.gi" ); 
     return ForAll( homlist, 
         m -> ( ( Source(m) = Range(m) ) 
                and IsEndomorphismWithObjects(m) 
@@ -83,7 +83,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     if ( ( nargs < 2 ) 
          or ( nargs > 5 )  
          or not IsMagmaWithObjects( arg[1] ) 
-         or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) ) then 
+         or ( ( nargs > 2 ) and not IsMagmaWithObjects( arg[2] ) ) ) then
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
     fi;
@@ -174,7 +174,8 @@ function( gpd, sgpd )
     local sobs, o1, c1, mappings, comps, m, gens, mor;
 
     if not IsSubgroupoid( gpd, sgpd ) then
-        Error( "arg[2] is not a subgroupoid of arg[1]" );
+        ## Error( "arg[2] is not a subgroupoid of arg[1]" );
+        return fail;
     fi;
     gens := GeneratorsOfGroupoid( sgpd );
     if IsSinglePiece( sgpd ) then
@@ -204,13 +205,46 @@ end );
 
 InstallMethod( InclusionMappingGroupoids, "for a subgroupoid of a groupoid", 
     true, [ IsGroupoid, IsGroupoid ], 0,
-function( gpd, sgpd )
-    if not IsSubdomainWithObjects( gpd, sgpd ) then
-        Error( "arg[2] is not a submagma of arg[1]" );
-    fi;
-    if not IsSinglePiece( sgpd ) then
-        Error( "not yet implemented when arg[2] is not connected" );
-    fi;
+function( A, B )
+
+    local PA, PB, nA, nB, obsA, try, maps, i, p, found, j, q, inc, incobs; 
+
+    if not ( HasPieces( A ) or HasPieces( B ) ) then 
+        Error( "unexpected case in InclusionMappingGroupoids" ); 
+    fi; 
+    PA := Pieces( A ); 
+    PB := Pieces( B ); 
+    nA := Length( PA ); 
+    nB := Length( PB );
+    obsA := ObjectList( A );
+    try := [1..nA];
+    maps := [1..nB]; 
+
+    for i in [1..nB] do
+        p := PB[i];
+        found := false; 
+        j := 0; 
+        while ( ( not found ) and ( j < Length( try ) ) ) do 
+            j := j+1; 
+            q := PA[j];
+            inc := InclusionMappingGroupoids( q, p );
+            if not ( inc = fail ) then
+                incobs := ImagesOfObjects( inc );
+                if not ForAll( incobs, o -> o in obsA ) then
+                    inc := fail;
+                fi;
+            fi;
+            if not ( inc = fail ) then 
+                found := true; 
+                maps[i] := inc; 
+                obsA := Difference( obsA, incobs );
+            fi; 
+        od; 
+        if ( not found ) then 
+            return fail; 
+        fi; 
+    od; 
+    return HomomorphismByUnion( B, A, maps );
 end );
 
 InstallMethod( InclusionMappingGroupoids, "from hom discrete to single piece", 
@@ -285,7 +319,7 @@ function( mor, U )
         imres := List( genU, g -> ImageElm( mor, g ) ); 
         V := SinglePieceSubgroupoidByGenerators( Range(mor), imres );
         res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres ); 
-        SetIsSurjective( mor, true ); 
+        SetIsSurjective( res, true ); 
         if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
             SetIsInjective( res, true );
         fi;
@@ -332,11 +366,13 @@ function( mor )
     local gpd1, gpd2, ob2, imobs, roh, mgi, ray, gp2, im2, hom;
 
     Info( InfoGroupoids, 3, 
-          "method for RootGroupHomomorphism in gpdhom.gi" ); 
+          "method for RootGroupHomomorphism in gpdhom.gi" );
+    return MappingToSinglePieceData( mor )[1][1];
+
     gpd2 := Range( mor ); 
     ob2 := gpd2!.objects; 
     imobs := ImagesOfObjects( mor ); 
-    roh := MappingToSinglePieceData( mor )[1][1]; 
+    roh := MappingToSinglePieceData( mor )[1][1];
     if ( imobs[1] = ob2[1] ) then  ## root maps to root 
         hom := roh; 
     elif ( HasIsDirectProductWithCompleteDigraph( gpd2 ) and 
@@ -386,6 +422,26 @@ function( mor, obj )
     fi; 
     return hom; 
 end ); 
+
+############################################################################
+##
+#M  ImageElementsOfRays . . . . . .  . . . . . . . . . . for a groupoid hom 
+##
+InstallMethod( ImageElementsOfRays, "for a groupoid homomorphism", 
+    true, [ IsGroupoidHomomorphism ], 0,
+function( hom )
+    local  data;
+    if HasMappingToSinglePieceData( hom ) then 
+        data := MappingToSinglePieceData( hom );
+        if IsList( data[1] ) then
+            if ( Length( data[1] ) = 3 ) then
+                return data[1][3];
+            fi;
+        fi;
+    fi;
+    Error( "fail with ImageElementsOfRays" );
+    return fail;
+end );
 
 ############################################################################
 ##
@@ -600,6 +656,31 @@ function ( map )
     od; 
 end );
 
+#############################################################################
+##
+#M  \=( <hom1>, <hom2> ) . . . . test if two groupoid homomorphisms are equal
+##
+InstallMethod( \=, "for a groupoid homomorphisms", true, 
+    [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ], 
+function ( hom1, hom2 )
+    local  genS, a, im1, im2;
+    Info( InfoGroupoids, 2, "running \= for groupoid homomorphisms" );
+    if not ( Source( hom1 ) = Source( hom2 ) )
+       and ( Range( hom1 ) = Range( hom2 ) ) then
+        Info( InfoGroupoids, 2, "unequal source and/or range" );
+        return false;
+    fi;
+    genS := GeneratorsOfGroupoid( Source( hom1 ) );
+    for a in genS do
+        im1 := ImageElm( hom1, a );
+        im2 := ImageElm( hom2, a );
+        if ( im1 <> im2 ) then
+            return false;
+        fi;
+    od;
+    return true;
+end );
+
 ############################################################################
 ##
 #M  GroupoidHomomorphismFromSinglePieceNC 
@@ -652,7 +733,7 @@ function( src, rng, gens, images )
         IsGeneralMappingWithObjects, true, 
         IsGroupWithObjectsHomomorphism, true, 
         IsHomomorphismToSinglePiece, true, 
-        RespectsMultiplication, true ); 
+        RespectsMultiplication, true );
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
     SetIsHomomorphismFromSinglePiece( map, true ); 
@@ -1214,23 +1295,22 @@ function( A, B )
     try := [1..n]; 
     used := [ ]; 
     isos := [1..n]; 
-    for i in [1..n] do 
+
+    for i in [1..n] do
         p := PA[i]; 
         found := false; 
         try := Difference( try, used ); 
         j := 0; 
         while ( ( not found ) and ( j < Length( try ) ) ) do 
             j := j+1; 
-            k := try[j]; 
-            if ( i <> k ) then 
-                q := PB[k]; 
-                iso := IsomorphismGroupoids( p, q );
-                if not ( iso = fail ) then 
-                    found := true; 
-                    isos[i] := iso; 
-                    Add( used, k ); 
-                fi; 
-            fi;
+            k := try[j];
+            q := PB[k]; 
+            iso := IsomorphismGroupoids( p, q );
+            if not ( iso = fail ) then 
+                found := true; 
+                isos[i] := iso; 
+                Add( used, k ); 
+            fi; 
         od; 
         if ( not found ) then 
             return fail; 

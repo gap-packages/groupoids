@@ -18,15 +18,16 @@ GPD_CONSTRUCTORS := Concatenation(
 
 SUB_CONSTRUCTORS := Concatenation( 
     "The standard operations which construct a subgroupoid are:\n", 
-    "1.  SubgroupoidByPieces( groupoid, list of [imobs,hom] pairs );\n",
+    "1.  SubgroupoidByObjects( groupoid, list of objects );\n", 
     "2.  SubgroupoidBySubgroup( groupoid, group );\n", 
-    "3.  SubgroupoidByObjects( groupoid, list of objects );\n", 
-    "4.  MaximalDiscreteSubgroupoid( groupoid );\n", 
-    "5.  DiscreteSubgroupoid( groupoid, list of obs, list of subgps );\n",
-    "6.  FullTrivialSubgroupoid( groupoid );\n", 
-    "7.  DiscreteTrivialSubgroupoid( groupoid );\n", 
-    "8.  Subgroupoid( one of the previous parameter options );" );
-##  and these are called by the GlobalFunction Subgroupoid 
+    "3.  SubgroupoidWithRays( groupoid, root group, rays );\n", 
+    "4.  SubgroupoidByPieces( groupoid, list of [imobs,hom] pairs );\n",
+    "5.  FullTrivialSubgroupoid( groupoid );\n", 
+    "6.  DiscreteTrivialSubgroupoid( groupoid );\n", 
+    "7.  DiscreteSubgroupoid( groupoid, list of obs, list of subgps );\n",
+    "8.  MaximalDiscreteSubgroupoid( groupoid );\n", 
+    "9.  Subgroupoid( one of the previous parameter options );" );
+##  and these are all called by the GlobalFunction Subgroupoid 
 
 #############################################################################
 ##
@@ -649,7 +650,7 @@ function( gpd )
                 else
                     Print( rgp, "\n" );
                 fi; 
-                Print( "  conjugators: ", c!.rays, "\n" );
+                Print( "         rays: ", c!.rays, "\n" );
             fi; 
         od;
     fi;
@@ -659,14 +660,14 @@ end );
 ##
 #M  \=( <G1>, <G2> )  . . . . . . . . . . . . test if two groupoids are equal
 ##
-InstallMethod( \=, "for a connected groupoid", true, ## IsIdenticalObj,
+InstallMethod( \=, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece, IsGroupoid ], 
 function ( G1, G2 )
 
-    ## Print( "### method 1 for =\n" ); 
+    Info( InfoGroupoids, 2, "### method 1 for G1 = G2" ); 
     if not IsSinglePiece( G2 ) then
         return false;
-    fi; 
+    fi;
     if not ( IsDirectProductWithCompleteDigraph( G1 ) = 
              IsDirectProductWithCompleteDigraph( G2 ) ) then
         return false;
@@ -694,7 +695,7 @@ InstallMethod( \=, "for a groupoid", true, [ IsGroupoid, IsGroupoid ],
 function ( G1, G2 )
     local c1, c2, len, obj, i, j;
 
-    ## Print( "### method 2 for =\n" ); 
+    Info( InfoGroupoids, 2, "### method 2 for G1 = G2" ); 
     c1 := Pieces( G1 );
     c2 := Pieces( G2 );
     len := Length( c1 );
@@ -1515,9 +1516,10 @@ end );
 
 #############################################################################
 ##
-#F  Subgroupoid( <gpd>, <subgp> )        connected groupoids
+#F  Subgroupoid( <gpd>, <subgp> )        subgroupoid by subgroup
+#F  Subgroupoid( <gpd>, <comp> )         subgroupoid as list of [sgp,obs]
+#F  Subgroupoid( <gpd>, <obs> )          subgroupoid by objects
 #F  Subgroupoid( <gpd>, <gps>, <obs> )   discrete subgroupoid 
-#F  Subgroupoid( <gpd>, <comp> )         subgroupoid as list of pieces
 ##
 InstallGlobalFunction( Subgroupoid, function( arg )
 
@@ -1530,24 +1532,32 @@ InstallGlobalFunction( Subgroupoid, function( arg )
         return fail;
     fi;
     # by subgroup
-    if ( ( nargs = 2 ) and IsSinglePiece( arg[1] )
-                       and IsGroup( arg[2] ) ) then
-        gp := gpd!.magma;
-        Info( InfoGroupoids, 2, "connected subgroupoid" );
-        sub := SinglePieceGroupoid( arg[2], gpd!.objects );
-        SetParentAttr( sub, gpd );
+    if ( nargs = 2 ) then
+        if ( IsSinglePiece( arg[1] ) and IsGroup( arg[2] ) ) then
+            gp := gpd!.magma;
+            Info( InfoGroupoids, 2, "connected subgroupoid" );
+            sub := SinglePieceGroupoid( arg[2], gpd!.objects );
+            SetParentAttr( sub, gpd );
+        elif IsHomogeneousList( arg[2] ) then
+            if IsList( arg[2][1] ) then 
+                Info( InfoGroupoids, 2, "subgroupoid by pieces" );
+                sub := SubgroupoidByPieces( arg[1], arg[2] );
+            else
+                Info( InfoGroupoids, 2, "subgroupoid by objects" );
+                sub := SubgroupoidByObjects( arg[1], arg[2] );
+            fi;
+        fi;
         return sub;
     fi;
     # discrete subgroupoid
-    if ( ( nargs = 3 ) and IsHomogeneousList( arg[2] ) 
-                       and IsHomogeneousList( arg[3] ) ) then
-        Info( InfoGroupoids, 2, "discrete subgroupoid" );
-        return DiscreteSubgroupoid( arg[1], arg[2], arg[3] );
-    fi;
-    # list of pieces
-    if ( ( nargs = 2 ) and IsHomogeneousList( arg[2] ) ) then
-        Info( InfoGroupoids, 2, "subgroupoid by pieces" );
-        return SubgroupoidByPieces( arg[1], arg[2] );
+    if ( nargs = 3 ) then
+        if ( IsHomogeneousList( arg[2] ) and IsHomogeneousList( arg[3] ) ) then
+            Info( InfoGroupoids, 2, "discrete subgroupoid" );
+            return DiscreteSubgroupoid( arg[1], arg[2], arg[3] );
+        elif ( IsGroup( arg[2] ) and IsHomogeneousList( arg[3] ) ) then
+            Info( InfoGroupoids, 2, "subgroupoid with rays" );
+            return SubgroupoidWithRays( arg[1], arg[2], arg[3] );
+        fi;
     fi;
     Info( InfoGroupoids, 1, SUB_CONSTRUCTORS );
     return fail;
@@ -1560,7 +1570,6 @@ end );
 InstallMethod( IsSubgroupoid, "generic method for two groupoids", true,
     [ IsGroupoid, IsGroupoid], 0,
 function( G, U ) 
-    ## Print( "IsSubgroupoid 1 : ", G, " >= ", U, "\n" ); 
     if ( HasParentAttr( U ) and ( ParentAttr( U ) = G ) ) then 
         return true;
     fi;
@@ -1573,7 +1582,6 @@ end );
 InstallMethod( IsSubgroupoid, "generic method for two groupoids", true,
     [ IsGroupoid, IsGroupoid and IsSinglePiece], 0,
 function( G, U )
-    ## Print( "IsSubgroupoid 2 : ", G, " >= ", U, "\n" ); 
     if ( HasParentAttr( U ) and ( ParentAttr( U ) = G ) ) then 
         return true;
     fi;
@@ -1620,6 +1628,30 @@ function( D, S )
              ObjectList( D ) = ObjectList( S ) ); 
 end ); 
 
+InstallMethod( IsFullSubgroupoid, "for two groupoids", true, 
+    [ IsGroupoid, IsGroupoid ], 0, 
+function( D, S )
+    local  r, rgpS, pD, rgpD, pS;
+    if IsSinglePiece( S ) then 
+        r := RootObject( S );
+        rgpS := ObjectGroup( S, r );
+        pD := PieceOfObject( D, r );
+        rgpD := ObjectGroup( pD, r );
+        return ( rgpS = rgpD );
+    else
+        for pS in Pieces( S ) do
+            r := RootObject( pS );
+            rgpS := ObjectGroup( pS, r );
+            pD := PieceOfObject( D, r );
+            rgpD := ObjectGroup( pD, r );
+            if not ( rgpS = rgpD ) then
+                return false;
+            fi;
+        od;
+        return true;
+    fi;
+end ); 
+
 ############################################################################
 ##
 #M  SubgroupoidBySubgroup
@@ -1658,7 +1690,7 @@ function( gpd, piecedata )
           gobs, grays, nobspi, j, ob, rays, rootpi, rootpos, obpos;
 
     Info( InfoGroupoids, 2, "calling SubgroupoidByPieces" );
-    p1 := piecedata[1]; 
+    p1 := piecedata[1];
     if IsList( p1 ) then 
         withrays := (("IsSinglePieceRaysRep" in RepresentationsOfObject(gpd)) 
                      or ( Length( p1 ) = 3))
@@ -1666,7 +1698,7 @@ function( gpd, piecedata )
         len := Length( piecedata );
         pieceU := ListWithIdenticalEntries( len, 0 ); 
         for i in [1..len] do 
-            pi := piecedata[i]; 
+            pi := piecedata[i];
             if withrays then 
                 if not ( Length( pi ) = 3 ) then 
                     ## keep the rays of the larger gpd 
@@ -1688,7 +1720,12 @@ function( gpd, piecedata )
                     sub := SubgroupoidWithRays( par, pi[1], pi[3] ); 
                 fi; 
             else 
-                sub := SinglePieceGroupoid( pi[1], pi[2] ); 
+                sub := SubgroupoidByObjects( gpd, pi[2] );
+                if ( Length( pi ) = 2 ) then 
+                    sub := SubgroupoidBySubgroup( sub, pi[1] );
+                else
+                    sub := SubgroupoidWithRays( sub, pi[1], pi[3] );
+                fi;
             fi; 
             pieceU[i] := sub;
         od;
