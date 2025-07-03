@@ -59,8 +59,6 @@ In recent versions there have been a number of changes of function
 name, such as <C>IsDigraph</C> becoming <C>IsGroupoidDigraph</C>. 
 This is in order to avoid conflicts with the 
 <Package>Digraphs</Package> package.
-The intention is that these functions can revert to the original names 
-in due course.
 <P/>
 In version 1.62 of October 2018 there were significant changes to the 
 operations constructing free products with amalgamation and HNN extensions. 
@@ -72,11 +70,11 @@ left and double cosets of groupoids.
 (The initial declaration of LeftCoset was moved to the 
 <Package>Utils</Package> package.) 
 <P/> 
-Version 1.73 of February 2023 contains a first attempt at an 
-implementation of double groupoids: 
-see Chapter <Ref Chap='chap-double' />. 
-This is very experimental material, and will soon be changed or extended. 
-A more general version of double groupoids will be introduced in the 
+Version 1.73 of February 2023 contained a first attempt at an implementation
+of double groupoids, as described in Chapter <Ref Chap='chap-double' />.
+This was then extensively revised in version 1.77 of July 2025.
+This experimental material is liable to be changed and extended. 
+A more general version of double groupoids has been introduced in the 
 <Package>XMod</Package> package. 
 
 </Section>
@@ -112,9 +110,6 @@ convert <C>GraphOfGroupsRewritingSystem</C> to the category
 </Item>
 <Item>
 in <Package>XMod</Package>, continue to work on crossed modules over groupoids;
-</Item>
-<Item>
-extend the material on double groupoids.
 </Item>
 </List>
 

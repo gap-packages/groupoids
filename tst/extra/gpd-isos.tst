@@ -101,11 +101,11 @@ gap> ic022 := ImageElm( hom022, c0 );
 gap> hom10 := GroupoidHomomorphismFromSinglePiece( G1, G0, gens1, gens0 );; 
 gap> rgh10 := RootGroupHomomorphism( hom10 );;
 gap> ia10 := ImageElm( hom10, a1 ); 
-[(11,22,33) : 1 -> 2]
+[(11,22,33) : -10 -> -9]
 gap> ib10 := ImageElm( hom10, b1 ); 
-[(22,33) : 2 -> 3]
+[(22,33) : -9 -> -8]
 gap> ic10 := ImageElm( hom10, c1 ); 
-[(11,33) : 1 -> 3]
+[(11,33) : -10 -> -8]
 
 gap> gens00 := [ Arrow( G0, (11,22,33), -9, -9 ), 
 >                Arrow( G0, (22,33), -9, -9 ), 
@@ -115,13 +115,13 @@ gap> hom200 := GroupoidHomomorphismFromSinglePiece( G2, G0, gens2, gens00 );;
 gap> rgh200 := RootGroupHomomorphism( hom200 );;
 gap> a22 := Arrow( G2, [ (1,2,3), s3p.2 ], -7, -6 );;
 gap> ia22 := ImageElm( hom200, a22 ); 
-[(11,22,33) : 2 -> 3]
+[(11,22,33) : -9 -> -8]
 gap> b22 := Arrow( G2, [ s3p.1, s3f.2 ], -6, -5 );;
 gap> ib22 := ImageElm( hom200, b22 ); 
-[(22,33) : 3 -> 1]
+[(22,33) : -8 -> -10]
 gap> c22 := a22 * b22; 
 [[ (1,3), f2^-1*f1^2 ] : -7 -> -5]
 gap> ic22 := ImageElm( hom200, c22 ); 
-[(11,33) : 2 -> 1]
+[(11,33) : -9 -> -10]
 gap> ##
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

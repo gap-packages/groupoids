@@ -98,7 +98,7 @@ gap> rt32 := r31 * t12;
 gap> tsr1 := ts13 * r31;
 [Transformation( [ 3, 3, 3 ] ) : -1 -> -1]
 
-gap> S0 := DomainWithSingleObject( sgp, 0 );
+gap> S0 := MagmaWithSingleObject( sgp, 0 );
 semigroup with objects :-
     magma = sgp<t,s,r>
   objects = [ 0 ]
@@ -208,7 +208,7 @@ gap> Length( GeneratorsOfMagmaWithObjects( N3 ) );
 50
 
 ## this should fail since the object sets are not disjoint: 
-gap> N4 := UnionOfPieces( S123, DomainWithSingleObject( sgp, -2 ) );  
+gap> N4 := UnionOfPieces( S123, MagmaWithSingleObject( sgp, -2 ) );  
 fail
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );; 

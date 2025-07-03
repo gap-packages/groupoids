@@ -51,21 +51,24 @@ end );
 ############################################################################# 
 ## 
 #M  Arrow( <mwo>, <elt>, <tail>, <head> ) 
-#M  ArrowNC( <isgpdelt>, <elt>, <tail>, <head> ) 
+#M  ArrowNC( <mwo> <isgpdelt>, <elt>, <tail>, <head> ) 
 ##
 InstallMethod( ArrowNC, 
-    "for boolean, element, tail and head", true,  
-    [ IsBool, IsMultiplicativeElement, IsObject, IsObject ], 0, 
-function( isge, e, t, h ) 
+    "for mwo, boolean, element, tail and head", true,  
+    [ IsMagmaWithObjects, IsBool, IsMultiplicativeElement, IsObject, IsObject ],
+    0, 
+function( mwo, isge, e, t, h ) 
 
     local obs, elt, fam;
 
+Info( InfoGroupoids, 1, "standard method for ArrowNC" );
     if isge then 
         fam := IsGroupoidElementFamily; 
-        elt := Objectify( IsGroupoidElementType, [ e, t, h ] );
+        elt := Objectify( IsGroupoidElementType, [ mwo, e, t, h ] );
     else 
         fam := IsMultiplicativeElementWithObjectsFamily; 
-        elt := Objectify( IsMultiplicativeElementWithObjectsType, [ e, t, h ] ); 
+        elt := Objectify( IsMultiplicativeElementWithObjectsType,
+                   [ mwo, e, t, h ] ); 
     fi; 
     return elt; 
 end ); 
@@ -104,7 +107,7 @@ function( mwo, e, t, h )
             Error( "(e : t -> h) not an element in <piece>," ); 
         fi;   
     fi; 
-    return ArrowNC( false, e, t, h ); 
+    return ArrowNC( mwo, false, e, t, h ); 
 end );
 
 #############################################################################
@@ -112,15 +115,19 @@ end );
 #M  ElementOfArrow
 #M  TailOfArrow
 #M  HeadOfArrow
+#M  GroupoidOfArrow
 ##
 InstallMethod( ElementOfArrow, "generic method for magma with objects element", 
-    true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![1] ); 
-
-InstallMethod( TailOfArrow, "generic method for magma with objects element", 
     true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![2] ); 
 
-InstallMethod( HeadOfArrow, "generic method for magma with objects element", 
+InstallMethod( TailOfArrow, "generic method for magma with objects element", 
     true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![3] ); 
+
+InstallMethod( HeadOfArrow, "generic method for magma with objects element", 
+    true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![4] ); 
+
+InstallMethod( GroupoidOfArrow, "generic method for magma with objects element", 
+    true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![1] ); 
 
 #############################################################################
 ##
@@ -130,8 +137,8 @@ InstallMethod( HeadOfArrow, "generic method for magma with objects element",
 InstallMethod( String, "for an element in a magma with objects", true, 
     [ IsMultiplicativeElementWithObjects ], 0, 
 function( e ) 
-    return( STRINGIFY( "[", String( e![1] ), " : ", String( e![2] ), 
-                       " -> ", String( e![3] ), "]" ) ); 
+    return( STRINGIFY( "[", String( e![2] ), " : ", String( e![3] ), 
+                       " -> ", String( e![4] ), "]" ) ); 
 end );
 
 InstallMethod( ViewString, "for an element in a magma with objects", true, 
@@ -146,7 +153,7 @@ InstallMethod( ViewObj, "for an element in a magma with objects", true,
 InstallMethod( PrintObj, "for an element in a magma with objects",
     [ IsMultiplicativeElementWithObjects ],
 function ( e )
-    Print( "[", e![1], " : ", e![2], " -> ", e![3], "]" );
+    Print( "[", e![2], " : ", e![3], " -> ", e![4], "]" );
 end );
 
 InstallMethod( ViewObj, "for an element in a magma with objects",
@@ -160,7 +167,7 @@ InstallMethod( \=, "for two multiplicative elements with objects",
     IsIdenticalObj, [ IsMultiplicativeElementWithObjects, 
                       IsMultiplicativeElementWithObjects ], 0,
 function( e1, e2 )
-    return ForAll( [1..3], i -> ( e1![i] = e2![i] ) ); 
+    return ForAll( [1..4], i -> ( e1![i] = e2![i] ) ); 
 end );
 
 #############################################################################
@@ -171,11 +178,14 @@ InstallMethod( \<, "for two multiplicative elements with objects",
     IsIdenticalObj, [ IsMultiplicativeElementWithObjects, 
                       IsMultiplicativeElementWithObjects ], 0,
 function( e1, e2 )
-    if ( e1![2] < e2![2] ) then 
+    if ( e1![1] <> e2![1] ) then
+        Error( "e1, e2 belong to different mwos" );
+    fi;
+    if ( e1![3] < e2![3] ) then 
         return true; 
-    elif ( (e1![2] = e2![2]) and (e1![3] < e2![3]) ) then 
+    elif ( (e1![3] = e2![3]) and (e1![4] < e2![4]) ) then 
         return true; 
-    elif ( (e1![2] = e2![2]) and (e1![3] = e2![3]) and (e1![1] < e2![1]) ) then 
+    elif ( (e1![3] = e2![3]) and (e1![4] = e2![4]) and (e1![2] < e2![2]) ) then 
         return true; 
     else 
         return false; 
@@ -193,10 +203,12 @@ function( e1, e2 )
 
     local prod; 
 
+    if ( e1![1] <> e2![1] ) then
+        Error( "e1, e2 belong to different mwos" );
+    fi;
     ## elements are composable? 
-    if ( ( e1![3] = e2![2] ) and 
-         ( FamilyObj( e1![1] ) = FamilyObj( e2![1] ) ) ) then 
-        return ArrowNC( false, e1![1]*e2![1], e1![2], e2![3] ); 
+    if ( e1![4] = e2![3] ) then 
+        return ArrowNC( e1![1], false, e1![2]*e2![2], e1![3], e2![4] ); 
     else 
         return fail; 
     fi;  
@@ -211,8 +223,8 @@ InstallMethod( \^, "for an element in a magma with objects and a PosInt",
 function( e, p ) 
     ##  should be able to invert an identity element 
     ##  groupoids use their own method 
-    if ( e![3] = e![2] ) then 
-        return ArrowNC( false, e![1]^p, e![2], e![3] ); 
+    if ( e![4] = e![3] ) then 
+        return ArrowNC( e![1], false, e![2]^p, e![3], e![4] ); 
     else 
         return fail; 
     fi;  
@@ -228,10 +240,10 @@ function( e )
 
     local ord;
 
-    if not ( e![2] = e![3] ) then
+    if not ( e![3] = e![4] ) then
         Error( "tail of e <> head of e," );
     fi;
-    return Order( e![1] );
+    return Order( e![2] );
 end );
 
 
@@ -329,25 +341,13 @@ InstallMethod( \in, "for mwo element and a standard magma with objects", true,
     [ IsMultiplicativeElementWithObjects, 
       IsMagmaWithObjects and IsSinglePiece ], 0,
 function( e, mwo ) 
-
-    local obs; 
-
-    obs := mwo!.objects; 
-    if not ( (e![2] in obs) and (e![3] in obs) ) then 
-        return false; 
-    fi; 
-    if ( HasIsDirectProductWithCompleteDigraph( mwo ) 
-         and IsDirectProductWithCompleteDigraph( mwo ) ) then 
-        return (e![1] in mwo!.magma);
-    else 
-        Error( "mwo not a standard magma with objects" ); 
-    fi; 
+    return ( e![1] = mwo );
 end ); 
 
 InstallMethod( \in, "for mwo element and a union of pieces", true, 
     [ IsMultiplicativeElementWithObjects, IsMagmaWithObjects and HasPieces ], 0,
 function( e, mwo )
-    return e in PieceOfObject( mwo, e![2] ); 
+    return e in PieceOfObject( mwo, e![3] ); 
 end );
 
 #############################################################################
@@ -422,7 +422,7 @@ function( mwo )
     local kind; 
 
     kind := KindOfDomainWithObjects( [ mwo ] ); 
-    if ( kind = 1 ) then 
+    if ( kind = 1 ) or ( kind = 5 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
     elif ( kind = 2 ) then 
         Print( "monoid with objects :-\n" ); 
@@ -444,7 +444,7 @@ function( mwo )
     local kind; 
 
     kind := KindOfDomainWithObjects( [ mwo ] ); 
-    if ( kind = 1 ) then 
+    if ( kind = 1 ) or ( kind = 5 ) then 
         Print( "#I  should be using special groupoid method!\n" ); 
     elif ( kind = 2 ) then 
         Print( "monoid with objects :-\n" ); 
@@ -472,6 +472,7 @@ function( dwo )
       elif (kind=2) then Print( "monoid with objects" ); 
       elif (kind=3) then Print( "semigroup with objects" ); 
       elif (kind=4) then Print( "magma with objects" ); 
+      elif (kind=5) then Print( "double groupoid" ); 
       elif (kind=0) then Error( "invalid domain with objects," ); 
     fi;
     Print( " having ", np, " pieces :-\n" ); 
@@ -606,7 +607,7 @@ function( mwo )
         for j in obs do 
             for g in mgens do
                 k := k+1; 
-                gens[k] := ArrowNC( false, g, i, j ); 
+                gens[k] := ArrowNC( mwo, false, g, i, j ); 
             od;
         od;
     od;
@@ -652,12 +653,12 @@ function( mwo )
     m := mwo!.magma; 
     mgens := GeneratorsOfMonoid( m ); 
     id := One( m ); 
-    gens1 := List( mgens, g -> ArrowNC( false, g, o1, o1 ) );
+    gens1 := List( mgens, g -> ArrowNC( mwo, false, g, o1, o1 ) );
     gens2 := ListWithIdenticalEntries( (nobs-1)^2, 0 ); 
     k := 0;
     for i in [2..nobs] do 
-        gens2[k+1] := ArrowNC( false, id, o1, obs[i] ); 
-        gens2[k+2] := ArrowNC( false, id, obs[i], o1 ); 
+        gens2[k+1] := ArrowNC( mwo, false, id, o1, obs[i] ); 
+        gens2[k+2] := ArrowNC( mwo, false, id, obs[i], o1 ); 
         k := k+2; 
     od;
     gens := Immutable( Concatenation( gens1, gens2 ) ); 
@@ -755,6 +756,9 @@ function( comps, dom )
     ## determine which kind:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dgpd, 6=dom 
     if ForAll( comps, c -> "IsGroupoid" in CategoriesOfObject( c ) ) then 
         kind := 1; 
+    elif ForAll( comps,
+                 c -> "IsDoubleGroupoid" in CategoriesOfObject( c ) ) then
+        kind := 5;
     elif ForAll( comps, 
                  c -> "IsMonoidWithObjects" in CategoriesOfObject( c ) ) then 
         kind := 2; 
@@ -763,7 +767,7 @@ function( comps, dom )
         kind := 3; 
     elif ForAll( comps, 
                  c -> "IsMagmaWithObjects" in CategoriesOfObject( c ) ) then 
-        kind := 4; 
+        kind := 4;
     else 
         Print( "kind not in {1,2,3,4,5} so TryNextMethod()\n" ); 
         TryNextMethod(); 
@@ -779,27 +783,27 @@ function( comps, dom )
     else 
         Info( InfoGroupoids, 2, "reordering pieces by first object" ); 
         pieces := List( L, i -> comps[i] );
-    fi; 
+    fi;
     if ( kind = 1 ) then 
         fam := IsGroupoidFamily; 
         filter := IsPiecesRep and IsGroupoid and IsAssociative; 
         mwo := Objectify( IsGroupoidPiecesType, rec() );
-#?      SetIsGroupoidInPieces( mwo, true ); 
+    elif ( kind = 5 ) then 
+        fam := IsDoubleGroupoidFamily; 
+        filter := IsPiecesRep and IsDoubleGroupoid and IsAssociative; 
+        mwo := Objectify( IsDoubleGroupoidPiecesType, rec() ); 
     elif ( kind = 2 ) then 
         fam := IsMonoidWithObjectsFamily; 
         filter := IsPiecesRep and IsMonoidWithObjects; 
         mwo := Objectify( IsMonoidWOPiecesType, rec() );
-#?      SetIsMonoidWithObjectsInPieces( mwo, true ); 
     elif ( kind = 3 ) then 
         fam := IsSemigroupWithObjectsFamily; 
         filter := IsPiecesRep and IsSemigroupWithObjects; 
         mwo := Objectify( IsSemigroupWOPiecesType, rec() );
-#?      SetIsSemigroupWithObjectsInPieces( mwo, true ); 
     elif ( kind = 4 ) then 
         fam := IsMagmaWithObjectsFamily; 
         filter := IsPiecesRep and IsMagmaWithObjects; 
         mwo := Objectify( IsMagmaWOPiecesType, rec() ); 
-#?      SetIsMagmaWithObjectsInPieces( mwo, true ); 
     else 
         ## ?? (23/04/10) fam := FamilyObj( [ pieces ] ); 
         Error( "union of unstructured domains not yet implemented," ); 
@@ -827,13 +831,13 @@ end );
 
 #############################################################################
 ##
-#M  DomainWithSingleObject
+#M  MagmaWithSingleObject
 ##
 ##  Note that there is another method for [ IsGroup, IsObject ] in gpd.gi 
 ##
-InstallMethod( DomainWithSingleObject, "generic method for domain, object",
-    true, [ IsDomain, IsObject ], 0,
-function( dom, obj ) 
+InstallMethod( MagmaWithSingleObject, "generic method for magma, object",
+    true, [ IsMagma, IsObject ], 0,
+function( mgm, obj ) 
 
     local o; 
 
@@ -846,16 +850,16 @@ function( dom, obj )
     if not IsObject( o ) then 
         Error( "<obj> not a scalar or singleton list," ); 
     fi; 
-    if ( HasIsAssociative( dom ) and IsAssociative( dom ) 
-         and ( "IsMagmaWithInverses" in CategoriesOfObject( dom ) ) 
-         and IsMagmaWithInverses( dom ) ) then 
-        return SinglePieceGroupoidNC( dom, [o] ); 
-    elif ( HasIsMonoid( dom ) and IsMonoid( dom ) ) then 
-        return SinglePieceMonoidWithObjects( dom, [o] ); 
-    elif ( HasIsSemigroup( dom ) and IsSemigroup( dom ) ) then 
-        return SinglePieceSemigroupWithObjects( dom, [o] ); 
-    elif ( ( "IsMagma" in CategoriesOfObject(dom) ) and IsMagma(dom) ) then 
-        return SinglePieceMagmaWithObjects( dom, [o] ); 
+    if ( HasIsAssociative( mgm ) and IsAssociative( mgm ) 
+         and ( "IsMagmaWithInverses" in CategoriesOfObject( mgm ) ) 
+         and IsMagmaWithInverses( mgm ) ) then 
+        return SinglePieceGroupoidNC( mgm, [o] ); 
+    elif ( HasIsMonoid( mgm ) and IsMonoid( mgm ) ) then 
+        return SinglePieceMonoidWithObjects( mgm, [o] ); 
+    elif ( HasIsSemigroup( mgm ) and IsSemigroup( mgm ) ) then 
+        return SinglePieceSemigroupWithObjects( mgm, [o] ); 
+    elif ( ( "IsMagma" in CategoriesOfObject(mgm) ) and IsMagma(mgm) ) then 
+        return SinglePieceMagmaWithObjects( mgm, [o] ); 
     else 
         Error( "unstructured domains with objects not yet implemented," ); 
     fi; 
@@ -1027,7 +1031,7 @@ InstallGlobalFunction( SubdomainWithObjects, function( arg )
     if isgpd then 
         if ( nargs = 2 ) then 
             return Subgroupoid( arg[1], arg[2] ); 
-        elif ( nargs = 2 ) then 
+        elif ( nargs = 3 ) then 
             return Subgroupoid( arg[1], arg[2], arg[3] ); 
         elif ( nargs = 4 ) then 
             return Subgroupoid( arg[1], arg[2], arg[3], arg[4] ); 

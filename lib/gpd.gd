@@ -57,7 +57,7 @@ DeclareGlobalFunction( "Groupoid" );
 ############################################################################# 
 ##           
 #O  SinglePieceGroupoidNC( <group>, <objects> )              
-#O  SinglePieceGroupoid( <group>, <objects> )              
+#O  SinglePieceGroupoid( <group>, <objects> )        
 #O  GroupoidWithRays( <rootgp>, <objects>, <rays> )
 #O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
 #O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
@@ -243,10 +243,12 @@ DeclareOperation( "DoubleCosetRepresentatives",
 #F  Subgroupoid( <args> )              
 #O  IsSubgroupoid( <G>, <S> )
 #O  IsWideSubgroupoid( <G>, <S> )                            
+#O  IsFullSubgroupoid( <G>, <S> )                            
 ## 
 DeclareGlobalFunction( "Subgroupoid" );
 DeclareOperation( "IsSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
+DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
 
 ############################################################################# 
 ## 

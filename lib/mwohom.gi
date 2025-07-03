@@ -74,8 +74,6 @@ function( m1, m2, fun, imo )
         RespectsMultiplication, true, 
         IsGeneralMappingToSinglePiece, true, 
         IsMappingWithObjectsByFunction, true );
-    ## ok := IsInjectiveOnObjects( map ); 
-    ## ok := IsSurjectiveOnObjects( map ); 
     return map; 
 end );
 
@@ -205,7 +203,7 @@ function( gpd1, gpd2, homs )
     ok := IsInjectiveOnObjects( map ); 
     ok := IsSurjectiveOnObjects( map ); 
     ok := IsGroupWithObjectsHomomorphism( map ); 
-    ok := IsHomomorphismFromSinglePiece( map ); 
+    ok := IsHomomorphismFromSinglePiece( map );
     return map; 
 end );
 
@@ -216,7 +214,7 @@ function( mwo1, mwo2, homs )
 
     local pieces, o2, j, h;
 
-    Info( InfoGroupoids, 3, "homomorphism to a single piece groupoid:", homs ); 
+    Info( InfoGroupoids, 3, "morphism to a single piece groupoid:\n", homs ); 
     pieces := Pieces( mwo1 ); 
     if not ( Length( pieces ) = Length( homs ) ) then 
         Error( "there should be one homomorphism for each piece in mwo1" ); 
@@ -264,7 +262,6 @@ function( mag1, mag2, images )
         PiecesOfMapping, images,
         IsGeneralMappingToSinglePiece, false );
     inj := IsInjectiveOnObjects( map ); 
-    #? added 10/05/06 -- it is useful ?? 
     pieces1 := Pieces( mag1 );
     nc1 := Length( pieces1 );
     pieces2 := Pieces( mag2 );
@@ -289,12 +286,11 @@ end );
 InstallMethod( HomomorphismByUnion, 
     "generic method for a magma mapping", true,
     [ IsMagmaWithObjects, IsMagmaWithObjects, IsList ], 0, 
-    #? (15/06/11) was SinglePiece: needs revising for multi-component cases? 
 function( mag1, mag2, maps )
 
     local pieces1, nc1, pieces2, nc2, lenmaps, lenpieces, npieces, expand, 
-          src1, g, flat1, pos1, pos2, piecesmap, L, i, j, k, m, filt, 
-          mapj, src;
+          src1, img1, g, ppos, pos2, piecesmap, L, i, j, k, m, filt, 
+          mapj, srcj;
 
     if not ForAll( maps, IsGeneralMappingWithObjects ) then 
         Error( "all maps should have IsGeneralMappingWithObjects" ); 
@@ -334,59 +330,55 @@ function( mag1, mag2, maps )
         fi;
     od;
     Info( InfoGroupoids, 3, "expanded maps:", expand );
-    pos1 := ListWithIdenticalEntries( lenmaps, 0 );
     src1 := List( expand, Source );
-    for j in [1..lenmaps] do
-        g := src1[j];
-        if IsSinglePiece( g ) then
-            pos1[j] := [ Position( pieces1, g ) ];
-        else
-            pos1[j] := List( Pieces(g),
-                              c -> Position( pieces1, c ) );
-        fi;
-    od;
-    flat1 := Flat( pos1 );
-    Info( InfoGroupoids, 3, " pos1 = ", pos1 );
-    Info( InfoGroupoids, 3, "flat1 = ", flat1 );
-    if ( fail in flat1 ) then
+    img1 := UnionOfPieces( List( maps, m -> ImagesSource( m ) ) );
+    ppos := PiecePositions( mag2, img1 );
+    Info( InfoGroupoids, 3, " ppos = ", ppos );
+    if ( fail in ppos ) then
         Error( "not all m have source in mag1" );
     fi;
-    if not ( Set( flat1 ) = [1..Length(pieces1)] ) then
-        Error( "pieces of mag1 <> union of sources in maps" );
-    fi;
-    ##  more efficient to use PieceNrOfObject here ??
-    pos2 := List( maps, m -> Position( pieces2, 
-                      PieceOfObject( mag2, Range(m)!.objects[1] ) ) );
-    if ( fail in pos2 ) then
-        Error( "not all m have range in mag2" );
-    fi;
-    if IsDuplicateFree( pos2 ) then
-        ## reorder if necessary
-        Info( InfoGroupoids, 2, "duplicate free case" );
-        L := [1..nc2];
-        SortParallel( pos2, L );
-        piecesmap := List( L, j -> expand[j] );
+    ## construct the constituent mappings
+    piecesmap := ListWithIdenticalEntries( nc2, 0 );
+    for j in [1..nc2] do
+        filt := Filtered( [1..npieces], k -> ppos[k] = j );
+        mapj := maps{filt};
+        srcj := UnionOfPieces( src1{filt} );
+        piecesmap[j] := HomomorphismToSinglePiece( srcj, pieces2[j], mapj );
+    od;
+
+##    ##  more efficient to use PieceNrOfObject here ??
+##    pos2 := List( maps, m -> Position( pieces2, 
+##                      PieceOfObject( mag2, Range(m)!.objects[1] ) ) );
+##    if ( fail in pos2 ) then
+##        Error( "not all m have range in mag2" );
+##    fi;
+##    if IsDuplicateFree( pos2 ) then
+##        ## reorder if necessary
+##        Info( InfoGroupoids, 2, "duplicate free case" );
+##        L := [1..nc2];
+##        SortParallel( pos2, L );
+##        piecesmap := List( L, j -> expand[j] );
+##        return HomomorphismByUnionNC( mag1, mag2, piecesmap );
+##    else
+##        ## construct the constituent mappings
+##        piecesmap := ListWithIdenticalEntries( nc2, 0 );
+##        for j in [1..nc2] do
+##            filt := Filtered( pos2, i -> (i=j) );
+##            mapj := List( filt, i -> maps[i] );
+##            if ( Length( filt ) = 1 ) then
+##                piecesmap[j] := mapj[1]; 
+##            else
+##                if ( Length( filt ) = nc1 ) then
+##                    src := mag1;
+##                else
+##                    src := UnionOfPieces( List(filt), i -> Source(maps[i]) );
+##                fi;
+##                piecesmap[j] := 
+##                    HomomorphismToSinglePiece( src, pieces2[j], mapj );
+##            fi;
+##        od;
         return HomomorphismByUnionNC( mag1, mag2, piecesmap );
-    else
-        ## construct the constituent mappings
-        piecesmap := ListWithIdenticalEntries( nc2, 0 );
-        for j in [1..nc2] do
-            filt := Filtered( pos2, i -> (i=j) );
-            mapj := List( filt, i -> maps[i] );
-            if ( Length( filt ) = 1 ) then
-                piecesmap[j] := mapj[1]; 
-            else
-                if ( Length( filt ) = nc1 ) then
-                    src := mag1;
-                else
-                    src := UnionOfPieces( List(filt), i -> Source(maps[i]) );
-                fi;
-                piecesmap[j] := 
-                    HomomorphismToSinglePiece( src, pieces2[j], mapj );
-            fi;
-        od;
-        return HomomorphismByUnionNC( mag1, mag2, piecesmap );
-    fi;
+##    fi;
 end );
 
 #############################################################################
@@ -775,18 +767,18 @@ function( iso )
     else 
         rayrq := genss[ nggenss + pq - 1 ]; 
     fi; 
-    j := rayrq![1]; 
+    j := rayrq![2];
     rayuv := ImageElm( iso, rayrq );
-    g := rayuv![1]; 
+    g := rayuv![2]; 
     for i in [1..nggensr] do 
-        y := gensr[i]![1]; 
+        y := gensr[i]![2]; 
         invy := ImageElm( irhom, y^(g^-1) )^j; 
         images[i] := Arrow( src, invy, q, q ); 
     od; 
     for i in [2..nobs] do 
         w := obsr[i];
         rayvw := gensr[nggensr+i-1]; 
-        f := rayvw![1]; 
+        f := rayvw![2]; 
         p := invobs[i]; 
         pp := Position( obss, p );
         if ( pp = 1 ) then 
@@ -794,9 +786,9 @@ function( iso )
         else 
             rayrp := genss[ nggenss + pp - 1 ];
         fi; 
-        k := rayrp![1]; 
+        k := rayrp![2]; 
         rayuw := ImageElm( iso, rayrp ); 
-        h := rayuw![1]; 
+        h := rayuw![2]; 
         invf := (j^-1) * ImageElm( irhom, g*f*h^-1 ) * k;
         images[ nggensr + i -1 ] := Arrow( src, invf, q, p ); 
     od; 
@@ -1088,7 +1080,8 @@ InstallMethod( \*, "for two single piece magma mappings", true,
     [ IsHomomorphismToSinglePiece, IsHomomorphismToSinglePiece ], 0,
 function( m1, m2 )
 
-    local s1, r1, s2, r2, oi1, ob1, nob1, ob2, oi2, oi12, j, o, p, hom;
+    local s1, r1, s2, r2, oi1, ob1, nob1, ob2, oi2, oi12, j, o, p, hom, 
+          gens, images;
 
     Info( InfoGroupoids, 3, 
           "third method for * with map1 & map2 single piece" );
@@ -1113,8 +1106,15 @@ function( m1, m2 )
         p := Position( ob2, o );
         oi12[j] := oi2[2][p];
     od;
-    hom := oi1[1] * oi2[1]; 
-    return HomomorphismToSinglePiece( s1, r2, [ [ hom, oi12 ] ] );
+    hom := oi1[1] * oi2[1];
+    if IsGroupoid( s1 ) and IsSinglePiece( s1 ) then
+        gens := GeneratorsOfGroupoid( s1 );
+        images := List( gens, g -> ImageElm( m1, g ) );
+        images := List( images, g -> ImageElm( m2, g ) );
+        return GroupoidHomomorphismFromSinglePiece( s1, r2, gens, images ); 
+    else
+        return HomomorphismToSinglePiece( s1, r2, [ [ hom, oi12 ] ] );
+    fi;
 end );
 
 InstallMethod( \*, "for 2 connected groupoid homomorphisms", true,
@@ -1417,10 +1417,18 @@ InstallMethod( Display, "generic method for a magma mapping", true,
     [ IsGeneralMappingWithObjects ], 0,
 function ( hom )
 
-    local chom, src, rng, pieces, i, c, maps, len;
+    local src, rng, isgpd, chom, pieces, i, c, maps, len;
 
-    Print( "magma homomorphism: ", Source( hom ), " -> ", 
-            Range( hom ), " with pieces :\n" );
+    src := Source( hom );
+    rng := Range( hom );
+    isgpd := ( "IsGroupoid" in CategoriesOfObject( src ) ) and
+             ( "IsGroupoid" in CategoriesOfObject( rng ) );   
+    if isgpd then 
+        Print( "groupoid homomorphism: " );
+    else
+        Print( "magma homomorphism: " );
+    fi;
+    Print( Source( hom ), " -> ",  Range( hom ), " with pieces :\n" );
     for chom in PiecesOfMapping( hom ) do
         src := Source( chom );
         rng := Range( chom );
@@ -1455,7 +1463,7 @@ function ( map, e )
     Info( InfoGroupoids, 3, 
           "this is the first ImageElm function in mwohom.gi" ); 
     G1 := Source( map );
-    ce := PieceOfObject( G1, e![2] );
+    ce := PieceOfObject( G1, e![3] );
     C1 := Pieces( G1 );
     pe := Position( C1, ce );
     Ge := C1[pe];
@@ -1464,9 +1472,9 @@ function ( map, e )
     obs2 := MappingToSinglePieceData( map )[pe][2]; 
     #?  this is not the correct range magma ??
     mag2 := Range( map ); 
-    t2 := obs2[ Position( obs1, e![2] ) ];
-    h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := ImageElm( hom, e![1] );
+    t2 := obs2[ Position( obs1, e![3] ) ];
+    h2 := obs2[ Position( obs1, e![4] ) ]; 
+    g2 := ImageElm( hom, e![2] );
     return MultiplicativeElementWithObjects( mag2, g2, t2, h2 );
 end );
 
@@ -1480,14 +1488,14 @@ function ( map, e )
           "this is the second ImageElm function in mwohom.gi" ); 
     M1 := Source( map ); 
     C1 := Pieces( M1 );
-    pe := Position( C1, PieceOfObject( M1, e![2] ) ); 
+    pe := Position( C1, PieceOfObject( M1, e![3] ) ); 
     obs1 := C1[pe]!.objects; 
     pom := PiecesOfMapping( map )[pe]; 
     pim := MappingToSinglePieceData( pom )[1];
     obs2 := pim[2]; 
-    t2 := obs2[ Position( obs1, e![2] ) ];
-    h2 := obs2[ Position( obs1, e![3] ) ]; 
-    g2 := ImageElm( pim[1], e![1] );
+    t2 := obs2[ Position( obs1, e![3] ) ];
+    h2 := obs2[ Position( obs1, e![4] ) ]; 
+    g2 := ImageElm( pim[1], e![2] );
     return MultiplicativeElementWithObjects( Range( map ), g2, t2, h2 );
 end ); 
 
@@ -1509,22 +1517,22 @@ function ( map, elt )
     ims := gensims[2];
     #? (13/09/17) was: rhom := HomsOfMapping( map )[1]; 
     rhom := MappingToSinglePieceData( map )[1][1]; 
-    e := ImageElm( rhom, elt![1] ); 
+    e := ImageElm( rhom, elt![2] ); 
     j := elt![2];
-    pj := Position( obs, elt![2] );
+    pj := Position( obs, elt![3] );
     k := elt![3];
-    pk := Position( obs, elt![3] );
+    pk := Position( obs, elt![4] );
     r := Length( GeneratorsOfMagma( Source( rhom ) ) ); 
     ## n := Length( m!.objects ); 
     if ( pj = 1 ) then 
         ej := one;
     else
-        ej := ims[r+pj-1]![1]; 
+        ej := ims[r+pj-1]![2]; 
     fi;
     if ( pk = 1 ) then
         ek := one;
     else
-        ek := ims[r+pk-1]![1]; 
+        ek := ims[r+pk-1]![2]; 
     fi; 
     #?  MagmaElement only requires two parameters ??
     im := MagmaElement( mag, ej^(-1)*e*ek, j, k );
@@ -1543,9 +1551,9 @@ function ( map, e )
     fe := fun( e ); 
     obs := Source( map )!.objects; 
     imo := ImagesOfObjects( map );
-    pt := Position( obs, e![2] ); 
-    ph := Position( obs, e![3] ); 
-    if not ( ( fe![2] = imo[pt] ) and ( fe![3] = imo[ph] ) ) then 
+    pt := Position( obs, e![3] ); 
+    ph := Position( obs, e![4] ); 
+    if not ( ( fe![3] = imo[pt] ) and ( fe![4] = imo[ph] ) ) then 
         Error( "wrong objects in ImageElm" );
     else 
         return fe; 
@@ -1558,6 +1566,7 @@ function ( map )
 
     local src, par, impar, gens, imgs, imo, hom, img, rng;
 
+    Info( InfoGroupoids, 3, "ImagesSource for a map to a single piece" ); 
     if not IsInjectiveOnObjects( map ) then
         Error( "not yet implemented when not injective on objects" );
     fi;
@@ -1581,9 +1590,9 @@ function ( map )
         return rng;
     elif HasLargerDirectProductGroupoid( rng ) then 
         return SubdomainWithObjects( 
-                   LargerDirectProductGroupoid( rng ), [ [ imo, img ] ] );
+                   LargerDirectProductGroupoid( rng ), [ [ img, imo ] ] );
     else
-        return SubdomainWithObjects( rng, [ [ imo, img ] ] );
+        return SubdomainWithObjects( rng, [ [ img, imo ] ] );
     fi;
 end );
 
@@ -1591,6 +1600,7 @@ InstallOtherMethod( ImagesSource, "for a magma mapping", true,
     [ IsMagmaWithObjectsHomomorphism ], 0,
 function ( map )
     Error( "not yet implemented when Range(map) is not single piece" );
+    Info( InfoGroupoids, 3, "ImagesSource for a map to more than one piece" ); 
 end );
 
 #############################################################################

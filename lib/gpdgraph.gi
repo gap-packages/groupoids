@@ -200,7 +200,7 @@ function( gpd, w0 )
     if not w0 in gpd then
         Error( "word not in the groupoid" );
     fi;
-    comp := PieceOfObject( gpd, w0![2] );
+    comp := PieceOfObject( gpd, w0![3] );
     ogp := comp!.magma;
     id := One( ogp );
     iso := IsomorphismFpSemigroup( ogp );
@@ -210,13 +210,13 @@ function( gpd, w0 )
     MakeConfluent( rwsmg );  ### this should not be necessary here !! ###
     smggen := GeneratorsOfSemigroup( smg );
     fsmg := FreeSemigroupOfKnuthBendixRewritingSystem( rwsmg );
-    iw := ImageElm( iso, w0![1] );
+    iw := ImageElm( iso, w0![2] );
     uiw := UnderlyingElement( iw );
     ruw := ReducedForm( rwsmg, uiw );
     fam1 := FamilyObj( smggen[1] );
     riw := ElementOfFpSemigroup( fam1, ruw );
     rw := ImageElm( inviso, riw );
-    return GroupoidElement( gpd, rw, w0![2], w0![3] );
+    return GroupoidElement( gpd, rw, w0![3], w0![4] );
 end);
 
 #############################################################################
@@ -240,7 +240,7 @@ function( gg )
     reps := ListWithIdenticalEntries( na, 0 );
     for k in [1..na] do
         a := arcs[k];
-        p := Position( verts, a![2] );
+        p := Position( verts, a![3] );
         G := gpds[p];
         U := subs[k];
         reps[k] := RightCosetRepresentatives( G, U );
@@ -321,7 +321,7 @@ function( gg, tv, wL )
     posv := Position( vdig, v );
     g := gpds[ posv ];
     w := wL[1];
-    cg := PieceOfObject( g, w![2] );
+    cg := PieceOfObject( g, w![3] );
     if not w in cg then
         Error( "first groupoid element not in tail groupoid" );
     fi;
@@ -339,7 +339,7 @@ function( gg, tv, wL )
         g := gpds[ posv ];
         j := j+2;
         w := wL[j];
-        cg := PieceOfObject( g, w![2] );
+        cg := PieceOfObject( g, w![3] );
         if not w in cg then
             Error( "entry ", j, " not in groupoid at vertex ", v );
         fi;
@@ -474,10 +474,10 @@ function( ggword )
         u := sgpds[te];
         obg := ObjectList( g );
         nob := Length( obg );
-        tword := word![2];
+        tword := word![3];
         ptword := Position( obg, tword );
         h := sgpds[e];
-        ch := PieceOfObject( h, word![3] );
+        ch := PieceOfObject( h, word![4] );
         tran := ltrans[e][ptword];
         Info( InfoGroupoids, 3, "tran = ", tran );
         Info( InfoGroupoids, 3, "word = ", word );
@@ -515,10 +515,8 @@ function( ggword )
         Info( InfoGroupoids, 2, tsp[2], " mapped over to ", im );
         w[k2-1] := tsp[1];
         if isfp then
-            #?  (14/11/08)  old version fails - problem with \* 
-            #? w[k2+1] := NormalFormKBRWS( gpds[he], im*w[k2+1] );
             w[k2+1] := NormalFormKBRWS( gpds[he], GroupoidElement( 
-                gpds[he], im![1]*w[k2+1]![1], im![2], w[k2+1]![3] ) );
+                gpds[he], im![2]*w[k2+1]![2], im![3], w[k2+1]![4] ) );
             Info( InfoGroupoids, 2, "k = ", k, ", w = ", w );
         else
             w[k2+1] := im*w[k2+1];
@@ -532,9 +530,9 @@ function( ggword )
             v := adig[e][2];
             gv := gpds[ Position( vdig, v ) ];
             if isfp then
-                isid := ( ( Length( w[k2-1]![1] ) = 0 ) and ( w[k2-2] = ie ) );
+                isid := ( ( Length( w[k2-1]![2] ) = 0 ) and ( w[k2-2] = ie ) );
             else
-                isid := ( ( w[k2-1]![1] = ( ) ) and ( w[k2-2] = ie ) );
+                isid := ( ( w[k2-1]![2] = ( ) ) and ( w[k2-2] = ie ) );
             fi;
             if isid then
                 Info( InfoGroupoids, 2, "LENGTH REDUCTION!\n" );

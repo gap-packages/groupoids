@@ -147,12 +147,12 @@ gap> IsAutomorphismWithObjects( h14 );
 false
 
 ## SubSection 3.3.2
-gap> swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      
+gap> swap := function(a) return Arrow(M78,a![2],a![4],a![3]); end;      
 function( a ) ... end
 gap> swapmap := MappingWithObjectsByFunction( M78, M78, swap, [-7,-8] );
 magma with objects mapping by function : M78 -> M78
 function: function ( a )
-    return Arrow( M78, a![1], a![3], a![2] );
+    return Arrow( M78, a![2], a![4], a![3] );
 end
 
 gap> a78; ImageElm( swapmap, a78 );              
