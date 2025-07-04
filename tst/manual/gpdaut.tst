@@ -13,7 +13,7 @@ gap> d8 := Group( (5,6,7,8), (5,7) );;
 gap> SetName( a4, "a4" );  SetName( d8, "d8" ); 
 gap> Ga4 := SinglePieceGroupoid( a4, [-15 .. -11] );; 
 gap> Gd8 := Groupoid( d8, [-9,-8,-7] );;
-gap> Ha4 := SubgroupoidByObjects( Ha4, [-14,-13,-12] );;  
+gap> Ha4 := SubgroupoidByObjects( Ga4, [-14,-13,-12] );;  
 gap> SetName( Ha4, "Ha4" );
 gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );;
 gap> SetName( k4, "k4" );
