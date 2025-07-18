@@ -86,8 +86,8 @@
   
   [1X2.1-2 IsDomainWithObjects[101X
   
-  [33X[1;0Y[29X[2XIsDomainWithObjects[102X( [3Xobj[103X ) [32X filter[133X
-  [33X[1;0Y[29X[2XIsMagmaWithObjects[102X( [3Xobj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsDomainWithObjects[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMagmaWithObjects[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe   output   from   function   [10XMagmaWithObjects[110X  lies  in  the  categories
   [10XIsDomainWithObjects[110X,                  [10XIsMagmaWithObjects[110X                 and

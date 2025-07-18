@@ -6,10 +6,10 @@
           [1X Calculations with finite groupoids and their homomorphisms [101X
   
   
-                                      1.77
+                                      1.78
   
   
-                                  3 July 2025
+                                  18 July 2025
   
   
                                  Emma J. Moore
@@ -184,14 +184,15 @@
       6.5-1 GraphOfGroupoids
       6.5-2 GraphOfGroupoidsWord
   7 [33X[0;0YDouble Groupoids[133X
-    7.1 [33X[0;0YDouble groupoid squares[133X
+    7.1 [33X[0;0YSingle piece double groupoids[133X
       7.1-1 SinglePieceBasicDoubleGroupoid
-      7.1-2 IsCommutingSquare
-      7.1-3 TransposedSquare
-      7.1-4 HorizontalProduct
-      7.1-5 VerticalProduct
-      7.1-6 HorizontalIdentities
-      7.1-7 [33X[0;0YHorizontal and vertical groupoids in [22X□(G)[122X[133X
+      7.1-2 SquareOfArrows
+      7.1-3 IsCommutingSquare
+      7.1-4 TransposedSquare
+      7.1-5 HorizontalProduct
+      7.1-6 VerticalProduct
+      7.1-7 HorizontalIdentities
+      7.1-8 [33X[0;0YHorizontal and vertical groupoids in [22X□(G)[122X[133X
     7.2 [33X[0;0YDouble groupoids with more than one piece[133X
       7.2-1 UnionOfPieces
     7.3 [33X[0;0YGenerators of a double groupoid[133X

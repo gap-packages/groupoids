@@ -121,6 +121,7 @@ m(g1 : o1 \to o2)*m(g2 : o2 \to o3) ~=~ m(g1*g2 : o1 \to o3).
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidHomomorphismFromSinglePiece</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">gens</var>, <var class="Arg">images</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidHomomorphism</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidHomomorphism</code>( <var class="Arg">mwohom</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The simplest groupoid homomorphism is a mapping <span class="SimpleMath">\(\phi : G \to H\)</span> from a connected groupoid <span class="SimpleMath">\(G\)</span> to a connected groupoid <span class="SimpleMath">\(H\)</span>. There are two equivalent sets of input data which may be used. Both require the <code class="code">Source</code> <span class="SimpleMath">\(G\)</span> and the <code class="code">Range</code> <span class="SimpleMath">\(H\)</span>. The first then requires:</p>
 
 
@@ -185,6 +186,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 := Arrow( Gd8, (5,6,7,8), -7, -8 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( hom8, e1 );</span>
 [(1,3,4) : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidHomomorphism( hom8 );</span>
+true
 
 </pre></div>
 
@@ -588,15 +591,18 @@ groupoid homomorphism : HDc6 -&gt; Ga4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">homW := HomomorphismByUnion( W1, W2, [ isoHa4, hom8 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( homW );           </span>
 groupoid homomorphism: [Ha4,Gd8] -&gt; [Ka4,Kk4] with pieces :
- groupoid mapping: [ Ha4 ] -&gt; [ Ka4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -30, -29, -28 ]
-   images of rays: [ [() : -30 -&gt; -30], [() : -30 -&gt; -29], [() : -30 -&gt; -28] ]
- groupoid mapping: [ Gd8 ] -&gt; [ Kk4 ]
-root homomorphism: [ [ (5,6,7,8), (5,7) ], [ (1,4)(2,3), () ] ]
-images of objects: [ -14, -13, -12 ]
-   images of rays: [ [() : -14 -&gt; -14], [(1,3,4) : -14 -&gt; -13], 
-  [(1,4)(2,3) : -14 -&gt; -12] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ka4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -30, -29, -28 ]
+ray images: [ (), (), () ]
+homomorphism to single piece groupoid: Gd8 -&gt; Kk4
+root group homomorphism:
+(5,6,7,8) -&gt; (1,4)(2,3)
+(5,7) -&gt; ()
+object map: [ -9, -8, -7 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (1,3,4), (1,4)(2,3) ]
  
 </pre></div>
 
@@ -689,10 +695,12 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">perm1 := [-13,-12,-14];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut1 := GroupoidAutomorphismByObjectPerm( Ha4, perm1 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut1 ); </span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -13, -12, -14 ]
-   images of rays: [ [() : -13 -&gt; -13], [() : -13 -&gt; -12], [() : -13 -&gt; -14] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -13, -12, -14 ]
+ray images: [ (), (), () ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := Arrow( Ha4, (1,3,4), -12, -13 ); </span>
 [(1,3,4) : -12 -&gt; -13]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d1 := ImageElm( aut1, d ); </span>
@@ -701,48 +709,54 @@ images of objects: [ -13, -12, -14 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut2 := GroupoidAutomorphismByGroupAuto( Ha4, alpha2 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut2 ); </span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (2,3,4), (1,3,4) ] ]
-images of objects: [ -14, -13, -12 ]
-   images of rays: [ [() : -14 -&gt; -14], [() : -14 -&gt; -13], [() : -14 -&gt; -12] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (2,3,4)
+(2,3,4) -&gt; (1,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (), () ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d2 := ImageElm( aut2, d1 );</span>
 [(1,2,4) : -14 -&gt; -12]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L3 := [(), (1,3,2), (2,4,3)];; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut3 := GroupoidAutomorphismByRayShifts( Ha4, L3 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut3 ); </span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -14, -13, -12 ]
-   images of rays: [ [() : -14 -&gt; -14], [(1,3,2) : -14 -&gt; -13], 
-  [(2,4,3) : -14 -&gt; -12] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (1,3,2), (2,4,3) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d3 := ImageElm( aut3, d2 );</span>
 [(1,4)(2,3) : -14 -&gt; -12]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h4 := Arrow( Ha4, (2,3,4), -12, -13 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut4 := GroupoidInnerAutomorphism( Ha4, h4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut4 );</span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -14, -12, -13 ]
-   images of rays: [ [() : -14 -&gt; -14], [(2,4,3) : -14 -&gt; -12], 
-  [(2,3,4) : -14 -&gt; -13] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -12, -13 ]
+ray images: [ (), (2,4,3), (2,3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d4 := ImageElm( aut4, d3 );</span>
 [(1,2,4) : -14 -&gt; -13]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut1234 := aut1*aut2*aut3*aut4;; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut1234 ); </span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,4,3), (2,4,3) ] ]
-images of objects: [ -12, -13, -14 ]
-   images of rays: [ [() : -12 -&gt; -12], [(1,2)(3,4) : -12 -&gt; -13], 
-  [(1,2)(3,4) : -12 -&gt; -14] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,4,3)
+(2,3,4) -&gt; (2,4,3)
+object map: [ -14, -13, -12 ] -&gt; [ -12, -13, -14 ]
+ray images: [ (), (1,2)(3,4), (1,2)(3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d4  = ImageElm( aut1234, d );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv1234 := InverseGeneralMapping( aut1234 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( inv1234 ); </span>
- groupoid mapping: [ Ha4 ] -&gt; [ Ha4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,4), (1,2,3) ] ]
-images of objects: [ -12, -13, -14 ]
-   images of rays: [ [() : -12 -&gt; -12], [() : -12 -&gt; -13], 
-  [(1,4)(2,3) : -12 -&gt; -14] ]
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,4)
+(2,3,4) -&gt; (1,2,3)
+object map: [ -14, -13, -12 ] -&gt; [ -12, -13, -14 ]
+ray images: [ (), (), (1,4)(2,3) ]
 
 </pre></div>
 

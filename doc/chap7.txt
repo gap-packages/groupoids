@@ -21,12 +21,48 @@
   time permits.[133X
   
   
-  [1X7.1 [33X[0;0YDouble groupoid squares[133X[101X
+  [1X7.1 [33X[0;0YSingle piece double groupoids[133X[101X
   
-  [33X[0;0YLet  [22XG[122X  be  a  connected  groupoid with object set [22XΩ[122X. Let [22X□(G)[122X be the set of
-  [13Xsquares[113X with objects from [22XΩ[122X at each corner; plus two vertical arrows and two
-  horizontal  arrows  from  Arr[22X(G)[122X. The following picture illustrates a square
-  [22Xs_1[122X:[133X
+  [1X7.1-1 SinglePieceBasicDoubleGroupoid[101X
+  
+  [33X[1;0Y[29X[2XSinglePieceBasicDoubleGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDoubleGroupoid[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoid[102X( [3Xmwo[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBasicDoubleGroupoid[102X( [3Xdgpd[103X ) [32X Category[133X
+  
+  [33X[0;0YLet [22XG[122X be a connected groupoid with object set [22XΩ[122X. The double groupoid [22X□(G)[122X on
+  [22XG[122X is constructed by the operation [10XSinglePieceBasicDoubleGroupoid(G)[110X.[133X
+  
+  [33X[0;0YThe  global  function  [10XDoubleGroupoid[110X may be used instead of this operation,
+  and will work with various other input parameters.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; [127X[104X
+    [4X[25Xgap>[125X [27XDGd8!.groupoid;[127X[104X
+    [4X[28XGd8[128X[104X
+    [4X[25Xgap>[125X [27XDGd8!.objects;[127X[104X
+    [4X[28X[ -9, -8, -7 ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( DGd8, "DGd8" );[127X[104X
+    [4X[25Xgap>[125X [27X[ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];[127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X7.1-2 SquareOfArrows[101X
+  
+  [33X[1;0Y[29X[2XSquareOfArrows[102X( [3Xgpd[103X, [3Xup[103X, [3Xlt[103X, [3Xrt[103X, [3Xdn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUpArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDownArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XBoundaryOfSquare[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDoubleGroupoidOfSquare[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoidElement[102X( [3Xarrow[103X ) [32X Category[133X
+  
+  [33X[0;0YLet  [22X□(G)[122X be the set of [13Xsquares[113X with objects from [22XΩ[122X at each corner; plus two
+  vertical arrows and two horizontal arrows from Arr[22X(G)[122X. The following picture
+  illustrates a square [22Xs_1[122X:[133X
   
   
   [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{b_1} & v_1 \ar[d]^{c_1}
@@ -41,39 +77,15 @@
   [22Xx_1[122X.[133X
   
   [33X[0;0YThe  [13Xboundary[113X  of  the  square  is the loop [22X(x_1, d_1^-1b_1^-1a_1c_1, x_1) =
-  (x_1,δ(s_1),x_1)[122X.[133X
-  
-  [1X7.1-1 SinglePieceBasicDoubleGroupoid[101X
-  
-  [33X[1;0Y[29X[2XSinglePieceBasicDoubleGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XDoubleGroupoid[102X( [3Xargs[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSquareOfArrows[102X( [3Xgpd[103X, [3Xup[103X, [3Xlt[103X, [3Xrt[103X, [3Xdn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XUpArrow[102X( [3Xsq[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XLeftArrow[102X( [3Xsq[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XRightArrow[102X( [3Xsq[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XDownArrow[102X( [3Xsq[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XBoundaryOfSquare[102X( [3Xsq[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XDoubleGroupoidOfSquare[102X( [3Xsq[103X ) [32X operation[133X
-  
-  [33X[0;0YThe  operation [10XSinglePieceBasicDoubleGroupoid[110X constructs the double groupoid
-  [22X□(G)[122X  on  a groupoid [22XG[122X. The number of squares in this double groupoid is the
-  product  of  the  number of objects with the size of the group all raised to
-  the fourth power. When viewing or printing a square, the boundary element is
-  shown in the centre.[133X
-  
-  [33X[0;0YThe  global  function  [10XDoubleGroupoid[110X may be used instead of this operation,
-  and will work with various other input parameters.[133X
+  (x_1,δ(s_1),x_1)[122X.  The number of squares in a double groupoid is the product
+  of the number of objects with the size of the group all raised to the fourth
+  power.  When  viewing or printing a square, the boundary element is shown in
+  the centre.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XDGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; [127X[104X
-    [4X[25Xgap>[125X [27XDGd8!.groupoid;[127X[104X
-    [4X[28XGd8[128X[104X
-    [4X[25Xgap>[125X [27XDGd8!.objects;[127X[104X
-    [4X[28X[ -9, -8, -7 ][128X[104X
-    [4X[25Xgap>[125X [27X[ Size(DGd8), (3*8)^4 ]; [127X[104X
+    [4X[25Xgap>[125X [27X[ Size( DGd8 ), (3*8)^4 ]; [127X[104X
     [4X[28X[ 331776, 331776 ][128X[104X
-    [4X[25Xgap>[125X [27XSetName( DGd8, "DGd8" );[127X[104X
     [4X[25Xgap>[125X [27Xa1 := Arrow( Gd8, (5,7), -7, -8 );;[127X[104X
     [4X[25Xgap>[125X [27Xb1 := Arrow( Gd8, (6,8), -7, -7 );;[127X[104X
     [4X[25Xgap>[125X [27Xc1 := Arrow( Gd8, (5,6)(7,8), -8, -9 );;[127X[104X
@@ -100,10 +112,12 @@
     [4X[28X[(6,8) : -9 -> -9][128X[104X
     [4X[25Xgap>[125X [27XDoubleGroupoidOfSquare( sq1 );[127X[104X
     [4X[28XDGd8[128X[104X
+    [4X[25Xgap>[125X [27XIsDoubleGroupoidElement( sq1 );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X7.1-2 IsCommutingSquare[101X
+  [1X7.1-3 IsCommutingSquare[101X
   
   [33X[1;0Y[29X[2XIsCommutingSquare[102X( [3Xsq[103X ) [32X property[133X
   
@@ -129,7 +143,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X7.1-3 TransposedSquare[101X
+  [1X7.1-4 TransposedSquare[101X
   
   [33X[1;0Y[29X[2XTransposedSquare[102X( [3Xsq[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XIsClosedUnderTransposition[102X( [3Xsq[103X ) [32X property[133X
@@ -151,7 +165,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X7.1-4 HorizontalProduct[101X
+  [1X7.1-5 HorizontalProduct[101X
   
   [33X[1;0Y[29X[2XHorizontalProduct[102X( [3Xsq1[103X, [3Xsq2[103X ) [32X operation[133X
   
@@ -195,7 +209,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X7.1-5 VerticalProduct[101X
+  [1X7.1-6 VerticalProduct[101X
   
   [33X[1;0Y[29X[2XVerticalProduct[102X( [3Xsq1[103X, [3Xsq3[103X ) [32X operation[133X
   
@@ -315,7 +329,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X7.1-6 HorizontalIdentities[101X
+  [1X7.1-7 HorizontalIdentities[101X
   
   [33X[1;0Y[29X[2XHorizontalIdentities[102X( [3Xsq[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XVerticalIdentities[102X( [3Xsq[103X ) [32X operation[133X
@@ -450,13 +464,11 @@
   [4X[32X[104X
   
   
-  [1X7.1-7 [33X[0;0YHorizontal and vertical groupoids in [22X□(G)[122X[101X[1X[133X[101X
+  [1X7.1-8 [33X[0;0YHorizontal and vertical groupoids in [22X□(G)[122X[101X[1X[133X[101X
   
   [33X[0;0YNow [22X□(G)[122X is the maximal double groupoid determined by [22XG[122X, but in general many
-  substructures may be formed.[133X
-  
-  [33X[0;0YThe  [13Xhorizontal groupoid[113X structure [22X□_H(G)[122X on [22X□(G)[122X has the vertical arrows as
-  objects, and considers the usual square [22Xs[122X[133X
+  substructures  may  be  formed.  The [13Xhorizontal groupoid[113X structure [22X□_H(G)[122X on
+  [22X□(G)[122X has the vertical arrows as objects, and considers the usual square [22Xs[122X[133X
   
   
   [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{b}  &  v  \ar[d]^{c} \\ w
@@ -471,6 +483,8 @@
   [33X[0;0YSimilarly  the [13Xvertical groupoid[113X structure [22X□_V(G)[122X on [22X□(G)[122X has the horizontal
   arrows as objects and pairs of vertical arrows as arrows. The identity arrow
   at [22Xa[122X is [22X1_U(s)[122X, and the inverse arrow of [22Xs[122X is [22Xs^-1_V[122X.[133X
+  
+  [33X[0;0YThese groupoid structures have not been implemented in this package.[133X
   
   
   [1X7.2 [33X[0;0YDouble groupoids with more than one piece[133X[101X
@@ -655,6 +669,7 @@
   [1X7.5-1 DoubleGroupoidHomomorphism[101X
   
   [33X[1;0Y[29X[2XDoubleGroupoidHomomorphism[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoidHomomorphism[102X( [3Xmwohom[103X ) [32X Category[133X
   
   [33X[0;0YA  homomorphism  of  double  groupoids  is  determined by a homomorphism [10Xmor[110X
   between the underlying groupoids since [10Xmor[110X determines the images of the four
@@ -669,15 +684,18 @@
     [4X[25X>[125X [27X              [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;[127X[104X
     [4X[25Xgap>[125X [27Xmd8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [127X[104X
     [4X[25X>[125X [27X              [-7,-9,-8], [(),(5,7),(6,8)] );;[127X[104X
-    [4X[25Xgap>[125X [27XendDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );[127X[104X
-    [4X[28Xdouble groupoid homomorphism : DGd8 -> DGd8[128X[104X
-    [4X[25Xgap>[125X [27XDisplay( endDGd8 );[127X[104X
+    [4X[25Xgap>[125X [27XendDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( endDGd8 );            [127X[104X
     [4X[28Xdouble groupoid homomorphism: [ DGd8 ] -> [ DGd8 ][128X[104X
     [4X[28Xwith underlying groupoid homomorphism:[128X[104X
-    [4X[28X groupoid mapping: [ Gd8 ] -> [ Gd8 ][128X[104X
-    [4X[28Xroot homomorphism: [ [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] ][128X[104X
-    [4X[28Ximages of objects: [ -7, -9, -8 ][128X[104X
-    [4X[28X   images of rays: [ [() : -7 -> -7], [(5,7) : -7 -> -9], [(6,8) : -7 -> -8] ][128X[104X
+    [4X[28Xhomomorphism to single piece groupoid: Gd8 -> Gd8[128X[104X
+    [4X[28Xroot group homomorphism:[128X[104X
+    [4X[28X(5,6,7,8) -> (5,8,7,6)[128X[104X
+    [4X[28X(5,7) -> (6,8)[128X[104X
+    [4X[28Xobject map: [ -9, -8, -7 ] -> [ -7, -9, -8 ][128X[104X
+    [4X[28Xray images: [ (), (5,7), (6,8) ][128X[104X
+    [4X[25Xgap>[125X [27XIsDoubleGroupoidHomomorphism( endDGd8 );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xsq1;[127X[104X
     [4X[28X[-7] ------- (5,7) ------> [-8][128X[104X
     [4X[28X  |                          |[128X[104X

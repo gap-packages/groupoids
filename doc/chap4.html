@@ -103,6 +103,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceGroupoid</code>( <var class="Arg">grp</var>, <var class="Arg">obs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Groupoid</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaWithSingleObject</code>( <var class="Arg">gp</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoid</code>( <var class="Arg">mwo</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The simplest construction of a groupoid is as the direct product of a group and a complete digraph. Such a groupoid will be called a <em>standard groupoid</em>. Many subgroupoids of such a groupoid do not have this simple form, and will be considered in section <a href="chap4.html#X7BDBA72C852C4625"><span class="RefLink">4.3</span></a>. The global function <code class="code">Groupoid</code> will normally find the appropriate constructor to call, the options being:</p>
 
 
@@ -133,6 +134,8 @@ single piece groupoid: &lt; d8, [ -9, -8, -7 ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( c6, "c6" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gc6 := MagmaWithSingleObject( c6, -10 );</span>
 single piece groupoid: &lt; c6, [ -10 ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoid( Gc6 ); </span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Ga4, "Ga4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  </span>
 
 </pre></div>
@@ -374,6 +377,7 @@ groupoid homomorphism :
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TailOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeadOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidElement</code>( <var class="Arg">arrow</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The operation <code class="code">GroupoidElement</code> is a synonym for the operation <code class="code">Arrow</code>, as described in subsection <a href="chap2.html#X86247DFC8242CEBE"><span class="RefLink">2.1-3</span></a>. To recapitulate, an arrow <code class="code">e</code> consists of a group element, <code class="code">ElementOfArrow(e)</code>; the tail (source) object, <code class="code">TailOfArrow(e)</code>; and the head (target) object, <code class="code">HeadOfArrow(e)</code>. Arrows have a <em>partial composition</em>: two arrows may be multiplied when the head of the first coincides with the tail of the second. If an attempt is made to multiply arrows where this condition does not hold, then the value <code class="code">fail</code> is returned.</p>
 
 
@@ -385,6 +389,8 @@ groupoid homomorphism :
 [(5,7) : -8 -&gt; -7]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );</span>
 [ (5,6,7,8), -9, -8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidElement( e1 );</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1e2 := e1*e2;</span>
 [(5,6)(7,8) : -9 -&gt; -7]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2*e1;</span>

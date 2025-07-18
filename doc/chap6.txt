@@ -71,6 +71,7 @@
   [33X[1;0Y[29X[2XDigraphOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XGroupsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIsomorphismsOfGraphOfGroups[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsGraphOfGroups[102X( [3Xdig[103X ) [32X Category[133X
   
   [33X[0;0YA graph of groups is traditionally defined as consisting of:[133X
   
@@ -133,6 +134,8 @@
     [4X[28X        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ][128X[104X
     [4X[28X      groups: [ fa, fb ][128X[104X
     [4X[28Xisomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsGraphOfGroups( G1 );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -452,6 +455,7 @@
   [33X[1;0Y[29X[2XIsomorphismsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRightTransversalsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLeftTransversalsOfGraphOfGroupoids[102X( [3Xgg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsGraphOfGroupoids[102X( [3Xdig[103X ) [32X Category[133X
   
   [33X[0;0YGraphs  of  groups  generalise naturally to graphs of groupoids, forming the
   class  [10XIsGraphOfGroupoids[110X.  There  is  now a groupoid at each vertex and the
@@ -511,6 +515,8 @@
     [4X[28X  groupoid homomorphism : Uhybar -> Uhy[128X[104X
     [4X[28X    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], [128X[104X
     [4X[28X      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsGraphOfGroupoids( gg3 );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

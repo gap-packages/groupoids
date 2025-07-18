@@ -117,6 +117,7 @@ and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfGraphOfGroups</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupsOfGraphOfGroups</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismsOfGraphOfGroups</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphOfGroups</code>( <var class="Arg">dig</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A graph of groups is traditionally defined as consisting of:</p>
 
 
@@ -183,6 +184,8 @@ Graph of Groups with :-
         arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphOfGroups( G1 );</span>
+true
 
 </pre></div>
 
@@ -458,6 +461,7 @@ fe2*fe1^-1
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismsOfGraphOfGroupoids</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTransversalsOfGraphOfGroupoids</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTransversalsOfGraphOfGroupoids</code>( <var class="Arg">gg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphOfGroupoids</code>( <var class="Arg">dig</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Graphs of groups generalise naturally to graphs of groupoids, forming the class <code class="code">IsGraphOfGroupoids</code>. There is now a groupoid at each vertex and the isomorphism on an arc identifies wide subgroupoids at the tail and at the head. Since all subgroupoids are wide, every groupoid in a connected constituent of the graph has the same number of objects, but there is no requirement that the object sets are all the same.</p>
 
 <p>The example below generalises the trefoil group example in subsection 4.4.1, taking at each vertex of <code class="code">D1</code> a two-object groupoid with a free group on one generator, and full subgroupoids with groups <span class="SimpleMath">⟨ a^3 ⟩</span> and <span class="SimpleMath">⟨ b^2 ⟩</span>.</p>
@@ -510,6 +514,8 @@ isomorphisms: [ groupoid homomorphism : Uhy -&gt; Uhybar
   groupoid homomorphism : Uhybar -&gt; Uhy
     [ [ [b^2 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ], 
       [ [a^3 : -2 -&gt; -2], [&lt;identity ...&gt; : -2 -&gt; -1] ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphOfGroupoids( gg3 );</span>
+true
 
 </pre></div>
 
