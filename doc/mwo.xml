@@ -112,9 +112,9 @@ gap> [ RootObject( M78 ), ObjectList( M78 ) ];
 
 <ManSection>
    <Filt Name="IsDomainWithObjects"
-         Arg="obj" />
+         Arg="obj" Type='Category'/>
    <Filt Name="IsMagmaWithObjects"
-         Arg="obj" />
+         Arg="obj" Type='Category'/>
 <Description>
 The output from function <C>MagmaWithObjects</C> lies in the categories 
 <C>IsDomainWithObjects</C>, <C>IsMagmaWithObjects</C> and

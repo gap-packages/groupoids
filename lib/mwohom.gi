@@ -888,7 +888,7 @@ function( map )
     homs := ShallowCopy( ObjectHomomorphisms( map ) ); 
     SortParallel( oims1, obs ); 
     SortParallel( oims2, homs ); 
-    ihoms := List( homs, InverseGeneralMapping ); 
+    ihoms := List( homs, InverseGeneralMapping );
     inv := GroupoidHomomorphismFromHomogeneousDiscrete( src,rng,ihoms,obs ); 
     SetInverseGeneralMapping( map, inv );
     SetInverseGeneralMapping( inv, map );
@@ -1369,8 +1369,9 @@ InstallMethod( Display, "for a homomorphsim to a single piece magma", true,
     [ IsHomomorphismToSinglePiece ], 0,
 function ( hom )
 
-    local homs, imo, src, rng, isgpd, pieces, i, c, maps, map1, len;
+    local homs, imo, src, rng, isgpd, pieces, i, c, maps, map1, mgi, len;
 
+    Info( InfoGroupoids, 2, "first display method for homs in mwohom.gi" );
     src := Source( hom );
     rng := Range( hom );
     isgpd := "IsGroupoid" in CategoriesOfObject(rng); 
@@ -1395,14 +1396,19 @@ function ( hom )
         fi; 
         map1 := maps[1]; 
         if isgpd then 
-            Print( " group hom: ", MappingGeneratorsImages(map1[1]), "\n" ); 
+            Print( "root group homomorphism:\n" );
+            mgi := MappingGeneratorsImages( map1[1] );
+            for i in [1..Length( mgi[1] )] do
+                Print( mgi[1][i], " -> " );
+                Display( mgi[2][i] );
+            od;
         else 
             Print( " magma hom: " ); 
             Display( map1[1] ); 
         fi;
         Print( "object map: ", src!.objects, " -> ", imo, "\n"); 
-        if ( Length(map1) > 2 ) then 
-            Print( "ray images: ", map1[3], "\n" ); 
+        if ( Length( map1 ) > 2 ) then 
+            Print( "ray images: ", map1[3], "\n" );
         fi; 
     else
         Print( " with mappings:\n" );
@@ -1419,6 +1425,7 @@ function ( hom )
 
     local src, rng, isgpd, chom, pieces, i, c, maps, len;
 
+    Info( InfoGroupoids, 2, "second display method for homs in mwohom.gi" );
     src := Source( hom );
     rng := Range( hom );
     isgpd := ( "IsGroupoid" in CategoriesOfObject( src ) ) and

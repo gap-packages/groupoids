@@ -26,11 +26,60 @@ We call these <E>edge-symmetric</E> double groupoids.
 This addition to the package is very experimental,
 and will be extended as time permits.
 
+<Section Label="sec-sdgpd">
+<Heading>Single piece double groupoids</Heading>
 
-<Section Label="sec-square">
-<Heading>Double groupoid squares</Heading>
-
+<ManSection>
+   <Oper Name="SinglePieceBasicDoubleGroupoid"
+         Arg="gpd" />
+   <Func Name="DoubleGroupoid"
+         Arg="args" />
+   <Filt Name="IsDoubleGroupoid" 
+         Arg='mwo' Type='Category'/>
+   <Filt Name="IsBasicDoubleGroupoid" 
+         Arg='dgpd' Type='Category'/>
+<Description>
 Let <M>G</M> be a connected groupoid with object set <M>\Omega</M>. 
+The double groupoid <M>\Box(G)</M> on <M>G</M> is constructed by the operation
+<C>SinglePieceBasicDoubleGroupoid(G)</C>.
+<P/>
+The global function <C>DoubleGroupoid</C> may be used instead of 
+this operation, and will work with various other input parameters.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> DGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
+gap> DGd8!.groupoid;
+Gd8
+gap> DGd8!.objects;
+[ -9, -8, -7 ]
+gap> SetName( DGd8, "DGd8" );
+gap> [ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];
+[ true, true ]
+]]>
+</Example>
+
+
+<ManSection>
+   <Oper Name="SquareOfArrows"
+         Arg="gpd, up, lt, rt, dn" />
+   <Attr Name="UpArrow"
+         Arg="sq" />
+   <Attr Name="LeftArrow"
+         Arg="sq" />
+   <Attr Name="RightArrow"
+         Arg="sq" />
+   <Attr Name="DownArrow"
+         Arg="sq" />
+   <Oper Name="BoundaryOfSquare"
+         Arg="sq" />
+   <Oper Name="DoubleGroupoidOfSquare"
+         Arg="sq" />
+   <Filt Name="IsDoubleGroupoidElement" 
+         Arg='arrow' Type='Category'/>
+<Description>
 Let <M>\Box(G)</M> be the set of <E>squares</E>
 with objects from <M>\Omega</M> at each corner;
 plus two vertical arrows and two horizontal arrows from Arr<M>(G)</M>. 
@@ -56,47 +105,16 @@ right-hand corner, <M>x_1</M>.
 The <E>boundary</E> of the square is the loop 
 <M>(x_1, d_1^{-1}b_1^{-1}a_1c_1, x_1) = (x_1,\delta(s_1),x_1)</M>. 
 
-<ManSection>
-   <Oper Name="SinglePieceBasicDoubleGroupoid"
-         Arg="gpd" />
-   <Func Name="DoubleGroupoid"
-         Arg="args" />
-   <Oper Name="SquareOfArrows"
-         Arg="gpd, up, lt, rt, dn" />
-   <Attr Name="UpArrow"
-         Arg="sq" />
-   <Attr Name="LeftArrow"
-         Arg="sq" />
-   <Attr Name="RightArrow"
-         Arg="sq" />
-   <Attr Name="DownArrow"
-         Arg="sq" />
-   <Oper Name="BoundaryOfSquare"
-         Arg="sq" />
-   <Oper Name="DoubleGroupoidOfSquare"
-         Arg="sq" />
-<Description>
-The operation <C>SinglePieceBasicDoubleGroupoid</C>
-constructs the double groupoid <M>\Box(G)</M> on a groupoid <M>G</M>.
-The number of squares in this double groupoid is the product of the number
+The number of squares in a double groupoid is the product of the number
 of objects with the size of the group all raised to the fourth power.
 When viewing or printing a square, the boundary element is shown in the centre.
-<P/>
-The global function <C>DoubleGroupoid</C> may be used instead of 
-this operation, and will work with various other input parameters.
 <P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> DGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
-gap> DGd8!.groupoid;
-Gd8
-gap> DGd8!.objects;
-[ -9, -8, -7 ]
-gap> [ Size(DGd8), (3*8)^4 ]; 
+gap> [ Size( DGd8 ), (3*8)^4 ]; 
 [ 331776, 331776 ]
-gap> SetName( DGd8, "DGd8" );
 gap> a1 := Arrow( Gd8, (5,7), -7, -8 );;
 gap> b1 := Arrow( Gd8, (6,8), -7, -7 );;
 gap> c1 := Arrow( Gd8, (5,6)(7,8), -8, -9 );;
@@ -123,8 +141,16 @@ gap> BoundaryOfSquare( sq1 );
 [(6,8) : -9 -> -9]
 gap> DoubleGroupoidOfSquare( sq1 );
 DGd8
+gap> IsDoubleGroupoidElement( sq1 );
+true
 ]]>
 </Example>
+
+
+
+
+
+
 
 <ManSection>
    <Prop Name="IsCommutingSquare"
@@ -570,10 +596,9 @@ true
 </Example>
 
 <Subsection Label="sec-horiz-vert">
+<Heading>Horizontal and vertical groupoids in <M>\Box(G)</M></Heading>
 Now <M>\Box(G)</M> is the maximal double groupoid determined by <M>G</M>, 
 but in general many substructures may be formed. 
-<P/>
-<Heading>Horizontal and vertical groupoids in <M>\Box(G)</M></Heading>
 The <E>horizontal groupoid</E> <Index Key="horizontal groupoid"></Index>
 structure <M>\Box_{H}(G)</M> on <M>\Box(G)</M> has the vertical arrows
 as objects, and considers the usual square <M>s</M>
@@ -600,6 +625,8 @@ structure <M>\Box_{V}(G)</M> on <M>\Box(G)</M> has the horizontal arrows
 as objects and pairs of vertical arrows as arrows.
 The identity arrow at <M>a</M> is <M>1_U(s)</M>,
 and the inverse arrow of <M>s</M> is <M>s^{-1}_{V}</M>.
+<P/>
+These groupoid structures have not been implemented in this package.
 </Subsection>
 
 </Section>
@@ -841,6 +868,8 @@ gap> sq := SquareOfArrows( DGd8c6, a6, b6, c6, d6 );
 <ManSection>
    <Oper Name="DoubleGroupoidHomomorphism"
          Arg="src rng hom" />
+   <Filt Name="IsDoubleGroupoidHomomorphism" 
+         Arg='mwohom' Type='Category'/>
 <Description>
 A homomorphism of double groupoids is determined by a homomorphism <C>mor</C>
 between the underlying groupoids since <C>mor</C> determines the images of
@@ -857,15 +886,18 @@ gap> ad8 := GroupHomomorphismByImages( d8, d8,
 >               [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, 
 >               [-7,-9,-8], [(),(5,7),(6,8)] );;
-gap> endDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );
-double groupoid homomorphism : DGd8 -> DGd8
-gap> Display( endDGd8 );
+gap> endDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );;
+gap> Display( endDGd8 );            
 double groupoid homomorphism: [ DGd8 ] -> [ DGd8 ]
 with underlying groupoid homomorphism:
- groupoid mapping: [ Gd8 ] -> [ Gd8 ]
-root homomorphism: [ [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] ]
-images of objects: [ -7, -9, -8 ]
-   images of rays: [ [() : -7 -> -7], [(5,7) : -7 -> -9], [(6,8) : -7 -> -8] ]
+homomorphism to single piece groupoid: Gd8 -> Gd8
+root group homomorphism:
+(5,6,7,8) -> (5,8,7,6)
+(5,7) -> (6,8)
+object map: [ -9, -8, -7 ] -> [ -7, -9, -8 ]
+ray images: [ (), (5,7), (6,8) ]
+gap> IsDoubleGroupoidHomomorphism( endDGd8 );
+true
 gap> sq1;
 [-7] ------- (5,7) ------> [-8]
   |                          |

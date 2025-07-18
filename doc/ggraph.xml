@@ -89,6 +89,8 @@ and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
          Arg="gg" />
    <Attr Name="IsomorphismsOfGraphOfGroups"
          Arg="gg" />
+   <Filt Name="IsGraphOfGroups" 
+         Arg='dig' Type='Category'/>
 <Description>
 A graph of groups is traditionally defined as consisting of: 
 <List>
@@ -165,6 +167,8 @@ Graph of Groups with :-
         arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
+gap> IsGraphOfGroups( G1 );
+true
 ]]>
 </Example>
 
@@ -555,6 +559,8 @@ fe2*fe1^-1
          Arg="gg" />
    <Attr Name="LeftTransversalsOfGraphOfGroupoids"
          Arg="gg" />
+   <Filt Name="IsGraphOfGroupoids" 
+         Arg='dig' Type='Category'/>
 <Description>
 Graphs of groups generalise naturally to graphs of groupoids, 
 forming the class <C>IsGraphOfGroupoids</C>.
@@ -619,6 +625,8 @@ isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
   groupoid homomorphism : Uhybar -> Uhy
     [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
       [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
+gap> IsGraphOfGroupoids( gg3 );
+true
 ]]>
 </Example>
 

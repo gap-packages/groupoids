@@ -30,9 +30,13 @@ gap> DGd8!.groupoid;
 Gd8
 gap> DGd8!.objects;
 [ -9, -8, -7 ]
+gap> SetName( DGd8, "DGd8" );
+gap> [ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];
+[ true, true ]
+
+## SubSection 7.1.2 
 gap> [ Size(DGd8), (3*8)^4 ]; 
 [ 331776, 331776 ]
-gap> SetName( DGd8, "DGd8" );
 gap> a1 := Arrow( Gd8, (5,7), -7, -8 );;
 gap> b1 := Arrow( Gd8, (6,8), -7, -7 );;
 gap> c1 := Arrow( Gd8, (5,6)(7,8), -8, -9 );;
@@ -59,8 +63,10 @@ gap> BoundaryOfSquare( sq1 );
 [(6,8) : -9 -> -9]
 gap> DoubleGroupoidOfSquare( sq1 );
 DGd8
+gap> IsDoubleGroupoidElement( sq1 );
+true
 
-## SubSection 7.1.2
+## SubSection 7.1.3
 gap> a2 := Arrow( Gd8, (6,8), -8, -9 );;
 gap> c2 := Arrow( Gd8, (5,7)(6,8), -9, -8);;
 gap> d2 := Arrow( Gd8, (5,6,7,8), -9, -8 );; 
@@ -75,7 +81,7 @@ gap> bdy2 := BoundaryOfSquare( sq2 );
 gap> [ IsCommutingSquare(sq1), IsCommutingSquare(sq2) ]; 
 [ false, true ]
 
-## SubSection 7.1.3
+## SubSection 7.1.4
 gap> tsq1 := TransposedSquare( sq1 );
 [-7] ------- (6,8) ------> [-7]
   |                         |
@@ -85,7 +91,7 @@ gap> tsq1 := TransposedSquare( sq1 );
 gap> IsClosedUnderTransposition( sq1 );  
 false
 
-## SubSection 7.1.4
+## SubSection 7.1.5
 gap> LeftArrow( sq2 ) = RightArrow( sq1 ); 
 true
 gap> sq12 := HorizontalProduct( sq1, sq2 );
@@ -99,7 +105,7 @@ gap> bdy12 := BoundaryOfSquare( sq12 );
 gap> (bdy1^d2) * bdy2 = bdy12;
 true
 
-## SubSection 7.1.5
+## SubSection 7.1.6
 gap> b3 := Arrow( Gd8, (5,7), -7, -9 );;
 gap> c3 := Arrow( Gd8, (6,8), -9, -8);;
 gap> d3 := Arrow( Gd8, (5,8)(6,7), -9, -8 );; 
@@ -158,7 +164,7 @@ gap> sq1324 := HorizontalProduct( sq13, sq24 );;
 gap> sq1324 = sq1234;
 true
 
-## SubSection 7.1.6
+## SubSection 7.1.7
 gap> hid := HorizontalIdentities( sq24 );;
 gap> hid[1]; Print("\n"); hid[2];                    
 [-8] --------- () --------> [-8]
@@ -298,15 +304,18 @@ gap> ad8 := GroupHomomorphismByImages( d8, d8,
 >               [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, 
 >               [-7,-9,-8], [(),(5,7),(6,8)] );;
-gap> endDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );
-double groupoid homomorphism : DGd8 -> DGd8
-gap> Display( endDGd8 );
+gap> endDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );;
+gap> Display( endDGd8 );            
 double groupoid homomorphism: [ DGd8 ] -> [ DGd8 ]
 with underlying groupoid homomorphism:
- groupoid mapping: [ Gd8 ] -> [ Gd8 ]
-root homomorphism: [ [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] ]
-images of objects: [ -7, -9, -8 ]
-   images of rays: [ [() : -7 -> -7], [(5,7) : -7 -> -9], [(6,8) : -7 -> -8] ]
+homomorphism to single piece groupoid: Gd8 -> Gd8
+root group homomorphism:
+(5,6,7,8) -> (5,8,7,6)
+(5,7) -> (6,8)
+object map: [ -9, -8, -7 ] -> [ -7, -9, -8 ]
+ray images: [ (), (5,7), (6,8) ]
+gap> IsDoubleGroupoidHomomorphism( endDGd8 );
+true
 gap> sq1;
 [-7] ------- (5,7) ------> [-8]
   |                          |

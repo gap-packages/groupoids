@@ -87,6 +87,8 @@ true
 gap> e1 := Arrow( Gd8, (5,6,7,8), -7, -8 );;
 gap> ImageElm( hom8, e1 );
 [(1,3,4) : -12 -> -13]
+gap> IsGroupoidHomomorphism( hom8 );
+true
 
 ## Section 5.2
 ## SubSection 5.2.1
@@ -277,15 +279,18 @@ gap> SetName( W1, "[Ha4,Gd8]" );  SetName( W2, "[Ka4,Kk4]" );
 gap> homW := HomomorphismByUnion( W1, W2, [ isoHa4, hom8 ] );;
 gap> Display( homW );           
 groupoid homomorphism: [Ha4,Gd8] -> [Ka4,Kk4] with pieces :
- groupoid mapping: [ Ha4 ] -> [ Ka4 ]
-root homomorphism: [ [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] ]
-images of objects: [ -30, -29, -28 ]
-   images of rays: [ [() : -30 -> -30], [() : -30 -> -29], [() : -30 -> -28] ]
- groupoid mapping: [ Gd8 ] -> [ Kk4 ]
-root homomorphism: [ [ (5,6,7,8), (5,7) ], [ (1,4)(2,3), () ] ]
-images of objects: [ -14, -13, -12 ]
-   images of rays: [ [() : -14 -> -14], [(1,3,4) : -14 -> -13], 
-  [(1,4)(2,3) : -14 -> -12] ]
+homomorphism to single piece groupoid: Ha4 -> Ka4
+root group homomorphism:
+(1,2,3) -> (1,2,3)
+(2,3,4) -> (2,3,4)
+object map: [ -14, -13, -12 ] -> [ -30, -29, -28 ]
+ray images: [ (), (), () ]
+homomorphism to single piece groupoid: Gd8 -> Kk4
+root group homomorphism:
+(5,6,7,8) -> (1,4)(2,3)
+(5,7) -> ()
+object map: [ -9, -8, -7 ] -> [ -14, -13, -12 ]
+ray images: [ (), (1,3,4), (1,4)(2,3) ]
 
 
 ## SubSection 5.5.2
