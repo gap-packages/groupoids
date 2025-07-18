@@ -1,6 +1,6 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.77dev for GAP 4.14.0 (17/07/25) 
+## Version 1.78 for GAP 4.14.0 (18/07/25) 
  * (17/07/25) documented some missing categories in the manual
 
 ## Version 1.77 for GAP 4.14.0 (03/07/25)
