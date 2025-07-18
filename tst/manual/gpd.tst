@@ -19,6 +19,8 @@ gap> c6 := Group( (11,12,13)(14,15) );;
 gap> SetName( c6, "c6" );
 gap> Gc6 := MagmaWithSingleObject( c6, -10 );
 single piece groupoid: < c6, [ -10 ] >
+gap> IsGroupoid( Gc6 ); 
+true
 gap> SetName( Ga4, "Ga4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
 
 ## SubSection 4.1.2 
@@ -148,6 +150,8 @@ gap> e2 := Arrow( Gd8, (5,7), -8, -7 );
 [(5,7) : -8 -> -7]
 gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
 [ (5,6,7,8), -9, -8 ]
+gap> IsGroupoidElement( e1 );
+true
 gap> e1e2 := e1*e2;
 [(5,6)(7,8) : -9 -> -7]
 gap> e2*e1;

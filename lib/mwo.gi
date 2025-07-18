@@ -61,7 +61,7 @@ function( mwo, isge, e, t, h )
 
     local obs, elt, fam;
 
-Info( InfoGroupoids, 1, "standard method for ArrowNC" );
+    Info( InfoGroupoids, 3, "standard method for ArrowNC" );
     if isge then 
         fam := IsGroupoidElementFamily; 
         elt := Objectify( IsGroupoidElementType, [ mwo, e, t, h ] );

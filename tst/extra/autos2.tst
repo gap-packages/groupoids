@@ -107,11 +107,12 @@ gap> IsAutomorphismWithObjects( aut1 );
 true
 gap> iso1 := isod8 * aut1;; 
 gap> Display( iso1 ); 
- groupoid mapping: [ Gd8 ] -> [ Fd8 ]
-root homomorphism: [ [ (1,2,3,4), (2,4) ], [ (1,2,3,4), (2,4) ] ]
-images of objects: [ -17, -16, -19, -18 ]
-   images of rays: [ [() : -17 -> -17], [(1,2,3) : -17 -> -16], 
-  [() : -17 -> -19], [(1,2,3) : -17 -> -18] ]
+homomorphism to single piece groupoid: Gd8 -> Fd8
+root group homomorphism:
+(1,2,3,4) -> (1,2,3,4)
+(2,4) -> (2,4)
+object map: [ -9, -8, -7, -6 ] -> [ -17, -16, -19, -18 ]
+ray images: [ (), (1,2,3), (), (1,2,3) ]
 gap> a := Arrow( Gd8, (1,2,3), -9, -8 );; 
 gap> a1 := ImageElm( iso1, a ); 
 [(1,2,3) : -17 -> -16]
@@ -137,11 +138,12 @@ gap> IsAutomorphismWithObjects( aut2 );
 true
 gap> iso2 := isod8 * aut2;;
 gap> Display( iso2 ); 
- groupoid mapping: [ Gd8 ] -> [ Fd8 ]
-root homomorphism: [ [ (1,2,3,4), (2,4) ], [ (1,2,3,4), (1,3) ] ]
-images of objects: [ -19, -18, -17, -16 ]
-   images of rays: [ [() : -19 -> -19], [(1,2,3) : -19 -> -18], 
-  [() : -19 -> -17], [(1,2,3) : -19 -> -16] ]
+homomorphism to single piece groupoid: Gd8 -> Fd8
+root group homomorphism:
+(1,2,3,4) -> (1,2,3,4)
+(2,4) -> (1,3)
+object map: [ -9, -8, -7, -6 ] -> [ -19, -18, -17, -16 ]
+ray images: [ (), (1,2,3), (), (1,2,3) ]
 gap> a2 := ImageElm( iso2, a ); 
 [(1,2,3) : -19 -> -18]
 gap> b2 := ImageElm( iso2, b ); 
@@ -170,11 +172,12 @@ gap> IsAutomorphismWithObjects( aut3 );
 true
 gap> iso3 := isod8 * aut3;;
 gap> Display( iso3 ); 
- groupoid mapping: [ Gd8 ] -> [ Fd8 ]
-root homomorphism: [ [ (1,2,3,4), (2,4) ], [ (1,2,3,4), (2,4) ] ]
-images of objects: [ -19, -18, -17, -16 ]
-   images of rays: [ [() : -19 -> -19], [(2,4,3) : -19 -> -18], 
-  [(1,4,3,2) : -19 -> -17], [(1,3,4) : -19 -> -16] ]
+homomorphism to single piece groupoid: Gd8 -> Fd8
+root group homomorphism:
+(1,2,3,4) -> (1,2,3,4)
+(2,4) -> (2,4)
+object map: [ -9, -8, -7, -6 ] -> [ -19, -18, -17, -16 ]
+ray images: [ (), (2,4,3), (1,4,3,2), (1,3,4) ]
 gap> a3 := ImageElm( iso3, a ); 
 [(2,4,3) : -19 -> -18]
 gap> b3 := ImageElm( iso3, b ); 

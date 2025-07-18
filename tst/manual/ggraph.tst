@@ -63,6 +63,8 @@ Graph of Groups with :-
         arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
+gap> IsGraphOfGroups( G1 );
+true
 
 ## SubSection 6.2.2
 gap> IsGraphOfFpGroups(G1);
@@ -233,6 +235,8 @@ isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
   groupoid homomorphism : Uhybar -> Uhy
     [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
       [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
+gap> IsGraphOfGroupoids( gg3 );
+true
 
 ## Subsection 6.5.2
 gap> f1 := Arrow( Gfa, a^7, -1, -2);;

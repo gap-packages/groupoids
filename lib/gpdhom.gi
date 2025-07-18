@@ -627,27 +627,14 @@ end );
 ##
 #M  Display
 ##
-InstallMethod( Display, "for a mapping of connected groupoids", true,
-    [ IsGroupoidHomomorphism and IsHomomorphismFromSinglePiece 
-      and IsHomomorphismToSinglePiece ], 0,
-function ( map ) 
-    Print( " groupoid mapping: " ); 
-    Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 
-    Print( "root homomorphism: ", 
-           MappingGeneratorsImages( RootGroupHomomorphism(map) ), "\n" ); 
-    Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
-    Print( "   images of rays: ", 
-           List( RayArrowsOfGroupoid( Source(map) ), r -> ImageElm(map,r) ), 
-           "\n" ); 
-end );
-
 InstallMethod( Display, "for a mapping from a homogeneous discrete gpd", true, 
     [ IsGroupoidHomomorphismFromHomogeneousDiscreteRep ], 0,
 function ( map ) 
 
     local h; 
 
-    Print( " homogeneous discrete groupoid mapping: " ); 
+    Info( InfoGroupoids, 2, "display method for discrete homs in gpdhom.gi" );
+    Print( "homogeneous discrete groupoid mapping: " ); 
     Print( "[ ", Source(map), " ] -> [ ", Range(map), " ]\n" ); 
     Print( "images of objects: ", ImagesOfObjects( map ), "\n" ); 
     Print( "object homomorphisms:\n" ); 
@@ -806,7 +793,7 @@ function ( map, e )
     fi; 
     imo := ImagesOfObjects( map ); 
     obs1 := src!.objects; 
-    pt1 := Position( obs1, e![3] ); 
+    pt1 := Position( obs1, e![3] );
     ph1 := Position( obs1, e![4] ); 
     ray1 := RaysOfGroupoid( src ); 
     loop := ray1[pt1] * e![2] * ray1[ph1]^(-1); 
@@ -1394,8 +1381,8 @@ end );
 
 InstallMethod( GroupoidHomomorphismFromHomogeneousDiscrete,
     "method for a mapping from a homogeneous, discrete groupoid", true,
-    [ IsHomogeneousDiscreteGroupoid, IsGroupoid and IsSinglePieceDomain, 
-      IsHomogeneousList, IsHomogeneousList ], 0,
+    [ IsHomogeneousDiscreteGroupoid, IsGroupoid, IsHomogeneousList,
+      IsHomogeneousList ], 0,
 function( src, rng, homs, oims ) 
 
     local gps, gpr, obs, obr; 
