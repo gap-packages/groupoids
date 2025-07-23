@@ -257,6 +257,7 @@ DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 #O  SubgroupoidByPieces( <gpd>, <obhoms> )              
 #O  PiecePositions( <gpd>, <sgpd> )
 #O  DiscreteSubgroupoid( <gpd>, <gps>, <obs> )              
+#O  HomogeneousDiscreteSubgroupoid( <gpd>, <gp>, <obs> )              
 #A  MaximalDiscreteSubgroupoid( <gpd> )  
 #A  FullTrivialSubgroupoid( <gpd> )  
 #A  DiscreteTrivialSubgroupoid( <gpd> )  
@@ -270,6 +271,8 @@ DeclareOperation( "SubgroupoidByPieces",
 ##  DeclareOperation( "PiecePositions", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "DiscreteSubgroupoid",
     [ IsGroupoid, IsList, IsHomogeneousList ] );
+DeclareOperation( "HomogeneousDiscreteSubgroupoid",
+    [ IsGroupoid, IsGroup, IsHomogeneousList ] );
 DeclareAttribute( "MaximalDiscreteSubgroupoid", IsGroupoid );
 DeclareAttribute( "FullTrivialSubgroupoid", IsGroupoid );
 DeclareAttribute( "DiscreteTrivialSubgroupoid", IsGroupoid );

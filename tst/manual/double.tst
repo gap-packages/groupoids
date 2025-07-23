@@ -24,7 +24,7 @@ gap> Gq8 := Groupoid( q8, [ -19, -18, -17 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> U3 := UnionOfPieces( [ Ga4, Gc6, Gd8 ] );;
 
-## SubSection 7.1.1 
+## SubSection 8.1.1 
 gap> DGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; 
 gap> DGd8!.groupoid;
 Gd8
@@ -34,7 +34,7 @@ gap> SetName( DGd8, "DGd8" );
 gap> [ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];
 [ true, true ]
 
-## SubSection 7.1.2 
+## SubSection 8.1.2 
 gap> [ Size(DGd8), (3*8)^4 ]; 
 [ 331776, 331776 ]
 gap> a1 := Arrow( Gd8, (5,7), -7, -8 );;
@@ -66,7 +66,7 @@ DGd8
 gap> IsDoubleGroupoidElement( sq1 );
 true
 
-## SubSection 7.1.3
+## SubSection 8.1.3
 gap> a2 := Arrow( Gd8, (6,8), -8, -9 );;
 gap> c2 := Arrow( Gd8, (5,7)(6,8), -9, -8);;
 gap> d2 := Arrow( Gd8, (5,6,7,8), -9, -8 );; 
@@ -81,7 +81,7 @@ gap> bdy2 := BoundaryOfSquare( sq2 );
 gap> [ IsCommutingSquare(sq1), IsCommutingSquare(sq2) ]; 
 [ false, true ]
 
-## SubSection 7.1.4
+## SubSection 8.1.4
 gap> tsq1 := TransposedSquare( sq1 );
 [-7] ------- (6,8) ------> [-7]
   |                         |
@@ -91,7 +91,7 @@ gap> tsq1 := TransposedSquare( sq1 );
 gap> IsClosedUnderTransposition( sq1 );  
 false
 
-## SubSection 7.1.5
+## SubSection 8.1.5
 gap> LeftArrow( sq2 ) = RightArrow( sq1 ); 
 true
 gap> sq12 := HorizontalProduct( sq1, sq2 );
@@ -105,7 +105,7 @@ gap> bdy12 := BoundaryOfSquare( sq12 );
 gap> (bdy1^d2) * bdy2 = bdy12;
 true
 
-## SubSection 7.1.6
+## SubSection 8.1.6
 gap> b3 := Arrow( Gd8, (5,7), -7, -9 );;
 gap> c3 := Arrow( Gd8, (6,8), -9, -8);;
 gap> d3 := Arrow( Gd8, (5,8)(6,7), -9, -8 );; 
@@ -164,7 +164,7 @@ gap> sq1324 := HorizontalProduct( sq13, sq24 );;
 gap> sq1324 = sq1234;
 true
 
-## SubSection 7.1.7
+## SubSection 8.1.7
 gap> hid := HorizontalIdentities( sq24 );;
 gap> hid[1]; Print("\n"); hid[2];                    
 [-8] --------- () --------> [-8]
@@ -223,8 +223,8 @@ true
 gap> VerticalProduct( sq24, vinv ) = vid[1];   
 true
 
-## Section 7.2
-## SubSection 7.2.1
+## Section 8.2
+## SubSection 8.2.1
 gap> DGc6 := SinglePieceBasicDoubleGroupoid( Gc6 );; 
 gap> DGa4 := SinglePieceBasicDoubleGroupoid( Ga4 );; 
 gap> DGc6s4 := DoubleGroupoid( [ DGc6, DGa4 ] );
@@ -248,8 +248,8 @@ gap> Pieces( DGa4c6 );
         group = c6
       objects = [ -10 ] ]
 
-## Section 7.3
-## SubSection 7.3.1
+## Section 8.3
+## SubSection 8.3.1
 gap> DGtriv := DoubleGroupoidWithTrivialGroup( [-19..-17] );
 single piece double groupoid with:
  groupoid = single piece groupoid: < Group( [ () ] ), [ -19 .. -17 ] >
@@ -259,7 +259,7 @@ single piece double groupoid with:
 gap> Size(DGtriv);                                          
 81
 
-## SubSection 7.3.2
+## SubSection 8.3.2
 gap> DGc4 := DoubleGroupoidWithSingleObject( Group((1,2,3,4)), 0 );
 single piece double groupoid with:
  groupoid = single piece groupoid: < Group( [ (1,2,3,4) ] ), [ 0 ] >
@@ -269,7 +269,7 @@ single piece double groupoid with:
 gap> Size( DGc4 );                                                 
 256
 
-## Section 7.4
+## Section 8.4
 gap> Gd8c6 := DirectProduct( Gd8, Gc6 );
 single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), 
 [ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ] >
@@ -299,7 +299,7 @@ gap> sq := SquareOfArrows( DGd8c6, a6, b6, c6, d6 );
   V                                        V
 [[ -9, -10 ]] ----- (2,4) ----> [[ -8, -10 ]]
 
-## SubSection 7.5.1
+## SubSection 8.5.1
 gap> ad8 := GroupHomomorphismByImages( d8, d8,
 >               [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, 

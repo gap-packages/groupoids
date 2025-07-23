@@ -16,10 +16,10 @@ AutoDoc(rec(
             \newcommand{\Inn} {\mathrm{Inn}}
         """ )),  
     scaffold := rec(
-        includes := [ "intro.xml",   "mwo.xml",       "mwohom.xml", 
-                      "gpd.xml",     "gpdhom.xml",    "ggraph.xml", 
-                      "double.xml",  "tecnotes.xml",  "history.xml" 
-                    ],
+        includes := [ "intro.xml",   "mwo.xml",     "mwohom.xml", 
+                      "gpd.xml",     "gpdhom.xml",  "gpdaut.xml",
+                      "ggraph.xml",  "double.xml",  "tecnotes.xml",
+                      "history.xml" ],
         bib := "bib.xml", 
         entities := rec( 
             AutoDoc := "<Package>AutoDoc</Package>",

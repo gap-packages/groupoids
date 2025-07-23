@@ -258,7 +258,7 @@ false
 <Description>
 More general mappings, which need not preserve multiplication, 
 are available using this operation. 
-See section <Ref Sect="sec-autos"/> for an application. 
+See chapter <Ref Chap="chap-gpdaut"/> for an application. 
 </Description>
 </ManSection>
 

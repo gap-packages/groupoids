@@ -293,6 +293,7 @@ gap> r1 := GroupoidAutomorphismByRayShifts( Ga4, krayr );;
 gap> r*k = k*r1;                                         
 true
 
+gap> ## check the conjugation formula: c(ab)= c(a)*c(b)*c(a) = c(b)*c(a)*c(b)
 gap> x := a*b;
 [(1,3)(2,4) : -9 -> -7]
 gap> auta:=GroupoidInnerAutomorphism( Ga4, a );

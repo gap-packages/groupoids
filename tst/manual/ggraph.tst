@@ -7,9 +7,9 @@ gap> START_TEST( "groupoids package: ggraph.tst" );
 gap> gpd_infolevel_saved := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
 
-###  Section 6.1  Digraphs
+###  Section 7.1  Digraphs
 
-## SubSection 6.1.1
+## SubSection 7.1.1
 ## define the graph D1
 gap> V1 := [5,6];;
 gap> fg1 := FreeGroup("y");;
@@ -33,9 +33,9 @@ and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
 gap> inob3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 
-### Section 6.2 : Graphs of Groups
+### Section 7.2 : Graphs of Groups
 
-## SubSection 6.2.1
+## SubSection 7.2.1
 ## group fa and subgroup 3fa
 gap> fa := FreeGroup( "a" );;
 gap> a := fa.1;;
@@ -66,21 +66,21 @@ isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 gap> IsGraphOfGroups( G1 );
 true
 
-## SubSection 6.2.2
+## SubSection 7.2.2
 gap> IsGraphOfFpGroups(G1);
 true
 gap> IsomorphismsOfGraphOfGroups(G1);
 [ [ a^3 ] -> [ b^2 ], [ b^2 ] -> [ a^3 ] ]
 
-## SubSection 6.2.3
+## SubSection 7.2.3
 gap> RTG1 := RightTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a, a^2 ], [ <identity ...>, b ] ]
 gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a^-1, a^-2 ], [ <identity ...>, b^-1 ] ]
 
-### Section 6.3  Words in a Graph of Groups and their normal forms
+### Section 7.3  Words in a Graph of Groups and their normal forms
 
-## SubSection 6.3.1
+## SubSection 7.3.1
 gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
 gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
 (5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
@@ -93,13 +93,13 @@ Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> WordOfGraphOfGroupsWord( gw1 );
 [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
 
-## SubSection 6.3.2
+## SubSection 7.3.2
 gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
 (5)a^-1.y.b^-1.y^-1.a^10(5)
 
-### Section 6.4 : Free products with amalgamation and HNN extensions
+### Section 7.4 : Free products with amalgamation and HNN extensions
 
-## Subsection 6.4.1
+## Subsection 7.4.1
 ## set up the first group s3 and a subgroup c3=<a1>
 gap> fg2 := FreeGroup( 2, "a" );;
 gap> rel1 := [fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2];;
@@ -152,7 +152,7 @@ f4^-1*f3*f4
 gap> ReducedImageElm( emb2, b1^b2 );
 f4*f3^-1
 
-## Subsection 6.4.2
+## Subsection 7.4.2
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
 gap> hnn := HnnExtension( a4, i23 );
@@ -187,9 +187,9 @@ fe2^-1*fe1*fe2
 gap> ReducedImageElm( emb, b1^b2 );
 fe2*fe1^-1
 
-### Section 6.5 : Graphs of groupoids and their words 
+### Section 7.5 : Graphs of groupoids and their words 
 
-## Subsection 6.5.1
+## Subsection 7.5.1
 gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );
@@ -238,7 +238,7 @@ isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
 gap> IsGraphOfGroupoids( gg3 );
 true
 
-## Subsection 6.5.2
+## Subsection 7.5.2
 gap> f1 := Arrow( Gfa, a^7, -1, -2);;
 gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
 gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;

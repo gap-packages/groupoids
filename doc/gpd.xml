@@ -804,7 +804,7 @@ A single piece trivial groupoid is sometimes called a
 <Index Key="tree groupoid"> tree groupoid </Index> <E>tree groupoid</E>.
 (The term <Index Key="identity subgroupoid"> identity subgroupoid </Index> 
 <E>identity subgroupoid</E> was used in versions up to 1.14.)
-In the example <C>id(G)</C> denot4es the identity subgroup of <M>G</M>.
+In the example <C>id(G)</C> denotes the identity subgroup of <M>G</M>.
 <P/>
 </Description>
 </ManSection>
@@ -822,6 +822,8 @@ homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7 ] >
 <ManSection Label="sec-subgpd-discrete">
    <Oper Name="DiscreteSubgroupoid"
          Arg="gpd, sgps, obs" />
+   <Oper Name="HomogeneousDiscreteSubgroupoid"
+         Arg="gpd, gp, obs" />
    <Attr Name="MaximalDiscreteSubgroupoid"
          Arg="gpd" />
 <Description>
@@ -843,6 +845,8 @@ groupoid with 4 pieces:
 2:  single piece groupoid: < c3b, [ -13 ] >
 3:  single piece groupoid: < c6, [ -10 ] >
 4:  single piece groupoid: < c4, [ -7 ] >
+gap> HomogeneousDiscreteSubgroupoid( Ga4, k4, [-15,-13,-11] ); 
+homogeneous, discrete groupoid: < a4, [ -15, -13, -11 ] >
 gap> MaximalDiscreteSubgroupoid( Jc3 );
 groupoid with 3 pieces:
 1:  single piece groupoid: < c3a, [ -14 ] >
@@ -1021,7 +1025,7 @@ gap> dcra4 := DoubleCosetRepresentatives( Ha4, Jc3, Jc3 );
 <Description>
 Conjugation by an arrow <M>a = (c : p \to q)</M> 
 is the groupoid inner automorphism 
-(see section <Ref Sect="sec-autos"/>) defined as follows. 
+(see chapter <Ref Chap="chap-gpdaut"/>) defined as follows. 
 There are two cases to consider. 
 In the case <M>p \neq q</M>, 
 <List>
@@ -1070,7 +1074,10 @@ In the case <M>p=q</M>,
 </List>
 <P/>
 The details of this construction may be found in 
-section 3.2 of <Cite Key="AlWe"/>. 
+section 3.2 of <Cite Key="AlWe"/>.
+<P/>
+See section <Ref Oper="GroupoidInnerAutomorphism"/> where conjugation
+is used to construct groupoid automorphisms.
 <P/>
 </Description>
 </ManSection>
