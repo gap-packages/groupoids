@@ -37,18 +37,28 @@ DeclareOperation( "GroupoidAutomorphismByGroupAuto",
 ## 
 #O  GroupoidAutomorphismByObjectPermNC( <gpd>, <oims> )
 #O  GroupoidAutomorphismByObjectPerm( <gpd>, <oims> )
+#O  GroupoidAutomorphismByNtupleNC( <gpd>, <L> ) 
+#O  GroupoidAutomorphismByNtuple( <gpd>, <L> ) 
 #O  GroupoidAutomorphismByRayShiftsNC( <gpd>, <rims> ) 
 #O  GroupoidAutomorphismByRayShifts( <gpd>, <rims> ) 
-#O  GroupoidInnerAutomorphism( <gpd>, <arr> )
 ## 
 DeclareOperation( "GroupoidAutomorphismByObjectPermNC", 
     [ IsGroupoid, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByObjectPerm", 
     [ IsGroupoid, IsHomogeneousList ] );
+DeclareOperation( "GroupoidAutomorphismByNtupleNC", 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
+DeclareOperation( "GroupoidAutomorphismByNtuple", 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] ); 
 DeclareOperation( "GroupoidAutomorphismByRayShiftsNC", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByRayShifts", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] ); 
+
+############################################################################# 
+## 
+#O  GroupoidInnerAutomorphism( <gpd>, <arr> )
+##
 DeclareOperation( "GroupoidInnerAutomorphism", 
     [ IsGroupoid, IsGroupoidElement ] ); 
 
@@ -114,3 +124,45 @@ DeclareOperation( "GroupoidAutomorphismByPiecesPermNC",
     [ IsGroupoid, IsPerm ] );
 DeclareOperation( "GroupoidAutomorphismByPiecesPerm", 
     [ IsGroupoid, IsPerm ] );
+
+## ======================================================================== ##
+##                              Groupoid actions.                           ##
+## ======================================================================== ##
+
+#############################################################################
+##
+#C  IsGroupoidAction( <map> )
+#R  IsGroupoidActionRep( <map> )
+#A  ActionMap( <act> )
+##
+##  A groupoid action is a mapping which satisfies the conjugation identities
+##
+DeclareCategory( "IsGroupoidAction", IsGeneralMapping );
+DeclareRepresentation( "IsGroupoidActionRep", 
+    IsGroupoidAction and IsAttributeStoringRep, 
+    [ "Source", "Range", "ActionMap" ] );
+DeclareAttribute( "ActionMap", IsGroupoidAction );
+
+#############################################################################
+##
+#O  GroupoidActionByConjugation      groupoid G acts on itself by conjugation
+##
+DeclareOperation( "GroupoidActionByConjugation", [ IsGroupoid ] );
+
+#############################################################################
+##
+#C  IsGroupoidActionCollection . . . . . . . category of colls of gpd actions
+#C  IsGroupoidActionCollColl . . . . . . . . . . . category of colls of colls 
+#C  IsGroupoidActionCollCollColl . . . . . .  category of colls, colls, colls
+#V  GroupoidActionFamily . . . . . . . . . . . .  family for groupoid actions
+#T  GroupoidActionType . . . . . . . . . . . . . .  type for groupoid actions 
+##
+DeclareCategoryCollections( "IsGroupoidAction" );
+DeclareCategoryCollections( "IsGroupoidActionCollection" );
+DeclareCategoryCollections( "IsGroupoidActionCollColl" );
+BindGlobal( "GroupoidActionFamily", 
+    NewFamily( "GroupoidActionFamily", IsGroupoidAction, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "GroupoidActionType", 
+            NewType( GroupoidActionFamily, IsGroupoidActionRep ) ); 
+

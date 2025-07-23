@@ -322,6 +322,8 @@ groupoid with 4 pieces:
 2:  single piece groupoid: < c3b, [ -13 ] >
 3:  single piece groupoid: < c6, [ -10 ] >
 4:  single piece groupoid: < c4, [ -7 ] >
+gap> HomogeneousDiscreteSubgroupoid( Ga4, k4, [-15,-13,-11] ); 
+homogeneous, discrete groupoid: < a4, [ -15, -13, -11 ] >
 gap> MaximalDiscreteSubgroupoid( Jc3 );
 groupoid with 3 pieces:
 1:  single piece groupoid: < c3a, [ -14 ] >

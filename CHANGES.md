@@ -1,5 +1,11 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.78dev for GAP 4.14.0 (23/07/25) 
+ * (22/07/25) revised code and examples of GroupoidInnerAutomorphism
+ * (21/07/25) added GroupoidAutomorphismByNtuple(NC)
+              added HomogeneousDiscreteSubgroupoid
+ * (18/07/25) started work on groupoid actions
+
 ## Version 1.78 for GAP 4.14.0 (18/07/25) 
  * (17/07/25) documented some missing categories in the manual
 

@@ -187,24 +187,25 @@ end );
 
 #############################################################################
 ##
-#M  GroupoidAutomorphismByRayShiftsNC  
-#M  GroupoidAutomorphismByRayShifts 
+#M  GroupoidAutomorphismByNtupleNC  
+#M  GroupoidAutomorphismByNtuple 
 ##
-InstallMethod( GroupoidAutomorphismByRayShiftsNC , 
+InstallMethod( GroupoidAutomorphismByNtupleNC , 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
-function( gpd, shifts ) 
+function( gpd, shifts )
 
-    local gens, ngens, nobs, images, i, k, a, mor; 
+    local gens, ngens, obs, images, i, p, q, a, mor; 
 
     gens := GeneratorsOfGroupoid( gpd ); 
     ngens := Length( gens ); 
-    nobs := Length( gpd!.objects ); 
+    obs := gpd!.objects;
     images := ShallowCopy( gens ); 
-    k := ngens - nobs;
-    for i in [2..nobs] do 
-        a := gens[i+k]; 
-        images[i+k] := Arrow( gpd, a![2]*shifts[i], a![3], a![4] ); 
+    for i in [1..ngens] do 
+        a := gens[i];
+        p := Position( obs, a![3] );
+        q := Position( obs, a![4] );
+        images[i] := Arrow( gpd, (shifts[p])^-1*a![2]*shifts[q], a![3], a![4] );
     od; 
     mor := GroupoidHomomorphismFromSinglePiece( gpd, gpd, gens, images ); 
     SetOrder( mor, Lcm( List( shifts, Order ) ) ); 
@@ -214,7 +215,7 @@ function( gpd, shifts )
     return mor;
 end ); 
 
-InstallMethod( GroupoidAutomorphismByRayShifts, 
+InstallMethod( GroupoidAutomorphismByNtuple, 
     "for a groupoid and a list of elements of the root group", true, 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd, shifts ) 
@@ -227,10 +228,32 @@ function( gpd, shifts )
     if not ForAll( shifts, s -> s in rgp ) then  
         Error( "ray shifts not all in the root group" ); 
     fi; 
-    if not ( shifts[1] = One( rgp ) ) then 
+    return GroupoidAutomorphismByNtupleNC( gpd, shifts ); 
+end ); 
+
+#############################################################################
+##
+#M  GroupoidAutomorphismByRayShiftsNC  
+#M  GroupoidAutomorphismByRayShifts 
+##
+InstallMethod( GroupoidAutomorphismByRayShiftsNC , 
+    "for a groupoid and a list of elements of the root group", true, 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
+function( gpd, shifts ) 
+    if not ( shifts[1] = One( gpd!.magma ) ) then 
         Error( "the first ray shift is not the identity" ); 
     fi; 
-    return GroupoidAutomorphismByRayShiftsNC( gpd, shifts ); 
+    return GroupoidAutomorphismByNtupleNC( gpd, shifts );
+end );
+
+InstallMethod( GroupoidAutomorphismByRayShifts, 
+    "for a groupoid and a list of elements of the root group", true, 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
+function( gpd, shifts ) 
+    if not ( shifts[1] = One( gpd!.magma ) ) then 
+        Error( "the first ray shift is not the identity" ); 
+    fi; 
+    return GroupoidAutomorphismByNtuple( gpd, shifts ); 
 end ); 
 
 #############################################################################
@@ -238,7 +261,7 @@ end );
 #M  GroupoidInnerAutomorphism 
 ##
 InstallMethod( GroupoidInnerAutomorphism, 
-    "for a groupoid and an element", true, 
+    "for a groupoid and an element", true,
     [ IsGroupoid, IsGroupoidElement ], 0,
 function( gpd, e ) 
     Error( "not yet implemented for unions of groupoids" );
@@ -279,17 +302,47 @@ InstallOtherMethod( GroupoidInnerAutomorphism,
     [ IsGroupoid and IsSinglePieceDomain, IsGroupoid, IsGroupoidElement ], 0,
 function( gpd, sub, e ) 
 
-    local gens, images, inn, res; 
+    local obs, gens, images, pieces, n, homs, oims, i, p, o, q, h; 
 
     Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism for a subgroupoid" ); 
-    if not IsSubgroupoid( gpd, sub ) then 
+    if not IsWideSubgroupoid( gpd, sub ) then 
         Error( "sub is not a subgroupoid of gpd" ); 
-    fi; 
-    gens := GeneratorsOfGroupoid( gpd ); 
-    images := List( gens, g -> g^e ); 
-    inn := GroupoidHomomorphism( gpd, gpd, gens, images ); 
-    res := RestrictedMappingGroupoids( inn, sub ); 
-    return res;
+    fi;
+    if IsSinglePiece( sub ) then
+        if not ( e![2] in RootGroup( sub ) ) then
+            Error( "element e![2] in not in the root group of sub" );
+        fi;
+    elif IsHomogeneousDomainWithObjects( sub ) then
+        if not ( e![2] in RootGroup( Pieces(sub)[1] ) ) then 
+            Error( "element e![2] in not in the root groups of sub" );
+        fi;
+    else
+        Error( "invalid subgroupoid sub" );
+    fi;
+    obs := gpd!.objects;
+    if IsSinglePiece( sub ) then
+        gens := GeneratorsOfGroupoid( sub );
+        images := List( gens, g -> g^e );
+        return GroupoidHomomorphism( sub, sub, gens, images );
+    elif IsHomogeneousDomainWithObjects( sub ) then
+        pieces := Pieces( sub );
+        n := Length( pieces );
+        homs := ListWithIdenticalEntries( n, 0 );
+        oims := ListWithIdenticalEntries( n, 0 );
+        for i in [1..n] do
+            p := pieces[i];
+            gens := GeneratorsOfGroupoid( p );
+            images := List( gens, g -> g^e );
+            o := images[1]![3];
+            oims[i] := o;
+            q := pieces[ Position( obs, o ) ];
+            h := GroupoidHomomorphism( p, q, gens, images );
+            homs[i] := RootGroupHomomorphism( h );
+        od;
+        return GroupoidHomomorphismFromHomogeneousDiscrete( sub, sub, homs, oims );
+    else
+        return fail;
+    fi;
 end );
 
 #############################################################################
@@ -1003,3 +1056,55 @@ function( gpd )
     return UnionOfPieces( comp ); 
 end );
 
+############################# GROUPOID ACTIONS ##############################
+
+#############################################################################
+##
+#M  GroupoidActionByConjugation                        sets up the action map
+##
+InstallMethod( GroupoidActionByConjugation, "method for a groupoid", true,
+    [ IsGroupoid and IsSinglePieceDomain ], 0,
+function( gpd )
+
+    local aut, map, act;
+
+    aut := AutomorphismGroupOfGroupoid( gpd );
+    map := function(a) return GroupoidInnerAutomorphism(gpd,a); end;
+    act := rec(); 
+    ObjectifyWithAttributes( act, GroupoidActionType, 
+        Source, gpd,
+        Range, aut,
+        ActionMap, map,
+        IsGroupoidAction, true );
+    return act;
+end );
+
+InstallOtherMethod( GroupoidActionByConjugation, 
+    "method for a groupoid and a normal subgroupoid", true,
+    [ IsGroupoid and IsSinglePieceDomain, IsGroupoid ], 0,
+function( gpd, sub )
+
+    local issing, ishomd, aut, map, act;
+
+    issing := false;
+    ishomd := false;
+    if not IsWideSubgroupoid( gpd, sub ) then 
+        Error( "sub is not a subgroupoid of gpd" ); 
+    fi;
+    if IsSinglePiece( sub ) then
+        issing := true;
+    elif IsHomogeneousDomainWithObjects( sub ) then
+        ishomd := true;
+    else
+        Error( "invalid subgroupoid sub" );
+    fi;
+    aut := AutomorphismGroupOfGroupoid( sub );
+    map := function(a) return GroupoidInnerAutomorphism(gpd,sub,a); end;
+    act := rec(); 
+    ObjectifyWithAttributes( act, GroupoidActionType, 
+        Source, gpd,
+        Range, aut,
+        ActionMap, map,
+        IsGroupoidAction, true );
+    return act;
+end );

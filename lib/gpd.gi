@@ -24,9 +24,10 @@ SUB_CONSTRUCTORS := Concatenation(
     "4.  SubgroupoidByPieces( groupoid, list of [imobs,hom] pairs );\n",
     "5.  FullTrivialSubgroupoid( groupoid );\n", 
     "6.  DiscreteTrivialSubgroupoid( groupoid );\n", 
-    "7.  DiscreteSubgroupoid( groupoid, list of obs, list of subgps );\n",
-    "8.  MaximalDiscreteSubgroupoid( groupoid );\n", 
-    "9.  Subgroupoid( one of the previous parameter options );" );
+    "7.  DiscreteSubgroupoid( groupoid, list of subgps, list of obs );\n",
+    "8.  HomogerneousDiscreteSubgroupoid( groupoid, group, list of obs );\n",
+    "9.  MaximalDiscreteSubgroupoid( groupoid );\n", 
+    "10. Subgroupoid( one of the previous parameter options );" );
 ##  and these are all called by the GlobalFunction Subgroupoid 
 
 #############################################################################
@@ -1798,6 +1799,30 @@ function( G, gps, obs )
     SetIsDiscreteDomainWithObjects( U, true );
     SetParentAttr( U, G );
     return U;
+end );
+
+#############################################################################
+##
+#M  HomogeneousDiscreteSubgroupoid
+##
+InstallMethod( HomogeneousDiscreteSubgroupoid, "generic method for a groupoid",
+    true, [ IsGroupoid and IsSinglePiece, IsGroup, IsHomogeneousList ], 0,
+function( G, gp, obs )
+
+    local obsg, len, rgp, gps;
+
+    Info( InfoGroupoids, 2, "calling HomogeneousDiscreteSubgroupoid" );
+    obsg := ObjectList( G );
+    len := Length( obs ); 
+    if ( len = 1 ) then 
+        return MagmaWithSingleObject( gp, obs[1] ); 
+    fi; 
+    rgp := RootGroup( G );
+    if not IsSubgroup( rgp, gp ) then
+        Error( "gp is not a subgroup of the root group of G" );
+    fi;
+    gps := List( obs, o -> ObjectGroup( G, o ) );
+    return DiscreteSubgroupoid( G, gps, obs );
 end );
 
 #############################################################################

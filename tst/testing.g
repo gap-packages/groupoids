@@ -10,7 +10,7 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst/manual" );
 ## testing manual examples 
 testmanual := 
     [ "mwo.tst",  "mwohom.tst",  "gpd.tst",  "gpdhom.tst",  "gpdaut.tst", 
-      "ggraph.tst" ];
+      "ggraph.tst",  "double.tst" ];
 testresult := true;
 for ff in testmanual do
     fn := Filename( pkgdir, ff );
