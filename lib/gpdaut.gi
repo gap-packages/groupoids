@@ -259,6 +259,7 @@ end );
 #############################################################################
 ##
 #M  GroupoidInnerAutomorphism 
+#M  GroupoidInnerAutomorphismNormalSubgroupoid
 ##
 InstallMethod( GroupoidInnerAutomorphism, 
     "for a groupoid and an element", true,
@@ -297,14 +298,14 @@ function( gpd, e )
     return GroupoidAutomorphismByGroupAutosNC( gpd, auts ); 
 end );
 
-InstallOtherMethod( GroupoidInnerAutomorphism, 
+InstallMethod( GroupoidInnerAutomorphismNormalSubgroupoid, 
     "for a groupoid, a subgroupoid, and an element", true, 
     [ IsGroupoid and IsSinglePieceDomain, IsGroupoid, IsGroupoidElement ], 0,
 function( gpd, sub, e ) 
 
     local obs, gens, images, pieces, n, homs, oims, i, p, o, q, h; 
 
-    Info( InfoGroupoids, 3, "GroupoidInnerAutomorphism for a subgroupoid" ); 
+    Info( InfoGroupoids, 3, "GroupoidInnerAutomorphismNormalSubgroupoid" ); 
     if not IsWideSubgroupoid( gpd, sub ) then 
         Error( "sub is not a subgroupoid of gpd" ); 
     fi;
@@ -1069,7 +1070,7 @@ function( gpd )
     local aut, map, act;
 
     aut := AutomorphismGroupOfGroupoid( gpd );
-    map := function(a) return GroupoidInnerAutomorphism(gpd,a); end;
+    map := function(a) return GroupoidInnerAutomorphism( gpd, a ); end;
     act := rec(); 
     ObjectifyWithAttributes( act, GroupoidActionType, 
         Source, gpd,
@@ -1099,7 +1100,9 @@ function( gpd, sub )
         Error( "invalid subgroupoid sub" );
     fi;
     aut := AutomorphismGroupOfGroupoid( sub );
-    map := function(a) return GroupoidInnerAutomorphism(gpd,sub,a); end;
+    map := function(a) 
+               return GroupoidInnerAutomorphismNormalSubgroupoid(gpd,sub,a);
+           end;
     act := rec(); 
     ObjectifyWithAttributes( act, GroupoidActionType, 
         Source, gpd,

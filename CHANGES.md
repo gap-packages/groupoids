@@ -1,6 +1,7 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.79 for GAP 4.14.0 (10/09/25)
+## Version 1.79 for GAP 4.14.0 (11/09/25)
+ * (11/09/25) added operation GroupoidInnerAutomorphismNormalSubgroupoid
  * (10/09/25) added new release mechanism file .github/workflows/release.yml 
  * (22/07/25) revised code and examples of GroupoidInnerAutomorphism
  * (21/07/25) added GroupoidAutomorphismByNtuple(NC)
