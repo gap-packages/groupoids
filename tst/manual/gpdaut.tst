@@ -106,7 +106,7 @@ gap> d5 := ImageElm( inn1, d4 );
 gap> Nk4 := SubgroupoidBySubgroup( Ha4, k4 );;
 gap> SetName( Nk4, "Nk4" );
 gap> e4 := Arrow( Ha4, (1,2)(3,4), -14, -13 );;
-gap> inn2 := GroupoidInnerAutomorphism( Ha4, Nk4, e4 );;
+gap> inn2 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Nk4, e4 );;
 gap> Display( inn2 );
 homomorphism to single piece groupoid: Nk4 -> Nk4
 root group homomorphism:
@@ -117,7 +117,7 @@ ray images: [ (), (), (1,2)(3,4) ]
 
 gap> Ma4 := MaximalDiscreteSubgroupoid( Ha4 );;
 gap> SetName( Ma4, "Ma4" );
-gap> inn3 := GroupoidInnerAutomorphism( Ha4, Ma4, e4 );;
+gap> inn3 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Ma4, e4 );;
 gap> Display( inn3 );
 homogeneous discrete groupoid mapping: [ Ma4 ] -> [ Ma4 ]
 images of objects: [ -13, -14, -12 ]

@@ -58,9 +58,12 @@ DeclareOperation( "GroupoidAutomorphismByRayShifts",
 ############################################################################# 
 ## 
 #O  GroupoidInnerAutomorphism( <gpd>, <arr> )
+#O  GroupoidInnerAutomorphismNormalSubgroupoid( <gpd>, <nsgpd>, <arr> )
 ##
 DeclareOperation( "GroupoidInnerAutomorphism", 
     [ IsGroupoid, IsGroupoidElement ] ); 
+DeclareOperation( "GroupoidInnerAutomorphismNormalSubgroupoid", 
+    [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
 
 ############################################################################# 
 ## 

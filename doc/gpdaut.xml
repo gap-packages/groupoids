@@ -127,7 +127,7 @@ ray images: [ (), (1,3,2), (1,3,4) ]
 <ManSection>
    <Oper Name="GroupoidInnerAutomorphism" 
          Arg="gpd, arrow" />
-   <Oper Name="GroupoidInnerAutomorphism" 
+   <Oper Name="GroupoidInnerAutomorphismNormalSubgroupoid" 
          Arg="gpd, subgpd, arrow" />
 <Description>
 <Index>inner automorphism</Index> 
@@ -172,7 +172,7 @@ the inner automorphism by <M>a</M> may be applied to <M>N</M>.
 gap> Nk4 := SubgroupoidBySubgroup( Ha4, k4 );;
 gap> SetName( Nk4, "Nk4" );
 gap> e4 := Arrow( Ha4, (1,2)(3,4), -14, -13 );;
-gap> inn2 := GroupoidInnerAutomorphism( Ha4, Nk4, e4 );;
+gap> inn2 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Nk4, e4 );;
 gap> Display( inn2 );
 homomorphism to single piece groupoid: Nk4 -> Nk4
 root group homomorphism:
