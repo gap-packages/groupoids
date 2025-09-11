@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (groupoids) - Chapter 6: Automorphisms of Groupoids</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
+<p><a id="X803E01577A2B37D2" name="X803E01577A2B37D2"></a></p>
+<div class="ChapSects"><a href="chap6.html#X803E01577A2B37D2">6 <span class="Heading">Automorphisms of Groupoids</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7935832881320667">6.1 <span class="Heading">Automorphisms of single piece groupoids</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79DA704A8051CB72">6.1-1 GroupoidAutomorphismByObjectPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86BD61567B41B139">6.1-2 GroupoidInnerAutomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8278B93E7F78038C">6.1-3 <span class="Heading">Automorphisms of a groupoid with rays</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7DB9D5737EB8C260">6.1-4 AutomorphismGroupOfGroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7EC237ED7E1978B0">6.1-5 <span class="Heading">Inner automorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80F9594481CA9FDE">6.1-6 GroupoidAutomorphismByGroupAutos</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A93C6507BC697CD">6.1-7 AutomorphismGroupoidOfGroupoid</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X8003AF117B956D16">6.2 <span class="Heading">Matrix representations of groupoids</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7DB8E7EF7A51F1BE">6.3 <span class="Heading">Groupoid actions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C4DCB287B3DD0CD">6.3-1 GroupoidActionByConjugation</a></span>
+</div></div>
+</div>
+
+<h3>6 <span class="Heading">Automorphisms of Groupoids</span></h3>
+
+<p>In this chapter we consider automorphisms of single piece groupoids; then homogeneous discrete groupoids; and finally homogeneous groupoids. We also consider matrix representations and groupooid actions.</p>
+
+<p><a id="X7935832881320667" name="X7935832881320667"></a></p>
+
+<h4>6.1 <span class="Heading">Automorphisms of single piece groupoids</span></h4>
+
+<p><a id="X79DA704A8051CB72" name="X79DA704A8051CB72"></a></p>
+
+<h5>6.1-1 GroupoidAutomorphismByObjectPerm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidAutomorphismByObjectPerm</code>( <var class="Arg">gpd</var>, <var class="Arg">imobs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidAutomorphismByGroupAuto</code>( <var class="Arg">gpd</var>, <var class="Arg">gpiso</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidAutomorphismByNtuple</code>( <var class="Arg">gpd</var>, <var class="Arg">imrays</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidAutomorphismByRayShifts</code>( <var class="Arg">gpd</var>, <var class="Arg">imrays</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>We first describe automorphisms of a groupoid <span class="SimpleMath">G</span> where <span class="SimpleMath">G</span> is the direct product of a group <span class="SimpleMath">g</span> and a complete digraph with <span class="SimpleMath">n</span> objects.. The automorphism group is generated by three types of automorphism:</p>
+
+
+<ul>
+<li><p>given a permutation <span class="SimpleMath">π</span> of the <span class="SimpleMath">n</span> objects, we define</p>
+
+<p class="pcenter">
+\alpha_{\pi} : G \to G,~ 
+(g : o_i \to o_j) \mapsto (g : o_{\pi i} \to o_{\pi j});
+</p>
+
+</li>
+<li><p>given an automorphism <span class="SimpleMath">θ</span> of the root group <span class="SimpleMath">g</span>, we define</p>
+
+<p class="pcenter">
+\alpha_{\theta} : G \to G,~ (g : o_i \to o_j) \mapsto (\theta g : o_i \to o_j);
+</p>
+
+</li>
+<li><p>given <span class="SimpleMath">L = [g_1,g_2,g_3,...,g_n] ∈ g^n</span> we define</p>
+
+<p class="pcenter">
+\alpha_L : G \to G,~ (g : o_i \to o_j) \mapsto (g_i^{-1}gg_j : o_i \to o_j).
+</p>
+
+<p>If <span class="SimpleMath">g_1 = 1_g</span>, then for all <span class="SimpleMath">j</span> the rays <span class="SimpleMath">(r_j : o_1 -&gt; o_j)</span> are shifted by <span class="SimpleMath">g_j</span>: so they map to <span class="SimpleMath">(r_jg_j : o_1 -&gt; o_j)</span>. So the operation <code class="code">GroupoidAutomorphismByRayShifts</code> is the special case of <code class="code">GroupoidAutomorphismByNtuple</code> when <span class="SimpleMath">g_1=1</span>.</p>
+
+</li>
+</ul>
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">perm1 := [-13,-12,-14];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut1 := GroupoidAutomorphismByObjectPerm( Ha4, perm1 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut1 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -13, -12, -14 ]
+ray images: [ (), (), () ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := Arrow( Ha4, (1,3,4), -12, -13 ); </span>
+[(1,3,4) : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d1 := ImageElm( aut1, d ); </span>
+[(1,3,4) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gensa4 := GeneratorsOfGroup( a4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha2 := GroupHomomorphismByImages( a4, a4, gensa4, [(2,3,4), (1,3,4)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut2 := GroupoidAutomorphismByGroupAuto( Ha4, alpha2 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut2 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (2,3,4)
+(2,3,4) -&gt; (1,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (), () ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d2 := ImageElm( aut2, d1 );</span>
+[(1,2,4) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L3 := [(1,2)(3,4), (1,3)(2,4), (1,4)(2,3)];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut3 := GroupoidAutomorphismByNtuple( Ha4, L3 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut3 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,4,2)
+(2,3,4) -&gt; (1,4,3)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (1,4)(2,3), (1,3)(2,4) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d3 := ImageElm( aut3, d2 );</span>
+[(2,3,4) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L4 := [(), (1,3,2), (2,4,3)];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut4 := GroupoidAutomorphismByRayShifts( Ha4, L4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut4 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -13, -12 ]
+ray images: [ (), (1,3,2), (2,4,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d4 := ImageElm( aut4, d3 );</span>
+[() : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h4 := Arrow( Ha4, (2,3,4), -12, -13 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut1234 := aut1*aut2*aut3*aut4;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( aut1234 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,4,3)
+(2,3,4) -&gt; (1,2,3)
+object map: [ -14, -13, -12 ] -&gt; [ -13, -12, -14 ]
+ray images: [ (), (2,3,4), (1,3,4) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d4  = ImageElm( aut1234, d );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv1234 := InverseGeneralMapping( aut1234 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( inv1234 ); </span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,4,3)
+(2,3,4) -&gt; (2,4,3)
+object map: [ -14, -13, -12 ] -&gt; [ -12, -14, -13 ]
+ray images: [ (), (1,3,2), (1,3,4) ]
+
+</pre></div>
+
+<p><a id="X86BD61567B41B139" name="X86BD61567B41B139"></a></p>
+
+<h5>6.1-2 GroupoidInnerAutomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidInnerAutomorphism</code>( <var class="Arg">gpd</var>, <var class="Arg">arrow</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidInnerAutomorphismNormalSubgroupoid</code>( <var class="Arg">gpd</var>, <var class="Arg">subgpd</var>, <var class="Arg">arrow</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Given an arrow <span class="SimpleMath">a = (c : p -&gt; q) ∈ G</span> with <span class="SimpleMath">p ≠ q</span>, the <em>inner automorphism</em> <span class="SimpleMath">α_a</span> of <span class="SimpleMath">G</span> by <span class="SimpleMath">a</span> is the mapping <span class="SimpleMath">g ↦ g^a</span> where conjugation of arrows is defined in section <a href="chap4.html#X8653FC9786E3209A"><span class="RefLink">4.5</span></a>. It is easily checked that if <span class="SimpleMath">L_a = [1,...,1,c^-1,1,...,1,c,1,...,1]</span>, with <span class="SimpleMath">c^-1</span> in position <span class="SimpleMath">p</span> and <span class="SimpleMath">c</span> in position <span class="SimpleMath">q</span>, then</p>
+
+<p class="pcenter">
+\alpha_a ~=~ \alpha_{(p,q)} * \alpha_{L_a}.
+</p>
+
+<p>Similarly, when <span class="SimpleMath">p=q</span>, then <span class="SimpleMath">α_a = α_L_a</span> where now <span class="SimpleMath">L_a = [1,...,1,c,1,...,1]</span>, with <span class="SimpleMath">c</span> in position <span class="SimpleMath">p</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inn1 := GroupoidInnerAutomorphism( Ha4, h4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( inn1 );</span>
+homomorphism to single piece groupoid: Ha4 -&gt; Ha4
+root group homomorphism:
+(1,2,3) -&gt; (1,2,3)
+(2,3,4) -&gt; (2,3,4)
+object map: [ -14, -13, -12 ] -&gt; [ -14, -12, -13 ]
+ray images: [ (), (2,4,3), (2,3,4) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d5 := ImageElm( inn1, d4 );</span>
+[(2,3,4) : -14 -&gt; -13]
+
+</pre></div>
+
+<p>Conjugation may also be applied to certain normal subgroupoids of <span class="SimpleMath">G</span>. Firstly, let <span class="SimpleMath">N</span> be the wide subgroupoid of <span class="SimpleMath">G</span> determined by a normal subgroup <span class="SimpleMath">n</span> of the root group. Then, provided the group element of <span class="SimpleMath">a</span> is in <span class="SimpleMath">n</span>, the inner automorphism by <span class="SimpleMath">a</span> may be applied to <span class="SimpleMath">N</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Nk4 := SubgroupoidBySubgroup( Ha4, k4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Nk4, "Nk4" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e4 := Arrow( Ha4, (1,2)(3,4), -14, -13 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inn2 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Nk4, e4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( inn2 );</span>
+homomorphism to single piece groupoid: Nk4 -&gt; Nk4
+root group homomorphism:
+(1,2)(3,4) -&gt; (1,2)(3,4)
+(1,3)(2,4) -&gt; (1,3)(2,4)
+object map: [ -14, -13, -12 ] -&gt; [ -13, -14, -12 ]
+ray images: [ (), (), (1,2)(3,4) ]
+
+</pre></div>
+
+<p>Secondly, if <span class="SimpleMath">H</span> is a homogeneous, discrete subgroupoid of <span class="SimpleMath">G</span> and if the group element of <span class="SimpleMath">a</span> is in the common vertex groups, then the inner automorphism may be applied to <span class="SimpleMath">H</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ma4 := MaximalDiscreteSubgroupoid( Ha4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Ma4, "Ma4" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inn3 := GroupoidInnerAutomorphism( Ha4, Ma4, e4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( inn3 );</span>
+homogeneous discrete groupoid mapping: [ Ma4 ] -&gt; [ Ma4 ]
+images of objects: [ -13, -14, -12 ]
+object homomorphisms:
+GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,4,2), (1,4,3)  ] )
+GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,4,2), (1,4,3)  ] )
+GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4)  ] )
+
+</pre></div>
+
+<p><a id="X8278B93E7F78038C" name="X8278B93E7F78038C"></a></p>
+
+<h5>6.1-3 <span class="Heading">Automorphisms of a groupoid with rays</span></h5>
+
+<p>Let <span class="SimpleMath">S</span> be a wide subgroupoid with rays of a standard groupoid <span class="SimpleMath">G</span>.</p>
+
+<p>An automorphism <span class="SimpleMath">α</span> of the root group <span class="SimpleMath">H</span> extends to the whole of <span class="SimpleMath">S</span> with the rays fixed by the automorphism: <span class="SimpleMath">(r^-1_ihr_j : o_i -&gt; o_j) ↦ (r^-1_i (α h)r_j : o_i -&gt; o_j)</span>.</p>
+
+<p>An automorphism of <span class="SimpleMath">G</span> obtained by permuting the objects may map <span class="SimpleMath">S</span> to a different subgroupoid. So we construct an isomorphism <span class="SimpleMath">ι</span> from <span class="SimpleMath">S</span> to a standard groupoid <span class="SimpleMath">T</span>, construct <span class="SimpleMath">α</span> permuting the objects of <span class="SimpleMath">T</span>, and return <span class="SimpleMath">ι*α*ι^-1</span>.</p>
+
+<p>For an automorphism by ray shifts we require that the shifts are elements of the root group of <span class="SimpleMath">S</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## (1) automorphism by group auto </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a6 := GroupHomomorphismByImages( k4, k4,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [ (1,2)(3,4), (1,3)(2,4) ], [ (1,3)(2,4), (1,4)(2,3) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut6 := GroupoidAutomorphismByGroupAuto( Kk4, a6 );</span>
+groupoid homomorphism : Kk4 -&gt; Kk4
+[ [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ], 
+  [ [(1,3)(2,4) : -14 -&gt; -14], [(1,4)(2,3) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Arrow( Kk4, (1,3)(2,4), -12, -12 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut6, a );</span>
+[(1,4)(2,3) : -12 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := Arrow( Kk4, (1,4,2), -12, -13 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut6, b );</span>
+[(1,2,3) : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## (2) automorphism by object perm </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut7 := GroupoidAutomorphismByObjectPerm( Kk4, [-13,-12,-14] );</span>
+groupoid homomorphism : Kk4 -&gt; Kk4
+[ [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ], 
+  [ [(1,4)(2,3) : -13 -&gt; -13], [(1,2)(3,4) : -13 -&gt; -13], 
+      [(2,3,4) : -13 -&gt; -12], [(1,4,3) : -13 -&gt; -14] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut7, a );                                           </span>
+[(1,3)(2,4) : -14 -&gt; -14]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut7, b );                                           </span>
+[(1,3)(2,4) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## (3) automorphism by ray shifts </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut8 := GroupoidAutomorphismByRayShifts( Kk4,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               [ (), (1,4)(2,3), (1,3)(2,4) ] );</span>
+groupoid homomorphism : Kk4 -&gt; Kk4
+[ [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ], 
+  [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,2,3) : -14 -&gt; -13], [(1,2)(3,4) : -14 -&gt; -12] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut8, a );</span>
+[(1,3)(2,4) : -12 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut8, b );</span>
+[(1,2,3) : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## (4) combine these three automorphisms </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut678 := aut6 * aut7 * aut8;</span>
+groupoid homomorphism : Kk4 -&gt; Kk4
+[ [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ], 
+  [ [(1,2)(3,4) : -13 -&gt; -13], [(1,3)(2,4) : -13 -&gt; -13], 
+      [(1,4,3) : -13 -&gt; -12], [(1,3,2) : -13 -&gt; -14] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut678, a ); </span>
+[(1,4)(2,3) : -14 -&gt; -14]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( aut678, b );</span>
+[(1,4)(2,3) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## (5) conjgation by an arrow</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e8 := Arrow( Kk4, (1,3)(2,4), -14, -12 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut9 := GroupoidInnerAutomorphism( Kk4, e8 );</span>
+groupoid homomorphism : Kk4 -&gt; Kk4
+[ [ [(1,2)(3,4) : -14 -&gt; -14], [(1,3)(2,4) : -14 -&gt; -14], 
+      [(1,3,4) : -14 -&gt; -13], [(1,4)(2,3) : -14 -&gt; -12] ], 
+  [ [(1,2)(3,4) : -12 -&gt; -12], [(1,3)(2,4) : -12 -&gt; -12], 
+      [(1,4,2) : -12 -&gt; -13], [(1,4)(2,3) : -12 -&gt; -14] ] ]
+
+</pre></div>
+
+<p><a id="X7DB9D5737EB8C260" name="X7DB9D5737EB8C260"></a></p>
+
+<h5>6.1-4 AutomorphismGroupOfGroupoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroupOfGroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceObjectAutoGroupGroupoid</code>( <var class="Arg">gpd</var>, <var class="Arg">aut</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>As above, let <span class="SimpleMath">G</span> be the direct product of a group <span class="SimpleMath">g</span> and a complete digraph with <span class="SimpleMath">n</span> objects. The <code class="code">AutomorphismGroup</code> <span class="SimpleMath">Aut(G)</span> of <span class="SimpleMath">G</span> is isomorphic to the quotient of <span class="SimpleMath">S_n × A × g^n</span> by a subgroup isomorphic to <span class="SimpleMath">g</span>, where <span class="SimpleMath">A</span> is the automorphism group of <span class="SimpleMath">g</span> and <span class="SimpleMath">S_n</span> is the symmetric group on the <span class="SimpleMath">n</span> objects. This is one of the main topics in <a href="chapBib.html#biBAlWe">[AW10]</a>.</p>
+
+<p>If <span class="SimpleMath">H</span> is the union of <span class="SimpleMath">k</span> groupoids, all isomorphic to <span class="SimpleMath">G</span>, then <span class="SimpleMath">Aut(H)</span> is isomorphic to <span class="SimpleMath">S_k ⋉ Aut(G)</span>.</p>
+
+<p>The function <code class="code">NiceObjectAutoGroupGroupoid</code> takes a groupoid and a subgroup of its automorphism group and retuns a <em>nice monomorphism</em> from this automorphism group to a pc-group, if one is available. The current implementation is experimental. Note that <code class="code">ImageElm</code> at present only works on generating elements.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AHa4 := AutomorphismGroupOfGroupoid( Ha4 ); </span>
+Aut(Ha4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Agens := GeneratorsOfGroup( AHa4);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( Agens );</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NHa4 := NiceObject( AHa4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MHa4 := NiceMonomorphism( AHa4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( AHa4 );    ## (3!)x24x(12^2)</span>
+20736
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( AHa4, "AHa4" ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( NHa4, "NHa4" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## either of these names may be returned</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">names := [ "(((A4 x A4 x A4) : C2) : C3) : C2",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   "(C2 x C2 x C2 x C2 x C2 x C2) : (((C3 x C3 x C3) : C3) : (C2 x C2))" ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( NHa4 ) in names;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  cannot test images of Agens because of random variations </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  Now do some tests!</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mgi := MappingGeneratorsImages( MHa4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">autgen := mgi[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pcgen := mgi[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ngen := Length( autgen );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( [1..ngen], i -&gt; Order(autgen[i]) = Order(pcgen[i]) ); </span>
+true
+
+</pre></div>
+
+<p><a id="X7EC237ED7E1978B0" name="X7EC237ED7E1978B0"></a></p>
+
+<h5>6.1-5 <span class="Heading">Inner automorphisms</span></h5>
+
+<p>The inner automorphism subgroup <span class="SimpleMath">mathrmInn(G)</span> of the automorphism group of <span class="SimpleMath">G</span> is the group of inner automorphisms <span class="SimpleMath">∧ a : b ↦ b^a</span> for <span class="SimpleMath">a ∈ G</span>. It is <em>not</em> the case that the map <span class="SimpleMath">G -&gt; mathrmInn(G), a ↦ ∧ a</span> preserves multiplication. Indeed, when <span class="SimpleMath">a=(o,g,p), b=(p,h,r) ∈ G</span> with objects <span class="SimpleMath">p,q,r</span> all distict, then</p>
+
+<p class="pcenter">
+\wedge(ab) ~=~ (\wedge a)(\wedge b)(\wedge a) 
+           ~=~ (\wedge b)(\wedge a)(\wedge b).  
+</p>
+
+<p>(Compare this with the permutation identity <span class="SimpleMath">(pq)(qr)(pq) = (pr) = (qr)(pq)(qr)</span>.) So the map <span class="SimpleMath">G -&gt; mathrmInn(G)</span> is of type <code class="code">IsMappingWithObjectsByFunction</code>.</p>
+
+<p>In the example we convert the automorphism group <code class="code">AGa4</code> into a single object groupoid, and then define the inner automorphism map.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AHa40 := Groupoid( AHa4, [0] );</span>
+single piece groupoid: &lt; Aut(Ha4), [ 0 ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">conj := function(a) </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       return ArrowNC( Ha4, true, GroupoidInnerAutomorphism(Ha4,a), 0, 0 ); </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   end;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inner := MappingWithObjectsByFunction( Ha4, AHa40, conj, [0,0,0] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a1 := Arrow( Ha4, (1,2,3), -14, -13 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inner1 := ImageElm( inner, a1 );;                        </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a2 := Arrow( Ha4, (2,3,4), -13, -12 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inner2 := ImageElm( inner, a2 );;       </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a3 := a1*a2;                      </span>
+[(1,3)(2,4) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inner3 := ImageElm( inner, a3 );  </span>
+[groupoid homomorphism : Ha4 -&gt; Ha4
+[ [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
+      [() : -14 -&gt; -12] ], 
+  [ [(1,3,4) : -12 -&gt; -12], [(1,2,4) : -12 -&gt; -12], [(1,3)(2,4) : -12 -&gt; -13],
+      [() : -12 -&gt; -14] ] ] : 0 -&gt; 0]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(inner3 = inner1*inner2*inner1) and (inner3 = inner2*inner1*inner2);</span>
+true
+true
+
+</pre></div>
+
+<p><a id="X80F9594481CA9FDE" name="X80F9594481CA9FDE"></a></p>
+
+<h5>6.1-6 GroupoidAutomorphismByGroupAutos</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidAutomorphismByGroupAutos</code>( <var class="Arg">gpd</var>, <var class="Arg">auts</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Homogeneous, discrete groupoids are the second type of groupoid for which a method is provided for <code class="code">AutomorphismGroupOfGroupoid</code>. This is used in the <strong class="pkg">XMod</strong> package for constructing crossed modules of groupoids. The two types of generating automorphism are <code class="code">GroupoidAutomorphismByGroupAutos</code>, which requires a list of group automorphisms, one for each object group, and <code class="code">GroupoidAutomorphismByObjectPerm</code>, which permutes the objects. So, if the object groups <span class="SimpleMath">g</span> have automorphism group <span class="SimpleMath">Aut(g)</span> and there are <span class="SimpleMath">n</span> objects, the autmorphism group of the groupoid has size <span class="SimpleMath">n!|Aut(g)|^n</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dd8 := HomogeneousDiscreteGroupoid( d8, [ -13..-10] ); </span>
+homogeneous, discrete groupoid: &lt; d8, [ -13 .. -10 ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut10 := GroupoidAutomorphismByObjectPerm( Dd8, [-12,-10,-11,-13] ); </span>
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -&gt; [ -12, -10, -11, -13 ]
+object homomorphisms:
+IdentityMapping( d8 )
+IdentityMapping( d8 )
+IdentityMapping( d8 )
+IdentityMapping( d8 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gend8 := GeneratorsOfGroup( d8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := gend8[1];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 := gend8[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b1 := IdentityMapping( d8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b2 := GroupHomomorphismByImages( d8, d8, gend8, [g1, g2*g1 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b3 := GroupHomomorphismByImages( d8, d8, gend8, [g1^g2, g2 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b4 := GroupHomomorphismByImages( d8, d8, gend8, [g1^g2, g2^(g1*g2) ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut11 := GroupoidAutomorphismByGroupAutos( Dd8, [b1,b2,b3,b4] ); </span>
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -&gt; [ -13, -12, -11, -10 ]
+object homomorphisms:
+IdentityMapping( d8 )
+GroupHomomorphismByImages( d8, d8, [ (5,6,7,8), (5,7) ], 
+[ (5,6,7,8), (5,8)(6,7) ] )
+GroupHomomorphismByImages( d8, d8, [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (5,7) ] )
+GroupHomomorphismByImages( d8, d8, [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ADd8 := AutomorphismGroupOfGroupoid( Dd8 ); </span>
+&lt;group with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( ADd8 );    ## 4!*8^4</span>
+98304
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genADd8 := GeneratorsOfGroup( ADd8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( genADd8 ); </span>
+4  
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := GroupoidAutomorphismByGroupAutos( Dd8, [b2,b1,b1,b1] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := GroupoidAutomorphismByGroupAutos( Dd8, [b3,b1,b1,b1] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := GroupoidAutomorphismByObjectPerm( Dd8, [ -12, -11, -10, -13 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := GroupoidAutomorphismByObjectPerm( Dd8, [ -12, -13, -11, -10 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ok := ForAll( genADd8, a -&gt; a in[ w, x, y, z ] ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NADd8 := NiceObject( ADd8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MADd8 := NiceMonomorphism( ADd8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 := ImageElm( MADd8, w );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x1 := ImageElm( MADd8, x );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y1 := ImageElm( MADd8, y );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z1 := ImageElm( MADd8, z );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := z*w*y*x*z; </span>
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -13, -12, -11, -10 ] -&gt; [ -11, -13, -10, -12 ]
+object homomorphisms:
+IdentityMapping( d8 )
+GroupHomomorphismByImages( d8, d8, [ (5,6,7,8), (5,7) ], 
+[ (5,6,7,8), (5,8)(6,7) ] )
+IdentityMapping( d8 )
+GroupHomomorphismByImages( d8, d8, [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (5,7) ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u1 := z1*w1*y1*x1*z1; </span>
+(1,2,4,3)(5,17,23,11,6,18,24,16)(7,19,25,15,9,21,27,13)(8,20,26,14,10,22,28,12)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imu := ImageElm( MADd8, u );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u1 = imu;</span>
+true
+
+</pre></div>
+
+<p><a id="X7A93C6507BC697CD" name="X7A93C6507BC697CD"></a></p>
+
+<h5>6.1-7 AutomorphismGroupoidOfGroupoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroupoidOfGroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>If <span class="SimpleMath">G</span> is a single piece groupoid with automorphism group <span class="SimpleMath">Aut(G)</span>, and if <span class="SimpleMath">H</span> is the union of <span class="SimpleMath">k</span> pieces, all isomorphic to <span class="SimpleMath">G</span>, then the automorphism group of <span class="SimpleMath">H</span> is the wreath product <span class="SimpleMath">S_k ⋉ Aut(G)</span>. However, we find it more convenient to construct the <em>automorphism groupoid</em> of <span class="SimpleMath">H</span>. This is a single piece groupoid <span class="SimpleMath">AUT(H)</span> with <span class="SimpleMath">k</span> objects - the object lists of the pieces of <span class="SimpleMath">H</span> - and root group <span class="SimpleMath">Aut(G)</span>. Isomorphisms between the root groups of the <span class="SimpleMath">k</span> pieces may be applied to the generators of <span class="SimpleMath">Aut(G)</span> to construct automorphism groups of these pieces, and then isomorphisms between these automorphism groups. We then construct <span class="SimpleMath">AUT(H)</span> using <code class="code">GroupoidByIsomorphisms</code>.</p>
+
+<p>In the special case that <span class="SimpleMath">H</span> is homogeneous, there is no need to construct a collection of automorphism groups. Rather, the rays of <span class="SimpleMath">AUT(H)</span> are given by <code class="code">IsomorphismNewObjects</code>. For the example we use <code class="code">HGd8</code> constructed in subsection <code class="func">HomogeneousGroupoid</code> (<a href="chap4.html#X855F318181808814"><span class="RefLink">4.1-5</span></a>).</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HGd8 := HomogeneousGroupoid( Gd8, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               [ [-39,-38,-37], [-36,-35,-34], [-33,-32,-31] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( HGd8, "HGd8" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AHGd8 := AutomorphismGroupoidOfGroupoid( HGd8 ); </span>
+Aut(HGd8)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( AHGd8 );</span>
+[ [ -39, -38, -37 ], [ -36, -35, -34 ], [ -33, -32, -31 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RaysOfGroupoid( AHGd8 ){[2..3]};</span>
+[ groupoid homomorphism : 
+    [ [ [(5,6,7,8) : -39 -&gt; -39], [(5,7) : -39 -&gt; -39], [() : -39 -&gt; -38], 
+          [() : -39 -&gt; -37] ], 
+      [ [(5,6,7,8) : -36 -&gt; -36], [(5,7) : -36 -&gt; -36], [() : -36 -&gt; -35], 
+          [() : -36 -&gt; -34] ] ], groupoid homomorphism : 
+    [ [ [(5,6,7,8) : -39 -&gt; -39], [(5,7) : -39 -&gt; -39], [() : -39 -&gt; -38], 
+          [() : -39 -&gt; -37] ], 
+      [ [(5,6,7,8) : -33 -&gt; -33], [(5,7) : -33 -&gt; -33], [() : -33 -&gt; -32], 
+          [() : -33 -&gt; -31] ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">obgp := ObjectGroup( AHGd8, [ -36, -35, -34 ] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( obgp );    ## 3!*8^3</span>
+3072
+
+</pre></div>
+
+<p><a id="X8003AF117B956D16" name="X8003AF117B956D16"></a></p>
+
+<h4>6.2 <span class="Heading">Matrix representations of groupoids</span></h4>
+
+<p>Suppose that <code class="code">gpd</code> is the direct product of a group <span class="SimpleMath">G</span> and a complete digraph, and that <span class="SimpleMath">ρ : G -&gt; M</span> is an isomorphism to a matrix group <span class="SimpleMath">M</span>. Then, if <code class="code">rep</code> is the isomorphic groupoid with the same objects and root group <span class="SimpleMath">M</span>, there is an isomorphism <span class="SimpleMath">μ</span> from <code class="code">gpd</code> to <code class="code">rep</code> mapping <span class="SimpleMath">(g : i -&gt; j)</span> to <span class="SimpleMath">(ρ g : i -&gt; j)</span>.</p>
+
+<p>When <code class="code">gpd</code> is a groupoid with rays, a representation can be obtained by restricting a representation of its parent.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps := IrreducibleRepresentations( a4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rep4 := reps[4]; </span>
+Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -&gt; 
+[ [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ], 
+  [ [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, -1 ] ], 
+  [ [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ra4 := Groupoid( Image( rep4 ), Ga4!.objects );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( Ra4 ) = [ -15 .. -11 ];</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroupoid( Ga4 );</span>
+[ [(1,2,3) : -15 -&gt; -15], [(2,3,4) : -15 -&gt; -15], [() : -15 -&gt; -14],
+  [() : -15 -&gt; -13], [() : -15 -&gt; -12], [() : -15 -&gt; -11] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">images := List( gens, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       g -&gt; Arrow( Ra4, ImageElm(rep4,g![2]), g![3], g![4] ) ); </span>
+[ [[ [ 0, 0, -1 ], [ 1, 0, 0 ], [ 0, -1, 0 ] ] : -15 -&gt; -15], 
+  [[ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] : -15 -&gt; -15], 
+  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -14], 
+  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -13], 
+  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -12], 
+  [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -11] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor := GroupoidHomomorphismFromSinglePiece( Ga4, Ra4, gens, images );</span>
+groupoid homomorphism : 
+[ [ [(1,2,3) : -15 -&gt; -15], [(2,3,4) : -15 -&gt; -15], [() : -15 -&gt; -14], 
+      [() : -15 -&gt; -13], [() : -15 -&gt; -12], [() : -15 -&gt; -11] ], 
+  [ [[ [ 0, 0, -1 ], [ 1, 0, 0 ], [ 0, -1, 0 ] ] : -15 -&gt; -15], 
+      [[ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] : -15 -&gt; -15], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -14], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -13], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -12], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -15 -&gt; -11] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixGroupoid( Ra4 ); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Arrow( Ha4, (1,4,2), -12, -13 );</span>
+[(1,4,2) : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( mor, a );</span>
+[[ [ 0, 0, 1 ], [ -1, 0, 0 ], [ 0, -1, 0 ] ] : -12 -&gt; -13]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rmor := RestrictedMappingGroupoids( mor, Ha4 );</span>
+groupoid homomorphism : 
+[ [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
+      [() : -14 -&gt; -12] ], 
+  [ [[ [ 0, 0, -1 ], [ 1, 0, 0 ], [ 0, -1, 0 ] ] : -14 -&gt; -14], 
+      [[ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] : -14 -&gt; -14], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -14 -&gt; -13], 
+      [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -14 -&gt; -12] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ParentMappingGroupoids( rmor ) = mor;</span>
+true
+
+</pre></div>
+
+<p><a id="X7DB8E7EF7A51F1BE" name="X7DB8E7EF7A51F1BE"></a></p>
+
+<h4>6.3 <span class="Heading">Groupoid actions</span></h4>
+
+<p>Recall from sections <a href="chap4.html#X8653FC9786E3209A"><span class="RefLink">4.5</span></a> and <code class="func">GroupoidInnerAutomorphism</code> (<a href="chap6.html#X86BD61567B41B139"><span class="RefLink">6.1-2</span></a>) the notion of <em>conjugation</em> in a groupoid, and the associated inner automorphisms.</p>
+
+<p>It was mentioned there that the map <span class="SimpleMath">∧ : G -&gt; Aut(G),~ a -&gt; ∧ a</span>, is <em>not</em> a groupoid homomorphism. It is in fact a <em>groupoid action</em> which we now define. Let <span class="SimpleMath">{p,q,r,u,v}</span> be distinct objects in <span class="SimpleMath">G</span> and let:</p>
+
+<p><span class="SimpleMath">a_1 = (c_1 : p -&gt; q),~~ a_2 = (c_2 : q -&gt; r),~~ a_3 = (c_3 : q -&gt; p),~~ a_4 = (c_4 : u -&gt; v)</span>,</p>
+
+<p><span class="SimpleMath">b_1 = (d_1 : p -&gt; p),~~ b_2 = (d_2 : p -&gt; p),~~ b_3 = (d_3 : q -&gt; q),~~ b_4 = (c_3c_1 : q -&gt; q)</span> be arrows in <span class="SimpleMath">G</span>. Then the following <em>conjugation identities</em> must be satisfied:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">∧(a_1a_2) ~=~ (∧ a_1)*(∧ a_2)*(∧ a_1) ~=~ (∧ a_2)*(∧ a_1)*(∧ a_2)</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">∧(b_1a_1) ~=~ (∧ b_1)*(∧ a_1)*(∧ b_1)^-1</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">∧(a_1b_3) ~=~ (∧ b_3)^-1*(∧ a_1)*(∧ b_3)</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">∧(b_1b_2) ~=~ (∧ b_1)*(∧ b_2)</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">∧(a_1a_3) ~=~ (∧ a_1)*(∧ a_3)*(∧ b_4)</span>,</p>
+
+</li>
+<li><p><span class="SimpleMath">(∧ a_1)*(∧ a_4) ~=~ (∧ a_4)*(∧ a_1)</span>.</p>
+
+</li>
+</ul>
+<p>In the following example we check the first of these identities in one particular case.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c1 := Arrow( Ha4, (1,2)(3,4), -14, -13);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">innc1 := GroupoidInnerAutomorphism( Ha4, c1 );</span>
+groupoid homomorphism : Ha4 -&gt; Ha4
+[ [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
+      [() : -14 -&gt; -12] ], 
+  [ [(1,4,2) : -13 -&gt; -13], [(1,4,3) : -13 -&gt; -13], [() : -13 -&gt; -14], 
+      [(1,2)(3,4) : -13 -&gt; -12] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c2 := Arrow( Ha4, (1,4,2), -13, -12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">innc2 := GroupoidInnerAutomorphism( Ha4, c2 );</span>
+groupoid homomorphism : Ha4 -&gt; Ha4
+[ [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
+      [() : -14 -&gt; -12] ], 
+  [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [(1,4,2) : -14 -&gt; -12], 
+      [(1,2,4) : -14 -&gt; -13] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c12 := c1 * c2;</span>
+[(2,4,3) : -14 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">innc12 := GroupoidInnerAutomorphism( Ha4, c12 );</span>
+groupoid homomorphism : Ha4 -&gt; Ha4
+[ [ [(1,2,3) : -14 -&gt; -14], [(2,3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
+      [() : -14 -&gt; -12] ], 
+  [ [(1,4,2) : -12 -&gt; -12], [(2,3,4) : -12 -&gt; -12], [(2,3,4) : -12 -&gt; -13], 
+      [(2,4,3) : -12 -&gt; -14] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ innc1 * innc2 * innc1 = innc12, innc2 * innc1 * innc2 = innc12 ];</span>
+[ true, true ]
+
+</pre></div>
+
+<p><a id="X7C4DCB287B3DD0CD" name="X7C4DCB287B3DD0CD"></a></p>
+
+<h5>6.3-1 GroupoidActionByConjugation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidActionByConjugation</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidAction</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionMap</code>( <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">GroupoidInnerAutomorphism</code>, which produces the conjugation action of <span class="SimpleMath">G</span> on itself, does satisfy the conjugation identities and so provides a standard example of an action.</p>
+
+<p>An action is a record with fields <code class="code">Source</code>, <code class="code">Range</code> and <code class="code">ActionMap</code>.</p>
+
+<p>The examples repeat those in section <code class="func">GroupoidInnerAutomorphism</code> (<a href="chap6.html#X86BD61567B41B139"><span class="RefLink">6.1-2</span></a>): firstly with a groupoid acting on itself.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act1 := GroupoidActionByConjugation( Ha4 );</span>
+&lt;general mapping: Ha4 -&gt; Aut(Ha4) &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidAction( act1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap1 := ActionMap( act1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap1( h4 ) = inn1;</span>
+true
+
+</pre></div>
+
+<p>Secondly with an action on a single piece, normal subgroupoid.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act2 := GroupoidActionByConjugation( Ha4, Nk4 );</span>
+&lt;general mapping: Ha4 -&gt; Aut(Nk4) &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidAction( act2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap2 := ActionMap( act2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap2( e4 ) = inn2;</span>
+true
+
+</pre></div>
+
+<p>Thirly with an action on a homogeneous, discrete subgroupoid.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act3 := GroupoidActionByConjugation( Ha4, Ma4 );</span>
+&lt;general mapping: Ha4 -&gt; Aut(Ma4) &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidAction( act3 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap3 := ActionMap( act3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">amap3( e4 ) = inn3;</span>
+true
+
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
