@@ -148,14 +148,20 @@ gap> e1 := GroupoidElement( Gd8, (5,6,7,8), -9, -8 );
 [(5,6,7,8) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (5,7), -8, -7 );
 [(5,7) : -8 -> -7]
-gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
-[ (5,6,7,8), -9, -8 ]
+gap> [ MWOofArrow( e1 ), ElementOfArrow( e1 ), 
+>      TailOfArrow( e1 ), HeadOfArrow( e1 ) ];
+[ Gd8, (5,6,7,8), -9, -8 ]
+gap> [ e1![1], e1![2], e1![3], e1![4] ];
+[ Gd8, (5,6,7,8), -9, -8 ]
 gap> IsGroupoidElement( e1 );
 true
 gap> e1e2 := e1*e2;
 [(5,6)(7,8) : -9 -> -7]
+gap> SetInfoLevel( InfoGroupoids, 1 );; 
 gap> e2*e1;
+#I  head of the first arrow <> tail of the second
 fail
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 gap> e3 := Arrow( Gd8, (6,8), -7, -9 );;
 gap> loop := e1e2*e3;
 [(5,8,7,6) : -9 -> -9]
@@ -207,6 +213,19 @@ gap> Perform( hsetq8, Display );
 [y*y2 : -18 -> -17]
 [x*y*y2 : -18 -> -17]
 
+## SubSection 4.2.5
+gap> c5 := Group( (11,12,13,14,15) );;
+gap> Gc5 := Groupoid( c5, [ -11, -10, -9] );;
+gap> e3;
+[(6,8) : -7 -> -9]
+gap> e5 := Arrow( Gc5, (11,13,15,12,14), -9, -11 );
+[(11,13,15,12,14) : -9 -> -11]
+gap> SetInfoLevel( InfoGroupoids, 1 );; 
+gap> e3 * e5;
+#I  arrows not in the same groupoid or subgroupoid
+fail
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
+
 ### Section 4.3 : Subgroupoids ###
 
 ## SubSection 4.3.2 : SubgroupoidByObjects/Subgroup
@@ -232,11 +251,14 @@ gap> Gk4 := SubgroupoidWithRays( Ga4, k4,
 single piece groupoid with rays: < k4, [ -15 .. -11 ], 
 [ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ] >
 gap> SetName( Gk4, "Gk4" );
-gap> RaysOfGroupoid( Gk4 );       
-[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
+gap> RayArrowsOfGroupoid( Ga4 );
+[ [() : -15 -> -15], [() : -15 -> -14], [() : -15 -> -13], [() : -15 -> -12], 
+  [() : -15 -> -11] ]
 gap> RayArrowsOfGroupoid( Gk4 );  
 [ [() : -15 -> -15], [(1,2,3) : -15 -> -14], [(1,2,4) : -15 -> -13],
   [(1,3,4) : -15 -> -12], [(2,3,4) : -15 -> -11] ]
+gap> RaysOfGroupoid( Gk4 );       
+[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
 gap> IsDirectProductWithCompleteDigraph( Gk4 );
 false
 gap> ObjectGroup( Gk4, -14 );
@@ -341,10 +363,10 @@ single piece groupoid with rays: < Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
 ### Section 4.4 : Left, Right and Double Cosets ###
 
 ## SubSection 4.4.1
-gap> e4 := Arrow( Jc3, (2,4,3), -13, -12 );;;                            
-gap> re4 := RightCoset( Ha4, Jc3, e4 );
+gap> e6 := Arrow( Jc3, (2,4,3), -13, -12 );;;                            
+gap> re6 := RightCoset( Ha4, Jc3, e6 );
 <right coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
-gap> Perform( re4, Display );
+gap> Perform( re6, Display );
 [(2,4,3) : -13 -> -12]
 [(1,3,4) : -12 -> -12]
 [(1,3,2) : -13 -> -12]
@@ -361,9 +383,9 @@ gap> rcra4 := RightCosetRepresentatives( Ha4, Jc3 );
   [(1,2)(3,4) : -12 -> -12], [(1,3)(2,4) : -12 -> -12], 
   [(1,4)(2,3) : -12 -> -12], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
   [(1,3)(2,4) : -13 -> -14], [(1,4)(2,3) : -13 -> -14] ]
-gap> le4 := LeftCoset( Ha4, Jc3, e4 ); 
+gap> le6 := LeftCoset( Ha4, Jc3, e6 ); 
 <left coset of Jc3b with representative [(1,4,2) : -13 -> -13]>
-gap> Perform( le4, Display );
+gap> Perform( le6, Display );
 [(1,4,2) : -13 -> -13]
 [(2,4,3) : -13 -> -12]
 [() : -13 -> -13]
@@ -384,9 +406,9 @@ gap> lcr11 := LeftCosetRepresentativesFromObject( Ha4, Jc3, -12 );
 [ [() : -12 -> -14], [(1,2)(3,4) : -12 -> -14], [(1,3)(2,4) : -12 -> -14], 
   [(1,4)(2,3) : -12 -> -14], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 
   [(1,3)(2,4) : -12 -> -12], [(1,4)(2,3) : -12 -> -12] ]
-gap> de4 := DoubleCoset( Ha4, Jc3, Jc3, e4 );
+gap> de6 := DoubleCoset( Ha4, Jc3, Jc3, e6 );
 <double coset of [ Jc3b, Jc3b ] with representative [(1,4,2) : -13 -> -13]>
-gap> Perform( de4, Display );
+gap> Perform( de6, Display );
 [() : -13 -> -13]
 [(1,4)(2,3) : -13 -> -12]
 [(1,4)(2,3) : -12 -> -13]

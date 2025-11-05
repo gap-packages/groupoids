@@ -40,8 +40,9 @@ gap> a78 := Arrow( M78, m2, -7, -8 );
 gap> a78 in M78; 
 true 
 gap> b87 := Arrow( M78, m4, -8, -7 );;
-gap> [ ElementOfArrow( b87 ), TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
-[ m4, -8, -7 ]
+gap> [ MWOofArrow( b87), ElementOfArrow( b87 ),
+>      TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
+[ M78, m4, -8, -7 ]
 gap> ba := b87*a78;  ab := a78*b87;
 [m4 : -8 -> -8]
 [m3 : -7 -> -7]

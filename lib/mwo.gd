@@ -302,15 +302,15 @@ DeclareOperation( "ArrowNC",
     
 ############################################################################## 
 ## 
+#O  MWOofArrow( <ewo> ) 
 #O  ElementOfArrow( <ewo> ) 
 #O  TailOfArrow( <ewo> ) 
 #O  HeadOfArrow( <ewo> ) 
-#O  GroupoidOfArrow( <ewo> ) 
 ##  
+DeclareOperation( "MWOofArrow", [ IsMultiplicativeElementWithObjects ] ); 
 DeclareOperation( "ElementOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 DeclareOperation( "TailOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 DeclareOperation( "HeadOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
-DeclareOperation( "GroupoidOfArrow", [ IsMultiplicativeElementWithObjects ] ); 
 
 
 ################################  SEMIGROUPS  ###############################

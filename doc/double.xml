@@ -96,8 +96,8 @@ The following picture illustrates a square <M>s_1</M>:
 ]]>
 </Display> 
 
-We name the four arrows <C>UpArrow(s)</C>, <C>LeftArrow(s)</C>,
-<C>RightArrow(s)</C> and <C>DownArrow(s)</C>.
+We name these four arrows <C>UpArrow(s1)</C>, <C>LeftArrow(s1)</C>,
+<C>RightArrow(s1)</C> and <C>DownArrow(s1)</C>.
 <P/>
 We think of the square <M>s_1</M> being <E>based</E> at the bottom, 
 right-hand corner, <M>x_1</M>. 
