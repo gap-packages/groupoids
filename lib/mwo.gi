@@ -112,11 +112,14 @@ end );
 
 #############################################################################
 ## 
+#M  MWOofArrow
 #M  ElementOfArrow
 #M  TailOfArrow
 #M  HeadOfArrow
-#M  GroupoidOfArrow
 ##
+InstallMethod( MWOofArrow, "generic method for magma with objects element", 
+    true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![1] ); 
+
 InstallMethod( ElementOfArrow, "generic method for magma with objects element", 
     true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![2] ); 
 
@@ -125,9 +128,6 @@ InstallMethod( TailOfArrow, "generic method for magma with objects element",
 
 InstallMethod( HeadOfArrow, "generic method for magma with objects element", 
     true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![4] ); 
-
-InstallMethod( GroupoidOfArrow, "generic method for magma with objects element", 
-    true, [ IsMultiplicativeElementWithObjects ], 0, e -> e![1] ); 
 
 #############################################################################
 ##

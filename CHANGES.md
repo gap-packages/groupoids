@@ -1,5 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.81 for GAP 4.15.1 (05/11/25)
+ * (05/11/25) renamed GroupoidOfArrow as MWOofArrow and documented it
+
 ## Version 1.79 for GAP 4.14.0 (11/09/25)
  * (11/09/25) added operation GroupoidInnerAutomorphismNormalSubgroupoid
  * (10/09/25) added new release mechanism file .github/workflows/release.yml 
@@ -12,8 +15,8 @@
  * (17/07/25) documented some missing categories in the manual
 
 ## Version 1.77 for GAP 4.14.0 (03/07/25)
- * (03/07/25) made extensive changes to the examples in folder tst/manual 
-              added operation IsFullSubgroupoid(gpd,subgpd)
+ * (03/07/25) made extensive changes to the examples in tst/manual 
+              added operation IsFullSubgroupoid( gpd, subgpd )
               Subgroupoid now checks for SubgroupoidWithRays
               SubgroupoidByPieces now copes with mixed piece data
               added method for \= for two groupoid homomorphisms

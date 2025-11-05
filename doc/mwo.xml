@@ -134,6 +134,8 @@ gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ];
 <ManSection Label="man-arrow">
    <Oper Name="Arrow"
          Arg="mwo,elt,tail,head" />
+   <Oper Name="MWOofArrow"
+         Arg="arr" Label="for magmas with objects" />
    <Oper Name="ElementOfArrow"
          Arg="arr" Label="for magmas with objects" />
    <Oper Name="TailOfArrow"
@@ -147,11 +149,12 @@ Arrows in a magma with objects lie in the category
 <C>IsMultiplicativeElementWithObjects</C>. 
 An attempt to multiply two arrows which do not compose 
 resuts in <C>fail</C> being returned. 
-Each arrow <M>arr = (a : u \to v)</M> has three components. 
-The magma <E>element</E> <M>a \in m</M> may be accessed by 
-<C>ElementOfArrow(arr)</C>.  
-Similarly, the <E>tail</E> object <M>u</M> and the <E>head</E> object <M>v</M> 
-may be obtained using <C>TailOfArrow(arr)</C> 
+Each arrow <M>arr = (a : u \to v)</M> has four components. 
+The underlying <E>magma</E>  <M>M</M> may be accessed by 
+<C>MWOofArrow(arr)</C>.  
+Similarly, the <E>element</E> <M>a \in m</M>, the <E>tail</E> object <M>u</M>,
+and the <E>head</E> object <M>v</M> may be obtained using 
+<C>ElementOfArrow(arr)</C>, <C>TailOfArrow(arr)</C> 
 and <C>HeadOfArrow(arr)</C> respectively. 
 The operation <C>MultiplicativeElementWithObjects</C> 
 is a synonym for <C>Arrow</C> 
@@ -166,8 +169,9 @@ gap> a78 := Arrow( M78, m2, -7, -8 );
 gap> a78 in M78; 
 true
 gap> b87 := Arrow( M78, m4, -8, -7 );;
-gap> [ ElementOfArrow( b87 ), TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
-[ m4, -8, -7 ]
+gap> [ MWOofArrow( b87), ElementOfArrow( b87 ),
+>      TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
+[ M78, m4, -8, -7 ]
 gap> ba := b87*a78;;  ab := a78*b87;;  [ ba, ab ];
 [ [m4 : -8 -> -8], [m3 : -7 -> -7] ]
 gap> [ a78^2, ba^2, ba^3 ]; 

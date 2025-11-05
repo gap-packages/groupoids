@@ -419,22 +419,28 @@ groupoid homomorphism :
 <ManSection>
    <Oper Name="GroupoidElement"
          Arg="gpd, elt, tail, head" />
+   <Oper Name="MWOofArrow"
+         Arg="arr" Label="for groupoids" />
    <Oper Name="ElementOfArrow"
-         Arg="elt" Label="for groupoids" />
+         Arg="arr" Label="for groupoids" />
    <Oper Name="TailOfArrow"
-         Arg="elt" Label="for groupoids" />
+         Arg="arr" Label="for groupoids" />
    <Oper Name="HeadOfArrow"
-         Arg="elt" Label="for groupoids" />
+         Arg="arr" Label="for groupoids" />
    <Filt Name="IsGroupoidElement" 
-         Arg='arrow' Type='Category'/>
+         Arg='arr' Type='Category'/>
 <Description> 
 <Index Key="Arrow" Subkey="for groupoid elements"> <C>Arrow</C> </Index>
 The operation <C>GroupoidElement</C> is a synonym for the operation 
 <C>Arrow</C>, as described in subsection <Ref Sect="man-arrow"/>. 
-To recapitulate, an arrow <C>e</C> consists of 
+To recapitulate, an arrow <C>e</C> has four components:
+the groupoid <C>MWOofArrow(e)</C> to which it belongs;
 a group element, <C>ElementOfArrow(e)</C>; 
 the tail (source) object, <C>TailOfArrow(e)</C>;
 and the head (target) object, <C>HeadOfArrow(e)</C>.
+These four components may be accessed using 
+<M>\{ e![i] ~|~ 1 \leqslant i \leqslant 4 \}</M>.
+<P/>
 Arrows have a <E>partial composition</E>: 
 two arrows may be multiplied when the head of the first 
 coincides with the tail of the second. 
@@ -450,13 +456,17 @@ gap> e1 := GroupoidElement( Gd8, (5,6,7,8), -9, -8 );
 [(5,6,7,8) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (5,7), -8, -7 );
 [(5,7) : -8 -> -7]
-gap> Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );
-[ (5,6,7,8), -9, -8 ]
+gap> [ MWOofArrow( e1 ), ElementOfArrow( e1 ), 
+>      TailOfArrow( e1 ), HeadOfArrow( e1 ) ];
+[ Gd8, (5,6,7,8), -9, -8 ]
+gap> [ e1![1], e1![2], e1![3], e1![4] ];
+[ Gd8, (5,6,7,8), -9, -8 ]
 gap> IsGroupoidElement( e1 );
 true
 gap> e1e2 := e1*e2;
 [(5,6)(7,8) : -9 -> -7]
 gap> e2*e1;
+#I  head of the first arrow <> tail of the second
 fail
 gap> e3 := Arrow( Gd8, (6,8), -7, -9 );;
 gap> loop := e1e2*e3;
@@ -573,6 +583,33 @@ gap> Perform( hsetq8, Display );
 ]]>
 </Example>
 
+<Subsection Label="subsec-common-objects">
+<Heading>Groupoids with objects in common</Heading>
+Users are advised to select disjoint object sets when creating more than one
+groupoid.  
+When groupoids <M>G_1, G_2</M> do have an object <M>o</M> in common,
+if <M>a_1 = (g_1 : o_1 \to o) \in G_1</M> 
+and <M>a_2 = (g_2 : o \to o_2) \in G_2</M>
+then any attempt to compose <M>a_1 * a_2</M> will not succeed.
+<P/>
+<Example>
+<![CDATA[
+gap> c5 := Group( (11,12,13,14,15) );;
+gap> Gc5 := Groupoid( c5, [ -11, -10, -9] );;
+gap> e3;
+[(6,8) : -7 -> -9]
+gap> e5 := Arrow( Gc5, (11,13,15,12,14), -9, -11 );
+[(11,13,15,12,14) : -9 -> -11]
+gap> SetInfoLevel( InfoGroupoids, 1 );; 
+gap> e3 * e5;
+#I  arrows not in the same groupoid or subgroupoid
+fail
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
+]]>
+</Example>
+
+</Subsection>
+
 </Section>
 
 
@@ -656,7 +693,7 @@ with group <M>g</M> and <M>n</M> objects,
 then a typical wide subgroupoid <M>H</M> of <M>G</M> is formed by choosing 
 a subgroup <M>h</M> of <M>g</M> to be the object group 
 at the root object <M>q</M>, and an arrow  
-<M>r : q \to p</M> for each of the objects <M>p</M>. 
+<M>(r : q \to p)</M> for each of the objects <M>p</M>. 
 The chosen loop arrow at <M>q</M> must be the identity arrow. 
 These <M>n</M> arrows are called the <E>ray arrows</E> of the subgroupoid. 
 The arrows in the homset from <M>p</M> to <M>p'</M> have the form 
@@ -686,11 +723,14 @@ gap> Gk4 := SubgroupoidWithRays( Ga4, k4,
 single piece groupoid with rays: < k4, [ -15 .. -11 ], 
 [ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ] >
 gap> SetName( Gk4, "Gk4" );
-gap> RaysOfGroupoid( Gk4 );       
-[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
+gap> RayArrowsOfGroupoid( Ga4 );
+[ [() : -15 -> -15], [() : -15 -> -14], [() : -15 -> -13], [() : -15 -> -12], 
+  [() : -15 -> -11] ]
 gap> RayArrowsOfGroupoid( Gk4 );  
 [ [() : -15 -> -15], [(1,2,3) : -15 -> -14], [(1,2,4) : -15 -> -13],
   [(1,3,4) : -15 -> -12], [(2,3,4) : -15 -> -11] ]
+gap> RaysOfGroupoid( Gk4 );       
+[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
 gap> IsDirectProductWithCompleteDigraph( Gk4 );
 false
 gap> ObjectGroup( Gk4, -14 );

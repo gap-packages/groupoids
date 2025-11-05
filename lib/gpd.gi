@@ -2720,7 +2720,7 @@ function( e1, e2 )
 
     gpd1 := e1![1];
     gpd2 := e2![1];
-    ## determine the groupoid where the compoisite lives
+    ## determine the groupoid where the composite lives
     if ( gpd1 = gpd2 ) then
         par := gpd1;
     elif IsSubgroupoid( gpd1, gpd2 ) then
@@ -2728,9 +2728,13 @@ function( e1, e2 )
     elif IsSubgroupoid( gpd2, gpd1 ) then
         par := gpd2;
     else
-        Error( "e1, e2 not in the same groupoid or subgroupoid" );
+        Info( InfoGroupoids, 1, 
+              "arrows not in the same groupoid or subgroupoid" );
+        return fail;
     fi;
     if ( e1![4] <> e2![3] ) then
+        Info( InfoGroupoids, 1, 
+              "head of the first arrow <> tail of the second" );
         return fail;
     fi; 
     return ArrowNC( par, true, e1![2]*e2![2], e1![3], e2![4] );
