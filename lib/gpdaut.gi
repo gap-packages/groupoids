@@ -997,7 +997,7 @@ function( gpd )
     p1 := pieces[1]; 
     ap1 := AutomorphismGroupOfGroupoid( p1 ); 
     rays := Concatenation( [ One( ap1 ) ], 
-            List( [1..n-1], i -> IsomorphismNewObjects( p1, obs[i+1] ) ) ); 
+            List( [1..n-1], i -> IsomorphismNewObjects( p1, obs[i+1] ) ) );
     aut := SinglePieceGroupoidWithRays( ap1, obs, rays ); 
     if HasName( gpd ) then 
         SetName( aut, Concatenation( "Aut(", Name( gpd ), ")" ) ); 

@@ -725,6 +725,7 @@ function( arg )
     fi; 
     for part in L do 
         if not IsDomainWithObjects( part ) then
+Error("here");
             Info( InfoGroupoids, 1, "part ", part, "not an mwo" );
             return fail;
         fi;
@@ -824,7 +825,11 @@ function( comps, dom )
              then SetIsPcGroupoid( mwo, true ); 
         elif ForAll( pieces, p -> HasIsFpGroupoid(p) and IsFpGroupoid(p) )
              then SetIsFpGroupoid( mwo, true ); 
-        fi; 
+        fi;
+        if ForAll( pieces, p -> HasIsGroupoidWithMonoidObjects(p)
+                                and IsGroupoidWithMonoidObjects(p) )
+             then SetIsGroupoidWithMonoidObjects( mwo, true );
+        fi;
     fi; 
     return mwo; 
 end );

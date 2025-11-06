@@ -1,6 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.81 for GAP 4.15.1 (05/11/25)
+## Version 1.81 for GAP 4.15.1 (06/11/25)
+ * (06/11/25) renamed: CosetSuperDomain and CosetActingDomain,
+              RightActionGroupoid -> GroupoidWithMonoidObjects
  * (05/11/25) renamed GroupoidOfArrow as MWOofArrow and documented it
 
 ## Version 1.79 for GAP 4.14.0 (11/09/25)
