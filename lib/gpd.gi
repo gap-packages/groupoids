@@ -245,51 +245,6 @@ end );
 
 #############################################################################
 ##
-#M  SinglePieceGroupoidWithRaysNC                                            
-#M  SinglePieceGroupoidWithRays                                            
-##
-InstallMethod( SinglePieceGroupoidWithRaysNC, 
-    "method for a connected groupoid", true,
-    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
-function( gp, obs, rays ) 
-
-    local gpd, gens1, gens;
-
-    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRaysNC" );
-    gpd := rec( objects := obs, magma := gp, rays := rays ); 
-    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
-        IsSinglePieceDomain, true,
-        IsAssociative, true, 
-        IsCommutative, IsCommutative( gp ), 
-        IsSinglePieceGroupoidWithRays, true, 
-        IsDirectProductWithCompleteDigraphDomain, false ); 
-    gens := GeneratorsOfMagmaWithObjects( gpd ); 
-    return gpd; 
-end );
-
-InstallMethod( SinglePieceGroupoidWithRays, 
-    "method for a connected groupoid", true,
-    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
-function( gp, obs, rays ) 
-    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRays" );
-    if not IsSet( obs ) then 
-        Sort( obs ); 
-    fi; 
-    if not IsDuplicateFree( obs ) then
-        Error( "objects must be distinct," );
-    fi; 
-    if not ( Length( obs ) = Length( rays ) ) then 
-        Error( "obs and rays should have the same length" ); 
-    fi;
-    #?  how detailed should tests on the rays be? 
-    if ( One( gp ) * rays[1] = fail ) then 
-        Error( "cannot compose One(gp) with the first ray" ); 
-    fi;
-    return SinglePieceGroupoidWithRaysNC( gp, obs, rays );
-end ); 
-
-#############################################################################
-##
 #M  RootGroup
 ##
 InstallMethod( RootGroup, "for a connected groupoid",
@@ -767,7 +722,7 @@ function( G, obj )
 
     local H, pieceH, obs, np, p, genp;
 
-    ##  added 11/09/18 to deal with automorphism gpds of homogeneous gpds 
+    ##  added 11/09/18 to deal with automorphism gpds of homogeneous gpds
     if HasAutomorphismDomain( G ) then 
         H := AutomorphismDomain( G ); 
         pieceH := Pieces( H ); 
@@ -1077,13 +1032,13 @@ function ( hc )
         Print( "<costar at ", hc!.hobs[1], 
                " with vertex group ", hc!.elements, ">" );
     elif ( hc!.type = "r" ) then 
-        Print( "<right coset of ", hc!.ActingDomain, 
+        Print( "<right coset of ", hc!.CosetActingDomain, 
                " with representative ", Representative( hc ),">" );
     elif ( hc!.type = "l" ) then 
-        Print( "<left coset of ", hc!.ActingDomain, 
+        Print( "<left coset of ", hc!.CosetActingDomain, 
                " with representative ", Representative( hc ),">" );
     elif ( hc!.type = "d" ) then 
-        Print( "<double coset of ", hc!.ActingDomain, 
+        Print( "<double coset of ", hc!.CosetActingDomain, 
                " with representative ", Representative( hc ),">" );
     else
         Print( "<object>");
@@ -1104,11 +1059,11 @@ function ( hc )
     elif ( hc!.type = "c" ) then 
         Print( "costar at ", hc!.hobs[1], " with elements:\n" );
     elif ( hc!.type = "r" ) then 
-        Print( "<right coset of ", hc!.ActingDomain, " with elements:\n" );
+        Print( "<right coset of ", hc!.CosetActingDomain, " with elements:\n" );
     elif ( hc!.type = "l" ) then 
-        Print( "<left coset of ", hc!.ActingDomain, " with elements:\n" );
+        Print( "<left coset of ", hc!.CosetActingDomain, " with elements:\n" );
     elif ( hc!.type = "d" ) then 
-        Print( "<double coset of ", hc!.ActingDomain, " with elements:\n" );
+        Print( "<double coset of ", hc!.CosetActingDomain, " with elements:\n" );
     fi; 
     for g in hc do  
         Print( g, "\n" ); 
@@ -1124,11 +1079,11 @@ function( c1, c2 )
 
     local  act1, act2, sd1, sd2, rep1, rep2, type1, type2, elts1, elts2; 
 
-    act1 := ActingDomain( c1 ); 
-    act2 := ActingDomain( c2 ); 
-    sd1 := SuperDomain( c1 ); 
-    sd2 := SuperDomain( c2 ); 
-    if not ( ( act1 = act2 ) and ( SuperDomain(c1) = SuperDomain(c2) ) ) then 
+    act1 := CosetActingDomain( c1 ); 
+    act2 := CosetActingDomain( c2 ); 
+    sd1 := CosetSuperDomain( c1 ); 
+    sd2 := CosetSuperDomain( c2 ); 
+    if not ( ( act1 = act2 ) and ( sd1 = sd2 ) ) then 
         Info( InfoGroupoids, 2, "different acting domain or super domain" ); 
         return false; 
     fi; 
@@ -2169,8 +2124,8 @@ function( gpd, sgpd, e )
                  hobs := [ e![4] ], rep := r![2], trays := rayU, type := "r" ); 
     ObjectifyWithAttributes( rcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
-        SuperDomain, G,
-        ActingDomain, U,  
+        CosetSuperDomain, G,
+        CosetActingDomain, U,  
         Size, Size( gpt ) * nobsU, 
         Representative, r ); 
     return rcos; 
@@ -2222,8 +2177,8 @@ function( gpd, sgpd, e )
                  hobs := obsV, rep := r![2], hrays := rayV, type := "l" ); 
     ObjectifyWithAttributes( lcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
-        SuperDomain, G,
-        ActingDomain, V, 
+        CosetSuperDomain, G,
+        CosetActingDomain, V, 
         Size, Size( gph ) * nobsV, 
         Representative, r ); 
     return lcos;
@@ -2299,8 +2254,8 @@ function( gpd, lsgpd, rsgpd, e )
                  rep := r![2], trays := rayU, hrays := rayV, type := "d" ); 
     ObjectifyWithAttributes( dcos, IsHomsetCosetsType, 
         IsGroupoidCoset, true, 
-        SuperDomain, G,
-        ActingDomain, [U,V], 
+        CosetSuperDomain, G,
+        CosetActingDomain, [U,V], 
         Size, nobsU * Size( dc ) * nobsV, 
         Representative, r ); 
     return dcos;
@@ -2309,27 +2264,25 @@ end );
 InstallMethod( PrintObj, "RightCoset", true, 
     [ IsGroupoidCoset and IsRightCosetDefaultRep ], 0,
 function( r )
-  Print( "RightCoset(", ActingDomain(r), ",", r!.rep, ")" );
-##  Print( "RightCoset(", ActingDomain(r), ",", Representative(r), ")" );
+    Print( "RightCoset(", CosetActingDomain(r), ",", r!.rep, ")" );
 end); 
 
 InstallMethod( ViewObj, "RightCoset", true, 
     [ IsGroupoidCoset and IsRightCosetDefaultRep ], 0,
 function( r )
-    Print( "RightCoset(", ActingDomain(r), ",", r!.rep, ")" );
-##    Print( "RightCoset(", ActingDomain(r), ",", Representative(r), ")" );
+    Print( "RightCoset(", CosetActingDomain(r), ",", r!.rep, ")" );
 end ); 
 
 InstallMethod( PrintObj, "LeftCoset", true, 
     [ IsGroupoidCoset and IsLeftCosetWithObjectsDefaultRep ], 0,
 function( l )
-    Print( "LeftCoset(", Representative(l), ",", ActingDomain(l), ")" );
+    Print( "LeftCoset(", Representative(l), ",", CosetActingDomain(l), ")" );
 end ); 
 
 InstallMethod( ViewObj, "LeftCoset", true, 
     [ IsGroupoidCoset and IsLeftCosetWithObjectsDefaultRep ], 0,
 function( l )
-    Print( "LeftCoset(", Representative(l), ",", ActingDomain(l), ")" );
+    Print( "LeftCoset(", Representative(l), ",", CosetActingDomain(l), ")" );
 end ); 
 
 InstallMethod( \in, "for stars, costars, homsets, cosets, etc.", true, 
@@ -2981,73 +2934,120 @@ end );
 
 ############################################################################# 
 ## 
-#M  RightActionGroupoid
+#M  GroupoidWithMonoidObjects
 ## 
-InstallMethod( RightActionGroupoid, "for a group", true, [ IsGroup ], 0,
-function( G ) 
-
-    local elG; 
-
-    elG := Elements( G ); 
-    return SinglePieceGroupoidWithRays( G, elG, elG ); 
-end ); 
-
-InstallMethod( RightActionGroupoid, "for a monoid", true, [ IsMonoid ], 0,
+InstallMethod( GroupoidWithMonoidObjects, "for a monoid", true, 
+    [ IsMonoid ], 0,
 function( M )
 
-    local elM, lenM, elG, lenG, m, e, gpd, L, x, i, K, pos, gp, comp, 
-          j, obs, rays; 
+    local elM, lenM, elG, lenG, G, m, e, gpd, L, i, obs, nobs, comp, j; 
 
-    elM := Elements( M ); 
-    lenM := Length( elM );
-    elG := [ ]; 
-    for m in M do 
-        if ( m^(-1) <> fail ) then 
-            Add( elG, m ); 
-        fi; 
-    od; 
-    lenG := Length( elG );
-    e := Identity( M ); 
+    if IsGroup( M ) then
+        G := M;
+        if HasName( M ) then
+            SetName( G, Name( M ) );
+        fi;
+        elG := Elements( G );
+        elM := elG;
+        lenG := Size( G );
+        lenM := lenG;
+    else
+        elM := Elements( M ); 
+        lenM := Length( elM );
+        elG := [ ]; 
+        for m in M do 
+            if ( m^(-1) <> fail ) then 
+                Add( elG, m ); 
+            fi; 
+        od; 
+        lenG := Length( elG );
+        G := Group( elG );
+        if HasName( M ) then
+            SetName( G, Concatenation( "gp(", Name(M), ")" ) );
+        fi;
+    fi;
     if ( lenG = 1 ) then 
         ## the groupoid is discrete 
-        gpd := HomogeneousDiscreteGroupoid( Group(e), elM ); 
+        gpd := HomogeneousDiscreteGroupoid( G, elM ); 
     else 
-        Info( InfoGroupoids, 1, "the group of M has size ", Length( elG ) ); 
+        Info( InfoGroupoids, 1, "group of M has size ", Length( elG ) ); 
         ## construct the group component 
-        gpd := SinglePieceGroupoidWithRays( Group(e), elG, elG );  
+        gpd := SinglePieceGroupoid( G, elG );
+        SetIsGroupoidWithMonoidObjects( gpd, true );
         L := ListWithIdenticalEntries( lenM, true ); 
-        for x in elG do 
-            L[ Position( elM, x ) ] := false; 
-        od; 
+        for m in elG do 
+            L[ Position( elM, m ) ] := false; 
+        od;
         for i in [1..lenM] do 
             if L[i] then 
                 ## construct the component with root elM[i]  
-                x := elM[i]; 
-                K := List( elG, t -> x*t ); 
-                pos := Filtered( [1..lenG], j -> K[1] = K[j] ); 
-                gp := Group( List( pos, j -> elG[j] ) ); 
-                if ( Size( gp ) = 1 ) then 
-                    comp := SinglePieceGroupoidWithRays( gp, K, elG ); 
-                else 
-                    obs := [ ];
-                    rays := [ ];
-                    for j in [1..lenG] do 
-                        pos := Positions( K, K[j] ); 
-                        if ( pos[1] = j ) then 
-                            Add( obs, K[j] ); 
-                            Add( rays, elG[j] ); 
-                        fi; 
-                    od; 
-                    comp := SinglePieceGroupoidWithRays( gp, obs, rays ); 
-                fi; 
-                for j in [1..lenG] do 
-                    L[ Position( elM, K[j] ) ] := false; 
+                m := elM[i]; 
+                obs := Set( List( elG, t -> m*t ) );
+                nobs := Length( obs );
+                comp := SinglePieceGroupoid( G, obs );
+                SetIsGroupoidWithMonoidObjects( comp, true ); 
+                for j in [1..nobs] do 
+                    L[ Position( elM, obs[j] ) ] := false; 
                 od; 
             Info( InfoGroupoids, 1, comp );
             gpd := UnionOfPieces( gpd, comp );
             fi; 
         od;
     fi; 
-    SetIsGroupoidWithMonoidObjects( gpd, true );
+##    SetIsGroupoidWithMonoidObjects( gpd, true );
     return gpd;
 end );
+
+## InstallMethod( IsGroupoidWithMonoidObjects, "method for a groupoid", true,
+##     [ IsGroupoid ], 0,
+## function( gpd ) 
+##     local ok;
+##     return true; 
+## end ); 
+
+#############################################################################
+##
+#M  SinglePieceGroupoidWithRaysNC                                            
+#M  SinglePieceGroupoidWithRays                                            
+##
+InstallMethod( SinglePieceGroupoidWithRaysNC, 
+    "method for a connected groupoid", true,
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+function( gp, obs, rays ) 
+
+    local gpd, gens1, gens;
+
+    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRaysNC" );
+    gpd := rec( objects := obs, magma := gp, rays := rays ); 
+    ObjectifyWithAttributes( gpd, IsSinglePieceRaysType, 
+        IsSinglePieceDomain, true,
+        IsAssociative, true, 
+        IsCommutative, IsCommutative( gp ), 
+        IsSinglePieceGroupoidWithRays, true, 
+        IsDirectProductWithCompleteDigraphDomain, false ); 
+    gens := GeneratorsOfMagmaWithObjects( gpd ); 
+    return gpd; 
+end );
+
+InstallMethod( SinglePieceGroupoidWithRays, 
+    "method for a connected groupoid", true,
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ], 0,
+function( gp, obs, rays ) 
+    Info( InfoGroupoids, 2, "calling SinglePieceGroupoidWithRays" );
+    if not IsSet( obs ) then 
+        Sort( obs ); 
+    fi; 
+    if not IsDuplicateFree( obs ) then
+        Error( "objects must be distinct," );
+    fi; 
+    if not ( Length( obs ) = Length( rays ) ) then 
+        Error( "obs and rays should have the same length" ); 
+    fi;
+    #?  how detailed should tests on the rays be? 
+    if ( One( gp ) * rays[1] = fail ) then 
+        Error( "cannot compose One(gp) with the first ray" ); 
+    fi;
+    return SinglePieceGroupoidWithRaysNC( gp, obs, rays );
+end ); 
+
+

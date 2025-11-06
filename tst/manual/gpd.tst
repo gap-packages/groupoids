@@ -360,6 +360,13 @@ gap> SinglePieceSubgroupoidByGenerators( Gk4, [a1,a2,a3] );
 single piece groupoid with rays: < Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
 [ (), (1,3,2), (2,3,4) ] >
 
+## SubSection 4.3.9
+gap> G3 := SinglePieceGroupoidWithRays( k4, [-15,-13,-11], [(),(1,2,4),(2,3,4)] );
+single piece groupoid with rays: < k4, [ -15, -13, -11 ], 
+[ (), (1,2,4), (2,3,4) ] >
+gap> IsSubgroupoid( Gk4, G3 );
+true
+
 ### Section 4.4 : Left, Right and Double Cosets ###
 
 ## SubSection 4.4.1
@@ -511,62 +518,55 @@ gap> c2 := a2*b2;
 [[ (1,3,2), f1^2 ] : -6 -> -4]
 
 ## SubSection 4.7.1
-gap> d8 := Group( (5,6,7,8), (5,7) );; 
+gap> d8 := Group( (5,6,7,8), (5,7) );;
+gap> SetName( d8, "d8" );;
 gap> ed8 := Elements( d8 );; 
-gap> Rd8 := SinglePieceGroupoidWithRays( d8, ed8, ed8 );
-single piece groupoid with rays: < Group( [ (5,6,7,8), (5,7) ] ), 
-[ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), (5,7)(6,8), (5,8,7,6), (5,8)(6,7) 
- ], [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), (5,7)(6,8), (5,8,7,6), 
-  (5,8)(6,7) ] >
+gap> Rd8 := GroupoidWithMonoidObjects( d8 );
+single piece groupoid: < d8, [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), 
+  (5,7)(6,8), (5,8,7,6), (5,8)(6,7) ] >
 gap> Homset( Rd8, (6,8), (5,7) );
-<homset (6,8) -> (5,7) with head group Group( [ (5,8,7,6), (5,7) ] )>
+<homset (6,8) -> (5,7) with head group d8>
 gap> Display( last ); 
 <homset (6,8) -> (5,7) with elements:
-[(5,7)(6,8) : (6,8) -> (5,7)]
-[(5,7) : (6,8) -> (5,7)]
 [() : (6,8) -> (5,7)]
 [(6,8) : (6,8) -> (5,7)]
+[(5,7)(6,8) : (6,8) -> (5,7)]
+[(5,7) : (6,8) -> (5,7)]
 [(5,8,7,6) : (6,8) -> (5,7)]
 [(5,8)(6,7) : (6,8) -> (5,7)]
 [(5,6,7,8) : (6,8) -> (5,7)]
 [(5,6)(7,8) : (6,8) -> (5,7)]
 
 ## SubSection 4.7.2
-gap> M := Monoid( Transformation( [1,1,2,3] ), Transformation( [1,2,4,3] ) );
+gap> M13 := Monoid( Transformation( [1,1,2,3] ), Transformation( [1,2,4,3] ) );
 <transformation monoid of degree 4 with 2 generators>
-gap> rag := RightActionGroupoid( M );
+gap> Size( M13 );
+13
+gap> SetName( M13, "M13" );
+gap> gpd13 := GroupoidWithMonoidObjects( M13 );
 groupoid with 8 pieces:
-1:  single piece groupoid with rays: < Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 1, 1 ] ) ], [ IdentityTransformation ] >
-2:  single piece groupoid with rays: < Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 1, 2 ] ) ], [ IdentityTransformation ] >
-3:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ) ], 
+1:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 1, 1 ] ) ] >
+2:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 1, 2 ] ) ] >
+3:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 1, 3 ] ), 
+  Transformation( [ 1, 1, 1 ] ) ] >
+4:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 2, 1 ] ) ] >
+5:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 2, 3 ] ), 
+  Transformation( [ 1, 1, 2 ] ) ] >
+6:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 3, 1 ] ), 
+  Transformation( [ 1, 1, 4, 1 ] ) ] >
+7:  single piece groupoid: < gp(M13), [ Transformation( [ 1, 1, 3, 2 ] ), 
+  Transformation( [ 1, 1, 4, 2 ] ) ] >
+8:  single piece groupoid: < gp(M13), 
 [ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
-4:  single piece groupoid with rays: < Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 2, 1 ] ) ], [ IdentityTransformation ] >
-5:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 1, 1, 2 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
-6:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
-7:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 3, 2 ] ), Transformation( [ 1, 1, 4, 2 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
-8:  single piece groupoid with rays: < Group( [ IdentityTransformation ] ), 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] >
-gap> IsGroupoidWithMonoidObjects( rag );
+gap> IsGroupoidWithMonoidObjects( gpd13 );
 true
-gap> orag := ObjectList( rag );;
-gap> hs := Homset( rag, orag[3], orag[4] );;  
+gap> obs13 := ObjectList( gpd13 );;
+gap> hs := Homset( gpd13, obs13[3], obs13[4] );;  
 gap> Display( hs );                  
 <homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
   with elements:
+[IdentityTransformation : Transformation( [ 1, 1, 1, 3 ] ) -> 
+Transformation( [ 1, 1, 1 ] )]
 [Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]
 

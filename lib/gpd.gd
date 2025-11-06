@@ -62,8 +62,6 @@ DeclareGlobalFunction( "Groupoid" );
 #O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
 #O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
 #O  SinglePieceSubgroupoidByGenerators( <ancestor>, <gens> )
-#O  SinglePieceGroupoidWithRaysNC( <group>, <objects>, <rays> )              
-#O  SinglePieceGroupoidWithRays( <group>, <objects>, <rays> ) 
 ## 
 DeclareOperation( "SinglePieceGroupoidNC", 
     [ IsGroup, IsHomogeneousList ] ); 
@@ -77,10 +75,6 @@ DeclareOperation( "SubgroupoidWithRays",
     [ IsGroupoid, IsGroup, IsHomogeneousList ] );
 DeclareOperation( "SinglePieceSubgroupoidByGenerators", 
     [ IsGroupoid, IsList ] ); 
-DeclareOperation( "SinglePieceGroupoidWithRaysNC", 
-    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] ); 
-DeclareOperation( "SinglePieceGroupoidWithRays", 
-    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] ); 
 
 ############################################################################# 
 ##           
@@ -213,15 +207,17 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 ############################################################################## 
 ##  
 #P  IsGroupoidCoset( <cset> ) 
-#A  SuperDomain( <cset> );                          #? rename ?? 
-#O  RightCosetRepresentatives( <gpd>, <sgpd> )      #? should be Iterator ?? 
+#A  CosetSuperDomain( <cset> )
+#A  CosetActingDomain( <cset> )
+#O  RightCosetRepresentatives( <gpd>, <sgpd> ) 
 #R  IsLeftCosetWithObjectsDefaultRep( <gp>, <obj> ) 
-#O  LeftCosetRepresentatives( <gpd>, <sgpd> )       #? should be Iterator ?? 
+#O  LeftCosetRepresentatives( <gpd>, <sgpd> )
 #O  LeftCosetRepresentativesFromObject( <gpd>, <sgpd>, <obj> ) 
-#O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )          #? ditto ?? 
+#O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )
 ## 
 DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
-DeclareAttribute( "SuperDomain", IsRightCosetDefaultRep ); 
+DeclareAttribute( "CosetSuperDomain", IsRightCosetDefaultRep ); 
+DeclareAttribute( "CosetActingDomain", IsRightCosetDefaultRep ); 
 DeclareCategory( "IsLeftCosetWithObjects", IsDomain and IsExternalOrbit );
 DeclareRepresentation( "IsLeftCosetWithObjectsDefaultRep", 
     IsComponentObjectRep and IsAttributeStoringRep 
@@ -293,12 +289,18 @@ DeclareOperation( "IsNormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 
 ############################################################################# 
 ## 
+#O  GroupoidWithMonoidObjects( <M> )              
 #P  IsGroupoidWithMonoidObjects( <gpd> ) 
 ## 
+DeclareOperation( "GroupoidWithMonoidObjects", [ IsMonoid ] );
 DeclareProperty( "IsGroupoidWithMonoidObjects", IsGroupoid );  
 
 ############################################################################# 
 ## 
-#A  RightActionGroupoid( <M> )              
+#O  SinglePieceGroupoidWithRaysNC( <gp> <obs> <rays> )              
+#O  SinglePieceGroupoidWithRays( <gp> <obs> <rays> ) 
 ## 
-DeclareAttribute( "RightActionGroupoid", IsMonoid );
+DeclareOperation( "SinglePieceGroupoidWithRaysNC", 
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] );
+DeclareOperation( "SinglePieceGroupoidWithRays", 
+    [ IsGroup, IsHomogeneousList, IsHomogeneousList ] );
