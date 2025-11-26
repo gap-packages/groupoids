@@ -191,7 +191,7 @@ then the inner automorphism may be applied to <M>H</M>.
 <![CDATA[
 gap> Ma4 := MaximalDiscreteSubgroupoid( Ha4 );;
 gap> SetName( Ma4, "Ma4" );
-gap> inn3 := GroupoidInnerAutomorphism( Ha4, Ma4, e4 );;
+gap> inn3 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Ma4, e4 );;
 gap> Display( inn3 );
 homogeneous discrete groupoid mapping: [ Ma4 ] -> [ Ma4 ]
 images of objects: [ -13, -14, -12 ]
@@ -375,7 +375,7 @@ into a single object groupoid, and then define the inner automorphism map.
 gap> AHa40 := Groupoid( AHa4, [0] );
 single piece groupoid: < Aut(Ha4), [ 0 ] >
 gap> conj := function(a) 
->        return ArrowNC( Ha4, true, GroupoidInnerAutomorphism(Ha4,a), 0, 0 ); 
+>        return ArrowNC( Ha4, 1, GroupoidInnerAutomorphism(Ha4,a), 0, 0 ); 
 >    end;; 
 gap> inner := MappingWithObjectsByFunction( Ha4, AHa40, conj, [0,0,0] );;
 gap> a1 := Arrow( Ha4, (1,2,3), -14, -13 );;
@@ -391,7 +391,6 @@ gap> inner3 := ImageElm( inner, a3 );
   [ [(1,3,4) : -12 -> -12], [(1,2,4) : -12 -> -12], [(1,3)(2,4) : -12 -> -13],
       [() : -12 -> -14] ] ] : 0 -> 0]
 gap> (inner3 = inner1*inner2*inner1) and (inner3 = inner2*inner1*inner2);
-true
 true
 ]]>
 </Example>

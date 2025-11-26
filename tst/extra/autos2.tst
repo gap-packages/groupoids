@@ -53,7 +53,6 @@ gap> acoll := List( coll, a -> ImageElm( alpha, a ) );
 gap> Hd8a := SinglePieceSubgroupoidByGenerators( Gs4, acoll );; 
 gap> Display( Hd8a ); 
 single piece groupoid with rays having: 
-supergroupoid: single piece groupoid: < s4, [ -9, -8, -7, -6 ] >
       objects: [ -9, -8, -7, -6 ]
    root group: Group( [ (1,4,2,3), (3,4) ] )
          rays: [ (), (1,3,2), (), (1,3,2) ]
@@ -81,7 +80,6 @@ gap> bcoll := List( coll, a -> ImageElm( beta, a ) );
 gap> Hd8b := SinglePieceSubgroupoidByGenerators( Gs4, bcoll );; 
 gap> Display( Hd8b ); 
 single piece groupoid with rays having: 
-supergroupoid: single piece groupoid: < s4, [ -9, -8, -7, -6 ] >
       objects: [ -9, -8, -7, -6 ]
    root group: Group( [ (1,2,3,4), (2,4) ] )
          rays: [ (), (1,2,3), (), (1,2,3) ]

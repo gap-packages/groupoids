@@ -1,6 +1,10 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.81 for GAP 4.15.1 (06/11/25)
+## Version 1.81 for GAP 4.15.1 (26/11/25)
+ * (25/11/25) revised FreeProductWithAmalgamation and HnnExtension
+ * (21/11/25) revised Families and Types for semigroups/monoids with objects 
+ * (18/11/25) major revision of Left/Right/DoubleCosets, to cope with rays
+ * (07/11/25) Submagma operations not used or documented, so deleted
  * (06/11/25) renamed: CosetSuperDomain and CosetActingDomain,
               RightActionGroupoid -> GroupoidWithMonoidObjects
  * (05/11/25) renamed GroupoidOfArrow as MWOofArrow and documented it

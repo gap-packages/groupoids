@@ -11,7 +11,6 @@
 #C  IsNonSPGeneralMappingWithObjects( <map> )
 #C  IsSPGeneralMappingWithObjects( <map> )
 ## 
-#?  do we need the SP and nonSP division ?
 ##  Category and groupoid mapping declarations 
 
 DeclareCategory( "IsGeneralMappingWithObjects", IsGeneralMapping ); 
@@ -60,7 +59,6 @@ DeclareSynonymAttr( "IsMagmaWithObjectsGeneralMapping",
 DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", 
     IsMagmaWithObjectsGeneralMapping and IsSPGeneralMappingWithObjects );
 
-#?  modify these next three to SynonymAttr's ??
 DeclareProperty( "IsSemigroupWithObjectsHomomorphism", 
     IsMagmaWithObjectsHomomorphism  );
 DeclareProperty( "IsMonoidWithObjectsHomomorphism", 

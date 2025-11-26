@@ -97,7 +97,6 @@ DeclareCategory( "IsGraphOfGroups", IsGroupoidDigraph );
 DeclareRepresentation( "IsGraphOfGroupsRep",
     IsStructuredDigraph and IsAttributeStoringRep, 
     [ "DigraphOfGraphOfGroups", "GroupsOfGraphOfGroups", 
-      #?  "SubgroupsOfGraphOfGroups", 
       "IsomorphismsOfGraphOfGroups" ] ); 
 BindGlobal( "IsGraphOfGroupsFamily", 
     NewFamily( "IsGraphOfGroupsFamily", IsGraphOfGroups ) ); 
@@ -128,14 +127,12 @@ DeclareOperation( "GraphOfGroups",
 ## 
 #A  GroupsOfGraphOfGroups( <gg> )                                        
 #A  DigraphOfGraphOfGroups( <gg> )                                    
-#A  SubgroupsOfGraphOfGroups( <gg> )                                       
 #A  IsomorphismsOfGraphOfGroups( <gg> )                                    
 #A  RightTransversalsOfGraphOfGroups( <gg> ) 
 #A  LeftTransversalsOfGraphOfGroups( <gg> ) 
 ## 
 DeclareAttribute( "GroupsOfGraphOfGroups", IsGraphOfGroups ); 
 DeclareAttribute( "DigraphOfGraphOfGroups", IsGraphOfGroups );  
-## DeclareAttribute( "SubgroupsOfGraphOfGroups", IsGraphOfGroups ); 
 DeclareAttribute( "IsomorphismsOfGraphOfGroups", IsGraphOfGroups );  
 DeclareAttribute( "RightTransversalsOfGraphOfGroups", IsGraphOfGroups );  
 DeclareAttribute( "LeftTransversalsOfGraphOfGroups", IsGraphOfGroups );  
@@ -157,26 +154,26 @@ DeclareOperation( "NormalFormKBRWS", [ IsFpGroup, IsObject ] );
  
 ############################################################################# 
 ## 
-#O  FreeProductWithAmalgamation( <grp>, <grp>, <iso> ) 
-#O  FreeProductWithAmalgamationOp( <grp>, <grp>, <iso> ) 
+#O  FreeProductWithAmalgamation( <grp>, <grp>, <iso>, <verts> ) 
+#O  FreeProductWithAmalgamationOp( <grp>, <grp>, <iso>, <verts> ) 
 #A  FreeProductWithAmalgamationInfo( <fpagrp> )
 #P  IsFreeProductWithAmalgamation( <fpgrp> )  
 ## 
 DeclareOperation( "FreeProductWithAmalgamation",
-    [ IsGroup, IsGroup, IsGroupHomomorphism ] );    
+    [ IsGroup, IsGroup, IsGroupHomomorphism, IsList ] );    
 DeclareOperation( "FreeProductWithAmalgamationOp",
-    [ IsGroup, IsGroup, IsGroupHomomorphism ] );    
+    [ IsGroup, IsGroup, IsGroupHomomorphism, IsList ] );    
 DeclareProperty( "IsFreeProductWithAmalgamation", IsFpGroup );
 DeclareAttribute( "FreeProductWithAmalgamationInfo", 
     IsFreeProductWithAmalgamation, "mutable" );    
  
 ############################################################################# 
 ## 
-#O  HnnExtension( <grp>, <iso> ) 
+#O  HnnExtension( <grp>, <iso>, <verts> ) 
 #P  IsHnnExtension( <fpgrp> )  
 #A  HnnExtensionInfo( <fpa> )
 ## 
-DeclareOperation( "HnnExtension", [ IsGroup, IsGroupHomomorphism ] );    
+DeclareOperation( "HnnExtension", [ IsGroup, IsGroupHomomorphism, IsList ] );
 DeclareProperty( "IsHnnExtension", IsFpGroup );
 DeclareAttribute( "HnnExtensionInfo", IsHnnExtension, "mutable" );    
  

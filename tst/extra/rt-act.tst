@@ -36,7 +36,7 @@ gap> Homset( rm3, orm3[2], orm3[3] );
 <homset Transformation( [ 1, 1, 2 ] ) -> Transformation( [ 1, 1 ] )
   with head group gp(m3)>
 gap> Display( last );                
-<homset Transformation( [ 1, 1, 2 ] ) -> Transformation( [ 1, 1 ] )
+homset Transformation( [ 1, 1, 2 ] ) -> Transformation( [ 1, 1 ] )
   with elements:
 [IdentityTransformation : Transformation( [ 1, 1, 2 ] ) -> Transformation( [ 
  1, 1 ] )]
@@ -54,8 +54,7 @@ gap> Homset( rm3, orm3[1], orm3[14] );
 <homset Transformation( [ 1, 1, 1 ] ) -> Transformation( [ 2, 2, 2 ] )
   with head group gp(m3)>
 gap> Display( last );                 
-<homset Transformation( [ 1, 1, 1 ] ) -> Transformation( [ 2, 2, 2 ]\
- )
+homset Transformation( [ 1, 1, 1 ] ) -> Transformation( [ 2, 2, 2 ] )
   with elements:
 [IdentityTransformation : Transformation( [ 1, 1, 1 ] ) -> Transformation( [ 
  2, 2, 2 ] )]

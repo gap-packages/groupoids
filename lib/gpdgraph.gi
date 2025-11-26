@@ -427,10 +427,10 @@ InstallMethod( ReducedGraphOfGroupoidsWord, "for word in graph of groupoids",
     true, [ IsGraphOfGroupoidsWordRep ], 0,
 function( ggword )
 
-    local w, tw, hw, gg, gpds, sgpds, dig, adig, vdig, lw, len, k, k2, he,
-          tsp, word, tran, ltrans, pos, a, g, h, found, i, nwit, tword, 
-          te, obg, nob, ptword, itword, ch, isos, im, sub, u, v, gu, gv, e, 
-          ie, isoe, part, cw, pw, fw, iw, isow, ng, rw, lenred, isfp, isid;
+    local w, tw, hw, lw, len, gg, gpds, sgpds, isos, isfp, dig, adig, vdig,
+          ltrans, ng, k, v, k2, e, he, word, a, te, g, u, obg, nob, tword,
+          hword, phword, h, ch, tran, i, t, found, wordt, word2, loop, isoe,
+          part, cw, pw, fw, iw, isow, im, ie, gv, gu, rw, lenred, isid;
 
     if ( HasIsReducedGraphOfGroupoidsWord( ggword )
          and IsReducedGraphOfGroupoidsWord( ggword ) ) then
@@ -475,26 +475,29 @@ function( ggword )
         obg := ObjectList( g );
         nob := Length( obg );
         tword := word![3];
-        ptword := Position( obg, tword );
+        hword := word![4];
+        phword := Position( obg, hword );
         h := sgpds[e];
         ch := PieceOfObject( h, word![4] );
-        tran := ltrans[e][ptword];
+        tran := ltrans[e][phword];
         Info( InfoGroupoids, 3, "tran = ", tran );
         Info( InfoGroupoids, 3, "word = ", word );
         i := 0;
         found := false;
         while not found do
             i := i+1;
-            itword := tran[i]^(-1)*word;
-            Info( InfoGroupoids, 3, "[i,itword] = ", [i,itword] );
-            if ( itword = fail ) then 
+            t := tran[i]^-1;
+            wordt := word * t;
+            Info( InfoGroupoids, 3, "[i,wordt] = ", [i,wordt] );
+            if ( wordt = fail ) then 
                 found := false;
             else
-                found := itword in ch;
+                found := wordt in ch;
             fi;
         od;
-        tsp := [ tran[i], itword ];
-        Info( InfoGroupoids, 3, "tsp = ", tsp );
+        loop := Arrow( g, wordt![2]^-1, hword, hword );
+        word2 := word * loop;
+        Info( InfoGroupoids, 3, "[loop.wordt] = ", [loop,wordt] );
         isoe := isos[e];
         if IsMWOSinglePieceRep( Source( isoe ) ) then
             part := [ [1] ];
@@ -502,7 +505,7 @@ function( ggword )
             part := PartitionOfSource( isoe );
         fi;
         if HasPiecesOfMapping( isoe ) then
-            cw := PieceOfObject( u, itword![2] );
+            cw := PieceOfObject( u, wordt![2] );
             pw := Position( Pieces( u ), cw ); 
             fw := List( part, p -> Position( p, pw ) );
             iw := PositionProperty( fw, f -> not( f = fail ) ); 
@@ -511,9 +514,9 @@ function( ggword )
             isow := isoe;
         fi;
         Info( InfoGroupoids, 3, "isow = ", isow );
-        im := ImageElm( isow, tsp[2] );
-        Info( InfoGroupoids, 2, tsp[2], " mapped over to ", im );
-        w[k2-1] := tsp[1];
+        im := ImageElm( isow, loop^-1 );
+        Info( InfoGroupoids, 2, loop, " mapped over to ", im );
+        w[k2-1] := word2;
         if isfp then
             w[k2+1] := NormalFormKBRWS( gpds[he], GroupoidElement( 
                 gpds[he], im![2]*w[k2+1]![2], im![3], w[k2+1]![4] ) );

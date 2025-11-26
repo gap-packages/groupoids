@@ -10,9 +10,9 @@
 #O  RayArrowsOfGroupoid( <gpd> ) 
 #A  GeneratorsOfGroupoid( <gpd> )
 ## 
-DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] ); 
-DeclareAttribute( "RaysOfGroupoid", IsGroupoid ); 
-DeclareOperation( "RayArrowsOfGroupoid", [ IsGroupoid ] ); 
+DeclareOperation( "RootGroup", [ IsGroupoid and IsSinglePiece ] );
+DeclareAttribute( "RaysOfGroupoid", IsGroupoid );
+DeclareOperation( "RayArrowsOfGroupoid", [ IsGroupoid ] );
 DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
   
 ############################################################################## 
@@ -27,10 +27,10 @@ DeclareAttribute( "GeneratorsOfGroupoid", IsGroupoid );
 ## 
 DeclareRepresentation( "IsSinglePieceRaysRep",
   IsGroupoid and IsAttributeStoringRep and IsComponentObjectRep, 
-  [ "parent", "rootGroup", "rays" ] ); 
+  [ "parent", "rootGroup", "rays" ] );
 BindGlobal( "IsSinglePieceRaysType", 
             NewType( IsGroupoidFamily, IsSinglePieceRaysRep ) );
-DeclareAttribute( "LargerDirectProductGroupoid", IsSinglePieceRaysRep ); 
+DeclareAttribute( "LargerDirectProductGroupoid", IsSinglePieceRaysRep );
  
 ############################################################################# 
 ## 
@@ -41,12 +41,12 @@ DeclareAttribute( "LargerDirectProductGroupoid", IsSinglePieceRaysRep );
 #P  IsFreeGroupoid( <gpd> ) 
 #P  IsSinglePieceGroupoidWithRays( <gpd> )
 ## 
-DeclareProperty( "IsPermGroupoid", IsGroupoid );  
-DeclareProperty( "IsFpGroupoid", IsGroupoid );  
-DeclareProperty( "IsPcGroupoid", IsGroupoid );  
-DeclareProperty( "IsMatrixGroupoid", IsGroupoid );  
-DeclareProperty( "IsFreeGroupoid", IsGroupoid );  
-DeclareProperty( "IsSinglePieceGroupoidWithRays", IsGroupoid );  
+DeclareProperty( "IsPermGroupoid", IsGroupoid );
+DeclareProperty( "IsFpGroupoid", IsGroupoid );
+DeclareProperty( "IsPcGroupoid", IsGroupoid );
+DeclareProperty( "IsMatrixGroupoid", IsGroupoid );
+DeclareProperty( "IsFreeGroupoid", IsGroupoid );
+DeclareProperty( "IsSinglePieceGroupoidWithRays", IsGroupoid );
   
 ############################################################################# 
 ## 
@@ -59,22 +59,13 @@ DeclareGlobalFunction( "Groupoid" );
 #O  SinglePieceGroupoidNC( <group>, <objects> )              
 #O  SinglePieceGroupoid( <group>, <objects> )        
 #O  GroupoidWithRays( <rootgp>, <objects>, <rays> )
-#O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
-#O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
-#O  SinglePieceSubgroupoidByGenerators( <ancestor>, <gens> )
 ## 
 DeclareOperation( "SinglePieceGroupoidNC", 
-    [ IsGroup, IsHomogeneousList ] ); 
+    [ IsGroup, IsHomogeneousList ] );
 DeclareOperation( "SinglePieceGroupoid", 
-    [ IsGroup, IsHomogeneousList ] ); 
+    [ IsGroup, IsHomogeneousList ] );
 DeclareOperation( "GroupoidWithRays", 
     [ IsGroup, IsHomogeneousList, IsList ] );
-DeclareOperation( "SubgroupoidWithRaysNC", 
-    [ IsGroupoid, IsGroup, IsHomogeneousList ] );
-DeclareOperation( "SubgroupoidWithRays", 
-    [ IsGroupoid, IsGroup, IsHomogeneousList ] );
-DeclareOperation( "SinglePieceSubgroupoidByGenerators", 
-    [ IsGroupoid, IsList ] ); 
 
 ############################################################################# 
 ##           
@@ -91,8 +82,8 @@ DeclareProperty( "IsGroupoidByIsomorphisms",
 #O  ObjectGroup( <gpd>, <obj> )
 #A  ObjectGroups( <gpd> )
 ## 
-DeclareOperation( "ObjectGroup", [ IsGroupoid, IsObject ] );    
-DeclareAttribute( "ObjectGroups", IsGroupoid );    
+DeclareOperation( "ObjectGroup", [ IsGroupoid, IsObject ] );
+DeclareAttribute( "ObjectGroups", IsGroupoid );
 
 
 ## ======================================================================== ##
@@ -110,10 +101,10 @@ DeclareAttribute( "ObjectGroups", IsGroupoid );
 ##  So such structures deserve their own representation and type. 
 ## 
 DeclareSynonymAttr( "IsHomogeneousDiscreteGroupoid", IsGroupoid and 
-    IsDiscreteDomainWithObjects and IsHomogeneousDomainWithObjects ); 
+    IsDiscreteDomainWithObjects and IsHomogeneousDomainWithObjects );
 DeclareRepresentation( "IsHomogeneousDiscreteGroupoidRep",
   IsGroupoid and IsAttributeStoringRep and IsComponentObjectRep, 
-  [ "magma", "objects" ] ); 
+  [ "magma", "objects" ] );
 BindGlobal( "IsHomogeneousDiscreteGroupoidType", 
             NewType( IsGroupoidFamily, 
                      IsHomogeneousDiscreteGroupoidRep and IsGroupoid ) );
@@ -124,10 +115,10 @@ BindGlobal( "IsHomogeneousDiscreteGroupoidType",
 #O  HomogeneousGroupoidNC( <gpd>, <obs> ) 
 #O  HomogeneousDiscreteGroupoid( <gp>, <obs> ) 
 ## 
-DeclareOperation( "HomogeneousGroupoid", [ IsGroupoid, IsHomogeneousList ] ); 
-DeclareOperation( "HomogeneousGroupoidNC", [ IsGroupoid, IsHomogeneousList ] ); 
+DeclareOperation( "HomogeneousGroupoid", [ IsGroupoid, IsHomogeneousList ] );
+DeclareOperation( "HomogeneousGroupoidNC", [ IsGroupoid, IsHomogeneousList ] );
 DeclareOperation( "HomogeneousDiscreteGroupoid", 
-    [ IsGroup, IsHomogeneousList ] ); 
+    [ IsGroup, IsHomogeneousList ] );
 
 ## ======================================================================== ##
 ##                       Manipulating groupoid unions                       ##
@@ -139,10 +130,10 @@ DeclareOperation( "HomogeneousDiscreteGroupoid",
 ## 
 DeclareOperation( "ReplaceOnePieceInUnion", 
     [ IsGroupoid and IsPiecesRep, IsGroupoid and IsSinglePiece,  
-      IsGroupoid and IsSinglePiece ] ); 
+      IsGroupoid and IsSinglePiece ] );
 DeclareOperation( "ReplaceOnePieceInUnion", 
     [ IsGroupoid and IsPiecesRep, IsPosInt,  
-      IsGroupoid and IsSinglePiece ] ); 
+      IsGroupoid and IsSinglePiece ] );
 
 
 ## ======================================================================== ##
@@ -156,8 +147,8 @@ DeclareOperation( "ReplaceOnePieceInUnion",
 ## 
 ##  A connected groupoid element is [ group element, tail, head ]
 ## 
-DeclareSynonym( "GroupoidElement", Arrow ); 
-DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] ); 
+DeclareSynonym( "GroupoidElement", Arrow );
+DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 
 ############################################################################## 
 ## 
@@ -172,7 +163,7 @@ DeclareOperation( "IdentityArrow", [ IsGroupoid, IsObject ] );
 ##  5.  a representative arrow, 
 ##  6.  a list of group elements, e.g. an object group of a coset, 
 ##  7.  a single character string 'c' in {s,c,h,u,r,l,d}, 
-##      specifying star; costar; homset; union; right/left/double coset.
+##      specifying star;costar;homset;union;right/left/double coset.
 ##
 #P  IsHomsetCosets( <obj> )
 #R  IsHomsetCosetsRep( <obj> )
@@ -190,19 +181,19 @@ DeclareProperty( "IsHomsetCosets", IsGroupoidElementCollection );
 InstallTrueMethod(IsListOrCollection, IsHomsetCosets);
 DeclareRepresentation( "IsHomsetCosetsRep", IsHomsetCosets 
     and IsAttributeStoringRep and IsComponentObjectRep, 
-    [ "tobj", "hobj", "trays", "hrays", "rep", "elements", "type" ] ); 
+    [ "tobj", "hobj", "trays", "hrays", "rep", "elements", "type" ] );
 BindGlobal( "IsHomsetCosetsFamily", 
-            NewFamily( "IsHomsetCosetsFamily", IsList ) ); 
+            NewFamily( "IsHomsetCosetsFamily", IsList ) );
 BindGlobal( "IsHomsetCosetsType", 
             NewType( CollectionsFamily( IsGroupoidElementFamily ), 
                      IsHomsetCosetsRep ) );
-DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] ); 
-DeclareOperation( "ObjectStar", [ IsGroupoid, IsObject ] ); 
-DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsObject ] ); 
-DeclareOperation( "ObjectCostar", [ IsGroupoid, IsObject ] ); 
-DeclareOperation( "HomsetNC", [ IsGroupoid, IsObject, IsObject ] ); 
-DeclareOperation( "Homset", [ IsGroupoid, IsObject, IsObject ] ); 
-DeclareAttribute( "ElementsOfGroupoid", IsGroupoid ); 
+DeclareOperation( "ObjectStarNC", [ IsGroupoid, IsObject ] );
+DeclareOperation( "ObjectStar", [ IsGroupoid, IsObject ] );
+DeclareOperation( "ObjectCostarNC", [ IsGroupoid, IsObject ] );
+DeclareOperation( "ObjectCostar", [ IsGroupoid, IsObject ] );
+DeclareOperation( "HomsetNC", [ IsGroupoid, IsObject, IsObject ] );
+DeclareOperation( "Homset", [ IsGroupoid, IsObject, IsObject ] );
+DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 
 ############################################################################## 
 ##  
@@ -215,19 +206,19 @@ DeclareAttribute( "ElementsOfGroupoid", IsGroupoid );
 #O  LeftCosetRepresentativesFromObject( <gpd>, <sgpd>, <obj> ) 
 #O  DoubleCosetRepresentatives( <gpd>, <sgpd>, <sgpd> )
 ## 
-DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep ); 
-DeclareAttribute( "CosetSuperDomain", IsRightCosetDefaultRep ); 
-DeclareAttribute( "CosetActingDomain", IsRightCosetDefaultRep ); 
+DeclareProperty( "IsGroupoidCoset", IsRightCosetDefaultRep );
+DeclareAttribute( "CosetSuperDomain", IsRightCosetDefaultRep );
+DeclareAttribute( "CosetActingDomain", IsRightCosetDefaultRep );
 DeclareCategory( "IsLeftCosetWithObjects", IsDomain and IsExternalOrbit );
 DeclareRepresentation( "IsLeftCosetWithObjectsDefaultRep", 
     IsComponentObjectRep and IsAttributeStoringRep 
     and IsLeftCosetWithObjects, [] );
-DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
-DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] ); 
+DeclareOperation( "RightCosetRepresentatives", [ IsGroupoid, IsGroupoid ] );
+DeclareOperation( "LeftCosetRepresentatives", [ IsGroupoid, IsGroupoid ] );
 DeclareOperation( "LeftCosetRepresentativesFromObject", 
-    [ IsGroupoid, IsGroupoid, IsObject ] ); 
+    [ IsGroupoid, IsGroupoid, IsObject ] );
 DeclareOperation( "DoubleCosetRepresentatives", 
-    [ IsGroupoid, IsGroupoid, IsGroupoid ] ); 
+    [ IsGroupoid, IsGroupoid, IsGroupoid ] );
 
 
 ## ======================================================================== ##
@@ -243,13 +234,18 @@ DeclareOperation( "DoubleCosetRepresentatives",
 ## 
 DeclareGlobalFunction( "Subgroupoid" );
 DeclareOperation( "IsSubgroupoid", [ IsGroupoid, IsGroupoid ] );
-DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
-DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] ); 
+DeclareOperation( "IsWideSubgroupoid", [ IsGroupoid, IsGroupoid ] );
+DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 
 ############################################################################# 
 ## 
 #O  SubgroupoidBySubgroup( <gpd>, <sgp> ) 
+#O  SubgroupoidBySubgroupOp( <gpd>, <sgp> ) 
 #O  SubgroupoidByObjects( <gpd>, <obs> ) 
+#O  SubgroupoidByObjectsOp( <gpd>, <obs> ) 
+#O  SubgroupoidWithRaysNC( <parent>, <rootgp>, <rays> )
+#O  SubgroupoidWithRays( <parent>, <rootgp>, <rays> )
+#O  SinglePieceSubgroupoidByGenerators( <ancestor>, <gens> )
 #O  SubgroupoidByPieces( <gpd>, <obhoms> )              
 #O  PiecePositions( <gpd>, <sgpd> )
 #O  DiscreteSubgroupoid( <gpd>, <gps>, <obs> )              
@@ -259,9 +255,20 @@ DeclareOperation( "IsFullSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 #A  DiscreteTrivialSubgroupoid( <gpd> )  
 ## 
 DeclareOperation( "SubgroupoidBySubgroup", 
-    [ IsGroupoid and IsSinglePiece, IsGroup ] ); 
-DeclareOperation( "SubgroupoidByObjects", [ IsGroupoid, IsHomogeneousList ] );
-DeclareSynonym( "FullSubgroupoid", SubgroupoidByObjects ); 
+    [ IsGroupoid and IsSinglePiece, IsGroup ] );
+DeclareOperation( "SubgroupoidBySubgroupOp", 
+    [ IsGroupoid and IsSinglePiece, IsGroup ] );
+DeclareOperation( "SubgroupoidByObjects",
+    [ IsGroupoid, IsHomogeneousList ] );
+DeclareOperation( "SubgroupoidByObjectsOp",
+    [ IsGroupoid, IsHomogeneousList ] );
+DeclareOperation( "SubgroupoidWithRaysNC", 
+    [ IsGroupoid, IsGroup, IsHomogeneousList ] );
+DeclareOperation( "SubgroupoidWithRays", 
+    [ IsGroupoid, IsGroup, IsHomogeneousList ] );
+DeclareOperation( "SinglePieceSubgroupoidByGenerators", 
+    [ IsGroupoid, IsList ] );
+DeclareSynonym( "FullSubgroupoid", SubgroupoidByObjects );
 DeclareOperation( "SubgroupoidByPieces",
     [ IsGroupoid, IsList ] );
 ##  DeclareOperation( "PiecePositions", [ IsGroupoid, IsGroupoid ] );
@@ -275,9 +282,10 @@ DeclareAttribute( "DiscreteTrivialSubgroupoid", IsGroupoid );
 
 #############################################################################
 ##
-#O  ConjugateGroupoid( <gpd>, <elt> ) . . . . . . conjugate of <gpd> by <elt>
+#O  ConjugateGroupoid( <gpd>, <sgpd>, <elt> ) .. conjugate of <sgpd> by <elt>
 ##
-DeclareOperation( "ConjugateGroupoid", [ IsGroupoid, IsGroupoidElement ] );
+DeclareOperation( "ConjugateGroupoid",
+    [ IsGroupoid, IsGroupoid, IsGroupoidElement ] );
 
 ############################################################################# 
 ## 
@@ -293,7 +301,7 @@ DeclareOperation( "IsNormalSubgroupoid", [ IsGroupoid, IsGroupoid ] );
 #P  IsGroupoidWithMonoidObjects( <gpd> ) 
 ## 
 DeclareOperation( "GroupoidWithMonoidObjects", [ IsMonoid ] );
-DeclareProperty( "IsGroupoidWithMonoidObjects", IsGroupoid );  
+DeclareProperty( "IsGroupoidWithMonoidObjects", IsGroupoid );
 
 ############################################################################# 
 ## 

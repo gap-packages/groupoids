@@ -41,13 +41,13 @@ so as to produce digraphs of type <C>IsFpWeightedDigraph</C>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> V1 := [ 5, 6 ];;
-gap> fg1 := FreeGroup( "y" );;
+gap> V1 := [7,8];;
+gap> fg1 := FreeGroup("y");;
 gap> y := fg1.1;;
-gap> A1 := [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ];
+gap> A1 := [ [y,7,8], [y^-1,8,7]];;
 gap> D1 := FpWeightedDigraph( fg1, V1, A1 );
-weighted digraph with vertices: [ 5, 6 ]
-and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+weighted digraph with vertices: [ 7, 8 ]
+and arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
 gap> inv1 := InvolutoryArcs( D1 );
 [ 2, 1 ]
 ]]>
@@ -62,15 +62,15 @@ of each inverse arc in the list of arcs.
 In the second example the graph is a complete digraph on three vertices.
 <Example>
 <![CDATA[
-gap> fg3 := FreeGroup( 3, "z" );;
-gap> z1 := fg3.1;;  z2 := fg3.2;;  z3 := fg3.3;;
-gap> ob3 := [ 7, 8, 9 ];;
-gap> A3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;
+gap> fg3 := FreeGroup(3,"z");;
+gap> z1:=fg3.1;; z2:=fg3.2;; z3:=fg3.3;;
+gap> ob3 := [11,12,13];;
+gap> A3 := [[z1,11,12],[z2,12,13],[z3,13,11],[z1^-1,12,11],[z2^-1,13,12],[z3^-1,11,13]];;
 gap> D3 := FpWeightedDigraph( fg3, ob3, A3 );
-weighted digraph with vertices: [ 7, 8, 9 ]
-and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
-  [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
-[gap> inob3 := InvolutoryArcs( D3 );
+weighted digraph with vertices: [ 11, 12, 13 ]
+and arcs: [ [ z1, 11, 12 ], [ z2, 12, 13 ], [ z3, 13, 11 ], [ z1^-1, 12, 11 ],
+  [ z2^-1, 13, 12 ], [ z3^-1, 11, 13 ] ]
+gap> inob3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 ]]>
 </Example>
@@ -162,9 +162,9 @@ gap> ## defining graph of groups G1
 gap> G1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> Display( G1 );
-Graph of Groups with :-
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+Graph of Groups with :- 
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 gap> IsGraphOfGroups( G1 );
@@ -282,13 +282,13 @@ so the resulting word is a loop at vertex <M>5</M>.
 <Example>
 <![CDATA[
 gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
-gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
-(5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
+gap> gw1 := GraphOfGroupsWord( G1, 7, L1 );
+(7)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(7)
 gap> IsGraphOfGroupsWord( gw1 );
 true
-gap> [ TailOfGraphOfGroupsWord(gw1), HeadOfGraphOfGroupsWord(gw1) ];
-[ 5, 5 ]
-gap> GraphOfGroupsOfWord(gw1);
+gap> [ TailOfGraphOfGroupsWord( gw1 ), HeadOfGraphOfGroupsWord( gw1 ) ];
+[ 7, 7 ]
+gap> GraphOfGroupsOfWord( gw1 );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> WordOfGraphOfGroupsWord( gw1 );
 [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
@@ -334,7 +334,7 @@ a^{-1}b^{-1}a^{10}.
 <Example>
 <![CDATA[
 gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
-(5)a^-1.y.b^-1.y^-1.a^10(5)
+(7)a^-1.y.b^-1.y^-1.a^10(7)
 ]]>
 </Example>
 </Section>
@@ -345,7 +345,7 @@ gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
 
 <ManSection>
    <Oper Name="FreeProductWithAmalgamation"
-         Arg="gp1, gp2, iso" />
+         Arg="gp1, gp2, iso, verts" />
    <Attr Name="FreeProductWithAmalgamationInfo"
          Arg="fpa" />
    <Prop Name="IsFreeProductWithAmalgamation"
@@ -385,34 +385,34 @@ amalgamated over a cyclic subgroup <C>c3</C>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> ## set up the first group s3 and a subgroup c3=<a1>
+## set up the first group s3 and a subgroup c3=<a1>
 gap> fg2 := FreeGroup( 2, "a" );;
-gap> rel1 := [ fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2 ];;
+gap> rel1 := [fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2];;
 gap> s3 := fg2/rel1;;
 gap> gs3 := GeneratorsOfGroup(s3);;
-gap> SetName( s3, "s3" );
-gap> a1 := gs3[1];;  a2 := gs3[2];;
+gap> SetName(s3,"s3");
+gap> a1:=gs3[1];;  a2:=gs3[2];;
 gap> H1 := Subgroup(s3,[a1]);;
-gap> ## then the second group a4 and subgroup c3=<b1>
+## then the second group a4 and subgroup c3=<b1>
 gap> f2 := FreeGroup( 2, "b" );;
-gap> rel2 := [ f2.1^3, f2.2^3, (f2.1*f2.2)^2 ];;
+gap> rel2 := [f2.1^3, f2.2^3, (f2.1*f2.2)^2];;
 gap> a4 := f2/rel2;;
 gap> ga4 := GeneratorsOfGroup(a4);;
-gap> SetName( a4, "a4" );
-gap> b1 := ga4[1];  b2 := ga4[2];;
+gap> SetName(a4,"a4");
+gap> b1 := ga4[1];;  b2:=ga4[2];;
 gap> H2 := Subgroup(a4,[b1]);;
 gap> ## form the isomorphism and the fpa group
 gap> iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;
 gap> inv := InverseGeneralMapping(iso);;
-gap> fpa := FreeProductWithAmalgamation( s3, a4, iso );
+gap> fpa := FreeProductWithAmalgamation( s3, a4, iso, [7,8] );
 <fp group on the generators [ f1, f2, f3, f4 ]>
 gap> RelatorsOfFpGroup( fpa );
 [ f1^2, f2^3, (f2*f1)^2, f3^3, f4^3, (f4*f3)^2, f2*f3^-1 ]
 gap> gg1 := GraphOfGroupsRewritingSystem( fpa );;
 gap> Display( gg1 );
 Graph of Groups with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ s3, a4 ]
 isomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ]
 gap> LeftTransversalsOfGraphOfGroups( gg1 );
@@ -450,11 +450,11 @@ graph of groups rewriting system.
 </ManSection>
 <Example>
 <![CDATA[
-gap> fpainfo;
+gap> fpainfo := FreeProductWithAmalgamationInfo( fpa );
 rec( embeddings := [ [ a2, a1 ] -> [ f1, f2 ], [ b1, b2 ] -> [ f3, f4 ] ], 
   groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
   positions := [ [ 1, 2 ], [ 3, 4 ] ], 
-  subgroups := [ Group([ a1 ]), Group([ b1 ]) ] )
+  subgroups := [ Group([ a1 ]), Group([ b1 ]) ], vertices := [ 7, 8 ] )
 gap> emb2 := Embedding( fpa, 2 );
 [ b1, b2 ] -> [ f3, f4 ]
 gap> ImageElm( emb2, b1^b2 );       
@@ -467,7 +467,7 @@ f4*f3^-1
 
 <ManSection>
    <Oper Name="HnnExtension"
-         Arg="gp, iso" />
+         Arg="gp, iso, verts" />
    <Attr Name="HnnExtensionInfo"
          Arg="gp, iso" />
    <Prop Name="IsHnnExtension"
@@ -492,8 +492,8 @@ of order 3.
 <![CDATA[
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
-gap> hnn := HnnExtension( a4, i23 );
-<fp group on the generators [ fe1, fe2, fe3 ]> 
+gap> hnn := HnnExtension( a4, i23, [9] );
+<fp group of size infinity on the generators [ fe1, fe2, fe3 ]>
 gap> phnn := PresentationFpGroup( hnn );;
 gap> TzPrint( phnn );
 #I  generators: [ fe1, fe2, fe3 ]
@@ -501,11 +501,11 @@ gap> TzPrint( phnn );
 #I  1.  3  [ 1, 1, 1 ]
 #I  2.  3  [ 2, 2, 2 ]
 #I  3.  4  [ 1, 2, 1, 2 ]
-#I  4.  4  [ -3, 1, 3, -2 ] 
+#I  4.  4  [ -3, 1, 3, -2 ]
 gap> gg2 := GraphOfGroupsRewritingSystem( hnn );
 Graph of Groups: 1 vertices; 2 arcs; groups [ a4 ]
 gap> LeftTransversalsOfGraphOfGroups( gg2 );
-[ [ <identity ...>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ],
+[ [ <identity ...>, b2^-1, b1^-1*b2^-1, b1*b2^-1 ], 
   [ <identity ...>, b1^-1, b1, b2^-1*b1 ] ]
 gap> gh := GeneratorsOfGroup( hnn );;
 gap> w3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];
@@ -524,7 +524,7 @@ storing the group, subgroups and isomorphism involved in their construction.
 gap> hnninfo := HnnExtensionInfo( hnn );
 rec( embeddings := [ [ b1, b2 ] -> [ fe1, fe2 ] ], group := a4, 
   isomorphism := [ b1 ] -> [ b2 ], 
-  subgroups := [ Group([ b1 ]), Group([ b2 ]) ] )
+  subgroups := [ Group([ b1 ]), Group([ b2 ]) ], vertices := [ 9 ] )
 gap> emb := Embedding( hnn, 1 );
 [ b1, b2 ] -> [ fe1, fe2 ]
 gap> ImageElm( emb, b1^b2 );       
@@ -580,51 +580,51 @@ on one generator, and full subgroupoids with groups
 </ManSection>
 <Example>
 <![CDATA[
-gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
+gap> Gfa := SinglePieceGroupoid( fa, [-4,-3] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );
-gap> Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;
+gap> Uhy := Subgroupoid( Gfa, [ [ hy, [-4,-3] ] ] );;
 gap> SetName( Uhy, "Uhy" );
-gap> Gfb := SinglePieceGroupoid( fb, [-4,-3] );;
+gap> Gfb := SinglePieceGroupoid( fb, [-6,-5] );;
 gap> ofb := One( fb );;
 gap> SetName( Gfb, "Gfb" );
-gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;
+gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-6,-5] ] ] );;
 gap> SetName( Uhybar, "Uhybar" );
 gap> gens := GeneratorsOfGroupoid( Uhy );; 
 gap> gensbar := GeneratorsOfGroupoid( Uhybar );;
 gap> mory := GroupoidHomomorphismFromSinglePiece( 
 >                Uhy, Uhybar, gens, gensbar );
 groupoid homomorphism : Uhy -> Uhybar
-[ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
-  [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
+[ [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+  [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ] ]
 gap> morybar := InverseGeneralMapping( mory );
 groupoid homomorphism : Uhybar -> Uhy
-[ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
-  [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ]
+[ [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ], 
+  [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
 gap> gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;
 gap> Display( gg3 );
 Graph of Groupoids with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
    groupoids: 
 fp single piece groupoid: Gfa
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: fa = <[ a ]>
 fp single piece groupoid: Gfb
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: fb = <[ b ]>
 subgroupoids: single piece groupoid: Uhy
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: hy = <[ a^3 ]>
 single piece groupoid: Uhybar
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: hybar = <[ b^2 ]>
 isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
-    [ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
-      [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ], 
+    [ [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+      [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ] ], 
   groupoid homomorphism : Uhybar -> Uhy
-    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
-      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
+    [ [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ], 
+      [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ] ] ]
 gap> IsGraphOfGroupoids( gg3 );
 true
 ]]>
@@ -659,53 +659,54 @@ Compare the normal form <C>nw3</C> below with the normal form <C>nw1</C> above.
 </ManSection>
 <Example>
 <![CDATA[
-gap> f1 := Arrow( Gfa, a^7, -1, -2);;
-gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
-gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;
-gap> f4 := Arrow( Gfb, b^9, -3, -4 );;
-gap> f5 := Arrow( Gfa, a^7, -2, -2 );;
+gap> f1 := Arrow( Gfa, a^7, -3, -4);;
+gap> f2 := Arrow( Gfb, b^-6, -6, -6 );;
+gap> f3 := Arrow( Gfa, a^-11, -4, -3 );;
+gap> f4 := Arrow( Gfb, b^9, -5, -6 );;
+gap> f5 := Arrow( Gfa, a^7, -4, -3 );;
 gap> L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];
-[ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, 
-  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -2] ]
-gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
-(5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : 
--3 -> -4].y^-1.[a^7 : -2 -> -2](5)
+[ [a^7 : -3 -> -4], 1, [b^-6 : -6 -> -6], 2, [a^-11 : -4 -> -3], 1, 
+  [b^9 : -5 -> -6], 2, [a^7 : -4 -> -3] ]
+gap> gw3 := GraphOfGroupoidsWord( gg3, 7, L3);
+(7)[a^7 : -3 -> -4].y.[b^-6 : -6 -> -6].y^-1.[a^-11 : -4 -> -3].y.[b^9 : 
+-5 -> -6].y^-1.[a^7 : -4 -> -3](7)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
-(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -2](5)
+(7)[a^-1 : -3 -> -3].y.[b^-1 : -5 -> -6].y^-1.[a^10 : -4 -> -3](7)
 ]]>
 </Example>
 
 The reduction proceeds as follows. 
 <List>
 <Item> 
-<M> [a^7 : -1 \to -2] = [a^{-2} : -1 \to -1]*[a^9 : -1 \to -2] 
-    \stackrel{y}{\to} [a^{-2} : -1 \to -1]*[b^6 : -3 \to -4] </M> 
+<M> [a^7 : -3 \to -4] = [a^{-2} : -3 \to -4]*[a^9 : -4 \to -4] 
+    \stackrel{y}{\to} [a^{-2} : -3 \to -4]*[b^6 : -6 \to -6] </M> 
 </Item>
 <Item> 
-<M> [b^6 : -3 \to -4]*[b^{-6} : -4 \to -4] = [\mathrm{id} : -3 \to -4] 
-    \stackrel{\bar{y}}{\to} [\mathrm{id} : -1 \to -2] </M> 
+<M> [b^6 : -6 \to -6]*[b^{-6} : -6 \to -6] = [\mathrm{id} : -6 \to -6] 
+    \stackrel{\bar{y}}{\to} [\mathrm{id} : -4 \to -4] </M> 
 </Item>
 <Item> 
-<M> [a^{-2} : -1 \to -1]*[\mathrm{id} : -1 \to -2]*[a^{-11} : -2 \to -1] 
-    = [a^{-13} : -1 \to -1] </M> 
+<M> [a^{-2} : -3 \to -4]*[\mathrm{id} : -4 \to -4]*[a^{-11} : -4 \to -3] 
+    = [a^{-13} : -3 \to -3] </M> 
 </Item>
 <Item> 
-<M> [a^{-13} : -1 \to -1] = [a^{-1} : -1 \to -1]*[a^{-12} : -1 \to -1] 
-    \stackrel{y}{\to} [a^{-1} : -1 \to -1]*[b^{-8} : -3 \to -3] </M> 
+<M> [a^{-13} : -3 \to -3] = [a^{-1} : -3 \to -3]*[a^{-12} : -3 \to -3] 
+    \stackrel{y}{\to} [a^{-1} : -3 \to -3]*[b^{-8} : -5 \to -5] </M> 
 </Item>
 <Item> 
-<M> [b^{-8} : -3 \to -3]*[b^9 : -3 \to -4] 
-    = [b^{-1} : -3 \to -3]*[b^2 : -3 \to -4] 
-    \stackrel{\bar{y}}{\to} [b^{-1} : -3 \to -3]*[a^3 : -1 \to -2] </M> 
+<M> [b^{-8} : -5 \to -5]*[b^9 : -5 \to -6] 
+    = [b^{-1} : -5 \to -6]*[b^2 : -6 \to -6] </M> 
 </Item>
 <Item> 
-<M> [a^3 := -1 \to -2]*[a^7 : -2 \to -2] = [a^{10} : -1 \to -2] </M> 
+<M> [b^2 : -6 \to -6] \stackrel{\bar{y}}{\to} [a^3 : -4 \to -4] </M> 
+</Item>
+<Item> 
+<M> [a^3 := -4 \to -4]*[a^7 : -4 \to -3] = [a^{10} : -4 \to -3] </M> 
 </Item>
 </List>
 
 So the resulting word is 
-<M>~(a^{-1} : -1, -1)(b^{-1} : -3, -3)(a^{10} : -1, -2)</M>.
-Notice that all the arrows except the final one are loops.
+<M>~[a^{-1} : -3, -3][b^{-1} : -5, -6][a^{10} : -4, -3]</M>.
 </Section>
 
 </Chapter>

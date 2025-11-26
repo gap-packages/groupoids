@@ -215,7 +215,7 @@ true
 gap> AHa40 := Groupoid( AHa4, [0] );
 single piece groupoid: < Aut(Ha4), [ 0 ] >
 gap> conj := function(a) 
->        return ArrowNC( Ha4, true, GroupoidInnerAutomorphism(Ha4,a), 0, 0 ); 
+>        return ArrowNC( Ha4, 1, GroupoidInnerAutomorphism(Ha4,a), 0, 0 ); 
 >    end;; 
 gap> inner := MappingWithObjectsByFunction( Ha4, AHa40, conj, [0,0,0] );;
 gap> a1 := Arrow( Ha4, (1,2,3), -14, -13 );;
@@ -406,6 +406,14 @@ gap> IsGroupoidAction( act2 );
 true
 gap> amap2 := ActionMap( act2 );;
 gap> amap2( e4 ) = inn2;
+true
+
+gap> act3 := GroupoidActionByConjugation( Ha4, Ma4 );
+<general mapping: Ha4 -> Aut(Ma4) >
+gap> IsGroupoidAction( act3 );
+true
+gap> amap3 := ActionMap( act3 );;
+gap> amap3( e4 ) = inn3;
 true
 
 gap> #

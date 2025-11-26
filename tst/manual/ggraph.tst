@@ -11,25 +11,25 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## SubSection 7.1.1
 ## define the graph D1
-gap> V1 := [5,6];;
+gap> V1 := [7,8];;
 gap> fg1 := FreeGroup("y");;
 gap> y := fg1.1;;
-gap> A1 := [ [y,5,6], [y^-1,6,5]];;
+gap> A1 := [ [y,7,8], [y^-1,8,7]];;
 gap> D1 := FpWeightedDigraph( fg1, V1, A1 );
-weighted digraph with vertices: [ 5, 6 ]
-and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+weighted digraph with vertices: [ 7, 8 ]
+and arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
 gap> inv1 := InvolutoryArcs( D1 );
 [ 2, 1 ]
 
 ## define the graph D3
 gap> fg3 := FreeGroup(3,"z");;
 gap> z1:=fg3.1;; z2:=fg3.2;; z3:=fg3.3;;
-gap> ob3 := [7,8,9];;
-gap> A3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;
+gap> ob3 := [11,12,13];;
+gap> A3 := [[z1,11,12],[z2,12,13],[z3,13,11],[z1^-1,12,11],[z2^-1,13,12],[z3^-1,11,13]];;
 gap> D3 := FpWeightedDigraph( fg3, ob3, A3 );
-weighted digraph with vertices: [ 7, 8, 9 ]
-and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ], 
-  [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
+weighted digraph with vertices: [ 11, 12, 13 ]
+and arcs: [ [ z1, 11, 12 ], [ z2, 12, 13 ], [ z3, 13, 11 ], [ z1^-1, 12, 11 ],
+  [ z2^-1, 13, 12 ], [ z3^-1, 11, 13 ] ]
 gap> inob3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
 
@@ -59,8 +59,8 @@ gap> G1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> Display( G1 );
 Graph of Groups with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 gap> IsGraphOfGroups( G1 );
@@ -82,12 +82,12 @@ gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
 
 ## SubSection 7.3.1
 gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
-gap> gw1 := GraphOfGroupsWord( G1, 5, L1 );
-(5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
+gap> gw1 := GraphOfGroupsWord( G1, 7, L1 );
+(7)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(7)
 gap> IsGraphOfGroupsWord( gw1 );
 true
 gap> [ TailOfGraphOfGroupsWord( gw1 ), HeadOfGraphOfGroupsWord( gw1 ) ];
-[ 5, 5 ]
+[ 7, 7 ]
 gap> GraphOfGroupsOfWord( gw1 );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> WordOfGraphOfGroupsWord( gw1 );
@@ -95,7 +95,7 @@ gap> WordOfGraphOfGroupsWord( gw1 );
 
 ## SubSection 7.3.2
 gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
-(5)a^-1.y.b^-1.y^-1.a^10(5)
+(7)a^-1.y.b^-1.y^-1.a^10(7)
 
 ### Section 7.4 : Free products with amalgamation and HNN extensions
 
@@ -120,15 +120,15 @@ gap> H2 := Subgroup(a4,[b1]);;
 gap> ## form the isomorphism and the fpa group
 gap> iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;
 gap> inv := InverseGeneralMapping(iso);;
-gap> fpa := FreeProductWithAmalgamation( s3, a4, iso );
+gap> fpa := FreeProductWithAmalgamation( s3, a4, iso, [7,8] );
 <fp group on the generators [ f1, f2, f3, f4 ]>
 gap> RelatorsOfFpGroup( fpa );
 [ f1^2, f2^3, (f2*f1)^2, f3^3, f4^3, (f4*f3)^2, f2*f3^-1 ]
 gap> gg1 := GraphOfGroupsRewritingSystem( fpa );;
 gap> Display( gg1 );
 Graph of Groups with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ s3, a4 ]
 isomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ]
 gap> LeftTransversalsOfGraphOfGroups( gg1 );
@@ -144,7 +144,7 @@ gap> fpainfo := FreeProductWithAmalgamationInfo( fpa );
 rec( embeddings := [ [ a2, a1 ] -> [ f1, f2 ], [ b1, b2 ] -> [ f3, f4 ] ], 
   groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
   positions := [ [ 1, 2 ], [ 3, 4 ] ], 
-  subgroups := [ Group([ a1 ]), Group([ b1 ]) ] )
+  subgroups := [ Group([ a1 ]), Group([ b1 ]) ], vertices := [ 7, 8 ] )
 gap> emb2 := Embedding( fpa, 2 );
 [ b1, b2 ] -> [ f3, f4 ]
 gap> ImageElm( emb2, b1^b2 );       
@@ -155,7 +155,7 @@ f4*f3^-1
 ## Subsection 7.4.2
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
-gap> hnn := HnnExtension( a4, i23 );
+gap> hnn := HnnExtension( a4, i23, [9] );
 <fp group of size infinity on the generators [ fe1, fe2, fe3 ]>
 gap> phnn := PresentationFpGroup( hnn );;
 gap> TzPrint( phnn );
@@ -179,7 +179,7 @@ gap> ##
 gap> hnninfo := HnnExtensionInfo( hnn );
 rec( embeddings := [ [ b1, b2 ] -> [ fe1, fe2 ] ], group := a4, 
   isomorphism := [ b1 ] -> [ b2 ], 
-  subgroups := [ Group([ b1 ]), Group([ b2 ]) ] )
+  subgroups := [ Group([ b1 ]), Group([ b2 ]) ], vertices := [ 9 ] )
 gap> emb := Embedding( hnn, 1 );
 [ b1, b2 ] -> [ fe1, fe2 ]
 gap> ImageElm( emb, b1^b2 );       
@@ -190,68 +190,68 @@ fe2*fe1^-1
 ### Section 7.5 : Graphs of groupoids and their words 
 
 ## Subsection 7.5.1
-gap> Gfa := SinglePieceGroupoid( fa, [-2,-1] );;
+gap> Gfa := SinglePieceGroupoid( fa, [-4,-3] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );
-gap> Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;
+gap> Uhy := Subgroupoid( Gfa, [ [ hy, [-4,-3] ] ] );;
 gap> SetName( Uhy, "Uhy" );
-gap> Gfb := SinglePieceGroupoid( fb, [-4,-3] );;
+gap> Gfb := SinglePieceGroupoid( fb, [-6,-5] );;
 gap> ofb := One( fb );;
 gap> SetName( Gfb, "Gfb" );
-gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;
+gap> Uhybar := Subgroupoid( Gfb, [ [ hybar, [-6,-5] ] ] );;
 gap> SetName( Uhybar, "Uhybar" );
 gap> gens := GeneratorsOfGroupoid( Uhy );; 
 gap> gensbar := GeneratorsOfGroupoid( Uhybar );;
 gap> mory := GroupoidHomomorphismFromSinglePiece( 
 >                Uhy, Uhybar, gens, gensbar );
 groupoid homomorphism : Uhy -> Uhybar
-[ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
-  [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
+[ [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+  [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ] ]
 gap> morybar := InverseGeneralMapping( mory );
 groupoid homomorphism : Uhybar -> Uhy
-[ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
-  [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ]
+[ [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ], 
+  [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ] ]
 gap> gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;
 gap> Display( gg3 );
 Graph of Groupoids with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
    groupoids: 
 fp single piece groupoid: Gfa
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: fa = <[ a ]>
 fp single piece groupoid: Gfb
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: fb = <[ b ]>
 subgroupoids: single piece groupoid: Uhy
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: hy = <[ a^3 ]>
 single piece groupoid: Uhybar
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: hybar = <[ b^2 ]>
 isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
-    [ [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ], 
-      [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ] ], 
+    [ [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
+      [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ] ], 
   groupoid homomorphism : Uhybar -> Uhy
-    [ [ [b^2 : -4 -> -4], [<identity ...> : -4 -> -3] ], 
-      [ [a^3 : -2 -> -2], [<identity ...> : -2 -> -1] ] ] ]
+    [ [ [b^2 : -6 -> -6], [<identity ...> : -6 -> -5] ], 
+      [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ] ] ]
 gap> IsGraphOfGroupoids( gg3 );
 true
 
 ## Subsection 7.5.2
-gap> f1 := Arrow( Gfa, a^7, -1, -2);;
-gap> f2 := Arrow( Gfb, b^-6, -4, -4 );;
-gap> f3 := Arrow( Gfa, a^-11, -2, -1 );;
-gap> f4 := Arrow( Gfb, b^9, -3, -4 );;
-gap> f5 := Arrow( Gfa, a^7, -2, -2 );;
+gap> f1 := Arrow( Gfa, a^7, -3, -4);;
+gap> f2 := Arrow( Gfb, b^-6, -6, -6 );;
+gap> f3 := Arrow( Gfa, a^-11, -4, -3 );;
+gap> f4 := Arrow( Gfb, b^9, -5, -6 );;
+gap> f5 := Arrow( Gfa, a^7, -4, -3 );;
 gap> L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];
-[ [a^7 : -1 -> -2], 1, [b^-6 : -4 -> -4], 2, [a^-11 : -2 -> -1], 1, 
-  [b^9 : -3 -> -4], 2, [a^7 : -2 -> -2] ]
-gap> gw3 := GraphOfGroupoidsWord( gg3, 5, L3);
-(5)[a^7 : -1 -> -2].y.[b^-6 : -4 -> -4].y^-1.[a^-11 : -2 -> -1].y.[b^9 : 
--3 -> -4].y^-1.[a^7 : -2 -> -2](5)
+[ [a^7 : -3 -> -4], 1, [b^-6 : -6 -> -6], 2, [a^-11 : -4 -> -3], 1, 
+  [b^9 : -5 -> -6], 2, [a^7 : -4 -> -3] ]
+gap> gw3 := GraphOfGroupoidsWord( gg3, 7, L3);
+(7)[a^7 : -3 -> -4].y.[b^-6 : -6 -> -6].y^-1.[a^-11 : -4 -> -3].y.[b^9 : 
+-5 -> -6].y^-1.[a^7 : -4 -> -3](7)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
-(5)[a^-1 : -1 -> -1].y.[b^-1 : -3 -> -3].y^-1.[a^10 : -1 -> -2](5)
+(7)[a^-1 : -3 -> -3].y.[b^-1 : -5 -> -6].y^-1.[a^10 : -4 -> -3](7)
 gap> #
 gap> SetInfoLevel( InfoGroupoids, gpd_infolevel_saved );;  
 gap> STOP_TEST( "ggraph.tst", 10000 );

@@ -243,7 +243,11 @@ gap> [ IsWideSubgroupoid( Ga4, Ha4 ), IsWideSubgroupoid( Ha4, Hc3a ) ];
 gap> [ IsFullSubgroupoid( Ga4, Ha4 ), IsFullSubgroupoid( Ha4, Hc3a ) ];
 [ true, false ]
 
-## SubSection 4.3.3 : SubgroupoidWithRays
+## SubSection 4.3.3 : ParentList
+gap> ParentList( Hc3a);
+[ Ga4, Ha4 ]
+
+## SubSection 4.3.4 : SubgroupoidWithRays
 gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );;
 gap> SetName( k4, "k4" );
 gap> Gk4 := SubgroupoidWithRays( Ga4, k4, 
@@ -268,7 +272,7 @@ gap> Gc2 := Subgroupoid( Gk4, c2, [ (), (1,3,4), (1,4,3), (1,2,3), (1,3,2) ] );
 single piece groupoid with rays: < c2, [ -15 .. -11 ], 
 [ (), (1,3,4), (1,4,3), (1,2,3), (1,3,2) ] >
 
-## SubSection 4.3.4 : SubgroupoidByPieces 
+## SubSection 4.3.5 : SubgroupoidByPieces 
 gap> Display( Ga4 );
 perm single piece groupoid: Ga4
   objects: [ -15 .. -11 ]
@@ -287,25 +291,27 @@ groupoid with 2 pieces:
    root group: c3b = <[ (1,2,4) ]>
          rays: [ (), (1,4)(2,3) ]
 gap> [ Parent( Jc3 ), IsWideSubgroupoid( Ha4, Jc3 ) ]; 
-[ Ga4, true ]
+[ Ha4, true ]
 gap> pJc3 := Pieces( Jc3 );;
-gap> SetName( pJc3[1], "Jc3a" );  SetName( pJc3[2], "Jc3b" );
+gap> Jc3a := pJc3[1];;  SetName( Jc3a, "Jc3a" );
+gap> Jc3b := pJc3[2];;  SetName( Jc3b, "Jc3b" );
 gap> U2;
 groupoid with 2 pieces:
 [ Gf2, Gq8 ]
 gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 [ f1^2, f2^2 ]
 gap> f2b := Subgroup( f2, genf2b );;
+gap> SetName( f2b, "f2b" );
 gap> JU2 := SubgroupoidByPieces( U2, [ [f2b,[-20]], [q8,[-17]] ] );
 groupoid with 2 pieces:
-1:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -20 ] >
+1:  single piece groupoid: < f2b, [ -20 ] >
 2:  single piece groupoid: < q8, [ -17 ] >
 gap> [ IsWideSubgroupoid(U2,JU2), IsSubgroupoid(Gf2,Groupoid(f2b,[-20])) ];
 [ false, true ]
 gap> pJU2 := Pieces( JU2 );; 
 gap> SetName( pJU2[1], "JU2a" );  SetName( pJU2[2], "JU2b" );
 
-## SubSection 4.3.5
+## SubSection 4.3.6
 gap> T1 := UnionOfPieces( [Ha4,U2] );;  Pieces( T1 );
 [ Gf2, Gq8, Ha4 ]
 gap> T2 := UnionOfPieces( [Jc3,JU2] );;  Pieces( T2 );
@@ -325,15 +331,17 @@ groupoid homomorphism :
   [ [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ], 
       [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ] ] ]
 
-## SubSection 4.3.6
-gap> FullTrivialSubgroupoid( Jc3 );
+## SubSection 4.3.7
+gap> Ic3 := FullTrivialSubgroupoid( Jc3 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(c3a), [ -14 ] >
 2:  single piece groupoid: < id(c3b), [ -13, -12 ] >
+gap> ParentList( Ic3);              
+[ Ga4, Ha4, Jc3 ]
 gap> DiscreteTrivialSubgroupoid( Gd8 );
 homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7 ] >
 
-## SubSection 4.3.7
+## SubSection 4.3.8
 gap> U3;
 groupoid with 3 pieces:
 [ Ga4, Gc6, Gd8 ]
@@ -352,7 +360,7 @@ groupoid with 3 pieces:
 2:  single piece groupoid: < c3b, [ -13 ] >
 3:  single piece groupoid: < Group( [ (1,4,3) ] ), [ -12 ] >
 
-## SubSection 4.3.8
+## SubSection 4.3.9
 gap> a1 := Arrow( Gk4, (1,2)(3,4), -15, -15 );;
 gap> a2 := Arrow( Gk4, (1,3,2), -15, -13 );;
 gap> a3 := Arrow( Gk4, (2,3,4), -15, -11 );;
@@ -360,7 +368,7 @@ gap> SinglePieceSubgroupoidByGenerators( Gk4, [a1,a2,a3] );
 single piece groupoid with rays: < Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
 [ (), (1,3,2), (2,3,4) ] >
 
-## SubSection 4.3.9
+## SubSection 4.3.10
 gap> G3 := SinglePieceGroupoidWithRays( k4, [-15,-13,-11], [(),(1,2,4),(2,3,4)] );
 single piece groupoid with rays: < k4, [ -15, -13, -11 ], 
 [ (), (1,2,4), (2,3,4) ] >
@@ -370,7 +378,7 @@ true
 ### Section 4.4 : Left, Right and Double Cosets ###
 
 ## SubSection 4.4.1
-gap> e6 := Arrow( Jc3, (2,4,3), -13, -12 );;;                            
+gap> e6 := Arrow( Ha4, (2,4,3), -13, -12 );;;                            
 gap> re6 := RightCoset( Ha4, Jc3, e6 );
 <right coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
 gap> Perform( re6, Display );
@@ -391,7 +399,7 @@ gap> rcra4 := RightCosetRepresentatives( Ha4, Jc3 );
   [(1,4)(2,3) : -12 -> -12], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
   [(1,3)(2,4) : -13 -> -14], [(1,4)(2,3) : -13 -> -14] ]
 gap> le6 := LeftCoset( Ha4, Jc3, e6 ); 
-<left coset of Jc3b with representative [(1,4,2) : -13 -> -13]>
+<left coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
 gap> Perform( le6, Display );
 [(1,4,2) : -13 -> -13]
 [(2,4,3) : -13 -> -12]
@@ -414,12 +422,8 @@ gap> lcr11 := LeftCosetRepresentativesFromObject( Ha4, Jc3, -12 );
   [(1,4)(2,3) : -12 -> -14], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 
   [(1,3)(2,4) : -12 -> -12], [(1,4)(2,3) : -12 -> -12] ]
 gap> de6 := DoubleCoset( Ha4, Jc3, Jc3, e6 );
-<double coset of [ Jc3b, Jc3b ] with representative [(1,4,2) : -13 -> -13]>
+<double coset of [ Jc3b, Jc3b ] with representative [(2,4,3) : -13 -> -12]>
 gap> Perform( de6, Display );
-[() : -13 -> -13]
-[(1,4)(2,3) : -13 -> -12]
-[(1,4)(2,3) : -12 -> -13]
-[() : -12 -> -12]
 [(1,4,2) : -13 -> -13]
 [(2,4,3) : -13 -> -12]
 [(1,2,3) : -12 -> -13]
@@ -428,6 +432,10 @@ gap> Perform( de6, Display );
 [(1,3,2) : -13 -> -12]
 [(2,3,4) : -12 -> -13]
 [(1,4,3) : -12 -> -12]
+[() : -13 -> -13]
+[(1,4)(2,3) : -13 -> -12]
+[(1,4)(2,3) : -12 -> -13]
+[() : -12 -> -12]
 gap> dcra4 := DoubleCosetRepresentatives( Ha4, Jc3, Jc3 );
 [ [() : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -13], 
   [(1,2)(3,4) : -14 -> -13], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
@@ -463,7 +471,7 @@ gap> s^r;
 ## SubSection 4.5.2
 gap> a5 := Arrow( Ga4, (1,2,3), -13, -12 ); 
 [(1,2,3) : -13 -> -12]
-gap> ConjugateGroupoid( Gk4, a5 );
+gap> ConjugateGroupoid( Ga4, Gk4, a5 );
 single piece groupoid with rays: < Group( [ (1,2)(3,4), (1,3)(2,4) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2,3), (1,2)(3,4), (1,3)(2,4), (2,3,4) ] >
 
@@ -527,7 +535,7 @@ single piece groupoid: < d8, [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7),
 gap> Homset( Rd8, (6,8), (5,7) );
 <homset (6,8) -> (5,7) with head group d8>
 gap> Display( last ); 
-<homset (6,8) -> (5,7) with elements:
+homset (6,8) -> (5,7) with elements:
 [() : (6,8) -> (5,7)]
 [(6,8) : (6,8) -> (5,7)]
 [(5,7)(6,8) : (6,8) -> (5,7)]
@@ -563,7 +571,7 @@ true
 gap> obs13 := ObjectList( gpd13 );;
 gap> hs := Homset( gpd13, obs13[3], obs13[4] );;  
 gap> Display( hs );                  
-<homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
+homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
   with elements:
 [IdentityTransformation : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]
