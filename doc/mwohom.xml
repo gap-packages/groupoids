@@ -279,7 +279,7 @@ end
 gap> a78; ImageElm( swapmap, a78 );              
 [m2 : -7 -> -8]
 [m2 : -8 -> -7]
-g]]>
+]]>
 </Example>
 
 </Section>
