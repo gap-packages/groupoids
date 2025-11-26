@@ -49,8 +49,6 @@ For the various structures we have:
 <C>DeclareCategory( "IsMonoidWithObjects", 
     IsSemigroupWithObjects and 
     IsMultiplicativeElementWithObjectsAndOnesCollection ); </C> 
-<P/>
-<C>IsMultiplicativeElementWithObjectsAndInversesCollection ); </C>
 </Item>
 <Item>
 <C>DeclareCategory( "IsGroupoid", IsMonoidWithObjects and 
@@ -140,7 +138,7 @@ A few examples:
 </Item>
 <Item>
 <C>DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", 
-    IsMagmaWithObjectsGeneralMapping and IsMapping ); </C>
+    IsMagmaWithObjectsGeneralMapping and IsSPGeneralMappingWithObjects ); </C>
 </Item>
 <Item>
 <C>DeclareCategory("IsGroupoidHomomorphism",IsMagmaWithObjectsHomomorphism); 
@@ -154,12 +152,14 @@ and for unions of such mappings:
 <Item>
 <C>DeclareRepresentation( "IsMappingToSinglePieceRep",
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); </C>
+        and IsComponentObjectRep and IsGeneralMapping, 
+    [ "Source", "Range", "MappingToSinglePieceData" ] ); </C>
 </Item>
 <Item>
-<C>DeclareRepresentation( "IsMappingWithObjectsRep", 
+<C>DeclareRepresentation( "IsMappingWithPiecesRep", 
     IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep 
-        and IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); </C>
+        and IsComponentObjectRep and IsGeneralMapping, 
+    [ "Source", "Range", "PiecesOfMapping" ] ); </C>
 </Item>
 </List>
 <P/>
