@@ -29,12 +29,14 @@ magma with objects :-
 gap> SetName( M78, "M78" ); 
 gap> [ IsAssociative(M78), IsCommutative(M78) ]; 
 [ false, false ]
-gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
-[ true, true, false ]
 gap> [ RootObject( M78 ), ObjectList( M78 ) ]; 
 [ -8, [ -8, -7 ] ]
 
 ## SubSection 2.1.2 
+gap> [ IsDomainWithObjects(M78), IsMagmaWithObjects(M78), IsMagma(M78) ]; 
+[ true, true, false ]
+
+## SubSection 2.1.3
 gap> a78 := Arrow( M78, m2, -7, -8 ); 
 [m2 : -7 -> -8]
 gap> a78 in M78; 
@@ -52,7 +54,7 @@ gap> ## this demonstrates non-associativity:
 gap> [ a78*ba, ab*a78, a78*ba = ab*a78 ]; 
 [ [m3 : -7 -> -8], [m4 : -7 -> -8], false ]
 
-## SubSection 2.1.3 
+## SubSection 2.1.4
 gap> IsSinglePiece( M78 ); 
 true
 gap> IsDirectProductWithCompleteDigraph( M78 );
@@ -82,7 +84,6 @@ gap> CategoriesOfObject( S123 );
   "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
   "IsDomainWithObjects", 
   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
   "IsMagmaWithObjects", "IsSemigroupWithObjects" ]
 gap> t12 := Arrow( S123, t, -1, -2 );
 [Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2]
@@ -135,7 +136,6 @@ gap> ans := [ "IsListOrCollection", "IsCollection", "IsExtLElement",
 >   "IsDomainWithObjects", 
 >   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
 >   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
->   "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)", 
 >   "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ];;
 gap> ForAll( ans, a -> ( a in catobj ) ); 
 true

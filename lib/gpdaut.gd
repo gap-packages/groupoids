@@ -12,7 +12,7 @@
 #P  IsGroupoidAutomorphismByPiecesPerm( <aut> )
 ##
 DeclareSynonym( "IsGroupoidAutomorphism", 
-    IsGroupoidHomomorphism and IsAutomorphismWithObjects );  
+    IsGroupoidHomomorphism and IsAutomorphismWithObjects );
 DeclareProperty( "IsGroupoidAutomorphismByGroupAuto", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByObjectPerm", IsGroupoidAutomorphism );
 DeclareProperty( "IsGroupoidAutomorphismByPiecesPerm", IsGroupoidAutomorphism );
@@ -49,11 +49,11 @@ DeclareOperation( "GroupoidAutomorphismByObjectPerm",
 DeclareOperation( "GroupoidAutomorphismByNtupleNC", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByNtuple", 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] ); 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByRayShiftsNC", 
     [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 DeclareOperation( "GroupoidAutomorphismByRayShifts", 
-    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] ); 
+    [ IsGroupoid and IsSinglePiece, IsHomogeneousList ] );
 
 ############################################################################# 
 ## 
@@ -61,9 +61,9 @@ DeclareOperation( "GroupoidAutomorphismByRayShifts",
 #O  GroupoidInnerAutomorphismNormalSubgroupoid( <gpd>, <nsgpd>, <arr> )
 ##
 DeclareOperation( "GroupoidInnerAutomorphism", 
-    [ IsGroupoid, IsGroupoidElement ] ); 
+    [ IsGroupoid, IsGroupoidElement ] );
 DeclareOperation( "GroupoidInnerAutomorphismNormalSubgroupoid", 
-    [ IsGroupoid, IsGroupoid, IsGroupoidElement ] ); 
+    [ IsGroupoid, IsGroupoid, IsGroupoidElement ] );
 
 ############################################################################# 
 ## 
@@ -75,9 +75,9 @@ DeclareOperation( "GroupoidInnerAutomorphismNormalSubgroupoid",
 ##  
 DeclareProperty( "IsAutomorphismGroupOfGroupoid", IsGroup );
 DeclareProperty( "IsGroupOfGroupoidAutomorphisms", IsGroup );
-DeclareAttribute( "AutomorphismGroupOfGroupoid", IsGroupoid ); 
+DeclareAttribute( "AutomorphismGroupOfGroupoid", IsGroupoid );
 DeclareOperation( "NiceObjectAutoGroupGroupoid", [ IsGroupoid, IsGroup ] );
-DeclareAttribute( "EmbeddingsInNiceObject", IsGroup ); 
+DeclareAttribute( "EmbeddingsInNiceObject", IsGroup );
 
 InstallTrueMethod( IsGroup, IsAutomorphismGroupOfGroupoid );
 InstallTrueMethod( IsGroup, IsGroupOfGroupoidAutomorphisms );
@@ -165,7 +165,7 @@ DeclareCategoryCollections( "IsGroupoidActionCollection" );
 DeclareCategoryCollections( "IsGroupoidActionCollColl" );
 BindGlobal( "GroupoidActionFamily", 
     NewFamily( "GroupoidActionFamily", IsGroupoidAction, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
+               CanEasilySortElements, CanEasilySortElements ) );
 BindGlobal( "GroupoidActionType", 
-            NewType( GroupoidActionFamily, IsGroupoidActionRep ) ); 
+            NewType( GroupoidActionFamily, IsGroupoidActionRep ) );
 

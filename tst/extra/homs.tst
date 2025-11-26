@@ -23,7 +23,6 @@ single piece groupoid: < s4, [ -4, -3, -2, -1 ] >
 gap> G := SubgroupoidWithRays( SG, a4, [ (), (1,4), (2,4), (3,4) ] );;
 gap> Display(G);
 single piece groupoid with rays having: 
-supergroupoid: single piece groupoid: < s4, [ -4, -3, -2, -1 ] >
       objects: [ -4, -3, -2, -1 ]
    root group: a4 = <[ (1,2,3), (2,3,4) ]>
          rays: [ (), (1,4), (2,4), (3,4) ]
@@ -34,7 +33,6 @@ gap> H := SubgroupoidWithRays( SH, a4,
 >           [ (), (2,3,4), (1,3,4), (1,2,4), (1,2,3) ] );;
 gap> Display(H);
 single piece groupoid with rays having: 
-supergroupoid: single piece groupoid: < s4, [ -9, -8, -7, -6, -5 ] >
       objects: [ -9, -8, -7, -6, -5 ]
    root group: a4 = <[ (1,2,3), (2,3,4) ]>
          rays: [ (), (2,3,4), (1,3,4), (1,2,4), (1,2,3) ]
@@ -45,7 +43,6 @@ gap> J := SubgroupoidWithRays( SJ, a4,
 >           [ (), (2,3), (1,3), (1,2), (1,2,3) ] );;
 gap> Display(J);
 single piece groupoid with rays having: 
-supergroupoid: single piece groupoid: < s4, [ -19, -18, -17, -16, -15 ] >
       objects: [ -19, -18, -17, -16, -15 ]
    root group: a4 = <[ (1,2,3), (2,3,4) ]>
          rays: [ (), (2,3), (1,3), (1,2), (1,2,3) ]
@@ -119,7 +116,6 @@ gap> A := SubgroupoidWithRays( DA, s3d,
 >           [(),(1,2)(3,6)(4,5),(1,4)(2,3)(5,6),(1,6)(2,5)(3,4)] );;
 gap> Display(A);
 single piece groupoid with rays having: 
-supergroupoid: DA
       objects: [ -24, -23, -22, -21 ]
    root group: s3d = <[ (1,3,5)(2,4,6), (1,3)(4,6) ]>
          rays: [ (), (1,2)(3,6)(4,5), (1,4)(2,3)(5,6), (1,6)(2,5)(3,4) ]
@@ -131,7 +127,6 @@ gap> B := SubgroupoidWithRays( DB, s3d,
 >           [ (), (1,2,3,4,5,6), (1,4)(2,5)(3,6), (1,6,5,4,3,2) ] );;
 gap> Display(B);
 single piece groupoid with rays having: 
-supergroupoid: DB
       objects: [ -29, -28, -27, -26 ]
    root group: s3d = <[ (1,3,5)(2,4,6), (1,3)(4,6) ]>
          rays: [ (), (1,2,3,4,5,6), (1,4)(2,5)(3,6), (1,6,5,4,3,2) ]
@@ -143,7 +138,6 @@ gap> C := SubgroupoidWithRays( DC, s3d,
 >           [ (), (1,6,5,4,3,2), (1,6)(2,5)(3,4), (2,6)(3,5) ] );;
 gap> Display(C);
 single piece groupoid with rays having: 
-supergroupoid: DC
       objects: [ -39, -38, -37, -36 ]
    root group: s3d = <[ (1,3,5)(2,4,6), (1,3)(4,6) ]>
          rays: [ (), (1,6,5,4,3,2), (1,6)(2,5)(3,4), (2,6)(3,5) ]

@@ -95,7 +95,10 @@ gap> Display( tm );
   [  1,  2,  4,  3 ],
   [  3,  4,  2,  1 ],
   [  3,  4,  2,  1 ] ]
-gap> m := MagmaByMultiplicationTable( tm );;  SetName( m, "m" );
+gap> m := MagmaByMultiplicationTable( tm ); 
+<magma with 4 generators>
+gap> SetName( m, "m" );  One(m);
+fail
 gap> m1 := MagmaElement(m,1);;  m2 := MagmaElement(m,2);; 
 gap> m3 := MagmaElement(m,3);;  m4 := MagmaElement(m,4);; 
 gap> M78 := MagmaWithObjects( m, [-8,-7] ); 
@@ -167,17 +170,18 @@ since this was used in older versions of the package.
 gap> a78 := Arrow( M78, m2, -7, -8 ); 
 [m2 : -7 -> -8]
 gap> a78 in M78; 
-true
+true 
 gap> b87 := Arrow( M78, m4, -8, -7 );;
 gap> [ MWOofArrow( b87), ElementOfArrow( b87 ),
 >      TailOfArrow( b87 ), HeadOfArrow( b87 ) ]; 
 [ M78, m4, -8, -7 ]
-gap> ba := b87*a78;;  ab := a78*b87;;  [ ba, ab ];
-[ [m4 : -8 -> -8], [m3 : -7 -> -7] ]
+gap> ba := b87*a78;  ab := a78*b87;
+[m4 : -8 -> -8]
+[m3 : -7 -> -7]
 gap> [ a78^2, ba^2, ba^3 ]; 
 [ fail, [m1 : -8 -> -8], [m3 : -8 -> -8] ]
-gap> ## this demonstrates non-associativity with a78*b87*a78:
-gap> [ a78*ba, ab*a78, a78*ba=ab*a78 ]; 
+gap> ## this demonstrates non-associativity:  
+gap> [ a78*ba, ab*a78, a78*ba = ab*a78 ]; 
 [ [m3 : -7 -> -8], [m4 : -7 -> -8], false ]
 ]]>
 </Example>
@@ -255,8 +259,17 @@ gap> S123 := SemigroupWithObjects( sgp, [-3,-2,-1] );
 semigroup with objects :-
     magma = sgp<t,s,r>
   objects = [ -3, -2, -1 ]
-gap> [ IsAssociative(S123), IsCommutative(S123) ];
+
+gap> [ IsAssociative(S123), IsCommutative(S123) ]; 
 [ true, false ]
+gap> CategoriesOfObject( S123 ); 
+[ "IsListOrCollection", "IsCollection", "IsExtLElement", 
+  "CategoryCollections(IsExtLElement)", "IsExtRElement", 
+  "CategoryCollections(IsExtRElement)", 
+  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
+  "IsDomainWithObjects", 
+  "CategoryCollections(IsMultiplicativeElementWithObjects)", 
+  "IsMagmaWithObjects", "IsSemigroupWithObjects" ]
 gap> t12 := Arrow( S123, t, -1, -2 );
 [Transformation( [ 1, 1, 2, 3 ] ) : -1 -> -2]
 gap> s23 := Arrow( S123, s, -2, -3 );
@@ -317,27 +330,33 @@ and <M>2</M> objects.
 </ManSection>
 <Example>
 <![CDATA[
-gap> fm := FreeMonoid( 2, "f" );;
-gap> em := One( fm );;
-gap> gm := GeneratorsOfMonoid( fm );;
+gap> fm := FreeMonoid( 2, "f" );; 
+gap> em := One( fm );; 
+gap> gm := GeneratorsOfMonoid( fm );; 
 gap> mon := fm/[ [gm[1]^3,em], [gm[1]*gm[2],gm[2]] ];; 
 gap> M49 := MonoidWithObjects( mon, [-9,-4] ); 
 monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
   objects = [ -9, -4 ]
-gap> ktpo := KnownTruePropertiesOfObject( M49 );
-[ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
-  "IsDirectProductWithCompleteDigraphDomain" ]
+
+gap> [ IsAssociative(M49), IsCommutative(M49) ]; 
+[ true, false ]
+gap> ktpo := KnownTruePropertiesOfObject( M49 );; 
+gap> ans := [ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
+> "IsDirectProductWithCompleteDigraphDomain" ];;  
+gap> ForAll( ans, a -> ( a in ktpo ) ); 
+true
 gap> catobj := CategoriesOfObject( M49 );; 
-[ "IsListOrCollection", "IsCollection", "IsExtLElement", 
-  "CategoryCollections(IsExtLElement)", "IsExtRElement", 
-  "CategoryCollections(IsExtRElement)", 
-  "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
-  "IsDomainWithObjects", 
-  "CategoryCollections(IsMultiplicativeElementWithObjects)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)", 
-  "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ]
+gap> ans := [ "IsListOrCollection", "IsCollection", "IsExtLElement", 
+>   "CategoryCollections(IsExtLElement)", "IsExtRElement", 
+>   "CategoryCollections(IsExtRElement)", 
+>   "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
+>   "IsDomainWithObjects", 
+>   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
+>   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
+>   "IsMagmaWithObjects", "IsSemigroupWithObjects", "IsMonoidWithObjects" ];;
+gap> ForAll( ans, a -> ( a in catobj ) ); 
+true
 ]]>
 </Example>
 
@@ -385,7 +404,7 @@ gap> Length( genS );
 gap> genM := GeneratorsOfMonoidWithObjects( M49 );
 [ [f1 : -9 -> -9], [f2 : -9 -> -9], [<identity ...> : -9 -> -4], 
   [<identity ...> : -4 -> -9] ]
-gap> g1:=genM[2];; g2:=genM[3];; g3:=genM[4];; g4:=genM[5];; 
+gap> g1:=genM[1];; g2:=genM[2];; g3:=genM[3];; g4:=genM[4];; 
 gap> [g4,g2,g1,g3];
 [ [<identity ...> : -4 -> -9], [f2 : -9 -> -9], [f1 : -9 -> -9], 
   [<identity ...> : -9 -> -4] ]
@@ -420,7 +439,7 @@ The pieces are ordered by the order of their root objects.
 </ManSection>
 <Example>
 <![CDATA[
-gap> N1 := UnionOfPieces( [ M78, S123 ] ); 
+gap> N1 := UnionOfPieces( M78, S123 ); 
 magma with objects having 2 pieces :-
 1: M78
 2: semigroup with objects :-
@@ -435,7 +454,7 @@ gap> Pieces(N1);
      ]
 gap> PieceOfObject( N1, -7 ); 
 M78
-gap> N2 := UnionOfPieces( [ M49, S0 ] );  
+gap> N2 := UnionOfPieces( M49, S0 );  
 semigroup with objects having 2 pieces :-
 1: monoid with objects :-
     magma = Monoid( [ f1, f2 ] )
@@ -445,7 +464,7 @@ semigroup with objects having 2 pieces :-
   objects = [ 0 ]
 gap> ObjectList( N2 ); 
 [ -9, -4, 0 ]
-gap> N3 := UnionOfPieces( [ N1, N2] );  
+gap> N3 := UnionOfPieces( N1, N2 );  
 magma with objects having 4 pieces :-
 1: monoid with objects :-
     magma = Monoid( [ f1, f2 ] )

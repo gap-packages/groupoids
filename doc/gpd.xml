@@ -207,7 +207,7 @@ gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" );
 gap> q8 := QuaternionGroup( 8 );;
 gap> genq8 := GeneratorsOfGroup( q8 );;
 gap> x := genq8[1];;  y := genq8[2];;
-gap> Gq8 := Groupoid( q8, [ -18, -17 ] );;
+gap> Gq8 := Groupoid( q8, [ -19, -18, -17 ] );;
 gap> SetName( q8, "q8" );  SetName( Gq8, "Gq8" );
 gap> sl43 := SpecialLinearGroup( 4, 3 );;
 gap> Gsl43 := SinglePieceGroupoid( sl43, [-23,-22,-21] );;
@@ -269,7 +269,7 @@ gap> [ Size(Ga4), Size(Gd8), Size(Gc6), Size(U3) ];
 [ 300, 72, 6, 378 ]
 gap> U2 := Groupoid( [ Gf2, Gq8 ] );;
 gap> [ Size(Gf2), Size(Gq8), Size(U2) ];           
-[ infinity, 32, infinity ]
+[ infinity, 72, infinity ]
 gap> U5 := UnionOfPieces( [ U3, U2 ] );
 groupoid with 5 pieces:
 [ Gf2, Gq8, Ga4, Gc6, Gd8 ]
@@ -277,7 +277,7 @@ gap> V3 := ReplaceOnePieceInUnion( U3, Gd8, Gq8 );
 groupoid with 3 pieces:
 [ Gq8, Ga4, Gc6 ]
 gap> ObjectList( V3 );             
-[ -18, -17, -15, -14, -13, -12, -11, -10 ]
+[ -19, -18, -17, -15, -14, -13, -12, -11, -10 ]
 ]]>
 </Example>
 
@@ -465,9 +465,11 @@ gap> IsGroupoidElement( e1 );
 true
 gap> e1e2 := e1*e2;
 [(5,6)(7,8) : -9 -> -7]
+gap> SetInfoLevel( InfoGroupoids, 1 );; 
 gap> e2*e1;
 #I  head of the first arrow <> tail of the second
 fail
+gap> SetInfoLevel( InfoGroupoids, 0 );; 
 gap> e3 := Arrow( Gd8, (6,8), -7, -9 );;
 gap> loop := e1e2*e3;
 [(5,8,7,6) : -9 -> -9]
@@ -612,8 +614,6 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 </Section>
 
-
-
 <Section Label="sec-subgpds">
 <Heading>Subgroupoids</Heading>
 
@@ -680,13 +680,27 @@ gap> [ IsFullSubgroupoid( Ga4, Ha4 ), IsFullSubgroupoid( Ha4, Hc3a ) ];
 ]]>
 </Example>
 
+<ManSection Label="sec-subgpd-obs">
+   <Attr Name="ParentList"
+         Arg="dwo" />
+<Description>
+When <M>S</M> is constructed as a groupoid of <M>G</M>
+then <M>G</M> is assigned as the <C>Parent</C> of <M>S</M>.
+The <C>ParentList</C> of <M>S</M> is the concatenation of the parent list
+of <M>G</M> (or <M>[~]</M> if none exists) and <M>G</M>.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> ParentList( Hc3a);
+[ Ga4, Ha4 ]
+]]>
+</Example>
+
 <ManSection Label="sec=subgpd-rays">
    <Oper Name="SubgroupoidWithRays"
          Arg="gpd, sgp, rays" />
-   <Oper Name="RaysOfGroupoid"
-         Arg="gpd" />
-   <Oper Name="RayArrowsOfGroupoid"
-         Arg="gpd" />
 <Description>
 If groupoid <M>G</M> is of type <C>IsDirectProductWithCompleteDigraph</C> 
 with group <M>g</M> and <M>n</M> objects, 
@@ -776,18 +790,20 @@ groupoid with 2 pieces:
    root group: c3b = <[ (1,2,4) ]>
          rays: [ (), (1,4)(2,3) ]
 gap> [ Parent( Jc3 ), IsWideSubgroupoid( Ha4, Jc3 ) ]; 
-[ Ga4, true ]
+[ Ha4, true ]
 gap> pJc3 := Pieces( Jc3 );;
-gap> SetName( pJc3[1], "Jc3a" );  SetName( pJc3[2], "Jc3b" );
+gap> Jc3a := pJc3[1];;  SetName( Jc3a, "Jc3a" );
+gap> Jc3b := pJc3[2];;  SetName( Jc3b, "Jc3b" );
 gap> U2;
 groupoid with 2 pieces:
 [ Gf2, Gq8 ]
 gap> genf2b := List( GeneratorsOfGroup(f2), g -> g^2 );
 [ f1^2, f2^2 ]
 gap> f2b := Subgroup( f2, genf2b );;
+gap> SetName( f2b, "f2b" );
 gap> JU2 := SubgroupoidByPieces( U2, [ [f2b,[-20]], [q8,[-17]] ] );
 groupoid with 2 pieces:
-1:  single piece groupoid: < Group( [ f1^2, f2^2 ] ), [ -20 ] >
+1:  single piece groupoid: < f2b, [ -20 ] >
 2:  single piece groupoid: < q8, [ -17 ] >
 gap> [ IsWideSubgroupoid(U2,JU2), IsSubgroupoid(Gf2,Groupoid(f2b,[-20])) ];
 [ false, true ]
@@ -850,10 +866,12 @@ In the example <C>id(G)</C> denotes the identity subgroup of <M>G</M>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> FullTrivialSubgroupoid( Jc3 );
+gap> Ic3 := FullTrivialSubgroupoid( Jc3 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(c3a), [ -14 ] >
 2:  single piece groupoid: < id(c3b), [ -13, -12 ] >
+gap> ParentList( Ic3);              
+[ Ga4, Ha4, Jc3 ]
 gap> DiscreteTrivialSubgroupoid( Gd8 );
 homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7 ] >
 ]]>
@@ -918,7 +936,7 @@ gap> a2 := Arrow( Gk4, (1,3,2), -15, -13 );;
 gap> a3 := Arrow( Gk4, (2,3,4), -15, -11 );;
 gap> SinglePieceSubgroupoidByGenerators( Gk4, [a1,a2,a3] );
 single piece groupoid with rays: < Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
- [ (), (1,3,2), (2,3,4) ] >
+[ (), (1,3,2), (2,3,4) ] >
 ]]>
 </Example>
 
@@ -946,8 +964,6 @@ true
 </Example>
 
 </Section>
-
-
 
 <Section Label="sec-cosets">
 <Heading>Left, right and double cosets</Heading>
@@ -1011,10 +1027,10 @@ seventeenth one in the printed list <C>rcra4</C>, namely <C>[():-12->-12]</C>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> e4 := Arrow( Jc3, (2,4,3), -13, -12 );;;                            
-gap> re4 := RightCoset( Ha4, Jc3, e4 );
+gap> e6 := Arrow( Ha4, (2,4,3), -13, -12 );;;                            
+gap> re6 := RightCoset( Ha4, Jc3, e6 );
 <right coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
-gap> Perform( re4, Display );
+gap> Perform( re6, Display );
 [(2,4,3) : -13 -> -12]
 [(1,3,4) : -12 -> -12]
 [(1,3,2) : -13 -> -12]
@@ -1031,9 +1047,9 @@ gap> rcra4 := RightCosetRepresentatives( Ha4, Jc3 );
   [(1,2)(3,4) : -12 -> -12], [(1,3)(2,4) : -12 -> -12], 
   [(1,4)(2,3) : -12 -> -12], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
   [(1,3)(2,4) : -13 -> -14], [(1,4)(2,3) : -13 -> -14] ]
-gap> le4 := LeftCoset( Ha4, Jc3, e4 ); 
-<left coset of Jc3b with representative [(1,4,2) : -13 -> -13]>
-gap> Perform( le4, Display );
+gap> le6 := LeftCoset( Ha4, Jc3, e6 ); 
+<left coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
+gap> Perform( le6, Display );
 [(1,4,2) : -13 -> -13]
 [(2,4,3) : -13 -> -12]
 [() : -13 -> -13]
@@ -1054,13 +1070,9 @@ gap> lcr11 := LeftCosetRepresentativesFromObject( Ha4, Jc3, -12 );
 [ [() : -12 -> -14], [(1,2)(3,4) : -12 -> -14], [(1,3)(2,4) : -12 -> -14], 
   [(1,4)(2,3) : -12 -> -14], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 
   [(1,3)(2,4) : -12 -> -12], [(1,4)(2,3) : -12 -> -12] ]
-gap> de4 := DoubleCoset( Ha4, Jc3, Jc3, e4 );
-<double coset of [ Jc3b, Jc3b ] with representative [(1,4,2) : -13 -> -13]>
-gap> Perform( de4, Display );
-[() : -13 -> -13]
-[(1,4)(2,3) : -13 -> -12]
-[(1,4)(2,3) : -12 -> -13]
-[() : -12 -> -12]
+gap> de6 := DoubleCoset( Ha4, Jc3, Jc3, e6 );
+<double coset of [ Jc3b, Jc3b ] with representative [(2,4,3) : -13 -> -12]>
+gap> Perform( de6, Display );
 [(1,4,2) : -13 -> -13]
 [(2,4,3) : -13 -> -12]
 [(1,2,3) : -12 -> -13]
@@ -1069,6 +1081,10 @@ gap> Perform( de4, Display );
 [(1,3,2) : -13 -> -12]
 [(2,3,4) : -12 -> -13]
 [(1,4,3) : -12 -> -12]
+[() : -13 -> -13]
+[(1,4)(2,3) : -13 -> -12]
+[(1,4)(2,3) : -12 -> -13]
+[() : -12 -> -12]
 gap> dcra4 := DoubleCosetRepresentatives( Ha4, Jc3, Jc3 );
 [ [() : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -13], 
   [(1,2)(3,4) : -14 -> -13], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
@@ -1187,7 +1203,7 @@ is the subgroupoid generated by the conjugates of the generators of <M>H</M>.
 <![CDATA[
 gap> a5 := Arrow( Ga4, (1,2,3), -13, -12 ); 
 [(1,2,3) : -13 -> -12]
-gap> ConjugateGroupoid( Gk4, a5 );
+gap> ConjugateGroupoid( Ga4, Gk4, a5 );
 single piece groupoid with rays: < Group( [ (1,2)(3,4), (1,3)(2,4) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2,3), (1,2)(3,4), (1,3)(2,4), (2,3,4) ] >
 ]]>
@@ -1321,7 +1337,7 @@ single piece groupoid: < d8, [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7),
 gap> Homset( Rd8, (6,8), (5,7) );
 <homset (6,8) -> (5,7) with head group d8>
 gap> Display( last ); 
-<homset (6,8) -> (5,7) with elements:
+homset (6,8) -> (5,7) with elements:
 [() : (6,8) -> (5,7)]
 [(6,8) : (6,8) -> (5,7)]
 [(5,7)(6,8) : (6,8) -> (5,7)]
@@ -1372,7 +1388,7 @@ true
 gap> obs13 := ObjectList( gpd13 );;
 gap> hs := Homset( gpd13, obs13[3], obs13[4] );;  
 gap> Display( hs );                  
-<homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
+homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
   with elements:
 [IdentityTransformation : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]

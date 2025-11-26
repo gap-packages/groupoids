@@ -113,7 +113,7 @@ When viewing or printing a square, the boundary element is shown in the centre.
 </ManSection>
 <Example>
 <![CDATA[
-gap> [ Size( DGd8 ), (3*8)^4 ]; 
+gap> [ Size(DGd8), (3*8)^4 ]; 
 [ 331776, 331776 ]
 gap> a1 := Arrow( Gd8, (5,7), -7, -8 );;
 gap> b1 := Arrow( Gd8, (6,8), -7, -7 );;
@@ -145,11 +145,6 @@ gap> IsDoubleGroupoidElement( sq1 );
 true
 ]]>
 </Example>
-
-
-
-
-
 
 
 <ManSection>

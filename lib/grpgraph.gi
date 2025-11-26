@@ -241,8 +241,6 @@ function( dig, gps, isos )
     # checking that isomorphisms are isos and form correct groups.
     inv := InvolutoryArcs(dig);
     for i in [1..lenE] do
-    #?  THIS LINE DOES NOT MAKE SENSE :-
-    #?         einvpos := Position( e, e[inv[i]] );
         for g in GeneratorsOfGroup( Source( isos[i] ) ) do
             if not ( ImageElm( isos[inv[i]], ImageElm(isos[i],g) ) = g ) then
                 Error( "isos are not correct");
@@ -722,7 +720,8 @@ end);
 InstallMethod( IsMappingToGroupWithGGRWS, "for a mapping", true, 
     [ IsGroupGeneralMappingByImages ], 0,
 function( map ) 
-    return HasGraphOfGroupsRewritingSystem( Range( map ) ); 
+    return true;
+##    return HasGraphOfGroupsRewritingSystem( Range( map ) ); 
 end ); 
 
 #############################################################################
@@ -928,11 +927,11 @@ end);
 
 ###############################################################################
 ##
-#F  FreeProductWithAmalgamation( group, group, isomorphism between subgroups ) 
+#F  FreeProductWithAmalgamation( group, group, subgroup isomorphism, vertices ) 
 ##
 InstallMethod( FreeProductWithAmalgamation, "for 2 groups and an isomorphism", 
-    true, [ IsGroup, IsGroup, IsGroupHomomorphism ], 0, 
-function( G, H, hom )
+    true, [ IsGroup, IsGroup, IsGroupHomomorphism, IsList ], 0, 
+function( G, H, hom, verts )
 
     local SG, SH; 
 
@@ -944,18 +943,21 @@ function( G, H, hom )
     fi; 
     if not IsBijective( hom ) then 
         Error( "hom : SG -> SH not an isomorphism" ); 
-    fi; 
+    fi;
+    if not ( Length( verts ) = 2 ) and ( ForAll( verts, v -> IsInt(v) ) ) then
+        Error( "expecting a two integer list of vertices" );
+    fi;
     ## Delegate the construction to FreeProductWithAmalgamationOp
-    return FreeProductWithAmalgamationOp( G, H, hom ); 
+    return FreeProductWithAmalgamationOp( G, H, hom, verts ); 
 end );
 
 ############################################################################
 ##
-#O  FreeProductWithAmalgamationOp( group, group, isomorphism ) 
+#O  FreeProductWithAmalgamationOp( group, group, isomorphism, vertices ) 
 ##
 InstallMethod( FreeProductWithAmalgamationOp, "for 2 groups and an isomorphism",
-    true, [ IsGroup, IsGroup, IsGroupHomomorphism ], 0,
-function( G, H, iso ) 
+    true, [ IsGroup, IsGroup, IsGroupHomomorphism, IsList ], 0,
+function( G, H, iso, verts ) 
 
     local gG, gH,       # generating sets for G,H 
           ngG, ngH,     # lengths of these generating sets 
@@ -1049,7 +1051,8 @@ function( G, H, iso )
              groups := [ G, H ], 
              isomorphism := iso, 
              positions := [ [1..ngG], [ngG+1..ngF] ], 
-             subgroups := [ SG, SH ] ) );
+             subgroups := [ SG, SH ],
+             vertices := verts ) );
     rws := GraphOfGroupsRewritingSystem( FPA );
     return FPA; 
 end );
@@ -1091,11 +1094,11 @@ function( fpa )
     local fy, y, verts, arcs, dig, info, f1, f2, iso, inv;
 
     fy := FreeGroup( "y" );
-    y := fy.1; 
-    verts := [5,6];
+    y := fy.1;
+    info := FreeProductWithAmalgamationInfo( fpa );
+    verts := info!.vertices;
     arcs := [ [y,verts[1],verts[2]], [y^-1,verts[2],verts[1]]];
     dig := FpWeightedDigraph( fy, verts, arcs );
-    info := FreeProductWithAmalgamationInfo( fpa );
     f1 := info!.groups[1];
     f2 := info!.groups[2];
     iso := info!.isomorphism;
@@ -1205,8 +1208,8 @@ end);
 ##
 InstallMethod( HnnExtension,
     "for an fp-groups and an isomorphism of subgroups", true,
-    [ IsFpGroup, IsGroupHomomorphism ], 0, 
-function( fp, iso )
+    [ IsFpGroup, IsGroupHomomorphism, IsList ], 0, 
+function( fp, iso, verts )
 
     local H1, H2, gfp, ng, fe, gfe, gfe1, ffp, gffp, z,
           rel, rele, gH1, igH1, relH, hnn, ghnn, emb, rws;
@@ -1216,6 +1219,9 @@ function( fp, iso )
     if not ( IsSubgroup( fp, H1 ) and IsSubgroup( fp, H2 ) 
              and IsTotal( iso ) and IsSingleValued( iso ) ) then
         Error( "iso not an isomorphism of subgroups" );
+    fi;
+    if not ( Length( verts ) = 1 ) and IsInt( verts[1] ) then
+        Error( "Expecting a single integer vertex list" );
     fi;
     gfp := GeneratorsOfGroup( fp );
     ng := Length( gfp );
@@ -1240,7 +1246,8 @@ function( fp, iso )
     SetHnnExtensionInfo( hnn, rec( group := fp,
                                    subgroups := [ H1, H2 ], 
                                    embeddings := [ emb ],
-                                   isomorphism := iso ) );
+                                   isomorphism := iso,
+                                   vertices := verts ) );
     rws := GraphOfGroupsRewritingSystem( hnn );
     return hnn;
 end );
@@ -1253,15 +1260,16 @@ InstallMethod( GraphOfGroupsRewritingSystem, "generic method for an hnn",
     true, [ IsHnnExtension ], 0,
 function( hnn )
 
-    local fz, z, verts, arcs, dig, inva, info, fp, iso, inv;
+    local fz, z, verts, v, arcs, dig, inva, info, fp, iso, inv;
 
     fz := FreeGroup("z");
     z := fz.1;
-    verts := [7];
-    arcs := [ [z,7,7], [z^-1,7,7]];
+    info := HnnExtensionInfo( hnn );
+    verts := info!.vertices;
+    v := verts[1];
+    arcs := [ [z,v,v], [z^-1,v,v]];
     dig := FpWeightedDigraph( fz, verts, arcs );
     inva := InvolutoryArcs( dig );
-    info := HnnExtensionInfo( hnn );
     fp := info!.group;
     iso := info!.isomorphism;
     inv := InverseGeneralMapping( iso );
