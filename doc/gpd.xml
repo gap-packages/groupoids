@@ -680,7 +680,7 @@ gap> [ IsFullSubgroupoid( Ga4, Ha4 ), IsFullSubgroupoid( Ha4, Hc3a ) ];
 ]]>
 </Example>
 
-<ManSection Label="sec-subgpd-obs">
+<ManSection Label="sec-parent-list">
    <Attr Name="ParentList"
          Arg="dwo" />
 <Description>
