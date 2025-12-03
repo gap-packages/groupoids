@@ -42,18 +42,22 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X78C3228682279032">4.2-2 IdentityArrow</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X84F59A2687C62763">4.2-3 Order</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7B561BAE7D471C60">4.2-4 ObjectStar</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X85B3283578D77C96">4.2-5 <span class="Heading">Groupoids with objects in common</span></a>
+</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7BDBA72C852C4625">4.3 <span class="Heading">Subgroupoids</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X80780D287EDDB7BB">4.3-1 Subgroupoid</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8600FA7B8051C9AC">4.3-2 SubgroupoidByObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X873E0914871858E8">4.3-3 SubgroupoidWithRays</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7AEA9BF780CD6957">4.3-4 SubgroupoidByPieces</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X78C7A83980BAE937">4.3-5 PiecePositions</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7FE8F09A7C8CEC5B">4.3-6 FullTrivialSubgroupoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7ACFBE7D855A82A3">4.3-7 DiscreteSubgroupoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A9F29BD7D64DCC1">4.3-8 SinglePieceSubgroupoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7C49AC70861F17C2">4.3-3 ParentList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X873E0914871858E8">4.3-4 SubgroupoidWithRays</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7AEA9BF780CD6957">4.3-5 SubgroupoidByPieces</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X78C7A83980BAE937">4.3-6 PiecePositions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7FE8F09A7C8CEC5B">4.3-7 FullTrivialSubgroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7ACFBE7D855A82A3">4.3-8 DiscreteSubgroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A9F29BD7D64DCC1">4.3-9 SinglePieceSubgroupoidByGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X805FA9F687C7F2A7">4.3-10 SinglePieceGroupoidWithRays</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X831AA9E8780235F2">4.4 <span class="Heading">Left, right and double cosets</span></a>
 </span>
@@ -74,8 +78,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X795DEB3D825B2120">4.7 <span class="Heading">Groupoids whose objects form a monoid</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X805FA9F687C7F2A7">4.7-1 SinglePieceGroupoidWithRays</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7E399664868937C8">4.7-2 RightActionGroupoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X873729E279AACB67">4.7-1 GroupoidWithMonoidObjects</a></span>
 </div></div>
 </div>
 
@@ -89,7 +92,7 @@
 
 <p>A <em>groupoid</em> is a set of one or more single piece groupoids, its <em>pieces</em>, and is represented as <code class="code">IsGroupoidRep</code>, with attribute <code class="code">PiecesOfGroupoid</code>.</p>
 
-<p>The underlying digraph of a single piece groupoid is a regular, complete digraph on the object set <span class="SimpleMath">\(\Omega\)</span> with <span class="SimpleMath">\(|G|\)</span> arrows from any one object to any other object. It will be convenient to specify a set of <em>rays</em> consisting of <span class="SimpleMath">\(|\Omega|\)</span> arrows <span class="SimpleMath">\((r_i : o_1 \to o_i)\)</span>, where <span class="SimpleMath">\(o_1\)</span> is the root object and <span class="SimpleMath">\(r_1\)</span> is the identity in <span class="SimpleMath">\(G\)</span>. In the simplest examples all the <span class="SimpleMath">\(r_i\)</span> will be identity elements, but other rays are useful when forming subgroupoids (see <code class="func">SubgroupoidWithRays</code> (<a href="chap4_mj.html#X873E0914871858E8"><span class="RefLink">4.3-3</span></a>)).</p>
+<p>The underlying digraph of a single piece groupoid is a regular, complete digraph on the object set <span class="SimpleMath">\(\Omega\)</span> with <span class="SimpleMath">\(|G|\)</span> arrows from any one object to any other object. It will be convenient to specify a set of <em>rays</em> consisting of <span class="SimpleMath">\(|\Omega|\)</span> arrows <span class="SimpleMath">\((r_i : o_1 \to o_i)\)</span>, where <span class="SimpleMath">\(o_1\)</span> is the root object and <span class="SimpleMath">\(r_1\)</span> is the identity in <span class="SimpleMath">\(G\)</span>. In the simplest examples all the <span class="SimpleMath">\(r_i\)</span> will be identity elements, but other rays are useful when forming subgroupoids (see <code class="func">SubgroupoidWithRays</code> (<a href="chap4_mj.html#X873E0914871858E8"><span class="RefLink">4.3-4</span></a>)).</p>
 
 <p>A groupoid is <em>homogeneous</em> if it has two of more isomorphic pieces, with identical groups. The special case of <em>homogeneous, discrete</em> groupoids, where each piece has a single object, is given its own representation. These are used in the <strong class="pkg">XMod</strong> package as the source of a crossed modules of groupoids.</p>
 
@@ -214,7 +217,7 @@ single piece groupoid: &lt; c6, [ "a", "b", "c" ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q8 := QuaternionGroup( 8 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genq8 := GeneratorsOfGroup( q8 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := genq8[1];;  y := genq8[2];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gq8 := Groupoid( q8, [ -18, -17 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gq8 := Groupoid( q8, [ -19, -18, -17 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( q8, "q8" );  SetName( Gq8, "Gq8" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sl43 := SpecialLinearGroup( 4, 3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gsl43 := SinglePieceGroupoid( sl43, [-23,-22,-21] );;</span>
@@ -259,7 +262,7 @@ groupoid with 3 pieces:
 [ 300, 72, 6, 378 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U2 := Groupoid( [ Gf2, Gq8 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Size(Gf2), Size(Gq8), Size(U2) ];           </span>
-[ infinity, 32, infinity ]
+[ infinity, 72, infinity ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U5 := UnionOfPieces( [ U3, U2 ] );</span>
 groupoid with 5 pieces:
 [ Gf2, Gq8, Ga4, Gc6, Gd8 ]
@@ -267,7 +270,7 @@ groupoid with 5 pieces:
 groupoid with 3 pieces:
 [ Gq8, Ga4, Gc6 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectList( V3 );             </span>
-[ -18, -17, -15, -14, -13, -12, -11, -10 ]
+[ -19, -18, -17, -15, -14, -13, -12, -11, -10 ]
 
 </pre></div>
 
@@ -377,11 +380,14 @@ groupoid homomorphism :
 <h5>4.2-1 GroupoidElement</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidElement</code>( <var class="Arg">gpd</var>, <var class="Arg">elt</var>, <var class="Arg">tail</var>, <var class="Arg">head</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TailOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeadOfArrow</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidElement</code>( <var class="Arg">arrow</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>The operation <code class="code">GroupoidElement</code> is a synonym for the operation <code class="code">Arrow</code>, as described in subsection <a href="chap2_mj.html#X86247DFC8242CEBE"><span class="RefLink">2.1-3</span></a>. To recapitulate, an arrow <code class="code">e</code> consists of a group element, <code class="code">ElementOfArrow(e)</code>; the tail (source) object, <code class="code">TailOfArrow(e)</code>; and the head (target) object, <code class="code">HeadOfArrow(e)</code>. Arrows have a <em>partial composition</em>: two arrows may be multiplied when the head of the first coincides with the tail of the second. If an attempt is made to multiply arrows where this condition does not hold, then the value <code class="code">fail</code> is returned.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MWOofArrow</code>( <var class="Arg">arr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfArrow</code>( <var class="Arg">arr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TailOfArrow</code>( <var class="Arg">arr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeadOfArrow</code>( <var class="Arg">arr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidElement</code>( <var class="Arg">arr</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">GroupoidElement</code> is a synonym for the operation <code class="code">Arrow</code>, as described in subsection <a href="chap2_mj.html#X86247DFC8242CEBE"><span class="RefLink">2.1-3</span></a>. To recapitulate, an arrow <code class="code">e</code> has four components: the groupoid <code class="code">MWOofArrow(e)</code> to which it belongs; a group element, <code class="code">ElementOfArrow(e)</code>; the tail (source) object, <code class="code">TailOfArrow(e)</code>; and the head (target) object, <code class="code">HeadOfArrow(e)</code>. These four components may be accessed using <span class="SimpleMath">\(\{ e![i] ~|~ 1 \leqslant i \leqslant 4 \}\)</span>.</p>
+
+<p>Arrows have a <em>partial composition</em>: two arrows may be multiplied when the head of the first coincides with the tail of the second. If an attempt is made to multiply arrows where this condition does not hold, then the value <code class="code">fail</code> is returned.</p>
 
 
 <div class="example"><pre>
@@ -390,14 +396,20 @@ groupoid homomorphism :
 [(5,6,7,8) : -9 -&gt; -8]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2 := Arrow( Gd8, (5,7), -8, -7 );</span>
 [(5,7) : -8 -&gt; -7]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( [ ElementOfArrow(e1), TailOfArrow(e1), HeadOfArrow(e1) ], "\n" );</span>
-[ (5,6,7,8), -9, -8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ MWOofArrow( e1 ), ElementOfArrow( e1 ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     TailOfArrow( e1 ), HeadOfArrow( e1 ) ];</span>
+[ Gd8, (5,6,7,8), -9, -8 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ e1![1], e1![2], e1![3], e1![4] ];</span>
+[ Gd8, (5,6,7,8), -9, -8 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidElement( e1 );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1e2 := e1*e2;</span>
 [(5,6)(7,8) : -9 -&gt; -7]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoGroupoids, 1 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2*e1;</span>
+#I  head of the first arrow &lt;&gt; tail of the second
 fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoGroupoids, 0 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3 := Arrow( Gd8, (6,8), -7, -9 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">loop := e1e2*e3;</span>
 [(5,8,7,6) : -9 -&gt; -9]
@@ -488,6 +500,29 @@ fail
 
 </pre></div>
 
+<p><a id="X85B3283578D77C96" name="X85B3283578D77C96"></a></p>
+
+<h5>4.2-5 <span class="Heading">Groupoids with objects in common</span></h5>
+
+<p>Users are advised to select disjoint object sets when creating more than one groupoid. When groupoids <span class="SimpleMath">\(G_1, G_2\)</span> do have an object <span class="SimpleMath">\(o\)</span> in common, if <span class="SimpleMath">\(a_1 = (g_1 : o_1 \to o) \in G_1\)</span> and <span class="SimpleMath">\(a_2 = (g_2 : o \to o_2) \in G_2\)</span> then any attempt to compose <span class="SimpleMath">\(a_1 * a_2\)</span> will not succeed.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c5 := Group( (11,12,13,14,15) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gc5 := Groupoid( c5, [ -11, -10, -9] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3;</span>
+[(6,8) : -7 -&gt; -9]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e5 := Arrow( Gc5, (11,13,15,12,14), -9, -11 );</span>
+[(11,13,15,12,14) : -9 -&gt; -11]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoGroupoids, 1 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3 * e5;</span>
+#I  arrows not in the same groupoid or subgroupoid
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoGroupoids, 0 );; </span>
+
+</pre></div>
+
 <p><a id="X7BDBA72C852C4625" name="X7BDBA72C852C4625"></a></p>
 
 <h4>4.3 <span class="Heading">Subgroupoids</span></h4>
@@ -533,14 +568,27 @@ single piece groupoid: &lt; c3a, [ -14, -13, -12 ] &gt;
 
 </pre></div>
 
+<p><a id="X7C49AC70861F17C2" name="X7C49AC70861F17C2"></a></p>
+
+<h5>4.3-3 ParentList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParentList</code>( <var class="Arg">dwo</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>When <span class="SimpleMath">\(S\)</span> is constructed as a groupoid of <span class="SimpleMath">\(G\)</span> then <span class="SimpleMath">\(G\)</span> is assigned as the <code class="code">Parent</code> of <span class="SimpleMath">\(S\)</span>. The <code class="code">ParentList</code> of <span class="SimpleMath">\(S\)</span> is the concatenation of the parent list of <span class="SimpleMath">\(G\)</span> (or <span class="SimpleMath">\([~]\)</span> if none exists) and <span class="SimpleMath">\(G\)</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ParentList( Hc3a);</span>
+[ Ga4, Ha4 ]
+
+</pre></div>
+
 <p><a id="X873E0914871858E8" name="X873E0914871858E8"></a></p>
 
-<h5>4.3-3 SubgroupoidWithRays</h5>
+<h5>4.3-4 SubgroupoidWithRays</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgroupoidWithRays</code>( <var class="Arg">gpd</var>, <var class="Arg">sgp</var>, <var class="Arg">rays</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RaysOfGroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RayArrowsOfGroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>If groupoid <span class="SimpleMath">\(G\)</span> is of type <code class="code">IsDirectProductWithCompleteDigraph</code> with group <span class="SimpleMath">\(g\)</span> and <span class="SimpleMath">\(n\)</span> objects, then a typical wide subgroupoid <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> is formed by choosing a subgroup <span class="SimpleMath">\(h\)</span> of <span class="SimpleMath">\(g\)</span> to be the object group at the root object <span class="SimpleMath">\(q\)</span>, and an arrow <span class="SimpleMath">\(r : q \to p\)</span> for each of the objects <span class="SimpleMath">\(p\)</span>. The chosen loop arrow at <span class="SimpleMath">\(q\)</span> must be the identity arrow. These <span class="SimpleMath">\(n\)</span> arrows are called the <em>ray arrows</em> of the subgroupoid. The arrows in the homset from <span class="SimpleMath">\(p\)</span> to <span class="SimpleMath">\(p'\)</span> have the form <span class="SimpleMath">\(r^{-1}xr'\)</span> where <span class="SimpleMath">\(r,r'\)</span> are the rays from <span class="SimpleMath">\(q\)</span> to <span class="SimpleMath">\(p,p'\)</span> respectively, and <span class="SimpleMath">\(x \in h\)</span>.</p>
+<p>If groupoid <span class="SimpleMath">\(G\)</span> is of type <code class="code">IsDirectProductWithCompleteDigraph</code> with group <span class="SimpleMath">\(g\)</span> and <span class="SimpleMath">\(n\)</span> objects, then a typical wide subgroupoid <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> is formed by choosing a subgroup <span class="SimpleMath">\(h\)</span> of <span class="SimpleMath">\(g\)</span> to be the object group at the root object <span class="SimpleMath">\(q\)</span>, and an arrow <span class="SimpleMath">\((r : q \to p)\)</span> for each of the objects <span class="SimpleMath">\(p\)</span>. The chosen loop arrow at <span class="SimpleMath">\(q\)</span> must be the identity arrow. These <span class="SimpleMath">\(n\)</span> arrows are called the <em>ray arrows</em> of the subgroupoid. The arrows in the homset from <span class="SimpleMath">\(p\)</span> to <span class="SimpleMath">\(p'\)</span> have the form <span class="SimpleMath">\(r^{-1}xr'\)</span> where <span class="SimpleMath">\(r,r'\)</span> are the rays from <span class="SimpleMath">\(q\)</span> to <span class="SimpleMath">\(p,p'\)</span> respectively, and <span class="SimpleMath">\(x \in h\)</span>.</p>
 
 <p>The operation <code class="code">RayArrowsOfGroupoid</code> returns a list of arrows, one for each object, while the operation <code class="code">RaysOfGroupoid</code> returns the list of group elements in these arrows.</p>
 
@@ -558,11 +606,14 @@ single piece groupoid: &lt; c3a, [ -14, -13, -12 ] &gt;
 single piece groupoid with rays: &lt; k4, [ -15 .. -11 ], 
 [ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gk4, "Gk4" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RaysOfGroupoid( Gk4 );       </span>
-[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RayArrowsOfGroupoid( Ga4 );</span>
+[ [() : -15 -&gt; -15], [() : -15 -&gt; -14], [() : -15 -&gt; -13], [() : -15 -&gt; -12], 
+  [() : -15 -&gt; -11] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RayArrowsOfGroupoid( Gk4 );  </span>
 [ [() : -15 -&gt; -15], [(1,2,3) : -15 -&gt; -14], [(1,2,4) : -15 -&gt; -13],
   [(1,3,4) : -15 -&gt; -12], [(2,3,4) : -15 -&gt; -11] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RaysOfGroupoid( Gk4 );       </span>
+[ (), (1,2,3), (1,2,4), (1,3,4), (2,3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDirectProductWithCompleteDigraph( Gk4 );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectGroup( Gk4, -14 );</span>
@@ -576,7 +627,7 @@ single piece groupoid with rays: &lt; c2, [ -15 .. -11 ],
 
 <p><a id="X7AEA9BF780CD6957" name="X7AEA9BF780CD6957"></a></p>
 
-<h5>4.3-4 SubgroupoidByPieces</h5>
+<h5>4.3-5 SubgroupoidByPieces</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgroupoidByPieces</code>( <var class="Arg">gpd</var>, <var class="Arg">pieces</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The most general way to construct a subgroupoid is to use the operation <code class="code">SubgroupoidByPieces</code>. Its two parameters are a groupoid and a list of <em>pieces</em>, each piece being specified either as a list <code class="code">[sgp,obs]</code>, where <code class="code">sgp</code> is a subgroup of the root group in that piece, and <code class="code">obs</code> is a subset of the objects in that piece, or as a list <code class="code">[sgp,obs,rays]</code> when a set of rays is required. In the example both types of piece are used.</p>
@@ -602,18 +653,20 @@ groupoid with 2 pieces:
    root group: c3b = &lt;[ (1,2,4) ]&gt;
          rays: [ (), (1,4)(2,3) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ Parent( Jc3 ), IsWideSubgroupoid( Ha4, Jc3 ) ]; </span>
-[ Ga4, true ]
+[ Ha4, true ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pJc3 := Pieces( Jc3 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( pJc3[1], "Jc3a" );  SetName( pJc3[2], "Jc3b" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Jc3a := pJc3[1];;  SetName( Jc3a, "Jc3a" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Jc3b := pJc3[2];;  SetName( Jc3b, "Jc3b" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U2;</span>
 groupoid with 2 pieces:
 [ Gf2, Gq8 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genf2b := List( GeneratorsOfGroup(f2), g -&gt; g^2 );</span>
 [ f1^2, f2^2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2b := Subgroup( f2, genf2b );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( f2b, "f2b" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JU2 := SubgroupoidByPieces( U2, [ [f2b,[-20]], [q8,[-17]] ] );</span>
 groupoid with 2 pieces:
-1:  single piece groupoid: &lt; Group( [ f1^2, f2^2 ] ), [ -20 ] &gt;
+1:  single piece groupoid: &lt; f2b, [ -20 ] &gt;
 2:  single piece groupoid: &lt; q8, [ -17 ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsWideSubgroupoid(U2,JU2), IsSubgroupoid(Gf2,Groupoid(f2b,[-20])) ];</span>
 [ false, true ]
@@ -624,7 +677,7 @@ groupoid with 2 pieces:
 
 <p><a id="X78C7A83980BAE937" name="X78C7A83980BAE937"></a></p>
 
-<h5>4.3-5 PiecePositions</h5>
+<h5>4.3-6 PiecePositions</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PiecePositions</code>( <var class="Arg">gpd</var>, <var class="Arg">sgpd</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>When <span class="SimpleMath">\(G\)</span> is a groupoid with a number of pieces and <span class="SimpleMath">\(H\)</span> is a subgroupid of <span class="SimpleMath">\(G\)</span>, it is useful to know for each piece of <span class="SimpleMath">\(H\)</span> the piece of <span class="SimpleMath">\(G\)</span> of which it is a subgroupoid. The inclusion mapping of <span class="SimpleMath">\(H\)</span> in <span class="SimpleMath">\(G\)</span> will be described in subsection <code class="func">InclusionMappingGroupoids</code> (<a href="chap5_mj.html#X855DB6C8815CDCC3"><span class="RefLink">5.3-1</span></a>).</p>
@@ -655,7 +708,7 @@ groupoid homomorphism :
 
 <p><a id="X7FE8F09A7C8CEC5B" name="X7FE8F09A7C8CEC5B"></a></p>
 
-<h5>4.3-6 FullTrivialSubgroupoid</h5>
+<h5>4.3-7 FullTrivialSubgroupoid</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullTrivialSubgroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiscreteTrivialSubgroupoid</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -664,10 +717,12 @@ groupoid homomorphism :
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FullTrivialSubgroupoid( Jc3 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ic3 := FullTrivialSubgroupoid( Jc3 );</span>
 groupoid with 2 pieces:
 1:  single piece groupoid: &lt; id(c3a), [ -14 ] &gt;
 2:  single piece groupoid: &lt; id(c3b), [ -13, -12 ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ParentList( Ic3);              </span>
+[ Ga4, Ha4, Jc3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DiscreteTrivialSubgroupoid( Gd8 );</span>
 homogeneous, discrete groupoid: &lt; id(d8), [ -9, -8, -7 ] &gt;
 
@@ -675,7 +730,7 @@ homogeneous, discrete groupoid: &lt; id(d8), [ -9, -8, -7 ] &gt;
 
 <p><a id="X7ACFBE7D855A82A3" name="X7ACFBE7D855A82A3"></a></p>
 
-<h5>4.3-7 DiscreteSubgroupoid</h5>
+<h5>4.3-8 DiscreteSubgroupoid</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiscreteSubgroupoid</code>( <var class="Arg">gpd</var>, <var class="Arg">sgps</var>, <var class="Arg">obs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomogeneousDiscreteSubgroupoid</code>( <var class="Arg">gpd</var>, <var class="Arg">gp</var>, <var class="Arg">obs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
@@ -707,7 +762,7 @@ groupoid with 3 pieces:
 
 <p><a id="X7A9F29BD7D64DCC1" name="X7A9F29BD7D64DCC1"></a></p>
 
-<h5>4.3-8 SinglePieceSubgroupoidByGenerators</h5>
+<h5>4.3-9 SinglePieceSubgroupoidByGenerators</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceSubgroupoidByGenerators</code>( <var class="Arg">parent</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>A set of arrows generates a groupoid by taking all possible products and inverses. So far, the only implementation is for the case of loops generating a group at an object <span class="SimpleMath">\(o\)</span> together with a set of rays from <span class="SimpleMath">\(o\)</span>, where <span class="SimpleMath">\(o\)</span> is <em>not</em> the least object. A suitably large supergroupoid, which must be a direct product with a complete digraph, should be provided. This is the case needed for <code class="code">ConjugateGroupoid</code> in section <a href="chap4_mj.html#X78218F357BFEDE82"><span class="RefLink">4.5-2</span></a>. Other cases will be added as time permits.</p>
@@ -720,7 +775,27 @@ groupoid with 3 pieces:
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a3 := Arrow( Gk4, (2,3,4), -15, -11 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SinglePieceSubgroupoidByGenerators( Gk4, [a1,a2,a3] );</span>
 single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
- [ (), (1,3,2), (2,3,4) ] &gt;
+[ (), (1,3,2), (2,3,4) ] &gt;
+
+</pre></div>
+
+<p><a id="X805FA9F687C7F2A7" name="X805FA9F687C7F2A7"></a></p>
+
+<h5>4.3-10 SinglePieceGroupoidWithRays</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceGroupoidWithRays</code>( <var class="Arg">gp</var>, <var class="Arg">obs</var>, <var class="Arg">rays</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>A more general way of constructing a groupoid is to specify a group, a set of objects, and a set of rays. The rays must be composable with the elements of the group.</p>
+
+<p>This construction is used in the <strong class="pkg">XMod</strong> package to construct the group-groupoid which corresponds to a crossed module or cat<span class="SimpleMath">\(^2\)</span>-group.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G3 := SinglePieceGroupoidWithRays( k4, [-15,-13,-11], [(),(1,2,4),(2,3,4)] );</span>
+single piece groupoid with rays: &lt; k4, [ -15, -13, -11 ], 
+[ (), (1,2,4), (2,3,4) ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubgroupoid( Gk4, G3 );</span>
+true
 
 </pre></div>
 
@@ -755,10 +830,10 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e4 := Arrow( Jc3, (2,4,3), -13, -12 );;;                            </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">re4 := RightCoset( Ha4, Jc3, e4 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e6 := Arrow( Ha4, (2,4,3), -13, -12 );;;                            </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">re6 := RightCoset( Ha4, Jc3, e6 );</span>
 &lt;right coset of Jc3b with representative [(2,4,3) : -13 -&gt; -12]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( re4, Display );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( re6, Display );</span>
 [(2,4,3) : -13 -&gt; -12]
 [(1,3,4) : -12 -&gt; -12]
 [(1,3,2) : -13 -&gt; -12]
@@ -775,9 +850,9 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  
   [(1,2)(3,4) : -12 -&gt; -12], [(1,3)(2,4) : -12 -&gt; -12], 
   [(1,4)(2,3) : -12 -&gt; -12], [() : -13 -&gt; -14], [(1,2)(3,4) : -13 -&gt; -14], 
   [(1,3)(2,4) : -13 -&gt; -14], [(1,4)(2,3) : -13 -&gt; -14] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">le4 := LeftCoset( Ha4, Jc3, e4 ); </span>
-&lt;left coset of Jc3b with representative [(1,4,2) : -13 -&gt; -13]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( le4, Display );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">le6 := LeftCoset( Ha4, Jc3, e6 ); </span>
+&lt;left coset of Jc3b with representative [(2,4,3) : -13 -&gt; -12]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( le6, Display );</span>
 [(1,4,2) : -13 -&gt; -13]
 [(2,4,3) : -13 -&gt; -12]
 [() : -13 -&gt; -13]
@@ -798,13 +873,9 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  
 [ [() : -12 -&gt; -14], [(1,2)(3,4) : -12 -&gt; -14], [(1,3)(2,4) : -12 -&gt; -14], 
   [(1,4)(2,3) : -12 -&gt; -14], [() : -12 -&gt; -12], [(1,2)(3,4) : -12 -&gt; -12], 
   [(1,3)(2,4) : -12 -&gt; -12], [(1,4)(2,3) : -12 -&gt; -12] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">de4 := DoubleCoset( Ha4, Jc3, Jc3, e4 );</span>
-&lt;double coset of [ Jc3b, Jc3b ] with representative [(1,4,2) : -13 -&gt; -13]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( de4, Display );</span>
-[() : -13 -&gt; -13]
-[(1,4)(2,3) : -13 -&gt; -12]
-[(1,4)(2,3) : -12 -&gt; -13]
-[() : -12 -&gt; -12]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">de6 := DoubleCoset( Ha4, Jc3, Jc3, e6 );</span>
+&lt;double coset of [ Jc3b, Jc3b ] with representative [(2,4,3) : -13 -&gt; -12]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Perform( de6, Display );</span>
 [(1,4,2) : -13 -&gt; -13]
 [(2,4,3) : -13 -&gt; -12]
 [(1,2,3) : -12 -&gt; -13]
@@ -813,6 +884,10 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  
 [(1,3,2) : -13 -&gt; -12]
 [(2,3,4) : -12 -&gt; -13]
 [(1,4,3) : -12 -&gt; -12]
+[() : -13 -&gt; -13]
+[(1,4)(2,3) : -13 -&gt; -12]
+[(1,4)(2,3) : -12 -&gt; -13]
+[() : -12 -&gt; -12]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dcra4 := DoubleCosetRepresentatives( Ha4, Jc3, Jc3 );</span>
 [ [() : -14 -&gt; -14], [(1,2)(3,4) : -14 -&gt; -14], [() : -14 -&gt; -13], 
   [(1,2)(3,4) : -14 -&gt; -13], [() : -13 -&gt; -14], [(1,2)(3,4) : -13 -&gt; -14], 
@@ -919,7 +994,7 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a5 := Arrow( Ga4, (1,2,3), -13, -12 ); </span>
 [(1,2,3) : -13 -&gt; -12]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConjugateGroupoid( Gk4, a5 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConjugateGroupoid( Ga4, Gk4, a5 );</span>
 single piece groupoid with rays: &lt; Group( [ (1,2)(3,4), (1,3)(2,4) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2,3), (1,2)(3,4), (1,3)(2,4), (2,3,4) ] &gt;
 
@@ -1003,33 +1078,30 @@ single piece groupoid with rays: &lt; Group( [ (1,2)(3,4), (1,3)(2,4) ] ),
 
 <p>Let <span class="SimpleMath">\(M\)</span> be a monoid with <span class="SimpleMath">\(G\)</span> its maximal subgroup. We may form a groupoid with the elements of <span class="SimpleMath">\(M\)</span> as its objects and with arrows <span class="SimpleMath">\(t \to t*g\)</span> for all <span class="SimpleMath">\(t \in M\)</span> and <span class="SimpleMath">\(g \in G\)</span>.</p>
 
-<p>This construction is used in the <strong class="pkg">XMod</strong> package to construct the group-groupoid which corresponds to a crossed module or cat<span class="SimpleMath">\(^2\)</span>-group.</p>
+<p><a id="X873729E279AACB67" name="X873729E279AACB67"></a></p>
 
-<p><a id="X805FA9F687C7F2A7" name="X805FA9F687C7F2A7"></a></p>
+<h5>4.7-1 GroupoidWithMonoidObjects</h5>
 
-<h5>4.7-1 SinglePieceGroupoidWithRays</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePieceGroupoidWithRays</code>( <var class="Arg">gp</var>, <var class="Arg">obs</var>, <var class="Arg">rays</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupoidWithMonoidObjects</code>( <var class="Arg">gp</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>When <span class="SimpleMath">\(M\)</span> is a group, <span class="SimpleMath">\(G=M\)</span> and the groupoid so constructed is a single piece which represents the regular representation of <span class="SimpleMath">\(G\)</span>. The ray from <span class="SimpleMath">\(1\)</span> to <span class="SimpleMath">\(g\)</span> is just <span class="SimpleMath">\(g\)</span> since <span class="SimpleMath">\(1*g=g\)</span>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d8 := Group( (5,6,7,8), (5,7) );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d8 := Group( (5,6,7,8), (5,7) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( d8, "d8" );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ed8 := Elements( d8 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rd8 := SinglePieceGroupoidWithRays( d8, ed8, ed8 );</span>
-single piece groupoid with rays: &lt; Group( [ (5,6,7,8), (5,7) ] ), 
-[ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), (5,7)(6,8), (5,8,7,6), (5,8)(6,7) 
- ], [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), (5,7)(6,8), (5,8,7,6), 
-  (5,8)(6,7) ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rd8 := GroupoidWithMonoidObjects( d8 );</span>
+single piece groupoid: &lt; d8, [ (), (6,8), (5,6)(7,8), (5,6,7,8), (5,7), 
+  (5,7)(6,8), (5,8,7,6), (5,8)(6,7) ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homset( Rd8, (6,8), (5,7) );</span>
-&lt;homset (6,8) -&gt; (5,7) with head group Group( [ (5,8,7,6), (5,7) ] )&gt;
+&lt;homset (6,8) -&gt; (5,7) with head group d8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( last ); </span>
-&lt;homset (6,8) -&gt; (5,7) with elements:
-[(5,7)(6,8) : (6,8) -&gt; (5,7)]
-[(5,7) : (6,8) -&gt; (5,7)]
+homset (6,8) -&gt; (5,7) with elements:
 [() : (6,8) -&gt; (5,7)]
 [(6,8) : (6,8) -&gt; (5,7)]
+[(5,7)(6,8) : (6,8) -&gt; (5,7)]
+[(5,7) : (6,8) -&gt; (5,7)]
 [(5,8,7,6) : (6,8) -&gt; (5,7)]
 [(5,8)(6,7) : (6,8) -&gt; (5,7)]
 [(5,6,7,8) : (6,8) -&gt; (5,7)]
@@ -1037,56 +1109,42 @@ single piece groupoid with rays: &lt; Group( [ (5,6,7,8), (5,7) ] ),
 
 </pre></div>
 
-<p><a id="X7E399664868937C8" name="X7E399664868937C8"></a></p>
+<p>When <span class="SimpleMath">\(M\)</span> is a monoid, rather than a group, this construction produces several components. One of these has as objects the elements of the group <span class="SimpleMath">\(G\)</span> of the monoid.</p>
 
-<h5>4.7-2 RightActionGroupoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightActionGroupoid</code>( <var class="Arg">mon</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupoidWithMonoidObjects</code>( <var class="Arg">gpd</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>When <span class="SimpleMath">\(M\)</span> is a monoid, rather than a group, this construction produces several components. One of these has as objects the elements of the group <span class="SimpleMath">\(G\)</span>.</p>
-
-<p>When <span class="SimpleMath">\(M\)</span> <em>is</em> a group, this operation gives the same result as <code class="code">SinglePieceGroupoidWithRays</code>.</p>
-
-<p>As a simple example we take a monoid <span class="SimpleMath">\(M\)</span> of size <span class="SimpleMath">\(13\)</span> generated by <span class="SimpleMath">\(2\)</span> transformations of degree <span class="SimpleMath">\(4\)</span>. The groupoid has <span class="SimpleMath">\(8\)</span> components, of which <span class="SimpleMath">\(3\)</span> have a single object and group <span class="SimpleMath">\(C_2\)</span> generated by <code class="code">Transformation([1,2,4,3])</code>, while <span class="SimpleMath">\(5\)</span> have two objects and trivial group.</p>
+<p>As a simple example we take a monoid <span class="SimpleMath">\(M\)</span> of size <span class="SimpleMath">\(13\)</span> generated by <span class="SimpleMath">\(2\)</span> transformations of degree <span class="SimpleMath">\(4\)</span>. The groupoid has <span class="SimpleMath">\(8\)</span> components, of which <span class="SimpleMath">\(3\)</span> (the first, second and fourth) have a single object and group <span class="SimpleMath">\(C_2\)</span> generated by <code class="code">Transformation([1,2,4,3])</code>, while <span class="SimpleMath">\(5\)</span> have two objects and trivial group.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := Monoid( Transformation( [1,1,2,3] ), Transformation( [1,2,4,3] ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M13 := Monoid( Transformation( [1,1,2,3] ), Transformation( [1,2,4,3] ) );</span>
 &lt;transformation monoid of degree 4 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rag := RightActionGroupoid( M );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( M13 );</span>
+13
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( M13, "M13" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gpd13 := GroupoidWithMonoidObjects( M13 );</span>
 groupoid with 8 pieces:
-1:  single piece groupoid with rays: &lt; Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 1, 1 ] ) ], [ IdentityTransformation ] &gt;
-2:  single piece groupoid with rays: &lt; Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 1, 2 ] ) ], [ IdentityTransformation ] &gt;
-3:  single piece groupoid with rays: &lt; Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ) ], 
+1:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 1, 1 ] ) ] &gt;
+2:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 1, 2 ] ) ] &gt;
+3:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 1, 3 ] ), 
+  Transformation( [ 1, 1, 1 ] ) ] &gt;
+4:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 2, 1 ] ) ] &gt;
+5:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 2, 3 ] ), 
+  Transformation( [ 1, 1, 2 ] ) ] &gt;
+6:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 3, 1 ] ), 
+  Transformation( [ 1, 1, 4, 1 ] ) ] &gt;
+7:  single piece groupoid: &lt; gp(M13), [ Transformation( [ 1, 1, 3, 2 ] ), 
+  Transformation( [ 1, 1, 4, 2 ] ) ] &gt;
+8:  single piece groupoid: &lt; gp(M13), 
 [ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] &gt;
-4:  single piece groupoid with rays: &lt; Group( 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] ), 
-[ Transformation( [ 1, 1, 2, 1 ] ) ], [ IdentityTransformation ] &gt;
-5:  single piece groupoid with rays: &lt; Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 1, 1, 2 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] &gt;
-6:  single piece groupoid with rays: &lt; Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] &gt;
-7:  single piece groupoid with rays: &lt; Group( [ IdentityTransformation ] ), 
-[ Transformation( [ 1, 1, 3, 2 ] ), Transformation( [ 1, 1, 4, 2 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] &gt;
-8:  single piece groupoid with rays: &lt; Group( [ IdentityTransformation ] ), 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ], 
-[ IdentityTransformation, Transformation( [ 1, 2, 4, 3 ] ) ] &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidWithMonoidObjects( rag );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupoidWithMonoidObjects( gpd13 );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">orag := ObjectList( rag );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hs := Homset( rag, orag[3], orag[4] );;  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">obs13 := ObjectList( gpd13 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hs := Homset( gpd13, obs13[3], obs13[4] );;  </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( hs );                  </span>
-&lt;homset Transformation( [ 1, 1, 1, 3 ] ) -&gt; Transformation( [ 1, 1, 1 ] )
+homset Transformation( [ 1, 1, 1, 3 ] ) -&gt; Transformation( [ 1, 1, 1 ] )
   with elements:
+[IdentityTransformation : Transformation( [ 1, 1, 1, 3 ] ) -&gt; 
+Transformation( [ 1, 1, 1 ] )]
 [Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -&gt; 
 Transformation( [ 1, 1, 1 ] )]
 

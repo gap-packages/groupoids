@@ -78,13 +78,13 @@
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V1 := [ 5, 6 ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg1 := FreeGroup( "y" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V1 := [7,8];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg1 := FreeGroup("y");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := fg1.1;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A1 := [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A1 := [ [y,7,8], [y^-1,8,7]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1 := FpWeightedDigraph( fg1, V1, A1 );</span>
-weighted digraph with vertices: [ 5, 6 ]
-and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+weighted digraph with vertices: [ 7, 8 ]
+and arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv1 := InvolutoryArcs( D1 );</span>
 [ 2, 1 ]
 
@@ -95,15 +95,15 @@ and arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg3 := FreeGroup( 3, "z" );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z1 := fg3.1;;  z2 := fg3.2;;  z3 := fg3.3;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ob3 := [ 7, 8, 9 ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A3 := [[z1,7,8],[z2,8,9],[z3,9,7],[z1^-1,8,7],[z2^-1,9,8],[z3^-1,7,9]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg3 := FreeGroup(3,"z");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z1:=fg3.1;; z2:=fg3.2;; z3:=fg3.3;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ob3 := [11,12,13];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A3 := [[z1,11,12],[z2,12,13],[z3,13,11],[z1^-1,12,11],[z2^-1,13,12],[z3^-1,11,13]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D3 := FpWeightedDigraph( fg3, ob3, A3 );</span>
-weighted digraph with vertices: [ 7, 8, 9 ]
-and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
-  [ z2^-1, 9, 8 ], [ z3^-1, 7, 9 ] ]
-[gap&gt; inob3 := InvolutoryArcs( D3 );
+weighted digraph with vertices: [ 11, 12, 13 ]
+and arcs: [ [ z1, 11, 12 ], [ z2, 12, 13 ], [ z3, 13, 11 ], [ z1^-1, 12, 11 ],
+  [ z2^-1, 13, 12 ], [ z3^-1, 11, 13 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inob3 := InvolutoryArcs( D3 );</span>
 [ 4, 5, 6, 1, 2, 3 ]
 
 </pre></div>
@@ -182,9 +182,9 @@ and arcs: [ [ z1, 7, 8 ], [ z2, 8, 9 ], [ z3, 9, 7 ], [ z1^-1, 8, 7 ],
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G1 := GraphOfGroups( D1, [fa,fb], [homy,homybar] );</span>
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( G1 );</span>
-Graph of Groups with :-
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+Graph of Groups with :- 
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ fa, fb ]
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphOfGroups( G1 );</span>
@@ -258,13 +258,13 @@ true
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gw1 := GraphOfGroupsWord( G1, 5, L1 );</span>
-(5)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gw1 := GraphOfGroupsWord( G1, 7, L1 );</span>
+(7)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphOfGroupsWord( gw1 );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ TailOfGraphOfGroupsWord(gw1), HeadOfGraphOfGroupsWord(gw1) ];</span>
-[ 5, 5 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsOfWord(gw1);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ TailOfGraphOfGroupsWord( gw1 ), HeadOfGraphOfGroupsWord( gw1 ) ];</span>
+[ 7, 7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGroupsOfWord( gw1 );</span>
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WordOfGraphOfGroupsWord( gw1 );</span>
 [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
@@ -293,7 +293,7 @@ a^{-1}b^{-1}a^{10}.
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nw1 := ReducedGraphOfGroupsWord( gw1 );</span>
-(5)a^-1.y.b^-1.y^-1.a^10(5)
+(7)a^-1.y.b^-1.y^-1.a^10(7)
 
 </pre></div>
 
@@ -305,7 +305,7 @@ a^{-1}b^{-1}a^{10}.
 
 <h5>7.4-1 FreeProductWithAmalgamation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProductWithAmalgamation</code>( <var class="Arg">gp1</var>, <var class="Arg">gp2</var>, <var class="Arg">iso</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProductWithAmalgamation</code>( <var class="Arg">gp1</var>, <var class="Arg">gp2</var>, <var class="Arg">iso</var>, <var class="Arg">verts</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProductWithAmalgamationInfo</code>( <var class="Arg">fpa</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeProductWithAmalgamation</code>( <var class="Arg">fpa</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphOfGroupsRewritingSystem</code>( <var class="Arg">fpa</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -321,34 +321,34 @@ a^{-1}b^{-1}a^{10}.
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## set up the first group s3 and a subgroup c3=&lt;a1&gt;</span>
+## set up the first group s3 and a subgroup c3=&lt;a1&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg2 := FreeGroup( 2, "a" );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel1 := [ fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel1 := [fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s3 := fg2/rel1;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gs3 := GeneratorsOfGroup(s3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( s3, "s3" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a1 := gs3[1];;  a2 := gs3[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName(s3,"s3");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a1:=gs3[1];;  a2:=gs3[2];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H1 := Subgroup(s3,[a1]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## then the second group a4 and subgroup c3=&lt;b1&gt;</span>
+## then the second group a4 and subgroup c3=&lt;b1&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := FreeGroup( 2, "b" );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel2 := [ f2.1^3, f2.2^3, (f2.1*f2.2)^2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rel2 := [f2.1^3, f2.2^3, (f2.1*f2.2)^2];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a4 := f2/rel2;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ga4 := GeneratorsOfGroup(a4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( a4, "a4" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b1 := ga4[1];  b2 := ga4[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName(a4,"a4");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b1 := ga4[1];;  b2:=ga4[2];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H2 := Subgroup(a4,[b1]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## form the isomorphism and the fpa group</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := GroupHomomorphismByImages(H1,H2,[a1],[b1]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(iso);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fpa := FreeProductWithAmalgamation( s3, a4, iso );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fpa := FreeProductWithAmalgamation( s3, a4, iso, [7,8] );</span>
 &lt;fp group on the generators [ f1, f2, f3, f4 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup( fpa );</span>
 [ f1^2, f2^3, (f2*f1)^2, f3^3, f4^3, (f4*f3)^2, f2*f3^-1 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gg1 := GraphOfGroupsRewritingSystem( fpa );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( gg1 );</span>
 Graph of Groups with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
       groups: [ s3, a4 ]
 isomorphisms: [ [ [ a1 ], [ b1 ] ], [ [ b1 ], [ a1 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftTransversalsOfGraphOfGroups( gg1 );</span>
@@ -374,11 +374,11 @@ f2*f3*(f4^-1*f2)^2*f4^-1*f3
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fpainfo;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fpainfo := FreeProductWithAmalgamationInfo( fpa );</span>
 rec( embeddings := [ [ a2, a1 ] -&gt; [ f1, f2 ], [ b1, b2 ] -&gt; [ f3, f4 ] ], 
   groups := [ s3, a4 ], isomorphism := [ a1 ] -&gt; [ b1 ], 
   positions := [ [ 1, 2 ], [ 3, 4 ] ], 
-  subgroups := [ Group([ a1 ]), Group([ b1 ]) ] )
+  subgroups := [ Group([ a1 ]), Group([ b1 ]) ], vertices := [ 7, 8 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">emb2 := Embedding( fpa, 2 );</span>
 [ b1, b2 ] -&gt; [ f3, f4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( emb2, b1^b2 );       </span>
@@ -392,7 +392,7 @@ f4*f3^-1
 
 <h5>7.4-3 HnnExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HnnExtension</code>( <var class="Arg">gp</var>, <var class="Arg">iso</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HnnExtension</code>( <var class="Arg">gp</var>, <var class="Arg">iso</var>, <var class="Arg">verts</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HnnExtensionInfo</code>( <var class="Arg">gp</var>, <var class="Arg">iso</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHnnExtension</code>( <var class="Arg">hnn</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>For <em>HNN extensions</em>, the appropriate graph of groups has underlying digraph with just one vertex and one pair of loops, weighted with <code class="code">FpGroup</code> generators <span class="SimpleMath">\(z,z^{-1}\)</span>. There is one vertex group <code class="code">G</code>, two isomorphic subgroups <code class="code">H1,H2</code> of <code class="code">G</code>, with the isomorphism and its inverse on the loops. The presentation of the extension has one more generator than that of <code class="code">G</code> and corresponds to the generator <span class="SimpleMath">\(z\)</span>.</p>
@@ -406,8 +406,8 @@ f4*f3^-1
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H3 := Subgroup(a4,[b2]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hnn := HnnExtension( a4, i23 );</span>
-&lt;fp group on the generators [ fe1, fe2, fe3 ]&gt; 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hnn := HnnExtension( a4, i23, [9] );</span>
+&lt;fp group of size infinity on the generators [ fe1, fe2, fe3 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phnn := PresentationFpGroup( hnn );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TzPrint( phnn );</span>
 #I  generators: [ fe1, fe2, fe3 ]
@@ -415,11 +415,11 @@ f4*f3^-1
 #I  1.  3  [ 1, 1, 1 ]
 #I  2.  3  [ 2, 2, 2 ]
 #I  3.  4  [ 1, 2, 1, 2 ]
-#I  4.  4  [ -3, 1, 3, -2 ] 
+#I  4.  4  [ -3, 1, 3, -2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gg2 := GraphOfGroupsRewritingSystem( hnn );</span>
 Graph of Groups: 1 vertices; 2 arcs; groups [ a4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftTransversalsOfGraphOfGroups( gg2 );</span>
-[ [ &lt;identity ...&gt;, b2^-1, b1^-1*b2^-1, b1*b2^-1 ],
+[ [ &lt;identity ...&gt;, b2^-1, b1^-1*b2^-1, b1*b2^-1 ], 
   [ &lt;identity ...&gt;, b1^-1, b1, b2^-1*b1 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gh := GeneratorsOfGroup( hnn );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];</span>
@@ -437,7 +437,7 @@ fe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hnninfo := HnnExtensionInfo( hnn );</span>
 rec( embeddings := [ [ b1, b2 ] -&gt; [ fe1, fe2 ] ], group := a4, 
   isomorphism := [ b1 ] -&gt; [ b2 ], 
-  subgroups := [ Group([ b1 ]), Group([ b2 ]) ] )
+  subgroups := [ Group([ b1 ]), Group([ b2 ]) ], vertices := [ 9 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">emb := Embedding( hnn, 1 );</span>
 [ b1, b2 ] -&gt; [ fe1, fe2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( emb, b1^b2 );       </span>
@@ -472,51 +472,51 @@ fe2*fe1^-1
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfa := SinglePieceGroupoid( fa, [-2,-1] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfa := SinglePieceGroupoid( fa, [-4,-3] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ofa := One( fa );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gfa, "Gfa" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhy := Subgroupoid( Gfa, [ [ hy, [-2,-1] ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhy := Subgroupoid( Gfa, [ [ hy, [-4,-3] ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Uhy, "Uhy" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfb := SinglePieceGroupoid( fb, [-4,-3] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Gfb := SinglePieceGroupoid( fb, [-6,-5] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ofb := One( fb );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Gfb, "Gfb" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhybar := Subgroupoid( Gfb, [ [ hybar, [-4,-3] ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Uhybar := Subgroupoid( Gfb, [ [ hybar, [-6,-5] ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Uhybar, "Uhybar" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroupoid( Uhy );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gensbar := GeneratorsOfGroupoid( Uhybar );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mory := GroupoidHomomorphismFromSinglePiece( </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">               Uhy, Uhybar, gens, gensbar );</span>
 groupoid homomorphism : Uhy -&gt; Uhybar
-[ [ [a^3 : -2 -&gt; -2], [&lt;identity ...&gt; : -2 -&gt; -1] ], 
-  [ [b^2 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ] ]
+[ [ [a^3 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ], 
+  [ [b^2 : -6 -&gt; -6], [&lt;identity ...&gt; : -6 -&gt; -5] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">morybar := InverseGeneralMapping( mory );</span>
 groupoid homomorphism : Uhybar -&gt; Uhy
-[ [ [b^2 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ], 
-  [ [a^3 : -2 -&gt; -2], [&lt;identity ...&gt; : -2 -&gt; -1] ] ]
+[ [ [b^2 : -6 -&gt; -6], [&lt;identity ...&gt; : -6 -&gt; -5] ], 
+  [ [a^3 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gg3 := GraphOfGroupoids( D1, [Gfa,Gfb], [Uhy,Uhybar], [mory,morybar] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( gg3 );</span>
 Graph of Groupoids with :- 
-    vertices: [ 5, 6 ]
-        arcs: [ [ y, 5, 6 ], [ y^-1, 6, 5 ] ]
+    vertices: [ 7, 8 ]
+        arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
    groupoids: 
 fp single piece groupoid: Gfa
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: fa = &lt;[ a ]&gt;
 fp single piece groupoid: Gfb
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: fb = &lt;[ b ]&gt;
 subgroupoids: single piece groupoid: Uhy
-  objects: [ -2, -1 ]
+  objects: [ -4, -3 ]
     group: hy = &lt;[ a^3 ]&gt;
 single piece groupoid: Uhybar
-  objects: [ -4, -3 ]
+  objects: [ -6, -5 ]
     group: hybar = &lt;[ b^2 ]&gt;
 isomorphisms: [ groupoid homomorphism : Uhy -&gt; Uhybar
-    [ [ [a^3 : -2 -&gt; -2], [&lt;identity ...&gt; : -2 -&gt; -1] ], 
-      [ [b^2 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ] ], 
+    [ [ [a^3 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ], 
+      [ [b^2 : -6 -&gt; -6], [&lt;identity ...&gt; : -6 -&gt; -5] ] ], 
   groupoid homomorphism : Uhybar -&gt; Uhy
-    [ [ [b^2 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ], 
-      [ [a^3 : -2 -&gt; -2], [&lt;identity ...&gt; : -2 -&gt; -1] ] ] ]
+    [ [ [b^2 : -6 -&gt; -6], [&lt;identity ...&gt; : -6 -&gt; -5] ], 
+      [ [a^3 : -4 -&gt; -4], [&lt;identity ...&gt; : -4 -&gt; -3] ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphOfGroupoids( gg3 );</span>
 true
 
@@ -544,19 +544,19 @@ true
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := Arrow( Gfa, a^7, -1, -2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := Arrow( Gfb, b^-6, -4, -4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f3 := Arrow( Gfa, a^-11, -2, -1 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f4 := Arrow( Gfb, b^9, -3, -4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f5 := Arrow( Gfa, a^7, -2, -2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := Arrow( Gfa, a^7, -3, -4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := Arrow( Gfb, b^-6, -6, -6 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f3 := Arrow( Gfa, a^-11, -4, -3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f4 := Arrow( Gfb, b^9, -5, -6 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f5 := Arrow( Gfa, a^7, -4, -3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L3 := [ f1, 1, f2, 2, f3, 1, f4, 2, f5 ];</span>
-[ [a^7 : -1 -&gt; -2], 1, [b^-6 : -4 -&gt; -4], 2, [a^-11 : -2 -&gt; -1], 1, 
-  [b^9 : -3 -&gt; -4], 2, [a^7 : -2 -&gt; -2] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gw3 := GraphOfGroupoidsWord( gg3, 5, L3);</span>
-(5)[a^7 : -1 -&gt; -2].y.[b^-6 : -4 -&gt; -4].y^-1.[a^-11 : -2 -&gt; -1].y.[b^9 : 
--3 -&gt; -4].y^-1.[a^7 : -2 -&gt; -2](5)
+[ [a^7 : -3 -&gt; -4], 1, [b^-6 : -6 -&gt; -6], 2, [a^-11 : -4 -&gt; -3], 1, 
+  [b^9 : -5 -&gt; -6], 2, [a^7 : -4 -&gt; -3] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gw3 := GraphOfGroupoidsWord( gg3, 7, L3);</span>
+(7)[a^7 : -3 -&gt; -4].y.[b^-6 : -6 -&gt; -6].y^-1.[a^-11 : -4 -&gt; -3].y.[b^9 : 
+-5 -&gt; -6].y^-1.[a^7 : -4 -&gt; -3](7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nw3 := ReducedGraphOfGroupoidsWord( gw3 );</span>
-(5)[a^-1 : -1 -&gt; -1].y.[b^-1 : -3 -&gt; -3].y^-1.[a^10 : -1 -&gt; -2](5)
+(7)[a^-1 : -3 -&gt; -3].y.[b^-1 : -5 -&gt; -6].y^-1.[a^10 : -4 -&gt; -3](7)
 
 </pre></div>
 
@@ -564,26 +564,29 @@ true
 
 
 <ul>
-<li><p><span class="SimpleMath">\( [a^7 : -1 \to -2] = [a^{-2} : -1 \to -1]*[a^9 : -1 \to -2] \stackrel{y}{\to} [a^{-2} : -1 \to -1]*[b^6 : -3 \to -4] \)</span></p>
+<li><p><span class="SimpleMath">\( [a^7 : -3 \to -4] = [a^{-2} : -3 \to -4]*[a^9 : -4 \to -4] \stackrel{y}{\to} [a^{-2} : -3 \to -4]*[b^6 : -6 \to -6] \)</span></p>
 
 </li>
-<li><p><span class="SimpleMath">\( [b^6 : -3 \to -4]*[b^{-6} : -4 \to -4] = [\mathrm{id} : -3 \to -4] \stackrel{\bar{y}}{\to} [\mathrm{id} : -1 \to -2] \)</span></p>
+<li><p><span class="SimpleMath">\( [b^6 : -6 \to -6]*[b^{-6} : -6 \to -6] = [\mathrm{id} : -6 \to -6] \stackrel{\bar{y}}{\to} [\mathrm{id} : -4 \to -4] \)</span></p>
 
 </li>
-<li><p><span class="SimpleMath">\( [a^{-2} : -1 \to -1]*[\mathrm{id} : -1 \to -2]*[a^{-11} : -2 \to -1] = [a^{-13} : -1 \to -1] \)</span></p>
+<li><p><span class="SimpleMath">\( [a^{-2} : -3 \to -4]*[\mathrm{id} : -4 \to -4]*[a^{-11} : -4 \to -3] = [a^{-13} : -3 \to -3] \)</span></p>
 
 </li>
-<li><p><span class="SimpleMath">\( [a^{-13} : -1 \to -1] = [a^{-1} : -1 \to -1]*[a^{-12} : -1 \to -1] \stackrel{y}{\to} [a^{-1} : -1 \to -1]*[b^{-8} : -3 \to -3] \)</span></p>
+<li><p><span class="SimpleMath">\( [a^{-13} : -3 \to -3] = [a^{-1} : -3 \to -3]*[a^{-12} : -3 \to -3] \stackrel{y}{\to} [a^{-1} : -3 \to -3]*[b^{-8} : -5 \to -5] \)</span></p>
 
 </li>
-<li><p><span class="SimpleMath">\( [b^{-8} : -3 \to -3]*[b^9 : -3 \to -4] = [b^{-1} : -3 \to -3]*[b^2 : -3 \to -4] \stackrel{\bar{y}}{\to} [b^{-1} : -3 \to -3]*[a^3 : -1 \to -2] \)</span></p>
+<li><p><span class="SimpleMath">\( [b^{-8} : -5 \to -5]*[b^9 : -5 \to -6] = [b^{-1} : -5 \to -6]*[b^2 : -6 \to -6] \)</span></p>
 
 </li>
-<li><p><span class="SimpleMath">\( [a^3 := -1 \to -2]*[a^7 : -2 \to -2] = [a^{10} : -1 \to -2] \)</span></p>
+<li><p><span class="SimpleMath">\( [b^2 : -6 \to -6] \stackrel{\bar{y}}{\to} [a^3 : -4 \to -4] \)</span></p>
+
+</li>
+<li><p><span class="SimpleMath">\( [a^3 := -4 \to -4]*[a^7 : -4 \to -3] = [a^{10} : -4 \to -3] \)</span></p>
 
 </li>
 </ul>
-<p>So the resulting word is <span class="SimpleMath">\(~(a^{-1} : -1, -1)(b^{-1} : -3, -3)(a^{10} : -1, -2)\)</span>. Notice that all the arrows except the final one are loops.</p>
+<p>So the resulting word is <span class="SimpleMath">\(~[a^{-1} : -3, -3][b^{-1} : -5, -6][a^{10} : -4, -3]\)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>

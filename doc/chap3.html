@@ -167,11 +167,15 @@ magma with objects homomorphism :
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  nat := NaturalHomomorphismByGenerators( sgp, sgp2 );  so we use: </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  in the function flip below t is a transformation on [1..n] </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">flip := function( t ) </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">    local i, j, k, L, L2, n; </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    local i, j, k, L, L1, L2, n; </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">    n := DegreeOfTransformation( t );  </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">    L := ImageListOfTransformation( t ); </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">    if IsOddInt(n) then n:=n+1; L1:=Concatenation(L,[n]); </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   else L1:=L; fi; </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    if IsOddInt( n ) then </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        n := n+1; </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        L1 := Concatenation( L, [n] );</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    else </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        L1 := L; </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    fi;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">    L2 := ShallowCopy( L1 );</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">    for i in [1..n] do </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">        if IsOddInt(i) then j:=i+1; else j:=i-1; fi; </span>
@@ -183,11 +187,11 @@ magma with objects homomorphism :
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">smap := MappingByFunction( sgp, sgp2, flip );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ok := RespectsMultiplication( smap ); </span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ t, ImageElm( smap, t ) ]; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ t, Image( smap, t ) ]; </span>
 [ Transformation( [ 1, 1, 2, 3 ] ), Transformation( [ 2, 2, 4, 1 ] ) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ s, ImageElm( smap, s ) ]; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ s, Image( smap, s ) ]; </span>
 [ Transformation( [ 2, 2, 3, 3 ] ), Transformation( [ 1, 1, 4, 4 ] ) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ r, ImageElm( smap, r ) ]; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ r, Image( smap, r ) ]; </span>
 [ Transformation( [ 2, 3, 4, 4 ] ), Transformation( [ 4, 1, 3, 3 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( smap, "smap" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T123 := SemigroupWithObjects( sgp2, [-13,-12,-11] );; </span>
@@ -276,12 +280,12 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">swap := function(a) return Arrow(M78,a![1],a![3],a![2]); end;      </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">swap := function(a) return Arrow(M78,a![2],a![4],a![3]); end;      </span>
 function( a ) ... end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">swapmap := MappingWithObjectsByFunction( M78, M78, swap, [-7,-8] );</span>
 magma with objects mapping by function : M78 -&gt; M78
 function: function ( a )
-    return Arrow( M78, a![1], a![3], a![2] );
+    return Arrow( M78, a![2], a![4], a![3] );
 end
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a78; ImageElm( swapmap, a78 );              </span>

@@ -1,0 +1,713 @@
+  
+  [1X8 [33X[0;0YDouble Groupoids[133X[101X
+  
+  [33X[0;0YA  [13Xdouble groupoid[113X is a [13Xdouble category[113X in which all the category structures
+  are groupoids. For the most general type of double groupoid there is also an
+  associated pre-crossed module. In this package we consider only [13Xbasic double
+  groupoids[113X,  which  do not involve pre-crossed modules. The more general case
+  will be discussed in the [5XXMod[105X package.[133X
+  
+  [33X[0;0YIn  a  double  groupoid,  as  well  as  objects and arrows, we need a set of
+  [13Xsquares[113X.  A  square  is  bounded  by  four  arrows,  two  horizontal and two
+  vertical,  and  there  is  a  [13Xhorizontal[113X  groupoid  structure and a [13Xvertical[113X
+  groupoid structure on these squares.[133X
+  
+  [33X[0;0YDouble  groupoids  can be considered where the vertical arrows come from one
+  groupoid,  and  the  horizontal  arrows  from  another. The double groupoids
+  constructed  here  are  special  in  that all four arrows come from the same
+  groupoid. We call these [13Xedge-symmetric[113X double groupoids.[133X
+  
+  [33X[0;0YThis  addition  to the package is very experimental, and will be extended as
+  time permits.[133X
+  
+  
+  [1X8.1 [33X[0;0YSingle piece double groupoids[133X[101X
+  
+  [1X8.1-1 SinglePieceBasicDoubleGroupoid[101X
+  
+  [33X[1;0Y[29X[2XSinglePieceBasicDoubleGroupoid[102X( [3Xgpd[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDoubleGroupoid[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoid[102X( [3Xmwo[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBasicDoubleGroupoid[102X( [3Xdgpd[103X ) [32X Category[133X
+  
+  [33X[0;0YLet [22XG[122X be a connected groupoid with object set [22XΩ[122X. The double groupoid [22X□(G)[122X on
+  [22XG[122X is constructed by the operation [10XSinglePieceBasicDoubleGroupoid(G)[110X.[133X
+  
+  [33X[0;0YThe  global  function  [10XDoubleGroupoid[110X may be used instead of this operation,
+  and will work with various other input parameters.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );; [127X[104X
+    [4X[25Xgap>[125X [27XDGd8!.groupoid;[127X[104X
+    [4X[28XGd8[128X[104X
+    [4X[25Xgap>[125X [27XDGd8!.objects;[127X[104X
+    [4X[28X[ -9, -8, -7 ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( DGd8, "DGd8" );[127X[104X
+    [4X[25Xgap>[125X [27X[ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];[127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-2 SquareOfArrows[101X
+  
+  [33X[1;0Y[29X[2XSquareOfArrows[102X( [3Xgpd[103X, [3Xup[103X, [3Xlt[103X, [3Xrt[103X, [3Xdn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUpArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDownArrow[102X( [3Xsq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XBoundaryOfSquare[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDoubleGroupoidOfSquare[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoidElement[102X( [3Xarrow[103X ) [32X Category[133X
+  
+  [33X[0;0YLet  [22X□(G)[122X be the set of [13Xsquares[113X with objects from [22XΩ[122X at each corner; plus two
+  vertical arrows and two horizontal arrows from Arr[22X(G)[122X. The following picture
+  illustrates a square [22Xs_1[122X:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{b_1} & v_1 \ar[d]^{c_1}
+  \\ w_1 \ar[r]_{d_1} & x_1 }}[133X
+  
+  [124X
+  
+  [33X[0;0YWe  name  these  four  arrows [10XUpArrow(s1)[110X, [10XLeftArrow(s1)[110X, [10XRightArrow(s1)[110X and
+  [10XDownArrow(s1)[110X.[133X
+  
+  [33X[0;0YWe  think  of  the  square [22Xs_1[122X being [13Xbased[113X at the bottom, right-hand corner,
+  [22Xx_1[122X.[133X
+  
+  [33X[0;0YThe  [13Xboundary[113X  of  the  square  is the loop [22X(x_1, d_1^-1b_1^-1a_1c_1, x_1) =
+  (x_1,δ(s_1),x_1)[122X.  The number of squares in a double groupoid is the product
+  of the number of objects with the size of the group all raised to the fourth
+  power.  When  viewing or printing a square, the boundary element is shown in
+  the centre.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ Size(DGd8), (3*8)^4 ]; [127X[104X
+    [4X[28X[ 331776, 331776 ][128X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow( Gd8, (5,7), -7, -8 );;[127X[104X
+    [4X[25Xgap>[125X [27Xb1 := Arrow( Gd8, (6,8), -7, -7 );;[127X[104X
+    [4X[25Xgap>[125X [27Xc1 := Arrow( Gd8, (5,6)(7,8), -8, -9 );;[127X[104X
+    [4X[25Xgap>[125X [27Xd1 := Arrow( Gd8, (5,6,7,8), -7, -9 );;[127X[104X
+    [4X[25Xgap>[125X [27Xbdy1 := d1^-1 * b1^-1 * a1 * c1;[127X[104X
+    [4X[28X[(6,8) : -9 -> -9][128X[104X
+    [4X[25Xgap>[125X [27Xsq1 := SquareOfArrows( DGd8, a1, b1, c1, d1 ); [127X[104X
+    [4X[28X[-7] ------- (5,7) ------> [-8][128X[104X
+    [4X[28X  |                          |[128X[104X
+    [4X[28X(6,8)        (6,8)        (5,6)(7,8)[128X[104X
+    [4X[28X  V                          V[128X[104X
+    [4X[28X[-7] ----- (5,6,7,8) ----> [-9][128X[104X
+    [4X[25Xgap>[125X [27Xsq1 in DGd8;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUpArrow( sq1 );[127X[104X
+    [4X[28X[(5,7) : -7 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XLeftArrow( sq1 );[127X[104X
+    [4X[28X[(6,8) : -7 -> -7][128X[104X
+    [4X[25Xgap>[125X [27XRightArrow( sq1 );[127X[104X
+    [4X[28X[(5,6)(7,8) : -8 -> -9][128X[104X
+    [4X[25Xgap>[125X [27XDownArrow( sq1 );[127X[104X
+    [4X[28X[(5,6,7,8) : -7 -> -9][128X[104X
+    [4X[25Xgap>[125X [27XBoundaryOfSquare( sq1 );[127X[104X
+    [4X[28X[(6,8) : -9 -> -9][128X[104X
+    [4X[25Xgap>[125X [27XDoubleGroupoidOfSquare( sq1 );[127X[104X
+    [4X[28XDGd8[128X[104X
+    [4X[25Xgap>[125X [27XIsDoubleGroupoidElement( sq1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-3 IsCommutingSquare[101X
+  
+  [33X[1;0Y[29X[2XIsCommutingSquare[102X( [3Xsq[103X ) [32X property[133X
+  
+  [33X[0;0YThe  square  [22Xs_1[122X  is [13Xcommuting[113X if [22Xa_1*c_1 = b_1*d_1[122X, so that its boundary is
+  the  identity.  The set of commutative squares in [22X□(G)[122X forms the [13Xcommutative
+  sub-double groupoid[113X of [22X□(G)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xa2 := Arrow( Gd8, (6,8), -8, -9 );;[127X[104X
+    [4X[25Xgap>[125X [27Xc2 := Arrow( Gd8, (5,7)(6,8), -9, -8);;[127X[104X
+    [4X[25Xgap>[125X [27Xd2 := Arrow( Gd8, (5,6,7,8), -9, -8 );; [127X[104X
+    [4X[25Xgap>[125X [27Xsq2 := SquareOfArrows( DGd8, a2, c1, c2, d2 );[127X[104X
+    [4X[28X[-8] -------- (6,8) -------> [-9][128X[104X
+    [4X[28X  |                            |[128X[104X
+    [4X[28X(5,6)(7,8)        ()        (5,7)(6,8)[128X[104X
+    [4X[28X  V                            V[128X[104X
+    [4X[28X[-9] ------ (5,6,7,8) -----> [-8][128X[104X
+    [4X[25Xgap>[125X [27Xbdy2 := BoundaryOfSquare( sq2 );[127X[104X
+    [4X[28X[() : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27X[ IsCommutingSquare(sq1), IsCommutingSquare(sq2) ]; [127X[104X
+    [4X[28X[ false, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-4 TransposedSquare[101X
+  
+  [33X[1;0Y[29X[2XTransposedSquare[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsClosedUnderTransposition[102X( [3Xsq[103X ) [32X property[133X
+  
+  [33X[0;0YThe  transpose  of the square [22Xs_1[122X, as with matrix transposition, is obtained
+  by  interchanging [22Xa_1[122X with [22Xb_1[122X and [22Xc_1[122X with [22Xd_1[122X. Its boundary is the inverse
+  of the boundary of [22Xs_1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xtsq1 := TransposedSquare( sq1 );[127X[104X
+    [4X[28X[-7] ------- (6,8) ------> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(5,7)        (6,8)        (5,6,7,8)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (5,6)(7,8) ---> [-9][128X[104X
+    [4X[25Xgap>[125X [27XIsClosedUnderTransposition( sq1 );  [127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-5 HorizontalProduct[101X
+  
+  [33X[1;0Y[29X[2XHorizontalProduct[102X( [3Xsq1[103X, [3Xsq2[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen   [10XRightArrow[110X[22X(s_1)[122X   =   [10XLeftArrow[110X[22X(s_2)[122X  we  may  compose  [22Xs_1[122X  and  [22Xs_2[122X
+  [13Xhorizontally[113X  to form the square [22Xs_1 (→) s_2[122X = [10XHorizontalProduct[110X[22X(s_1,s_2)[122X as
+  illustrated here:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{b_1} & v_1 \ar[r]^{a_2}
+  \ar[d]^{c_1}   &   v_2   \ar[d]^{c_2}  \ar@{}[dr]|=  &  u_1  \ar[r]^{a_1a_2}
+  \ar[d]_{b_1} & v_2 \ar[d]^{c_2} \\ w_1 \ar[r]_{d_1} & x_1 \ar[r]_{d_2} & x_2
+  & w_1 \ar[r]_{d_1d_2} & x_2 }}[133X
+  
+  [124X
+  
+  [33X[0;0YNotice that the boundary of the composite satisfies the identity:[133X
+  
+  
+  [24X[33X[0;6Y\delta(s_1   (\rightarrow)  s_2)  ~=~  (d_1d_2)^{-1}b_1^{-1}(a_1a_2)c_2  ~=~
+  d_2^{-1}(d_1^{-1}b_1^{-1}a_1c_1)d_2(d_2^{-1}c_1^{-1}a_2c_2)    ~=~   (\delta
+  s_1)^{d_2} (\delta s_2).[133X
+  
+  [124X
+  
+  [33X[0;0Y(This operation was called [10XLeftRightProduct[110X in versions up to 1.76.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLeftArrow( sq2 ) = RightArrow( sq1 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xsq12 := HorizontalProduct( sq1, sq2 );[127X[104X
+    [4X[28X[-7] ----- (5,7)(6,8) ----> [-9][128X[104X
+    [4X[28X  |                          |[128X[104X
+    [4X[28X(6,8)        (5,7)        (5,7)(6,8)[128X[104X
+    [4X[28X  V                          V[128X[104X
+    [4X[28X[-7] ----- (5,7)(6,8) ----> [-8][128X[104X
+    [4X[25Xgap>[125X [27Xbdy12 := BoundaryOfSquare( sq12 );[127X[104X
+    [4X[28X[(5,7) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27X(bdy1^d2) * bdy2 = bdy12;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-6 VerticalProduct[101X
+  
+  [33X[1;0Y[29X[2XVerticalProduct[102X( [3Xsq1[103X, [3Xsq3[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [10XDownArrow[110X[22X(s_1)[122X = [10XUpArrow[110X[22X(s_3)[122X we may compose [22Xs_1[122X and [22Xs_3[122X [13Xvertically[113X to
+  form [22Xs_1 (↓) s_3[122X = [10XVerticalProduct[110X[22X(s_1,s_3)[122X illustrated by:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   u_1   \ar[rr]^{a_1}   \ar[dd]_{b_1}   &&   v_1
+  \ar[dd]^{c_1}  &  &  &&  \\ && & & u_1 \ar[rr]^{a_1} \ar[dd]_{b_1b_3} && v_1
+  \ar[dd]^{c_1c_3} \\ w_1 \ar[rr]_{d_1} \ar[dd]_{b_3} && x_1 \ar[dd]^{c_3} &=&
+  && \\ && & & w_3 \ar[rr]_{d_3} && x_3 \\ w_3 \ar[rr]_{d_3} && x_3 }}[133X
+  
+  [124X
+  
+  [33X[0;0YThis time the boundary condition satisfies the identity:[133X
+  
+  
+  [24X[33X[0;6Y\delta(s_1   (\downarrow)   s_3)  ~=~  d_3^{-1}(b_1b_3)^{-1}a_1(c_1c_3)  ~=~
+  (d_3^{-1}b_3^{-1}d_1c_3)c_3^{-1}(d_1^{-1}b_1^{-1}a_1c_1)c_3    ~=~   (\delta
+  s_3)(\delta s_1)^{c_3}.[133X
+  
+  [124X
+  
+  [33X[0;0Y(This operation was called [10XUpDownProduct[110X in versions up to 1.76.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xb3 := Arrow( Gd8, (5,7), -7, -9 );;[127X[104X
+    [4X[25Xgap>[125X [27Xc3 := Arrow( Gd8, (6,8), -9, -8);;[127X[104X
+    [4X[25Xgap>[125X [27Xd3 := Arrow( Gd8, (5,8)(6,7), -9, -8 );; [127X[104X
+    [4X[25Xgap>[125X [27Xsq3 := SquareOfArrows( DGd8, d1, b3, c3, d3 );[127X[104X
+    [4X[28X[-7] ---- (5,6,7,8) ---> [-9][128X[104X
+    [4X[28X  |                        |[128X[104X
+    [4X[28X(5,7)       (6,8)       (6,8)[128X[104X
+    [4X[28X  V                        V[128X[104X
+    [4X[28X[-9] ---- (5,8)(6,7) ---> [-8][128X[104X
+    [4X[25Xgap>[125X [27Xbdy3 := BoundaryOfSquare( sq3 );[127X[104X
+    [4X[28X[(6,8) : -8 -> -8][128X[104X
+    [4X[25Xgap>[125X [27XUpArrow( sq3 ) = DownArrow( sq1 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xsq13 := VerticalProduct( sq1, sq3 );[127X[104X
+    [4X[28X[-7] -------- (5,7) -------> [-8][128X[104X
+    [4X[28X  |                           |[128X[104X
+    [4X[28X(5,7)(6,8)        ()        (5,8,7,6)[128X[104X
+    [4X[28X  V                           V[128X[104X
+    [4X[28X[-9] ----- (5,8)(6,7) ----> [-8][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YVertical  and  horizontal compositions commute, so we may construct products
+  such as:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   u_1   \ar[rr]^{a_1}   \ar[dd]_{b_1}   &&   v_1
+  \ar[rr]^{a_2}  \ar[dd]|{c_1}  &&  v_2 \ar[dd]^{c_2} & & &&& \\ && && & & u_1
+  \ar[rrr]^{a_1a_2}   \ar[dd]_{b_1b_3}   &&&   v_2   \ar[dd]^{c_2c_4}  \\  w_1
+  \ar[rr]|{d_1}  \ar[dd]_{b_3}  &&  x_1  \ar[rr]|{d_2}  \ar[dd]|{c_3}  &&  x_2
+  \ar[dd]^{c_4}  &=&  &&&  \\  &&  && & & w_3 \ar[rrr]_{d_3d_4} &&& x_4 \\ w_3
+  \ar[rr]_{d_3} && x_3 \ar[rr]_{d_4} && x_4 }}[133X
+  
+  [124X
+  
+  [33X[0;0YIn  our  example,  after adding [22Xc_4[122X and [22Xd_4[122X, it is routine to check that the
+  two ways of computing the product of four squares give the same answer.[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=2pc{   -7   \ar[rr]^{(5,7)}   \ar[dd]_{(6,8)}  &&  -8
+  \ar[rr]^{(6,8)}  \ar[dd]|{(5,6)(7,8)}  && -9 \ar[dd]^{(5,7)(6,8)} & & &&& \\
+  &&   &&   &   &   -7   \ar[rrr]^{(5,7)(6,8)}   \ar[dd]^{(5,7)(6,8)}  &&&  -9
+  \ar[dd]_{(5,8,7,6)}   \\   -7   \ar[rr]|{(5,6,7,8)}  \ar[dd]_{(5,7)}  &&  -9
+  \ar[rr]|{(5,6,7,8)}  \ar[dd]|{(6,8)} && -8 \ar[dd]^{(5,6,7,8)} &=& &&& \\ &&
+  &&  &  &  -9  \ar[rrr]_{(5,7)(6,8)}  &&& -7 \\ -9 \ar[rr]_{(5,8)(6,7)} && -8
+  \ar[rr]_{(5,6)(7,8)} && -7 }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xc4 := Arrow( Gd8, (5,6,7,8), -8, -7);;[127X[104X
+    [4X[25Xgap>[125X [27Xd4 := Arrow( Gd8, (5,6)(7,8), -8, -7 );; [127X[104X
+    [4X[25Xgap>[125X [27Xsq4 := SquareOfArrows( DGd8, d2, c3, c4, d4 );[127X[104X
+    [4X[28X[-9] ------- (5,6,7,8) ------> [-8][128X[104X
+    [4X[28X  |                             |[128X[104X
+    [4X[28X(6,8)        (5,6,7,8)        (5,6,7,8)[128X[104X
+    [4X[28X  V                             V[128X[104X
+    [4X[28X[-8] ------ (5,6)(7,8) -----> [-7][128X[104X
+    [4X[25Xgap>[125X [27XUpArrow( sq4 ) = DownArrow( sq2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XLeftArrow( sq4 ) = RightArrow( sq3 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq34 := HorizontalProduct( sq3, sq4 );[127X[104X
+    [4X[28X[-7] ------- (5,7)(6,8) ------> [-8][128X[104X
+    [4X[28X  |                              |[128X[104X
+    [4X[28X(5,7)        (5,8)(6,7)        (5,6,7,8)[128X[104X
+    [4X[28X  V                              V[128X[104X
+    [4X[28X[-9] ------- (5,7)(6,8) ------> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq1234 := VerticalProduct( sq12, sq34 );[127X[104X
+    [4X[28X[-7] --------- (5,7)(6,8) --------> [-9][128X[104X
+    [4X[28X  |                                  |[128X[104X
+    [4X[28X(5,7)(6,8)        (5,6,7,8)        (5,8,7,6)[128X[104X
+    [4X[28X  V                                  V[128X[104X
+    [4X[28X[-9] --------- (5,7)(6,8) --------> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq24 := VerticalProduct( sq2, sq4 ); [127X[104X
+    [4X[28X[-8] ----------- (6,8) ----------> [-9][128X[104X
+    [4X[28X  |                                 |[128X[104X
+    [4X[28X(5,8,7,6)        (5,6,7,8)        (5,8,7,6)[128X[104X
+    [4X[28X  V                                 V[128X[104X
+    [4X[28X[-8] -------- (5,6)(7,8) -------> [-7][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xsq1324 := HorizontalProduct( sq13, sq24 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq1324 = sq1234;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-7 HorizontalIdentities[101X
+  
+  [33X[1;0Y[29X[2XHorizontalIdentities[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVerticalIdentities[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHorizontalInverses[102X( [3Xsq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVerticalInverses[102X( [3Xsq[103X ) [32X operation[133X
+  
+  [33X[0;0YThere  is  no  single  identity  for  the  operations  [10XHorizontalProduct[110X and
+  [10XVerticalProduct[110X  but  there  are,  for each square, a [13Xleft identity[113X, a [13Xright
+  identity[113X,  an  [13Xup  identity[113X  and a [13Xdown identity[113X. The composite of the three
+  squares  shown  below  is  equal  to the central square [22Xs[122X, and the other two
+  squares are the left identity [22X1_L(s)[122X and the right identity [22X1_R(s)[122X for [22Xs[122X.[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{ u \ar[r]^{1} \ar[d]_{b} & u \ar[r]^{a} \ar[d]^{b}
+  &  v \ar[r]^{1} \ar[d]_{c} & v \ar[d]^{c} \\ w \ar[r]_{1} & w \ar[r]_{d} & x
+  \ar[r]_{1} & x }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xhid := HorizontalIdentities( sq24 );;[127X[104X
+    [4X[25Xgap>[125X [27Xhid[1]; Print("\n"); hid[2];                    [127X[104X
+    [4X[28X[-8] --------- () --------> [-8][128X[104X
+    [4X[28X  |                          |[128X[104X
+    [4X[28X(5,8,7,6)        ()        (5,8,7,6)[128X[104X
+    [4X[28X  V                          V[128X[104X
+    [4X[28X[-8] --------- () --------> [-8][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[-9] --------- () --------> [-9][128X[104X
+    [4X[28X  |                          |[128X[104X
+    [4X[28X(5,8,7,6)        ()        (5,8,7,6)[128X[104X
+    [4X[28X  V                          V[128X[104X
+    [4X[28X[-7] --------- () --------> [-7][128X[104X
+    [4X[25Xgap>[125X [27XHorizontalProduct( hid[1], sq24 ) = sq24;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XHorizontalProduct( sq24, hid[2] ) = sq24;      [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSimilarly,  here  are the up identity [22X1_U(s)[122X and the down identity [22X1_D(s)[122X of
+  [22Xs[122X:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{1}  &  v  \ar[d]^{1}  & w
+  \ar[r]^{d}  \ar[d]_{1} & x \ar[d]^{1} \\ u \ar[r]_{a} & v & w \ar[r]_{d} & x
+  }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xvid := VerticalIdentities( sq24 );;  [127X[104X
+    [4X[25Xgap>[125X [27Xvid[1]; Print("\n"); vid[2];                    [127X[104X
+    [4X[28X[-8] ---- (6,8) ---> [-9][128X[104X
+    [4X[28X  |                   |[128X[104X
+    [4X[28X()         ()         ()[128X[104X
+    [4X[28X  V                   V[128X[104X
+    [4X[28X[-8] ---- (6,8) ---> [-9][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[-8] ---- (5,6)(7,8) ---> [-7][128X[104X
+    [4X[28X  |                        |[128X[104X
+    [4X[28X()            ()            ()[128X[104X
+    [4X[28X  V                        V[128X[104X
+    [4X[28X[-8] ---- (5,6)(7,8) ---> [-7][128X[104X
+    [4X[25Xgap>[125X [27XVerticalProduct( vid[1], sq24 ) = sq24;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XVerticalProduct( sq24, vid[2] ) = sq24;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YConfusingly,  [22Xs[122X  has a [13Xhorizontal inverse[113X [22Xs^-1_H[122X whose product with [22Xs[122X is the
+  left identity or right identity:[133X
+  
+  
+  [24X[33X[0;6Ys (\rightarrow) s^{-1}_{H} ~=~ 1_L(s), \qquad s^{-1}_{H} (\rightarrow) s ~=~
+  1_R(s).[133X
+  
+  [124X
+  
+  [33X[0;0YThe  boundary  of  [22Xs^-1_H[122X  is [22Xdc^-1a^-1b = (δ(s)^-1)^d^-1}[122X. Here are the two
+  products:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{b}  &  v  \ar[r]^{a^{-1}}
+  \ar[d]^{c}  &  u  \ar[d]^{b}  &  v \ar[r]^{a^{-1}} \ar[d]_{c} & u \ar[r]^{a}
+  \ar[d]^{b}  &  v  \ar[d]^{c}  \\  w  \ar[r]_{d}  & x \ar[r]_{d^{-1}} & w & x
+  \ar[r]_{d^{-1}} & w \ar[r]_{d} & x }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xhinv := HorizontalInverse( sq24 ); [127X[104X
+    [4X[28X[-9] ----------- (6,8) ----------> [-8][128X[104X
+    [4X[28X  |                                 |[128X[104X
+    [4X[28X(5,8,7,6)        (5,6,7,8)        (5,8,7,6)[128X[104X
+    [4X[28X  V                                 V[128X[104X
+    [4X[28X[-7] -------- (5,6)(7,8) -------> [-8][128X[104X
+    [4X[25Xgap>[125X [27XHorizontalProduct( hinv, sq24 ) = hid[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XHorizontalProduct( sq24, hinv ) = hid[1];      [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSimilarly,  [22Xs[122X has a [13Xvertical inverse[113X [22Xs^-1_V[122X whose product with [22Xs[122X is an up or
+  down identity: [22Xs (↓) s^-1_V = 1_U(s)[122X and [22Xs^-1_V (↓) s = 1_D(s)[122X. The boundary
+  is [22Xa^-1bdc^-1 = (δ(s)^-1)^c^-1}[122X.[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  w \ar[r]^{d} \ar[d]_{b^{-1}} & x \ar[d]^{c^{-1}}
+  \\ u \ar[r]_{a} & v }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xvinv := VerticalInverse( sq24 );[127X[104X
+    [4X[28X[-8] -------- (5,6)(7,8) -------> [-7][128X[104X
+    [4X[28X  |                                 |[128X[104X
+    [4X[28X(5,6,7,8)        (5,8,7,6)        (5,6,7,8)[128X[104X
+    [4X[28X  V                                 V[128X[104X
+    [4X[28X[-8] ----------- (6,8) ----------> [-9][128X[104X
+    [4X[25Xgap>[125X [27XVerticalProduct( vinv, sq24 ) = vid[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XVerticalProduct( sq24, vinv ) = vid[1];   [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.1-8 [33X[0;0YHorizontal and vertical groupoids in [22X□(G)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YNow [22X□(G)[122X is the maximal double groupoid determined by [22XG[122X, but in general many
+  substructures  may  be  formed.  The [13Xhorizontal groupoid[113X structure [22X□_H(G)[122X on
+  [22X□(G)[122X has the vertical arrows as objects, and considers the usual square [22Xs[122X[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{b}  &  v  \ar[d]^{c} \\ w
+  \ar[r]_{d} & x }}[133X
+  
+  [124X
+  
+  [33X[0;0Yas  an  arrow  from [22Xb[122X to [22Xc[122X. So the arrows in [22X□_H(G)[122X are effectively pairs of
+  horizontal  arrows  [22X[a,d][122X.  The  vertex  groups are isomorphic to [22XG × G[122X; the
+  identity arrow at [22Xb[122X is [22X1_L(s)[122X; and the inverse arrow of [22Xs[122X is [22Xs^-1_H[122X.[133X
+  
+  [33X[0;0YSimilarly  the [13Xvertical groupoid[113X structure [22X□_V(G)[122X on [22X□(G)[122X has the horizontal
+  arrows as objects and pairs of vertical arrows as arrows. The identity arrow
+  at [22Xa[122X is [22X1_U(s)[122X, and the inverse arrow of [22Xs[122X is [22Xs^-1_V[122X.[133X
+  
+  [33X[0;0YThese groupoid structures have not been implemented in this package.[133X
+  
+  
+  [1X8.2 [33X[0;0YDouble groupoids with more than one piece[133X[101X
+  
+  [33X[0;0YAs  with  groupoids,  double  groupoids may comprise a union of single piece
+  double groupoids with disjoint object sets.[133X
+  
+  [1X8.2-1 UnionOfPieces[101X
+  
+  [33X[1;0Y[29X[2XUnionOfPieces[102X( [3Xpieces[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPieces[102X( [3Xdgpd[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  operation [10XUnionOfPieces[110X and the attribute [10XPieces[110X, introduced in section
+  [14X2.5[114X,  are also used for double groupoids. The pieces are sorted by the least
+  object  in their object lists. The [10XObjectList[110X is the sorted concatenation of
+  the objects in the pieces.[133X
+  
+  [33X[0;0YThe example shows that, as well as taking the union of two double groupoids,
+  the same object may be constructed directly from the underlying groupoids.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGc6 := SinglePieceBasicDoubleGroupoid( Gc6 );; [127X[104X
+    [4X[25Xgap>[125X [27XDGa4 := SinglePieceBasicDoubleGroupoid( Ga4 );; [127X[104X
+    [4X[25Xgap>[125X [27XDGc6s4 := DoubleGroupoid( [ DGc6, DGa4 ] );[127X[104X
+    [4X[28Xdouble groupoid having 2 pieces :-[128X[104X
+    [4X[28X1: single piece double groupoid with:[128X[104X
+    [4X[28X groupoid = Ga4[128X[104X
+    [4X[28X    group = a4[128X[104X
+    [4X[28X  objects = [ -15 .. -11 ][128X[104X
+    [4X[28X2: single piece double groupoid with:[128X[104X
+    [4X[28X groupoid = Gc6[128X[104X
+    [4X[28X    group = c6[128X[104X
+    [4X[28X  objects = [ -10 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGa4c6 := DoubleGroupoid( [ Ga4, Gc6 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XPieces( DGa4c6 );[127X[104X
+    [4X[28X[ single piece double groupoid with:[128X[104X
+    [4X[28X     groupoid = Ga4[128X[104X
+    [4X[28X        group = a4[128X[104X
+    [4X[28X      objects = [ -15 .. -11 ], single piece double groupoid with:[128X[104X
+    [4X[28X     groupoid = Gc6[128X[104X
+    [4X[28X        group = c6[128X[104X
+    [4X[28X      objects = [ -10 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.3 [33X[0;0YGenerators of a double groupoid[133X[101X
+  
+  [33X[0;0YBefore considering the general case we investigate two special cases:[133X
+  
+  [30X    [33X[0;6Ya basic double groupoid with identity group;[133X
+  
+  [30X    [33X[0;6Ya basic double groupoid with a single object.[133X
+  
+  [1X8.3-1 DoubleGroupoidWithTrivialGroup[101X
+  
+  [33X[1;0Y[29X[2XDoubleGroupoidWithTrivialGroup[102X( [3Xobs[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22X|Ω|=n[122X  the  double  groupoid with trivial permutation group on these [22Xn[122X
+  objects contains [22Xn^4[122X squares of the form:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{()}  \ar[d]_{()} & v \ar[d]^{()} \\ w
+  \ar[r]_{()} & x }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGtriv := DoubleGroupoidWithTrivialGroup( [-19..-17] );[127X[104X
+    [4X[28Xsingle piece double groupoid with:[128X[104X
+    [4X[28X groupoid = single piece groupoid: < Group( [ () ] ), [ -19 .. -17 ] >[128X[104X
+    [4X[28X    group = Group( [ () ] )[128X[104X
+    [4X[28X  objects = [ -19 .. -17 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize(DGtriv);                                          [127X[104X
+    [4X[28X81[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.3-2 DoubleGroupoidWithSingleObject[101X
+  
+  [33X[1;0Y[29X[2XDoubleGroupoidWithSingleObject[102X( [3Xgp[103X, [3Xobj[103X ) [32X operation[133X
+  
+  [33X[0;0YGiven a group [22XG[122X we can form the corresponding groupoid with a single object,
+  and  from  that  a  double groupoid on that object. The number of squares is
+  [22X|G|^4[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDGc4 := DoubleGroupoidWithSingleObject( Group((1,2,3,4)), 0 );[127X[104X
+    [4X[28Xsingle piece double groupoid with:[128X[104X
+    [4X[28X groupoid = single piece groupoid: < Group( [ (1,2,3,4) ] ), [ 0 ] >[128X[104X
+    [4X[28X    group = Group( [ (1,2,3,4) ] )[128X[104X
+    [4X[28X  objects = [ 0 ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize( DGc4 );                                                 [127X[104X
+    [4X[28X256[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.3-3 [33X[0;0YWhat is the double groupoid generated by a set of squares?[133X[101X
+  
+  [33X[0;0YThis  is  a very experimental section. Let us consider the following list of
+  three squares [22X[s_U(a,u,v),~ 1_U(v,u),~ s_U(a,u,u)][122X. What is generated by the
+  single square [22Xs_U(a,u,v)[122X?[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u  \ar[r]^{a}  \ar[d]_{1}  &  v  \ar[d]^{1}  & v
+  \ar[r]^{1}  \ar[d]_{1}  &  u  \ar[d]_{1}  &  u  \ar[r]^{a}  \ar[d]_{1}  &  u
+  \ar[d]_{1} \\ u \ar[r]_{1} & v & v \ar[r]_{1} & u & u \ar[r]_{1} & u }}[133X
+  
+  [124X
+  
+  [33X[0;0YThe  first square does not compose with itself, so cannot generate anything.
+  When constructing a group from generators there is never any need to include
+  an  identity  -  that  is  always  assumed  to  be  included.  Perhaps, when
+  constructing   a   double   groupoid,   it   should   be  assumed  that  the
+  [10XDoubleGroupoidWithTrivialGroup[110X  on the given objects should be automatically
+  included?  In  that case the square [22X1_U(v,u)[122X is available and can compose on
+  the  right  to  give  [22Xs_U(a,u,u)[122X.  This then composes with itself to produce
+  squares   [22Xs_U(a^i,u,u)[122X.   Then,   composing   with   identities,  we  obtain
+  [10XSinglePieceBasicDoubleGroupoid(G)[110X  where  [22XG[122X is the groupoid with group [22X⟨ a ⟩[122X
+  and objects [22X[u,v][122X. More work on this area is required![133X
+  
+  
+  [1X8.4 [33X[0;0YStarting with two groupoids[133X[101X
+  
+  [33X[0;0YIn the literature on double groupoids the construction often starts with two
+  groupoids  [22XG_1,  G_2[122X, and squares have horizontal arrows chosen from [22XG_1[122X and
+  vertical  arrows  chosen  from [22XG_2[122X. When that is the case, the boundary of a
+  square  is not defined, since arrows from [22XG_1[122X do not compose with those from
+  [22XG_2[122X.  This situation may be modelled here by constructing the direct product
+  groupoid  [22XG  = G_1 × G_2[122X and forming a double groupoid on [22XG[122X in which squares
+  have the form:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix   @=4pc{   [u_1,u_2]   \ar[r]^{[a,1]}   \ar[d]_{[1,b]}  &
+  [v_1,v_2] \ar[d]^{[1,c]} \\ [w_1,w_2] \ar[r]_{[d,1]} & [x_1,x_2] }}[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGd8c6 := DirectProduct( Gd8, Gc6 );[127X[104X
+    [4X[28Xsingle piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), [128X[104X
+    [4X[28X[ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ] >[128X[104X
+    [4X[25Xgap>[125X [27XSetName( Gd8c6, "Gd8c6" );[127X[104X
+    [4X[25Xgap>[125X [27XDGd8c6 := SinglePieceBasicDoubleGroupoid( Gd8c6 );[127X[104X
+    [4X[28Xsingle piece double groupoid with:[128X[104X
+    [4X[28X groupoid = Gd8c6[128X[104X
+    [4X[28X    group = Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] )[128X[104X
+    [4X[28X  objects = [ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xemb1 := Embedding( Gd8c6, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xemb2 := Embedding( Gd8c6, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xa5 := Arrow( Gd8, (5,7), -9, -7 );;[127X[104X
+    [4X[25Xgap>[125X [27Xa6 := ImageElm( emb1, a5 );[127X[104X
+    [4X[28X[(1,3) : [ -9, -10 ] -> [ -7, -10 ]][128X[104X
+    [4X[25Xgap>[125X [27Xd5 := Arrow( Gd8, (6,8), -9, -8 );;[127X[104X
+    [4X[25Xgap>[125X [27Xd6 := ImageElm( emb1, d5 );[127X[104X
+    [4X[28X[(2,4) : [ -9, -10 ] -> [ -8, -10 ]][128X[104X
+    [4X[25Xgap>[125X [27Xb5 := Arrow( Gc6, (11,12,13), -10, -10 );;[127X[104X
+    [4X[25Xgap>[125X [27Xb6 := ImageElm( emb2, b5 );[127X[104X
+    [4X[28X[(5,6,7) : [ -9, -10 ] -> [ -9, -10 ]][128X[104X
+    [4X[25Xgap>[125X [27Xc6 := Arrow( Gd8c6, (8,9), [-7,-10], [-8,-10] );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq := SquareOfArrows( DGd8c6, a6, b6, c6, d6 );[127X[104X
+    [4X[28X[[ -9, -10 ]] ----- (1,3) ----> [[ -7, -10 ]][128X[104X
+    [4X[28X  |                                        |[128X[104X
+    [4X[28X(5,6,7)        (1,3)(2,4)(5,7,6)(8,9)        (8,9)[128X[104X
+    [4X[28X  V                                        V[128X[104X
+    [4X[28X[[ -9, -10 ]] ----- (2,4) ----> [[ -8, -10 ]][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.5 [33X[0;0YDouble groupoid homomorphisms[133X[101X
+  
+  [1X8.5-1 DoubleGroupoidHomomorphism[101X
+  
+  [33X[1;0Y[29X[2XDoubleGroupoidHomomorphism[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDoubleGroupoidHomomorphism[102X( [3Xmwohom[103X ) [32X Category[133X
+  
+  [33X[0;0YA  homomorphism  of  double  groupoids  is  determined by a homomorphism [10Xmor[110X
+  between the underlying groupoids since [10Xmor[110X determines the images of the four
+  arrows in every square.[133X
+  
+  [33X[0;0YIn  the  example we take the endomorphism [10Xmd8[110X of [10XGd8[110X, constructed in section
+  [14X5.2-1[114X, to produce an endomorphism of [10XDGd8[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xad8 := GroupHomomorphismByImages( d8, d8,[127X[104X
+    [4X[25X>[125X [27X              [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xmd8 := GroupoidHomomorphism( Gd8, Gd8, ad8, [127X[104X
+    [4X[25X>[125X [27X              [-7,-9,-8], [(),(5,7),(6,8)] );;[127X[104X
+    [4X[25Xgap>[125X [27XendDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( endDGd8 );            [127X[104X
+    [4X[28Xdouble groupoid homomorphism: [ DGd8 ] -> [ DGd8 ][128X[104X
+    [4X[28Xwith underlying groupoid homomorphism:[128X[104X
+    [4X[28Xhomomorphism to single piece groupoid: Gd8 -> Gd8[128X[104X
+    [4X[28Xroot group homomorphism:[128X[104X
+    [4X[28X(5,6,7,8) -> (5,8,7,6)[128X[104X
+    [4X[28X(5,7) -> (6,8)[128X[104X
+    [4X[28Xobject map: [ -9, -8, -7 ] -> [ -7, -9, -8 ][128X[104X
+    [4X[28Xray images: [ (), (5,7), (6,8) ][128X[104X
+    [4X[25Xgap>[125X [27XIsDoubleGroupoidHomomorphism( endDGd8 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xsq1;[127X[104X
+    [4X[28X[-7] ------- (5,7) ------> [-8][128X[104X
+    [4X[28X  |                          |[128X[104X
+    [4X[28X(6,8)        (6,8)        (5,6)(7,8)[128X[104X
+    [4X[28X  V                          V[128X[104X
+    [4X[28X[-7] ----- (5,6,7,8) ----> [-9][128X[104X
+    [4X[25Xgap>[125X [27XImageElm( endDGd8, sq1 );[127X[104X
+    [4X[28X[-8] ------- (5,7) ------> [-9][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(5,7)        (5,7)        (5,8,7,6)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-8] ---- (5,8)(6,7) ---> [-7][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

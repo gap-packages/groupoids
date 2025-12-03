@@ -75,8 +75,6 @@
 </li>
 <li><p><code class="code">DeclareCategory( "IsMonoidWithObjects", IsSemigroupWithObjects and IsMultiplicativeElementWithObjectsAndOnesCollection ); </code></p>
 
-<p><code class="code">IsMultiplicativeElementWithObjectsAndInversesCollection ); </code></p>
-
 </li>
 <li><p><code class="code">DeclareCategory( "IsGroupoid", IsMonoidWithObjects and IsGroupoidElementCollection ); </code></p>
 
@@ -92,23 +90,38 @@
   "CategoryCollections(IsExtLElement)", "IsExtRElement", 
   "CategoryCollections(IsExtRElement)", 
   "CategoryCollections(IsMultiplicativeElement)", "IsGeneralizedDomain", 
-  "IsMagma", "IsDomainWithObjects", 
+  "IsDomainWithObjects", 
   "CategoryCollections(IsMultiplicativeElementWithObjects)", 
   "CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)", 
-  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)\
-", "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", 
-  "IsMagmaWithObjectsAndOnes", "IsMagmaWithObjectsAndInverses", 
-  "IsGroupoid" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( Gd8 );     ## these numbers vary from one run to another</span>
-NewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116, 
-  117, 119, 120, 123, 205, 501, 2690, 2703, 2707, 2711, 2715, 2718, 2720, 
-  2721, 2722 ] )
+  "CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)", 
+  "CategoryCollections(IsGroupoidElement)", "IsMagmaWithObjects", 
+  "IsSemigroupWithObjects", "IsMonoidWithObjects", "IsGroupoid" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( Gd8 );                     </span>
+&lt;Family: "CollectionsFamily(...)"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(last);   </span>
+name:
+    CollectionsFamily(...)
+required filters:
+    IsCollection
+implied filters:
+    IsListOrCollection
+    IsCollection
+    IsExtLElement
+    CategoryCollections(IsExtLElement)
+    IsExtRElement
+    CategoryCollections(IsExtRElement)
+    CategoryCollections(IsMultiplicativeElement)
+    IsOddAdditiveNestingDepthObject
+    CategoryCollections(IsMultiplicativeElementWithObjects)
+    CategoryCollections(IsMultiplicativeElementWithObjectsAndOnes)
+    CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)
+    CategoryCollections(IsGroupoidElement)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( Gd8 ); </span>
-[ "Name", "Size", "ObjectList", "GeneratorsOfMagmaWithObjects", 
+[ "Name", "ObjectList", "GeneratorsOfMagmaWithObjects", 
   "GeneratorsOfGroupoid" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( Gd8 ); </span>
-[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", 
-  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ]
+[ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
+  "IsDirectProductWithCompleteDigraphDomain" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( Gd8 );</span>
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( U5 ); </span>
@@ -121,23 +134,15 @@ NewFamily( "GroupoidFamily", [ 2722 ], [ 53, 54, 79, 80, 81, 82, 92, 93, 116,
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ a78, e2 ];</span>
-[ [m2 : -7 -&gt; -8], [(1,3) : -8 -&gt; -7] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject(a78);</span>
-[ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
-  "IsMultiplicativeElementWithObjects" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( a78 );     ## again these numbers vary</span>
-NewFamily( "MultiplicativeElementWithObjectsFamily", [ 2702 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 2702 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject(e2); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1;</span>
+[(5,6,7,8) : -9 -&gt; -8]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( e1 );</span>
 [ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
   "IsMultiplicativeElementWithObjects", 
   "IsMultiplicativeElementWithObjectsAndOnes", 
-  "IsMultiplicativeElementWithObjectsAndInverses", 
-  "IsGroupoidElement" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( e2 );        </span>
-NewFamily( "GroupoidElementFamily", [ 2714 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 2702, 2706, 2710, 2714 ] )
+  "IsMultiplicativeElementWithObjectsAndInverses", "IsGroupoidElement" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( e1 );</span>
+&lt;Family: "IsGroupoidElementFamily"&gt;
 
 </pre></div>
 
@@ -155,7 +160,7 @@ NewFamily( "GroupoidElementFamily", [ 2714 ],
 <li><p><code class="code">DeclareSynonymAttr( "IsMagmaWithObjectsGeneralMapping", IsGeneralMappingWithObjects and RespectsMultiplication ); </code></p>
 
 </li>
-<li><p><code class="code">DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", IsMagmaWithObjectsGeneralMapping and IsMapping ); </code></p>
+<li><p><code class="code">DeclareSynonymAttr( "IsMagmaWithObjectsHomomorphism", IsMagmaWithObjectsGeneralMapping and IsSPGeneralMappingWithObjects ); </code></p>
 
 </li>
 <li><p><code class="code">DeclareCategory("IsGroupoidHomomorphism",IsMagmaWithObjectsHomomorphism); </code></p>
@@ -166,39 +171,75 @@ NewFamily( "GroupoidElementFamily", [ 2714 ],
 
 
 <ul>
-<li><p><code class="code">DeclareRepresentation( "IsMappingToSinglePieceRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsGeneralMapping, [ "Source", "Range", "SinglePieceMappingData" ] ); </code></p>
+<li><p><code class="code">DeclareRepresentation( "IsMappingToSinglePieceRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsComponentObjectRep and IsGeneralMapping, [ "Source", "Range", "MappingToSinglePieceData" ] ); </code></p>
 
 </li>
-<li><p><code class="code">DeclareRepresentation( "IsMappingWithObjectsRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); </code></p>
+<li><p><code class="code">DeclareRepresentation( "IsMappingWithPiecesRep", IsMagmaWithObjectsHomomorphism and IsAttributeStoringRep and IsComponentObjectRep and IsGeneralMapping, [ "Source", "Range", "PiecesOfMapping" ] ); </code></p>
 
 </li>
 </ul>
-<p>In previous chapters, <code class="code">hom1</code> was an endofunction on <code class="code">M78</code>; <code class="code">homd8</code> was a homomorphism from <code class="code">Gd8</code> to <code class="code">Gs3</code>; and <code class="code">aut3</code> was an automorphism of <code class="code">Ga4</code>. All homomorphisms have family <code class="code">GeneralMappingWithObjectsFamily</code>. Perhaps it would be better to have separate families for each structure?</p>
+<p>In previous chapters, <code class="code">hom9</code> was a homomorphism from <code class="code">Gd8</code> to <code class="code">Kk4</code>; and <code class="code">aut1</code> was an automorphism of <code class="code">Ha4</code>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj(hom1);</span>
-NewFamily( "GeneralMappingWithObjectsFamily", [ 2726 ], 
-[ 79, 80, 81, 82, 116, 119, 122, 126, 130, 149, 412, 2726 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( hom1 );</span>
-[ "Range", "Source", "SinglePieceMappingData" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( hom1 );</span>
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "RespectsMultiplication", "IsGeneralMappingToSinglePiece",
-  "IsGeneralMappingFromSinglePiece", "IsInjectiveOnObjects", 
-  "IsSurjectiveOnObjects" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( homd8 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom9;</span>
+groupoid homomorphism : Gd8 -&gt; Kk4
+[ [ [(5,6,7,8) : -9 -&gt; -9], [(5,7) : -9 -&gt; -9], [() : -9 -&gt; -8], 
+      [() : -9 -&gt; -7] ], 
+  [ [(1,4)(2,3) : -14 -&gt; -14], [() : -14 -&gt; -14], [(1,3,4) : -14 -&gt; -13], 
+      [(1,4)(2,3) : -14 -&gt; -12] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( hom9 );</span>
 [ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
   "IsMultiplicativeElementWithOne", "IsMultiplicativeElementWithInverse", 
-  "IsAssociativeElement", "IsGeneralMapping", "IsGeneralMappingWithObjects", 
+  "IsAssociativeElement", "IsGeneralMapping", "IsSPGeneralMapping", 
+  "IsGeneralMappingWithObjects", "IsSPGeneralMappingWithObjects", 
   "IsGroupoidHomomorphism" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( homd8 );</span>
-[ "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", "ImageElementsOfRays", 
-  "ObjectTransformationOfGroupoidHomomorphism", "RootGroupHomomorphism" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( aut3 );</span>
-[ "Order", "Range", "Source", "SinglePieceMappingData", "ImagesOfObjects", 
-  "ImageElementsOfRays", "ObjectTransformationOfGroupoidHomomorphism", 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( hom9 );</span>
+&lt;Family: "GroupoidHomomorphismFamily"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( last );</span>
+name:
+    GroupoidHomomorphismFamily
+required filters:
+    IsGroupoidHomomorphism
+implied filters:
+    CanEasilyCompareElements
+    HasCanEasilyCompareElements
+    CanEasilySortElements
+    HasCanEasilySortElements
+    IsExtLElement
+    IsExtRElement
+    IsMultiplicativeElement
+    IsMultiplicativeElementWithOne
+    IsMultiplicativeElementWithInverse
+    IsAssociativeElement
+    IsGeneralMapping
+    IsSPGeneralMapping
+    RespectsMultiplication
+    HasRespectsMultiplication
+    IsGeneralMappingWithObjects
+    IsSPGeneralMappingWithObjects
+    IsGroupoidHomomorphism
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj( hom9 ) = FamilyObj( aut1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( hom9 );</span>
+[ "CanEasilyCompareElements", "CanEasilySortElements", 
+  "RespectsMultiplication", "IsGroupWithObjectsHomomorphism", 
+  "IsGeneralMappingToSinglePiece", "IsGeneralMappingFromSinglePiece", 
+  "IsInjectiveOnObjects", "IsSurjectiveOnObjects" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject( aut1 );</span>
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsEndoGeneralMapping",
+  "RespectsMultiplication", "IsGroupWithObjectsHomomorphism", 
+  "IsGeneralMappingToSinglePiece", "IsGeneralMappingFromSinglePiece", 
+  "IsInjectiveOnObjects", "IsSurjectiveOnObjects", 
+  "IsEndomorphismWithObjects", "IsAutomorphismWithObjects", 
+  "IsGroupoidAutomorphismByObjectPerm" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( hom9 );</span>
+[ "Range", "Source", "MappingGeneratorsImages", "MappingToSinglePieceData", 
+  "ImagesOfObjects", "ImageElementsOfRays", "RootGroupHomomorphism" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( aut1 );</span>
+[ "Order", "Range", "Source", "MappingGeneratorsImages", "AutomorphismDomain",
+  "MappingToSinglePieceData", "ImagesOfObjects", "ImageElementsOfRays", 
   "RootGroupHomomorphism" ]
 
 </pre></div>
