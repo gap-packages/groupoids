@@ -317,7 +317,7 @@ InstallMethod( ViewObj, "for a groupoid", true, [ IsGroupoid ], 0, PrintObj );
 InstallMethod( PrintObj, "for a groupoid", true, [ IsGroupoid ], 0,
 function ( gpd )
 
-    local comp, len, c, i;
+    local mgm, comp, len, c, i;
 
     if ( HasIsPermGroupoid( gpd ) and IsPermGroupoid( gpd ) ) then
         Print( "perm " );
@@ -326,14 +326,14 @@ function ( gpd )
     elif ( HasIsPcGroupoid( gpd ) and IsPcGroupoid( gpd ) ) then
         Print( "pc " );
     fi;
-    if IsSinglePiece( gpd ) then  
+    if IsSinglePiece( gpd ) then
+        mgm := gpd!.magma;
         if IsDirectProductWithCompleteDigraph( gpd ) then 
             Print( "single piece groupoid: < " );
-            Print( gpd!.magma, ", ", gpd!.objects, " >" );
+            Print( mgm, ", ", gpd!.objects, " >" );
         else 
             Print( "single piece groupoid with rays: < " );
-            Print( gpd!.magma, ", ", gpd!.objects, ", ", 
-                                     gpd!.rays, " >" );
+            Print( mgm, ", ", gpd!.objects, ", ", gpd!.rays, " >" );
         fi;
     elif ( HasIsHomogeneousDiscreteGroupoid( gpd ) 
            and IsHomogeneousDiscreteGroupoid( gpd ) ) then 
@@ -477,7 +477,7 @@ InstallMethod( \=, "for a connected groupoid", true,
     [ IsGroupoid and IsSinglePiece, IsGroupoid ], 
 function ( G1, G2 )
 
-    Info( InfoGroupoids, 2, "### method 1 for G1 = G2" );
+    Info( InfoGroupoids, 3, "### method 1 for G1 = G2" );
     if not IsSinglePiece( G2 ) then
         return false;
     fi;
@@ -495,9 +495,8 @@ function ( G1, G2 )
                  and ( ObjectGroups( G1 ) = ObjectGroups( G2 ) ) 
                  and ( G1!.isomorphisms = G2!.isomorphisms ) );
     elif ( IsSinglePieceRaysRep( G1 ) and IsSinglePieceRaysRep( G2 ) ) then 
-        return ( ( Parent( G1 ) = Parent( G2 ) ) and 
-                  ForAll( [1..Length(G1!.rays)], 
-                      j -> G1!.rays[j] * G2!.rays[j]^-1 in G1!.magma ) );
+        return ForAll( [1..Length(G1!.rays)], 
+                       j -> G1!.rays[j] * G2!.rays[j]^-1 in G1!.magma );
     else 
         return true;
     fi;
@@ -631,11 +630,10 @@ function( gpd, oblist )
 
     local len, isos, inv1, pieces, hgpd, pisos;
 
-    
     len := Length( oblist );
     isos := List( oblist, L -> IsomorphismNewObjects( gpd, L ) );
     inv1 := InverseGeneralMapping( isos[1] );
-    pieces := List( isos, ImagesSource );
+    pieces := List( isos, Range );
     hgpd := UnionOfPiecesOp( pieces, pieces[1] );
     pisos := List( [2..len], i -> inv1 * isos[i] );
     SetIsHomogeneousDomainWithObjects( hgpd, true );
@@ -1656,7 +1654,7 @@ InstallMethod( SinglePieceSubgroupoidByGenerators, "for a list of elements",
 function( G, gens ) 
 
     local ngens, lpos, loops, ro, go, found, obs, nobs, i, gp, rpos, 
-          g, c, p, q, r, rays, H, L;
+          one, isdsum, g, c, p, q, r, rays, H, L;
 
     Info( InfoGroupoids, 2, "calling SinglePieceSubgroupoidByGenerators" );
     if not ForAll( gens, g -> g in G ) then 
@@ -1687,10 +1685,12 @@ function( G, gens )
         fi;
     od;
     gp := Group( List( lpos, j -> gens[j]![2] ) );
-   if not ( ngens - Length( lpos ) - nobs + 1 = 0 ) then 
+    if not ( ngens - Length( lpos ) - nobs + 1 = 0 ) then 
         Error( "only case (group generators) + (rays) implemented," );
     fi;
     ## find positions of the rays 
+    one := One( RootGroup( G ) );
+    isdsum := true;
     rpos := ListWithIdenticalEntries( nobs, 0 );
     for i in [1..ngens] do 
         if not loops[i] then 
@@ -1698,6 +1698,9 @@ function( G, gens )
             c := g![2];
             p := g![3];
             q := g![4];
+            if ( c <> one ) then
+                isdsum := false;
+            fi;
             if ( p = go ) then 
                 rpos[ Position( obs, q ) ] := i;
             else 
@@ -1723,7 +1726,11 @@ function( G, gens )
             fi;
         od;
     fi;
-    H := SinglePieceGroupoidWithRays( gp, obs, rays );
+    if isdsum then
+        H := SinglePieceGroupoid( gp, obs );
+    else
+        H := SinglePieceGroupoidWithRays( gp, obs, rays );
+    fi;
     SetParentAttr( H, G );
     L := ParentList( H );
     return H;

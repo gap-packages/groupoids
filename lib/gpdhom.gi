@@ -76,7 +76,7 @@ end );
 ##
 InstallGlobalFunction( GroupoidHomomorphism, function( arg )
 
-    local nargs, src, rng, id, rays, ob1, ob2, i, g, pt, ph, 
+    local nargs, src, rng, hom, id, rays, ob1, ob2, i, g, pt, ph, 
           gens1, gens2, ngens, nobs, images, e, a;
 
     nargs := Length( arg );
@@ -87,9 +87,10 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         Info( InfoGroupoids, 1, GROUPOID_MAPPING_CONSTRUCTORS );
         return fail;
     fi;
+    src := arg[1];
     # various types of automorphism 
     if ( ( nargs = 2 ) and IsSinglePiece( arg[1] ) ) then 
-        Info( InfoGroupoids, 3, "gpd hom with 2 arguments" );
+        Info( InfoGroupoids, 2, "gpd hom with 2 arguments" );
         if IsGroupHomomorphism( arg[2] ) then 
             return GroupoidAutomorphismByGroupAuto( arg[1], arg[2] );
         elif ( IsHomogeneousList( arg[2] ) 
@@ -101,11 +102,13 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
     # gpd, gpd, group hom 
     elif ( ( nargs = 3 ) and IsSinglePiece( arg[1] ) 
            and IsSinglePiece( arg[2] ) and IsGroupHomomorphism( arg[3] ) ) then 
-        Info( InfoGroupoids, 3, "gpd hom with 3 arguments" );
-        gens1 := GeneratorsOfGroupoid( arg[1] );
-        ob1 := arg[1]!.objects;
+        Info( InfoGroupoids, 2, "gpd hom with 3 arguments" );
+        rng := arg[2];
+        hom := arg[3];
+        gens1 := GeneratorsOfGroupoid( src );
+        ob1 := src!.objects;
         ngens := Length( gens1 );
-        ob2 := arg[2]!.objects;
+        ob2 := rng!.objects;
         if not ( Length( ob1 ) = Length( ob2 ) ) then 
             Error( "groupoids have different numbers of objects" );
         fi;
@@ -114,10 +117,10 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
             g := gens1[i];
             pt := Position( ob1, g![3] );
             ph := Position( ob1, g![4] );
-            gens2[i] := Arrow( arg[2], Image(arg[3],g![2]), ob2[pt], ob2[ph] );
+            gens2[i] := Arrow( rng, Image(hom,g![2]), ob2[pt], ob2[ph] );
         od;
         return GroupoidHomomorphismFromSinglePieceNC( 
-                   arg[1], arg[2], gens1, gens2 );
+                   src, rng, gens1, gens2 );
     # mwo, mwo, list of mappings
     elif ( ( nargs = 3 ) and IsHomogeneousList( arg[3] ) 
             and IsHomomorphismToSinglePiece( arg[3][1] ) ) then
@@ -134,7 +137,7 @@ InstallGlobalFunction( GroupoidHomomorphism, function( arg )
         return GroupoidHomomorphismFromSinglePieceNC( 
                    arg[1], arg[2], arg[3], arg[4] );
     elif ( nargs = 5 ) then 
-        Info( InfoGroupoids, 3, "gpd hom with 5 arguments" );
+        Info( InfoGroupoids, 2, "gpd hom with 5 arguments" );
         gens1 := GeneratorsOfGroupoid( arg[1] );
         images := ShallowCopy( gens1 );
         ngens := Length( images );
@@ -173,6 +176,7 @@ function( gpd, sgpd )
 
     local sobs, o1, c1, mappings, comps, m, gens, mor;
 
+    Info( InfoGroupoids, 1, "InclusionMappingGroupoids from a single piece" );
     if not IsSubgroupoid( gpd, sgpd ) then
         ## Error( "arg[2] is not a subgroupoid of arg[1]" );
         return fail;
@@ -209,6 +213,7 @@ function( A, B )
 
     local PA, PB, nA, nB, obsA, try, maps, i, p, found, j, q, inc, incobs;
 
+    Info( InfoGroupoids, 1, "InclusionMappingGroupoids with pieces" );
     if not ( HasPieces( A ) or HasPieces( B ) ) then 
         Error( "unexpected case in InclusionMappingGroupoids" );
     fi;
@@ -272,9 +277,8 @@ InstallMethod( RestrictedMappingGroupoids, "for a groupoid mapping", true,
     [ IsGeneralMappingWithObjects, IsGroupoid ], 0,
 function( mor, U )
 
-    local smor, rmor, pieceU, lenU, imobs, autos, impieceU, i, Pi,
-          geni, obi, imi, imobi, ogi, imgpi, imU, res, genU, imres,
-          V, rcomp, rrng, imgeni, pos, hom, rng, par;
+    local smor, rmor, pieceU, lenU, imobs, autos, i, Pi, geni, obi, imi,
+          imobi, ogi, imgpi, res, genU, imres, rcomp, imgeni, pos, hom, par;
 
     smor := Source( mor );
     rmor := Range( mor );
@@ -290,35 +294,27 @@ function( mor, U )
         lenU := Length( pieceU );
         imobs := ListWithIdenticalEntries( lenU, 0 );
         autos := ListWithIdenticalEntries( lenU, 0 );
-        impieceU := [ ];
         for i in [1..lenU] do 
             Pi := pieceU[i];
             geni := GeneratorsOfGroupoid( Pi );
             obi := geni[1]![3];
             imi := List( geni, a -> ImageElm( mor, a ) );
-            imobi := imi[1]![2];
+            imobi := imi[1]![3];
             imobs[i] := imobi;
             ogi := ObjectGroup( rmor, imobi );
             imgpi := Subgroup( ogi, List( imi, a -> a![2] ) );
             autos[i] := GroupHomomorphismByImages( 
                             ObjectGroup( Pi, obi ), imgpi, 
                             List( geni, g->g![2] ), List( imi, g->g![2] ) );
-            Add( impieceU, SubgroupoidByPieces( rmor, [[imgpi,[imobi]]] ) );
         od;
-        imU := SubgroupoidByPieces( rmor, impieceU );
         res := GroupoidHomomorphismFromHomogeneousDiscrete(
-                   U, imU, autos, imobs );
+                   U, rmor, autos, imobs );
     elif HasIsSinglePiece( U ) and IsSinglePiece( U ) then
         Info( InfoGroupoids, 1, "RestrictedMapping from a single piece" );
         genU := GeneratorsOfGroupoid( U );
         imres := List( genU, g -> ImageElm( mor, g ) );
-        ## U a single piece => image V is also a single piece
-        V := SinglePieceSubgroupoidByGenerators( rmor, imres );
-        ## convert the images to arrows in V
-        imres := List( imres, a -> Arrow( V, a![2], a![3], a![4] ) );
-        res := GroupoidHomomorphismFromSinglePiece( U, V, genU, imres );
-        SetIsSurjective( res, true );
-        if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
+        res := GroupoidHomomorphismFromSinglePiece( U, rmor, genU, imres );
+        if IsInjective( mor ) then
             SetIsInjective( res, true );
         fi;
     else
@@ -326,20 +322,15 @@ function( mor, U )
         pieceU := Pieces( U );
         lenU := Length( pieceU );
         rcomp := ListWithIdenticalEntries( lenU, 0 );
-        rrng := ListWithIdenticalEntries( lenU, 0 );
         for i in [1..lenU] do 
             Pi := pieceU[i];
             geni := GeneratorsOfGroupoid( Pi );
             imgeni := List( geni, g -> ImageElm( mor, g ) );
             pos := PieceNrOfObject( rmor, imgeni[1]![3] );
-            imi := SinglePieceSubgroupoidByGenerators( 
-                       Pieces( rmor )[pos], imgeni );
-            hom := GroupoidHomomorphism( Pi, imi, geni, imgeni );
+            hom := GroupoidHomomorphism( Pi, rmor, geni, imgeni );
             rcomp[i] := hom;
-            rrng[i] := Range( hom );
         od;
-        rng := Groupoid( rrng );
-        res := HomomorphismByUnionNC( U, rng, rcomp );
+        res := HomomorphismByUnionNC( U, rmor, rcomp );
     fi;
     if ( HasIsInjective( mor ) and IsInjective( mor ) ) then
         SetIsInjective( res, true );
@@ -1168,6 +1159,7 @@ function( gpd1, ob2 )
     else 
         return fail;
     fi;
+    SetImagesSource( iso, gpd2 );
     return iso;
 end );
 
@@ -1179,8 +1171,9 @@ InstallMethod( IsomorphismStandardGroupoid, "for a single piece groupoid",
     true, [ IsGroupoid and IsSinglePiece, IsHomogeneousList ], 0,
 function( gpd1, obs )
 
-    local isdp, obs1, obs2, gp, gpd2, gens1, gens2;
+    local isdp, obs1, obs2, gp, gpd2, gens1, gens2, iso;
 
+    Info( InfoGroupoids, 2, "method 1 for IsomorphismStandardGroupoid" );
     isdp := IsDirectProductWithCompleteDigraphDomain( gpd1 );
     if isdp then 
         if ( obs = gpd1!.objects ) then 
@@ -1198,7 +1191,9 @@ function( gpd1, obs )
     gpd2 := SinglePieceGroupoidNC( gp, obs2 );
     gens1 := GeneratorsOfGroupoid( gpd1 );
     gens2 := GeneratorsOfGroupoid( gpd2 );
-    return GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 );
+    iso := GroupoidHomomorphismFromSinglePiece( gpd1, gpd2, gens1, gens2 );
+    SetImagesSource( iso, gpd2 );
+    return iso;
 end );
 
 InstallMethod( IsomorphismStandardGroupoid, "for a groupoid with pieces", 
@@ -1207,6 +1202,7 @@ function( gpd1, obs )
 
     local obs1, len1, obs2, k, pieces, nump, maps, range, i, p, lenp, m;
 
+    Info( InfoGroupoids, 2, "method 2 for IsomorphismStandardGroupoid" );
     obs1 := ObjectList( gpd1 );
     len1 := Length( obs1 );
     obs2 := Set( obs );
@@ -1236,6 +1232,7 @@ function( gpd1, obs )
 
     local isdp, obs1, obs2, gp, gpd2, gens1, gens2;
 
+    Info( InfoGroupoids, 2, "method 3 for IsomorphismStandardGroupoid" );
     isdp := IsDirectProductWithCompleteDigraphDomain( gpd1 );
     if isdp then 
         if ( obs = gpd1!.objects ) then 
@@ -1337,6 +1334,42 @@ function( gpd1, gpd2 )
     SetInverseGeneralMapping( iso, inv );
     return iso;
 end );
+
+#############################################################################
+##
+#M  ReduceRangeToImage
+##
+InstallMethod( ReduceRangeToImage, "for a groupoid homomorphism", true, 
+    [ IsGroupoidHomomorphism ], 0,
+function( hom )
+
+    local  src, rng, img, mgi, mgi2, res, oims, obhoms, gps, gens, maps0, maps;
+
+    src := Source( hom );
+    rng := Range( hom );
+    if IsSinglePiece( src ) then
+        img := ImagesSource( hom );
+        mgi := MappingGeneratorsImages( hom );
+        mgi2 := List( mgi[2], a -> Arrow( rng, a![2], a![3], a![4] ) );
+        res := GroupoidHomomorphismFromSinglePiece( src, img, mgi[1], mgi2 );    
+        return res;
+    elif IsDiscreteDomainWithObjects( src ) then
+        oims := ImagesOfObjects( hom );
+        obhoms := ObjectHomomorphisms( hom );
+        gps := List( obhoms, h -> Range( h ) );
+        img := DiscreteSubgroupoid( rng, gps, oims );
+        gens := GeneratorsOfGroupoid( src );
+        mgi2 := List( gens, a -> ImageElm( hom, a ) );
+        res := GroupoidHomomorphismFromHomogeneousDiscrete( 
+                   src, img, obhoms, oims );
+        return res;
+    else
+        maps0 := MappingToSinglePieceMaps( hom );
+        maps := List( maps0, m -> ReduceRangeToImage( m ) );
+        return HomomorphismByUnion( src, rng, maps );
+    fi;
+end );
+
 
 ## ======================================================================== ##
 ##                     Homogeneous groupoid homomorphisms                   ##

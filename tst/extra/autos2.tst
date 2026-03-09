@@ -24,16 +24,17 @@ groupoid homomorphism :
   [ [(1,2,3,4) : -5 -> -5], [(2,4) : -5 -> -5], [() : -5 -> -4], 
       [() : -5 -> -3], [() : -5 -> -2] ] ]
 gap> isono := IsomorphismNewObjects( Gs4, [-19,-18,-17,-16] );;
-gap> Fs4 := Image( isono ); 
+gap> Fs4 := Range( isono ); 
 single piece groupoid: < s4, [ -19, -18, -17, -16 ] >
 gap> SetName( Fs4, "Fs4" );
 gap> isod8 := RestrictedMappingGroupoids( isono, Gd8 ); 
-groupoid homomorphism : 
+groupoid homomorphism : Gd8 -> Fs4
 [ [ [(1,2,3,4) : -9 -> -9], [(2,4) : -9 -> -9], [(1,2,3) : -9 -> -8], 
       [() : -9 -> -7], [(1,2,3) : -9 -> -6] ], 
   [ [(1,2,3,4) : -19 -> -19], [(2,4) : -19 -> -19], [(1,2,3) : -19 -> -18], 
       [() : -19 -> -17], [(1,2,3) : -19 -> -16] ] ]
-gap> Fd8 := ImagesSource( isod8 );
+gap> resd8 := ReduceRangeToImage( isod8 );;
+gap> Fd8 := Range( resd8 );
 single piece groupoid with rays: < Group( [ (1,2,3,4), (2,4) ] ), 
 [ -19, -18, -17, -16 ], [ (), (1,2,3), (), (1,2,3) ] >
 gap> SetName( Fd8, "Fd8" ); 
@@ -57,7 +58,7 @@ single piece groupoid with rays having:
    root group: Group( [ (1,4,2,3), (3,4) ] )
          rays: [ (), (1,3,2), (), (1,3,2) ]
 gap> resalpha := RestrictedMappingGroupoids( alpha, Gd8 ); 
-groupoid homomorphism : 
+groupoid homomorphism : Gd8 -> Gs4
 [ [ [(1,2,3,4) : -9 -> -9], [(2,4) : -9 -> -9], [(1,2,3) : -9 -> -8], 
       [() : -9 -> -7], [(1,2,3) : -9 -> -6] ], 
   [ [(1,2,3,4) : -8 -> -8], [(2,4) : -8 -> -8], [(1,2,3) : -8 -> -7], 
@@ -84,12 +85,12 @@ single piece groupoid with rays having:
    root group: Group( [ (1,2,3,4), (2,4) ] )
          rays: [ (), (1,2,3), (), (1,2,3) ]
 gap> resbeta := RestrictedMappingGroupoids( beta, Gd8 ); 
-groupoid homomorphism : 
+groupoid homomorphism : Gd8 -> Gs4
 [ [ [(1,2,3,4) : -9 -> -9], [(2,4) : -9 -> -9], [(1,2,3) : -9 -> -8], 
       [() : -9 -> -7], [(1,2,3) : -9 -> -6] ], 
   [ [(1,2,3,4) : -7 -> -7], [(2,4) : -7 -> -7], [(1,2,3) : -7 -> -6], 
       [() : -7 -> -9], [(1,2,3) : -7 -> -8] ] ]
-gap> IsAutomorphismWithObjects( resbeta );
+gap> IsGroupWithObjectsHomomorphism(resbeta);
 true
 gap> Jd8b := ImagesSource( resbeta ); 
 single piece groupoid with rays: < Group( [ (1,2,3,4), (2,4) ] ), 
@@ -103,7 +104,7 @@ groupoid homomorphism : Fd8 -> Fd8
       [() : -17 -> -19], [(1,2,3) : -17 -> -18] ] ]
 gap> IsAutomorphismWithObjects( aut1 ); 
 true
-gap> iso1 := isod8 * aut1;; 
+gap> iso1 := resd8 * aut1;; 
 gap> Display( iso1 ); 
 homomorphism to single piece groupoid: Gd8 -> Fd8
 root group homomorphism:
@@ -134,7 +135,7 @@ groupoid homomorphism : Fd8 -> Fd8
       [() : -19 -> -17], [(1,2,3) : -19 -> -16] ] ]
 gap> IsAutomorphismWithObjects( aut2 ); 
 true
-gap> iso2 := isod8 * aut2;;
+gap> iso2 := resd8 * aut2;;
 gap> Display( iso2 ); 
 homomorphism to single piece groupoid: Gd8 -> Fd8
 root group homomorphism:
@@ -168,7 +169,7 @@ groupoid homomorphism : Fd8 -> Fd8
       [(1,4,3,2) : -19 -> -17], [(1,3,4) : -19 -> -16] ] ]
 gap> IsAutomorphismWithObjects( aut3 ); 
 true
-gap> iso3 := isod8 * aut3;;
+gap> iso3 := resd8 * aut3;;
 gap> Display( iso3 ); 
 homomorphism to single piece groupoid: Gd8 -> Fd8
 root group homomorphism:
@@ -235,7 +236,7 @@ groupoid homomorphism : Fd8 -> Fd8
       [() : -19 -> -17], [(1,2,3) : -19 -> -16] ], 
   [ [(1,2,3,4) : -17 -> -17], [(2,4) : -17 -> -17], [(1,2,4,3) : -17 -> -16], 
       [(1,2,3,4) : -17 -> -19], [(1,4) : -17 -> -18] ] ]
-gap> iso123 := isod8 * aut123;
+gap> iso123 := resd8 * aut123;
 groupoid homomorphism : Gd8 -> Fd8
 [ [ [(1,2,3,4) : -9 -> -9], [(2,4) : -9 -> -9], [(1,2,3) : -9 -> -8], 
       [() : -9 -> -7], [(1,2,3) : -9 -> -6] ], 
@@ -255,7 +256,7 @@ groupoid homomorphism : Fd8 -> Fd8
       [() : -19 -> -17], [(1,2,3) : -19 -> -16] ], 
   [ [(1,2,3,4) : -17 -> -17], [(1,3) : -17 -> -17], [(2,4,3) : -17 -> -16], 
       [(1,2,3,4) : -17 -> -19], [(1,4,2) : -17 -> -18] ] ]
-gap> invd8 := InverseGeneralMapping( isod8 ); 
+gap> invd8 := InverseGeneralMapping( resd8 ); 
 groupoid homomorphism : Fd8 -> Gd8
 [ [ [(1,2,3,4) : -19 -> -19], [(2,4) : -19 -> -19], [(1,2,3) : -19 -> -18], 
       [() : -19 -> -17], [(1,2,3) : -19 -> -16] ], 
