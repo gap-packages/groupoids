@@ -13,8 +13,8 @@ gap> d8 := Group( (5,6,7,8), (5,7) );;
 gap> SetName( a4, "a4" );  SetName( d8, "d8" ); 
 gap> Ga4 := SinglePieceGroupoid( a4, [-15 .. -11] ); 
 single piece groupoid: < a4, [ -15 .. -11 ] >
-gap> Gd8 := Groupoid( d8, [-9,-8,-7] );
-single piece groupoid: < d8, [ -9, -8, -7 ] >
+gap> Gd8 := Groupoid( d8, [-9,-8,-7,-6] );
+single piece groupoid: < d8, [ -9, -8, -7, -6 ] >
 gap> c6 := Group( (11,12,13)(14,15) );;
 gap> SetName( c6, "c6" );
 gap> Gc6 := MagmaWithSingleObject( c6, -10 );
@@ -60,14 +60,14 @@ groupoid with 3 pieces:
     group: a4 = <[ (1,2,3), (2,3,4) ]> >
 < objects: [ -10 ]
     group: c6 = <[ (11,12,13)(14,15) ]> >
-< objects: [ -9, -8, -7 ]
+< objects: [ -9, -8, -7, -6 ]
     group: d8 = <[ (5,6,7,8), (5,7) ]> >
 gap> Pieces( U3 );
 [ Ga4, Gc6, Gd8 ]
 gap> ObjectList( U3 );
-[ -15, -14, -13, -12, -11, -10, -9, -8, -7 ]
-gap> [ Size(Ga4), Size(Gd8), Size(Gc6), Size(U3) ];
-[ 300, 72, 6, 378 ]
+[ -15, -14, -13, -12, -11, -10, -9, -8, -7, -6 ]
+gap> [ Size(Ga4), Size(Gc6), Size(Gd8), Size(U3) ];
+[ 300, 6, 128, 434 ]
 gap> U2 := Groupoid( [ Gf2, Gq8 ] );;
 gap> [ Size(Gf2), Size(Gq8), Size(U2) ];           
 [ infinity, 72, infinity ]
@@ -82,23 +82,23 @@ gap> ObjectList( V3 );
 
 ## SubSection 4.1.5
 gap> HGd8 := HomogeneousGroupoid( Gd8, 
->                [ [-39,-38,-37], [-36,-35,-34], [-33,-32,-31] ] );
+>                [ [-59,-58,-57,-56], [-49,-48,-47,-46], [-39,-38,-37,-36] ] );
 homogeneous groupoid with 3 pieces:
-1:  single piece groupoid: < d8, [ -39, -38, -37 ] >
-2:  single piece groupoid: < d8, [ -36, -35, -34 ] >
-3:  single piece groupoid: < d8, [ -33, -32, -31 ] >
-gap> Size( HGd8 );   ## 8x3x3 + 8x3x3 + 8x3x3
-216
+1:  single piece groupoid: < d8, [ -59, -58, -57, -56 ] >
+2:  single piece groupoid: < d8, [ -49, -48, -47, -46 ] >
+3:  single piece groupoid: < d8, [ -39, -38, -37, -36 ] >
+gap> Size( HGd8 );   ## 8x4x4 + 8x4x4 + 8x4x4
+384
 gap> PieceIsomorphisms( HGd8 );
 [ groupoid homomorphism : 
-    [ [ [(5,6,7,8) : -39 -> -39], [(5,7) : -39 -> -39], [() : -39 -> -38], 
-          [() : -39 -> -37] ], 
-      [ [(5,6,7,8) : -36 -> -36], [(5,7) : -36 -> -36], [() : -36 -> -35], 
-          [() : -36 -> -34] ] ], groupoid homomorphism : 
-    [ [ [(5,6,7,8) : -39 -> -39], [(5,7) : -39 -> -39], [() : -39 -> -38], 
-          [() : -39 -> -37] ], 
-      [ [(5,6,7,8) : -33 -> -33], [(5,7) : -33 -> -33], [() : -33 -> -32], 
-          [() : -33 -> -31] ] ] ]
+    [ [ [(5,6,7,8) : -59 -> -59], [(5,7) : -59 -> -59], [() : -59 -> -58], 
+          [() : -59 -> -57], [() : -59 -> -56] ], 
+      [ [(5,6,7,8) : -49 -> -49], [(5,7) : -49 -> -49], [() : -49 -> -48], 
+          [() : -49 -> -47], [() : -49 -> -46] ] ], groupoid homomorphism : 
+    [ [ [(5,6,7,8) : -59 -> -59], [(5,7) : -59 -> -59], [() : -59 -> -58], 
+          [() : -59 -> -57], [() : -59 -> -56] ], 
+      [ [(5,6,7,8) : -39 -> -39], [(5,7) : -39 -> -39], [() : -39 -> -38], 
+          [() : -39 -> -37], [() : -39 -> -36] ] ] ]
 gap> HDc6 := HomogeneousDiscreteGroupoid( c6, [-27..-24] ); 
 homogeneous, discrete groupoid: < c6, [ -27 .. -24 ] >
 gap> Size( HDc6 );   ## 6x4
@@ -120,7 +120,7 @@ true
 ## SubSection 4.1.6
 gap> prod := DirectProductOp( [Gd8,Gc6], Gd8 );
 single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), 
-[ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ] >
+[ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ], [ -6, -10 ] ] >
 gap> Embedding( prod, 2 );                        
 groupoid homomorphism : 
 [ [ [(11,12,13)(14,15) : -10 -> -10] ], 
@@ -131,15 +131,16 @@ rec( embeddings := [ , groupoid homomorphism :
         [ [ [(11,12,13)(14,15) : -10 -> -10] ], 
           [ [(5,6,7)(8,9) : [ -9, -10 ] -> [ -9, -10 ]] ] ] ], first := Gd8, 
   groupoids := [ Gd8, Gc6 ], groups := [ d8, c6 ], 
-  objectlists := [ [ -9, -8, -7 ], [ -10 ] ], projections := [  ] )
+  objectlists := [ [ -9, -8, -7, -6 ], [ -10 ] ], projections := [  ] )
 gap> Projection( prod, 1 );  
 groupoid homomorphism : 
 [ [ [(1,2,3,4) : [ -9, -10 ] -> [ -9, -10 ]], 
       [(1,3) : [ -9, -10 ] -> [ -9, -10 ]], 
       [(5,6,7)(8,9) : [ -9, -10 ] -> [ -9, -10 ]], 
-      [() : [ -9, -10 ] -> [ -8, -10 ]], [() : [ -9, -10 ] -> [ -7, -10 ]] ], 
+      [() : [ -9, -10 ] -> [ -8, -10 ]], [() : [ -9, -10 ] -> [ -7, -10 ]], 
+      [() : [ -9, -10 ] -> [ -6, -10 ]] ], 
   [ [(5,6,7,8) : -9 -> -9], [(5,7) : -9 -> -9], [() : -9 -> -9], 
-      [() : -9 -> -8], [() : -9 -> -7] ] ]
+      [() : -9 -> -8], [() : -9 -> -7], [() : -9 -> -6] ] ]
 
 ## Section 4.2 : Groupoid elements: stars; costars; homsets ###
 
@@ -184,17 +185,19 @@ gap> [ Order( i8 ), Order(loop) ];
 gap> star9 := ObjectStar( Gd8, -9 );
 <star at -9 with vertex group d8>
 gap> Size( star9 ); 
-24
+32
 gap> ## print the elements in star9 from 19 to 24
 gap> iter := Iterator( star9 );;              
-gap> for i in [1..18] do a := NextIterator( iter ); od; 
-gap> for i in [19..24] do Print( i, " : ", NextIterator( iter ), "\n" ); od; 
-19 : [(5,6,7,8) : -9 -> -9]
-20 : [(5,6,7,8) : -9 -> -8]
-21 : [(5,6,7,8) : -9 -> -7]
-22 : [(5,6)(7,8) : -9 -> -9]
-23 : [(5,6)(7,8) : -9 -> -8]
-24 : [(5,6)(7,8) : -9 -> -7]
+gap> for i in [1..24] do a := NextIterator( iter ); od; 
+gap> for i in [25..32] do Print( i, " : ", NextIterator( iter ), "\n" ); od; 
+25 : [(5,6,7,8) : -9 -> -9]
+26 : [(5,6,7,8) : -9 -> -8]
+27 : [(5,6,7,8) : -9 -> -7]
+28 : [(5,6,7,8) : -9 -> -6]
+29 : [(5,6)(7,8) : -9 -> -9]
+30 : [(5,6)(7,8) : -9 -> -8]
+31 : [(5,6)(7,8) : -9 -> -7]
+32 : [(5,6)(7,8) : -9 -> -6]
 gap> costar12 := ObjectCostar( Ga4, -12 );
 <costar at -12 with vertex group a4>
 gap> Size( costar12 );
@@ -229,15 +232,15 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 ### Section 4.3 : Subgroupoids ###
 
 ## SubSection 4.3.2 : SubgroupoidByObjects/Subgroup
-gap> Ha4 := SubgroupoidByObjects( Ga4, [-14,-13,-12] );  
-single piece groupoid: < a4, [ -14, -13, -12 ] >
+gap> Ha4 := SubgroupoidByObjects( Ga4, [-14,-13,-12,-11] );
+single piece groupoid: < a4, [ -14, -13, -12, -11 ] >
 gap> SetName( Ha4, "Ha4" );
 gap> IsSubgroupoid( Ga4, Ha4 );
 true
 gap> c3a := Subgroup( a4, [ (1,2,3) ] );; 
 gap> SetName( c3a, "c3a" );
 gap> Hc3a := SubgroupoidBySubgroup( Ha4, c3a );
-single piece groupoid: < c3a, [ -14, -13, -12 ] >
+single piece groupoid: < c3a, [ -14, -13, -12, -11 ] >
 gap> [ IsWideSubgroupoid( Ga4, Ha4 ), IsWideSubgroupoid( Ha4, Hc3a ) ];
 [ false, true ]
 gap> [ IsFullSubgroupoid( Ga4, Ha4 ), IsFullSubgroupoid( Ha4, Hc3a ) ];
@@ -279,12 +282,12 @@ perm single piece groupoid: Ga4
     group: a4 = <[ (1,2,3), (2,3,4) ]>
 gap> c3b := Subgroup( a4, [ (1,2,4) ] );;
 gap> SetName( c3b, "c3b" );
-gap> pieces := [ [ c3a, [-14] ], [ c3b, [-13,-12], [(),(1,4)(2,3)] ] ];;
+gap> pieces := [ [ c3a, [-14,-11] ], [ c3b, [-13,-12], [(),(1,4)(2,3)] ] ];;
 gap> Jc3 := Subgroupoid( Ha4, pieces );;
 gap> SetName( Jc3, "Jc3" );
 gap> Display( Jc3 );
 groupoid with 2 pieces:
-< objects: [ -14 ]
+< objects: [ -14, -11 ]
     group: c3a = <[ (1,2,3) ]> >
 <     objects: [ -13, -12 ]
    parent gpd: single piece groupoid: < a4, [ -13, -12 ] >
@@ -327,19 +330,20 @@ groupoid homomorphism : JU2b -> Gq8
 [ [ [ [x : -17 -> -17], [y : -17 -> -17], [y2 : -17 -> -17] ], 
       [ [x : -17 -> -17], [y : -17 -> -17], [y2 : -17 -> -17] ] ] ]
 groupoid homomorphism : 
-[ [ [ [(1,2,3) : -14 -> -14] ], [ [(1,2,3) : -14 -> -14] ] ], 
+[ [ [ [(1,2,3) : -14 -> -14], [() : -14 -> -11] ], 
+      [ [(1,2,3) : -14 -> -14], [() : -14 -> -11] ] ], 
   [ [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ], 
       [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ] ] ]
 
 ## SubSection 4.3.7
 gap> Ic3 := FullTrivialSubgroupoid( Jc3 );
 groupoid with 2 pieces:
-1:  single piece groupoid: < id(c3a), [ -14 ] >
+1:  single piece groupoid: < id(c3a), [ -14, -11 ] >
 2:  single piece groupoid: < id(c3b), [ -13, -12 ] >
 gap> ParentList( Ic3);              
 [ Ga4, Ha4, Jc3 ]
 gap> DiscreteTrivialSubgroupoid( Gd8 );
-homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7 ] >
+homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7, -6 ] >
 
 ## SubSection 4.3.8
 gap> U3;
@@ -355,10 +359,11 @@ groupoid with 4 pieces:
 gap> HomogeneousDiscreteSubgroupoid( Ga4, k4, [-15,-13,-11] ); 
 homogeneous, discrete groupoid: < a4, [ -15, -13, -11 ] >
 gap> MaximalDiscreteSubgroupoid( Jc3 );
-groupoid with 3 pieces:
+groupoid with 4 pieces:
 1:  single piece groupoid: < c3a, [ -14 ] >
 2:  single piece groupoid: < c3b, [ -13 ] >
 3:  single piece groupoid: < Group( [ (1,4,3) ] ), [ -12 ] >
+4:  single piece groupoid: < c3a, [ -11 ] >
 
 ## SubSection 4.3.9
 gap> a1 := Arrow( Gk4, (1,2)(3,4), -15, -15 );;
@@ -390,14 +395,17 @@ gap> Perform( re6, Display );
 [() : -12 -> -12]
 gap> rcra4 := RightCosetRepresentatives( Ha4, Jc3 );
 [ [() : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [(1,3)(2,4) : -14 -> -14], 
-  [(1,4)(2,3) : -14 -> -14], [() : -14 -> -13], [(1,2)(3,4) : -14 -> -13], 
-  [(1,3)(2,4) : -14 -> -13], [(1,4)(2,3) : -14 -> -13], [() : -14 -> -12], 
-  [(1,2)(3,4) : -14 -> -12], [(1,3)(2,4) : -14 -> -12], 
-  [(1,4)(2,3) : -14 -> -12], [() : -13 -> -13], [(1,2)(3,4) : -13 -> -13], 
-  [(1,3)(2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -13], [() : -12 -> -12], 
-  [(1,2)(3,4) : -12 -> -12], [(1,3)(2,4) : -12 -> -12], 
-  [(1,4)(2,3) : -12 -> -12], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
-  [(1,3)(2,4) : -13 -> -14], [(1,4)(2,3) : -13 -> -14] ]
+  [(1,4)(2,3) : -14 -> -14], [() : -11 -> -11], [(1,2)(3,4) : -11 -> -11], 
+  [(1,3)(2,4) : -11 -> -11], [(1,4)(2,3) : -11 -> -11], [() : -14 -> -13], 
+  [(1,2)(3,4) : -14 -> -13], [(1,3)(2,4) : -14 -> -13], 
+  [(1,4)(2,3) : -14 -> -13], [() : -14 -> -12], [(1,2)(3,4) : -14 -> -12], 
+  [(1,3)(2,4) : -14 -> -12], [(1,4)(2,3) : -14 -> -12], [() : -13 -> -13], 
+  [(1,2)(3,4) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], 
+  [(1,4)(2,3) : -13 -> -13], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 
+  [(1,3)(2,4) : -12 -> -12], [(1,4)(2,3) : -12 -> -12], [() : -13 -> -14], 
+  [(1,2)(3,4) : -13 -> -14], [(1,3)(2,4) : -13 -> -14], 
+  [(1,4)(2,3) : -13 -> -14], [() : -13 -> -11], [(1,2)(3,4) : -13 -> -11], 
+  [(1,3)(2,4) : -13 -> -11], [(1,4)(2,3) : -13 -> -11] ]
 gap> le6 := LeftCoset( Ha4, Jc3, e6 ); 
 <left coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
 gap> Perform( le6, Display );
@@ -409,14 +417,17 @@ gap> Perform( le6, Display );
 [(1,3,2) : -13 -> -12]
 gap> lcra4 := LeftCosetRepresentatives( Ha4, Jc3 );
 [ [() : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [(1,3)(2,4) : -14 -> -14], 
-  [(1,4)(2,3) : -14 -> -14], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
-  [(1,3)(2,4) : -13 -> -14], [(1,4)(2,3) : -13 -> -14], [() : -12 -> -14], 
-  [(1,2)(3,4) : -12 -> -14], [(1,3)(2,4) : -12 -> -14], 
-  [(1,4)(2,3) : -12 -> -14], [() : -13 -> -13], [(1,2)(3,4) : -13 -> -13], 
-  [(1,3)(2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -13], [() : -12 -> -12], 
-  [(1,2)(3,4) : -12 -> -12], [(1,3)(2,4) : -12 -> -12], 
-  [(1,4)(2,3) : -12 -> -12], [() : -14 -> -13], [(1,2)(3,4) : -14 -> -13], 
-  [(1,3)(2,4) : -14 -> -13], [(1,4)(2,3) : -14 -> -13] ]
+  [(1,4)(2,3) : -14 -> -14], [() : -11 -> -11], [(1,2)(3,4) : -11 -> -11], 
+  [(1,3)(2,4) : -11 -> -11], [(1,4)(2,3) : -11 -> -11], [() : -13 -> -14], 
+  [(1,2)(3,4) : -13 -> -14], [(1,3)(2,4) : -13 -> -14], 
+  [(1,4)(2,3) : -13 -> -14], [() : -12 -> -14], [(1,2)(3,4) : -12 -> -14], 
+  [(1,3)(2,4) : -12 -> -14], [(1,4)(2,3) : -12 -> -14], [() : -13 -> -13], 
+  [(1,2)(3,4) : -13 -> -13], [(1,3)(2,4) : -13 -> -13], 
+  [(1,4)(2,3) : -13 -> -13], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 
+  [(1,3)(2,4) : -12 -> -12], [(1,4)(2,3) : -12 -> -12], [() : -14 -> -13], 
+  [(1,2)(3,4) : -14 -> -13], [(1,3)(2,4) : -14 -> -13], 
+  [(1,4)(2,3) : -14 -> -13], [() : -11 -> -13], [(1,2)(3,4) : -11 -> -13], 
+  [(1,3)(2,4) : -11 -> -13], [(1,4)(2,3) : -11 -> -13] ]
 gap> lcr11 := LeftCosetRepresentativesFromObject( Ha4, Jc3, -12 );
 [ [() : -12 -> -14], [(1,2)(3,4) : -12 -> -14], [(1,3)(2,4) : -12 -> -14], 
   [(1,4)(2,3) : -12 -> -14], [() : -12 -> -12], [(1,2)(3,4) : -12 -> -12], 

@@ -780,10 +780,12 @@ function( arg )
             Info( InfoGroupoids, 1, "part ", part, "not an mwo" );
             return fail;
         fi;
-        if ( HasIsSinglePiece(part) and IsSinglePiece(part) ) then
-            Add( pieces, part );
-        else
-            Append( pieces, Pieces( part ) );
+        if not ( part in pieces ) then
+            if ( HasIsSinglePiece(part) and IsSinglePiece(part) ) then
+                Add( pieces, part );
+            else
+                Append( pieces, Pieces( part ) );
+            fi;
         fi;
     od;
     obs := [ ];

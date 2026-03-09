@@ -49,6 +49,11 @@ DeclareOperation( "IsomorphismStandardGroupoid",
 ##  
 DeclareOperation( "IsomorphismGroupoids", [ IsGroupoid, IsGroupoid ] );
 
+############################################################################# 
+## 
+#O  ReduceRangeToImage( <hom> )
+##  
+DeclareOperation( "ReduceRangeToImage", [ IsGroupoidHomomorphism ] );
 
 ####################### functions from the 08.05 paper ####################### 
 

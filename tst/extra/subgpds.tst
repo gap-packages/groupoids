@@ -40,24 +40,19 @@ gap> Da4 := Pieces( Fa4 )[2];
 single piece groupoid with rays: < a4, [ -4 .. -1 ], 
 [ (), (2,3), (2,4), (3,4) ] >
 gap> SetName( Da4, "Da4" );
-gap> resF := RestrictedMappingGroupoids( mor, Fa4 );
-groupoid homomorphism from several pieces : 
-groupoid homomorphism : 
-[ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [(1,2) : -9 -> -8], 
-      [(1,3) : -9 -> -7], [(1,4) : -9 -> -6] ], 
-  [ [(2,3,4) : -11 -> -11], [(1,3,4) : -11 -> -11], [(2,3) : -11 -> -12], 
-      [(2,4) : -11 -> -13], [(1,2) : -11 -> -14] ] ]
-groupoid homomorphism : 
-[ [ [(1,2,3) : -4 -> -4], [(2,3,4) : -4 -> -4], [(2,3) : -4 -> -3], 
-      [(2,4) : -4 -> -2], [(3,4) : -4 -> -1] ], 
-  [ [(2,3,4) : -16 -> -16], [(1,3,4) : -16 -> -16], [(3,4) : -16 -> -17], 
-      [(1,3) : -16 -> -18], [(1,4) : -16 -> -19] ] ]
+gap> resF0 := RestrictedMappingGroupoids( mor, Fa4 );;
+gap> resF := ReduceRangeToImage( resF0 );
+groupoid homomorphism : Fa4 -> Hs4
+[ [ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [(1,2) : -9 -> -8], 
+          [(1,3) : -9 -> -7], [(1,4) : -9 -> -6] ], 
+      [ [(2,3,4) : -11 -> -11], [(1,3,4) : -11 -> -11], [(2,3) : -11 -> -12], 
+          [(2,4) : -11 -> -13], [(1,2) : -11 -> -14] ] ], 
+  [ [ [(1,2,3) : -4 -> -4], [(2,3,4) : -4 -> -4], [(2,3) : -4 -> -3], 
+          [(2,4) : -4 -> -2], [(3,4) : -4 -> -1] ], 
+      [ [(2,3,4) : -16 -> -16], [(1,3,4) : -16 -> -16], [(3,4) : -16 -> -17], 
+          [(1,3) : -16 -> -18], [(1,4) : -16 -> -19] ] ] ]
 gap> Ka4 := Range( resF );
-groupoid with 2 pieces:
-1:  single piece groupoid with rays: < Group( [ (1,2,3), (1,4,3) ] ), 
-[ -19, -18, -17, -16 ], [ (), (1,4,3), (1,3,4), (1,4) ] >
-2:  single piece groupoid with rays: < Group( [ (1,3,4), (2,3,4) ] ), 
-[ -14, -13, -12, -11 ], [ (), (1,4,2), (1,3,2), (1,2) ] >
+Hs4
 gap> SetName( Ka4, "Ka4" );
 gap> b := Arrow( Fa4, (1,2,3), -7, -8 );;
 gap> ImageElm( resF, b );
@@ -78,18 +73,17 @@ groupoid with 2 pieces:
 gap> SetName( Uc3, "Uc3" );
 gap> IsSubgroupoid( Fa4, Uc3 );
 true
-gap> resU := RestrictedMappingGroupoids( resF, Uc3 );
-groupoid homomorphism from several pieces : 
-groupoid homomorphism : 
-[ [ [(2,3,4) : -9 -> -9], [(1,2) : -9 -> -8], [(1,3) : -9 -> -7], 
-      [(1,4) : -9 -> -6] ], 
-  [ [(1,3,4) : -11 -> -11], [(2,3) : -11 -> -12], [(2,4) : -11 -> -13], 
-      [(1,2) : -11 -> -14] ] ]
-groupoid homomorphism : 
-[ [ [(2,3,4) : -4 -> -4], [(2,3) : -4 -> -3], [(2,4) : -4 -> -2], 
-      [(3,4) : -4 -> -1] ], 
-  [ [(1,3,4) : -16 -> -16], [(3,4) : -16 -> -17], [(1,3) : -16 -> -18], 
-      [(1,4) : -16 -> -19] ] ]
+gap> resU0 := RestrictedMappingGroupoids( resF, Uc3 );;
+gap> resU := ReduceRangeToImage( resU0 );
+groupoid homomorphism : Uc3 -> Hs4
+[ [ [ [(2,3,4) : -9 -> -9], [(1,2) : -9 -> -8], [(1,3) : -9 -> -7], 
+          [(1,4) : -9 -> -6] ], 
+      [ [(1,3,4) : -11 -> -11], [(2,3) : -11 -> -12], [(2,4) : -11 -> -13], 
+          [(1,2) : -11 -> -14] ] ], 
+  [ [ [(2,3,4) : -4 -> -4], [(2,3) : -4 -> -3], [(2,4) : -4 -> -2], 
+          [(3,4) : -4 -> -1] ], 
+      [ [(1,3,4) : -16 -> -16], [(3,4) : -16 -> -17], [(1,3) : -16 -> -18], 
+          [(1,4) : -16 -> -19] ] ] ]
 
 gap> Ca4 := SubgroupoidByObjects( Fa4, [-8,-7,-3,-2] ); 
 groupoid with 2 pieces:
@@ -98,32 +92,32 @@ groupoid with 2 pieces:
 2:  single piece groupoid with rays: < Group( [ (1,3,2), (2,4,3) ] ), 
 [ -3, -2 ], [ (), (2,3,4) ] >
 gap> SetName( Ca4, "Ca4" );
-gap> resC := RestrictedMappingGroupoids( resF, Ca4 );
-groupoid homomorphism from several pieces : 
-groupoid homomorphism : 
-[ [ [(1,3,2) : -8 -> -8], [(1,3,4) : -8 -> -8], [(1,2,3) : -8 -> -7] ], 
-  [ [(2,4,3) : -12 -> -12], [(1,2,4) : -12 -> -12], [(2,3,4) : -12 -> -13] ] ]
-groupoid homomorphism : 
-[ [ [(1,3,2) : -3 -> -3], [(2,4,3) : -3 -> -3], [(2,3,4) : -3 -> -2] ], 
-  [ [(2,4,3) : -17 -> -17], [(1,4,3) : -17 -> -17], [(1,3,4) : -17 -> -18] ] ]
+gap> resC0 := RestrictedMappingGroupoids( resF, Ca4 );;
+gap> resC := ReduceRangeToImage( resC0 );
+groupoid homomorphism : Ca4 -> Hs4
+[ [ [ [(1,3,2) : -8 -> -8], [(1,3,4) : -8 -> -8], [(1,2,3) : -8 -> -7] ], 
+      [ [(2,4,3) : -12 -> -12], [(1,2,4) : -12 -> -12], 
+          [(2,3,4) : -12 -> -13] ] ], 
+  [ [ [(1,3,2) : -3 -> -3], [(2,4,3) : -3 -> -3], [(2,3,4) : -3 -> -2] ], 
+      [ [(2,4,3) : -17 -> -17], [(1,4,3) : -17 -> -17], 
+          [(1,3,4) : -17 -> -18] ] ] ]
 gap> Ma4 := MaximalDiscreteSubgroupoid( Ca4 ); 
 homogeneous, discrete groupoid: < Group( [ (1,3,2), (1,3,4) ] ), 
 [ -8, -7, -3, -2 ] >
 gap> SetName( Ma4, "Ma4" );
-gap> resM := RestrictedMappingGroupoids( resC, Ma4 );
-groupoid homomorphism from several pieces : 
-groupoid homomorphism : 
-[ [ [(1,3,2) : -8 -> -8], [(1,3,4) : -8 -> -8] ], 
-  [ [(2,4,3) : -12 -> -12], [(1,2,4) : -12 -> -12] ] ]
-groupoid homomorphism : 
-[ [ [(1,3,2) : -7 -> -7], [(1,3,4) : -7 -> -7] ], 
-  [ [(2,4,3) : -13 -> -13], [(1,2,4) : -13 -> -13] ] ]
-groupoid homomorphism : 
-[ [ [(1,3,2) : -3 -> -3], [(1,3,4) : -3 -> -3] ], 
-  [ [(2,4,3) : -17 -> -17], [(1,2,4) : -17 -> -17] ] ]
-groupoid homomorphism : 
-[ [ [(1,3,2) : -2 -> -2], [(1,3,4) : -2 -> -2] ], 
-  [ [(2,4,3) : -18 -> -18], [(1,2,4) : -18 -> -18] ] ]
+gap> resM0 := RestrictedMappingGroupoids( resC, Ma4 );;
+gap> resM := ReduceRangeToImage( resM0 );
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -8, -7, -3, -2 ] -> [ -12, -13, -17, -18 ]
+object homomorphisms:
+GroupHomomorphismByImages( Group( [ (1,3,2), (1,3,4) ] ), Group( 
+[ (2,4,3), (1,2,4) ] ), [ (1,3,2), (1,3,4) ], [ (2,4,3), (1,2,4) ] )
+GroupHomomorphismByImages( Group( [ (1,3,2), (1,3,4) ] ), Group( 
+[ (2,4,3), (1,2,4) ] ), [ (1,3,2), (1,3,4) ], [ (2,4,3), (1,2,4) ] )
+GroupHomomorphismByImages( Group( [ (1,3,2), (1,3,4) ] ), Group( 
+[ (2,4,3), (1,2,4) ] ), [ (1,3,2), (1,3,4) ], [ (2,4,3), (1,2,4) ] )
+GroupHomomorphismByImages( Group( [ (1,3,2), (1,3,4) ] ), Group( 
+[ (2,4,3), (1,2,4) ] ), [ (1,3,2), (1,3,4) ], [ (2,4,3), (1,2,4) ] )
 gap> Mc3 := MaximalDiscreteSubgroupoid( Uc3 ); 
 groupoid with 8 pieces:
 1:  single piece groupoid: < c3, [ -9 ] >

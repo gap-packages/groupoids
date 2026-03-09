@@ -16,6 +16,7 @@ function( gpd, oims )
 
     local obs, gens, ngens, images, i, a, pt, ph, mor, L;
 
+    Info( InfoGroupoids, 1, "method 1 for GroupoidAutomorphismByObjectPermNC" );
     obs := gpd!.objects;
     gens := GeneratorsOfGroupoid( gpd );
     ngens := Length( gens );
@@ -47,9 +48,10 @@ function( gpd, oims )
 
     local iso, inv, sgpd, aut;
 
+    Info( InfoGroupoids, 1, "method 2 for GroupoidAutomorphismByObjectPermNC" );
     iso := IsomorphismStandardGroupoid( gpd, ObjectList( gpd ) );
     inv := InverseGeneralMapping( iso );
-    sgpd := Image( iso );
+    sgpd := Range( iso );
     aut := GroupoidAutomorphismByObjectPermNC( sgpd, oims );
     return iso * aut * inv;
 end );
@@ -61,6 +63,7 @@ function( gpd, oims )
 
     local gpd1, gp, id, homs, mor, L;
 
+    Info( InfoGroupoids, 1, "method 3 for GroupoidAutomorphismByObjectPermNC" );
     gpd1 := Pieces( gpd )[1];
     gp := gpd1!.magma;
     id := IdentityMapping( gp );
@@ -85,6 +88,9 @@ function( gpd, oims )
     local obs, pos;
 
     obs := ObjectList( gpd );
+    if ( Length( obs ) <> Length( oims ) ) then
+        Error( "obs and oims do not have the same length" );
+    fi;
     pos := PermList( List( oims, o -> Position( obs, o ) ) );
     if ( pos = fail ) then 
         Error( "object images not a permutation of the objects" );
