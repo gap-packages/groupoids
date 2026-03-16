@@ -59,8 +59,7 @@ For the various structures we have:
 Among the groupoids constructed earlier are the single piece 
 <C>Gd8</C> and the five component union <C>U5</C>: 
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> CategoriesOfObject( Gd8 );
 [ "IsListOrCollection", "IsCollection", "IsExtLElement", 
   "CategoryCollections(IsExtLElement)", "IsExtRElement", 
@@ -102,13 +101,11 @@ gap> RepresentationsOfObject( Gd8 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 gap> RepresentationsOfObject( U5 ); 
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPiecesRep" ]
-]]>
-</Example>
+]]></Example>
  
 Similarly, for arrows, we have: 
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> e1;
 [(5,6,7,8) : -9 -> -8]
 gap> CategoriesOfObject( e1 );
@@ -118,8 +115,7 @@ gap> CategoriesOfObject( e1 );
   "IsMultiplicativeElementWithObjectsAndInverses", "IsGroupoidElement" ]
 gap> FamilyObj( e1 );
 <Family: "IsGroupoidElementFamily">
-]]>
-</Example>
+]]></Example>
 </Section>
 
 
@@ -166,8 +162,7 @@ and for unions of such mappings:
 In previous chapters, <C>hom9</C> was a homomorphism 
 from <C>Gd8</C> to <C>Kk4</C>; 
 and  <C>aut1</C> was an automorphism of <C>Ha4</C>. 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> hom9;
 groupoid homomorphism : Gd8 -> Kk4
 [ [ [(5,6,7,8) : -9 -> -9], [(5,7) : -9 -> -9], [() : -9 -> -8], 
@@ -226,8 +221,7 @@ gap> KnownAttributesOfObject( aut1 );
 [ "Order", "Range", "Source", "MappingGeneratorsImages", "AutomorphismDomain",
   "MappingToSinglePieceData", "ImagesOfObjects", "ImageElementsOfRays", 
   "RootGroupHomomorphism" ]
-]]>
-</Example>
+]]></Example>
 
 
 </Section>

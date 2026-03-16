@@ -96,8 +96,7 @@ they construct.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a4 := Group( (1,2,3), (2,3,4) );; 
 gap> d8 := Group( (5,6,7,8), (5,7) );;
 gap> SetName( a4, "a4" );  SetName( d8, "d8" ); 
@@ -112,8 +111,7 @@ single piece groupoid: < c6, [ -10 ] >
 gap> IsGroupoid( Gc6 ); 
 true
 gap> SetName( Ga4, "Ga4" );  SetName( Gd8, "Gd8" );  SetName( Gc6, "Gc6" );  
-]]>
-</Example>
+]]></Example>
 
 More operations for constructing groupoids are described in the
 following subsections:
@@ -160,8 +158,7 @@ the objects need not be integers.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ObjectList( Ga4 );
 [ -15 .. -11 ] 
 gap> f2 := FreeGroup(2);;
@@ -173,8 +170,7 @@ gap> Gabc := Groupoid( c6, [ "a", "b", "c" ] );
 single piece groupoid: < c6, [ "a", "b", "c" ] >
 gap> Arrow( Gabc, (14,15), "c", "b" );
 [(14,15) : c -> b]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Prop Name="IsPermGroupoid"
@@ -199,8 +195,7 @@ See section <Ref Sect="sec-mxreps"/> for matrix representations of groupoids.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> f2 := FreeGroup( 2 );;
 gap> Gf2 := Groupoid( f2, -20 );;
 gap> SetName( f2, "f2" );  SetName( Gf2, "Gf2" ); 
@@ -215,8 +210,7 @@ gap> SetName( sl43, "sl43" );  SetName( Gsl43, "Gsl43" );
 gap> [ IsMatrixGroupoid( Gsl43 ), IsFpGroupoid( Gf2 ), IsFreeGroupoid( Gf2 ),
 >      IsPcGroupoid( Gq8 ), IsPermGroupoid( Ga4 ) ]; 
 [ true, true, true, true, true ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-union-gpds">
    <Oper Name="UnionOfPieces" 
@@ -250,8 +244,7 @@ we just require that the object lists in the new union are disjoint.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U3 := UnionOfPieces( [ Ga4, Gc6, Gd8 ] );;
 gap> Display( U3 );
 groupoid with 3 pieces:
@@ -278,8 +271,7 @@ groupoid with 3 pieces:
 [ Gq8, Ga4, Gc6 ]
 gap> ObjectList( V3 );             
 [ -19, -18, -17, -15, -14, -13, -12, -11, -10 ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-homogeneous">
    <Oper Name="HomogeneousGroupoid" 
@@ -323,8 +315,7 @@ In the latter case a separate representation
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> HGd8 := HomogeneousGroupoid( Gd8, 
 >                [ [-59,-58,-57,-56], [-49,-48,-47,-46], [-39,-38,-37,-36] ] );
 homogeneous groupoid with 3 pieces:
@@ -360,8 +351,7 @@ gap> ans :=
 >   "IsDiscreteDomainWithObjects", "IsHomogeneousDomainWithObjects" ];;
 gap> ForAll( ans, a -> ( a in ktpo ) ); 
 true
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-directprod">
    <Oper Name="DirectProductOp" 
@@ -383,8 +373,7 @@ See Chapter <Ref Sect="chap-gpdhom"/> for details of groupoid homomorphisms.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> prod := DirectProductOp( [Gd8,Gc6], Gd8 );
 single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), 
 [ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ], [ -6, -10 ] ] >
@@ -408,8 +397,7 @@ groupoid homomorphism :
       [() : [ -9, -10 ] -> [ -6, -10 ]] ], 
   [ [(5,6,7,8) : -9 -> -9], [(5,7) : -9 -> -9], [() : -9 -> -9], 
       [() : -9 -> -8], [() : -9 -> -7], [() : -9 -> -6] ] ]
-]]>
-</Example>
+]]></Example>
 
 </Section>
 
@@ -451,8 +439,7 @@ then the value <C>fail</C> is returned.
 </Description>
 </ManSection>
 <Index>* for groupoid elements</Index>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> e1 := GroupoidElement( Gd8, (5,6,7,8), -9, -8 );
 [(5,6,7,8) : -9 -> -8]
 gap> e2 := Arrow( Gd8, (5,7), -8, -7 );
@@ -476,8 +463,7 @@ gap> loop := e1e2*e3;
 [(5,8,7,6) : -9 -> -9]
 gap> loop^2;
 [(5,7)(6,8) : -9 -> -9]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="IdentityArrow"
@@ -493,14 +479,12 @@ so that <M>e*e^{-1}=1_p</M> and <M>e^{-1}*e = 1_q</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> i8 := IdentityArrow( Gd8, -8 );
 [() : -8 -> -8]
 gap> [ e1*i8, i8*e1, e1^-1]; 
 [ [(5,6,7,8) : -9 -> -8], fail, [(5,8,7,6) : -8 -> -9] ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Attr Name="Order"
@@ -513,14 +497,12 @@ group element.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> [ i8, loop ]; 
 [ [() : -8 -> -8], [(5,8,7,6) : -9 -> -9] ]
 gap> [ Order( i8 ), Order(loop) ];
 [ 1, 4 ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="ObjectStar"
@@ -550,8 +532,7 @@ for which an <C>Iterator</C> is provided.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> star9 := ObjectStar( Gd8, -9 );
 <star at -9 with vertex group d8>
 gap> Size( star9 ); 
@@ -585,8 +566,7 @@ gap> Perform( hsetq8, Display );
 [x*y2 : -18 -> -17]
 [y*y2 : -18 -> -17]
 [x*y*y2 : -18 -> -17]
-]]>
-</Example>
+]]></Example>
 
 <Subsection Label="subsec-common-objects">
 <Heading>Groupoids with objects in common</Heading>
@@ -597,8 +577,7 @@ if <M>a_1 = (g_1 : o_1 \to o) \in G_1</M>
 and <M>a_2 = (g_2 : o \to o_2) \in G_2</M>
 then any attempt to compose <M>a_1 * a_2</M> will not succeed.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> c5 := Group( (11,12,13,14,15) );;
 gap> Gc5 := Groupoid( c5, [ -11, -10, -9] );;
 gap> e3;
@@ -610,8 +589,7 @@ gap> e3 * e5;
 #I  arrows not in the same groupoid or subgroupoid
 fail
 gap> SetInfoLevel( InfoGroupoids, 0 );; 
-]]>
-</Example>
+]]></Example>
 
 </Subsection>
 
@@ -665,8 +643,7 @@ with root group <C>sgp</C> and containing the rays of <C>gpd</C>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Ha4 := SubgroupoidByObjects( Ga4, [-14,-13,-12,-11] );
 single piece groupoid: < a4, [ -14, -13, -12, -11 ] >
 gap> SetName( Ha4, "Ha4" );
@@ -680,8 +657,7 @@ gap> [ IsWideSubgroupoid( Ga4, Ha4 ), IsWideSubgroupoid( Ha4, Hc3a ) ];
 [ false, true ]
 gap> [ IsFullSubgroupoid( Ga4, Ha4 ), IsFullSubgroupoid( Ha4, Hc3a ) ];
 [ true, false ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-parent-list">
    <Attr Name="ParentList"
@@ -694,12 +670,10 @@ of <M>G</M> (or <M>[~]</M> if none exists) and <M>G</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ParentList( Hc3a);
 [ Ga4, Ha4 ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec=subgpd-rays">
    <Oper Name="SubgroupoidWithRays"
@@ -731,8 +705,7 @@ both <C>Gk4</C> and <C>Gc2</C>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );;
 gap> SetName( k4, "k4" );
 gap> Gk4 := SubgroupoidWithRays( Ga4, k4, 
@@ -756,8 +729,7 @@ gap> c2 := Subgroup( k4, [ (1,4)(2,3) ] );;  SetName( c2, "c2" );
 gap> Gc2 := Subgroupoid( Gk4, c2, [ (), (1,3,4), (1,4,3), (1,2,3), (1,3,2) ] );
 single piece groupoid with rays: < c2, [ -15 .. -11 ], 
 [ (), (1,3,4), (1,4,3), (1,2,3), (1,3,2) ] >
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-subgpd-pieces">
    <Oper Name="SubgroupoidByPieces"
@@ -773,8 +745,7 @@ In the example both types of piece are used.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Display( Ga4 );
 perm single piece groupoid: Ga4
   objects: [ -15 .. -11 ]
@@ -812,8 +783,7 @@ gap> [ IsWideSubgroupoid(U2,JU2), IsSubgroupoid(Gf2,Groupoid(f2b,[-20])) ];
 [ false, true ]
 gap> pJU2 := Pieces( JU2 );; 
 gap> SetName( pJU2[1], "JU2a" );  SetName( pJU2[2], "JU2b" );
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-pieces-pos">
    <Oper Name="PiecePositions"
@@ -827,8 +797,7 @@ subsection <Ref Oper="InclusionMappingGroupoids"/>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> T1 := UnionOfPieces( [Ha4,U2] );;  Pieces( T1 );
 [ Gf2, Gq8, Ha4 ]
 gap> T2 := UnionOfPieces( [Jc3,JU2] );;  Pieces( T2 );
@@ -848,8 +817,7 @@ groupoid homomorphism :
       [ [(1,2,3) : -14 -> -14], [() : -14 -> -11] ] ], 
   [ [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ], 
       [ [(1,2,4) : -13 -> -13], [(1,4)(2,3) : -13 -> -12] ] ] ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-subgpd-triv">
    <Attr Name="FullTrivialSubgroupoid"
@@ -868,8 +836,7 @@ In the example <C>id(G)</C> denotes the identity subgroup of <M>G</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Ic3 := FullTrivialSubgroupoid( Jc3 );
 groupoid with 2 pieces:
 1:  single piece groupoid: < id(c3a), [ -14, -11 ] >
@@ -878,8 +845,7 @@ gap> ParentList( Ic3);
 [ Ga4, Ha4, Jc3 ]
 gap> DiscreteTrivialSubgroupoid( Gd8 );
 homogeneous, discrete groupoid: < id(d8), [ -9, -8, -7, -6 ] >
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-subgpd-discrete">
    <Oper Name="DiscreteSubgroupoid"
@@ -895,8 +861,7 @@ is the union of all the single-object full subgroupoids of <C>gpd</C>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U3;
 groupoid with 3 pieces:
 [ Ga4, Gc6, Gd8 ]
@@ -915,8 +880,7 @@ groupoid with 4 pieces:
 2:  single piece groupoid: < c3b, [ -13 ] >
 3:  single piece groupoid: < Group( [ (1,4,3) ] ), [ -12 ] >
 4:  single piece groupoid: < c3a, [ -11 ] >
-]]>
-</Example>
+]]></Example>
 
 <ManSection Label="sec-subgpd-gens">
    <Oper Name="SinglePieceSubgroupoidByGenerators"
@@ -934,16 +898,14 @@ in section <Ref Sect="subsec-conjgpd"/>.
 Other cases will be added as time permits. 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a1 := Arrow( Gk4, (1,2)(3,4), -15, -15 );;
 gap> a2 := Arrow( Gk4, (1,3,2), -15, -13 );;
 gap> a3 := Arrow( Gk4, (2,3,4), -15, -11 );;
 gap> SinglePieceSubgroupoidByGenerators( Gk4, [a1,a2,a3] );
 single piece groupoid with rays: < Group( [ (1,2)(3,4) ] ), [ -15, -13, -11  ],
 [ (), (1,3,2), (2,3,4) ] >
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="SinglePieceGroupoidWithRays"
@@ -958,15 +920,13 @@ or cat<M>^2</M>-group.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> G3 := SinglePieceGroupoidWithRays( k4, [-15,-13,-11], [(),(1,2,4),(2,3,4)] );
 single piece groupoid with rays: < k4, [ -15, -13, -11 ], 
 [ (), (1,2,4), (2,3,4) ] >
 gap> IsSubgroupoid( Gk4, G3 );
 true
-]]>
-</Example>
+]]></Example>
 
 </Section>
 
@@ -1030,8 +990,7 @@ seventeenth one in the printed list <C>rcra4</C>, namely <C>[():-12->-12]</C>.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> e6 := Arrow( Ha4, (2,4,3), -13, -12 );;;                            
 gap> re6 := RightCoset( Ha4, Jc3, e6 );
 <right coset of Jc3b with representative [(2,4,3) : -13 -> -12]>
@@ -1100,8 +1059,7 @@ gap> dcra4 := DoubleCosetRepresentatives( Ha4, Jc3, Jc3 );
 [ [() : -14 -> -14], [(1,2)(3,4) : -14 -> -14], [() : -14 -> -13], 
   [(1,2)(3,4) : -14 -> -13], [() : -13 -> -14], [(1,2)(3,4) : -13 -> -14], 
   [() : -13 -> -13], [(1,2)(3,4) : -13 -> -13] ]
-]]>
-</Example>
+]]></Example>
 </Section>
 
 
@@ -1171,8 +1129,7 @@ is used to construct groupoid automorphisms.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> p := Arrow( Gd8, (5,7), -9, -9 );; 
 gap> q := Arrow( Gd8, (5,6,7,8), -8, -9 );; 
 gap> r := Arrow( Gd8, (5,6)(7,8), -9, -7 );; 
@@ -1196,8 +1153,7 @@ gap> s^q;
 [(5,7)(6,8) : -7 -> -9]
 gap> s^r;
 [(5,7) : -9 -> -8]
-]]>
-</Example>
+]]></Example>
 
 <Index>\^<Subkey>for groupoids</Subkey></Index>
 <ManSection Label="subsec-conjgpd">
@@ -1210,15 +1166,13 @@ is the subgroupoid generated by the conjugates of the generators of <M>H</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> a5 := Arrow( Ga4, (1,2,3), -13, -12 ); 
 [(1,2,3) : -13 -> -12]
 gap> ConjugateGroupoid( Ga4, Gk4, a5 );
 single piece groupoid with rays: < Group( [ (1,2)(3,4), (1,3)(2,4) ] ), 
 [ -15, -14, -13, -12, -11 ], [ (), (1,2,3), (1,2)(3,4), (1,3)(2,4), (2,3,4) ] >
-]]>
-</Example>
+]]></Example>
 </Section>
 
 <Section Label="sec-gpd-isos">
@@ -1264,8 +1218,7 @@ a permutation group; a pc-group and an fp-group.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> s3a := Group( (1,2), (2,3) );; 
 gap> s3b := Group( (4,6,8)(5,7,9), (4,9)(5,8)(6,7) );;
 gap> s3c := Group( (4,6,8)(5,7,9), (5,9)(6,8) );;
@@ -1314,8 +1267,7 @@ gap> b2 := Arrow( G2, [ y2, z2 ], -5, -4 );
 [[ f1, f2^-1 ] : -5 -> -4]
 gap> c2 := a2*b2; 
 [[ (1,3,2), f1^2 ] : -6 -> -4]
-]]>
-</Example>
+]]></Example>
 
 </Section> 
 
@@ -1337,8 +1289,7 @@ The ray from <M>1</M> to <M>g</M> is just <M>g</M> since <M>1*g=g</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> d8 := Group( (5,6,7,8), (5,7) );;
 gap> SetName( d8, "d8" );;
 gap> ed8 := Elements( d8 );; 
@@ -1357,8 +1308,7 @@ homset (6,8) -> (5,7) with elements:
 [(5,8)(6,7) : (6,8) -> (5,7)]
 [(5,6,7,8) : (6,8) -> (5,7)]
 [(5,6)(7,8) : (6,8) -> (5,7)]
-]]>
-</Example>
+]]></Example>
 
 When <M>M</M> is a monoid, rather than a group, this construction produces 
 several components. 
@@ -1372,8 +1322,7 @@ have a single object and group <M>C_2</M>
 generated by <C>Transformation([1,2,4,3])</C>,
 while <M>5</M> have two objects and trivial group. 
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> M13 := Monoid( Transformation( [1,1,2,3] ), Transformation( [1,2,4,3] ) );
 <transformation monoid of degree 4 with 2 generators>
 gap> Size( M13 );
@@ -1405,8 +1354,7 @@ homset Transformation( [ 1, 1, 1, 3 ] ) -> Transformation( [ 1, 1, 1 ] )
 Transformation( [ 1, 1, 1 ] )]
 [Transformation( [ 1, 2, 4, 3 ] ) : Transformation( [ 1, 1, 1, 3 ] ) -> 
 Transformation( [ 1, 1, 1 ] )]
-]]>
-</Example>
+]]></Example>
 
 </Section>
 
