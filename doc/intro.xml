@@ -39,11 +39,9 @@ When raised to a higher value, additional information is printed out.
 <P/>
 Help is available in the usual way.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> LoadPackage( "groupoids" );
-]]>
-</Example>
+]]></Example>
 
 For version 1.05 the package was completely restructured, 
 starting with <E>magmas with objects</E> and their mappings, 
