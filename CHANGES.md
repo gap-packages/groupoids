@@ -1,5 +1,7 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.81dev for GAP 4.16.0 (01/07/26)
+
 ## Version 1.81 for GAP 4.15.1 (26/11/25)
  * (25/11/25) revised FreeProductWithAmalgamation and HnnExtension
  * (21/11/25) revised Families and Types for semigroups/monoids with objects 
