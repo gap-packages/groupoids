@@ -1,5 +1,9 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.82 for GAP 4.16.0 (03/07/26)
+ * (03/07/26) tst/extra/cosets.tst returns some errors when tested with 
+              4.13 and 4.14, so these versions removed from CI.yml
+
 ## Version 1.81 for GAP 4.15.1 (26/11/25)
  * (25/11/25) revised FreeProductWithAmalgamation and HnnExtension
  * (21/11/25) revised Families and Types for semigroups/monoids with objects 
