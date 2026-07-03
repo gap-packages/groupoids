@@ -39,8 +39,7 @@ so as to produce digraphs of type <C>IsFpWeightedDigraph</C>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> V1 := [7,8];;
 gap> fg1 := FreeGroup("y");;
 gap> y := fg1.1;;
@@ -50,8 +49,7 @@ weighted digraph with vertices: [ 7, 8 ]
 and arcs: [ [ y, 7, 8 ], [ y^-1, 8, 7 ] ]
 gap> inv1 := InvolutoryArcs( D1 );
 [ 2, 1 ]
-]]>
-</Example>
+]]></Example>
 
 The example illustrates the fact that we require arcs to be defined
 in involutory pairs, as though they were inverse elements in a groupoid.
@@ -60,8 +58,7 @@ and get the function to construct the reverse edge.
 The attribute <C>InvolutoryArcs</C> returns a list of the positions
 of each inverse arc in the list of arcs.
 In the second example the graph is a complete digraph on three vertices.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> fg3 := FreeGroup(3,"z");;
 gap> z1:=fg3.1;; z2:=fg3.2;; z3:=fg3.3;;
 gap> ob3 := [11,12,13];;
@@ -72,8 +69,7 @@ and arcs: [ [ z1, 11, 12 ], [ z2, 12, 13 ], [ z3, 13, 11 ], [ z1^-1, 12, 11 ],
   [ z2^-1, 13, 12 ], [ z3^-1, 11, 13 ] ]
 gap> inob3 := InvolutoryArcs( D3 );
 [ 4, 5, 6, 1, 2, 3 ]
-]]>
-</Example>
+]]></Example>
 </Section>
 
 
@@ -141,8 +137,7 @@ with the obvious isomorphisms.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ## free vertex group at 5
 gap> fa := FreeGroup( "a" );;
 gap> a := fa.1;;
@@ -169,8 +164,7 @@ Graph of Groups with :-
 isomorphisms: [ [ [ a^3 ], [ b^2 ] ], [ [ b^2 ], [ a^3 ] ] ]
 gap> IsGraphOfGroups( G1 );
 true
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Prop Name="IsGraphOfFpGroups"
@@ -186,15 +180,13 @@ may be used as vertex groups, though these types are not
 normally mixed in a single structure.
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> IsGraphOfFpGroups( G1 );
 true
 gap> IsomorphismsOfGraphOfGroups( G1 );
 [ [ a^3 ] -> [ b^2 ], [ b^2 ] -> [ a^3 ] ]
 
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Attr Name="RightTransversalsOfGraphOfGroups"
@@ -217,14 +209,12 @@ rewriting systems using functions from the main &GAP; library,
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> RTG1 := RightTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a, a^2 ], [ <identity ...>, b ] ]
 gap> LTG1 := LeftTransversalsOfGraphOfGroups( G1 );
 [ [ <identity ...>, a^-1, a^-2 ], [ <identity ...>, b^-1 ] ] 
-]]>
-</Example>
+]]></Example>
 </Section>
 
 
@@ -279,8 +269,7 @@ so the resulting word is a loop at vertex <M>5</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> L1 := [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ];;
 gap> gw1 := GraphOfGroupsWord( G1, 7, L1 );
 (7)a^7.y.b^-6.y^-1.a^-11.y.b^9.y^-1.a^7(7)
@@ -292,8 +281,7 @@ gap> GraphOfGroupsOfWord( gw1 );
 Graph of Groups: 2 vertices; 2 arcs; groups [ fa, fb ]
 gap> WordOfGraphOfGroupsWord( gw1 );
 [ a^7, 1, b^-6, 2, a^-11, 1, b^9, 2, a^7 ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="ReducedGraphOfGroupsWord"
@@ -331,12 +319,10 @@ a^{-1}b^{-1}a^{10}.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> nw1 := ReducedGraphOfGroupsWord( gw1 );
 (7)a^-1.y.b^-1.y^-1.a^10(7)
-]]>
-</Example>
+]]></Example>
 </Section>
 
 
@@ -383,8 +369,7 @@ amalgamated over a cyclic subgroup <C>c3</C>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 ## set up the first group s3 and a subgroup c3=<a1>
 gap> fg2 := FreeGroup( 2, "a" );;
 gap> rel1 := [fg2.1^3, fg2.2^2, (fg2.1*fg2.2)^2];;
@@ -423,8 +408,7 @@ gap> w2 := (gfpa[1]*gfpa[2]*gfpa[3]^gfpa[4])^3;
 (f1*f2*f4^-1*f3*f4)^3
 gap> n2 := NormalFormGGRWS( fpa, w2 );
 f2*f3*(f4^-1*f2)^2*f4^-1*f3
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="ReducedImageElm" 
@@ -448,8 +432,7 @@ graph of groups rewriting system.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> fpainfo := FreeProductWithAmalgamationInfo( fpa );
 rec( embeddings := [ [ a2, a1 ] -> [ f1, f2 ], [ b1, b2 ] -> [ f3, f4 ] ], 
   groups := [ s3, a4 ], isomorphism := [ a1 ] -> [ b1 ], 
@@ -461,8 +444,7 @@ gap> ImageElm( emb2, b1^b2 );
 f4^-1*f3*f4
 gap> ReducedImageElm( emb2, b1^b2 );
 f4*f3^-1
-]]>
-</Example>
+]]></Example>
 
 
 <ManSection>
@@ -488,8 +470,7 @@ In the example we take <C>G=a4</C> and the two subgroups are cyclic groups
 of order 3.
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> H3 := Subgroup(a4,[b2]);;
 gap> i23 := GroupHomomorphismByImages( H2, H3, [b1], [b2] );;
 gap> hnn := HnnExtension( a4, i23, [9] );
@@ -512,15 +493,13 @@ gap> w3 := (gh[1]^gh[2])*gh[3]^-1*(gh[1]*gh[3]*gh[2]^2)^2*gh[3]*gh[2];
 fe2^-1*fe1*fe2*fe3^-1*(fe1*fe3*fe2^2)^2*fe3*fe2
 gap> n3 := NormalFormGGRWS( hnn, w3 );
 (fe2*fe1*fe3)^2
-]]>
-</Example>
+]]></Example>
 
 As with fpa-groups, hnn-groups are provided with a record attribute, 
 <C>HnnExtensionInfo(hnn)</C>, 
 storing the group, subgroups and isomorphism involved in their construction.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> hnninfo := HnnExtensionInfo( hnn );
 rec( embeddings := [ [ b1, b2 ] -> [ fe1, fe2 ] ], group := a4, 
   isomorphism := [ b1 ] -> [ b2 ], 
@@ -531,8 +510,7 @@ gap> ImageElm( emb, b1^b2 );
 fe2^-1*fe1*fe2
 gap> ReducedImageElm( emb, b1^b2 );
 fe2*fe1^-1
-]]>
-</Example>
+]]></Example>
 
 </Section>
 
@@ -578,8 +556,7 @@ on one generator, and full subgroupoids with groups
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Gfa := SinglePieceGroupoid( fa, [-4,-3] );;
 gap> ofa := One( fa );;
 gap> SetName( Gfa, "Gfa" );
@@ -627,8 +604,7 @@ isomorphisms: [ groupoid homomorphism : Uhy -> Uhybar
       [ [a^3 : -4 -> -4], [<identity ...> : -4 -> -3] ] ] ]
 gap> IsGraphOfGroupoids( gg3 );
 true
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="GraphOfGroupoidsWord"
@@ -657,8 +633,7 @@ Compare the normal form <C>nw3</C> below with the normal form <C>nw1</C> above.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> f1 := Arrow( Gfa, a^7, -3, -4);;
 gap> f2 := Arrow( Gfb, b^-6, -6, -6 );;
 gap> f3 := Arrow( Gfa, a^-11, -4, -3 );;
@@ -672,8 +647,7 @@ gap> gw3 := GraphOfGroupoidsWord( gg3, 7, L3);
 -5 -> -6].y^-1.[a^7 : -4 -> -3](7)
 gap> nw3 := ReducedGraphOfGroupoidsWord( gw3 );
 (7)[a^-1 : -3 -> -3].y.[b^-1 : -5 -> -6].y^-1.[a^10 : -4 -> -3](7)
-]]>
-</Example>
+]]></Example>
 
 The reduction proceeds as follows. 
 <List>

@@ -53,8 +53,7 @@ of <C>GroupoidAutomorphismByNtuple</C> when <M>g_1=1</M>.
 <P/>
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> perm1 := [-13,-12,-11,-14];;
 gap> aut1 := GroupoidAutomorphismByObjectPerm( Ha4, perm1 );; 
 gap> Display( aut1 ); 
@@ -121,8 +120,7 @@ root group homomorphism:
 (2,3,4) -> (1,2,3)
 object map: [ -14, -13, -12, -11 ] -> [ -11, -14, -13, -12 ]
 ray images: [ (), (1,3,2), (2,4,3), (1,2,4) ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="GroupoidInnerAutomorphism" 
@@ -146,8 +144,7 @@ where now <M> L_a = [1,\ldots,1,c,1,\ldots,1]</M>,
 with <M>c</M> in position <M>p</M>.
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> inn1 := GroupoidInnerAutomorphism( Ha4, h4 );;
 gap> Display( inn1 );
 homomorphism to single piece groupoid: Ha4 -> Ha4
@@ -158,8 +155,7 @@ object map: [ -14, -13, -12, -11 ] -> [ -14, -12, -13, -11 ]
 ray images: [ (), (2,4,3), (2,3,4), () ]
 gap> d5 := ImageElm( inn1, d4 );
 [() : -11 -> -13]
-]]>
-</Example>
+]]></Example>
 
 Conjugation may also be applied to certain normal subgroupoids of <M>G</M>.
 Firstly, let <M>N</M> be the wide subgroupoid of <M>G</M> determined by
@@ -167,8 +163,7 @@ a normal subgroup <M>n</M> of the root group.
 Then, provided the group element of <M>a</M> is in <M>n</M>, 
 the inner automorphism by <M>a</M> may be applied to <M>N</M>.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Nk4 := SubgroupoidBySubgroup( Ha4, k4 );;
 gap> SetName( Nk4, "Nk4" );
 gap> e4 := Arrow( Ha4, (1,2)(3,4), -14, -13 );;
@@ -180,15 +175,13 @@ root group homomorphism:
 (1,3)(2,4) -> (1,3)(2,4)
 object map: [ -14, -13, -12, -11 ] -> [ -13, -14, -12, -11 ]
 ray images: [ (), (), (1,2)(3,4), (1,2)(3,4) ]
-]]>
-</Example>
+]]></Example>
 
 Secondly, if <M>H</M> is a homogeneous, discrete subgroupoid of <M>G</M>
 and if the group element of <M>a</M> is in the common vertex groups,
 then the inner automorphism may be applied to <M>H</M>.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Ma4 := MaximalDiscreteSubgroupoid( Ha4 );;
 gap> SetName( Ma4, "Ma4" );
 gap> inn3 := GroupoidInnerAutomorphismNormalSubgroupoid( Ha4, Ma4, e4 );;
@@ -200,8 +193,7 @@ GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,4,2), (1,4,3) ] )
 GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,4,2), (1,4,3) ] )
 GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] )
 GroupHomomorphismByImages( a4, a4, [ (1,2,3), (2,3,4) ], [ (1,2,3), (2,3,4) ] )
-]]>
-</Example>
+]]></Example>
 
 
 
@@ -225,8 +217,7 @@ permuting the objects of <M>T</M>, and return <M>\iota*\alpha*\iota^{-1}</M>.
 For an automorphism by ray shifts we require that the shifts are 
 elements of the root group of <M>S</M>. 
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ## (1) automorphism by group auto 
 gap> a6 := GroupHomomorphismByImages( k4, k4,
 >              [ (1,2)(3,4), (1,3)(2,4) ], [ (1,3)(2,4), (1,4)(2,3) ] );;
@@ -288,8 +279,7 @@ groupoid homomorphism : Kk4 -> Kk4
   [ [(1,2)(3,4) : -14 -> -14], [(1,3)(2,4) : -14 -> -14], 
       [(1,4,2) : -14 -> -11], [(1,2,4) : -14 -> -12], [(2,4,3) : -14 -> -13] 
      ] ]
-]]>
-</Example>
+]]></Example>
 </Subsection>
 
 
@@ -321,8 +311,7 @@ Note that <C>ImageElm</C> at present only works on generating elements.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Ja4 := Subgroupoid( Ha4, [-14,-13,-12] );;
 gap> SetName( Ja4, "Ja4" );
 gap> AJa4 := AutomorphismGroupOfGroupoid( Ja4 ); 
@@ -349,8 +338,7 @@ gap> pcgen := mgi[2];;
 gap> ngen := Length( autgen );; 
 gap> ForAll( [1..ngen], i -> Order(autgen[i]) = Order(pcgen[i]) ); 
 true
-]]>
-</Example>
+]]></Example>
 
 
 <Subsection Label="subsec-inner-autos">
@@ -377,8 +365,7 @@ So the map <M>G \to \mathrm{Inn}(G)</M> is of type
 In the example we convert the automorphism group <C>AGa4</C> 
 into a single object groupoid, and then define the inner automorphism map. 
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> AJa40 := Groupoid( AJa4, [0] );
 single piece groupoid: < Aut(Ja4), [ 0 ] >
 gap> conj := function(a) 
@@ -399,8 +386,7 @@ gap> inner3 := ImageElm( inner, a3 );
       [() : -12 -> -14] ] ] : 0 -> 0]
 gap> (inner3 = inner1*inner2*inner1) and (inner3 = inner2*inner1*inner2);
 true
-]]>
-</Example>
+]]></Example>
 
 </Subsection>
 
@@ -422,8 +408,7 @@ has size <M>n!|\Aut(g)|^n</M>.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Dd8 := HomogeneousDiscreteGroupoid( d8, [ -13..-10] ); 
 homogeneous, discrete groupoid: < d8, [ -13 .. -10 ] >
 gap> aut10 := GroupoidAutomorphismByObjectPerm( Dd8, [-12,-10,-11,-13] ); 
@@ -483,8 +468,7 @@ gap> u1 := z1*w1*y1*x1*z1;
 gap> imu := ImageElm( MADd8, u );; 
 gap> u1 = imu;
 true
-]]>
-</Example>
+]]></Example>
 <P/>
 
 
@@ -514,8 +498,7 @@ constructed in subsection <Ref Oper="HomogeneousGroupoid"/>.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> HJa4 := HomogeneousGroupoid( Ja4, 
 >                [ [-39,-38,-37], [-36,-35,-34], [-33,-32,-31] ] );;
 gap> SetName( HJa4, "HJa4" );
@@ -536,8 +519,7 @@ gap> RaysOfGroupoid( AHJa4 ){[2..3]};
 gap> obgp := ObjectGroup( AHJa4, [ -36, -35, -34 ] );; 
 gap> Size( obgp );
 20736
-]]>
-</Example>
+]]></Example>
 <P/>
 
 </Section>
@@ -560,8 +542,7 @@ to <M>(\rho g : i \to j)</M>.
 When <C>gpd</C> is a groupoid with rays, a representation can be obtained 
 by restricting a representation of its parent.
 <P/>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> reps := IrreducibleRepresentations( a4 );; 
 gap> rep4 := reps[4]; 
 Pcgs([ (2,4,3), (1,3)(2,4), (1,2)(3,4) ]) -> 
@@ -608,8 +589,7 @@ groupoid homomorphism :
       [[ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ] : -14 -> -12] ] ]
 gap> ParentMappingGroupoids( rmor ) = mor;
 true
-]]>
-</Example>
+]]></Example>
 <P/>
 
 </Section>
@@ -661,8 +641,7 @@ must be satisfied: <Index>conjugation identities</Index>
 <P/>
 In the following example we check the first of these identities
 in one particular case.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> c1 := Arrow( Ja4, (1,2)(3,4), -14, -13);;
 gap> innc1 := GroupoidInnerAutomorphism( Ja4, c1 );
 groupoid homomorphism : Ja4 -> Ja4
@@ -687,8 +666,7 @@ groupoid homomorphism : Ja4 -> Ja4
       [(2,4,3) : -12 -> -14] ] ]
 gap> [ innc1 * innc2 * innc1 = innc12, innc2 * innc1 * innc2 = innc12 ];
 [ true, true ]
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
    <Oper Name="GroupoidActionByConjugation"
@@ -710,8 +688,7 @@ firstly with a groupoid acting on itself.
 <P/> 
 </Description>
 </ManSection>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> act1 := GroupoidActionByConjugation( Ha4 );
 <general mapping: Ha4 -> Aut(Ha4) >
 gap> IsGroupoidAction( act1 );
@@ -719,12 +696,10 @@ true
 gap> amap1 := ActionMap( act1 );;
 gap> amap1( h4 ) = inn1;
 true
-]]>
-</Example>
+]]></Example>
 
 Secondly with an action on a single piece, normal subgroupoid.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> act2 := GroupoidActionByConjugation( Ha4, Nk4 );
 <general mapping: Ha4 -> Aut(Nk4) >
 gap> IsGroupoidAction( act2 );
@@ -732,12 +707,10 @@ true
 gap> amap2 := ActionMap( act2 );;
 gap> amap2( e4 ) = inn2;
 true
-]]>
-</Example>
+]]></Example>
 
 Thirly with an action on a homogeneous, discrete subgroupoid.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> act3 := GroupoidActionByConjugation( Ha4, Ma4 );
 <general mapping: Ha4 -> Aut(Ma4) >
 gap> IsGroupoidAction( act3 );
@@ -745,8 +718,7 @@ true
 gap> amap3 := ActionMap( act3 );;
 gap> amap3( e4 ) = inn3;
 true
-]]>
-</Example>
+]]></Example>
 
 
 </Section>
