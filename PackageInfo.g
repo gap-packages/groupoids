@@ -67,7 +67,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.10.1",
+  GAP := ">=4.15.1",
   NeededOtherPackages := [ [ "fga", ">= 1.4.0" ],
                            [ "utils", ">= 0.76" ] ],
   SuggestedOtherPackages := [ [ "semigroups", ">= 3.1.1" ] ],
