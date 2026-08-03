@@ -204,9 +204,12 @@ gap> Size( AJa4 );    ## (4!)x24x(12^3)
 20736
 gap> SetName( AJa4, "AJa4" ); 
 gap> SetName( NJa4, "NJa4" );
-gap> ## either of these names may be returned
+gap> ## any of these names may be returned; which one depends on the
+gap> ## decomposition StructureDescription happens to choose, and the last
+gap> ## one occurs when the SmallGrp package is not available
 gap> names := [ "(((A4 x A4 x A4) : C2) : C3) : C2",
->    "(C2 x C2 x C2 x C2 x C2 x C2) : (((C3 x C3 x C3) : C3) : (C2 x C2))" ];;
+>    "(C2 x C2 x C2 x C2 x C2 x C2) : (((C3 x C3 x C3) : C3) : (C2 x C2))",
+>    "(C2 x C2 x C2 x C2 x C2 x C2) : (((C9 : C3) : C3) : (C2 x C2))" ];;
 gap> StructureDescription( NJa4 ) in names;
 true
 gap> ##  cannot test images of Agens because of random variations 
