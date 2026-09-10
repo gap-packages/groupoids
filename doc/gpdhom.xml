@@ -568,7 +568,17 @@ gap> hc6d := GroupHomomorphismByImages( c6, c3d,
 >                [(11,12,13)(14,15)], [(2,3,4)] );;
 gap> mor6 := GroupoidHomomorphismFromHomogeneousDiscrete( HDc6, Ga4,
 >              [ hc6a, hc6b, hc6c, hc6d ], [-15,-14,-12,-11] );
-groupoid homomorphism : HDc6 -> Ga4
+groupoid homomorphism : morphism from a homogeneous discrete groupoid:
+[ -27, -26, -25, -24 ] -> [ -15, -14, -12, -11 ]
+object homomorphisms:
+GroupHomomorphismByImages( c6, Group( [ (1,2,3) ] ), [ (11,12,13)(14,15) ], 
+[ (1,2,3) ] )
+GroupHomomorphismByImages( c6, Group( [ (1,2,4) ] ), [ (11,12,13)(14,15) ], 
+[ (1,2,4) ] )
+GroupHomomorphismByImages( c6, Group( [ (1,3,4) ] ), [ (11,12,13)(14,15) ], 
+[ (1,3,4) ] )
+GroupHomomorphismByImages( c6, Group( [ (2,3,4) ] ), [ (11,12,13)(14,15) ], 
+[ (2,3,4) ] )
 gap> e6 := Arrow( HDc6, (11,12,13), -25, -25 );;
 gap> ImageElm( mor6, e6 );
 [(1,3,4) : -12 -> -12]

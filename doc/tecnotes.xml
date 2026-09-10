@@ -92,11 +92,11 @@ implied filters:
     CategoryCollections(IsMultiplicativeElementWithObjectsAndInverses)
     CategoryCollections(IsGroupoidElement)
 gap> KnownAttributesOfObject( Gd8 ); 
-[ "Name", "ObjectList", "GeneratorsOfMagmaWithObjects", 
-  "GeneratorsOfGroupoid" ]
+[ "Name", "Size", "ObjectList", "Pieces", "GeneratorsOfMagmaWithObjects", 
+  "RaysOfGroupoid", "GeneratorsOfGroupoid", "DiscreteTrivialSubgroupoid" ]
 gap> KnownTruePropertiesOfObject( Gd8 ); 
-[ "IsDuplicateFree", "IsAssociative", "IsSinglePieceDomain", 
-  "IsDirectProductWithCompleteDigraphDomain" ]
+[ "IsNonTrivial", "IsFinite", "IsDuplicateFree", "IsAssociative", 
+  "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain" ]
 gap> RepresentationsOfObject( Gd8 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsMWOSinglePieceRep" ]
 gap> RepresentationsOfObject( U5 ); 
@@ -107,7 +107,7 @@ Similarly, for arrows, we have:
 <P/>
 <Example><![CDATA[
 gap> e1;
-[(5,6,7,8) : -9 -> -8]
+[(5,6,7,8) : -7 -> -8]
 gap> CategoriesOfObject( e1 );
 [ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
   "IsMultiplicativeElementWithObjects", 
@@ -166,9 +166,9 @@ and  <C>aut1</C> was an automorphism of <C>Ha4</C>.
 gap> hom9;
 groupoid homomorphism : Gd8 -> Kk4
 [ [ [(5,6,7,8) : -9 -> -9], [(5,7) : -9 -> -9], [() : -9 -> -8], 
-      [() : -9 -> -7] ], 
-  [ [(1,4)(2,3) : -14 -> -14], [() : -14 -> -14], [(1,3,4) : -14 -> -13], 
-      [(1,4)(2,3) : -14 -> -12] ] ]
+      [() : -9 -> -7], [() : -9 -> -6] ], 
+  [ [(1,4)(2,3) : -14 -> -14], [() : -14 -> -14], [(1,2,3) : -14 -> -13], 
+      [(1,2,4) : -14 -> -12], [(1,3,4) : -14 -> -11] ] ]
 gap> CategoriesOfObject( hom9 );
 [ "IsExtLElement", "IsExtRElement", "IsMultiplicativeElement", 
   "IsMultiplicativeElementWithOne", "IsMultiplicativeElementWithInverse", 
