@@ -1,5 +1,8 @@
 # CHANGES to the 'groupoids' package 
 
+## Version 1.84 for GAP 4.16.1 (10/09/26)
+ * (10/09/26) replaced existing tests with ones extracted from the manual
+
 ## Version 1.83 for GAP 4.16.0 (19/08/26)
  * (19/08/26) adjust output after changes in automorphism group code
  * (03/07/26) tst/extra/cosets.tst returns some errors when tested with 
