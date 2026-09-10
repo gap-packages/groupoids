@@ -40,7 +40,7 @@ When raised to a higher value, additional information is printed out.
 Help is available in the usual way.
 <P/>
 <Example><![CDATA[
-gap> LoadPackage( "groupoids" );
+gap> LoadPackage( "groupoids" );;
 ]]></Example>
 
 For version 1.05 the package was completely restructured, 

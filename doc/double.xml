@@ -53,7 +53,7 @@ gap> DGd8 := SinglePieceBasicDoubleGroupoid( Gd8 );;
 gap> DGd8!.groupoid;
 Gd8
 gap> DGd8!.objects;
-[ -9, -8, -7 ]
+[ -9, -8, -7, -6 ]
 gap> SetName( DGd8, "DGd8" );
 gap> [ IsDoubleGroupoid( DGd8 ), IsBasicDoubleGroupoid( DGd8 ) ];
 [ true, true ]
@@ -108,7 +108,7 @@ When viewing or printing a square, the boundary element is shown in the centre.
 </ManSection>
 <Example><![CDATA[
 gap> [ Size(DGd8), (3*8)^4 ]; 
-[ 331776, 331776 ]
+[ 1048576, 331776 ]
 gap> a1 := Arrow( Gd8, (5,7), -7, -8 );;
 gap> b1 := Arrow( Gd8, (6,8), -7, -7 );;
 gap> c1 := Arrow( Gd8, (5,6)(7,8), -8, -9 );;
@@ -757,13 +757,13 @@ and forming a double groupoid on <M>G</M> in which squares have the form:
 <Example><![CDATA[
 gap> Gd8c6 := DirectProduct( Gd8, Gc6 );
 single piece groupoid: < Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] ), 
-[ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ] >
+[ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ], [ -6, -10 ] ] >
 gap> SetName( Gd8c6, "Gd8c6" );
 gap> DGd8c6 := SinglePieceBasicDoubleGroupoid( Gd8c6 );
 single piece double groupoid with:
  groupoid = Gd8c6
     group = Group( [ (1,2,3,4), (1,3), (5,6,7)(8,9) ] )
-  objects = [ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ] ]
+  objects = [ [ -9, -10 ], [ -8, -10 ], [ -7, -10 ], [ -6, -10 ] ]
 
 gap> emb1 := Embedding( Gd8c6, 1 );;
 gap> emb2 := Embedding( Gd8c6, 2 );;
@@ -810,7 +810,7 @@ to produce an endomorphism of <C>DGd8</C>.
 gap> ad8 := GroupHomomorphismByImages( d8, d8,
 >               [ (5,6,7,8), (5,7) ], [ (5,8,7,6), (6,8) ] );;
 gap> md8 := GroupoidHomomorphism( Gd8, Gd8, ad8, 
->               [-7,-9,-8], [(),(5,7),(6,8)] );;
+>               [-7,-6,-9,-8], [(),(5,7),(),(6,8)] );;
 gap> endDGd8 := DoubleGroupoidHomomorphism( DGd8, DGd8, md8 );;
 gap> Display( endDGd8 );            
 double groupoid homomorphism: [ DGd8 ] -> [ DGd8 ]
@@ -819,8 +819,8 @@ homomorphism to single piece groupoid: Gd8 -> Gd8
 root group homomorphism:
 (5,6,7,8) -> (5,8,7,6)
 (5,7) -> (6,8)
-object map: [ -9, -8, -7 ] -> [ -7, -9, -8 ]
-ray images: [ (), (5,7), (6,8) ]
+object map: [ -9, -8, -7, -6 ] -> [ -7, -6, -9, -8 ]
+ray images: [ (), (5,7), (), (6,8) ]
 gap> IsDoubleGroupoidHomomorphism( endDGd8 );
 true
 gap> sq1;
@@ -830,11 +830,11 @@ gap> sq1;
   V                          V
 [-7] ----- (5,6,7,8) ----> [-9]
 gap> ImageElm( endDGd8, sq1 );
-[-8] ------- (5,7) ------> [-9]
+[-9] ---- (5,7)(6,8) ---> [-6]
   |                         |
 (5,7)        (5,7)        (5,8,7,6)
   V                         V
-[-8] ---- (5,8)(6,7) ---> [-7]
+[-9] ----- (5,8,7,6) ----> [-7]
 ]]></Example>
 
 </Section>
