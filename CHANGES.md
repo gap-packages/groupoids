@@ -1,14 +1,23 @@
 # CHANGES to the 'groupoids' package 
 
-## Version 1.84 for GAP 4.16.1 (10/09/26)
+## 1.84 (2026-09-10)
+
+For GAP 4.16.1.
+
  * (10/09/26) replaced existing tests with ones extracted from the manual
 
-## Version 1.83 for GAP 4.16.0 (19/08/26)
+## 1.83 (2026-08-19)
+
+For GAP 4.16.0.
+
  * (19/08/26) adjust output after changes in automorphism group code
  * (03/07/26) tst/extra/cosets.tst returns some errors when tested with 
               4.13 and 4.14, so these versions removed from CI.yml
 
-## Version 1.81 for GAP 4.15.1 (26/11/25)
+## 1.81 (2025-11-26)
+
+For GAP 4.15.1.
+
  * (25/11/25) revised FreeProductWithAmalgamation and HnnExtension
  * (21/11/25) revised Families and Types for semigroups/monoids with objects 
  * (18/11/25) major revision of Left/Right/DoubleCosets, to cope with rays
@@ -17,7 +26,10 @@
               RightActionGroupoid -> GroupoidWithMonoidObjects
  * (05/11/25) renamed GroupoidOfArrow as MWOofArrow and documented it
 
-## Version 1.79 for GAP 4.14.0 (11/09/25)
+## 1.79 (2025-09-11)
+
+For GAP 4.14.0.
+
  * (11/09/25) added operation GroupoidInnerAutomorphismNormalSubgroupoid
  * (10/09/25) added new release mechanism file .github/workflows/release.yml 
  * (22/07/25) revised code and examples of GroupoidInnerAutomorphism
@@ -25,10 +37,16 @@
               added HomogeneousDiscreteSubgroupoid
  * (18/07/25) started work on groupoid actions
 
-## Version 1.78 for GAP 4.14.0 (18/07/25) 
+## 1.78 (2025-07-18)
+
+For GAP 4.14.0.
+
  * (17/07/25) documented some missing categories in the manual
 
-## Version 1.77 for GAP 4.14.0 (03/07/25)
+## 1.77 (2025-07-03)
+
+For GAP 4.14.0.
+
  * (03/07/25) made extensive changes to the examples in tst/manual 
               added operation IsFullSubgroupoid( gpd, subgpd )
               Subgroupoid now checks for SubgroupoidWithRays
@@ -37,22 +55,37 @@
               documented the operation PiecePositions
               revised HomomorphismByUnion - deals with many pieces
 
-## Version 1.76 for GAP 4.13.1 (23/09/24) 
+## 1.76 (2024-09-23)
+
+For GAP 4.13.1.
+
  * (23/09/24) fix error caused re immutable ExtRepOfObj by GAP pull #5808
 
-## Version 1.74 for GAP 4.12.2 (09/02/23) 
+## 1.74 (2023-02-09)
+
+For GAP 4.12.2.
+
  * (23/01/24) avoid trivial function wrappers; correct email address 
 
-## Version 1.73 for GAP 4.12.2 (09/02/23) 
+## 1.73 (2023-02-09)
+
+For GAP 4.12.2.
+
  * (09/02/23) first attempt at basic double groupoids 
  * (27/01/23) added RegularActionHomomorphismGroupoid and used in gpdhom.tst 
  * (23/12/22) changed email address and other personal details
 
-## Version 1.71 for GAP 4.11.1 (07/08/22) 
+## 1.71 (2022-08-07)
+
+For GAP 4.11.1.
+
  * (07/08/22) now requiring version 0.76 of Utils 
               major revision of left, right and double cosets 
 
-## Version 1.69 for GAP 4.11.1 (15/11/21) 
+## 1.69 (2021-11-15)
+
+For GAP 4.11.1.
+
  * (30/06/22) renamed GpdIsDigraph etc as IsGroupoidDigraph 
  * (15/11/21) moved package homepage to 
               https://github.com/gap-packages/groupoids 
@@ -60,13 +93,22 @@
  * (13/04/21) changed nicemap.tst to cope with alternative NiceMonomorphisms 
  * (08/04/21) Switch CI to use GitHub Actions 
 
-## Version 1.68 for GAP 4.10.2 (04/09/19) 
+## 1.68 (2019-09-04)
+
+For GAP 4.10.2.
+
  * (12/07/19) fixed errors in tests introduced in gapdev
 
-## Version 1.67 for GAP 4.10.1 (17/06/19) 
+## 1.67 (2019-06-17)
+
+For GAP 4.10.1.
+
  * (16/06/19) added Utils to the required packages 
 
-## Version 1.66 for GAP 4.10.1 (29/05/19) 
+## 1.66 (2019-05-29)
+
+For GAP 4.10.1.
+
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (08/04/19) AutomorphismGroupoidOfGroupoid for homogeneous union 
  * (05/04/19) methods for IsInjective, IsSurjective for groupoid homs 
@@ -75,33 +117,41 @@
  * (24/03/19) extended IsomorphismStandardGroupoid to a union of pieces
  * (21/03/19) added operation IsomorphismGroupoids  
 
-## Version 1.65 for GAP 4.10.0 (05/03/19) 
+## 1.65 (2019-03-05)
+
+For GAP 4.10.0.
+
  * (05/03/19) added attribute RightActionGroupoid 
  * (16/02/19) added License field in PackageInfo.g 
 
-## 1.61 -> 1.63  (23/10/18) 
+## 1.63 (2018-10-23)
+
  * (23/10/18) Added ReducedImageElm for IsMappingToFreeProductWithAmalgamation
               IsFpaGroup now IsFreeProductWithAmalgamation; sim. IsHnnGroup 
  * (15/10/18) Undid previous commit; revised FreeProductWithAmalgamation(Op) 
               and made similar changes to HnnExtension(Op) inc. Embeddings 
               FpaInfo is now FreeProductWithAmalgamationInfo; sim. HnnInfo 
 
-## 1.59 -> 1.61  (09/10/18) 
+## 1.61 (2018-10-09)
+
  * (09/10/18) Added 'GGRWS' to 'FreeProductWithAmalgamation', 'HnnExtension'
 
-## 1.57 -> 1.59  (13/09/18) 
+## 1.59 (2018-09-13)
+
  * (13/09/18) GroupoidAutomorphismByObjectPerm method for groupoid with rays
  * (13/09/18) removed dependency on Utils - but still used by xtst/testextra.g
  * (12/09/18) removed attribute InverseOfIsomorphismFpSemigroup 
  * (11/09/18) added AutomorphismGroupoidOfGroupoid for homogeneous groupoids
  * (05/09/18) replaced SmallGroup(8,4) with QuaternionGroup(8)
 
-## 1.55 -> 1.57  (28/08/18) 
+## 1.57 (2018-08-28)
+
  * (28/08/18) removed Semigroups from SuggestedOtherPackages (temporarily?) 
  * (10/05/18) added attribute PieceIsomorphisms for homogeneous dwos
  * (09/05/18) added attribute ParentMappingGroupoids for restricted mappings
 
-## 1.54 -> 1.55  (02/02/18) 
+## 1.55 (2018-02-02)
+
  * (01/02/18) renamed test files in folder xtst/ 
  * (30/01/18) Rewrote to Left(Right)CosetRepresentatives(FromObject) 
  * (24/01/18) Corrections to methods for RightCoset and LeftCoset
@@ -117,7 +167,8 @@
               split off autogroup functions from gpdhom.g{d,i} to gpdaut.g{d,i} 
  * (14/12/17) added method for \in for automorphisms of groupoids 
 
-## 1.53 -> 1.54  (29/11/17) 
+## 1.54 (2017-11-29)
+
  * (29/11/17) revised manual Ch.5; added test to GroupoidHomomorphism; release!  
  * (27/11/17) added MappingGeneratorsImages method for hom discrete mappings
  * (18/10/17) fixed bug in DiscreteSubgroupoid; RestrictedMapGpd now in manual
@@ -128,12 +179,14 @@
               then added new manual section on the inner automorphism group
  * (09/10/17) added operation GroupoidInnerAutomorphism 
 
-## 1.52 -> 1.53  (04/10/17) 
+## 1.53 (2017-10-04)
+
  * (03/10/17) added section 5.5 to the manual: matrix reps of groupoids 
  * (29/09/17) test files back to original names and made independent 
  * (27/09/17) introduced lots of Types and adjusted Objectify commands 
 
-## 1.51 -> 1.52  (21/09/17) 
+## 1.52 (2017-09-21)
+
  * (21/09/17) revised HomomorphismToSinglePiece and associated functions 
  * (21/09/17) SinglePieceMappingData now MappingToSinglePieceData 
  * (21/09/17) revised IsomorphismPermGroupoid and added IsomorphismPcGroupoid 
@@ -153,17 +206,20 @@
  * (11/09/17) PieceImages -> SinglePieceMappingData 
  * (08/08/17) testall.g copied to testing.g; testall now calls TestDirectory
 
-## 1.46 -> 1.51  (06/08/17)     
+## 1.51 (2017-08-06)
+
  * (06/08/17) version 1.51 released - for GAP 4.8.8 
  * (03/07/17) README and CHANGES now in MarkDown format as .md files 
  * (14/06/17) added various methods for String, ViewString, PrintString 
  * (07/04/17) renamed the package 'groupoids' so most files needed editing 
 
-## 1.45 -> 1.46  (21/02/17) 
+## 1.46 (2017-02-21)
+
  * (21/02/17) removed method for IsCommutative from `gpd.gi` 
               which was causing slowdown in one of the main GAP tests 
 
-## 1.43 -> 1.45  (02/11/16) 
+## 1.45 (2016-11-02)
+
  * (02/11/16) improved RestrictedMappingGroupoids 
  * (01/11/16) added IsomorphismStandardGroupoid to `gpdhom.g{d,i}`; 
              GroupoidAutomorphismByRayImages->GroupoidAutomorphismByRayShifts; 
@@ -177,18 +233,21 @@
  * (27/04/16) added EmbeddingsInNiceObject 
  * (14/04/16) converted cases of \in to new InAutomorphismGroupOfGroupoid 
 
-## 1.41 -> 1.43  (16/03/16) 
+## 1.43 (2016-03-16)
+
  * (16/03/16) dealt with new diffs in test files 
  * (18/02/16) removed date/version info from file headers 
  * (15/02/16) Added method for ImagesRepresentative( gpdhom, arrow ) 
 
-## 1.36 -> 1.41  (09/02/16) 
+## 1.41 (2016-02-09)
+
  * (04/02/16) replacing test IsScalar for objects with IsObject/IsSet 
               added examples in section 4.1.1 where the objects are 
               free group generators or strings 
  * (12/01/16) renamed some ENTITYs in `PackageInfo.g` 
 
-## 1.35 -> 1.36  (23/11/15) 
+## 1.36 (2015-11-23)
+
  * (23/11/15) new method for ObjectGroupHomomorphism 
  * (23/11/15) converted RootObject from an operation to an attribute 
  * (23/11/15) renamed IsDigraph etc as GpdIsDigraph as requested by James 
@@ -199,7 +258,8 @@
  * (28/10/15) added MathJax to `makedocrel.g` 
  * (01/09/15) major edits to `README`, including GitHub issues link 
 
-## 1.34 -> 1.35  (24/08/15) 
+## 1.35 (2015-08-24)
+
  * (24/08/15) packed up version 1.35 prior to move from Bitbucket to Github 
  * (11/06/15) removed GroupoidHomomorphismByGroupHom and increased the 
               number of options recognised by GroupoidHomomorphism 
@@ -208,7 +268,8 @@
  * (10/06/15) made various improvements to the manual 
  * (10/06/15) renamed RootObjectHomomorphism as RootGroupHomomorphism 
 
-## 1.32 -> 1.34  (05/06/15) 
+## 1.34 (2015-06-05)
+
  * (05/06/15) added method for GeneratorsOfMagma for a magma with objects 
  * (05/06/15) attempted fix of problem with NormalFormGGRWS 
  * (02/06/15) `PackageInfo.g` : 'gpd' is now an accepted package  
@@ -216,14 +277,17 @@
               and added an URL to Emma's thesis (`moore.ps.gz`) 
  * (02/06/15) Fixed typos in the manual reported by the referee 
 
-## 1.31 -> 1.32  (03/02/15) 
+## 1.32 (2015-02-03)
+
  * (03/02/15) changed 'InversesIfNonzero' to 'Inverse' in category names 
 
-## 1.23 -> 1.31  (17/12/14) 
+## 1.31 (2014-12-17)
+
  * (17/12/14) moved package homepage to <pages.bangor.ac.uk/~mas023/chda/gpd/> 
  * (26/11/14) changed Arrow to ArrowNC in GeneratorsOfMagmaWithObjects 
 
-## 1.22 -> 1.23  (03/07/14) 
+## 1.23 (2014-07-03)
+
  * (03/07/14) updated chapter 6 in the manual: Technical Notes
  * (02/07/14) realised that rays are arrows so swapped the names: 
               RaysOfGroupoid with RayElementsOfGroupoid 
@@ -240,14 +304,16 @@
  * (07/05/14) added IsMatrixGroupoid 
  * (27/11/13) added semigroups package to SuggestedOtherPackages (Needed...?) 
 
-## 1.19 -> 1.22  (20/11/13) 
+## 1.22 (2013-11-20)
+
  * (20/11/13) Adjusted flip function in `mwohom.g` and `mwohom.tst`. 
  * (10/05/13) Added method for ImageElm for mwohoms and more than one piece. 
  * (09/05/13) Added IsElementOfMagmaWithObjects (in place of \in). 
  * (08/05/13) Renamed (again) Arrowelt -> ElementOfArrow, etc. 
  * (07/05/13) Started to fix a whole set of typos in the manual. 
 
-## 1.17 -> 1.19  (11/03/13) 
+## 1.19 (2013-03-11)
+
  * (11/03/13) Minor modifications to test files to fix differences. 
  * (06/02/13) Changed IsDiscreteDomainWithObjects to be false when there 
               is only one object, and now there are diffs in tests! 
@@ -258,11 +324,13 @@
  * (22/01/13) Fixed problem with IsHomomorphismFromSinglePiece. 
               Made changes to PrintObj and Display methods. 
 
-## 1.16 -> 1.17  (14/01/13) 
+## 1.17 (2013-01-14)
+
  * (12/01/13) Converted Vertices and Arcs back from Attributes to Operations 
               (otherwise there is a clash with the Grape package). 
 
-## 1.15 -> 1.16  (09/01/13) 
+## 1.16 (2013-01-09)
+
  * (09/01/13) corrected output in test files (words in fp-groups are now 
               factorised where possible) and finalised version 1.16. 
  * (24/10/12) ??? Remove subgpds as input parameter for GraphOfGroupoids ??? 
@@ -272,14 +340,16 @@
               so attribute SubgroupsOfGraphOfGroups is redundant. 
  * (27/06/12) Added operation EndoMappingToOne 
 
-## 1.14 -> 1.15  (09/06/12) 
+## 1.15 (2012-06-09)
+
  * (09/06/12) Added test for trivial groups in InclusionMappingGroups 
  * (08/06/12) Removed IdentitySubgroup and used TrivialSubgroup instead, 
               following email from Max Horn 
               Similarly replaced Identity with Trivial in the operations 
               FullIdentitySubgroupoid and DiscreteIdentitySubgroupoid 
 
-## 1.13 -> 1.14  (23/04/12) 
+## 1.14 (2012-04-23)
+
  * (20/04/12) Corrected ImageElm for single-piece groupoid elements. 
  * (18/04/12) Replaced ReadTest with Test in `testall.g` 
  * (12/01/12) Experimentally added method for IsCommutative to `gpd.gi` 
@@ -287,7 +357,8 @@
  * (12/01/12) Edited examples in `gpdhom.g`, `gpdhom2`.g, `gpdhom.tst`, `gpdhom.xml`
  * (16/12/11) Fixed error in method for IsHomogeneousDomainWithObjects 
 
-## 1.12 -> 1.13  (14/12/11) 
+## 1.13 (2011-12-14)
+
  * (09/12/11) Added AutomorphismGroup and NiceObjectAutoGroupGroupoid methods 
               for homogeneous discrete groupoids
  * (03/12/11) Added ObjectGroupHomomorphism 
@@ -302,24 +373,28 @@
               now using package directory in the format `.../gpd-1.13/` 
               and archive files in the format  `gpd-1.13.tar` 
 
-## 1.09 -> 1.12  (21/09/11) 
+## 1.12 (2011-09-21)
+
  * (20/09/11) new version of `makedocrel.g` for building the manual 
               added file `gpd/examples/readall.g` for testing purposes 
 
-## 1.08 -> 1.09  (17/09/11) 
+## 1.09 (2011-09-17)
+
  * (17/09/11) Shortened the banner 
  * (16/09/11) Renamed subdirectory `gpd/gap` as `gpd/lib` 
               Status of package now specified as "submitted". 
  * (13/09/11) Added fga as a required package (used by `tst/gpd.tst`). 
 
-## 1.07 -> 1.08  (06/09/11) 
+## 1.08 (2011-09-06)
+
  * (06/09/11) Changed IsGraphOfGroups to IsGraphOfGroupsRep 
               and introduced category IsGraphOfGroups and GraphOfGroupsFamily, 
               and similarly for IsGraphOfGroupoids. 
  * (04/09/11) Changed BIND_GLOBAL to BindGlobal, since it is 'safer' 
  * (16/08/11) Changed directory for archive to `.../chda/gap4r5/gpd/`
 
-## 1.05 -> 1.07  (08/07/11) 
+## 1.07 (2011-07-08)
+
  * (08/07/11) Changed RootHomomorphism to RootObjectHomomorphism and 
               added new operation RootHomomorphism. 
  * (07/07/11) Extended GroupoidAutomorphismByObjectPerm to rays case. 
@@ -426,7 +501,8 @@
  * (15/04/10) Renamed SinglePieceGroupoidWithRays as SubgroupoidWithRays 
  * (26/03/10) Moved Gpd development to IMac at home, and started v.1.07
 
-## 1.04 -> 1.05  (21/11/2008)
+## 1.05 (2008-11-21)
+
  * (21/11/08) Introduced TypeOfDomainWithObjects.  
                Completed the change of parameter order to "<mag>,<obs>",
  * (19/11/08) GapDoc relegated to "suggested other packages".
@@ -447,7 +523,8 @@
                needed to replace \in by IsElementInGroupoid many times; 
                still a problem with \* for GraphOfGroupoidsWords
 
-## 1.03 -> 1.04  (13/11/2008)
+## 1.04 (2008-11-13)
+
 problem: need to redefine PieceImages in light of DefaultGroupoidMappingRep ? 
          need elements for this new submagma representation 
 
@@ -547,7 +624,8 @@ problem: need to redefine PieceImages in light of DefaultGroupoidMappingRep ?
  * (06/03/08) Method for GeneratorsOfGroupoid in the non-connected case. 
  * (05/03/08) Expanded conjugation operator, e1^e2, following preprint 07.10 
 
-## 1.01 -> 1.03  (08/10/2007)
+## 1.03 (2007-10-08)
+
  *  Started this `CHANGES` file. 
  *  Now using GAPDoc-1.0.
  *  Fixed some bugs in the example files. 
@@ -558,7 +636,7 @@ problem: need to redefine PieceImages in light of DefaultGroupoidMappingRep ?
       added: IsGroupoidWithConstantGroup, ConnectedGroupoidWithRays(NC). 
       Note: many of the other functions do not yet work with these groupoids. 
 
-# HISTORY up to version 1.01
+### HISTORY up to version 1.01
  * 07/05/97  package `GraphGpd` started: tree and connected groupoids  
  * 12/12/00  version 1.001 published in Emma Moore's thesis
  * 30/01/04  version 1.002 prepared for GAP 4.4
