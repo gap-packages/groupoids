@@ -1,22 +1,18 @@
 # CHANGES to the 'groupoids' package 
 
-## 1.84 (2026-09-10)
+## 1.84dev (2026-10-13)
 
-For GAP 4.16.1.
+## 1.84 (2026-09-10)
 
  * (10/09/26) replaced existing tests with ones extracted from the manual
 
 ## 1.83 (2026-08-19)
-
-For GAP 4.16.0.
 
  * (19/08/26) adjust output after changes in automorphism group code
  * (03/07/26) tst/extra/cosets.tst returns some errors when tested with 
               4.13 and 4.14, so these versions removed from CI.yml
 
 ## 1.81 (2025-11-26)
-
-For GAP 4.15.1.
 
  * (25/11/25) revised FreeProductWithAmalgamation and HnnExtension
  * (21/11/25) revised Families and Types for semigroups/monoids with objects 
@@ -28,8 +24,6 @@ For GAP 4.15.1.
 
 ## 1.79 (2025-09-11)
 
-For GAP 4.14.0.
-
  * (11/09/25) added operation GroupoidInnerAutomorphismNormalSubgroupoid
  * (10/09/25) added new release mechanism file .github/workflows/release.yml 
  * (22/07/25) revised code and examples of GroupoidInnerAutomorphism
@@ -39,13 +33,9 @@ For GAP 4.14.0.
 
 ## 1.78 (2025-07-18)
 
-For GAP 4.14.0.
-
  * (17/07/25) documented some missing categories in the manual
 
 ## 1.77 (2025-07-03)
-
-For GAP 4.14.0.
 
  * (03/07/25) made extensive changes to the examples in tst/manual 
               added operation IsFullSubgroupoid( gpd, subgpd )
@@ -57,19 +47,13 @@ For GAP 4.14.0.
 
 ## 1.76 (2024-09-23)
 
-For GAP 4.13.1.
-
  * (23/09/24) fix error caused re immutable ExtRepOfObj by GAP pull #5808
 
 ## 1.74 (2023-02-09)
 
-For GAP 4.12.2.
-
  * (23/01/24) avoid trivial function wrappers; correct email address 
 
 ## 1.73 (2023-02-09)
-
-For GAP 4.12.2.
 
  * (09/02/23) first attempt at basic double groupoids 
  * (27/01/23) added RegularActionHomomorphismGroupoid and used in gpdhom.tst 
@@ -77,14 +61,10 @@ For GAP 4.12.2.
 
 ## 1.71 (2022-08-07)
 
-For GAP 4.11.1.
-
  * (07/08/22) now requiring version 0.76 of Utils 
               major revision of left, right and double cosets 
 
 ## 1.69 (2021-11-15)
-
-For GAP 4.11.1.
 
  * (30/06/22) renamed GpdIsDigraph etc as IsGroupoidDigraph 
  * (15/11/21) moved package homepage to 
@@ -95,19 +75,13 @@ For GAP 4.11.1.
 
 ## 1.68 (2019-09-04)
 
-For GAP 4.10.2.
-
  * (12/07/19) fixed errors in tests introduced in gapdev
 
 ## 1.67 (2019-06-17)
 
-For GAP 4.10.1.
-
  * (16/06/19) added Utils to the required packages 
 
 ## 1.66 (2019-05-29)
-
-For GAP 4.10.1.
 
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (08/04/19) AutomorphismGroupoidOfGroupoid for homogeneous union 
@@ -118,8 +92,6 @@ For GAP 4.10.1.
  * (21/03/19) added operation IsomorphismGroupoids  
 
 ## 1.65 (2019-03-05)
-
-For GAP 4.10.0.
 
  * (05/03/19) added attribute RightActionGroupoid 
  * (16/02/19) added License field in PackageInfo.g 
@@ -524,9 +496,6 @@ For GAP 4.10.0.
                still a problem with \* for GraphOfGroupoidsWords
 
 ## 1.04 (2008-11-13)
-
-problem: need to redefine PieceImages in light of DefaultGroupoidMappingRep ? 
-         need elements for this new submagma representation 
 
  * (13/11/08) deleted lots of examples which do not work at present 
                added GNU General Public License declaration,
